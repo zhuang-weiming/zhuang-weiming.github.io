@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>关于golang服务重启 | Zhuang&#39;s Diary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我相信每个人都会想，每次更新完代码，更新完配置文件后，就直接这么 ctrl+c 真的没问题吗，ctrl+c到底做了些什么事情呢？ 本文我们讨论 ctrl+c 背后的信号以及如何优雅的重启服务，以及对 HTTP 服务进行热更新。 ctrl + c在终端执行特定的组合键可以使系统发送特定的信号给此进程，完成一系列的动作    命令 信号 含义    ctrl + c SIGINT 强制进程结束   c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于golang服务重启">
+<meta property="og:url" content="https://willzhuang.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="我相信每个人都会想，每次更新完代码，更新完配置文件后，就直接这么 ctrl+c 真的没问题吗，ctrl+c到底做了些什么事情呢？ 本文我们讨论 ctrl+c 背后的信号以及如何优雅的重启服务，以及对 HTTP 服务进行热更新。 ctrl + c在终端执行特定的组合键可以使系统发送特定的信号给此进程，完成一系列的动作    命令 信号 含义    ctrl + c SIGINT 强制进程结束   c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-30T01:11:01.000Z">
+<meta property="article:modified_time" content="2020-03-31T09:13:44.291Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="golang服务">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhuang&#39;s Diary</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://willzhuang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-关于golang服务重启" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" class="article-date">
+  <time datetime="2020-03-30T01:11:01.000Z" itemprop="datePublished">2020-03-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于golang服务重启
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我相信每个人都会想，每次更新完代码，更新完配置文件后，就直接这么 <code>ctrl+c</code> 真的没问题吗，<code>ctrl+c</code>到底做了些什么事情呢？</p>
+<p>本文我们讨论 <code>ctrl+c</code> 背后的<strong>信号</strong>以及如何<strong>优雅的重启服务</strong>，以及对 <code>HTTP</code> 服务进行热更新。</p>
+<h3 id="ctrl-c"><a href="#ctrl-c" class="headerlink" title="ctrl + c"></a>ctrl + c</h3><p>在终端执行特定的组合键可以使系统发送特定的信号给此进程，完成一系列的动作</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>信号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ctrl + c</td>
+<td>SIGINT</td>
+<td>强制进程结束</td>
+</tr>
+<tr>
+<td>ctrl + z</td>
+<td>SIGTSTP</td>
+<td>任务中断，进程挂起</td>
+</tr>
+<tr>
+<td>ctrl + \</td>
+<td>SIGQUIT</td>
+<td>进程结束 和 <code>dump core</code></td>
+</tr>
+<tr>
+<td>ctrl + d</td>
+<td></td>
+<td>EOF</td>
+</tr>
+<tr>
+<td>常用于重启、重新加载进程</td>
+<td>SIGHUP</td>
+<td>若程序中没有捕捉该信号，当收到该信号时，进程就会退出</td>
+</tr>
+<tr>
+<td></td>
+<td>SIGPIPE</td>
+<td>在进程往一个已经关闭的管道写数据时会产生</td>
+</tr>
+</tbody></table>
+<p>因此在我们执行<code>ctrl + c</code>关闭服务端时，<strong>会强制进程结束，导致正在访问的用户等出现问题</strong>。</p>
+<p>常见的 <code>kill -9 pid</code> 会发送 <code>SIGKILL</code> 信号给进程，也是类似的结果。</p>
+<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><p>本段中出现<strong>信号</strong>是什么呢？</p>
+<p>信号是 <code>Unix</code> 、类 <code>Unix</code> 以及其他 <code>POSIX</code> 兼容的操作系统中进程间通讯的一种有限制的方式。</p>
+<p>它是一种异步的通知机制，用来提醒进程一个事件（硬件异常、程序执行异常、外部发出信号）已经发生。当一个信号发送给一个进程，操作系统中断了进程正常的控制流程。此时，任何非原子操作都将被中断。如果进程定义了信号的处理函数，那么它将被执行，否则就执行默认的处理函数。</p>
+<h4 id="所有信号"><a href="#所有信号" class="headerlink" title="所有信号"></a>所有信号</h4><p>从go语言 go root SDK中 <code>zerrors_linux_amd64.go</code> 来看，关于信号有如下常量：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">SIGABRT   </span><br><span class="line">SIGALRM   </span><br><span class="line">SIGBUS    </span><br><span class="line">SIGCHLD   </span><br><span class="line">SIGCLD    </span><br><span class="line">SIGCONT   </span><br><span class="line">SIGFPE    </span><br><span class="line">SIGHUP    </span><br><span class="line">SIGILL    </span><br><span class="line">SIGINT    </span><br><span class="line">SIGIO     </span><br><span class="line">SIGIOT    </span><br><span class="line">SIGKILL   </span><br><span class="line">SIGPIPE   </span><br><span class="line">SIGPOLL   </span><br><span class="line">SIGPROF   </span><br><span class="line">SIGPWR    </span><br><span class="line">SIGQUIT   </span><br><span class="line">SIGSEGV   </span><br><span class="line">SIGSTKFLT </span><br><span class="line">SIGSTOP   </span><br><span class="line">SIGSYS    </span><br><span class="line">SIGTERM   </span><br><span class="line">SIGTRAP   </span><br><span class="line">SIGTSTP   </span><br><span class="line">SIGTTIN   </span><br><span class="line">SIGTTOU   </span><br><span class="line">SIGUNUSED </span><br><span class="line">SIGURG    </span><br><span class="line">SIGUSR1   </span><br><span class="line">SIGUSR2   </span><br><span class="line">SIGVTALRM </span><br><span class="line">SIGWINCH  </span><br><span class="line">SIGXCPU   </span><br><span class="line">SIGXFSZ   </span><br></pre></td></tr></table></figure>
+
+<h3 id="怎样算优雅"><a href="#怎样算优雅" class="headerlink" title="怎样算优雅"></a>怎样算优雅</h3><h4 id="优雅地退出"><a href="#优雅地退出" class="headerlink" title="优雅地退出"></a>优雅地退出</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TrapSignal catches the SIGTERM/SIGINT/SIGKILL and executes cb function. </span></span><br><span class="line"><span class="comment">// After that it exits with code 0.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TrapSignal</span><span class="params">(cb <span class="keyword">func</span>()</span>)</span> &#123;</span><br><span class="line">	c := <span class="built_in">make</span>(<span class="keyword">chan</span> os.Signal, <span class="number">1</span>)</span><br><span class="line">	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> sig := <span class="keyword">range</span> c &#123;</span><br><span class="line">			fmt.Sprintf(<span class="string">&quot;captured %v, exiting...&quot;</span>, sig)</span><br><span class="line">			<span class="keyword">if</span> cb != <span class="literal">nil</span> &#123;</span><br><span class="line">				cb()</span><br><span class="line">			&#125;</span><br><span class="line">			os.Exit(<span class="number">0</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在接收退出信号<code>SIGTERM/SIGINT/SIGKILL</code>之后，系统退出<code>os.Exit(0)</code>之前，执行cb() callback函数。具体执行方法建议如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Cmd</span><span class="params">(ctx *cli.Context)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// program of business logic</span></span><br><span class="line">    start()</span><br><span class="line">    </span><br><span class="line">    TrapSignal(logger, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// program of business exit here</span></span><br><span class="line">		stop()</span><br><span class="line">	&#125;)</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="gin退出"><a href="#gin退出" class="headerlink" title="gin退出"></a>gin退出</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	engine := gin.Default()</span><br><span class="line">	engine.GET(<span class="string">&quot;/ping&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;</span><br><span class="line">			<span class="string">&quot;message&quot;</span>: <span class="string">&quot;pong&quot;</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	TrapSignal(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;before exit.&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	engine.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" data-id="ckh0c7emu0057xgvmazy2e61x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang%E6%9C%8D%E5%8A%A1/" rel="tag">golang服务</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          本地玩转k8s-第I弹
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/23/ERC%E5%85%B3%E6%B3%A8%E5%88%97%E8%A1%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ERC关注列表</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Burrow/" rel="tag">Burrow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DAO/" rel="tag">DAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFINITY/" rel="tag">DFINITY</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DID/" rel="tag">DID</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIP/" rel="tag">EIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EVM/" rel="tag">EVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ethereum/" rel="tag">Ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/" rel="tag">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenPGP/" rel="tag">OpenPGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PBFT/" rel="tag">PBFT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProtoBuf/" rel="tag">ProtoBuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VRF/" rel="tag">VRF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebAssembly/" rel="tag">WebAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorand/" rel="tag">algorand</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chainlink/" rel="tag">chainlink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/channel/" rel="tag">channel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/credits/" rel="tag">credits</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cv/" rel="tag">cv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/" rel="tag">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disk-usage/" rel="tag">disk usage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ethereum/" rel="tag">ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geth/" rel="tag">geth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang%E6%9C%8D%E5%8A%A1/" rel="tag">golang服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/" rel="tag">google</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leadership/" rel="tag">leadership</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/make/" rel="tag">make</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pprof/" rel="tag">pprof</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raft/" rel="tag">raft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/remix/" rel="tag">remix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seaweedfs/" rel="tag">seaweedfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solidity/" rel="tag">solidity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wasm/" rel="tag">wasm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whisper/" rel="tag">whisper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">令牌环领导人选举算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" rel="tag">占用磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" rel="tag">商业模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" rel="tag">商品验真</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90/" rel="tag">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag">开源协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag">性能分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%83%85%E5%95%86/" rel="tag">情商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%8A%9F/" rel="tag">成功</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" rel="tag">数字资产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" rel="tag">数学符号</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" rel="tag">服务器地址</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="tag">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="tag">相似度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="tag">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E7%9B%98/" rel="tag">磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" rel="tag">网络攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="tag">随机数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%90%E7%A7%81/" rel="tag">隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag">零知识证明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">领导人选举算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ACL/" style="font-size: 10px;">ACL</a> <a href="/tags/Burrow/" style="font-size: 13.33px;">Burrow</a> <a href="/tags/CSC/" style="font-size: 15.56px;">CSC</a> <a href="/tags/DAO/" style="font-size: 10px;">DAO</a> <a href="/tags/DFINITY/" style="font-size: 10px;">DFINITY</a> <a href="/tags/DID/" style="font-size: 10px;">DID</a> <a href="/tags/EIP/" style="font-size: 10px;">EIP</a> <a href="/tags/EVM/" style="font-size: 10px;">EVM</a> <a href="/tags/Ethereum/" style="font-size: 17.78px;">Ethereum</a> <a href="/tags/Ghana/" style="font-size: 15.56px;">Ghana</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/OCR/" style="font-size: 11.11px;">OCR</a> <a href="/tags/OpenPGP/" style="font-size: 10px;">OpenPGP</a> <a href="/tags/PBFT/" style="font-size: 10px;">PBFT</a> <a href="/tags/ProtoBuf/" style="font-size: 10px;">ProtoBuf</a> <a href="/tags/Tensorflow/" style="font-size: 14.44px;">Tensorflow</a> <a href="/tags/Token/" style="font-size: 16.67px;">Token</a> <a href="/tags/VRF/" style="font-size: 11.11px;">VRF</a> <a href="/tags/WebAssembly/" style="font-size: 10px;">WebAssembly</a> <a href="/tags/algorand/" style="font-size: 11.11px;">algorand</a> <a href="/tags/chainlink/" style="font-size: 10px;">chainlink</a> <a href="/tags/channel/" style="font-size: 10px;">channel</a> <a href="/tags/credits/" style="font-size: 10px;">credits</a> <a href="/tags/cv/" style="font-size: 11.11px;">cv</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/disk-usage/" style="font-size: 11.11px;">disk usage</a> <a href="/tags/ethereum/" style="font-size: 12.22px;">ethereum</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/golang%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">golang服务</a> <a href="/tags/google/" style="font-size: 14.44px;">google</a> <a href="/tags/k8s/" style="font-size: 11.11px;">k8s</a> <a href="/tags/leadership/" style="font-size: 10px;">leadership</a> <a href="/tags/make/" style="font-size: 10px;">make</a> <a href="/tags/paper/" style="font-size: 13.33px;">paper</a> <a href="/tags/pbft/" style="font-size: 11.11px;">pbft</a> <a href="/tags/pprof/" style="font-size: 11.11px;">pprof</a> <a href="/tags/raft/" style="font-size: 10px;">raft</a> <a href="/tags/remix/" style="font-size: 10px;">remix</a> <a href="/tags/seaweedfs/" style="font-size: 10px;">seaweedfs</a> <a href="/tags/solidity/" style="font-size: 17.78px;">solidity</a> <a href="/tags/wasm/" style="font-size: 11.11px;">wasm</a> <a href="/tags/whisper/" style="font-size: 10px;">whisper</a> <a href="/tags/%E4%B8%93%E5%88%A9/" style="font-size: 10px;">专利</a> <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" style="font-size: 18.89px;">产品设计</a> <a href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">令牌环领导人选举算法</a> <a href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" style="font-size: 11.11px;">占用磁盘</a> <a href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">商业模式</a> <a href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" style="font-size: 10px;">商品验真</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 10px;">开源</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">开源协议</a> <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" style="font-size: 10px;">性能分析</a> <a href="/tags/%E6%83%85%E5%95%86/" style="font-size: 10px;">情商</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 10px;">成功</a> <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" style="font-size: 12.22px;">数字资产</a> <a href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" style="font-size: 10px;">数学符号</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" style="font-size: 10px;">服务器地址</a> <a href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">架构模式</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 10px;">电商</a> <a href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" style="font-size: 10px;">相似度</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%A3%81%E7%9B%98/" style="font-size: 10px;">磁盘</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" style="font-size: 10px;">网络攻击</a> <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" style="font-size: 10px;">随机数</a> <a href="/tags/%E9%9A%90%E7%A7%81/" style="font-size: 10px;">隐私</a> <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" style="font-size: 20px;">零知识证明</a> <a href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">领导人选举算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1982/02/">February 1982</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">万向的产业区块链解决方</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%AC%AC%E4%BA%8C%E5%B1%82%E5%8D%8F%E8%AE%AE%E7%94%9F%E6%80%81%E7%9A%84%E5%B4%9B%E8%B5%B7/">以太坊第二层协议生态的崛起</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E6%89%93%E9%80%A0%E6%95%B0%E5%AD%97%E7%BB%8F%E6%B5%8E%E6%96%B0%E5%9F%BA%E5%BB%BA%E8%A7%A3%E6%94%BE%E6%95%B0%E6%8D%AE%E7%94%9F%E4%BA%A7%E5%8A%9B/">打造数字经济新基建解放数据生产力</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BB%88%E6%9E%81%E7%8C%9C%E6%83%B3/">区块链应用模式的终极猜想</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Weiming Zhuang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

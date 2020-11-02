@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Zhuang&#39;s Diary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Zhuang&#39;s Diary">
+<meta property="og:url" content="https://willzhuang.github.io/page/19/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Weiming Zhuang">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhuang&#39;s Diary</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://willzhuang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Haproxy的TCP层健康检查" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/20/Haproxy%E7%9A%84TCP%E5%B1%82%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/" class="article-date">
+  <time datetime="2018-11-20T01:29:44.000Z" itemprop="datePublished">2018-11-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/20/Haproxy%E7%9A%84TCP%E5%B1%82%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/">Haproxy的TCP层健康检查</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Haproxy配置为TCP模式，通常会配置健康检查所代理服务的端口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">frontend main *:6000</span><br><span class="line">    default_backend    app</span><br><span class="line">backend  app</span><br><span class="line">    server app1 192.168.2.10:8080 check</span><br></pre></td></tr></table></figure>
+<p>Haproxy的健康检查机制是利用TCP的三次握手。<br>1、首先由Haproxy向代理的服务器发起SYN握手协商，默认是与代理的端口建立链接，比如说8080。<br>2、等待代理服务器确认第一次SYN，并响应ACK，与发起SYN的第二次握手。<br>3、Haproxy收到确认ACK之后，会向代理服务器发送TCP链接重置的报文，已经确认代理的服务器健康。</p>
+<p>参考链接：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c9f6d55288c0">https://www.jianshu.com/p/c9f6d55288c0</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/11/20/Haproxy%E7%9A%84TCP%E5%B1%82%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/" data-id="ckh0c7elh001jxgvm5hn1bd8d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Haproxy/" rel="tag">Haproxy</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenPGP-Armor-编码介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2018-08-09T09:31:43.000Z" itemprop="datePublished">2018-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/">OpenPGP Armor 编码介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="OpenPGP-Armor"><a href="#OpenPGP-Armor" class="headerlink" title="OpenPGP Armor"></a>OpenPGP Armor</h3><p>OpenPGP是使用最广泛的电子邮件加密标准。它由Internet工程任务组（IETF）的OpenPGP工作组定义为RFC 4880中的建议标准.OpenPGP最初源自由Phil Zimmermann创建的PGP软件。</p>
+<p>虽然OpenPGP的主要目的是端到端加密电子邮件通信，但它也用于加密消息传递和其他用例，如密码管理器。</p>
+<p>OpenPGP的加密消息，签名证书和密钥的基本描述是八位的字节流。为了通过不能保障安全的网络通道传输OpenPGP的二进制八位字节，需要编码为可打印的二进制字符。OpenPGP提供将原始8位二进制八位字节流转换为可打印ASCII字符流，称为Radix-64编码或ASCII Armor。</p>
+<p>ASCII Armor是OpenPGP的可选功能。当OpenPGP将数据编码为ASCII Armor时，它会在Radix-64编码数据中放置特定的Header。OpenPGP可以使用ASCII Armor来保护原始二进制数据。OpenPGP通过使用Header告知用户在ASCII Armor中编码了什么类型的数据。</p>
+<h3 id="ASCII-Armor的数据结构如下："><a href="#ASCII-Armor的数据结构如下：" class="headerlink" title="ASCII Armor的数据结构如下："></a>ASCII Armor的数据结构如下：</h3><ul>
+<li>Armor标题行，匹配数据类型</li>
+<li>Armor Headers</li>
+<li>A Blank（零长度或仅包含空格） Line</li>
+<li>The ASCII-Armored data</li>
+<li>An Armor Checksum</li>
+<li>The Armor Tail，取决于护甲标题线</li>
+</ul>
+<h3 id="具体示例："><a href="#具体示例：" class="headerlink" title="具体示例："></a>具体示例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP MESSAGE-----</span><br><span class="line"></span><br><span class="line">Version: OpenPrivacy 0.99</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">yDgBO22WxBHv7O8X7O&#x2F;jygAEzol56iUKiXmV+XmpCtmpqQUKiQrFqclFqUDBovzSvBSFjNSiVHsuAA&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">&#x3D;njUN</span><br><span class="line"></span><br><span class="line">-----END PGP MESSAGE-----</span><br></pre></td></tr></table></figure>
+
+<h3 id="golang-org-x-crypto-openpgp-armor-代码分析："><a href="#golang-org-x-crypto-openpgp-armor-代码分析：" class="headerlink" title="golang.org/x/crypto/openpgp/armor 代码分析："></a><a href="golang.org/x/crypto/openpgp/armor">golang.org/x/crypto/openpgp/armor</a> 代码分析：</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Encode 返回一个 WriteCloser，它将对 写入的数据进行编码</span></span><br><span class="line"><span class="comment">// Encode returns a WriteCloser which will encode the data written to it in</span></span><br><span class="line"><span class="comment">// OpenPGP Armor.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Encode</span><span class="params">(out io.Writer, blockType <span class="keyword">string</span>, headers <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>)</span> <span class="params">(w io.WriteCloser, err error)</span></span> &#123;</span><br><span class="line">	bType := []<span class="keyword">byte</span>(blockType)</span><br><span class="line">	err = writeSlices(out, armorStart, bType, armorEndOfLineOut)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> k, v := <span class="keyword">range</span> headers &#123;</span><br><span class="line">		err = writeSlices(out, []<span class="keyword">byte</span>(k), armorHeaderSep, []<span class="keyword">byte</span>(v), newline)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	_, err = out.Write(newline)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	e := &amp;encoding&#123;</span><br><span class="line">		out:       out,</span><br><span class="line">		breaker:   newLineBreaker(out, <span class="number">64</span>),</span><br><span class="line">		crc:       crc24Init,</span><br><span class="line">		blockType: bType,</span><br><span class="line">	&#125;</span><br><span class="line">	e.b64 = base64.NewEncoder(base64.StdEncoding, e.breaker)</span><br><span class="line">	<span class="keyword">return</span> e, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将返回值进一步封装为字符串</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">EncodeArmor</span><span class="params">(blockType <span class="keyword">string</span>, headers <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>, data []<span class="keyword">byte</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	buf := <span class="built_in">new</span>(bytes.Buffer)</span><br><span class="line">	w, err := armor.Encode(buf, blockType, headers)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	_, err = w.Write(data)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	err = w.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> buf.String()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实际使用中将公钥导出为 ASCII Armor 格式</span></span><br><span class="line"><span class="comment">// ExportPubKey returns public keys in ASCII armored format.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">armorPubKeyBytes</span><span class="params">(bz []<span class="keyword">byte</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> armorBytes(bz, blockTypePubKey)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">armorBytes</span><span class="params">(bz []<span class="keyword">byte</span>, blockType <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	header := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;type&quot;</span>:    <span class="string">&quot;Info&quot;</span>,</span><br><span class="line">		<span class="string">&quot;version&quot;</span>: <span class="string">&quot;0.0.0&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> armor.EncodeArmor(blockType, header, bz)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ExportPubKey</span><span class="params">(name <span class="keyword">string</span>)</span> <span class="params">(armor <span class="keyword">string</span>, err error)</span></span> &#123;</span><br><span class="line">	bz := Get(infoKey(name))</span><br><span class="line">	<span class="keyword">if</span> bz == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, fmt.Errorf(<span class="string">&quot;no key to export with name %s&quot;</span>, name)</span><br><span class="line">	&#125;</span><br><span class="line">	info, err := readInfo(bz)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> armorPubKeyBytes(info.GetPubKey().Bytes()), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 CovalentChain 公钥、私钥的导入导出和传输等情况，使用 ASCII Armor 编码格式非常合适。另外，在私钥情况下，通常都需要在加密后，再进行编码处理。</p>
+<p>参考链接：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc4880">https://tools.ietf.org/html/rfc4880</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.openpgp.org/">https://www.openpgp.org/</a></li>
+<li><a href="golang.org/x/crypto/openpgp/armor">golang.org/x/crypto/openpgp/armor</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/" data-id="ckh0c7elo001xxgvmfusxasuj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenPGP/" rel="tag">OpenPGP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-WebAssembly-介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/26/WebAssembly-%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2018-07-26T06:48:32.000Z" itemprop="datePublished">2018-07-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/26/WebAssembly-%E4%BB%8B%E7%BB%8D/">WebAssembly 介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="解决什么问题？"><a href="#解决什么问题？" class="headerlink" title="解决什么问题？"></a>解决什么问题？</h4><p>JavaScript 从诞生起到现在已经变成最流行的编程语言，这背后正是 Web 的发展所推动的。Web 应用变得更多更复杂，但这也渐渐暴露出了 JavaScript 的问题：</p>
+<ol>
+<li>语法太灵活导致开发大型 Web 项目困难；</li>
+<li>性能不能满足一些场景的需要。</li>
+<li>针对以上两点缺陷，近年来出现了一些 JS 的代替语言，例如：</li>
+</ol>
+<ul>
+<li>微软的 TypeScript 通过为 JS 加入静态类型检查来改进 JS 松散的语法，提升代码健壮性；</li>
+<li>谷歌的 Dart 则是为浏览器引入新的虚拟机去直接运行 Dart 程序以提升性能；</li>
+<li>火狐的 asm.js 则是取 JS 的子集，JS 引擎针对 asm.js 做性能优化。</li>
+</ul>
+<p>以上尝试各有优缺点，其中：</p>
+<ul>
+<li>TypeScript 只是解决了 JS 语法松散的问题，最后还是需要编译成 JS 去运行，对性能没有提升；</li>
+<li>Dart 只能在 Chrome 预览版中运行，无主流浏览器支持，用 Dart 开发的人不多；</li>
+<li>asm.js 语法太简单、有很大限制，开发效率低。</li>
+</ul>
+<p>三大浏览器巨头分别提出了自己的解决方案，互不兼容，这违背了 Web 的宗旨； 是技术的规范统一让 Web 走到了今天，因此形成一套新的规范去解决 JS 所面临的问题迫在眉睫。</p>
+<p>于是 WebAssembly 诞生了，WebAssembly 是一种新的字节码格式，主流浏览器都已经支持 WebAssembly。和 JS 需要解释执行不同的是，WebAssembly 字节码和底层机器码很相似可快速装载运行，因此性能相对于 JS 解释执行大大提升。 也就是说 WebAssembly 并不是一门编程语言，而是一份字节码标准，需要用高级编程语言编译出字节码放到 WebAssembly 虚拟机中才能运行， 浏览器厂商需要做的就是根据 WebAssembly 规范实现虚拟机。</p>
+<h4 id="WebAssembly-原理"><a href="#WebAssembly-原理" class="headerlink" title="WebAssembly 原理"></a>WebAssembly 原理</h4><p>要搞懂 WebAssembly 的原理，需要先搞懂计算机的运行原理。电子计算机都是由电子元件组成，为了方便处理电子元件只存在开闭两种状态，对应着 0 和 1，也就是说计算机只认识 0 和 1，数据和逻辑都需要由 0 和 1 表示，也就是可以直接装载到计算机中运行的机器码。 机器码可读性极差，因此人们通过高级语言 C、C++、Rust、Go 等编写再编译成机器码。</p>
+<p>由于不同的计算机 CPU 架构不同，机器码标准也有所差别，常见的 CPU 架构包括 x86、AMD64、ARM，因此在由高级编程语言编译成可自行代码时需要指定目标架构。</p>
+<p>WebAssembly 字节码是一种抹平了不同 CPU 架构的机器码，WebAssembly 字节码不能直接在任何一种 CPU 架构上运行，但由于非常接近机器码，可以非常快的被翻译为对应架构的机器码，因此 WebAssembly 运行速度和机器码接近，这听上去非常像 Java 字节码。</p>
+<p>相对于 JS，WebAssembly 有如下优点：</p>
+<ol>
+<li>体积小：由于浏览器运行时只加载编译成的字节码，一样的逻辑比用字符串描述的 JS 文件体积要小很多；</li>
+<li>加载快：由于文件体积小，再加上无需解释执行，WebAssembly 能更快的加载并实例化，减少运行前的等待时间；</li>
+<li>兼容性问题少：WebAssembly 是非常底层的字节码规范，制订好后很少变动，就算以后发生变化,也只需在从高级语言编译成字节码过程中做兼容。可能出现兼容性问题的地方在于 JS 和 WebAssembly 桥接的 JS 接口。</li>
+</ol>
+<p>每个高级语言都去实现源码到不同平台的机器码的转换工作是重复的，高级语言只需要生成底层虚拟机(LLVM)认识的中间语言(LLVM IR)，LLVM 能实现：</p>
+<ul>
+<li>LLVM IR 到不同 CPU 架构机器码的生成；</li>
+<li>机器码编译时性能和大小优化。</li>
+</ul>
+<p>除此之外 LLVM 还实现了 LLVM IR 到 WebAssembly 字节码的编译功能，也就是说只要高级语言能转换成 LLVM IR，就能被编译成 WebAssembly 字节码，目前能编译成 WebAssembly 字节码的高级语言有：</p>
+<ul>
+<li>AssemblyScript:语法和 TypeScript 一致，对前端来说学习成本低，为前端编写 WebAssembly <a target="_blank" rel="noopener" href="http://webassembly.org.cn/">最佳选择</a>；</li>
+<li>c\c++:官方推荐的方式;</li>
+<li>Rust:语法复杂、学习成本高，对前端来说可能会不适应;</li>
+<li>Kotlin:语法和 Java、JS 相似，语言学习成本低;</li>
+<li>Golang:语法简单学习成本低。但对 WebAssembly 的支持还处于未正式发布阶段。</li>
+</ul>
+<p>通常负责把高级语言翻译到 LLVM IR 的部分叫做编译器前端，把 LLVM IR 编译成各架构 CPU 对应机器码的部分叫做编译器后端； 现在越来越多的高级编程语言选择 LLVM 作为后端，高级语言只需专注于如何提供开发效率更高的语法同时保持翻译到 LLVM IR 的程序执行性能。</p>
+<h4 id="编写-WebAssembly"><a href="#编写-WebAssembly" class="headerlink" title="编写 WebAssembly"></a>编写 WebAssembly</h4><p>接下来详细介绍如何使用 AssemblyScript 来编写 WebAssembly，实现斐波那契序列的计算。 用 TypeScript 实现斐波那契序列计算的模块 f.ts 如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">x: i32</span>): <span class="title">i32</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x === <span class="number">1</span> || x === <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f(x - <span class="number">1</span>) + f(x - <span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在按照 <a target="_blank" rel="noopener" href="https://github.com/AssemblyScript/assemblyscript#installation">AssemblyScript 提供的安装教程成功安装</a>后， 再通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asc f.ts -o f.wasm</span><br></pre></td></tr></table></figure>
+<p>就能把以上代码编译成可运行的 WebAssembly 模块。</p>
+<p>为了加载并执行编译出的 f.wasm 模块，需要通过 JS 去加载并调用模块上的 f 函数，为此需要以下 JS 代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">&#x27;f.wasm&#x27;</span>) <span class="comment">// 网络加载 f.wasm 文件</span></span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.arrayBuffer()) <span class="comment">// 转成 ArrayBuffer</span></span><br><span class="line">    .then(WebAssembly.instantiate) <span class="comment">// 编译为当前 CPU 架构的机器码 + 实例化</span></span><br><span class="line">    .then(<span class="function"><span class="params">mod</span> =&gt;</span> &#123; <span class="comment">// 调用模块实例上的 f 函数计算</span></span><br><span class="line">    <span class="built_in">console</span>.log(mod.instance.f(<span class="number">50</span>));</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>以上代码中出现了一个新的内置类型 i32，这是 AssemblyScript 在 TypeScript 的基础上内置的类型。AssemblyScript 和 TypeScript 有细微区别，AssemblyScript 是 TypeScript 的子集，为了方便编译成 WebAssembly 在 TypeScript 的基础上加了更严格的类型限制，区别如下：</p>
+<ul>
+<li>比 TypeScript 多了很多更细致的内置类型，以优化性能和内存占用;</li>
+<li>不能使用 any 和 undefined 类型，以及枚举类型；</li>
+<li>可空类型的变量必须是引用类型，而不能是基本数据类型如 string、number、boolean；</li>
+<li>函数中的可选参数必须提供默认值，函数必须有返回类型，无返回值的函数返回类型需要是 void；</li>
+<li>不能使用 JS 环境中的内置函数，只能使用 AssemblyScript 提供的内置函数。</li>
+</ul>
+<p>总体来说 AssemblyScript 比 TypeScript 又多了很多限制，编写起来会觉得局限性很大； 用 AssemblyScript 来写 WebAssembly 经常会出现 tsc 编译通过但运行 WebAssembly 时出错的情况，这很可能就是你没有遵守以上限制导致的；但 AssemblyScript 通过修改 TypeScript 编译器默认配置能在编译阶段找出大多错误。</p>
+<p>AssemblyScript 的实现原理其实也借助了 LLVM，它通过 TypeScript 编译器把 TS 源码解析成 AST，再把 AST 翻译成 IR，再通过 LLVM 编译成 WebAssembly 字节码实现； 上面提到的各种限制都是为了方便把 AST 转换成 LLVM IR。</p>
+<h4 id="为什么选-AssemblyScript-作为-WebAssembly-开发语言"><a href="#为什么选-AssemblyScript-作为-WebAssembly-开发语言" class="headerlink" title="为什么选 AssemblyScript 作为 WebAssembly 开发语言"></a>为什么选 AssemblyScript 作为 WebAssembly 开发语言</h4><p>AssemblyScript 相对于 C、Rust 等其它语言去写 WebAssembly 而言，好处除了对前端来说无额外新语言学习成本外，还有对于不支持 WebAssembly 的浏览器，可以通过 TypeScript 编译器编译成可正常执行的 JS 代码，从而实现从 JS 到 WebAssembly 的平滑迁移。</p>
+<h4 id="接入-Webpack-构建"><a href="#接入-Webpack-构建" class="headerlink" title="接入 Webpack 构建"></a>接入 Webpack 构建</h4><p>任何新的 Web 开发技术都少不了构建流程，为了提供一套流畅的 WebAssembly 开发流程，接下来介绍接入 Webpack 具体步骤。</p>
+<ol>
+<li>安装以下依赖，以便让 TS 源码被 AssemblyScript 编译成 WebAssembly。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;assemblyscript&quot;</span>: <span class="string">&quot;github:AssemblyScript/assemblyscript&quot;</span>,</span><br><span class="line">    <span class="string">&quot;assemblyscript-typescript-loader&quot;</span>: <span class="string">&quot;^1.3.2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;typescript&quot;</span>: <span class="string">&quot;^2.8.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;webpack&quot;</span>: <span class="string">&quot;^3.10.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;webpack-dev-server&quot;</span>: <span class="string">&quot;^2.10.1&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改 webpack.config.js，加入 loader：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.ts$/</span>,</span><br><span class="line">                loader: <span class="string">&#x27;assemblyscript-typescript-loader&#x27;</span>,</span><br><span class="line">                options: &#123;</span><br><span class="line">                    sourceMap: <span class="literal">true</span>,</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改 TypeScript 编译器配置 tsconfig.json，以便让 TypeScript 编译器能支持 AssemblyScript 中引入的内置类型和函数。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;extends&quot;</span>: <span class="string">&quot;../../node_modules/assemblyscript/std/portable.json&quot;</span>,</span><br><span class="line">  <span class="string">&quot;include&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;./**/*.ts&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>配置直接继承自 assemblyscript 内置的配置文件。</li>
+</ol>
+<h4 id="WebAssembly-相关文件格式"><a href="#WebAssembly-相关文件格式" class="headerlink" title="WebAssembly 相关文件格式"></a>WebAssembly 相关文件格式</h4><p>前面提到了 WebAssembly 的二进制文件格式 wasm，这种格式的文件人眼无法阅读，为了阅读 WebAssembly 文件的逻辑，还有一种文本格式叫 wast； 以前面讲到的计算斐波那契序列的模块为例，对应的 wast 文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">func $src&#x2F;asm&#x2F;module&#x2F;f (param f64) (result f64)</span><br><span class="line">(local i32)</span><br><span class="line">  get_local 0</span><br><span class="line">  f64.const 1</span><br><span class="line">  f64.eq</span><br><span class="line">  tee_local 1</span><br><span class="line">  if i32</span><br><span class="line">    get_local 1</span><br><span class="line">  else</span><br><span class="line">    get_local 0</span><br><span class="line">    f64.const 2</span><br><span class="line">    f64.eq</span><br><span class="line">  end</span><br><span class="line">  i32.const 1</span><br><span class="line">  i32.and</span><br><span class="line">  if</span><br><span class="line">    f64.const 1</span><br><span class="line">    return</span><br><span class="line">  end</span><br><span class="line">  get_local 0</span><br><span class="line">  f64.const 1</span><br><span class="line">  f64.sub</span><br><span class="line">  call 0</span><br><span class="line">  get_local 0</span><br><span class="line">  f64.const 2</span><br><span class="line">  f64.sub</span><br><span class="line">  call 0</span><br><span class="line">  f64.add</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>这和汇编语言非常像，里面的 f64 是数据类型，f64.eq f64.sub f64.add 则是 CPU 指令。</p>
+<p>为了把二进制文件格式 wasm 转换成人眼可见的 wast 文本，需要安装 WebAssembly 二进制工具箱WABT， 在 Mac 系统下可通过 brew install WABT 安装，安装成功后可以通过命令 wasm2wast f.wasm 获得 wast；除此之外还可以通过 wast2wasm f.wast -o f.wasm 逆向转换回去。</p>
+<h4 id="WebAssembly-相关工具"><a href="#WebAssembly-相关工具" class="headerlink" title="WebAssembly 相关工具"></a>WebAssembly 相关工具</h4><p>除了前面提到的 WebAssembly 二进制工具箱，WebAssembly 社区还有以下常用工具：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://kripken.github.io/emscripten-site/">Emscripten</a>: 能把 C、C++代码转换成 wasm、asm.js；</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/WebAssembly/binaryen">Binaryen</a>: 提供更简洁的 IR，把 IR 转换成 wasm，并且提供 wasm 的编译时优化、wasm 虚拟机，wasm 压缩等功能，前面提到的 AssemblyScript 就是基于它。</li>
+</ul>
+<h4 id="WebAssembly-JS-API"><a href="#WebAssembly-JS-API" class="headerlink" title="WebAssembly JS API"></a>WebAssembly JS API</h4><p>目前 WebAssembly 只能通过 JS 去加载和执行，但未来在浏览器中可以通过像加载 JS 那样 <script src="f.wasm"></script> 去加载和执行 WebAssembly，下面来详细介绍如何用 JS 调 WebAssembly。</p>
+<p>JS 调 WebAssembly 分为 3 大步：加载字节码 &gt; 编译字节码 &gt; 实例化，获取到 WebAssembly 实例后就可以通过 JS 去调用了，以上 3 步具体的操作是：</p>
+<ol>
+<li>对于浏览器可以通过网络请求去加载字节码，对于 Nodejs 可以通过 fs 模块读取字节码文件；</li>
+<li>在获取到字节码后都需要转换成 ArrayBuffer 后才能被编译，通过 WebAssembly 通过的 JS API <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile">WebAssembly.compile</a> 编译后会通过 Promise resolve 一个 WebAssembly.Module，这个 module 是不能直接被调用的需要；</li>
+<li>在获取到 module 后需要通过 WebAssembly.Instance API 去实例化 module，获取到 Instance 后就可以像使用 JS 模块一个调用了。<br>其中的第 2、3 步可以合并一步完成，前面提到的 WebAssembly.instantiate 就做了这两个事情。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WebAssembly.instantiate(bytes).then(<span class="function"><span class="params">mod</span>=&gt;</span>&#123;</span><br><span class="line">  mod.instance.f(<span class="number">50</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="直接执行-wasm-二进制文件"><a href="#直接执行-wasm-二进制文件" class="headerlink" title="直接执行 wasm 二进制文件"></a>直接执行 wasm 二进制文件</h4><p>前面提到的 Binaryen 提供了在命令行中直接执行 wasm 二进制文件的工具，在 Mac 系统下通过 brew install binaryen 安装成功后，通过 wasm-shell f.wasm 文件即可直接运行。</p>
+<h4 id="在-Node-js-中运行"><a href="#在-Node-js-中运行" class="headerlink" title="在 Node.js 中运行"></a>在 Node.js 中运行</h4><p>目前 V8 JS 引擎已经添加了对 WebAssembly 的支持，Chrome 和 Node.js 都采用了 V8 作为引擎，因此 WebAssembly 也可以运行在 Node.js 环境中；</p>
+<p>V8 JS 引擎在运行 WebAssembly 时，WebAssembly 和 JS 是在同一个虚拟机中执行，而不是 WebAssembly 在一个单独的虚拟机中运行，这样方便实现 JS 和 WebAssembly 之间的相互调用。</p>
+<p>要让上面的例子在 Node.js 中运行，可以使用以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toUint8Array</span>(<span class="params">buf</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> u = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(buf.length);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; buf.length; ++i) &#123;</span><br><span class="line">        u[i] = buf[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> u;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadWebAssembly</span>(<span class="params">filename, imports</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 读取 wasm 文件，并转换成 byte 数组</span></span><br><span class="line">    <span class="keyword">const</span> buffer = toUint8Array(fs.readFileSync(filename));</span><br><span class="line">    <span class="comment">// 编译 wasm 字节码到机器码</span></span><br><span class="line">    <span class="keyword">return</span> WebAssembly.compile(buffer)</span><br><span class="line">        .then(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 实例化模块</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> WebAssembly.Instance(<span class="built_in">module</span>, imports)</span><br><span class="line">        &#125;)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">loadWebAssembly(<span class="string">&#x27;../temp/assembly/module.wasm&#x27;</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">instance</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 调用 f 函数计算</span></span><br><span class="line">        <span class="built_in">console</span>.log(instance.exports.f(<span class="number">10</span>))</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在 Nodejs 环境中运行 WebAssembly 的意义其实不大，原因在于 Nodejs 支持运行原生模块，而原生模块的性能比 WebAssembly 要好。 如果你是通过 C、Rust 去编写 WebAssembly，你可以直接编译成 Nodejs 可以调用的原生模块。</p>
+<h4 id="WebAssembly-实际应用"><a href="#WebAssembly-实际应用" class="headerlink" title="WebAssembly 实际应用"></a>WebAssembly 实际应用</h4><p>从上面的内容可见 WebAssembly 主要是为了解决 JS 的性能瓶颈，也就是说 WebAssembly 适合用于需要大量计算的场景，例如：</p>
+<ol>
+<li>在浏览器中处理音视频，<a target="_blank" rel="noopener" href="https://github.com/Bilibili/flv.js/">flv.js</a> 用 WebAssembly 重写后性能会有很大提升；</li>
+<li>React 的 dom diff 中涉及到大量计算，用 WebAssembly 重写 React 核心模块能提升性能。Safari 浏览器使用的 JS 引擎 JavaScriptCore 也已经支持 WebAssembly，RN 应用性能也能提升；<br>突破大型 3D 网页游戏性能瓶颈，<a target="_blank" rel="noopener" href="https://feday.fequan.com/2017/WebAssembly%E5%9C%A8%E7%99%BD%E9%B9%AD%E5%BC%95%E6%93%8E%E7%9A%84%E5%AE%9E%E8%B7%B5.pdf">白鹭引擎已经开始探索用 WebAssembly</a>。</li>
+</ol>
+<h4 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h4><ul>
+<li><a target="_blank" rel="noopener" href="http://webassembly.org.cn/">WebAssembly中文</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/WebAssembly/Using_the_JavaScript_API">使用 WebAssembly JavaScript API</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ewasm/design">Ethereum flavored WebAssembly (eWASM) Design</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ewasm/evm2wasm">Transcompiles EVM code to eWASM</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/07/26/WebAssembly-%E4%BB%8B%E7%BB%8D/" data-id="ckh0c7elt0029xgvmesy3dqv8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebAssembly/" rel="tag">WebAssembly</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JSON-WEB-TOKEN-介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/26/JSON-WEB-TOKEN-%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2018-07-26T00:56:12.000Z" itemprop="datePublished">2018-07-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/26/JSON-WEB-TOKEN-%E4%BB%8B%E7%BB%8D/">JSON WEB TOKEN 介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案。</p>
+<h4 id="一、跨域认证的问题"><a href="#一、跨域认证的问题" class="headerlink" title="一、跨域认证的问题"></a>一、跨域认证的问题</h4><p>互联网服务离不开用户认证。一般流程是下面这样。</p>
+<blockquote>
+<ol>
+<li>用户向服务器发送用户名和密码。</li>
+<li>服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
+<li>服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
+<li>用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
+<li>服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
+</ol>
+</blockquote>
+<p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p>
+<p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
+<p>一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p>
+<p>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</p>
+<h4 id="二、JWT-的原理"><a href="#二、JWT-的原理" class="headerlink" title="二、JWT 的原理"></a>二、JWT 的原理</h4><p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;姓名&quot;</span>: <span class="string">&quot;张三&quot;</span>,</span><br><span class="line">  <span class="string">&quot;角色&quot;</span>: <span class="string">&quot;管理员&quot;</span>,</span><br><span class="line">  <span class="string">&quot;到期时间&quot;</span>: <span class="string">&quot;2018年7月1日0点0分&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。</p>
+<p>服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
+<h4 id="三、JWT-的数据结构"><a href="#三、JWT-的数据结构" class="headerlink" title="三、JWT 的数据结构"></a>三、JWT 的数据结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span><br></pre></td></tr></table></figure>
+<p>它是一个很长的字符串，中间用点（.）分隔成三个部分。注意，JWT 内部是没有换行的，这里只是为了便于展示，将它写成了几行。</p>
+<p>JWT 的三个部分依次如下:</p>
+<ul>
+<li>Header（头部）</li>
+<li>Payload（负载）</li>
+<li>Signature（签名）</li>
+</ul>
+<p>写成一行，就是下面的样子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Header.Payload.Signature</span><br></pre></td></tr></table></figure>
+<p>下面依次介绍这三个部分。</p>
+<h5 id="3-1-Header"><a href="#3-1-Header" class="headerlink" title="3.1 Header"></a>3.1 Header</h5><p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;alg&quot;</span>: <span class="string">&quot;HS256&quot;</span>,</span><br><span class="line">  <span class="string">&quot;typ&quot;</span>: <span class="string">&quot;JWT&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，alg属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；typ属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。</p>
+<p>最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p>
+<h5 id="3-2-Payload"><a href="#3-2-Payload" class="headerlink" title="3.2 Payload"></a>3.2 Payload</h5><p>Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
+<ul>
+<li>iss (issuer)：签发人</li>
+<li>exp (expiration time)：过期时间</li>
+<li>sub (subject)：主题</li>
+<li>aud (audience)：受众</li>
+<li>nbf (Not Before)：生效时间</li>
+<li>iat (Issued At)：签发时间</li>
+<li>jti (JWT ID)：编号</li>
+</ul>
+<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;sub&quot;</span>: <span class="string">&quot;1234567890&quot;</span>,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;John Doe&quot;</span>,</span><br><span class="line">  <span class="string">&quot;admin&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。<br>这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p>
+<h5 id="3-3-Signature"><a href="#3-3-Signature" class="headerlink" title="3.3 Signature"></a>3.3 Signature</h5><p>Signature 部分是对前两部分的签名，防止数据篡改。</p>
+<p>首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + <span class="string">&quot;.&quot;</span> +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用”点”（.）分隔，就可以返回给用户。</p>
+<h5 id="3-4-Base64URL"><a href="#3-4-Base64URL" class="headerlink" title="3.4 Base64URL"></a>3.4 Base64URL</h5><p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。</p>
+<p>JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符+、/和=，在 URL 里面有特殊含义，所以要被替换掉：=被省略、+替换成-，/替换成_ 。这就是 Base64URL 算法。</p>
+<h4 id="四、JWT-的使用方式"><a href="#四、JWT-的使用方式" class="headerlink" title="四、JWT 的使用方式"></a>四、JWT 的使用方式</h4><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+
+<p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
+<h4 id="五、JWT-的几个特点"><a href="#五、JWT-的几个特点" class="headerlink" title="五、JWT 的几个特点"></a>五、JWT 的几个特点</h4><ol>
+<li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</li>
+<li>JWT 不加密的情况下，不能将秘密数据写入 JWT。</li>
+<li>JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。</li>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。</li>
+<li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
+<li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</li>
+</ol>
+<p>参考链接： <a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/07/26/JSON-WEB-TOKEN-%E4%BB%8B%E7%BB%8D/" data-id="ckh0c7elm001rxgvm6tn45nz4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-数学符号-朝花夕拾" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/23/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7-%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE/" class="article-date">
+  <time datetime="2018-07-23T01:09:56.000Z" itemprop="datePublished">2018-07-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/23/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7-%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE/">数学符号- 朝花夕拾</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>Α α alpha a:lf 阿尔法 角度；系数</li>
+<li>Β β beta bet 贝塔 磁通系数；角度；系数</li>
+<li>Γ γ gamma ga:m 伽马 电导系数（小写）</li>
+<li>Δ δ delta delt 德尔塔 变动；密度；屈光度</li>
+<li>Ε ε epsilon  伊普西龙 对数之基数</li>
+<li>Ζ ζ zeta zat 截塔 系数；方位角；阻抗；相对粘度；原子序数</li>
+<li>Η η eta eit 艾塔 磁滞系数；效率（小写）</li>
+<li>Θ θ thet θit 西塔 温度；相位角</li>
+<li>Ι ι iot aiot 约塔 微小，一点儿</li>
+<li>Κ κ kappa kap 卡帕 介质常数</li>
+<li>∧ λ lambda lambd 兰布达波长（小写）；体积</li>
+<li>Μ μ mu mju 缪 磁导系数；微（千分之一）；放大因数（小写）</li>
+<li>Ν ν nu nju 纽 磁阻系数</li>
+<li>Ξ ξ xi ksi 克西</li>
+<li>Ο ο omicron 奥密克戎</li>
+<li>∏ π pi pai 派 圆周率=圆周÷直径=3.1416</li>
+<li>Ρ ρ rho rou 肉 电阻系数（小写）</li>
+<li>∑ σ sigma  西格马 总和（大写），表面密度；跨导（小写）</li>
+<li>Τ τ tau tau 套 时间常数</li>
+<li>Υ υ upsilon 宇普西龙 位移</li>
+<li>Φ φ phi fai 佛爱 磁通；角</li>
+<li>Χ χ chi phai 西</li>
+<li>Ψ ψ psi psai 普西 角速；介质电通量（静电力线）；角</li>
+<li>Ω ω omega o`miga 欧米伽 欧姆（大写）；角速（小写）；角</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/07/23/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7-%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE/" data-id="ckh0c7ena006ixgvmh1fzfjkk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" rel="tag">数学符号</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/18/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/20/">Next &amp;raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Burrow/" rel="tag">Burrow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DAO/" rel="tag">DAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFINITY/" rel="tag">DFINITY</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DID/" rel="tag">DID</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIP/" rel="tag">EIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EVM/" rel="tag">EVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ethereum/" rel="tag">Ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/" rel="tag">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenPGP/" rel="tag">OpenPGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PBFT/" rel="tag">PBFT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProtoBuf/" rel="tag">ProtoBuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VRF/" rel="tag">VRF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebAssembly/" rel="tag">WebAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorand/" rel="tag">algorand</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chainlink/" rel="tag">chainlink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/channel/" rel="tag">channel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/credits/" rel="tag">credits</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cv/" rel="tag">cv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/" rel="tag">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disk-usage/" rel="tag">disk usage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ethereum/" rel="tag">ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geth/" rel="tag">geth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang%E6%9C%8D%E5%8A%A1/" rel="tag">golang服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/" rel="tag">google</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leadership/" rel="tag">leadership</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/make/" rel="tag">make</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pprof/" rel="tag">pprof</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raft/" rel="tag">raft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/remix/" rel="tag">remix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seaweedfs/" rel="tag">seaweedfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solidity/" rel="tag">solidity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wasm/" rel="tag">wasm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whisper/" rel="tag">whisper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">令牌环领导人选举算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" rel="tag">占用磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" rel="tag">商业模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" rel="tag">商品验真</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90/" rel="tag">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag">开源协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag">性能分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%83%85%E5%95%86/" rel="tag">情商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%8A%9F/" rel="tag">成功</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" rel="tag">数字资产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" rel="tag">数学符号</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" rel="tag">服务器地址</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="tag">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="tag">相似度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="tag">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E7%9B%98/" rel="tag">磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" rel="tag">网络攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="tag">随机数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%90%E7%A7%81/" rel="tag">隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag">零知识证明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">领导人选举算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ACL/" style="font-size: 10px;">ACL</a> <a href="/tags/Burrow/" style="font-size: 13.33px;">Burrow</a> <a href="/tags/CSC/" style="font-size: 15.56px;">CSC</a> <a href="/tags/DAO/" style="font-size: 10px;">DAO</a> <a href="/tags/DFINITY/" style="font-size: 10px;">DFINITY</a> <a href="/tags/DID/" style="font-size: 10px;">DID</a> <a href="/tags/EIP/" style="font-size: 10px;">EIP</a> <a href="/tags/EVM/" style="font-size: 10px;">EVM</a> <a href="/tags/Ethereum/" style="font-size: 17.78px;">Ethereum</a> <a href="/tags/Ghana/" style="font-size: 15.56px;">Ghana</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/OCR/" style="font-size: 11.11px;">OCR</a> <a href="/tags/OpenPGP/" style="font-size: 10px;">OpenPGP</a> <a href="/tags/PBFT/" style="font-size: 10px;">PBFT</a> <a href="/tags/ProtoBuf/" style="font-size: 10px;">ProtoBuf</a> <a href="/tags/Tensorflow/" style="font-size: 14.44px;">Tensorflow</a> <a href="/tags/Token/" style="font-size: 16.67px;">Token</a> <a href="/tags/VRF/" style="font-size: 11.11px;">VRF</a> <a href="/tags/WebAssembly/" style="font-size: 10px;">WebAssembly</a> <a href="/tags/algorand/" style="font-size: 11.11px;">algorand</a> <a href="/tags/chainlink/" style="font-size: 10px;">chainlink</a> <a href="/tags/channel/" style="font-size: 10px;">channel</a> <a href="/tags/credits/" style="font-size: 10px;">credits</a> <a href="/tags/cv/" style="font-size: 11.11px;">cv</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/disk-usage/" style="font-size: 11.11px;">disk usage</a> <a href="/tags/ethereum/" style="font-size: 12.22px;">ethereum</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/golang%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">golang服务</a> <a href="/tags/google/" style="font-size: 14.44px;">google</a> <a href="/tags/k8s/" style="font-size: 11.11px;">k8s</a> <a href="/tags/leadership/" style="font-size: 10px;">leadership</a> <a href="/tags/make/" style="font-size: 10px;">make</a> <a href="/tags/paper/" style="font-size: 13.33px;">paper</a> <a href="/tags/pbft/" style="font-size: 11.11px;">pbft</a> <a href="/tags/pprof/" style="font-size: 11.11px;">pprof</a> <a href="/tags/raft/" style="font-size: 10px;">raft</a> <a href="/tags/remix/" style="font-size: 10px;">remix</a> <a href="/tags/seaweedfs/" style="font-size: 10px;">seaweedfs</a> <a href="/tags/solidity/" style="font-size: 17.78px;">solidity</a> <a href="/tags/wasm/" style="font-size: 11.11px;">wasm</a> <a href="/tags/whisper/" style="font-size: 10px;">whisper</a> <a href="/tags/%E4%B8%93%E5%88%A9/" style="font-size: 10px;">专利</a> <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" style="font-size: 18.89px;">产品设计</a> <a href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">令牌环领导人选举算法</a> <a href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" style="font-size: 11.11px;">占用磁盘</a> <a href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">商业模式</a> <a href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" style="font-size: 10px;">商品验真</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 10px;">开源</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">开源协议</a> <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" style="font-size: 10px;">性能分析</a> <a href="/tags/%E6%83%85%E5%95%86/" style="font-size: 10px;">情商</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 10px;">成功</a> <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" style="font-size: 12.22px;">数字资产</a> <a href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" style="font-size: 10px;">数学符号</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" style="font-size: 10px;">服务器地址</a> <a href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">架构模式</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 10px;">电商</a> <a href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" style="font-size: 10px;">相似度</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%A3%81%E7%9B%98/" style="font-size: 10px;">磁盘</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" style="font-size: 10px;">网络攻击</a> <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" style="font-size: 10px;">随机数</a> <a href="/tags/%E9%9A%90%E7%A7%81/" style="font-size: 10px;">隐私</a> <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" style="font-size: 20px;">零知识证明</a> <a href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">领导人选举算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1982/02/">February 1982</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">万向的产业区块链解决方</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%AC%AC%E4%BA%8C%E5%B1%82%E5%8D%8F%E8%AE%AE%E7%94%9F%E6%80%81%E7%9A%84%E5%B4%9B%E8%B5%B7/">以太坊第二层协议生态的崛起</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E6%89%93%E9%80%A0%E6%95%B0%E5%AD%97%E7%BB%8F%E6%B5%8E%E6%96%B0%E5%9F%BA%E5%BB%BA%E8%A7%A3%E6%94%BE%E6%95%B0%E6%8D%AE%E7%94%9F%E4%BA%A7%E5%8A%9B/">打造数字经济新基建解放数据生产力</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BB%88%E6%9E%81%E7%8C%9C%E6%83%B3/">区块链应用模式的终极猜想</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Weiming Zhuang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

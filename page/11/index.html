@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Zhuang&#39;s Diary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Zhuang&#39;s Diary">
+<meta property="og:url" content="https://willzhuang.github.io/page/11/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Weiming Zhuang">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhuang&#39;s Diary</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://willzhuang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Odyssey实际运行占用磁盘情况介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/20/Odyssey%E5%AE%9E%E9%99%85%E8%BF%90%E8%A1%8C%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98%E6%83%85%E5%86%B5%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2019-12-20T02:36:04.000Z" itemprop="datePublished">2019-12-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/20/Odyssey%E5%AE%9E%E9%99%85%E8%BF%90%E8%A1%8C%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98%E6%83%85%E5%86%B5%E4%BB%8B%E7%BB%8D/">Odys实际运行占用磁盘情况</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2019-12-20，版本1.0.4，块高89万+（约59万笔交易）</p>
+<p>==========================================================</p>
+<p>run 25G</p>
+<p>|</p>
+<p>consus.log    526M</p>
+<p>logs                4.6G</p>
+<p>odys.log        16M</p>
+<p><strong>data                19G</strong></p>
+<p>|</p>
+<p>config            32K</p>
+<p><strong>data                2.7G</strong> — blockstore.db        1.4G    /    cs.wal    1G    /    state.db    21M    /    tx.index    308M</p>
+<p><strong>odyssey        17G</strong></p>
+<p>|</p>
+<p><strong>chaindata    17G — 平均每个文件2.1M，共计97224个文件，其中 ancient 472M</strong></p>
+<p>==========================================================</p>
+<p>某项目中，2019年11月29日上线起始，截至2020年6月19日为止。用户量逐渐增大，目前的日活用户数量为10000~60000。区块高度为6,000,000以上，单个节点的磁盘用量为300G，日新增存储量为1.5G。</p>
+<p>==========================================================</p>
+<p>BTW：在ethereum1.9.9的版本中，geth 增加了 inspect 命令，“Inspect the storage size for each type of data in the database” ，详细情况将在下一篇文章中介绍。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2019/12/20/Odyssey%E5%AE%9E%E9%99%85%E8%BF%90%E8%A1%8C%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98%E6%83%85%E5%86%B5%E4%BB%8B%E7%BB%8D/" data-id="ckh0c7eln001vxgvmcyolgryi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/disk-usage/" rel="tag">disk usage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" rel="tag">占用磁盘</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-区块链内的共识与信任" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/05/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%86%85%E7%9A%84%E5%85%B1%E8%AF%86%E4%B8%8E%E4%BF%A1%E4%BB%BB/" class="article-date">
+  <time datetime="2019-12-05T06:47:04.000Z" itemprop="datePublished">2019-12-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/05/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%86%85%E7%9A%84%E5%85%B1%E8%AF%86%E4%B8%8E%E4%BF%A1%E4%BB%BB/">区块链内的共识与信任</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>refer link==&gt; <a target="_blank" rel="noopener" href="http://www.jryj.org.cn/CN/abstract/abstract535.shtml">http://www.jryj.org.cn/CN/abstract/abstract535.shtml</a> (中国人民银行研究局/金融研究所)</p>
+<p>（：：姚前先生的文章常读常有心得）</p>
+<p>共识（consensus）和去信任（trustless）是区块链两个非常重要的基础概念。这两个概念脱胎于计算机领域，很难再经济学上予以严格定义，却很容易被误解。比如，将共识等同于消除了信息不对称或实现了共同信念，将去信任等同于没有信用风险。</p>
+<p><strong>1.共识的界定</strong></p>
+<p>目前对区块链共识的讨论，涉及三种不同语境下的共识概念—机器共识、治理共识和市场共识，其中治理共识和市场共识可以成为“人的共识”。很多误解就源于混淆了这三类共识，或者泛化了共识的范围和性质。</p>
+<p><strong>第一，机器共识。</strong>机器共识属于分布式计算领域的问题，目标是在存在各种差错、恶意攻击以及可能不同步的对等式网络中（peer-to-peer network），并且在没有中央协调的情况下，确保分布式账本在不同网络节点上的备份文本是一致的（不是语义一致）。</p>
+<p>对等式网络的节点（特别是负责生成和验证区块的节点）有诚实节点和恶意节点之分。诚实节点遵守预先定义的算法规则（主要是共识算法），能完美地发送和接收消息，但其行为完全是机械性的。恶意用户可以任意偏离算法规则。在一定限制条件下（比如比特币要求50%以上算力由诚实节点掌握），算法规则保证了机器共识的可行性、稳定性和安全性。机器共识的范围限于区块链内与Token的状态和交易等有关的信息。</p>
+<p><strong>第二，治理共识。</strong>指在群体治理中，群体成员发展并同意某一个对群体最有利的决策。比如，比特币社区关于“扩容”和分叉的讨论可以在治理共识框架下理解。治理共识的要素包括：1.不同的利益群体；2.一定治理结构和议事规则；3.相互冲突的利益或意见之间的调和折衷；4.对成员有普遍约束的群体决策。袁勇等（2018）指出，治理共识涉及人的主观价值判断，处理的是主观的多值共识，治理共识的参与者通过群体间协调和协作过程收敛到唯一意见，而此过程如果不收敛，就意味着治理共识的失败。</p>
+<p><strong>第三，市场共识。</strong>Token参与交易时（不管是不同Token之间交易，还是Token与区块链外资产或权利交易），就涉及市场共识。市场共识体现在市场交易形成的均衡价格中。</p>
+<p>三类共识之间存在紧密而复杂的关系。机器共识是对等式网络的节点运行算法规则的产物，治理共识反映由人（包括网络节点的拥有者或控制着）来制定或修改算法规则的过程。市场共识受机器共识和治理共识的影响。比如，如果分布式账本的安全性没有保障（即机器共识失效），比特币的市场价格将受到毁灭性冲击。再比如，2017年比特币社区对“SegWit2x”的讨论（即引入隔离见证并将单个区块的大小从1M提升到2M），对当时比特币价格走势有明显的影响，就体现了治理共识对算法共识的影响。下文如无特别说明，讨论的均是机器共识。</p>
+<p><strong>2.去信任含义的辨析</strong></p>
+<p>去信任源于Token被交易时，Token的状态变更和交易确认同步发生这一安排。设想Alice以比特币向Bob买入某一货物。Alice向Bob支付比特币这一过程无需两人之间有任何了解，也无需受信任的第三方机构，就可以在区块链内有保障地进行。这是去信任的真正含义。但在交易的另一端，Alice如何确保Bob会按时向她交付合格的货物？只要做不到一手交比特币、一手交货，就存在不容忽视的交易对手信用风险。只有准确识别、评估信用风险并引入风险防范措施，很多交易才能进行。比如，在暗网交易中，交易平台通常设立第三方托管账户（escrow account）。买方先将比特币打入第三方托管账户，等收到商品并确认后，才通知交易平台将比特币转给卖方。如果没有第三方托管账目这个增信手段，比特币忠实拥趸之间的交易也会大幅减少。</p>
+<p>因此，区块链内的去信任环境，不能简单外推到区块链外。一旦脱离Token交易等原生场景，区块链要解决现实中的信任问题，往往需要引入区块链外的可信中心机制予以辅助。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2019/12/05/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%86%85%E7%9A%84%E5%85%B1%E8%AF%86%E4%B8%8E%E4%BF%A1%E4%BB%BB/" data-id="ckh0c7emy005kxgvm0q8od6qz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-以太坊磁盘空间" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/" class="article-date">
+  <time datetime="2019-12-04T10:18:04.000Z" itemprop="datePublished">2019-12-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/">以太坊磁盘空间</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>refer link==&gt; <a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/143/what-are-the-ethereum-disk-space-needs">https://ethereum.stackexchange.com/questions/143/what-are-the-ethereum-disk-space-needs</a></p>
+<p>Update on Dec 9th, 2018 / Block ~ 6_850_000</p>
+<h3 id="Geth-Go"><a href="#Geth-Go" class="headerlink" title="Geth (Go)"></a>Geth (Go)</h3><p><em>Last Update: May 14th, 2018 / Block ~ 5_600_000</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Client / Mode         | Block <span class="built_in">Number</span>   | Disk Space</span><br><span class="line">======================|================|===========</span><br><span class="line">geth light            | <span class="number">5_600_000</span>      | <span class="number">363</span>M</span><br><span class="line">geth fast full        | <span class="number">5_600_000</span>      | <span class="number">142</span>G</span><br><span class="line">geth full full        | <span class="number">4_980_000</span> [<span class="number">1</span>]  | <span class="number">239</span>G + [<span class="number">1</span>]</span><br><span class="line">geth full archive     | <span class="number">4_980_000</span> [<span class="number">2</span>]  | <span class="number">671</span>G</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Geth 1.8.3</li>
+<li>Ubuntu 16.4 LTS, VPS instance with SSD backed storage</li>
+</ul>
+<h3 id="Parity-Rust"><a href="#Parity-Rust" class="headerlink" title="Parity (Rust)"></a>Parity (Rust)</h3><p><em>Last Update: May 14th, 2018 / Block ~ 5_600_000</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Client / Mode         | Block <span class="built_in">Number</span>   | Disk Space</span><br><span class="line">======================|================|===========</span><br><span class="line">parity light          | <span class="number">5_600_000</span>      |  <span class="number">89</span>M</span><br><span class="line">parity warp fast      | <span class="number">5_600_000</span>      |  <span class="number">82</span>G</span><br><span class="line">parity full fast      | <span class="number">5_600_000</span>      |  <span class="number">78</span>G</span><br><span class="line">parity full archive   | <span class="number">5_600_000</span>      | <span class="number">1.1</span>T</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Parity 1.10.0</li>
+<li>Ubuntu 16.4 LTS, VPS instance with SSD backed storage</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2019/12/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/" data-id="ckh0c7emg0041xgvmfomy46dv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ethereum/" rel="tag">Ethereum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%A3%81%E7%9B%98/" rel="tag">磁盘</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leader-and-leadership" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/04/leader-and-leadership/" class="article-date">
+  <time datetime="2019-12-04T01:30:04.000Z" itemprop="datePublished">2019-12-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/04/leader-and-leadership/">leader-and-leadership</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>leader: 率领和引导他人实现组织目标的过程例如，头雁。</p>
+<ul>
+<li>领导风格-西方提倡模式，Coach型，激发型；东方固有模式，家长式，命令型</li>
+<li>(领导中的)导是指什么？引导（指引目标），辅导，教导，督导（检查、督促），疏导（解决矛盾、怨言、冲突）</li>
+<li>领导对象-追随者</li>
+</ul>
+<p>leadership</p>
+<ul>
+<li>硬权力，岗位的职级，权力是起始点和载体</li>
+<li>软权力，品格德行、能力知识、修养才华。当品格德行出现问题时，公信力会出现丧失，说的正确的内容也会被人质疑</li>
+</ul>
+<p>领导发展趋势</p>
+<ul>
+<li>简约化、制度化、柔性化(发现追随者的内心，亲近)、隐形化(成功之后，也成自然的状态)</li>
+</ul>
+<p>领导职能</p>
+<ul>
+<li>出主意</li>
+<li>用干部</li>
+</ul>
+<p>出主意</p>
+<ul>
+<li><p>战略思维。长远的、全局的、高层次的重大问题的筹划和思考。全球-全国-上海-金融-保险。</p>
+<p>通观全局，抓枢纽，把重点</p>
+<p>着眼大局，认清大局，服务大局</p>
+<p>科学预见，立足长远，把握大势</p>
+</li>
+<li><p>创新思维、辩证思维（两点论、重点论、系统论-重大问题要放一放）、韧性、公心</p>
+</li>
+<li><p>及时决断、敢于担当（通过价值标准，拜托布里丹选择）</p>
+</li>
+<li><p>决策的三圈理论（价值圈、能力圈、认同圈）</p>
+</li>
+</ul>
+<p>用干部</p>
+<ul>
+<li><p>授权，多干就是少干、少干才能多干。领导就是服务（环境、平台、制度、支持）</p>
+</li>
+<li><p>优化团队结构（角色：实干、推动、协调、凝聚、监督、外交、智多、完美主义）</p>
+</li>
+<li><p>领导激励（满足合理需求、制度设计、物质与精神相结合）</p>
+</li>
+</ul>
+<p>沟通（语言、听、身体）</p>
+<ul>
+<li>上行，事前请示、事后沟通；目标传递、将目标变成领导的目标</li>
+<li>下行，开放、鼓励、公平。不着急说，先听听看</li>
+<li>平行，多支持，不埋怨</li>
+</ul>
+<p>认识自我</p>
+<ul>
+<li>知己，知命、知长、知短</li>
+<li>性格特点、正职副职、信任</li>
+<li>不断学习，依靠学习走向未来。70%从实践中学习，20%向同行同事学习，10%从书本中学习。“学哲学，用哲学是我们党的好传统“，“工作上常常干糊涂事、吃糊涂亏、占糊涂便宜”—《学哲学、用哲学》</li>
+<li>学历史（国史、党史），学专业知识，学习文学艺术</li>
+<li>情绪管理。时间管理28原则，锻炼放松、质朴生活</li>
+<li>改变认知。从学习经典中来，从自省（日三省身）&amp;觉知（自我的旁观者，keep focus，做事慢半拍）中来</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2019/12/04/leader-and-leadership/" data-id="ckh0c7em6003axgvm35tl23ul" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leadership/" rel="tag">leadership</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-什么是成功" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/13/%E4%BB%80%E4%B9%88%E6%98%AF%E6%88%90%E5%8A%9F/" class="article-date">
+  <time datetime="2019-11-13T05:22:04.000Z" itemprop="datePublished">2019-11-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/13/%E4%BB%80%E4%B9%88%E6%98%AF%E6%88%90%E5%8A%9F/">什么是成功</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先声明本人不是什么成功人士，无论是哪一种标准。但是我还是想说说本人对成功标准的看法。</p>
+<p>本人认为亿万财富不是成功，位高权重不是成功，<strong>追求并实现了自身认为的善事即为成功</strong>。什么是善事呢？ “善”的形体，是上面一只“羊”，下面两个“言”，而这只羊的颈上，系着一个绳套。  “羊”的驯良美好的品性之意，所以“善”的本义是“良”、“好”、“驯善”，其后又引申出“友好”、“擅长”、“赞许”、“容易”、“熟悉”等等意思来。本人认为 <strong>善就是予人以帮助的意思。</strong>例如，对一个人指路即是善事，对很多个人资助上学，完成学业就是大善事。和善相对的是恶，恶的释义是需要修正的，坏的行为。本人认为<strong>恶就是予人与破坏的意思</strong>。例如，偷盗等。</p>
+<p>其次，我们需要实现善念才能够成功。如何实现善念呢？我们的理工科、医科、商科等等教育就是我们的工具。</p>
+<p>现在的生活中，工具很多，但是不善的事也是有的。例如，有的App偷偷地手机个人信息，然后并不告诉用户，还售卖这些信息；例如，经过xx大数据分析，本年度的电动牙刷在外形的某部位加装一个金属圈，在上个月的销售中位居榜首。本人过于刻板，认为这样子的“创新”更加接近钻营。过于钻营就容易走向恶，过于追求结果就容易走错方向。</p>
+<p>所以从自己对成功定义的标准出发，我是走在成功路上的。</p>
+<p><img src="/.io//1.png"></p>
+<p>至于说成功后的结果可以是亿万富翁，也可以是人民公仆，更加可以是人民英雄。</p>
+<p>说到最好，如上图，列举了物的规则（唯物主义）、善恶（唯心主义）和成功（辩证唯物主义的方法论），图中将三者对号入座。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2019/11/13/%E4%BB%80%E4%B9%88%E6%98%AF%E6%88%90%E5%8A%9F/" data-id="ckh0c7eme003xxgvm2ycwd2tn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%88%90%E5%8A%9F/" rel="tag">成功</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/10/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/12/">Next &amp;raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Burrow/" rel="tag">Burrow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DAO/" rel="tag">DAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFINITY/" rel="tag">DFINITY</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DID/" rel="tag">DID</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIP/" rel="tag">EIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EVM/" rel="tag">EVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ethereum/" rel="tag">Ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/" rel="tag">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenPGP/" rel="tag">OpenPGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PBFT/" rel="tag">PBFT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProtoBuf/" rel="tag">ProtoBuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VRF/" rel="tag">VRF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebAssembly/" rel="tag">WebAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorand/" rel="tag">algorand</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chainlink/" rel="tag">chainlink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/channel/" rel="tag">channel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/credits/" rel="tag">credits</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cv/" rel="tag">cv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/" rel="tag">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disk-usage/" rel="tag">disk usage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ethereum/" rel="tag">ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geth/" rel="tag">geth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang%E6%9C%8D%E5%8A%A1/" rel="tag">golang服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/" rel="tag">google</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leadership/" rel="tag">leadership</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/make/" rel="tag">make</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pprof/" rel="tag">pprof</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raft/" rel="tag">raft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/remix/" rel="tag">remix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seaweedfs/" rel="tag">seaweedfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solidity/" rel="tag">solidity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wasm/" rel="tag">wasm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whisper/" rel="tag">whisper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">令牌环领导人选举算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" rel="tag">占用磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" rel="tag">商业模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" rel="tag">商品验真</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90/" rel="tag">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag">开源协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag">性能分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%83%85%E5%95%86/" rel="tag">情商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%8A%9F/" rel="tag">成功</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" rel="tag">数字资产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" rel="tag">数学符号</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" rel="tag">服务器地址</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="tag">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="tag">相似度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="tag">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E7%9B%98/" rel="tag">磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" rel="tag">网络攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="tag">随机数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%90%E7%A7%81/" rel="tag">隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag">零知识证明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">领导人选举算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ACL/" style="font-size: 10px;">ACL</a> <a href="/tags/Burrow/" style="font-size: 13.33px;">Burrow</a> <a href="/tags/CSC/" style="font-size: 15.56px;">CSC</a> <a href="/tags/DAO/" style="font-size: 10px;">DAO</a> <a href="/tags/DFINITY/" style="font-size: 10px;">DFINITY</a> <a href="/tags/DID/" style="font-size: 10px;">DID</a> <a href="/tags/EIP/" style="font-size: 10px;">EIP</a> <a href="/tags/EVM/" style="font-size: 10px;">EVM</a> <a href="/tags/Ethereum/" style="font-size: 17.78px;">Ethereum</a> <a href="/tags/Ghana/" style="font-size: 15.56px;">Ghana</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/OCR/" style="font-size: 11.11px;">OCR</a> <a href="/tags/OpenPGP/" style="font-size: 10px;">OpenPGP</a> <a href="/tags/PBFT/" style="font-size: 10px;">PBFT</a> <a href="/tags/ProtoBuf/" style="font-size: 10px;">ProtoBuf</a> <a href="/tags/Tensorflow/" style="font-size: 14.44px;">Tensorflow</a> <a href="/tags/Token/" style="font-size: 16.67px;">Token</a> <a href="/tags/VRF/" style="font-size: 11.11px;">VRF</a> <a href="/tags/WebAssembly/" style="font-size: 10px;">WebAssembly</a> <a href="/tags/algorand/" style="font-size: 11.11px;">algorand</a> <a href="/tags/chainlink/" style="font-size: 10px;">chainlink</a> <a href="/tags/channel/" style="font-size: 10px;">channel</a> <a href="/tags/credits/" style="font-size: 10px;">credits</a> <a href="/tags/cv/" style="font-size: 11.11px;">cv</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/disk-usage/" style="font-size: 11.11px;">disk usage</a> <a href="/tags/ethereum/" style="font-size: 12.22px;">ethereum</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/golang%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">golang服务</a> <a href="/tags/google/" style="font-size: 14.44px;">google</a> <a href="/tags/k8s/" style="font-size: 11.11px;">k8s</a> <a href="/tags/leadership/" style="font-size: 10px;">leadership</a> <a href="/tags/make/" style="font-size: 10px;">make</a> <a href="/tags/paper/" style="font-size: 13.33px;">paper</a> <a href="/tags/pbft/" style="font-size: 11.11px;">pbft</a> <a href="/tags/pprof/" style="font-size: 11.11px;">pprof</a> <a href="/tags/raft/" style="font-size: 10px;">raft</a> <a href="/tags/remix/" style="font-size: 10px;">remix</a> <a href="/tags/seaweedfs/" style="font-size: 10px;">seaweedfs</a> <a href="/tags/solidity/" style="font-size: 17.78px;">solidity</a> <a href="/tags/wasm/" style="font-size: 11.11px;">wasm</a> <a href="/tags/whisper/" style="font-size: 10px;">whisper</a> <a href="/tags/%E4%B8%93%E5%88%A9/" style="font-size: 10px;">专利</a> <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" style="font-size: 18.89px;">产品设计</a> <a href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">令牌环领导人选举算法</a> <a href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" style="font-size: 11.11px;">占用磁盘</a> <a href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">商业模式</a> <a href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" style="font-size: 10px;">商品验真</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 10px;">开源</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">开源协议</a> <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" style="font-size: 10px;">性能分析</a> <a href="/tags/%E6%83%85%E5%95%86/" style="font-size: 10px;">情商</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 10px;">成功</a> <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" style="font-size: 12.22px;">数字资产</a> <a href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" style="font-size: 10px;">数学符号</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" style="font-size: 10px;">服务器地址</a> <a href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">架构模式</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 10px;">电商</a> <a href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" style="font-size: 10px;">相似度</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%A3%81%E7%9B%98/" style="font-size: 10px;">磁盘</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" style="font-size: 10px;">网络攻击</a> <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" style="font-size: 10px;">随机数</a> <a href="/tags/%E9%9A%90%E7%A7%81/" style="font-size: 10px;">隐私</a> <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" style="font-size: 20px;">零知识证明</a> <a href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">领导人选举算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1982/02/">February 1982</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">万向的产业区块链解决方</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%AC%AC%E4%BA%8C%E5%B1%82%E5%8D%8F%E8%AE%AE%E7%94%9F%E6%80%81%E7%9A%84%E5%B4%9B%E8%B5%B7/">以太坊第二层协议生态的崛起</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E6%89%93%E9%80%A0%E6%95%B0%E5%AD%97%E7%BB%8F%E6%B5%8E%E6%96%B0%E5%9F%BA%E5%BB%BA%E8%A7%A3%E6%94%BE%E6%95%B0%E6%8D%AE%E7%94%9F%E4%BA%A7%E5%8A%9B/">打造数字经济新基建解放数据生产力</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BB%88%E6%9E%81%E7%8C%9C%E6%83%B3/">区块链应用模式的终极猜想</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Weiming Zhuang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

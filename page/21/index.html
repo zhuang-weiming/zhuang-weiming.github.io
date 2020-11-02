@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Zhuang&#39;s Diary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Zhuang&#39;s Diary">
+<meta property="og:url" content="https://willzhuang.github.io/page/21/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Weiming Zhuang">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhuang&#39;s Diary</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://willzhuang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-golang调优工具-pprof" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" class="article-date">
+  <time datetime="2018-06-07T06:56:17.000Z" itemprop="datePublished">2018-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/">golang调优工具-pprof</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="CPU-Profiling"><a href="#CPU-Profiling" class="headerlink" title="CPU Profiling"></a>CPU Profiling</h4><p>Golang 提供了 pprof 包（runtime/pprof）用于输出运行时的 profiling 数据，这些数据可以被 pprof 工具（或者 go tool pprof，其为 pprof 的变种）使用。通常我们这样来使用 pprof 包：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 定义 flag cpuprofile</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">var</span> cpuprofile = flag.String(<span class="string">&quot;cpuprofile&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;write cpu profile to file&quot;</span>)</span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="number">4</span>    flag.Parse()</span><br><span class="line"><span class="number">5</span>    <span class="comment">// 如果命令行设置了 cpuprofile</span></span><br><span class="line"><span class="number">6</span>    <span class="keyword">if</span> *cpuprofile != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line"><span class="number">7</span>        <span class="comment">// 根据命令行指定文件名创建 profile 文件</span></span><br><span class="line"><span class="number">8</span>        f, err := os.Create(*cpuprofile)</span><br><span class="line"><span class="number">9</span>        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">10</span>            log.Fatal(err)</span><br><span class="line"><span class="number">11</span>        &#125;</span><br><span class="line"><span class="number">12</span>        <span class="comment">// 开启 CPU profiling</span></span><br><span class="line"><span class="number">13</span>        pprof.StartCPUProfile(f)</span><br><span class="line"><span class="number">14</span>        <span class="keyword">defer</span> pprof.StopCPUProfile()</span><br><span class="line"><span class="number">15</span>    &#125;</span><br><span class="line"><span class="number">16</span>    ...</span><br></pre></td></tr></table></figure>
+
+<p>假定我们编写的一个程序 mytest 中加入了上述代码则可以执行并生成 profile 文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mytest -cpuprofile=mytest.prof</span><br></pre></td></tr></table></figure>
+
+<p>这里，我们生成了 mytest.prof profile 文件。有了 profile 文件就可以使用 go tool pprof 程序来解析此文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof mytest mytest.prof</span><br></pre></td></tr></table></figure>
+
+<p>pprof 程序中最重要的命令就是 topN，此命令用于显示 profile 文件中的最靠前的 N 个样本（samples），例如（此例为 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> 中的例子）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) top10</span><br><span class="line">2 Total: 2525 samples</span><br><span class="line">3    298  11.8%  11.8%    345  13.7% runtime.mapaccess1_fast64</span><br><span class="line">4    268  10.6%  22.4%   2124  84.1% main.FindLoops</span><br><span class="line">5    251   9.9%  32.4%    451  17.9% scanblock</span><br><span class="line">6    178   7.0%  39.4%    351  13.9% hash_insert</span><br><span class="line">7    131   5.2%  44.6%    158   6.3% sweepspan</span><br><span class="line">8    119   4.7%  49.3%    350  13.9% main.DFS</span><br><span class="line">9     96   3.8%  53.1%     98   3.9% flushptrbuf</span><br><span class="line">10    95   3.8%  56.9%     95   3.8% runtime.aeshash64</span><br><span class="line">11    95   3.8%  60.6%    101   4.0% runtime.settype_flush</span><br><span class="line">12    88   3.5%  64.1%    988  39.1% runtime.mallocgc</span><br></pre></td></tr></table></figure>
+
+<p>开启 CPU profiling 后，Golang 程序在 1 秒钟会停顿 100 次，每次停顿都会记录 1 个样本。上例中，前两列表示运行的函数的样本数量（the number of samples in which the function was running）和占总样本数的百分比，例如说 runtime.mapaccess1_fast64 函数在 298 次采样中（占总采样数量的 11.8%）正在运行。第三列表示前几行样本数量总和占总样本数的百分比（第二行 22.4% 为 11.8% + 10.6%）。第四、五列表示出现的函数的样本数量（the number of samples in which the function appeared）和占总样本数的百分比，这里“出现的函数”指的是在采样中正在运行或者等待某个被调用函数返回的函数，换句话就是采样中那些位于调用栈上的函数。我们可以使用 -cum（cumulative 的缩写）flag 来以第四、五列为标准排序。需要注意的是，每次采样只会包括最底下的 100 个栈帧（stack frames）。</p>
+<p>使用 web 命令能够以图形化的方式（SVG 格式）显示函数调用关系。例如（图片来源于 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> ）：</p>
+<p><img src="/.io//1.png"></p>
+<p>这里每个方块的大小由运行的函数的样本数量决定（这样就能方便的一眼看到热点函数）。箭头表示的是调用关系，箭头上的数字表示的是采样到的调用次数。web 命令还可以指定显示特定的函数，例如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(pprof) web mapaccess1</span><br></pre></td></tr></table></figure>
+
+<p>当我们有大致的想法（也就是确定热点函数）后，就可以深入特定的函数。我们使用 list 命令（此例为 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> 中的例子）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list DFS</span><br><span class="line">2 Total: 2525 samples</span><br><span class="line">3 ROUTINE ====================== main.DFS <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak1.go</span><br><span class="line">4    119    697 Total samples (flat / cumulative)</span><br><span class="line">5      3      3  240: func DFS(currentNode *BasicBlock, nodes []*UnionFindNode, number map[*BasicBlock]int, last []int, current int) int &#123;</span><br><span class="line">6      1      1  241:     nodes[current].Init(currentNode, current)</span><br><span class="line">7      1     37  242:     number[currentNode] = current</span><br><span class="line">8      .      .  243:</span><br><span class="line">9      1      1  244:     lastid := current</span><br><span class="line">10    89     89  245:     <span class="keyword">for</span> _, target := range currentNode.OutEdges &#123;</span><br><span class="line">11     9    152  246:             <span class="keyword">if</span> number[target] == unvisited &#123;</span><br><span class="line">12     7    354  247:                     lastid = DFS(target, nodes, number, last, lastid+1)</span><br><span class="line">13     .      .  248:             &#125;</span><br><span class="line">14     .      .  249:     &#125;</span><br><span class="line">15     7     59  250:     last[number[currentNode]] = lastid</span><br><span class="line">16     1      1  251:     <span class="built_in">return</span> lastid</span><br></pre></td></tr></table></figure>
+
+<p>上例中，第一列为运行到此行时的样本数，第二列为运行到此行或从此行调用的样本数，第三列为行号。如果需要显示汇编，可以使用命令 disasm（使用命令 weblist 可以同时显示源码和汇编代码， 这里 有一个范例）。通过样本数，我们可以定位到热点行，然后考虑适合的优化策略。</p>
+<h4 id="pprof-包"><a href="#pprof-包" class="headerlink" title="pprof 包"></a>pprof 包</h4><p>pprof 包进行 profiling 有两种方式：</p>
+<ul>
+<li>采样。CPU Profiling 需要不断采样，（如上所述）pprof 包提供了一套特殊的 API（StartCPUProfile / StopCPUProfile）</li>
+<li>快照。下面详细谈这种方式（同样可以使用 go tool pprof 程序来解析输出的 profile 文件）</li>
+</ul>
+<p>pprof 包预先定义了（还可以自己扩展）4 种快照模式：</p>
+<ul>
+<li>goroutine，当前所有 goroutines 的 stack traces</li>
+<li>heap，所有的堆内存分配（为降低开销仅获取一个近似值，To reduce overhead, the memory profiler only records information for approximately one block per half megabyte allocated (the “1-in-524288 sampling rate”), so these are approximations to the actual counts）</li>
+<li>threadcreate，致使新系统线程创建的 stack traces</li>
+<li>block，致使在同步原语上阻塞的 stack traces</li>
+</ul>
+<p>相关 API 具体用法如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 根据名字查找 Profile</span></span><br><span class="line"><span class="number">2</span> p := pprof.Lookup(<span class="string">&quot;heap&quot;</span>)</span><br><span class="line"><span class="number">3</span> <span class="comment">// 将一个 pprof（程序）格式的快照写入 w</span></span><br><span class="line"><span class="number">4</span> p.WriteTo(w, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里的 WriteTo 方法原型为：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">func</span> <span class="params">(p *Profile)</span> <span class="title">WriteTo</span><span class="params">(w io.Writer, debug <span class="keyword">int</span>)</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
+
+<p>其中 debug 参数：</p>
+<ul>
+<li>为 0 时，仅仅输出 pprof（程序）需要的十六进制地址</li>
+<li>为 1 时，输出时增加函数名和行号，这样无需工具也可以阅读此 profile</li>
+<li>为 2 时，并且当输出 goroutine profile 时，输出的 goroutine 栈的格式为未 recovered panic 时的格式</li>
+</ul>
+<h4 id="memory-profiling"><a href="#memory-profiling" class="headerlink" title="memory profiling"></a>memory profiling</h4><p>以 <a target="_blank" rel="noopener" href="https://blog.golang.org/profiling-go-programs">https://blog.golang.org/profiling-go-programs</a> 中的例子为例：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 定义 flag memprofile</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">var</span> memprofile = flag.String(<span class="string">&quot;memprofile&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;write memory profile to this file&quot;</span>)</span><br><span class="line"><span class="number">3</span> ...</span><br><span class="line"><span class="number">4</span>    <span class="comment">// 需要 profiling 的函数</span></span><br><span class="line"><span class="number">5</span>    FindHavlakLoops(cfgraph, lsgraph)</span><br><span class="line"><span class="number">6</span>    <span class="keyword">if</span> *memprofile != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line"><span class="number">7</span>        f, err := os.Create(*memprofile)</span><br><span class="line"><span class="number">8</span>        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">9</span>            log.Fatal(err)</span><br><span class="line"><span class="number">10</span>        &#125;</span><br><span class="line"><span class="number">11</span>        <span class="comment">// WriteHeapProfile 等价于 Lookup(&quot;heap&quot;).WriteTo(w, 0)</span></span><br><span class="line"><span class="number">12</span>        pprof.WriteHeapProfile(f)</span><br><span class="line"><span class="number">13</span>        <span class="comment">// 关闭文件</span></span><br><span class="line"><span class="number">14</span>        f.Close()</span><br><span class="line"><span class="number">15</span>        <span class="keyword">return</span></span><br><span class="line"><span class="number">16</span>    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 go tool pprof 程序打开生成的 profile 文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) top5</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3    56.3  68.4%  68.4%     56.3  68.4% main.FindLoops</span><br><span class="line">4    17.6  21.3%  89.7%     17.6  21.3% main.(*CFG).CreateNode</span><br><span class="line">5     8.0   9.7%  99.4%     25.6  31.0% main.NewBasicBlockEdge</span><br><span class="line">6     0.5   0.6% 100.0%      0.5   0.6% itab</span><br><span class="line">7     0.0   0.0% 100.0%      0.5   0.6% fmt.init</span><br></pre></td></tr></table></figure>
+
+<p>这里显示了函数当前大致分配的内存。类似 CPU profiling，通过 list 命令查看函数具体的内存分配情况：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list FindLoops</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3 ROUTINE ====================== main.FindLoops <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak3.go</span><br><span class="line">4   56.3   56.3 Total MB (flat / cumulative)</span><br><span class="line">5...</span><br><span class="line">6    1.9    1.9  268:     nonBackPreds := make([]map[int]bool, size)</span><br><span class="line">7    5.8    5.8  269:     backPreds := make([][]int, size)</span><br><span class="line">8      .      .  270:</span><br><span class="line">9    1.9    1.9  271:     number := make([]int, size)</span><br><span class="line">10   1.9    1.9  272:     header := make([]int, size, size)</span><br><span class="line">11   1.9    1.9  273:     types := make([]int, size, size)</span><br><span class="line">12   1.9    1.9  274:     last := make([]int, size, size)</span><br><span class="line">13   1.9    1.9  275:     nodes := make([]*UnionFindNode, size, size)</span><br><span class="line">14     .      .  276:</span><br><span class="line">15     .      .  277:     <span class="keyword">for</span> i := 0; i &lt; size; i++ &#123;</span><br><span class="line">16   9.5    9.5  278:             nodes[i] = new(UnionFindNode)</span><br><span class="line">17     .      .  279:     &#125;</span><br><span class="line">18...</span><br><span class="line">19     .      .  286:     <span class="keyword">for</span> i, bb := range cfgraph.Blocks &#123;</span><br><span class="line">20     .      .  287:             number[bb.Name] = unvisited</span><br><span class="line">21  29.5   29.5  288:             nonBackPreds[i] = make(map[int]bool)</span><br><span class="line">22     .      .  289:     &#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了这些信息，我们就可以着手进行优化了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" data-id="ckh0c7em40036xgvman31gjlb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pprof/" rel="tag">pprof</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-开源协议的详细要求" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/" class="article-date">
+  <time datetime="2018-06-05T05:52:57.000Z" itemprop="datePublished">2018-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/">开源协议的详细要求</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="BSD开源协议"><a href="#BSD开源协议" class="headerlink" title="BSD开源协议"></a>BSD开源协议</h4><p>是一个给于使用者很大自由的协议。可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件再发布。当你发布使用了BSD协议的代码，或者以BSD协议代码为基础做二次开发自己的产品时，需要满足三个条件：</p>
+<ul>
+<li>如果再发布的产品中包含源代码，则在源代码中必须带有原来代码中的BSD协议。</li>
+<li>如果再发布的只是二进制类库/软件，则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议。</li>
+<li>不可以用开源代码的作者/机构名字和原来产品的名字做市场推广。</li>
+</ul>
+<p>BSD代码鼓励代码共享，但需要尊重代码作者的著作权。BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销售，因此是对商业集成很友好的协议。很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码，在必要的时候可以修改或者 二次开发。</p>
+<h4 id="Apache-Licene-2-0-协议"><a href="#Apache-Licene-2-0-协议" class="headerlink" title="Apache Licene 2.0 协议"></a>Apache Licene 2.0 协议</h4><p>Apache Licence是著名的非盈利开源组织Apache采用的协议。该协议和BSD类似，同样鼓励代码共享和尊重原作者的著作权，同样允许代码修改，再发布（作为开源或商业软件）。需要满足的条件也和BSD类似：</p>
+<ul>
+<li>需要给代码的用户一份Apache Licence</li>
+<li>如果你修改了代码，需要在被修改的文件中说明。</li>
+<li>在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议，商标，专利声明和其他原来作者规定需要包含的说明。</li>
+<li>如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有Apache Licence。你可以在Notice中增加自己的许可，但不可以表现为对Apache Licence构成更改。</li>
+<li>Apache Licence也是对商业应用友好的许可。使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售。</li>
+</ul>
+<p>英文原文：<a target="_blank" rel="noopener" href="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</a></p>
+<h4 id="MIT-协议"><a href="#MIT-协议" class="headerlink" title="MIT 协议"></a>MIT 协议</h4><p>MIT许可证之名源自麻省理工学院（Massachusetts Institute of Technology, MIT），又称「X条款」（X License）或「X11条款」（X11 License）</p>
+<p>MIT内容与三条款BSD许可证（3-clause BSD license）内容颇为近似，但是赋予软体被授权人更大的权利与更少的限制。</p>
+<p>被授权人有权利使用、复制、修改、合并、出版发行、散布、再授权及贩售软体及软体的副本。</p>
+<p>被授权人可根据程式的需要修改授权条款为适当的内容。</p>
+<p>在软件和软件的所有副本中都必须包含版权声明和许可声明。</p>
+<p>此授权条款并非属copyleft的自由软体授权条款，允许在自由/开放源码软体或非自由软体（proprietary software）所使用。</p>
+<p>此亦为MIT与BSD（The BSD license, 3-clause BSD license）本质上不同处。</p>
+<p>MIT条款可与其他授权条款并存。另外，MIT条款也是自由软体基金会（FSF）所认可的自由软体授权条款，与GPL相容。</p>
+<p>协议英文原文：<a target="_blank" rel="noopener" href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a></p>
+<h4 id="GPL-协议"><a href="#GPL-协议" class="headerlink" title="GPL 协议"></a>GPL 协议</h4><p>在自由软件所使用的各种许可证之中，最为人们注意的也许是通用性公开许可证(General Public License，简称GPL)。</p>
+<p>GPL同其它的自由软件许可证一样，许可社会公众享有：运行、复制软件的自由，发行传播软件的自由，获得软件源码的自由，改进软件并将自己作出的改进版本向社会发行传播的自由。<br>GPL还规定：只要这种修改文本在整体上或者其某个部分来源于遵循GPL的程序，该修改文本的 整体就必须按照GPL流通，不仅该修改文本的源码必须向社会公开，而且对于这种修改文本的流通不准许附加修改者自己作出的限制。因此，一项遵循GPL流通 的程序不能同非自由的软件合并。GPL所表达的这种流通规则称为copyleft，表示与copyright(版权)的概念“相左”。</p>
+<p>GPL协议最主要的几个原则：</p>
+<ul>
+<li><p>确保软件自始至终都以开放源代码形式发布，保护开发成果不被窃取用作商业发售。任何一套软 件，只要其中使用了受 GPL 协议保护的第三方软件的源程序，并向非开发人员发布时，软件本身也就自动成为受 GPL 保护并且约束的实体。也就是说，此时它必须开放源代码。</p>
+</li>
+<li><p>GPL 大致就是一个左侧版权（Copyleft，或译为“反版权”、“版权属左”、“版权所无”、“版责”等）的体现。你可以去掉所有原作的版权 信息，只要你保持开源，并且随源代码、二进制版附上 GPL 的许可证就行，让后人可以很明确地得知此软件的授权信息。GPL 精髓就是，只要使软件在完整开源 的情况下，尽可能使使用者得到自由发挥的空间，使软件得到更快更好的发展。</p>
+</li>
+<li><p>无论软件以何种形式发布，都必须同时附上源代码。例如在 Web 上提供下载，就必须在二进制版本（如果有的话）下载的同一个页面，清楚地提供源代码下载的链接。如果以光盘形式发布，就必须同时附上源文件的光盘。</p>
+</li>
+<li><p>开发或维护遵循 GPL 协议开发的软件的公司或个人，可以对使用者收取一定的服务费用。但还是一句老话——必须无偿提供软件的完整源代码，不得将源代码与服务做捆绑或任何变相捆绑销售。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/" data-id="ckh0c7en50066xgvmbv0ha29v" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag">开源协议</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Decentralized-Identity-Foundation-first-anniversary" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/" class="article-date">
+  <time datetime="2018-06-01T17:40:41.000Z" itemprop="datePublished">2018-06-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/">Decentralized Identity Foundation first anniversary</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="http://note.youdao.com/noteshare?id=40a9c148897c69d4e65cafd722ff57d3">Decentralized Identity Foundation Grows To 56 Members In Our First Year</a></p>
+<p>May 23, 2018 marks the <a target="_blank" rel="noopener" href="http://identity.foundation/">Decentralized Identity Foundation</a>’s first anniversary. Over the past year, DIF has grown from a handful of founding organizations to 56 members. Together, we’re working to shape the future of decentralized identity technology and standards.</p>
+<p><img src="/.io//1.jpeg"></p>
+<h4 id="Technology-Under-Development"><a href="#Technology-Under-Development" class="headerlink" title="Technology Under Development"></a>Technology Under Development</h4><p>DIF members are working together to build a variety of technologies. Much of this work is being done in collaboration with the larger open source community through the W3C and events such as Rebooting Web of Trust and the Internet Identity Workshop.</p>
+<h4 id="Decentralized-Identifiers-DIDs"><a href="#Decentralized-Identifiers-DIDs" class="headerlink" title="Decentralized Identifiers (DIDs)"></a>Decentralized Identifiers (DIDs)</h4><p><a target="_blank" rel="noopener" href="https://w3c-ccg.github.io/did-spec/">Decentralized Identifiers (DIDs)</a> are a new type of identifier for verifiable, “self-sovereign” digital identity. DIDs are fully under the control of their owner, independent from any centralized registry, identity provider, or certificate authority.</p>
+<h4 id="Universal-Resolver"><a href="#Universal-Resolver" class="headerlink" title="Universal Resolver"></a>Universal Resolver</h4><p>The <a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/universal-resolver">Universal Resolver</a> is similar to Bind in the DNS system. However, instead of working with domain names, it works with self-sovereign identifiers that can be created and registered directly by their owners. This project was organized by DIF members with funding from British Columbia.</p>
+<h4 id="Chainpoint"><a href="#Chainpoint" class="headerlink" title="Chainpoint"></a>Chainpoint</h4><p><a target="_blank" rel="noopener" href="http://chaipoint.org/">Chainpoint</a> is an open standard for anchoring data to a blockchain and creating a timestamp proof.</p>
+<h4 id="Hubs"><a href="#Hubs" class="headerlink" title="Hubs"></a>Hubs</h4><p><a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/hubs/">Hubs</a> are datastores containing semantic data objects at well-known locations. Each object in a Hub is signed by an identity and accessible via a globally recognized API format that explicitly maps to semantic data objects. Hubs are addressable via unique identifiers maintained in a global namespace. Several members within DIF have announced work on hub implementations, including Microsoft and <a target="_blank" rel="noopener" href="https://sovrin.org/">Sovrin</a>.</p>
+<h4 id="DIF-Steering-Committee-Members"><a href="#DIF-Steering-Committee-Members" class="headerlink" title="DIF Steering Committee Members"></a>DIF Steering Committee Members</h4><p>We’d like to thank the following Steering Committee members for providing leadership and helping DIF grow over the past year.</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/drummondreed/">Drummond Reed</a> — Chief Trust Officer, <a target="_blank" rel="noopener" href="https://www.evernym.com/">Evernym</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/rouvenheck/">Rouven Heck</a> — Co-Founder &amp; Project Lead, <a target="_blank" rel="noopener" href="http://uport.me/">uPort</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/ryaneshea/">Ryan Shea</a> — Co-founder, <a target="_blank" rel="noopener" href="http://blockstack.org/">Blockstack</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/muneebali/">Muneeb Ali</a> — Co-founder, Blockstack</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/wayne/">Wayne Vaughan</a> — Chief Executive Officer, <a target="_blank" rel="noopener" href="http://tierion.com/">Tierion</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/dbuchner/">Daniel Buchner</a> — Senior PM, Decentralized Identity, Microsoft</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/sivakannan/">Siva Kannan </a>— Chief Software Development Officer, <a target="_blank" rel="noopener" href="http://gem.co/">Gem</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/imthedoctor/">Matt Smith </a>— Software Architect, Gem</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/vinomaster/">Dan Gisolfi</a> — CTO Trusted Identity |Distinguished Engineer, IBM</p>
+</li>
+</ul>
+<h4 id="More-Projects-companies-working-on-blockchain-and-identity"><a href="#More-Projects-companies-working-on-blockchain-and-identity" class="headerlink" title="More Projects/companies working on blockchain and identity"></a>More Projects/companies working on blockchain and identity</h4><p><a target="_blank" rel="noopener" href="https://github.com/peacekeeper/blockchain-identity">More Projects/companies working on blockchain and identity. </a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/" data-id="ckh0c7el0000hxgvm744w2fj8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DID/" rel="tag">DID</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-PBFT协议为什么要求N-3f-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/" class="article-date">
+  <time datetime="2018-05-25T09:00:31.000Z" itemprop="datePublished">2018-05-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/">PBFT协议为什么要求N&gt;3f+1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最坏的情况是：f个节点是有问题的，由于到达顺序的问题，有可能f个有问题的节点比正常的f个节点先返回消息，又要保证收到的正常的节点比有问题的节点多，所以需要满足N-f-f&gt;f =&gt; N&gt;3f，所以至少3f+1个节点。</p>
+<p>为什么至少要2f个prepare (包括自己的pre-prepare共2f+1)。这是因为之前论证的，如果有f个fault 节点，那么节点总数至少是N=3f+1。简单说一下论证过程，假设总数N个节点，f个fault节点，那么必须接收到N-f个消息应答，才能够判断出结果(因为fault节点可能不发送应答)。N-f个应答中有f个可能是假的(fault节点发出的)，那么真实的是N-f-f，要求真实的应答大于假的应答，即N-f-f &gt; f ==&gt; N &gt; 3f。所以: N_min = 3f+1 所以在prepare和commit两个阶段必须收到2f+1(包括自己) 的应答消息，才能证明有f+1非fault节点发送了应答。(注意前提是非fault对于相同的消息，会产生相同的消息应答)那么这里也有个问题：就是接收2f+1个消息的时，判断是否一致，是否需要对比数据的的签名。我的看法是，如果2f+1个v，n都相同，d(m)只需要f+1相同就可以了。否则就共识失败了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/" data-id="ckh0c7elp001zxgvm3g0a5t6f" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10种常见的软件架构模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time datetime="2018-05-21T00:45:26.000Z" itemprop="datePublished">2018-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/">10种常见的软件架构模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原文作者：<a target="_blank" rel="noopener" href="https://medium.com/@vijinimallawaarachchi?source=post_header_lockup">Vijini Mallawaarachchi</a><br>原文地址：<a target="_blank" rel="noopener" href="https://medium.com/towards-data-science/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013">10 Common Software Architectural Patterns in a nutshell</a></p>
+<p>有没有想过要设计多大的企业规模系统？在主要的软件开发启动之前，我们必须选择好体系结构，它将为我们提供所需的功能和质量。因此，在将它们应用到具体设计之前，我们应该了解不同的体系结构。</p>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/1.png"></a></p>
+<h3 id="什么是架构模式？"><a href="#什么是架构模式？" class="headerlink" title="什么是架构模式？"></a>什么是架构模式？</h3><p>根据维基百科中的定义：</p>
+<blockquote>
+<p>架构模式是一个通用的、可重用的解决方案，用于在给定上下文中的软件体系结构中经常出现的问题。架构模式与软件设计模式类似，但具有更广泛的范围。</p>
+</blockquote>
+<p>在本文中，将简要地解释以下10种常见的体系架构模式，以及它们的用法、优缺点。</p>
+<ol>
+<li>Layer 分层模式</li>
+<li>CS 客户端-服务器模式</li>
+<li>MS 主从设备模式</li>
+<li>Filter 管道-过滤器模式</li>
+<li>Broker 代理模式</li>
+<li>P2P 点对点模式</li>
+<li>Bus 事件总线模式</li>
+<li>MVC 模型-视图-控制器模式</li>
+<li>Blockboard 黑板模式</li>
+<li>Expression 解释器模式</li>
+</ol>
+<h3 id="一-Layer-分层模式"><a href="#一-Layer-分层模式" class="headerlink" title="一. Layer 分层模式"></a>一. Layer 分层模式</h3><p>这种模式也称为多层体系架构模式。它可以用来构造可以分解为子任务组的程序，每个子任务都处于一个特定的抽象级别。每个层都为下一个提供更高层次服务。</p>
+<p>一般信息系统中最常见的是如下所列的4层。</p>
+<ul>
+<li>表示层(也称为UI层)</li>
+<li>应用层(也称为服务层)</li>
+<li>业务逻辑层(也称为领域层)</li>
+<li>数据访问层(也称为持久化层)</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>一般的桌面应用程序</li>
+<li>电子商务Web应用程序</li>
+</ul>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/2.png"></a></p>
+<h3 id="二-CS-客户端-服务器模式"><a href="#二-CS-客户端-服务器模式" class="headerlink" title="二. CS 客户端-服务器模式"></a>二. CS 客户端-服务器模式</h3><p>这种模式由两部分组成：一个服务器和多个客户端。服务器组件将为多个客户端组件提供服务。客户端从服务器请求服务，服务器为这些客户端提供相关服务。此外，服务器持续侦听客户机请求。</p>
+<p>使用场景：</p>
+<ul>
+<li>电子邮件，文件共享和银行等在线应用程序<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/3.png"></a></li>
+</ul>
+<h3 id="三-MS-主从设备模式"><a href="#三-MS-主从设备模式" class="headerlink" title="三. MS 主从设备模式"></a>三. MS 主从设备模式</h3><p>这种模式由两方组成,主设备和从设备。主设备组件在相同的从设备组件中分配工作，并计算最终结果，这些结果是从设备返回的结果。</p>
+<p>使用场景：</p>
+<ul>
+<li>在数据库复制中，主数据库被认为是权威的来源，并且要与之同步</li>
+<li>在计算机系统中与总线连接的外围设备(主和从驱动器)<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/4.png"></a></li>
+</ul>
+<h3 id="四-管道-过滤器模式"><a href="#四-管道-过滤器模式" class="headerlink" title="四. 管道-过滤器模式"></a>四. 管道-过滤器模式</h3><p>此模式可用于构造、生成和处理数据流的系统。每个处理步骤都封装在一个过滤器组件内。要处理的数据是通过管道传递的。这些管道可以用于缓冲或用于同步。</p>
+<p>使用场景：</p>
+<ul>
+<li>编译器。连续的过滤器执行词法分析、解析、语义分析和代码生成</li>
+<li>生物信息学的工作流<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/5.png"></a></li>
+</ul>
+<h3 id="五-代理模式"><a href="#五-代理模式" class="headerlink" title="五. 代理模式"></a>五. 代理模式</h3><p>此模式用于构造具有解耦组件的分布式系统。这些组件可以通过远程服务调用彼此交互。代理组件负责组件之间的通信协调。</p>
+<p>服务器将其功能(服务和特征)发布给代理。客户端从代理请求服务，然后代理将客户端重定向到其注册中心的适当服务。</p>
+<p>使用场景：</p>
+<ul>
+<li>消息代理软件，如Apache ActiveMQ，Apache Kafka，RabbitMQ和JBoss Messaging</li>
+<li>负债均衡 Ngix</li>
+</ul>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/6.png"></a></p>
+<h3 id="六-点对点模式"><a href="#六-点对点模式" class="headerlink" title="六. 点对点模式"></a>六. 点对点模式</h3><p>在这种模式中，单个组件被称为对等点。对等点可以作为客户端，从其他对等点请求服务，作为服务器，为其他对等点提供服务。对等点可以充当客户端或服务器或两者的角色，并且可以随时间动态地更改其角色。</p>
+<p>使用场景：</p>
+<ul>
+<li>像Gnutella和G2这样的文件共享网络</li>
+<li>多媒体协议，如P2PTV和PDTP</li>
+<li>像Spotify这样的专有多媒体应用程序</li>
+</ul>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/7.png"></a></p>
+<h3 id="七-事件总线模式"><a href="#七-事件总线模式" class="headerlink" title="七. 事件总线模式"></a>七. 事件总线模式</h3><p>这种模式主要是处理事件，包括4个主要组件：事件源、事件监听器、通道和事件总线。消息源将消息发布到事件总线上的特定通道上。侦听器订阅特定的通道。侦听器会被通知消息，这些消息被发布到它们之前订阅的一个通道上。</p>
+<p>使用场景：</p>
+<ul>
+<li>安卓开发</li>
+<li>通知服务</li>
+</ul>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/8.png"></a></p>
+<h3 id="八-MVC-模型-视图-控制器模式"><a href="#八-MVC-模型-视图-控制器模式" class="headerlink" title="八. MVC 模型-视图-控制器模式"></a>八. MVC 模型-视图-控制器模式</h3><p>这种模式，也称为MVC模式，把一个交互式应用程序划分为3个部分，</p>
+<ul>
+<li>模型：包含核心功能和数据</li>
+<li>视图：将信息显示给用户(可以定义多个视图)</li>
+<li>控制器：处理用户输入的信息<br>这样做是为了将信息的内部表示与信息的呈现方式分离开来，并接受用户的请求。它分离了组件，并允许有效的代码重用。</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>在主要编程语言中互联网应用程序的体系架构</li>
+<li>像Django和Rails这样的Web框架<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/9.png"></a></li>
+</ul>
+<h3 id="九-黑板模式"><a href="#九-黑板模式" class="headerlink" title="九. 黑板模式"></a>九. 黑板模式</h3><p>这种模式对于没有确定解决方案策略的问题是有用的。黑板模式由3个主要组成部分组成。</p>
+<ul>
+<li>黑板——包含来自解决方案空间的对象的结构化全局内存</li>
+<li>知识源——专门的模块和它们自己的表示</li>
+<li>控制组件——选择、配置和执行模块<br>所有的组件都可以访问黑板。组件可以生成添加到黑板上的新数据对象。组件在黑板上查找特定类型的数据，并通过与现有知识源的模式匹配来查找这些数据。</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>语音识别</li>
+<li>车辆识别和跟踪</li>
+<li>蛋白质结构识别</li>
+<li>声纳信号的解释<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/10.png"></a></li>
+</ul>
+<h3 id="十-解释器模式"><a href="#十-解释器模式" class="headerlink" title="十. 解释器模式"></a>十. 解释器模式</h3><p>这个模式用于设计一个解释用专用语言编写的程序的组件。它主要指定如何评估程序的行数，即以特定的语言编写的句子或表达式。其基本思想是为每种语言的符号都有一个分类。</p>
+<p>使用场景：</p>
+<ul>
+<li>数据库查询语言，比如SQL</li>
+<li>用于描述通信协议的语言<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/11.png"></a></li>
+</ul>
+<h3 id="体系架构模式的比较"><a href="#体系架构模式的比较" class="headerlink" title="体系架构模式的比较"></a>体系架构模式的比较</h3><p>下面给出的表格总结了每种体系架构模式的优缺点。</p>
+<p>名称—优点—缺点<br>1.分层模式:<br>    - 一个较低的层可以被不同的层所使用。层使标准化更容易，因为我们可以清楚地定义级别。可以在层内进行更改，而不会影响其他层。<br>    - 不是普遍适用的。在某些情况下，某些层可能会被跳过。<br>2.客户端-服务器模式:<br>    - 很好地建立一组服务，用户可以请求他们的服务。<br>    - 请求通常在服务器上的单独线程中处理。由于不同的客户端具有不同的表示，进程间通信会导致额外开销。<br>3.主从设备模式:<br>    - 准确性——将服务的执行委托给不同的从设备，具有不同的实现。<br>    - 从设备是孤立的：没有共享的状态。主-从通信中的延迟可能是一个问题，例如在实时系统中。这种模式只能应用于可以分解的问题。<br>4.管道-过滤器模式:<br>    - 展示并发处理。当输入和输出由流组成时，过滤器在接收数据时开始计算。轻松添加过滤器，系统可以轻松扩展。过滤器可重复使用。可以通过重新组合一组给定的过滤器来构建不同的管道。<br>    - 效率受到最慢的过滤过程的限制。从一个过滤器移动到另一个过滤器时的数据转换开销。<br>5.代理模式:<br>    - 允许动态更改、添加、删除和重新定位对象，这使开发人员的发布变得透明。<br>    - 要求对服务描述进行标准化。<br>6.点对点模式:<br>    - 支持分散式计算。对任何给定节点的故障处理具有强大的健壮性。在资源和计算能力方面具有很高的可扩展性。<br>    - 服务质量没有保证，因为节点是自愿合作的。安全是很难得到保证的。性能取决于节点的数量。<br>7.事件总线模式:<br>    - 新的发布者、订阅者和连接可以很容易地添加。对高度分布式的应用程序有效。<br>    - 可伸缩性可能是一个问题，因为所有消息都是通过同一事件总线进行的。<br>8.模型-视图-控制器模式:<br>    - 可以轻松地拥有同一个模型的多个视图，这些视图可以在运行时连接和断开。<br>    - 增加复杂性。可能导致许多不必要的用户操作更新。<br>9.黑板模式:<br>    - 很容易添加新的应用程序。扩展数据空间的结构很简单。<br>    - 修改数据空间的结构非常困难，因为所有应用程序都受到了影响。可能需要同步和访问控制。<br>10.解释器模式:<br>    - 高度动态的行为是可行的。对终端用户编程性提供好处。提高灵活性，因为替换一个解释程序很容易。<br>    - 由于解释语言通常比编译后的语言慢，因此性能可能是一个问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" data-id="ckh0c7ekr0001xgvm7f8qgqvp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="tag">架构模式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/20/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/22/">Next &amp;raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Burrow/" rel="tag">Burrow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DAO/" rel="tag">DAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFINITY/" rel="tag">DFINITY</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DID/" rel="tag">DID</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIP/" rel="tag">EIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EVM/" rel="tag">EVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ethereum/" rel="tag">Ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/" rel="tag">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenPGP/" rel="tag">OpenPGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PBFT/" rel="tag">PBFT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProtoBuf/" rel="tag">ProtoBuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VRF/" rel="tag">VRF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebAssembly/" rel="tag">WebAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorand/" rel="tag">algorand</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chainlink/" rel="tag">chainlink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/channel/" rel="tag">channel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/credits/" rel="tag">credits</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cv/" rel="tag">cv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/" rel="tag">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disk-usage/" rel="tag">disk usage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ethereum/" rel="tag">ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geth/" rel="tag">geth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang%E6%9C%8D%E5%8A%A1/" rel="tag">golang服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/" rel="tag">google</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leadership/" rel="tag">leadership</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/make/" rel="tag">make</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pprof/" rel="tag">pprof</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raft/" rel="tag">raft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/remix/" rel="tag">remix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seaweedfs/" rel="tag">seaweedfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solidity/" rel="tag">solidity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wasm/" rel="tag">wasm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whisper/" rel="tag">whisper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">令牌环领导人选举算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" rel="tag">占用磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" rel="tag">商业模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" rel="tag">商品验真</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90/" rel="tag">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag">开源协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag">性能分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%83%85%E5%95%86/" rel="tag">情商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%8A%9F/" rel="tag">成功</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" rel="tag">数字资产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" rel="tag">数学符号</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" rel="tag">服务器地址</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="tag">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="tag">相似度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="tag">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E7%9B%98/" rel="tag">磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" rel="tag">网络攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="tag">随机数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%90%E7%A7%81/" rel="tag">隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag">零知识证明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">领导人选举算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ACL/" style="font-size: 10px;">ACL</a> <a href="/tags/Burrow/" style="font-size: 13.33px;">Burrow</a> <a href="/tags/CSC/" style="font-size: 15.56px;">CSC</a> <a href="/tags/DAO/" style="font-size: 10px;">DAO</a> <a href="/tags/DFINITY/" style="font-size: 10px;">DFINITY</a> <a href="/tags/DID/" style="font-size: 10px;">DID</a> <a href="/tags/EIP/" style="font-size: 10px;">EIP</a> <a href="/tags/EVM/" style="font-size: 10px;">EVM</a> <a href="/tags/Ethereum/" style="font-size: 17.78px;">Ethereum</a> <a href="/tags/Ghana/" style="font-size: 15.56px;">Ghana</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/OCR/" style="font-size: 11.11px;">OCR</a> <a href="/tags/OpenPGP/" style="font-size: 10px;">OpenPGP</a> <a href="/tags/PBFT/" style="font-size: 10px;">PBFT</a> <a href="/tags/ProtoBuf/" style="font-size: 10px;">ProtoBuf</a> <a href="/tags/Tensorflow/" style="font-size: 14.44px;">Tensorflow</a> <a href="/tags/Token/" style="font-size: 16.67px;">Token</a> <a href="/tags/VRF/" style="font-size: 11.11px;">VRF</a> <a href="/tags/WebAssembly/" style="font-size: 10px;">WebAssembly</a> <a href="/tags/algorand/" style="font-size: 11.11px;">algorand</a> <a href="/tags/chainlink/" style="font-size: 10px;">chainlink</a> <a href="/tags/channel/" style="font-size: 10px;">channel</a> <a href="/tags/credits/" style="font-size: 10px;">credits</a> <a href="/tags/cv/" style="font-size: 11.11px;">cv</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/disk-usage/" style="font-size: 11.11px;">disk usage</a> <a href="/tags/ethereum/" style="font-size: 12.22px;">ethereum</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/golang%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">golang服务</a> <a href="/tags/google/" style="font-size: 14.44px;">google</a> <a href="/tags/k8s/" style="font-size: 11.11px;">k8s</a> <a href="/tags/leadership/" style="font-size: 10px;">leadership</a> <a href="/tags/make/" style="font-size: 10px;">make</a> <a href="/tags/paper/" style="font-size: 13.33px;">paper</a> <a href="/tags/pbft/" style="font-size: 11.11px;">pbft</a> <a href="/tags/pprof/" style="font-size: 11.11px;">pprof</a> <a href="/tags/raft/" style="font-size: 10px;">raft</a> <a href="/tags/remix/" style="font-size: 10px;">remix</a> <a href="/tags/seaweedfs/" style="font-size: 10px;">seaweedfs</a> <a href="/tags/solidity/" style="font-size: 17.78px;">solidity</a> <a href="/tags/wasm/" style="font-size: 11.11px;">wasm</a> <a href="/tags/whisper/" style="font-size: 10px;">whisper</a> <a href="/tags/%E4%B8%93%E5%88%A9/" style="font-size: 10px;">专利</a> <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" style="font-size: 18.89px;">产品设计</a> <a href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">令牌环领导人选举算法</a> <a href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" style="font-size: 11.11px;">占用磁盘</a> <a href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">商业模式</a> <a href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" style="font-size: 10px;">商品验真</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 10px;">开源</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">开源协议</a> <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" style="font-size: 10px;">性能分析</a> <a href="/tags/%E6%83%85%E5%95%86/" style="font-size: 10px;">情商</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 10px;">成功</a> <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" style="font-size: 12.22px;">数字资产</a> <a href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" style="font-size: 10px;">数学符号</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" style="font-size: 10px;">服务器地址</a> <a href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">架构模式</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 10px;">电商</a> <a href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" style="font-size: 10px;">相似度</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%A3%81%E7%9B%98/" style="font-size: 10px;">磁盘</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" style="font-size: 10px;">网络攻击</a> <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" style="font-size: 10px;">随机数</a> <a href="/tags/%E9%9A%90%E7%A7%81/" style="font-size: 10px;">隐私</a> <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" style="font-size: 20px;">零知识证明</a> <a href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">领导人选举算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1982/02/">February 1982</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">万向的产业区块链解决方</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%AC%AC%E4%BA%8C%E5%B1%82%E5%8D%8F%E8%AE%AE%E7%94%9F%E6%80%81%E7%9A%84%E5%B4%9B%E8%B5%B7/">以太坊第二层协议生态的崛起</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E6%89%93%E9%80%A0%E6%95%B0%E5%AD%97%E7%BB%8F%E6%B5%8E%E6%96%B0%E5%9F%BA%E5%BB%BA%E8%A7%A3%E6%94%BE%E6%95%B0%E6%8D%AE%E7%94%9F%E4%BA%A7%E5%8A%9B/">打造数字经济新基建解放数据生产力</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BB%88%E6%9E%81%E7%8C%9C%E6%83%B3/">区块链应用模式的终极猜想</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Weiming Zhuang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Zhuang&#39;s Diary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Zhuang&#39;s Diary">
+<meta property="og:url" content="https://willzhuang.github.io/page/27/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Weiming Zhuang">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhuang&#39;s Diary</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://willzhuang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-What-is-an-ERC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/13/What-is-an-ERC/" class="article-date">
+  <time datetime="2018-02-13T02:33:37.000Z" itemprop="datePublished">2018-02-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/13/What-is-an-ERC/">What is an ERC?</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ERC stands for “<strong>Ethereum Request for Comment</strong>” This is Ethereum’s version of a Request for Comments (RFC), a concept devised by the Internet Engineering Task Force. Memos within an RFC contain technical and organizational notes. For ERCs, this includes some technical guidelines for the buildout of the Ethereum network.</p>
+<p>This was written by Ethereum developers for the Ethereum community. Thus, the workflow of generating an ERC includes a developer. To create standards for the Ethereum platform, a developer submits an Ethereum Improvement Proposal (EIP). This includes protocol specifications and contract standards. Once that EIP is approved by a committee and finalized, it becomes an ERC. The complete list of EIPs can be found here.</p>
+<p>The finalized EIPs give the Ethereum developers a set of implementable standards. This allows Smart Contracts to be built with these standards, which a common interface can access. ERC20 is the most well-known of all the standards within the entire crypto community, and most tokens issued on top of the Ethereum platform use it.</p>
+<p>Sources link ==&gt; <a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts">https://github.com/OpenZeppelin/openzeppelin-contracts</a></p>
+<h3 id="ERC20"><a href="#ERC20" class="headerlink" title="ERC20"></a>ERC20</h3><p>任何 ERC20 代币都能立即兼容以太坊钱包（几乎所有支持以太币的钱包，包括Jaxx、MEW、imToken等，也支持 erc20的代币</p>
+<p>The ERC20 standard includes the following functions:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">totalSupply() <span class="comment">//returns total token supply</span></span><br><span class="line">balanceOf(address _owner) <span class="comment">//returns account balance of _owner’s account</span></span><br><span class="line">transfer(address _to, uint256 _value) <span class="comment">//takes in number _value and transfers that amount of tokens to address _to and triggers transferevent</span></span><br><span class="line">transferFrom(address _from, address _to, uint256 _value) <span class="comment">//transfers _value amount of tokens from the address _from to the address _to, and triggers the transfer event.拥有者从 _from地址给 _to地址转账授权范围内的一定额度的一类同质化通证。</span></span><br><span class="line">approve(address _spender, uint256 _value) <span class="comment">//allows _spender to withdraw any number up to _value amount</span></span><br><span class="line">allowance(address _owner, address _spender) <span class="comment">//returns the amount which the_spender is still allowed to withdraw from the _owner</span></span><br><span class="line"><span class="comment">// 授权给_spender账户一定额度。拥有者 _owner给消费者_spender在当前查询账户授权(approve)的额度。</span></span><br></pre></td></tr></table></figure>
+
+
+<p>The following events are triggered based on the functions above:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transfer(address indexed _from, address indexed _to, uint256 _value) <span class="comment">//this is triggered whenever tokens are transferred</span></span><br><span class="line">approval(address indexed _owner, address indexed _spender, uint256 _value) <span class="comment">//is triggered on any call to approve()</span></span><br></pre></td></tr></table></figure>
+
+<p>ERC20 was proposed in 2015 and officially formalized in September 2017. It is a great starting point for token standardization. However, some in the developer community have noted that it has certain flaws and vulnerabilities. Additionally, there are some use cases that require something different. </p>
+<p>另外，<a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20">https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20</a> </p>
+<h4 id="Extensions-扩张功能"><a href="#Extensions-扩张功能" class="headerlink" title="Extensions\扩张功能"></a>Extensions\扩张功能</h4>
+
+
+
+
+
+
+
+<h4 id="Utilities-工具方法"><a href="#Utilities-工具方法" class="headerlink" title="Utilities\工具方法"></a>Utilities\工具方法</h4>
+
+
+
+<h3 id="ERC223"><a href="#ERC223" class="headerlink" title="ERC223"></a>ERC223</h3><p>Status: Open</p>
+<p>Date Proposed: 3/5/2017</p>
+<p>一句话：ERC223令牌标准可以防止令牌在以太坊网络上丢失。</p>
+<p>A post by developer Dexaran describes these two scenarios in detail:</p>
+<p>There are two ways of performing a transaction in ERC20 tokens:</p>
+<ol>
+<li>transfer function.</li>
+<li>approve + transferFrom mechanism.</li>
+</ol>
+<p>Token balance is just a variable in the token contract.</p>
+<p>The transaction of a token is a change in the internal variables of the contract. The balance of the sender will be decreased and the balance of the recipient will be increased.</p>
+<p>The transfer function will not notify the recipient when the transaction occurs. The recipient will not be able to recognize the incoming transaction! I wrote this illustration of the process that is leading to unhandled transactions and money losses.<br>As a result, if the recipient is a contract, users must transfer their tokens using the approve +transferFrom mechanism. If the recipient is an externally owned account address, users must transfer their tokens via the transfer function. If a user makes a mistake and chooses the wrong function, the token will get stuck inside contract (contract will not recognize a transaction). There will be no way to extract stuck tokens.</p>
+<p>His proposed solution to this issue is contained within ERC223. It is very similar to the ERC20 standard, but it solves the problems described above. When tokens are transferred to a smart contract, a special function of that contract is tokenFallback. This allows the receiving contract to decline the tokens or trigger further actions. This can be used in place of the approvefunction in most cases.</p>
+<p>由openzeppelin-contracts <code>SafeERC20</code> 完成。</p>
+<h3 id="ERC621"><a href="#ERC621" class="headerlink" title="ERC621"></a>ERC621</h3><p>Status: Open</p>
+<p>Date Proposed: 5/1/2017</p>
+<p>一句话：发行 Token 总量可变。<strong>ERC621</strong> = ERC20 + increaseSupply() + decreaseSupply()</p>
+<p>ERC621 is an extension of the ERC20 token standard. It adds two additional functions, increaseSupply and decreaseSupply. This can increase and decrease the token supply in circulation. ERC20 only allows a single token issuance event. This restricts the supply to a certain amount which can’t be changed. ERC621 proposes that totalSupply can be modified.</p>
+<h3 id="ERC721"><a href="#ERC721" class="headerlink" title="ERC721"></a>ERC721</h3><p>Status: Open</p>
+<p>Date Proposed: 9/22/2017</p>
+<p>一句话：每个代币都是 unique，例如以太猫。</p>
+<p>ERC721 is very different than ERC20 and ERC223. It describes a non-fungible token. This means that each token is totally different and each one can have a different value to different users. One way to think about this is to recall CryptoKittes. Each one is its own separate commodity whose value is based on its own rarity and desirability by users.</p>
+<p>ERC721 tokens can be used in any exchange, but the token value is “a result of the uniqueness and rareness associated with each token.” The standard functions are name, symbol, totalSupply, balanceOf, ownerOf , approve , takeOwnership , transfer , tokenOfOwnerByIndex, and tokenMetadata. It also defines two events: Transfer and Approval. This article by Gerald Nash does a good job explaining the concept of fungibility as it relates to tokens and goes into good technical detail.</p>
+<h3 id="ERC1155"><a href="#ERC1155" class="headerlink" title="ERC1155"></a>ERC1155</h3><p>Status: Final</p>
+<p>Date Proposed: 2018-06-17</p>
+<p>一句话：ERC-1155的创造者是Enjin coin的CTO Witek Radomski。ERC1155标准定义了一种解决上述问题的新方法。现在“物品”（可能包含ERC20的token或ERC721的token或两者都有）可以被单一的一个合约（打包处理）来定义了。合约里包含区别token们所需的最小量的数据。</p>
+<p>ERC1155协议主要包括ERC1155Mintable.sol同质化可增发智能合约和ERC1155NonFungibleMintable.sol非同质化可增发智能合约，本章只讲解同质化可增发智能合约的功能。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/02/13/What-is-an-ERC/" data-id="ckh0c7elr0025xgvm0ak7crqq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Token/" rel="tag">Token</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-tail-命令使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2012-06-08T08:28:14.000Z" itemprop="datePublished">2012-06-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">tail 命令使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>UNIX/Linux用户在系统或者应用中触发动作，想要看到针对动作的实时log，这个时候tail命令正是可以一展身手的时候了。</p>
+<p>例：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f sci.log.D20120224.T000000 | grep -v getCommonCodeList | grep -v getRuleDetails | grep -v getExceptionList | grep zhuangwm | grep <span class="string">&quot;Invoking api Method:&quot;</span></span><br></pre></td></tr></table></figure>
+<p>tail —用于输出文件的最后10行信息的内容。-f  是指当文件长度增长的时候，输出文件增长的部分。<br>sci.log.D20120224.T000000 —被搜索的文件名称。<br>|  —是指管道，用于将前面的输出作为输入到后面的命令中<br>grep -v getCommonCodeList —是查找文件里符合条件的字符串。 -v 是指反转查找，用于排除所列出来的文字对象</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" data-id="ckh0c7ema003ixgvm53gx8wxc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-one-year-later" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2011/11/15/one-year-later/" class="article-date">
+  <time datetime="2011-11-15T03:01:03.000Z" itemprop="datePublished">2011-11-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2011/11/15/one-year-later/">one year later</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>==============================================================</p>
+<p>Gosh darnit, I miss you guys!</p>
+<p>Congrats to everyone with all of the great things that are going on in each of your lives!  I hope things just continue to progress more and more! Happy Birthday to you, Keith!</p>
+<p>I’m glad that I’ve had a chance to see Erika and Belen, but since I’ve started a new position where I’m traveling ALL of the time, I’m hoping to be in a city near each of you soon!  </p>
+<p>Much love to G5!</p>
+<p>Regards,</p>
+<p>Regina D. Holley Information Security Advisor and Global ISA Program Lead</p>
+<p>  ITD - Security Operations Management</p>
+<p>  972.561.6790 [TL:  861.6790]</p>
+<p>  <a href="mailto:&#x68;&#111;&#108;&#x6c;&#101;&#x79;&#114;&#64;&#x75;&#x73;&#x2e;&#x69;&#98;&#x6d;&#46;&#x63;&#111;&#109;">&#x68;&#111;&#108;&#x6c;&#101;&#x79;&#114;&#64;&#x75;&#x73;&#x2e;&#x69;&#98;&#x6d;&#46;&#x63;&#111;&#109;</a></p>
+<p>  “Do not follow the path. Go where there is no path to begin the trail.”</p>
+<p>-Ashanti proverb</p>
+<p>===============================================================</p>
+<p>From: Erika V Quezada/Mexico/IBM@IBMMX</p>
+<p>To: Keith M Bantle/Fairfax/IBM@IBMUS</p>
+<p>Cc: Srinivas Manem/India/IBM@IBMIN, Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
+<p>Date: 10/27/2011 01:34 AM</p>
+<p>Subject: Re: One year later….</p>
+<p>FELIZ CUMPLEAÑOS KEITH!!!</p>
+<p>My best wishes to you!  Pls put a picture of Wilson next to your shots.  And drink one wooden boat shot for us =)  Have a great birthday!!</p>
+<p>I will be in NYC from friday to wednesday morning for vacation, aren’t you planning to be there for Halloween?  </p>
+<p>Srini, are you part of the Acapulco mexican team? If yes you should visit us,  Is the biggest project in Mexico!!</p>
+<p>Today, I was chatting with Tina by Facebook and she ask me to say hello to everybody, she is now an expert surffer and still miss all of us.</p>
+<p>Kisses!</p>
+<p>Saludos,</p>
+<p>Erika V. Quezada Ruiz</p>
+<p>Sales Manager</p>
+<p>Public Sector</p>
+<p>IBM de México</p>
+<p>Tel. (55) 52703701</p>
+<p>Cel. 04455 54551278</p>
+<p>===============================================================</p>
+<p>From: Keith M Bantle/Fairfax/IBM@IBMUS</p>
+<p>To: Srinivas Manem/India/IBM@IBMIN</p>
+<p>Cc: Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
+<p>Date: 26/10/2011 11:57</p>
+<p>Subject: Re: One year later….</p>
+<p>Yes, all such wonderful memories for all of us!  I still cannot even imagine a better team!</p>
+<p>ps- and for the record, I will be using my little wooden boat ‘shooter’ for my birthday shots this evening!</p>
+<p>Keith Bantle</p>
+<p>IBM Global Business Services</p>
+<p>AIS - Application Innovation Services</p>
+<p>4401 Belle Oaks Drive, Ashley Center</p>
+<p>Charleston, SC 29405</p>
+<p>Mobile: 843.860.9174</p>
+<p>Fax: 845.432.0121</p>
+<p><a href="mailto:&#107;&#98;&#97;&#110;&#116;&#108;&#x65;&#x40;&#x75;&#115;&#46;&#105;&#x62;&#x6d;&#x2e;&#x63;&#x6f;&#109;">&#107;&#98;&#97;&#110;&#116;&#108;&#x65;&#x40;&#x75;&#115;&#46;&#105;&#x62;&#x6d;&#x2e;&#x63;&#x6f;&#109;</a></p>
+<p>===============================================================</p>
+<p>From: Srinivas Manem/India/IBM@IBMIN</p>
+<p>To: Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Keith M Bantle/Fairfax/IBM@IBMUS, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
+<p>Date: 10/26/2011 12:44 PM</p>
+<p>Subject: Re: One year later….</p>
+<p>Hi Keith,</p>
+<p>Wish you a very happy Birthday..!! Have a great time</p>
+<p>It’s already been an year.. The memories are still very fresh in my mind. I really miss all those great days. Last year, this week we were rushing to complete projects &amp; finalizing our presentations.. </p>
+<p>Playing golf, eating fufu, early morning monkey search, playing darts, wonderful excursions on the weekends &amp; wonderful team work to complete the projects.. We had so much of fun in just one month time.. </p>
+<p>Truly, ours is the BEST TEAM ever..  Wish we’d meet again some day!!</p>
+<p>Freddie:  Congratulations on your new house.. :)  Please share some pictures.. </p>
+<p>Thanks &amp; Regards, </p>
+<p>Srini </p>
+<p>Srinivas Manem,</p>
+<p>Release Management, Acapulco,</p>
+<p>Global Telecom CoC </p>
+<p>IBM Global Business Services </p>
+<p>Mobile  +91 99497 03030 </p>
+<p>Email   <a href="mailto:&#83;&#114;&#105;&#110;&#105;&#118;&#x61;&#115;&#x2e;&#x4d;&#97;&#110;&#x65;&#x6d;&#64;&#x69;&#110;&#46;&#105;&#x62;&#109;&#x2e;&#99;&#x6f;&#109;">&#83;&#114;&#105;&#110;&#105;&#118;&#x61;&#115;&#x2e;&#x4d;&#97;&#110;&#x65;&#x6d;&#64;&#x69;&#110;&#46;&#105;&#x62;&#109;&#x2e;&#99;&#x6f;&#109;</a> </p>
+<p>===============================================================</p>
+<p>From: Belen Martin Lopez/Spain/IBM@IBMES</p>
+<p>To: Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB</p>
+<p>Cc: Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Keith M Bantle/Fairfax/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA, Srinivas Manem/India/IBM@IBMIN</p>
+<p>Date: 10/26/2011 02:07 PM</p>
+<p>Subject: Re: One year later….</p>
+<p>I almost forgot,</p>
+<p>Happy Birthday Keith!!</p>
+<p>Have a great day! Wilson and I miss you!</p>
+<p>Saludos/Regards</p>
+<p>Belén Martín López</p>
+<p>Senior Managing Consultant</p>
+<p>Phone: +34 660 413 703 </p>
+<p>email: <a href="mailto:&#x62;&#x65;&#108;&#101;&#110;&#46;&#109;&#x61;&#x72;&#x74;&#105;&#x6e;&#x40;&#101;&#115;&#46;&#105;&#98;&#x6d;&#x2e;&#99;&#111;&#109;">&#x62;&#x65;&#108;&#101;&#110;&#46;&#109;&#x61;&#x72;&#x74;&#105;&#x6e;&#x40;&#101;&#115;&#46;&#105;&#98;&#x6d;&#x2e;&#99;&#111;&#109;</a> </p>
+<p>IBM Global Services España, S.A.</p>
+<p>Mar Adriático, 2, 28830 San Fernando de Henares (Madrid)</p>
+<p>Registro Mercantil de Madrid, Folio 49; Tomo 6430; Hoja M-104.742</p>
+<p>CIF A80-599459 </p>
+<p>===============================================================</p>
+<p>Wei Ming Zhuang/China/IBM@IBMCN</p>
+<p>26/10/2011 10:36 </p>
+<p> To</p>
+<p> Keith M Bantle/Fairfax/IBM@IBMUS@IBMAU, Regina D Holley/Dallas/IBM@IBMUS</p>
+<p> cc</p>
+<p> Roy Hebert/CanWest/IBM@IBMCA, Erika V Quezada/Mexico/IBM@IBMMX@IBMUS, Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Srinivas Manem/India/IBM@IBMIN</p>
+<p> Subject</p>
+<p> Re: One year later….</p>
+<p>Hi,</p>
+<p>I often talk about our G5 experience with friends and others, I do not know why, a lot of things become more clear with the flow at time.</p>
+<p>Last week Regina was the most close to me (about 4 hours fly from Dalian to Hong Kong, Taipei). But I am still so happy to know this, just like one guy in island after air crash shouts at the near boat. </p>
+<p>Miss all of you. Must be let me if anyone come to Beijing or Dalian. Must!</p>
+<p>Have a good working day !</p>
+<p>==============================================</p>
+<p>庄伟铭/Wei Ming, E-mail: <a href="mailto:&#122;&#x68;&#117;&#x61;&#110;&#x67;&#x77;&#109;&#x40;&#99;&#110;&#46;&#105;&#x62;&#x6d;&#x2e;&#x63;&#x6f;&#x6d;">&#122;&#x68;&#117;&#x61;&#110;&#x67;&#x77;&#109;&#x40;&#99;&#110;&#46;&#105;&#x62;&#x6d;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
+<p>TEL:0411-88151143 Tie-Line:61143 </p>
+<p>IBM Dalian Global Delivery Center, GBS/GCG</p>
+<p>==============================================</p>
+<p>From: Keith M Bantle/Fairfax/IBM@IBMUS</p>
+<p>To: Roy Hebert/CanWest/IBM@IBMCA</p>
+<p>Cc: Erika V Quezada/Mexico/IBM@IBMMX@IBMUS, Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN</p>
+<p>Date: 2011-10-26 02:23</p>
+<p>Subject: Re: One year later….</p>
+<p>Hello, ¡Hola , Hallo, Ello,  Ahoj, 您好,??????, and Top O’ the Mornin’ to Ya (that one is for you, Roy, and I hope the others are correct),</p>
+<p>I think we need a G5 summit!  It really is very hard to believe it’s been a year already!  I have been thinking of all of you, especially as the month of October has been passing by, remembering what we were doing ‘that week’.  </p>
+<p>It certainly does appear that the girls have been much better about staying in touch and Belen has even come to visit already!  Hopefully she and Carlos enjoyed their stay in Charleston (Savannah and Asheville too), which was still too short.  I must admit that I was tempted to surprise her one day by pounding ‘fufu’ and putting a ball of pizza dough in some tomato soup, although she may have actually preferred that over the real thing.  </p>
+<p>Roy, I was disappointed to see the Sabres schedule does not include Calgary this season, but hopefully next year and I promise I will be there.  No excuses!  Bring on the wings and Canadian beer!!</p>
+<p>Freddie, congrats on your new house!!  I forgot to tell you about our 3 day Dave Matthews concert in NYC last month- it was awesome!</p>
+<p>Erika, thanks for rounding all of us up and glad to hear you are enjoying life!  I miss all of the different candy!</p>
+<p>Anouk, hopefully you are doing well and keep us posted on your baby’s arrival!  We’ll have to figure out his or her Ghanaian name and we can always have some of that awful clove porridge I made the mistake of eating early one morning exported to you…</p>
+<p>GoG and AB- it was great speaking with both of you earlier today!!</p>
+<p>Srini, I hope you’ve continued playing golf… you must be preparing for the PGA already!</p>
+<p>Martin, I’m sure you are as glad as I am that the NHL season is underway- hope you have been playing as often as you can!</p>
+<p>Herbie, I wonder if you and Anouk have played darts and been able to replicate your double dart achievements?!</p>
+<p>Will, every time I see ‘Firefly Sweet Tea Vodka’, I remember you drinking that whole bottle at once!</p>
+<p>Hope everyone is doing well and look forward to catching up soon!</p>
+<p>Keith</p>
+<p>ps- if anyone needs about a lb. or so of shea butter, I still have 98.2% of the container remaining… Belen can attest to that!</p>
+<p>Keith Bantle</p>
+<p>IBM Global Business Services</p>
+<p>AIS - Application Innovation Services</p>
+<p>4401 Belle Oaks Drive, Ashley Center</p>
+<p>Charleston, SC 29405</p>
+<p>Mobile: 843.860.9174</p>
+<p>Fax: 845.432.0121</p>
+<p><a href="mailto:&#107;&#98;&#97;&#x6e;&#116;&#108;&#101;&#x40;&#117;&#115;&#x2e;&#105;&#98;&#x6d;&#46;&#x63;&#x6f;&#109;">&#107;&#98;&#97;&#x6e;&#116;&#108;&#101;&#x40;&#117;&#115;&#x2e;&#105;&#98;&#x6d;&#46;&#x63;&#x6f;&#109;</a></p>
+<p>===============================================================</p>
+<p>From: Roy Hebert/CanWest/IBM@IBMCA</p>
+<p>To: Erika V Quezada/Mexico/IBM@IBMMX@IBMUS</p>
+<p>Cc: Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Keith M Bantle/Fairfax/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN</p>
+<p>Date: 10/25/2011 11:23 AM</p>
+<p>Subject: Re: One year later….</p>
+<p>I know … have been thinking about our 1 year anniversary all month!    </p>
+<p>By the way, the girls seem to be ruling in the reunion category … Freddie travelled to Mexico to visit Ms. Erica, and Regina and Erica have connected …. Regina I think you and Friddie met up in London?  I think Belen has met with at least one of you as well?</p>
+<p>Le girls rule, as usual.   </p>
+<p>Keith … was looking forward to hosting you for a Sabres game vs the Flames this year … but your beloved team doesn’t come to Calgary this season.  </p>
+<p>With fondest memories of my best team ever!!   </p>
+<p>Roy Hebert</p>
+<p>Alberta Territory Manager, IBM</p>
+<p>Office 403 539 3145</p>
+<p><a href="mailto:&#114;&#104;&#x65;&#98;&#x65;&#114;&#116;&#64;&#99;&#x61;&#x2e;&#x69;&#x62;&#109;&#46;&#99;&#x6f;&#x6d;">&#114;&#104;&#x65;&#98;&#x65;&#114;&#116;&#64;&#99;&#x61;&#x2e;&#x69;&#x62;&#109;&#46;&#99;&#x6f;&#x6d;</a></p>
+<p>===============================================================</p>
+<p>From: Erika V Quezada/Mexico/IBM@IBMMX</p>
+<p>To: Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Martin Jesko/Slovakia/IBM@IBMSK, Keith M Bantle/Fairfax/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS</p>
+<p>Date: 10/25/2011 08:43 AM</p>
+<p>Subject: One year later….</p>
+<p>Hellooo Superb Team!!!</p>
+<p>How are u one year later??  Hope everything is good with all of you….  To me, it has been a year of many changes either in my personal and professional life.  But I am very happy enjoying my life,  Still remember each particular moment we shared in Ghana and the things I learned of all of u that marked my life.</p>
+<p>I already met with Regina and Freddie … and I really hope to meet with all of u anytime.</p>
+<p>Big kiss and huge hug!</p>
+<p>Miss u all!!</p>
+<p>Remember:   we are The Best Team Ever!!!</p>
+<p>Erika Q</p>
+<p>Erika V. Quezada Ruiz</p>
+<p>Sales Manager</p>
+<p>Public Sector</p>
+<p>IBM de México</p>
+<p>Tel. (55) 52703701</p>
+<p>Cel. 04455 54551278</p>
+<p>=============================================================</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2011/11/15/one-year-later/" data-id="ckh0c7em7003dxgvmhf1mfyax" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-remebering-csc-days" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/11/07/remebering-csc-days/" class="article-date">
+  <time datetime="2010-11-07T06:56:22.000Z" itemprop="datePublished">2010-11-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/11/07/remebering-csc-days/">remebering csc days</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Sitting at my desk back in my office during my lunch break, I started to reminisce about my month long stay in Ghana with my 10 IBM colleagues – now my close friends. One week ago we were in Accra, the capital, preparing for our press conference, dressed in our business best (and the ladies looked amazing). Our goal for the press conference was to state what we had achieved for Ghana and our clients during our short stay. Five of us summarized the projects we worked on and the tangible deliverables in addition to the intangible short, medium, and long-term goals we left for our Ghanaian colleagues to achieve. It was the three client’s statements that really made us all realize the positive impact we had made – how much we had done for them in 16 working days, how we’ve shown them that when focused on a common set of goals, great things can be accomplished in a very short time. We all hope the excitement and drive we were able to share continues and the pace of success remains steady. </p>
+<p>29 days earlier eleven of us from all over the world landed in Accra – all IBMers but strangers nonetheless. We came from very diverse cultural and business backgrounds yet we all shared similar interests: the love of travel, the openness to new cultures, the joy of laughter and friendships, and the love of family and friends back home. Though our business skills were also diverse, we have core similarities there as well: we are all driven to achieve, we all have excellent problem solving skills, we all have great soft skills, and we all have excellent time management skills. We work hard, and we play hard – I guess that’s the IBM way.</p>
+<p>As the working days passed, the eleven of us became as close as family. We leaned on each other for support and wisdom; we celebrated each others’ successes and embraced each others’ challenges. We shared outstanding experiences touring Ghana and learning about its people and the growing economy. We realized how special this program was to us and our clients. Many of us shared stories where our clients first realized we were strangers when we started this assignment; they thought we had been working together for years. I don’t know how our team mates were selected, but I commend whomever it was that put the 11 of us together – it was perfect.</p>
+<p><img src="/.io//1.jpg"></p>
+<p>As my last post to this blog, I just want to let anybody that is considering joining the IBM Corporate Service Corps know that they absolutely should do it. You will grow in many ways, both personally and professionally. On the professional side, how often do you get the chance to work on a two or three person team where your project deliverables will help shape a growing economy? How often do you get the business opportunity to lead such positively impacting projects? How often do your clients become great friends where they start telling you they’ll miss you 5 days before the project is over? It’s a life-changing experience, do it, and thank IBM while you’re at it.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2010/11/07/remebering-csc-days/" data-id="ckh0c7em9003gxgvmhkpva334" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ghana-day-29" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2010/11/04/ghana-day-29/" class="article-date">
+  <time datetime="2010-11-04T15:53:10.000Z" itemprop="datePublished">2010-11-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2010/11/04/ghana-day-29/">ghana day 29</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>How times flying. I went back to China, but I can not forget what happened on my last working day in Ghana.</p>
+<p>On the last day, the last three team did their final presentations, including Chamber, GTB and NBSSI Team. The final presentation was very successful, we did a great job and we got a great satisfaction from client, and detailed action plan was created. It means we delivered these results to client, they are not only deliverables, but also they will become a big impact in future. I feel an honest and happy pride!</p>
+<p>In the evening, Mr.Hammond and staffs of GTB met Anouk and me in Valley Beach Hotel, they sent us great presents.</p>
+<p><img src="/.io//1.jpg"><br><img src="/.io//2.jpg"><br>GTB staffs, Anouk and me</p>
+<p>We chat for long time, the most unforgettable sentence from clients is “Unbelievable, I thought you (Anouk and me) are working together one year at least!”</p>
+<p>Absolutely, our understanding really more than one year already in CSC program Ghana Team V.</p>
+<p>Will<br>Nov.04 2010</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2010/11/04/ghana-day-29/" data-id="ckh0c7em1002wxgvm3gp0dcw4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/26/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/28/">Next &amp;raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Burrow/" rel="tag">Burrow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DAO/" rel="tag">DAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFINITY/" rel="tag">DFINITY</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DID/" rel="tag">DID</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIP/" rel="tag">EIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EVM/" rel="tag">EVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ethereum/" rel="tag">Ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/" rel="tag">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenPGP/" rel="tag">OpenPGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PBFT/" rel="tag">PBFT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProtoBuf/" rel="tag">ProtoBuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VRF/" rel="tag">VRF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebAssembly/" rel="tag">WebAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorand/" rel="tag">algorand</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chainlink/" rel="tag">chainlink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/channel/" rel="tag">channel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/credits/" rel="tag">credits</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cv/" rel="tag">cv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/" rel="tag">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disk-usage/" rel="tag">disk usage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ethereum/" rel="tag">ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geth/" rel="tag">geth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang%E6%9C%8D%E5%8A%A1/" rel="tag">golang服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/" rel="tag">google</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leadership/" rel="tag">leadership</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/make/" rel="tag">make</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pprof/" rel="tag">pprof</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raft/" rel="tag">raft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/remix/" rel="tag">remix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seaweedfs/" rel="tag">seaweedfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solidity/" rel="tag">solidity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wasm/" rel="tag">wasm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whisper/" rel="tag">whisper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">令牌环领导人选举算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" rel="tag">占用磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" rel="tag">商业模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" rel="tag">商品验真</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90/" rel="tag">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag">开源协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag">性能分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%83%85%E5%95%86/" rel="tag">情商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%8A%9F/" rel="tag">成功</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" rel="tag">数字资产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" rel="tag">数学符号</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" rel="tag">服务器地址</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="tag">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="tag">相似度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="tag">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E7%9B%98/" rel="tag">磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" rel="tag">网络攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="tag">随机数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%90%E7%A7%81/" rel="tag">隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag">零知识证明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">领导人选举算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ACL/" style="font-size: 10px;">ACL</a> <a href="/tags/Burrow/" style="font-size: 13.33px;">Burrow</a> <a href="/tags/CSC/" style="font-size: 15.56px;">CSC</a> <a href="/tags/DAO/" style="font-size: 10px;">DAO</a> <a href="/tags/DFINITY/" style="font-size: 10px;">DFINITY</a> <a href="/tags/DID/" style="font-size: 10px;">DID</a> <a href="/tags/EIP/" style="font-size: 10px;">EIP</a> <a href="/tags/EVM/" style="font-size: 10px;">EVM</a> <a href="/tags/Ethereum/" style="font-size: 17.78px;">Ethereum</a> <a href="/tags/Ghana/" style="font-size: 15.56px;">Ghana</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/OCR/" style="font-size: 11.11px;">OCR</a> <a href="/tags/OpenPGP/" style="font-size: 10px;">OpenPGP</a> <a href="/tags/PBFT/" style="font-size: 10px;">PBFT</a> <a href="/tags/ProtoBuf/" style="font-size: 10px;">ProtoBuf</a> <a href="/tags/Tensorflow/" style="font-size: 14.44px;">Tensorflow</a> <a href="/tags/Token/" style="font-size: 16.67px;">Token</a> <a href="/tags/VRF/" style="font-size: 11.11px;">VRF</a> <a href="/tags/WebAssembly/" style="font-size: 10px;">WebAssembly</a> <a href="/tags/algorand/" style="font-size: 11.11px;">algorand</a> <a href="/tags/chainlink/" style="font-size: 10px;">chainlink</a> <a href="/tags/channel/" style="font-size: 10px;">channel</a> <a href="/tags/credits/" style="font-size: 10px;">credits</a> <a href="/tags/cv/" style="font-size: 11.11px;">cv</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/disk-usage/" style="font-size: 11.11px;">disk usage</a> <a href="/tags/ethereum/" style="font-size: 12.22px;">ethereum</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/golang%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">golang服务</a> <a href="/tags/google/" style="font-size: 14.44px;">google</a> <a href="/tags/k8s/" style="font-size: 11.11px;">k8s</a> <a href="/tags/leadership/" style="font-size: 10px;">leadership</a> <a href="/tags/make/" style="font-size: 10px;">make</a> <a href="/tags/paper/" style="font-size: 13.33px;">paper</a> <a href="/tags/pbft/" style="font-size: 11.11px;">pbft</a> <a href="/tags/pprof/" style="font-size: 11.11px;">pprof</a> <a href="/tags/raft/" style="font-size: 10px;">raft</a> <a href="/tags/remix/" style="font-size: 10px;">remix</a> <a href="/tags/seaweedfs/" style="font-size: 10px;">seaweedfs</a> <a href="/tags/solidity/" style="font-size: 17.78px;">solidity</a> <a href="/tags/wasm/" style="font-size: 11.11px;">wasm</a> <a href="/tags/whisper/" style="font-size: 10px;">whisper</a> <a href="/tags/%E4%B8%93%E5%88%A9/" style="font-size: 10px;">专利</a> <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" style="font-size: 18.89px;">产品设计</a> <a href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">令牌环领导人选举算法</a> <a href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" style="font-size: 11.11px;">占用磁盘</a> <a href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">商业模式</a> <a href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" style="font-size: 10px;">商品验真</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 10px;">开源</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">开源协议</a> <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" style="font-size: 10px;">性能分析</a> <a href="/tags/%E6%83%85%E5%95%86/" style="font-size: 10px;">情商</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 10px;">成功</a> <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" style="font-size: 12.22px;">数字资产</a> <a href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" style="font-size: 10px;">数学符号</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" style="font-size: 10px;">服务器地址</a> <a href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">架构模式</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 10px;">电商</a> <a href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" style="font-size: 10px;">相似度</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%A3%81%E7%9B%98/" style="font-size: 10px;">磁盘</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" style="font-size: 10px;">网络攻击</a> <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" style="font-size: 10px;">随机数</a> <a href="/tags/%E9%9A%90%E7%A7%81/" style="font-size: 10px;">隐私</a> <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" style="font-size: 20px;">零知识证明</a> <a href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">领导人选举算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1982/02/">February 1982</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">万向的产业区块链解决方</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%AC%AC%E4%BA%8C%E5%B1%82%E5%8D%8F%E8%AE%AE%E7%94%9F%E6%80%81%E7%9A%84%E5%B4%9B%E8%B5%B7/">以太坊第二层协议生态的崛起</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E6%89%93%E9%80%A0%E6%95%B0%E5%AD%97%E7%BB%8F%E6%B5%8E%E6%96%B0%E5%9F%BA%E5%BB%BA%E8%A7%A3%E6%94%BE%E6%95%B0%E6%8D%AE%E7%94%9F%E4%BA%A7%E5%8A%9B/">打造数字经济新基建解放数据生产力</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BB%88%E6%9E%81%E7%8C%9C%E6%83%B3/">区块链应用模式的终极猜想</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Weiming Zhuang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

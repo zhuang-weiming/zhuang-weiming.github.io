@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Jasper项目告诉你-分布式大额支付系统是否可行 | Zhuang&#39;s Diary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="翻译：https:&#x2F;&#x2F;www.bankofcanada.ca&#x2F;wp-content&#x2F;uploads&#x2F;2017&#x2F;05&#x2F;fsr-june-2017-chapman.pdf  分布式账本技术(DLT)通常被称为比特币的基础。DLT提供了一种全新方式进行(和跟踪)金融交易。研究人员正在调查其在金融体系的实用性。 Jasper项目是基于DLT大额支付系统的技术验证。该验证对DLT作为金融系统基础建设技术的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jasper项目告诉你-分布式大额支付系统是否可行">
+<meta property="og:url" content="https://willzhuang.github.io/2018/02/15/Jasper%E9%A1%B9%E7%9B%AE%E5%91%8A%E8%AF%89%E4%BD%A0-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%A7%E9%A2%9D%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A1%8C/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="翻译：https:&#x2F;&#x2F;www.bankofcanada.ca&#x2F;wp-content&#x2F;uploads&#x2F;2017&#x2F;05&#x2F;fsr-june-2017-chapman.pdf  分布式账本技术(DLT)通常被称为比特币的基础。DLT提供了一种全新方式进行(和跟踪)金融交易。研究人员正在调查其在金融体系的实用性。 Jasper项目是基于DLT大额支付系统的技术验证。该验证对DLT作为金融系统基础建设技术的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-15T03:04:39.000Z">
+<meta property="article:modified_time" content="2020-06-20T11:34:01.072Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="产品设计">
+<meta property="article:tag" content="paper">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zhuang&#39;s Diary</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://willzhuang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Jasper项目告诉你-分布式大额支付系统是否可行" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/15/Jasper%E9%A1%B9%E7%9B%AE%E5%91%8A%E8%AF%89%E4%BD%A0-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%A7%E9%A2%9D%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A1%8C/" class="article-date">
+  <time datetime="2018-02-15T03:04:39.000Z" itemprop="datePublished">2018-02-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Jasper项目告诉你-分布式大额支付系统是否可行
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> 翻译：<a target="_blank" rel="noopener" href="https://www.bankofcanada.ca/wp-content/uploads/2017/05/fsr-june-2017-chapman.pdf">https://www.bankofcanada.ca/wp-content/uploads/2017/05/fsr-june-2017-chapman.pdf</a></p>
+<ul>
+<li>分布式账本技术(DLT)通常被称为比特币的基础。DLT提供了一种全新方式进行(和跟踪)金融交易。研究人员正在调查其在金融体系的实用性。</li>
+<li>Jasper项目是基于DLT大额支付系统的技术验证。该验证对DLT作为金融系统基础建设技术的成熟度提供了重要见解。</li>
+<li>对于大额支付系统等关键的金融市场基础设施(FMI)，目前版本的DLT还无法提供与集中式系统同样的整体能力。然而，与DLT的初始加密货币应用相比，最新版本的DLT已经取得了巨大的进步。</li>
+<li>基于DLT的大额支付系统的优势是其可以接入更大的DLT生态市场(可能包括跨境交易)。</li>
+</ul>
+<h4 id="什么是分布式账本系统？"><a href="#什么是分布式账本系统？" class="headerlink" title="什么是分布式账本系统？"></a>什么是分布式账本系统？</h4><p>比特币在2009年引入分布式账本技术，其后开始流行。比特币是数字货币的代表。交易都记录在账本上，对所有人都是可见的，由分布式的计算机（矿工）维护。这些计算机是系统上的节点，这些节点在创建新交易时更新账本。该账本使用一系列密码学技术记录交易，若干笔交易被封装成块，交易块与块连接在一起，这种账本被称为区块链。<br>区块链是一个突破，它展示了一种方法来维护各方之间的账本，（i）没有人监督该系统；（ii）交易可以可靠地更新并且记录到比特币系统（无需担心其他成员的诚实度）。</p>
+<p>通过让矿工解决数学难题来争取获得验证交易块的权利，从而实现分布式账本的“可靠性”更新。第一个完成一个新的区块广播的矿工为其他矿工提供区块，并以该区块创建的新比特币（矿山）作为回报。虽然挖矿很难，但很容易验证。一旦其他节点看到并验证了这个新矿山，新的区块就被添加到链的后面，块中的交易则被认为是正确的，矿工们开始挖掘其他的新交易。节点对新区块达成一致的方式称为共识机制，比特币的共识机制叫做工作证明(PoW)。</p>
+<p>虽然比特币系统已具有相当的弹性，但是他有以下几个不足：</p>
+<p>（i）所有交易对每个人都是可见的，但是这是违反银行法的，并使某些参与方利益受损;</p>
+<p>（ii）在时间和能源方面，挖矿的代价非常高，在受信任的环境中通常不需要它的好处;</p>
+<p>（iii）该系统对任何参加者都是匿名开放的。</p>
+<p>为了解决上述问题，人们一直在开发比特币的替代品。新的分布式账本系统只允许受限制的可信对手访问。在一些系统中，共识机制被其他方法所取代。在Jasper阶段2中使用的Corda平台，是通过每个参与方都信任的公证节点完成的，并替换PoW。并且，放弃了区块链的链式结构，并将其替换为分布式账本结构，每个节点只能访问必要的数据，减少系统的透明度，为参与者提供更多隐私**。</p>
+<p>Jasper流动资金模型(LSM)利用一个定时多边支付结算的队列，如果银行有非紧急付款，将付款存入队列中。在银行提交付款通知后，提交的付款将与其他排队付款一起等待。定时到达时，该队列暂时被锁定，而算法结合所有提交的付款，确定每个银行的净付款并评其流动性。</p>
+<p><strong>支付队列本质上是集中的</strong>。关键的问题是如何在DLT系统中实现它，而不是使用传统的集中账本系统。这些技术问题带来了极大的复杂性。</p>
+<h4 id="流动资金模型"><a href="#流动资金模型" class="headerlink" title="流动资金模型"></a>流动资金模型</h4><p>Jasper项目的创新解决方案是在Corda平台上加入“吸入/呼出”程序。在”匹配”周期开始之前，银行向队列提交付款。这些付款不会立即添加到账本中，而是付款指令加载到队列中，直到”匹配”周期开始。此时，会发生一系列事件。首先，在“吸入”阶段，向参与匹配周期的所有银行发送通知，要求他们向加拿大银行发送数字存托凭证(DDR)。然后验证每一笔付款并添加到账本中。然后，在“呼出”阶段，”匹配”算法确定付款的全部子集，以净额为基础，在具备可用资金的情况下进行清算。加拿大银行将DDR付款返还给所有参与银行，金额等于他们所提供的金额，加上或减去”匹配”算法完成后的金额。</p>
+<p>举例说明，假设有两家银行A和B，在队列中支付对方100美元和90美元。此外，作为吸入阶段的一部分，每家银行都将15美元送到队列中。扣除两次付款后，该算法将向A银行收取10美元，并向B银行支付10美元。鉴于他们在吸入阶段的贡献，在呼出阶段A银行为支付5美元，对B银行为支付25美元。</p>
+<p>然后验证这些交易并将其添加到账本中。与算法不匹配的付款保留在队列中。此时开始一个新的匹配周期。在下一个匹配周期结束之前，银行可以自由输入或移除队列中的付款。重复该过程。</p>
+<h4 id="效率和金融稳定性风险"><a href="#效率和金融稳定性风险" class="headerlink" title="效率和金融稳定性风险"></a>效率和金融稳定性风险</h4><h4 id="信用和流动性风险"><a href="#信用和流动性风险" class="headerlink" title="信用和流动性风险"></a>信用和流动性风险</h4><p>Jasper平台没有设计信用风险，因为所有的支付都是对中央银行存款的索赔，这是无风险的资产。参与者通过LVTS将现金转入加拿大银行，然后，大额转账系统(LVTS创建DDR，DDR可以在分布式账本平台上交换。总的来说，本设计证明信用上是可兼容的。</p>
+<p>Jasper合并了一个模拟现有实时总额结算(RTGS)系统功能的流动资金模型(LSM)，以缓解流动性风险，参与者将对不够充足的DDR进行支付。Jasper流动资金模型(LSM)的性能目前正在使用模拟数据进行测试。预测这些模拟结果还为时尚早，但我们可以报告，迄今为止，还没有看到证据表明在分布式账本上实施LSM会改变其相对于中央系统的使用或性能。基于DLT技术的LSM很可能可以做出与现有LSM类似的流动性资金系统。</p>
+<h4 id="结算风险"><a href="#结算风险" class="headerlink" title="结算风险"></a>结算风险</h4><p>结算定义为资产不可撤销和无条件的转移。</p>
+<p>与Jasper方案相关的两个方面：分布式账本更新过程的确定性，和法律确权。</p>
+<p>为了确保法律的正当性，Jasper项目的结构如下：</p>
+<p>DDR的转让是相当于中央银行存款基础债权的完全（不可撤销）转移。这个设计与DDR的发行有关，因此独立于Jasper平台。</p>
+<p>另一方面，为确保方案最终完成，需要解决DLT基础技术相关的问题。在以太坊中，使用PoW共识机制来验证付款。但是PoW是不确定的，付款可能出现失败。在Corda平台中，理论上讲，可信公证人的角色将消除这种不确定性，交易一旦完成就无法撤销。但是，系统还没有经过压力测试，因此一些风险可能仍然与方案有关。</p>
+<h4 id="运营风险"><a href="#运营风险" class="headerlink" title="运营风险"></a>运营风险</h4><p>总体评估表明，与集中式平台相比，分布式账本如果没有经过精心设计，可能会降低运营弹性。基于Corda，Jasper阶段2在满足金融市场基础设施(PFMI)方面比当前集中式系统更加昂贵。在Jasper阶段2中，参与者需要投资高可用节点以减少停机的可能性。</p>
+<p>另一个关键方面是可扩展性。目前，LVTS每天处理32,000笔交易，峰值吞吐量约为每秒10笔交易。在DLT中，”分配”算法消耗了一定的时间。在像以太坊这样的PoW平台上，扩展能力有限。在第一阶段，大概是每秒14笔交易，以太坊是为公有链设计的，速度限制节点之间的信息流。虽然这个速度足以处理当前每日的LVTS，但它限制了未来的高峰量。相比之下，可扩展性不会成为Corda平台的一个限制，因为Corda没有基于固定时间的共识方法，只需要相关方的节点和公证人验证事务。</p>
+<h4 id="透明性和隐私"><a href="#透明性和隐私" class="headerlink" title="透明性和隐私"></a>透明性和隐私</h4><p>大额支付系统需要参与者保持交易私密性，防止其他参与者窥视这些信息。参与者的客户也需要保持隐私。PoW系统是不适合的，因为所有交易都是公开的。</p>
+<p>相比之下，基于公证的DLT系统（如Corda）则允许增加隐私，因为受信任的第三方（例如加拿大银行）有助于验证所有交易。Corda系统缺乏透明性意味着系统中没有任何节点(公证人可能除外)拥有全部信息。如果一个或多个节点的信息被破坏，则可能无法重建整个网络，因为即使公证人也没有全量的账本副本。这就需要对单个节点进行备份。这提出了在交易保持私密的限制下，DLT的运营恢复能力是否有可能的问题。</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>Jasper项目让我们更好地理解了DLT大额支付系统运营者，参与者和中央银行的角色和责任。在DLT框架中，运营者的角色可能更接近规则制定者或标准制定者的角色，而不是传统的IT基础架构运营商。</p>
+<p>此外，Jasper项目促使大额支付系统相关者共同开发平台。私人和公共部门合作，从项目中了解了DLT技术的很多内容。他们发现这降低了相互承认所涉过程的复杂性。</p>
+<p>纯粹独立的DLT大额支付系统不太可能与集中式的收益相匹配。因为上面讨论的LSM，与目前的集中式系统相比，增加的复杂性导致进一步的运营风险。</p>
+<p>相反，基于DLT的大额支付系统的好处是可以与更广泛的FMI生态系统互动。例如，将其他资产与支付相结合（抵押品质押和资产出售），通过整合后端系统，扩大范围经济并降低参与者的成本。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://willzhuang.github.io/2018/02/15/Jasper%E9%A1%B9%E7%9B%AE%E5%91%8A%E8%AF%89%E4%BD%A0-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%A7%E9%A2%9D%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A1%8C/" data-id="ckh0c7elk001nxgvme89verkn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper/" rel="tag">paper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          以太坊编程_I
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Remix部署以太坊智能合约至远程节点</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACL/" rel="tag">ACL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Burrow/" rel="tag">Burrow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSC/" rel="tag">CSC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DAO/" rel="tag">DAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFINITY/" rel="tag">DFINITY</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DID/" rel="tag">DID</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIP/" rel="tag">EIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EVM/" rel="tag">EVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ethereum/" rel="tag">Ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ghana/" rel="tag">Ghana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Haproxy/" rel="tag">Haproxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenPGP/" rel="tag">OpenPGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PBFT/" rel="tag">PBFT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ProtoBuf/" rel="tag">ProtoBuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VRF/" rel="tag">VRF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebAssembly/" rel="tag">WebAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorand/" rel="tag">algorand</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chainlink/" rel="tag">chainlink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/channel/" rel="tag">channel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/credits/" rel="tag">credits</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cv/" rel="tag">cv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debug/" rel="tag">debug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disk-usage/" rel="tag">disk usage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ethereum/" rel="tag">ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geth/" rel="tag">geth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang%E6%9C%8D%E5%8A%A1/" rel="tag">golang服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google/" rel="tag">google</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leadership/" rel="tag">leadership</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/make/" rel="tag">make</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/" rel="tag">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pprof/" rel="tag">pprof</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raft/" rel="tag">raft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/remix/" rel="tag">remix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seaweedfs/" rel="tag">seaweedfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solidity/" rel="tag">solidity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wasm/" rel="tag">wasm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whisper/" rel="tag">whisper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">令牌环领导人选举算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" rel="tag">占用磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" rel="tag">商业模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" rel="tag">商品验真</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90/" rel="tag">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag">开源协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag">性能分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%83%85%E5%95%86/" rel="tag">情商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%8A%9F/" rel="tag">成功</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" rel="tag">数字资产</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" rel="tag">数学符号</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" rel="tag">服务器地址</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="tag">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%95%86/" rel="tag">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="tag">相似度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="tag">知识图谱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E7%9B%98/" rel="tag">磁盘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" rel="tag">网络攻击</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="tag">随机数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%90%E7%A7%81/" rel="tag">隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag">零知识证明</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" rel="tag">领导人选举算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ACL/" style="font-size: 10px;">ACL</a> <a href="/tags/Burrow/" style="font-size: 13.33px;">Burrow</a> <a href="/tags/CSC/" style="font-size: 15.56px;">CSC</a> <a href="/tags/DAO/" style="font-size: 10px;">DAO</a> <a href="/tags/DFINITY/" style="font-size: 10px;">DFINITY</a> <a href="/tags/DID/" style="font-size: 10px;">DID</a> <a href="/tags/EIP/" style="font-size: 10px;">EIP</a> <a href="/tags/EVM/" style="font-size: 10px;">EVM</a> <a href="/tags/Ethereum/" style="font-size: 17.78px;">Ethereum</a> <a href="/tags/Ghana/" style="font-size: 15.56px;">Ghana</a> <a href="/tags/Haproxy/" style="font-size: 10px;">Haproxy</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/OCR/" style="font-size: 11.11px;">OCR</a> <a href="/tags/OpenPGP/" style="font-size: 10px;">OpenPGP</a> <a href="/tags/PBFT/" style="font-size: 10px;">PBFT</a> <a href="/tags/ProtoBuf/" style="font-size: 10px;">ProtoBuf</a> <a href="/tags/Tensorflow/" style="font-size: 14.44px;">Tensorflow</a> <a href="/tags/Token/" style="font-size: 16.67px;">Token</a> <a href="/tags/VRF/" style="font-size: 11.11px;">VRF</a> <a href="/tags/WebAssembly/" style="font-size: 10px;">WebAssembly</a> <a href="/tags/algorand/" style="font-size: 11.11px;">algorand</a> <a href="/tags/chainlink/" style="font-size: 10px;">chainlink</a> <a href="/tags/channel/" style="font-size: 10px;">channel</a> <a href="/tags/credits/" style="font-size: 10px;">credits</a> <a href="/tags/cv/" style="font-size: 11.11px;">cv</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/disk-usage/" style="font-size: 11.11px;">disk usage</a> <a href="/tags/ethereum/" style="font-size: 12.22px;">ethereum</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/golang%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">golang服务</a> <a href="/tags/google/" style="font-size: 14.44px;">google</a> <a href="/tags/k8s/" style="font-size: 11.11px;">k8s</a> <a href="/tags/leadership/" style="font-size: 10px;">leadership</a> <a href="/tags/make/" style="font-size: 10px;">make</a> <a href="/tags/paper/" style="font-size: 13.33px;">paper</a> <a href="/tags/pbft/" style="font-size: 11.11px;">pbft</a> <a href="/tags/pprof/" style="font-size: 11.11px;">pprof</a> <a href="/tags/raft/" style="font-size: 10px;">raft</a> <a href="/tags/remix/" style="font-size: 10px;">remix</a> <a href="/tags/seaweedfs/" style="font-size: 10px;">seaweedfs</a> <a href="/tags/solidity/" style="font-size: 17.78px;">solidity</a> <a href="/tags/wasm/" style="font-size: 11.11px;">wasm</a> <a href="/tags/whisper/" style="font-size: 10px;">whisper</a> <a href="/tags/%E4%B8%93%E5%88%A9/" style="font-size: 10px;">专利</a> <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" style="font-size: 18.89px;">产品设计</a> <a href="/tags/%E4%BB%A4%E7%89%8C%E7%8E%AF%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">令牌环领导人选举算法</a> <a href="/tags/%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98/" style="font-size: 11.11px;">占用磁盘</a> <a href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">商业模式</a> <a href="/tags/%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" style="font-size: 10px;">商品验真</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 10px;">开源</a> <a href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">开源协议</a> <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" style="font-size: 10px;">性能分析</a> <a href="/tags/%E6%83%85%E5%95%86/" style="font-size: 10px;">情商</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 10px;">成功</a> <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/" style="font-size: 12.22px;">数字资产</a> <a href="/tags/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7/" style="font-size: 10px;">数学符号</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80/" style="font-size: 10px;">服务器地址</a> <a href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">架构模式</a> <a href="/tags/%E7%94%B5%E5%95%86/" style="font-size: 10px;">电商</a> <a href="/tags/%E7%9B%B8%E4%BC%BC%E5%BA%A6/" style="font-size: 10px;">相似度</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 10px;">知识图谱</a> <a href="/tags/%E7%A3%81%E7%9B%98/" style="font-size: 10px;">磁盘</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB/" style="font-size: 10px;">网络攻击</a> <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/" style="font-size: 10px;">随机数</a> <a href="/tags/%E9%9A%90%E7%A7%81/" style="font-size: 10px;">隐私</a> <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" style="font-size: 20px;">零知识证明</a> <a href="/tags/%E9%A2%86%E5%AF%BC%E4%BA%BA%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">领导人选举算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/11/">November 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/10/">October 2010</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/1982/02/">February 1982</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">万向的产业区块链解决方</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%AC%AC%E4%BA%8C%E5%B1%82%E5%8D%8F%E8%AE%AE%E7%94%9F%E6%80%81%E7%9A%84%E5%B4%9B%E8%B5%B7/">以太坊第二层协议生态的崛起</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E6%89%93%E9%80%A0%E6%95%B0%E5%AD%97%E7%BB%8F%E6%B5%8E%E6%96%B0%E5%9F%BA%E5%BB%BA%E8%A7%A3%E6%94%BE%E6%95%B0%E6%8D%AE%E7%94%9F%E4%BA%A7%E5%8A%9B/">打造数字经济新基建解放数据生产力</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BB%88%E6%9E%81%E7%8C%9C%E6%83%B3/">区块链应用模式的终极猜想</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Weiming Zhuang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
