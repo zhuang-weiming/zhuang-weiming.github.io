@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="什么是zk-SNARKs？Zcash是zk-SNARKs的第一个广泛应用，它是一种零知识密码学的新形式。Zcash的隐私保证源于可以屏蔽交易，但仍可通过zk-SNARK证明在网络共识规则下验证为有效。 缩写zk-SNARK代表“Zero-Knowledge Succinct Non-Interactive Argument of Knowledge 零知识简明非交互式知识”，并且指向的证明构造可以">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/.io//1.png">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png">
 <meta property="article:published_time" content="2018-03-21T06:09:22.000Z">
 <meta property="article:modified_time" content="2020-06-20T11:08:59.906Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="零知识证明">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/.io//1.png">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png">
   
     <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
   
@@ -102,7 +102,7 @@
 <p>计算 → 算术电路 → R1CS → QAP → zk-SNARK</p>
 <p>将交易有效性函数转化为数学表示，第一步是将逻辑步骤分解为最小可能的操作，从而创建一个“算术电路”。 类似于一个布尔逻辑电路，其中一个程序被编译成离散的单个步骤，如AND，OR，NOT，当一个程序转换为一个算术电路时，它被分解为单个步骤，包括加法，减法， 乘法和除法（在特殊情况下，我们将避免使用除法）。</p>
 <p>下面是计算表达式（a + b）*（b * c）的算术电路的例子：</p>
-<p><img src="/.io//1.png"></p>
+<p><img src="/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png"></p>
 <p>看着这样一个电路，我们可以将输入值a，b，c看作在输出线上从左到右的“行进”。我们的下一步是建立的一级约束系统 (Rank 1 Constraint System)，即R1CS，以检查这些值是否“行进正确”。在上图中，R1CS将确认，b和c进入的乘法门的值是 b*c。</p>
 <p>在这个R1CS表示中，验证者必须检查许多约束条件 - 几乎每条线路都有一个约束条件。 （由于技术原因，事实证明，我们只能对乘法门引出的线路有所限制。）在2012年<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2012/215.pdf">关于该主题的论文</a>中，Gennaro，Gentry，Parno和Raykova提出了一种很好的方法来“将所有这些约束集中成一个” 。该方法使用称为二次算术程序（QAP）的电路表示。需要检查的单个约束在多项式之间而不是数字之间。多项式可能相当大，因为当多项式之间的身份不成立时，它将无法保持多数点。因此，您只需检查两个多项式是否在一个随机选择的点上匹配，以便以高概率正确验证证明。</p>
 <p>如果证明者事先知道验证者选择检查哪一点，则他们可能能够制造无效的多项式，但仍然满足当时的身份。使用zk-SNARKs，复杂的数学技术（如同态加密和椭圆曲线配对）可用于“盲人式”评估多项式 - 即不知道哪个点正在评估。上面描述的公共参数用于确定将检查哪个点，且以加密形式，以便证明者和验证者都不知道公共参数是什么。</p>
@@ -142,7 +142,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/" data-id="ckh0c7ema003kxgvm4fjn9lzm" class="article-share-link">Share</a>
+      <a data-url="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/" data-id="ckh0e2dxx003k58vmeflw8vdt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag">零知识证明</a></li></ul>

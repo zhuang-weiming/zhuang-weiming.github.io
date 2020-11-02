@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="参考链接&#x3D;&#x3D;&gt;https:&#x2F;&#x2F;thenextweb.com&#x2F;podium&#x2F;2019&#x2F;05&#x2F;05&#x2F;ibms-hyperledger-isnt-a-real-blockchain-heres-why&#x2F; 选型 Hyperledger Fabric 作为联盟链需要考虑的几个细节问题 1.区块链的智能合约语言如何安全、简单地表达出复杂的业务逻辑？2.那些目光长远的企业还会考虑到被选择的区块链将来能否可">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/.io//1.jpeg">
+<meta property="og:image" content="https://willzhuang.github.io/2020/01/17/%E9%80%89%E5%9E%8Bfabric%E4%BD%9C%E4%B8%BA%E8%81%94%E7%9B%9F%E9%93%BE%E6%97%B6%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/1.jpeg">
 <meta property="article:published_time" content="2020-01-17T03:21:02.000Z">
 <meta property="article:modified_time" content="2020-06-20T11:20:14.016Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="产品设计">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/.io//1.jpeg">
+<meta name="twitter:image" content="https://willzhuang.github.io/2020/01/17/%E9%80%89%E5%9E%8Bfabric%E4%BD%9C%E4%B8%BA%E8%81%94%E7%9B%9F%E9%93%BE%E6%97%B6%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/1.jpeg">
   
     <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
   
@@ -98,7 +98,7 @@
 <p>4.扩展性，升级性如何？</p>
 <p><strong>Hyperledger Fabric是如何工作的</strong></p>
 <p>区块链的核心是一个去中心化的不可篡改的账本，账本中存储着事件或者交易，而往账本中加入哪些数据完全由共识机制来决定。在比特币和以太坊这样的公有区块链中，这种共识是通过工作量证明或称“挖矿”来实现的。在许可区块链中，参与者提供密码学签名来对共识的内容进行投票，从而达成共识。无论是哪种方式，都不会有中央机构进行干预。</p>
-<p><img src="/.io//1.jpeg"></p>
+<p><img src="/2020/01/17/%E9%80%89%E5%9E%8Bfabric%E4%BD%9C%E4%B8%BA%E8%81%94%E7%9B%9F%E9%93%BE%E6%97%B6%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/1.jpeg"></p>
 <p>在 Hyperledger Fabric 所提供 API 的帮助下，一笔交易要经过如下步骤：</p>
 <p>1）一笔交易预提案被提交后；2）由背书节点（ endorsing peer ）通过智能合约语言 chaincode 执行它的逻辑，同时它会查询状态数据库并生成要使用到的读写集（ RWset ）；3）之后它还会连同生成的读写集返回交易预提案的回应；4）接下来，系统会将带有读写集的交易预提案提交；5）Ordering服务会把一批次的交易加入到区块中；6/7）所有的节点都会收到订购服务发来的区块信息，但它们需要验证区块中的交易信息来保证区块链中数据的安全性。</p>
 <p><strong>结论一：共识过程无容恶、容错能力</strong></p>
@@ -121,7 +121,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://willzhuang.github.io/2020/01/17/%E9%80%89%E5%9E%8Bfabric%E4%BD%9C%E4%B8%BA%E8%81%94%E7%9B%9F%E9%93%BE%E6%97%B6%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" data-id="ckh0c7enq007pxgvm359jf1tk" class="article-share-link">Share</a>
+      <a data-url="https://willzhuang.github.io/2020/01/17/%E9%80%89%E5%9E%8Bfabric%E4%BD%9C%E4%B8%BA%E8%81%94%E7%9B%9F%E9%93%BE%E6%97%B6%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" data-id="ckh0e2dzk007p58vmb40xeszo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag">产品设计</a></li></ul>

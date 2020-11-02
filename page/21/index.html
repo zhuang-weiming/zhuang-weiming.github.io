@@ -100,7 +100,7 @@
 
 <p>开启 CPU profiling 后，Golang 程序在 1 秒钟会停顿 100 次，每次停顿都会记录 1 个样本。上例中，前两列表示运行的函数的样本数量（the number of samples in which the function was running）和占总样本数的百分比，例如说 runtime.mapaccess1_fast64 函数在 298 次采样中（占总采样数量的 11.8%）正在运行。第三列表示前几行样本数量总和占总样本数的百分比（第二行 22.4% 为 11.8% + 10.6%）。第四、五列表示出现的函数的样本数量（the number of samples in which the function appeared）和占总样本数的百分比，这里“出现的函数”指的是在采样中正在运行或者等待某个被调用函数返回的函数，换句话就是采样中那些位于调用栈上的函数。我们可以使用 -cum（cumulative 的缩写）flag 来以第四、五列为标准排序。需要注意的是，每次采样只会包括最底下的 100 个栈帧（stack frames）。</p>
 <p>使用 web 命令能够以图形化的方式（SVG 格式）显示函数调用关系。例如（图片来源于 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> ）：</p>
-<p><img src="/.io//1.png"></p>
+<p><img src="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png"></p>
 <p>这里每个方块的大小由运行的函数的样本数量决定（这样就能方便的一眼看到热点函数）。箭头表示的是调用关系，箭头上的数字表示的是采样到的调用次数。web 命令还可以指定显示特定的函数，例如：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(pprof) web mapaccess1</span><br></pre></td></tr></table></figure>
 
@@ -146,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" data-id="ckh0c7em40036xgvman31gjlb" class="article-share-link">Share</a>
+      <a data-url="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" data-id="ckh0e2dxp003658vm20jpe4em" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pprof/" rel="tag">pprof</a></li></ul>
@@ -222,7 +222,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://willzhuang.github.io/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/" data-id="ckh0c7en50066xgvmbv0ha29v" class="article-share-link">Share</a>
+      <a data-url="https://willzhuang.github.io/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/" data-id="ckh0e2dyy006658vmcqbcgk9u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag">开源协议</a></li></ul>
@@ -258,7 +258,7 @@
       
         <p><a target="_blank" rel="noopener" href="http://note.youdao.com/noteshare?id=40a9c148897c69d4e65cafd722ff57d3">Decentralized Identity Foundation Grows To 56 Members In Our First Year</a></p>
 <p>May 23, 2018 marks the <a target="_blank" rel="noopener" href="http://identity.foundation/">Decentralized Identity Foundation</a>’s first anniversary. Over the past year, DIF has grown from a handful of founding organizations to 56 members. Together, we’re working to shape the future of decentralized identity technology and standards.</p>
-<p><img src="/.io//1.jpeg"></p>
+<p><img src="/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/1.jpeg"></p>
 <h4 id="Technology-Under-Development"><a href="#Technology-Under-Development" class="headerlink" title="Technology Under Development"></a>Technology Under Development</h4><p>DIF members are working together to build a variety of technologies. Much of this work is being done in collaboration with the larger open source community through the W3C and events such as Rebooting Web of Trust and the Internet Identity Workshop.</p>
 <h4 id="Decentralized-Identifiers-DIDs"><a href="#Decentralized-Identifiers-DIDs" class="headerlink" title="Decentralized Identifiers (DIDs)"></a>Decentralized Identifiers (DIDs)</h4><p><a target="_blank" rel="noopener" href="https://w3c-ccg.github.io/did-spec/">Decentralized Identifiers (DIDs)</a> are a new type of identifier for verifiable, “self-sovereign” digital identity. DIDs are fully under the control of their owner, independent from any centralized registry, identity provider, or certificate authority.</p>
 <h4 id="Universal-Resolver"><a href="#Universal-Resolver" class="headerlink" title="Universal Resolver"></a>Universal Resolver</h4><p>The <a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/universal-resolver">Universal Resolver</a> is similar to Bind in the DNS system. However, instead of working with domain names, it works with self-sovereign identifiers that can be created and registered directly by their owners. This project was organized by DIF members with funding from British Columbia.</p>
@@ -290,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://willzhuang.github.io/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/" data-id="ckh0c7el0000hxgvm744w2fj8" class="article-share-link">Share</a>
+      <a data-url="https://willzhuang.github.io/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/" data-id="ckh0e2dw0000h58vm04pk3x26" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DID/" rel="tag">DID</a></li></ul>
@@ -330,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://willzhuang.github.io/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/" data-id="ckh0c7elp001zxgvm3g0a5t6f" class="article-share-link">Share</a>
+      <a data-url="https://willzhuang.github.io/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/" data-id="ckh0e2dx5001z58vm3p74git2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li></ul>
@@ -474,7 +474,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://willzhuang.github.io/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" data-id="ckh0c7ekr0001xgvm7f8qgqvp" class="article-share-link">Share</a>
+      <a data-url="https://willzhuang.github.io/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" data-id="ckh0e2dv5000058vm2wit77t0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="tag">架构模式</a></li></ul>

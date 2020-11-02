@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="参考链接：https:&#x2F;&#x2F;github.com&#x2F;bigpicturelabs&#x2F;consensusPBFT Definitions of each abbreviation in the diagram are;m: Request message objectc: Client IDt: Timestampv: View IDn: Sequence IDi: Peer(Node) IDr: Res">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/.io//pbft-consensus-behavior.jpg">
+<meta property="og:image" content="https://willzhuang.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg">
 <meta property="article:published_time" content="2018-06-25T02:46:16.000Z">
 <meta property="article:modified_time" content="2018-06-25T02:51:39.000Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="pbft">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/.io//pbft-consensus-behavior.jpg">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Zhuang&#39;s Diary" type="application/atom+xml">
   
@@ -91,7 +91,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/bigpicturelabs/consensusPBFT">https://github.com/bigpicturelabs/consensusPBFT</a><br><img src="/.io//pbft-consensus-behavior.jpg"></p>
+        <p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/bigpicturelabs/consensusPBFT">https://github.com/bigpicturelabs/consensusPBFT</a><br><img src="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg"></p>
 <h4 id="Definitions-of-each-abbreviation-in-the-diagram-are"><a href="#Definitions-of-each-abbreviation-in-the-diagram-are" class="headerlink" title="Definitions of each abbreviation in the diagram are;"></a>Definitions of each abbreviation in the diagram are;</h4><p>m: Request message object<br>c: Client ID<br>t: Timestamp<br>v: View ID<br>n: Sequence ID<br>i: Peer(Node) ID<br>r: Result of the request’s operation</p>
 <h4 id="Why-count-gt-2"><a href="#Why-count-gt-2" class="headerlink" title="Why count &gt;= 2 ?"></a>Why count &gt;= 2 ?</h4><p>In the diagram, the peer change its state to prepared or committed when the count value, which is the number of verified messages from other peers, is larger than 2. Actually, the condition is count &gt;= 2*f where f is the maximum number of faulty peers, which the network can tolerate. In this case, f is just 1, so the condition is count &gt;= 2.</p>
 <h4 id="What-is-the-reply-message"><a href="#What-is-the-reply-message" class="headerlink" title="What is the reply message?"></a>What is the reply message?</h4><p>Every node replies the result of the request’s operation to the client individually. The client will collect these reply messages and if f + 1 valid reply messages are arrived, the client will accept the result. In this sample implementation, there is no client. So, every node including the primary will return its reply message to the primary.</p>
@@ -99,7 +99,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://willzhuang.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" data-id="ckh0c7em8003fxgvm273gauug" class="article-share-link">Share</a>
+      <a data-url="https://willzhuang.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" data-id="ckh0e2dxv003f58vmg6bm56dy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pbft/" rel="tag">pbft</a></li></ul>
