@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="什么是zk-SNARKs？Zcash是zk-SNARKs的第一个广泛应用，它是一种零知识密码学的新形式。Zcash的隐私保证源于可以屏蔽交易，但仍可通过zk-SNARK证明在网络共识规则下验证为有效。 缩写zk-SNARK代表“Zero-Knowledge Succinct Non-Interactive Argument of Knowledge 零知识简明非交互式知识”，并且指向的证明构造可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zkSNARKs与zcash">
+<meta property="og:url" content="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="什么是zk-SNARKs？Zcash是zk-SNARKs的第一个广泛应用，它是一种零知识密码学的新形式。Zcash的隐私保证源于可以屏蔽交易，但仍可通过zk-SNARK证明在网络共识规则下验证为有效。 缩写zk-SNARK代表“Zero-Knowledge Succinct Non-Interactive Argument of Knowledge 零知识简明非交互式知识”，并且指向的证明构造可以">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png">
+<meta property="article:published_time" content="2018-03-21T06:09:22.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.114Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="零知识证明">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>zkSNARKs与zcash | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFzk-SNARKs%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是zk-SNARKs？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZK-SNARKS%E5%A6%82%E4%BD%95%E5%9C%A8ZCASH%E4%B8%AD%E6%9E%84%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">ZK-SNARKS如何在ZCASH中构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZK-SNARKS%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%E4%BA%8E%E5%88%9B%E5%BB%BA%E5%B1%8F%E8%94%BD%E4%BA%A4%E6%98%93"><span class="nav-number">3.</span> <span class="nav-text">ZK-SNARKS如何应用于创建屏蔽交易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZK-SNARKS%E7%9A%84%E6%9C%AA%E6%9D%A5%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">ZK-SNARKS的未来应用</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          zkSNARKs与zcash
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-03-21 14:09:22" itemprop="dateCreated datePublished" datetime="2018-03-21T14:09:22+08:00">2018-03-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="什么是zk-SNARKs？"><a href="#什么是zk-SNARKs？" class="headerlink" title="什么是zk-SNARKs？"></a>什么是zk-SNARKs？</h3><p>Zcash是zk-SNARKs的第一个广泛应用，它是一种零知识密码学的新形式。Zcash的隐私保证源于可以屏蔽交易，但仍可通过zk-SNARK证明在网络共识规则下验证为有效。</p>
+<p>缩写zk-SNARK代表“Zero-Knowledge Succinct Non-Interactive Argument of Knowledge 零知识简明非交互式知识”，并且指向的证明构造可以证明拥有某些信息，例如，一个密钥，不泄露该信息的情况下，也不在证明者和验证者之间进行任何交互。</p>
+<p>“零知识”证明允许一方（证明方 prover）向另一方（验证方 verifier）证明声明的内容是真实的，不泄露超出声明本身有效性的任何信息。例如，考虑使用随机数的散列，证明者可以说服验证者确实存在具有该散列值的数字，而不透露数字的内容是什么。</p>
+<p>在零知识“知识证明”中，证明者可以说服验证者不仅知道该数字存在，而且他们实际上知道这样一个数字，且不透露关于数字的任何信息。</p>
+<p>可以在几毫秒内验证“简洁”的零知识证明，即使对于非常大的程序的声明内容，验证长度也只有几百字节。在最初零知识协议中，证明者和验证者必须多次来回通信，但在“非交互式”结构中，证明者发送“证明”给验证者，“证明”由单个消息组成。目前，唯一已知的生成非交互式的，足够短的，以发布到区块链的零知识证明方法具有“初始设置阶段 initial setup phase”，此阶段生成在证明者和验证者之间共享的公共参考字符串。我们将这个公共参考字符串称为系统的公共参数。</p>
+<p>如果有人能够获得用于生成这些参数的随机性秘密，他们将能够创建对验证者看起来有效的错误证明。对于Zcash来说，这意味着恶意方可能会制造假币。为了防止此情况，Zcash设计了由多方程序产生公众参数。要详细了解参数生成程序并查看为防止随机性问题而采取的预防措施（例如，计算机正在生成公共参数），请访问<a target="_blank" rel="noopener" href="https://z.cash/technology/paramgen.html">Paramgen页面</a>。要了解有关参数生成协议背后的数学的更多信息，请阅读<a target="_blank" rel="noopener" href="https://z.cash/blog/generating-zcash-parameters.html">博客文章</a>或<a target="_blank" rel="noopener" href="https://github.com/zcash/mpc/blob/master/whitepaper.pdf">有关该主题的白皮书</a>。</p>
+<h3 id="ZK-SNARKS如何在ZCASH中构建"><a href="#ZK-SNARKS如何在ZCASH中构建" class="headerlink" title="ZK-SNARKS如何在ZCASH中构建"></a>ZK-SNARKS如何在ZCASH中构建</h3><p>为了在Zcash中拥有零知识隐私，根据网络共识规则确定交易有效的函数必须返回交易是否有效，而不泄露其执行计算的任何信息。这是通过对zk-SNARKs中的一些网络共识规则进行编码完成的。在很高的层面上，zk-SNARKs首先将你想要证明的东西转化为关于知道某些代数方程解的等价形式。 </p>
+<p>在下面的章节中，将简要介绍如何将用于确定有效交易的规则转换为方程，然后可以在候选解决方案上对方程进行评估，而不会向验证方程的当事方透露任何敏感信息。</p>
+<p>计算 → 算术电路 → R1CS → QAP → zk-SNARK</p>
+<p>将交易有效性函数转化为数学表示，第一步是将逻辑步骤分解为最小可能的操作，从而创建一个“算术电路”。 类似于一个布尔逻辑电路，其中一个程序被编译成离散的单个步骤，如AND，OR，NOT，当一个程序转换为一个算术电路时，它被分解为单个步骤，包括加法，减法， 乘法和除法（在特殊情况下，我们将避免使用除法）。</p>
+<p>下面是计算表达式（a + b）*（b * c）的算术电路的例子：</p>
+<p><img src="/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png"></p>
+<p>看着这样一个电路，我们可以将输入值a，b，c看作在输出线上从左到右的“行进”。我们的下一步是建立的一级约束系统 (Rank 1 Constraint System)，即R1CS，以检查这些值是否“行进正确”。在上图中，R1CS将确认，b和c进入的乘法门的值是 b*c。</p>
+<p>在这个R1CS表示中，验证者必须检查许多约束条件 - 几乎每条线路都有一个约束条件。 （由于技术原因，事实证明，我们只能对乘法门引出的线路有所限制。）在2012年<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2012/215.pdf">关于该主题的论文</a>中，Gennaro，Gentry，Parno和Raykova提出了一种很好的方法来“将所有这些约束集中成一个” 。该方法使用称为二次算术程序（QAP）的电路表示。需要检查的单个约束在多项式之间而不是数字之间。多项式可能相当大，因为当多项式之间的身份不成立时，它将无法保持多数点。因此，您只需检查两个多项式是否在一个随机选择的点上匹配，以便以高概率正确验证证明。</p>
+<p>如果证明者事先知道验证者选择检查哪一点，则他们可能能够制造无效的多项式，但仍然满足当时的身份。使用zk-SNARKs，复杂的数学技术（如同态加密和椭圆曲线配对）可用于“盲人式”评估多项式 - 即不知道哪个点正在评估。上面描述的公共参数用于确定将检查哪个点，且以加密形式，以便证明者和验证者都不知道公共参数是什么。</p>
+<p>到目前为止的描述主要涉及如何获得“SNARKs”中的S和N - 如何获得短暂的，非交互式的单一消息证明 - 但尚未解决允许 “zk”（零知识）部分证明者维护其秘密投入的机密性。事实证明，在这个阶段，通过使证明者使用仍然满足所需身份的原始多项式的“随机偏移”，可以容易地添加“zk”部分。</p>
+<p>有关Zcash中关于zk-SNARKs背后关键概念的深入解释，请参阅后面的博客文章。</p>
+<p>Zcash使用 <a target="_blank" rel="noopener" href="https://github.com/scipr-lab/libsnark">libsnark</a> 分支，这是一个用于zk-SNARKs的C++库。 您可以检查代码并了解更多关于在 <a target="_blank" rel="noopener" href="https://github.com/zcash/libsnark">github</a> 上的实现。要深入了解 Zcash zk-SNARKs 的协议，请参阅 <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2013/279.pdf">Pinocchio协议</a> 的本文。</p>
+<h3 id="ZK-SNARKS如何应用于创建屏蔽交易"><a href="#ZK-SNARKS如何应用于创建屏蔽交易" class="headerlink" title="ZK-SNARKS如何应用于创建屏蔽交易"></a>ZK-SNARKS如何应用于创建屏蔽交易</h3><p>在比特币中，通过链接发件人地址，收件人地址以及公共区块链上的输入和输出值来验证交易。 Zcash使用zk-SNARKs来证明有效交易的条件得到了满足，但没有透露任何有关地址或值的重要信息。 屏蔽交易的发件人构建了一个证据，以高概率显示：</p>
+<blockquote>
+<p>输入总和 等于 每个屏蔽转换的输出总和。</p>
+<p>发件人证明他们拥有输入的私钥，赋予他们花费的权力。</p>
+<p>输入的私钥与整个交易的签名链接起来，链接是加密的，则，交易不会被不知道这些私钥的人修改。</p>
+</blockquote>
+<p>另外，屏蔽交易必须满足下面描述的其他条件：</p>
+<p>比特币跟踪(未花费的交易输出)UTXO，以确定哪些交易是可用的。 在Zcash中，UTXO的屏蔽等同物称为“承诺”，花费承诺包含暴露出“花费人”。 Zcash节点保留已经创建的所有承诺的清单以及所有已经暴露的花费人。承诺和无效值存储为散列值，以避免公开关于承诺的任何信息，或者哪些无效值与哪些承诺相关。</p>
+<p>对于由屏蔽付款创建的每个新钞票，将公布一个承诺，其中包含以下内容的散列：</p>
+<ul>
+<li>钞票发送的地址</li>
+<li>发送的金额</li>
+<li>本钞票所特有的数字“rho”（稍后用于派生花费人）和一个随机数。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Commitment &#x3D; HASH(recipient address, amount, rho, r)</span><br></pre></td></tr></table></figure>
+
+<p>当屏蔽交易被花费时，发件人使用他们的支出密钥来公布一个花费者，该花费者是来自尚未用过的现有承诺的唯一编号（“rho”）的hash，并提供零知识证明，证明他们有权花费它。 该散列必须不在花费清单中，花费清单在区块链的每个节点中保存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nullifier &#x3D; HASH(spending key, rho)</span><br></pre></td></tr></table></figure>
+<p>屏蔽交易的零知识证明证实，除了上面列出的条件外，以下认定也是正确的：</p>
+<blockquote>
+<p>对于每个输入，都存在明确的承诺。</p>
+<p>花费者和钞票承诺计算正确。</p>
+<p>输出钞票的花费者与任何其他钞票的花费者发生绝不会发生冲突。</p>
+</blockquote>
+<p>除了用于控制地址的支出密钥之外，Zcash还使用一组证明和验证密钥来创建和检查证明。这些密钥在上面讨论的公共参数程序中生成，并在Zcash网络中的所有参与者之间共享。对于每个屏蔽交易，发件人使用他们的证明密钥来生成他们的输入有效的证据。矿工通过使用验证密钥检查证明者的计算来检查被保护的交易遵循共识规则。Zcash证明生成的设计方式要求证明者事先做更多的工作，但它简化了验证，因此主要的计算工作被转移到交易的创建者（这就是为什么创建屏蔽Zcash事务可能会占用到40秒，同时验证事务有效仅需要几毫秒）。</p>
+<p>Zcash的屏蔽交易的隐私依赖于标准的，经过验证的密码学（散列函数和流密码），但它增加了zk-SNARKs，与承诺和花费机制一起使用，允许屏蔽交易的发送者和接收者证明加密交易是有效的。其他为加密货币提供隐私的方法依赖于模糊交易之间的链接，但事实上Zcash交易可以存储在完全加密的区块链中，为加密货币应用程序开辟了新的可能性。加密交易使得各方可以享受公共区块链的好处，同时保护他们的隐私。计划的未来升级将允许用户根据自己的判断有选择地披露有关被屏蔽交易的信息。查看Zcash博客文章的近期未来，了解<a target="_blank" rel="noopener" href="https://z.cash/blog/the-near-future-of-zcash.html">Zcash的未来计划</a>。</p>
+<p>有关如何在Zcash中构建屏蔽事务的更深入解释，请参阅我们的博客文章，了解屏蔽地址之间的事务如何工作。有关当前Zcash协议的完整详细信息，请参阅我们的<a target="_blank" rel="noopener" href="https://github.com/zcash/zips/blob/master/protocol/protocol.pdf">协议规范</a>。</p>
+<h3 id="ZK-SNARKS的未来应用"><a href="#ZK-SNARKS的未来应用" class="headerlink" title="ZK-SNARKS的未来应用"></a>ZK-SNARKS的未来应用</h3><p>在Zcash中创建屏蔽交易只是zk-SNARKs许多可能应用中的一个例子。从理论上讲，您可以使用zk-SNARK来验证任何关系，而不会泄露输入或泄露信息。对复杂函数生成证明的计算量仍然过大，许多程序还不适用，但Zcash团队正在推动优化zk-SNARKs的界限，并且已经以更高效的实施方式开创了新局面。</p>
+<p>就目前而言，Zcash的zk-SNARKs实现可以作为企业用例的<a target="_blank" rel="noopener" href="https://z.cash/blog/zsl.html">零知识安全层</a>添加到任何现有的分布式分类帐解决方案中。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/" title="zkSNARKs与zcash">https://willzhuang.github.io/2018/03/21/zkSNARKs与zcash/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag"># 零知识证明</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/20/awesome-links-of-zero-knowledge-proof/" rel="prev" title="awesome links of zero knowledge proof">
+                  <i class="fa fa-chevron-left"></i> awesome links of zero knowledge proof
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/03/21/%E8%A7%A3%E9%87%8ASNARKs%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0/" rel="next" title="解释SNARKs系列文章">
+                  解释SNARKs系列文章 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '41b7b8b9a0e85dacb391a4fa79ebec1d',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

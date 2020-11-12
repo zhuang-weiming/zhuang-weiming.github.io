@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="区块链的核心价值： 提升多中心协作效率 减轻中介持有信息不透明造成的摩擦  中国的研究热点集中在联盟链上，同时监管技术也非常重要。目前联盟链的协议比较成熟，大致分为类EVM链和Hyperledger fabric。笔者从目前fabric的路线图和社区人员来看，认为类EVM更加有生命力。 联盟链的4个关键技术 软硬件协同 安全交易隐私。其中SGX严重依赖Intel芯片，Security Zone以来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="联盟链研发以来的思考-2019-10">
+<meta property="og:url" content="https://willzhuang.github.io/2019/10/29/%E8%81%94%E7%9B%9F%E9%93%BE%E7%A0%94%E5%8F%91%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83-2019-10/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="区块链的核心价值： 提升多中心协作效率 减轻中介持有信息不透明造成的摩擦  中国的研究热点集中在联盟链上，同时监管技术也非常重要。目前联盟链的协议比较成熟，大致分为类EVM链和Hyperledger fabric。笔者从目前fabric的路线图和社区人员来看，认为类EVM更加有生命力。 联盟链的4个关键技术 软硬件协同 安全交易隐私。其中SGX严重依赖Intel芯片，Security Zone以来">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-29T02:21:04.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.209Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="产品设计">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2019/10/29/%E8%81%94%E7%9B%9F%E9%93%BE%E7%A0%94%E5%8F%91%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83-2019-10/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>联盟链研发以来的思考-2019-10 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">区块链的核心价值：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%81%94%E7%9B%9F%E9%93%BE%E7%9A%844%E4%B8%AA%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-number">1.1.</span> <span class="nav-text">联盟链的4个关键技术</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%82%B9%E6%80%9D%E8%80%83%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">两点思考：</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/10/29/%E8%81%94%E7%9B%9F%E9%93%BE%E7%A0%94%E5%8F%91%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83-2019-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          联盟链研发以来的思考-2019-10
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-29 10:21:04" itemprop="dateCreated datePublished" datetime="2019-10-29T10:21:04+08:00">2019-10-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="区块链的核心价值："><a href="#区块链的核心价值：" class="headerlink" title="区块链的核心价值："></a>区块链的核心价值：</h3><ol>
+<li>提升多中心协作效率</li>
+<li>减轻中介持有信息不透明造成的摩擦</li>
+</ol>
+<p>中国的研究热点集中在联盟链上，同时监管技术也非常重要。目前联盟链的协议比较成熟，大致分为类EVM链和Hyperledger fabric。笔者从目前fabric的路线图和社区人员来看，认为类EVM更加有生命力。</p>
+<h4 id="联盟链的4个关键技术"><a href="#联盟链的4个关键技术" class="headerlink" title="联盟链的4个关键技术"></a>联盟链的4个关键技术</h4><ol>
+<li>软硬件协同</li>
+<li>安全交易隐私。其中SGX严重依赖Intel芯片，Security Zone以来Arm芯片，而服务器芯片大量采用Intel技术，所以基于cpu的可信计算环境实际上是Intel的宣传而已，在国内搞安全要求领域不建议使用。软件密码学实现交易可验证但是不可见，如同态加密，MPC。其中MPC由于通信次数多，独立于区块链的共识机制之外，可以独立运作，所以实际上MPC不需要和区块链结合，目前多方（两方以上）的MPC仍然属于研究阶段。同态加密+零知识证明目前逐渐成熟，如以太坊EIP1724，Zokrates，一账通的3D零知识证明都属本方向，笔者也认为此方向比较适用于区块链</li>
+<li>高可用性。如动态成员准入，节点失效后的快速恢复机制，网络持续工作中实现节点升级，节点/共识/存储/通信簿等全方位监控与报警等</li>
+<li>高可扩展。1）合约语言；2）存储支持多组织可信存储；3）语言机；4）跨链</li>
+</ol>
+<h3 id="两点思考："><a href="#两点思考：" class="headerlink" title="两点思考："></a>两点思考：</h3><ol>
+<li>BaaS(Blockchain as a Service) </li>
+</ol>
+<p>例如某文章中，xxx BaaS平台称，该平台目前已支撑了超过500亿元资产的真实性问题 。从这个阐述看，区块链的用户是信任xxx BaaS平台的，并且整条链都是部署与xxx BaaS平台的，那么问题是，既然一方或者多方都信任xxx平台，为什么还需要区块链呢？数据和流程都放置于xxx 的中心化的系统和数据库中，是不是同样的计算架构呢？</p>
+<ol start="2">
+<li>链上资产和实物资产的对应关系</li>
+</ol>
+<p>同样是也是对溯源的思考。经常会看到食品溯源的区块链案例，什么数据不可篡改，什么数据真实可靠。问题是，怎么能够证明手里面的视频和链上的数据是对应的呢？目前还没有看到靠谱的案例。</p>
+<p>笔者也在不断的思考以上两个问题。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2019/10/29/%E8%81%94%E7%9B%9F%E9%93%BE%E7%A0%94%E5%8F%91%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83-2019-10/" title="联盟链研发以来的思考-2019-10">https://willzhuang.github.io/2019/10/29/联盟链研发以来的思考-2019-10/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" rel="tag"># 产品设计</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/15/%E9%AB%98%E4%BB%B7%E5%80%BC%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" rel="prev" title="高价值商品验真">
+                  <i class="fa fa-chevron-left"></i> 高价值商品验真
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/" rel="next" title="总结区块链在金融方面的实施经验">
+                  总结区块链在金融方面的实施经验 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '8b4cd7eefb3121bcfe7beaaa2a68aabc',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

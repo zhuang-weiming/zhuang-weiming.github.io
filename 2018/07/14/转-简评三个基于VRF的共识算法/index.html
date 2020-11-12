@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="[转]https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;2b9fa8633df1 Algorand、Dfinity和Ouroboros Praos三个共识算法（Dfinity虽然是项目名，这里用来称呼其共识算法也应无不妥）近期较受关注，而且都是基于VRF(Verifiable Random Function) 设计，可以对照学习。Algorand的版本很多，以下单指 1607.01341v9，暂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]简评三个基于VRF的共识算法">
+<meta property="og:url" content="https://willzhuang.github.io/2018/07/14/%E8%BD%AC-%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="[转]https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;2b9fa8633df1 Algorand、Dfinity和Ouroboros Praos三个共识算法（Dfinity虽然是项目名，这里用来称呼其共识算法也应无不妥）近期较受关注，而且都是基于VRF(Verifiable Random Function) 设计，可以对照学习。Algorand的版本很多，以下单指 1607.01341v9，暂">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-07-14T01:34:29.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.214Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="VRF">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2018/07/14/%E8%BD%AC-%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[转]简评三个基于VRF的共识算法 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81VRF%E7%9A%84%E5%85%B1%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">一、VRF的共性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%AE%80%E8%AF%84%E5%BC%BA%E5%90%8C%E6%AD%A5%E5%81%87%E8%AE%BE%E7%89%88%E6%9C%AC%E7%9A%84Algorand"><span class="nav-number">2.</span> <span class="nav-text">二、简评强同步假设版本的Algorand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%AE%80%E8%AF%84Dfinity%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">三、简评Dfinity的可扩展性问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%AE%80%E8%AF%84Ouroboros-Praos"><span class="nav-number">4.</span> <span class="nav-text">四、简评Ouroboros Praos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/07/14/%E8%BD%AC-%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [转]简评三个基于VRF的共识算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-14 09:34:29" itemprop="dateCreated datePublished" datetime="2018-07-14T09:34:29+08:00">2018-07-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[转]<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2b9fa8633df1">https://www.jianshu.com/p/2b9fa8633df1</a></p>
+<p>Algorand、Dfinity和Ouroboros Praos三个共识算法（Dfinity虽然是项目名，这里用来称呼其共识算法也应无不妥）近期较受关注，而且都是基于VRF(Verifiable Random Function) 设计，可以对照学习。Algorand的版本很多，以下单指 1607.01341v9，暂称其为Algorand’（笔者手中另有Algorand的最新版本，其中已对下文提及的几处问题完成了修正，可与本文参看）。</p>
+<h3 id="一、VRF的共性"><a href="#一、VRF的共性" class="headerlink" title="一、VRF的共性"></a>一、VRF的共性</h3><p>VRF的意义很好理解——用以完成出块人（群）的随机选择。为此，VRF的返回值应尽力难以预测。先看Algorand’和Dfinity的套路是怎么做的：大体上是先将前一个随机数（最初的随机数却是协议给定的）和某种代表高度、轮次的变量进行组合，用某种私钥对之进行签名（或者是先签名再组合），最后哈希一下得出最新的随机数。这样产生的随机数旁人很容易验证其合乎算法，”V”就这样得到了；而哈希返回值又是随机分布的，“R”也因此得到保证。在此过程中，为降低操纵结果的可能性，有两个注意事项：A) 签名算法应当具有唯一性，也就是用同一把私钥对同样的信息进行签名，只有一个合法签名可以通过验证——普通的非对称加解密算法一般不具备这个属性，如SM2。如果用的签名算法没有这种uniqueness属性，那在生成新随机数的时候就存在通过反复多次尝试签名以挑出最有利者的余地，会降低安全性。B) 避免在生成新随机数时将当前块的数据作为随机性来源之一，比如引用本块交易列表的merkle root值等等，因为这样做会给出块人尝试变更打包交易顺序、尝试打包不同交易以产生最有利的新随机数的余地。在设计和检视新的共识算法时，以上两个注意事项是要特别留意的。</p>
+<p>考察一下VRF的返回结果应该如何运用。目前所见用法中，VRF的返回结果可以用来公开完成节点或节点群体的选择，也可以私密地完成选择。以Dfinity为例，它是利用mod操作来唯一、公开地确定一个Group。Algorand、Ouroboros Praos是私密选择的范例，大致套路是对VRF的最新返回值，配上轮次等变量后用私钥进行签名并哈希，如果哈希值小于某个阈值，节点就可以私密地知道自己被选中。这种方法很可能在网络节点数较多时的表现会更稳定，否则幸运儿个数上下波动会较大，进而影响协议表现，包括空块和分叉。</p>
+<h3 id="二、简评强同步假设版本的Algorand"><a href="#二、简评强同步假设版本的Algorand" class="headerlink" title="二、简评强同步假设版本的Algorand"></a>二、简评强同步假设版本的Algorand</h3><p>私密选择提供了较强的抗击定点攻击的能力，但由于幸运儿的总数对于任何一个幸运儿都是不能预知的，也因此给后续共识算法的设计和区块链的优化带来了困难。Algorand‘采用了很强的同步网络假设（同步网络假设下的共识算法当然容易做一些），要求预先知道网络消息传播时间的上限：在固定时间内完成对固定比例的用户的网络传播。比如要知道，1KB消息，在1秒钟内完成全网95%的传播，而1MB消息需要1.5分钟完成全网95%的传播。但这个传输上限应该如何选择？ 通过一段时间的统计结果再乘以一个系数这种经验统计？只能说“感觉上可以”，但如果要严谨和安全，Algorand‘算法应该补充证明即使在遭遇DDOS或互联网拥堵的情况下消息传播严重超限后算法仍然能够保证安全——然而这个证明是缺失的。作为对照，Ouroboros Praos公开承认之前在同步网络假设下设计的Ouroboros协议在异步网络条件下会出错，所以才又做了Ouroboros Praos；新版本的Algorand承认在弱同步网络时会在不同的块上达成共识（后续网络恢复强同步时分叉可以得到解决）云云，这些都可资参考。</p>
+<p>即使我们暂且认可Algorand’算法可以通过设定一个很大的传播时间上限来回应上述问题，但随之而来的是此时可以看出此算法缺乏一个非常好的特性：Responsiveness。这个特性指的是：若一个协议被设计为在一个较大的传播时间上限DELTA下工作，但若实际传播时间是较小的delta，则协议的实际推进步调将只和delta有关，这种协议被称为Responsive的。具有Responsive特性的共识算法再配以同步网络假设会非常理想——出于安全，上限可以设置很大，然而协议执行速度只和当时网络条件有关。Algorand’并不具有这种特性。平均而言，Algorand’完成共识所需的消息传送次数是11轮，每轮如果要确保安全，完成共识的时间就会很长，单个分区的吞吐量就不会太高。当然，架构设计涉及很多取舍，最终评价一个算法好还是不好还是要回到初心——准备拿来实现的目标是什么。上述分析只是尝试客观地指出Algorand’算法的几个少为人知的固有特征，供读者自行评估。</p>
+<h3 id="三、简评Dfinity的可扩展性问题"><a href="#三、简评Dfinity的可扩展性问题" class="headerlink" title="三、简评Dfinity的可扩展性问题"></a>三、简评Dfinity的可扩展性问题</h3><p>私密选择并且立即上任的做法，也给系统分片带来了极大挑战。Dfinity是明确要做分片(Sharding)的，所以必须直面挑战。可扩展性问题非常复杂，完整解决这个问题需要通盘考虑网络、存储、计算三方面的可扩展性——时下大多数区块链3.0项目只注意到计算的分片和可扩展性，忽略了其余二者，从而不可能真正实现理想的扩展。由于公链节点网络带宽的制约，计算合约所需的数据通常很难迅速地从一个节点拷贝到另一节点，所以就算用VRF实现了飘忽来去的出块节点选择，存储节点是没法同样飘逸如风的。明显的选择有那么几个：全部节点存储全部数据，不同节点静态地分配用来存储不同分区。前者的可扩展性很差，对于后者而言，如果出块节点漂浮不定且出块节点还需要完成合约运算，就意味着基于P2P网络来回远程访问存储，性能多半急剧下降；动态决定的出块节点只完成排序共识，计算能力和存储捆绑，通过静态分区提供可扩展性，可能是合理的应对。然而，最可恨的就是“然而”二字——即使如此，系统还存在一处对存储和网络构成压力的所在：最终用户提交的待打包交易。普通公链（先不考虑EOS那种）的带宽有限，如果用户提交的待打包交易必须粗放型地全网泛滥传播，那现有网络带宽可以提供多少TPS？如果出块节点是静态分区或者至少提前一段时间公开知晓，事情尚有回旋余地；如果出块节点是如此飘忽不定，而且直到最后一刻也只有这些节点自己知道，那无论是用户还是出块节点候选人看起来最直接的应对之道就是全网泛滥传播全部待打包交易、保存全部待打包交易，这样带宽和存储仍然成为系统瓶颈。</p>
+<p>所以这里碰到的，本质上还是安全、可扩展性、去中心化的不可能三角。</p>
+<h3 id="四、简评Ouroboros-Praos"><a href="#四、简评Ouroboros-Praos" class="headerlink" title="四、简评Ouroboros Praos"></a>四、简评Ouroboros Praos</h3><p>BM怼 Ouroboros的文字已经流传广泛。BM的话当然有些明显是不对的，比如Ouroboros的DPOS是指”Dynamic [stake distribution] POS”而不是BM的Delegate POS，但其关于Pareto分布的评论则值得玩味。如果我们仔细浏览后出的Ouroboros Praos，可以发现协议的安全假设和安全证明完全没有考虑经济博弈因素，因此洋洋洒洒的证明很可能会不得要领而错过真正需要防护的方向——毕竟一直以来POS/DPOS这些协议的血管里面流淌的就是基于经济博弈和人性进行设计的血液。最明显的例子是在forward secure signature的实现方法上，协议目前的设计是要求每个好的节点自觉主动地安全删除用过的私钥，而完全没有考虑近乎零的私钥保存成本如何面对bribe attack的诱惑，然而这却是值得考虑的。除了形式化证明之外，Ouroboros Praos本身并没有太多值得关注的协议特征，总体上就是用VRF抽签结合POS算法并针对某些安全假设进行了形式化证明，其做事的态度是非常值得赞赏的。</p>
+<h3 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h3><p>这几个算法本身颇有创意，也很值得学习。与此同时，在看过以太坊CASPER目前披露的分区技术后，笔者的体会是：区块链3.0的竞争才刚刚开始，从以太坊团队的技术路线看，他们的技术考量和选择要比很多宣称要超越以太坊的团队来得深刻和全面。如果当真要超越以太坊，还是应该先从理解以太坊开始。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2018/07/14/%E8%BD%AC-%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" title="[转]简评三个基于VRF的共识算法">https://willzhuang.github.io/2018/07/14/转-简评三个基于VRF的共识算法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/VRF/" rel="tag"># VRF</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" rel="prev" title="pbft图解">
+                  <i class="fa fa-chevron-left"></i> pbft图解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/07/14/%E5%A5%B3%E5%B7%AB%E6%94%BB%E5%87%BBSybil-Attack/" rel="next" title="女巫攻击Sybil_Attack">
+                  女巫攻击Sybil_Attack <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '36741c0704aecd5aa295438e4b0370e5',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

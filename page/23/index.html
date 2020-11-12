@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.2.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,11 +15,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
   <meta property="og:type" content="website">
@@ -28,10 +32,11 @@
 <meta property="article:author" content="Weiming Zhuang">
 <meta name="twitter:card" content="summary">
 
+
 <link rel="canonical" href="https://willzhuang.github.io/page/23/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -51,49 +56,61 @@
 
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">Zhuang's Diary</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
   </div>
@@ -106,9 +123,8 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
@@ -117,6 +133,11 @@
         <li class="menu-item menu-item-tags">
 
     <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -131,6 +152,62 @@
 
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
@@ -141,18 +218,23 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content index posts-expand">
-            
+    <div class="main-inner index posts-expand">
       
+
+      
+    
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,24 +252,26 @@
             <a href="/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Algorand算法特性总结</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-04-09 11:56:41" itemprop="dateCreated datePublished" datetime="2018-04-09T11:56:41+08:00">2018-04-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2018-04-09 11:56:41" itemprop="dateCreated datePublished" datetime="2018-04-09T11:56:41+08:00">2018-04-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -196,8 +280,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p><a target="_blank" rel="noopener" href="https://www.algorand.com/">here is algorand网址链接</a></p>
 <h4 id="PoW的安全性"><a href="#PoW的安全性" class="headerlink" title="PoW的安全性"></a>PoW的安全性</h4><p>基于PoW的区块链假定矿工拥有生成下一个区块所需的大部分计算能力。但是，工作证明已将权力集中在少数采矿池中。在比特币中，实际上只有三个这样的矿池控制区块链。对于任何实体而言，这种权力集中对于渴望分权的系统是不可接受的，并且很可能是非常危险的。</p>
 <h4 id="Bonded-PoS的安全性"><a href="#Bonded-PoS的安全性" class="headerlink" title="Bonded PoS的安全性"></a>Bonded PoS的安全性</h4><p>在基于Bonded PoS的区块链中，每个用户都可能将自己的部分资金置于危险境地。那些这样做的人有权根据他们的赌注选择一个新的区块。原则上，如果他们发现行为不端，他们可能会失去他们的赌注，如果他们主张通过行为失误赚更多的钱，这可能不是很有威慑力。但是，一个普通用户只能负担得起的一小部分资金。因此，这个系统可能会成为富有的不诚实的人的牺牲品，这些个人通过大量的资金来控制区块链。</p>
@@ -219,18 +301,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -248,24 +337,26 @@
             <a href="/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">可验证随机函数VRF之Algorand共识算法</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-03-31 13:54:31" itemprop="dateCreated datePublished" datetime="2018-03-31T13:54:31+08:00">2018-03-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2018-03-31 13:54:31" itemprop="dateCreated datePublished" datetime="2018-03-31T13:54:31+08:00">2018-03-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -274,8 +365,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>2018年2月，图灵奖得主、MIT教授Sivio Micali募集400万美元开发Algorand区块链协议一事受到了国内外媒体的普遍关注。在MITMicali教授和MIT媒体实验室数字货币计划负责人Neha Narula合开课程《共享公共账本》(Shared Public Ledger)课程。这门课主要就是讲解Algorand。Algorand的目标是建立一个低能耗、高速度、民主化、可拓展性好而且几乎不会出现分叉的分布式账本。Algorand没有引入激励机制或发行数字加密货币。</p>
 <p>论文发表In Proceedings of the 26th ACM Symposium on Operating Systems Principles (SOSP), Shanghai, China, October 2017.：</p>
 <ul>
@@ -387,18 +476,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -416,24 +512,26 @@
             <a href="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/" class="post-title-link" itemprop="url">为区块链做设计有什么不同</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-03-28 19:48:42" itemprop="dateCreated datePublished" datetime="2018-03-28T19:48:42+08:00">2018-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2018-03-28 19:48:42" itemprop="dateCreated datePublished" datetime="2018-03-28T19:48:42+08:00">2018-03-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -442,8 +540,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>—即如何设计“可信”技术的信任。<br>翻译原文： <a target="_blank" rel="noopener" href="https://media.consensys.net/designing-for-blockchain-whats-different-and-what-s-at-stake-b867eeade1c9">https://media.consensys.net/designing-for-blockchain-whats-different-and-what-s-at-stake-b867eeade1c9</a><br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/1.png"><br>区块链技术正在重新定义信任，改变我们如何思考日常生活的结构，从身份、经济以及政府。它推动设计师进行系统和更大规模的思考 - 重新定义分散形式的未来团队的角色和价值。</p>
 <p>如果我们不解决人们实际存在的问题，就无法实现区块链的未来。</p>
 <p>我最近的目标是让这个领域有更多的设计师：更多的同理心，更多的用户研究，更多的设计思维，以及更多的关注现在遇到的用户。</p>
@@ -523,18 +619,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -552,24 +655,26 @@
             <a href="/2018/03/27/Token-Ring-Election-Algorithm/" class="post-title-link" itemprop="url">Token Ring Election Algorithm</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-03-27 22:51:18" itemprop="dateCreated datePublished" datetime="2018-03-27T22:51:18+08:00">2018-03-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2018-03-27 22:51:18" itemprop="dateCreated datePublished" datetime="2018-03-27T22:51:18+08:00">2018-03-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -578,8 +683,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>令牌环领导人选举算法</p>
 <p>We start with 6 processes,<br>    connected in a logical ring.<br>Process 6 is the leader,<br>    as it has the highest number.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/0.gif"><br>Process 6 fails.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/1.gif"><br>Process 3 notices that Process 6 does not respond<br>    So it starts an election,<br>        sending a message containing its id<br>    to the next node in the ring.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/2.gif"><br>Process 5 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/3.gif"><br>Process 0 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/4.gif"><br>Process 1 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/5.gif"><br>Process 4 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/6.gif"><br>When Process 3 receives the message back,<br>    it knows the message has gone around the ring,<br>        as its own id is in the list.<br>Picking the highest id in the list,<br>    it starts the coordinator message<br>        “5 is the leader” around the ring.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/7.gif"><br>Process 5 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/8.gif"><br>Process 0 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/9.gif"><br>Process 1 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/10.gif"><br>Process 4 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/11.gif"><br>Process 3 receives the coordinator message,<br>    and stops it.</p>
 <p>让我们分析如何在ZooKeeper集合中选举leader节点，这个过程和令牌环原理是一致的。考虑一个集群中有N个节点。leader选举的过程如下：</p>
@@ -600,18 +703,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -629,24 +739,26 @@
             <a href="/2018/03/27/Bully-Election-Algorithm/" class="post-title-link" itemprop="url">Bully Election Algorithm</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-03-27 22:50:51" itemprop="dateCreated datePublished" datetime="2018-03-27T22:50:51+08:00">2018-03-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2018-03-27 22:50:51" itemprop="dateCreated datePublished" datetime="2018-03-27T22:50:51+08:00">2018-03-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -655,8 +767,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>欺负算法</p>
 <p>We start with 6 processes,<br>    all directly connected to each other.<br>Process 6 is the leader,<br>    as it has the highest number.<br><img src="/2018/03/27/Bully-Election-Algorithm/1.gif"><br>Process 6 fails.<br><img src="/2018/03/27/Bully-Election-Algorithm/2.gif"><br>Process 3 notices that Process 6 does not respond<br>    So it starts an election, notifying those processes<br>        with ids greater than 3.<br><img src="/2018/03/27/Bully-Election-Algorithm/3.gif"><br>Both Process 4 and Process 5 respond,<br>    telling Process 3 that they’ll take over from here.<br><img src="/2018/03/27/Bully-Election-Algorithm/4.gif"><br>Process 4 sends election messages<br>    to both Process 5 and Process 6.<br><img src="/2018/03/27/Bully-Election-Algorithm/5.gif"><br>Only Process 5 answers<br>    and takes over the election.<br><img src="/2018/03/27/Bully-Election-Algorithm/6.gif"><br>Process 5 sends out only one election message<br>    to Process 6.<br><img src="/2018/03/27/Bully-Election-Algorithm/7.gif"><br>When Process 6 does not respond<br>    Process 5 declares itself the winner.<br><img src="/2018/03/27/Bully-Election-Algorithm/8.gif"></p>
 
@@ -666,13 +776,16 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
-  
-  
+</div>
+
+
+
 
 
   
@@ -682,8 +795,7 @@
 
 
 
-          </div>
-          
+      
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -692,7 +804,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -701,76 +813,20 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">141</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">69</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
+      
 
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
+      
 
 <div class="copyright">
   
@@ -782,65 +838,26 @@
   <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
 </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-<script src="/js/bookmark.js"></script>
-
-
-
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
   <script>
     (function(){
-      var canonicalURL, curProtocol;
-      //Get the <link> tag
-      var x=document.getElementsByTagName("link");
-		//Find the last canonical URL
-		if(x.length > 0){
-			for (i=0;i<x.length;i++){
-				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
-					canonicalURL=x[i].href;
-				}
-			}
-		}
-    //Get protocol
-	    if (!canonicalURL){
-	    	curProtocol = window.location.protocol.split(':')[0];
-	    }
-	    else{
-	    	curProtocol = canonicalURL.split(':')[0];
-	    }
-      //Get current URL if the canonical URL does not exist
-	    if (!canonicalURL) canonicalURL = window.location.href;
-	    //Assign script content. Replace current URL with the canonical URL
-      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
   </script>
+
+
+
 
 
 
@@ -858,17 +875,16 @@
 
   
 
+
+
+
+
+
+
+
   
-  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://willzhuang.github.io/page/23/',]
-      });
-      });
-  </script>
+
+  
 
 
 </body>

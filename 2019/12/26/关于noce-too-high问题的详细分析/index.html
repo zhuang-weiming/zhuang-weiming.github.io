@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="关于ethereum 中，nonce问题总结： Tx 中 nonce 过低（too low）时，Tx 立即被拒绝 Tx 中 nonce 过高（too high）时，Tx 被放入交易池队列 transaction pool queue 如果 Tx 的 nonce 正好填补了最新的有效的 nonce 和过高的nonce之间的空隙，是的nonce的顺序完整连接时，交易池队列中的交易将被执行 当 Geth">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于nonce-too-high问题的详细分析">
+<meta property="og:url" content="https://willzhuang.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="关于ethereum 中，nonce问题总结： Tx 中 nonce 过低（too low）时，Tx 立即被拒绝 Tx 中 nonce 过高（too high）时，Tx 被放入交易池队列 transaction pool queue 如果 Tx 的 nonce 正好填补了最新的有效的 nonce 和过高的nonce之间的空隙，是的nonce的顺序完整连接时，交易池队列中的交易将被执行 当 Geth">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-26T01:07:04.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.154Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="Ethereum">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>关于nonce-too-high问题的详细分析 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Eethereum-%E4%B8%AD%EF%BC%8Cnonce%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">关于ethereum 中，nonce问题总结：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nonce%E9%97%AE%E9%A2%98%EF%BC%8C%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">nonce问题，详细介绍：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于nonce-too-high问题的详细分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-26 09:07:04" itemprop="dateCreated datePublished" datetime="2019-12-26T09:07:04+08:00">2019-12-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="关于ethereum-中，nonce问题总结："><a href="#关于ethereum-中，nonce问题总结：" class="headerlink" title="关于ethereum 中，nonce问题总结："></a>关于ethereum 中，nonce问题总结：</h3><ul>
+<li>Tx 中 nonce 过低（too low）时，Tx 立即被拒绝</li>
+<li>Tx 中 nonce 过高（too high）时，Tx 被放入交易池队列 transaction pool queue</li>
+<li>如果 Tx 的 nonce 正好填补了最新的有效的 nonce 和过高的nonce之间的空隙，是的nonce的顺序完整连接时，交易池队列中的交易将被执行</li>
+<li>当 Geth 被关掉或者重新启动时，交易池中的 Txs 将消失</li>
+</ul>
+<h3 id="nonce问题，详细介绍："><a href="#nonce问题，详细介绍：" class="headerlink" title="nonce问题，详细介绍："></a>nonce问题，详细介绍：</h3><ul>
+<li>当 Tx 中 nonce 过低时，</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> eth.sendTransaction(&#123;from: eth.accounts[0], to: eth.accounts[1], value: web3.toWei(1, <span class="string">&quot;ether&quot;</span>), nonce:0&#125;)</span></span><br><span class="line">Nonce too low</span><br><span class="line">    at InvalidResponse (&lt;anonymous&gt;:-81662:-106)</span><br><span class="line">    at send (&lt;anonymous&gt;:-156322:-106)</span><br><span class="line">    at sendTransaction (&lt;anonymous&gt;:-133322:-106)</span><br><span class="line">    at &lt;anonymous&gt;:1:1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当 Tx 中 nonce 过高时，</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> txpool.status</span></span><br><span class="line">&#123;</span><br><span class="line">  pending: 0,</span><br><span class="line">  queued: 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Geth 重启时，</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> txpool.status</span></span><br><span class="line">&#123;</span><br><span class="line">  pending: 0,</span><br><span class="line">  queued: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ul>
+<li><p>在应用本地保存nonce在数据库中，并且，数据库中的nonce值更新时需要访问锁保护。不建议将nonce保存在内存中，那样的话，在应用死机或者重启时，nonce将丢失。目前思考 Redis DB 是比较好的选择。</p>
+</li>
+<li><p>如果本地nonce出了问题，可以使用 <code>web3.eth.getTransactionCount(ethAddress)</code> 来恢复。但是 <code>web3.eth.getTransactionCount(ethAddress)</code> 是内存中的值，不是实时准确的，不建议实时使用。</p>
+</li>
+</ul>
+<p>另外：</p>
+<ul>
+<li><p>即使交易池（queue）中有交易存在，nonce正确的交易仍然可以继续进行。</p>
+</li>
+<li><p>当共识停止工作了，nonce正确的交易进入到pending队列中，nonce较高的交易进入到queue队列中。当共识重新正常工作时，pending队列中的交易会被自动处理而清空。</p>
+</li>
+<li><p>同时节点具有每隔一个小时，重新处理一次本地交易的能力。（handle local transaction journal rotation）</p>
+</li>
+</ul>
+<p>参考链接 ==&gt; <a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/2808/what-happens-when-a-transaction-nonce-is-too-high">https://ethereum.stackexchange.com/questions/2808/what-happens-when-a-transaction-nonce-is-too-high</a></p>
+<p>参考代码 ==&gt; </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ethereum/<span class="keyword">go</span>-ethereum/core/tx_pool.<span class="keyword">go</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(pool *TxPool)</span> <span class="title">loop</span><span class="params">()</span></span> &#123;</span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本问题调查过程中，使用到的命令==&gt;</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">eth.getTransactionCount(eth.accounts[0])</span><br><span class="line"></span><br><span class="line">personal.unlockAccount(eth.accounts[0],&quot;1234&quot;,99999)</span><br><span class="line"></span><br><span class="line">eth.sendTransaction(&#123;from:eth.accounts[0],to:eth.accounts[0],value:100,nonce:200&#125;)</span><br><span class="line"></span><br><span class="line">txpool.status</span><br><span class="line"></span><br><span class="line">eth.sendTransaction(&#123;from:eth.accounts[0],to:eth.accounts[0]&#125;)</span><br><span class="line"></span><br><span class="line">txpool.status</span><br><span class="line"></span><br><span class="line">./odyssey update_Validator localhost:26657 UpdateValidator:OA+kUHbBDxh6q2kqF1jNQFoPqjTYsTS2m17un4Z9vI0=*/*10000</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/" title="关于nonce-too-high问题的详细分析">https://willzhuang.github.io/2019/12/26/关于noce-too-high问题的详细分析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Ethereum/" rel="tag"># Ethereum</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/25/2020-%E5%BC%80%E6%BA%90%E5%87%A0%E4%B9%8E%E6%98%AF%E8%BA%B2%E4%B8%8D%E6%8E%89%E7%9A%84/" rel="prev" title="2020-开源几乎是躲不掉的">
+                  <i class="fa fa-chevron-left"></i> 2020-开源几乎是躲不掉的
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/27/Ethereum%E7%9A%84Whisper%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/" rel="next" title="Ethereum的Whisper通信介绍">
+                  Ethereum的Whisper通信介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '85056505910323dbd6afcb4a78b05d1f',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

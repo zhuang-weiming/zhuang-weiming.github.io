@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="以下列表均为Ethereum token相关的提案： EIP1080 这个是一种可以恢复的 token，其诞生的主要原因是因为以太坊的DAO之前的币被盗用才创建这个ip的，可以从合约层面恢复被盗或丢失的账户，这也减轻合理可证明的令牌或资产损失或盗窃的影响，并帮助解决其他冲突。不应该因为丢失、盗窃或冲突而修改Ethereum的协议，但是可以在智能契约层解决这些问题。其中定义的接口有一个抽象方法叫做c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ERC关注列表">
+<meta property="og:url" content="https://willzhuang.github.io/2020/03/23/ERC%E5%85%B3%E6%B3%A8%E5%88%97%E8%A1%A8/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="以下列表均为Ethereum token相关的提案： EIP1080 这个是一种可以恢复的 token，其诞生的主要原因是因为以太坊的DAO之前的币被盗用才创建这个ip的，可以从合约层面恢复被盗或丢失的账户，这也减轻合理可证明的令牌或资产损失或盗窃的影响，并帮助解决其他冲突。不应该因为丢失、盗窃或冲突而修改Ethereum的协议，但是可以在智能契约层解决这些问题。其中定义的接口有一个抽象方法叫做c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-23T05:42:01.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.034Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="EIP">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2020/03/23/ERC%E5%85%B3%E6%B3%A8%E5%88%97%E8%A1%A8/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>ERC关注列表 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/03/23/ERC%E5%85%B3%E6%B3%A8%E5%88%97%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ERC关注列表
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-03-23 13:42:01" itemprop="dateCreated datePublished" datetime="2020-03-23T13:42:01+08:00">2020-03-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>以下列表均为<a target="_blank" rel="noopener" href="https://eips.ethereum.org/erc">Ethereum token</a>相关的提案：</p>
+<p>EIP1080 这个是一种可以恢复的 token，其诞生的主要原因是因为以太坊的DAO之前的币被盗用才创建这个ip的，可以从合约层面恢复被盗或丢失的账户，这也减轻合理可证明的令牌或资产损失或盗窃的影响，并帮助解决其他冲突。不应该因为丢失、盗窃或冲突而修改Ethereum的协议，但是可以在智能契约层解决这些问题。其中定义的接口有一个抽象方法叫做claimLost，我在想这个东西是否可以利用在一些类似于财产险的场景中</p>
+<p>EIP1132 可以对ERC20进行时间锁定，这就使得在一些交易过程中不需要将ERC20转给其他第三方的资金托管智能合约，因为这种托管的方式你需要额外的信任这个托管合约，而且在转账给托管合约的时候会造成gas的消耗</p>
+<p>EIP998 是一种针对721和20以及223的扩展，使721token能够拥有其他721token和20token，使20和223能够由721令牌拥有，该规范涵盖了四种不同类型的可组合，998721(20)自顶向下的可组合token，用于接收、持有和传输721(20)token，998721(20)自底向上的可组合token，它们将自己附加到其他721token上，还包含一个rootowner的概念，这种token组合是一个树形的结构</p>
+<p>EIP1175 是一种区块链电商的解决方案，通过提供一个center，这个center面向buyer能够快速建立一个钱包，面向saler可以快速建立一个商店，而且能够创建自己商店的结算erc20token。经分析可以使用在积分，代金券，优惠券等场景中</p>
+<p>EIP902 token validator 提供token所有权和传输验证的服务协议，服务于监管机构的KYC和AML验证，因为监管机构需要将诸如身份等的非链合规信息与链上服务联系起来，通过一个共享的白名单而不是每个token都建立自己的白名单</p>
+<p>EIP1207 类似于OAuth经过第三方授权</p>
+<p>EIP1261 成员资格验证令牌 MVT 依然属于KYC的范畴，比如一些许可证的签发，例如在一些区块链的反洗钱应用，需要把一些地址和成员资格关联起来，达到监管的目的，也存在一种场景，就是我们自己发行的erc20token我们希望只能在我们许可的会员间传递</p>
+<p>EIP1450 给了我一个启发就是合规和监管对应的要求应该从合约层面解决，仅仅是对原有的ERC20加了一些modifier就可以满足监管和法律的要求，ERC-1450必须防止任何人执行转移、允许和批准功能和/或实现这些功能，否则总是会失败，ERC-1450更新了transferFrom、mint和burnFrom函数。转让方、铸币方和burnFrom只能由RTA执行，且受限于唯一发布的转让方修改人。此外，ERC-1450还定义了transferOwnership、setTransferAgent、setPhysicalAddressOfOperation和isTransferAgent等函数。只有发行者可以调用transferOwnership、setTransferAgent和setPhysicalAddressOfOperation函数。任何人都可以调用isTransferAgent函数。</p>
+<p>EIP1462 基本的安全token 这些要求包括KYC(了解您的客户)和AML(反洗钱)规则，以及为账户锁定令牌并限制其因法律纠纷而转移的能力。还可以附加附加的法律文档，以便在令牌和off-chain法律实体之间建立双重绑定关系。这个草案对EIP1400和EIP1450都不太认同，因为这两个草案都包含一些特定的场景，是比较小众的需求，1411和1410无法支持777，1066将引入一个转移检查功能，这包含四个新函数，用于检查所提供的输入是否允许操作</p>
+<p>EIP1523 保单721标准，提供了一个jsonSchema，这个jsonSchema类似一个Interface接口，包含符合该标准的一些属性和需要实现的方法</p>
+<p>EIP1948 对721的一个升级，因为有需求希望NFT用例能够与一个动态数据进行关联，该token可以在其生命周期内更改这个动态数据，如果有了这个，区块链电子病历和电子保单就能拥有动态的可修改的数据了</p>
+<p>EIP1996 可持有的token，这里指的是这个token可以被hold，而不是以前的token只能被own，这就意味着第三方可以hold同一笔token而不是own他，这位监管提供了一个很好的方案，持有指定了付款人、收款人、最高金额、公证员和到期日。在创建持有时，将暂停支付方的指定令牌余额。持有余额在执行或释放之前不能转移。持有只能由公证人执行，这将触发令牌从付款人向收款人的转移。如果在任何时候由公证员或在期满后由任何人解除持有，则不进行任何转让，并且支付人可以再次获得该金额。在一些业务下，必须在事先不知道确切金额的情况下保证付款，比如酒店可以暂停客人的账户，作为对任何可能的额外服务(如客房服务)的担保。当客人结账离开时，持有部分被执行，剩余的金额仍然在客人的账户上。而在其他一些业务情况下，在使用其服务之前必须保证支付。例如:当入住酒店时，酒店会hold客人的账户，以确保在交钥匙之前有足够的余额支付房间费用。</p>
+<p>EIP2018 可清除的token，其角色包含一个清算代理，操作员，开证申请人，清算过程将资金转移的承诺转化为资金从一个账户到另一个账户的实际流动。清算代理决定是否可以执行转移。应当转让的数额不能从支付人的余额中扣除，也不能用于其他转让，因此，保证了转让的执行是成功的。一个受管制的令牌需要符合所有的法律要求，特别是KYC和AML。其中一些检查可能无法在链上完成，因此传输可能无法在一个步骤中完成。目前还没有EIP来实现这样的外链检查。这个提议允许用户订购一个转移，可以由一个链外清算代理进行检查。根据它的结果，清算代理将执行或取消转移。要提供有关为何取消转账的更多信息，清算代理可以添加未执行转账的原因。</p>
+<p>EIP2019 可资助的令牌，ERC-20标准令牌的扩展，允许令牌钱包所有者通过调用智能契约并附加一个资金指令字符串来请求为钱包提供资金。其角色包含一个令牌钱包的主人，象征性的合约所有者/代理人，开证申请人，令牌钱包所有者(或经过批准的地址)可以通过区块链订购令牌化请求。这是通过调用orderFund或orderFundFrom方法来完成的，这些方法启动令牌契约操作符的工作流，以支持或拒绝资金请求。在这种情况下，在提交请求时提供资金指令，操作人员使用这些指令来确定要借记的资金来源，以便(通过minting)为令牌钱包提供资金。一般而言，在区块链上逐字逐句地放置用于借记资金的显式路由指令是不可取的，建议使用私有通信替代方法，如私有通道、加密存储或类似的方法(在区块链分类帐之外)来这样做。另一种(不太理想的)可能性是将这些指令以加密的形式放在指令字段中。现在，大多数的令牌发行/资金请求，基于任何基于菲亚特的支付方法，需要一个以前的集中交易，能够获得所需的令牌发行请求者的钱包。为了尝试将所有需要的步骤引入到分散化中，公开令牌生命周期和支付事务的所有需要的步骤，一个资金请求可以允许钱包所有者通过区块链发起资金请求。关键好处:资金和付款的可追溯性得到了加强，从而使入账成为可能。所有的付款状态可以存储在链。几乎所有的货币/令牌生命周期都是通过一种分散的方法来覆盖的，并辅之以在生态系统中普遍使用的私有通信。</p>
+<p>EIP2020 电子货币标准，如今，金融机构使用电子系统，这些系统在核心银行系统的数据库中保存账户余额。为了让一家机构能够保留客户账户余额的记录，并将其提供给客户，该机构必须在一个已知的法律框架下进行监管，而且必须拥有这样做的许可证。在监管监督下维持许可证，需要确保合规(即对所有客户执行KYC，并在允许交易前确保良好的“反洗钱”操作)，并通过定期审计证明其技术和运营偿付能力，以便向机构存放资金的客户可以放心，他们的资金是安全的。</p>
+<p>EIP2021 可支付令牌，令牌钱包的所有者(或批准的地址)可以通过区块链订购支付请求。这是通过调用orderPayoutFrom或orderPayoutFrom方法来完成的，这些方法启动令牌契约操作符的工作流，以支持或拒绝支付请求。在这种情况下，在提交请求时提供支付指令，操作人员使用这些指令来确定资金的目的地。通常，不建议在区块链上逐字逐句地为支出设置显式路由指令，建议使用私有通信替代方法，例如私有通道、加密存储或类似的方法(在区块链分类账之外)。另一种(不太理想的)可能性是将这些指令以加密的形式放在指令字段中。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2020/03/23/ERC%E5%85%B3%E6%B3%A8%E5%88%97%E8%A1%A8/" title="ERC关注列表">https://willzhuang.github.io/2020/03/23/ERC关注列表/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/EIP/" rel="tag"># EIP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/03/15/127.0.0.1%E5%92%8C0.0.0.0%E5%9C%B0%E5%9D%80/" rel="prev" title="127.0.0.1和0.0.0.0地址">
+                  <i class="fa fa-chevron-left"></i> 127.0.0.1和0.0.0.0地址
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" rel="next" title="关于golang服务重启">
+                  关于golang服务重启 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '0717185915fcfb622b05e1242a6dafcb',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

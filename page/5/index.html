@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.2.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,11 +15,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
   <meta property="og:type" content="website">
@@ -28,10 +32,11 @@
 <meta property="article:author" content="Weiming Zhuang">
 <meta name="twitter:card" content="summary">
 
+
 <link rel="canonical" href="https://willzhuang.github.io/page/5/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -51,49 +56,61 @@
 
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">Zhuang's Diary</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
   </div>
@@ -106,9 +123,8 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
@@ -117,6 +133,11 @@
         <li class="menu-item menu-item-tags">
 
     <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -131,6 +152,62 @@
 
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
@@ -141,18 +218,23 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content index posts-expand">
-            
+    <div class="main-inner index posts-expand">
       
+
+      
+    
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/19/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E6%AF%94%E8%BE%83%E4%B8%8E%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,24 +252,26 @@
             <a href="/2020/05/19/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E6%AF%94%E8%BE%83%E4%B8%8E%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">零知识证明比较与分析</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-19 17:26:31" itemprop="dateCreated datePublished" datetime="2020-05-19T17:26:31+08:00">2020-05-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2020-05-19 17:26:31" itemprop="dateCreated datePublished" datetime="2020-05-19T17:26:31+08:00">2020-05-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -196,8 +280,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <ul>
 <li>Zero-Knowledge Proofs ==&gt; <a target="_blank" rel="noopener" href="https://zkp.science/">https://zkp.science/</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/matter-labs/awesome-zero-knowledge-proofs">https://github.com/matter-labs/awesome-zero-knowledge-proofs</a></li>
@@ -209,18 +291,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -238,24 +327,26 @@
             <a href="/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-4/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-4</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-18 16:26:31" itemprop="dateCreated datePublished" datetime="2020-05-18T16:26:31+08:00">2020-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2020-05-18 16:26:31" itemprop="dateCreated datePublished" datetime="2020-05-18T16:26:31+08:00">2020-05-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -264,8 +355,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h3 id="CheckTx"><a href="#CheckTx" class="headerlink" title="CheckTx"></a>CheckTx</h3><p>在burrow项目中，<code>/consensus/abci/app.go</code>:</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(app *App)</span> <span class="title">CheckTx</span><span class="params">(req types.RequestCheckTx)</span> <span class="title">types</span>.<span class="title">ResponseCheckTx</span></span> &#123;</span><br><span class="line">	......</span><br><span class="line">	checkTx := ExecuteTx(logHeader, app.checker, app.txDecoder, req.GetTx())</span><br><span class="line">	......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -290,18 +379,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -319,24 +415,26 @@
             <a href="/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-3/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-3</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-18 14:52:31" itemprop="dateCreated datePublished" datetime="2020-05-18T14:52:31+08:00">2020-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2020-05-18 14:52:31" itemprop="dateCreated datePublished" datetime="2020-05-18T14:52:31+08:00">2020-05-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -345,8 +443,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h3 id="burrow-natives-Dump-Solidity-interface-contracts-for-Burrow-native-contracts"><a href="#burrow-natives-Dump-Solidity-interface-contracts-for-Burrow-native-contracts" class="headerlink" title="./burrow natives , Dump Solidity interface contracts for Burrow native contracts."></a>./burrow natives , Dump Solidity interface contracts for Burrow native contracts.</h3><p>抽出Burrow内置的solidity接口合约。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow natives       </span><br><span class="line">pragma solidity &gt;=<span class="number">0.4</span><span class="number">.24</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* acmstate.ReaderWriter for managing Secure Native authorizations.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>This interface describes the functions exposed by the native permissions layer in burrow.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>These functions can be accessed as if this contract were deployed at a special address (0x0A758FEB535243577C1A79AE55BED8CA03E226EC).</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>This special address is defined as the last 20 bytes of the sha3 hash of the the contract name.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>To instantiate the contract use:</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>Permissions permissions = Permissions(address(uint256(keccak256(&quot;Permissions&quot;))));</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">interface Permissions &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Adds a role to an account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether role was added</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Removes a role from an account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether role was removed</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">removeRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Indicates whether an account has a role</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether account has role</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Sets the permission flags for an account. Makes them explicitly set (on or off).</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the base permissions flags to set for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Set whether to set or unset the permissions flags at the account level</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was set as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setBase</span>(<span class="params">address _account, uint64 _permission, bool _set</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Unsets the permissions flags for an account. Causes permissions being unset to fall through to global permissions.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags to unset for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was unset as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">unsetBase</span>(<span class="params">address _account, uint64 _permission</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Indicates whether an account has a subset of permissions set</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags (mask) to check whether enabled against base permissions for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether account has the passed permissions flags set</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasBase</span>(<span class="params">address _account, uint64 _permission</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Sets the global (default) permissions flags for the entire chain</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags to set</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Set whether to set (or unset) the permissions flags</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was set as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setGlobal</span>(<span class="params">uint64 _permission, bool _set</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -360,18 +456,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/12/%E4%BD%93%E9%AA%8CHyperledger-Burrow-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -389,24 +492,26 @@
             <a href="/2020/05/12/%E4%BD%93%E9%AA%8CHyperledger-Burrow-2/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-2</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-12 09:08:31" itemprop="dateCreated datePublished" datetime="2020-05-12T09:08:31+08:00">2020-05-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2020-05-12 09:08:31" itemprop="dateCreated datePublished" datetime="2020-05-12T09:08:31+08:00">2020-05-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -415,8 +520,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>文档链接=&gt;<a target="_blank" rel="noopener" href="https://hyperledger.github.io/burrow/">https://hyperledger.github.io/burrow/</a></p>
 <p>github链接=&gt;<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/">https://github.com/hyperledger/burrow/</a></p>
 <p>接前文《体验Hyperledger-Burrow-1》，启动4个节点如下：</p>
@@ -457,18 +560,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -486,24 +596,26 @@
             <a href="/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-1</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-11 17:33:01" itemprop="dateCreated datePublished" datetime="2020-05-11T17:33:01+08:00">2020-05-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2020-05-11 17:33:01" itemprop="dateCreated datePublished" datetime="2020-05-11T17:33:01+08:00">2020-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -512,8 +624,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>文档链接=&gt;<a target="_blank" rel="noopener" href="https://hyperledger.github.io/burrow/">https://hyperledger.github.io/burrow/</a></p>
 <p>github链接=&gt;<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/">https://github.com/hyperledger/burrow/</a></p>
 <p>Burrow是一个权限控制较为严格、以太坊EVM和WASM虚拟机支持、运行于Tendermint共识之上的区块链客户端。其主要由Monax贡献，并由Monax 和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%8B%B1%E7%89%B9%E5%B0%94">英特尔</a>赞助。</p>
@@ -562,13 +672,16 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
-  
-  
+</div>
+
+
+
 
 
   
@@ -578,8 +691,7 @@
 
 
 
-          </div>
-          
+      
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -588,7 +700,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -597,76 +709,20 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">141</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">69</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
+      
 
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
+      
 
 <div class="copyright">
   
@@ -678,65 +734,26 @@
   <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
 </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-<script src="/js/bookmark.js"></script>
-
-
-
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
   <script>
     (function(){
-      var canonicalURL, curProtocol;
-      //Get the <link> tag
-      var x=document.getElementsByTagName("link");
-		//Find the last canonical URL
-		if(x.length > 0){
-			for (i=0;i<x.length;i++){
-				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
-					canonicalURL=x[i].href;
-				}
-			}
-		}
-    //Get protocol
-	    if (!canonicalURL){
-	    	curProtocol = window.location.protocol.split(':')[0];
-	    }
-	    else{
-	    	curProtocol = canonicalURL.split(':')[0];
-	    }
-      //Get current URL if the canonical URL does not exist
-	    if (!canonicalURL) canonicalURL = window.location.href;
-	    //Assign script content. Replace current URL with the canonical URL
-      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
   </script>
+
+
+
 
 
 
@@ -754,17 +771,16 @@
 
   
 
+
+
+
+
+
+
+
   
-  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://willzhuang.github.io/page/5/',]
-      });
-      });
-  </script>
+
+  
 
 
 </body>

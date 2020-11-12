@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="CPU ProfilingGolang 提供了 pprof 包（runtime&#x2F;pprof）用于输出运行时的 profiling 数据，这些数据可以被 pprof 工具（或者 go tool pprof，其为 pprof 的变种）使用。通常我们这样来使用 pprof 包： 123456789101112131415161 &#x2F;&#x2F; 定义 flag cpuprofile2 var cpuprofile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang调优工具-pprof">
+<meta property="og:url" content="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="CPU ProfilingGolang 提供了 pprof 包（runtime&#x2F;pprof）用于输出运行时的 profiling 数据，这些数据可以被 pprof 工具（或者 go tool pprof，其为 pprof 的变种）使用。通常我们这样来使用 pprof 包： 123456789101112131415161 &#x2F;&#x2F; 定义 flag cpuprofile2 var cpuprofile">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png">
+<meta property="article:published_time" content="2018-06-07T06:56:17.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.104Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="pprof">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>golang调优工具-pprof | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU-Profiling"><span class="nav-number">1.</span> <span class="nav-text">CPU Profiling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pprof-%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">pprof 包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#memory-profiling"><span class="nav-number">3.</span> <span class="nav-text">memory profiling</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          golang调优工具-pprof
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-07 14:56:17" itemprop="dateCreated datePublished" datetime="2018-06-07T14:56:17+08:00">2018-06-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="CPU-Profiling"><a href="#CPU-Profiling" class="headerlink" title="CPU Profiling"></a>CPU Profiling</h4><p>Golang 提供了 pprof 包（runtime/pprof）用于输出运行时的 profiling 数据，这些数据可以被 pprof 工具（或者 go tool pprof，其为 pprof 的变种）使用。通常我们这样来使用 pprof 包：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 定义 flag cpuprofile</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">var</span> cpuprofile = flag.String(<span class="string">&quot;cpuprofile&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;write cpu profile to file&quot;</span>)</span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="number">4</span>    flag.Parse()</span><br><span class="line"><span class="number">5</span>    <span class="comment">// 如果命令行设置了 cpuprofile</span></span><br><span class="line"><span class="number">6</span>    <span class="keyword">if</span> *cpuprofile != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line"><span class="number">7</span>        <span class="comment">// 根据命令行指定文件名创建 profile 文件</span></span><br><span class="line"><span class="number">8</span>        f, err := os.Create(*cpuprofile)</span><br><span class="line"><span class="number">9</span>        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">10</span>            log.Fatal(err)</span><br><span class="line"><span class="number">11</span>        &#125;</span><br><span class="line"><span class="number">12</span>        <span class="comment">// 开启 CPU profiling</span></span><br><span class="line"><span class="number">13</span>        pprof.StartCPUProfile(f)</span><br><span class="line"><span class="number">14</span>        <span class="keyword">defer</span> pprof.StopCPUProfile()</span><br><span class="line"><span class="number">15</span>    &#125;</span><br><span class="line"><span class="number">16</span>    ...</span><br></pre></td></tr></table></figure>
+
+<p>假定我们编写的一个程序 mytest 中加入了上述代码则可以执行并生成 profile 文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mytest -cpuprofile=mytest.prof</span><br></pre></td></tr></table></figure>
+
+<p>这里，我们生成了 mytest.prof profile 文件。有了 profile 文件就可以使用 go tool pprof 程序来解析此文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof mytest mytest.prof</span><br></pre></td></tr></table></figure>
+
+<p>pprof 程序中最重要的命令就是 topN，此命令用于显示 profile 文件中的最靠前的 N 个样本（samples），例如（此例为 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> 中的例子）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) top10</span><br><span class="line">2 Total: 2525 samples</span><br><span class="line">3    298  11.8%  11.8%    345  13.7% runtime.mapaccess1_fast64</span><br><span class="line">4    268  10.6%  22.4%   2124  84.1% main.FindLoops</span><br><span class="line">5    251   9.9%  32.4%    451  17.9% scanblock</span><br><span class="line">6    178   7.0%  39.4%    351  13.9% hash_insert</span><br><span class="line">7    131   5.2%  44.6%    158   6.3% sweepspan</span><br><span class="line">8    119   4.7%  49.3%    350  13.9% main.DFS</span><br><span class="line">9     96   3.8%  53.1%     98   3.9% flushptrbuf</span><br><span class="line">10    95   3.8%  56.9%     95   3.8% runtime.aeshash64</span><br><span class="line">11    95   3.8%  60.6%    101   4.0% runtime.settype_flush</span><br><span class="line">12    88   3.5%  64.1%    988  39.1% runtime.mallocgc</span><br></pre></td></tr></table></figure>
+
+<p>开启 CPU profiling 后，Golang 程序在 1 秒钟会停顿 100 次，每次停顿都会记录 1 个样本。上例中，前两列表示运行的函数的样本数量（the number of samples in which the function was running）和占总样本数的百分比，例如说 runtime.mapaccess1_fast64 函数在 298 次采样中（占总采样数量的 11.8%）正在运行。第三列表示前几行样本数量总和占总样本数的百分比（第二行 22.4% 为 11.8% + 10.6%）。第四、五列表示出现的函数的样本数量（the number of samples in which the function appeared）和占总样本数的百分比，这里“出现的函数”指的是在采样中正在运行或者等待某个被调用函数返回的函数，换句话就是采样中那些位于调用栈上的函数。我们可以使用 -cum（cumulative 的缩写）flag 来以第四、五列为标准排序。需要注意的是，每次采样只会包括最底下的 100 个栈帧（stack frames）。</p>
+<p>使用 web 命令能够以图形化的方式（SVG 格式）显示函数调用关系。例如（图片来源于 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> ）：</p>
+<p><img src="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png"></p>
+<p>这里每个方块的大小由运行的函数的样本数量决定（这样就能方便的一眼看到热点函数）。箭头表示的是调用关系，箭头上的数字表示的是采样到的调用次数。web 命令还可以指定显示特定的函数，例如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(pprof) web mapaccess1</span><br></pre></td></tr></table></figure>
+
+<p>当我们有大致的想法（也就是确定热点函数）后，就可以深入特定的函数。我们使用 list 命令（此例为 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> 中的例子）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list DFS</span><br><span class="line">2 Total: 2525 samples</span><br><span class="line">3 ROUTINE ====================== main.DFS <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak1.go</span><br><span class="line">4    119    697 Total samples (flat / cumulative)</span><br><span class="line">5      3      3  240: func DFS(currentNode *BasicBlock, nodes []*UnionFindNode, number map[*BasicBlock]int, last []int, current int) int &#123;</span><br><span class="line">6      1      1  241:     nodes[current].Init(currentNode, current)</span><br><span class="line">7      1     37  242:     number[currentNode] = current</span><br><span class="line">8      .      .  243:</span><br><span class="line">9      1      1  244:     lastid := current</span><br><span class="line">10    89     89  245:     <span class="keyword">for</span> _, target := range currentNode.OutEdges &#123;</span><br><span class="line">11     9    152  246:             <span class="keyword">if</span> number[target] == unvisited &#123;</span><br><span class="line">12     7    354  247:                     lastid = DFS(target, nodes, number, last, lastid+1)</span><br><span class="line">13     .      .  248:             &#125;</span><br><span class="line">14     .      .  249:     &#125;</span><br><span class="line">15     7     59  250:     last[number[currentNode]] = lastid</span><br><span class="line">16     1      1  251:     <span class="built_in">return</span> lastid</span><br></pre></td></tr></table></figure>
+
+<p>上例中，第一列为运行到此行时的样本数，第二列为运行到此行或从此行调用的样本数，第三列为行号。如果需要显示汇编，可以使用命令 disasm（使用命令 weblist 可以同时显示源码和汇编代码， 这里 有一个范例）。通过样本数，我们可以定位到热点行，然后考虑适合的优化策略。</p>
+<h4 id="pprof-包"><a href="#pprof-包" class="headerlink" title="pprof 包"></a>pprof 包</h4><p>pprof 包进行 profiling 有两种方式：</p>
+<ul>
+<li>采样。CPU Profiling 需要不断采样，（如上所述）pprof 包提供了一套特殊的 API（StartCPUProfile / StopCPUProfile）</li>
+<li>快照。下面详细谈这种方式（同样可以使用 go tool pprof 程序来解析输出的 profile 文件）</li>
+</ul>
+<p>pprof 包预先定义了（还可以自己扩展）4 种快照模式：</p>
+<ul>
+<li>goroutine，当前所有 goroutines 的 stack traces</li>
+<li>heap，所有的堆内存分配（为降低开销仅获取一个近似值，To reduce overhead, the memory profiler only records information for approximately one block per half megabyte allocated (the “1-in-524288 sampling rate”), so these are approximations to the actual counts）</li>
+<li>threadcreate，致使新系统线程创建的 stack traces</li>
+<li>block，致使在同步原语上阻塞的 stack traces</li>
+</ul>
+<p>相关 API 具体用法如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 根据名字查找 Profile</span></span><br><span class="line"><span class="number">2</span> p := pprof.Lookup(<span class="string">&quot;heap&quot;</span>)</span><br><span class="line"><span class="number">3</span> <span class="comment">// 将一个 pprof（程序）格式的快照写入 w</span></span><br><span class="line"><span class="number">4</span> p.WriteTo(w, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里的 WriteTo 方法原型为：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">func</span> <span class="params">(p *Profile)</span> <span class="title">WriteTo</span><span class="params">(w io.Writer, debug <span class="keyword">int</span>)</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
+
+<p>其中 debug 参数：</p>
+<ul>
+<li>为 0 时，仅仅输出 pprof（程序）需要的十六进制地址</li>
+<li>为 1 时，输出时增加函数名和行号，这样无需工具也可以阅读此 profile</li>
+<li>为 2 时，并且当输出 goroutine profile 时，输出的 goroutine 栈的格式为未 recovered panic 时的格式</li>
+</ul>
+<h4 id="memory-profiling"><a href="#memory-profiling" class="headerlink" title="memory profiling"></a>memory profiling</h4><p>以 <a target="_blank" rel="noopener" href="https://blog.golang.org/profiling-go-programs">https://blog.golang.org/profiling-go-programs</a> 中的例子为例：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 定义 flag memprofile</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">var</span> memprofile = flag.String(<span class="string">&quot;memprofile&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;write memory profile to this file&quot;</span>)</span><br><span class="line"><span class="number">3</span> ...</span><br><span class="line"><span class="number">4</span>    <span class="comment">// 需要 profiling 的函数</span></span><br><span class="line"><span class="number">5</span>    FindHavlakLoops(cfgraph, lsgraph)</span><br><span class="line"><span class="number">6</span>    <span class="keyword">if</span> *memprofile != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line"><span class="number">7</span>        f, err := os.Create(*memprofile)</span><br><span class="line"><span class="number">8</span>        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">9</span>            log.Fatal(err)</span><br><span class="line"><span class="number">10</span>        &#125;</span><br><span class="line"><span class="number">11</span>        <span class="comment">// WriteHeapProfile 等价于 Lookup(&quot;heap&quot;).WriteTo(w, 0)</span></span><br><span class="line"><span class="number">12</span>        pprof.WriteHeapProfile(f)</span><br><span class="line"><span class="number">13</span>        <span class="comment">// 关闭文件</span></span><br><span class="line"><span class="number">14</span>        f.Close()</span><br><span class="line"><span class="number">15</span>        <span class="keyword">return</span></span><br><span class="line"><span class="number">16</span>    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 go tool pprof 程序打开生成的 profile 文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) top5</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3    56.3  68.4%  68.4%     56.3  68.4% main.FindLoops</span><br><span class="line">4    17.6  21.3%  89.7%     17.6  21.3% main.(*CFG).CreateNode</span><br><span class="line">5     8.0   9.7%  99.4%     25.6  31.0% main.NewBasicBlockEdge</span><br><span class="line">6     0.5   0.6% 100.0%      0.5   0.6% itab</span><br><span class="line">7     0.0   0.0% 100.0%      0.5   0.6% fmt.init</span><br></pre></td></tr></table></figure>
+
+<p>这里显示了函数当前大致分配的内存。类似 CPU profiling，通过 list 命令查看函数具体的内存分配情况：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list FindLoops</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3 ROUTINE ====================== main.FindLoops <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak3.go</span><br><span class="line">4   56.3   56.3 Total MB (flat / cumulative)</span><br><span class="line">5...</span><br><span class="line">6    1.9    1.9  268:     nonBackPreds := make([]map[int]bool, size)</span><br><span class="line">7    5.8    5.8  269:     backPreds := make([][]int, size)</span><br><span class="line">8      .      .  270:</span><br><span class="line">9    1.9    1.9  271:     number := make([]int, size)</span><br><span class="line">10   1.9    1.9  272:     header := make([]int, size, size)</span><br><span class="line">11   1.9    1.9  273:     types := make([]int, size, size)</span><br><span class="line">12   1.9    1.9  274:     last := make([]int, size, size)</span><br><span class="line">13   1.9    1.9  275:     nodes := make([]*UnionFindNode, size, size)</span><br><span class="line">14     .      .  276:</span><br><span class="line">15     .      .  277:     <span class="keyword">for</span> i := 0; i &lt; size; i++ &#123;</span><br><span class="line">16   9.5    9.5  278:             nodes[i] = new(UnionFindNode)</span><br><span class="line">17     .      .  279:     &#125;</span><br><span class="line">18...</span><br><span class="line">19     .      .  286:     <span class="keyword">for</span> i, bb := range cfgraph.Blocks &#123;</span><br><span class="line">20     .      .  287:             number[bb.Name] = unvisited</span><br><span class="line">21  29.5   29.5  288:             nonBackPreds[i] = make(map[int]bool)</span><br><span class="line">22     .      .  289:     &#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了这些信息，我们就可以着手进行优化了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" title="golang调优工具-pprof">https://willzhuang.github.io/2018/06/07/golang调优工具-pprof/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/pprof/" rel="tag"># pprof</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/" rel="prev" title="开源协议的详细要求">
+                  <i class="fa fa-chevron-left"></i> 开源协议的详细要求
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/" rel="next" title="go pprof trace完整操作">
+                  go pprof trace完整操作 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'af2e5d10676fa18b0485b6c75f196083',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="目录  迈出第一步  与合约进行交互  现实世界中的构架和工具   第一步 假设你已经有一些计算机编程方面的基础知识，并知道区块链数据结构是怎样的。如果不具备，请先了解ethfans的内容再回来看这篇博客。 以太坊 以太坊是一个开源的，分布式的，基于区块链技术的公共平台，无需审查及第三方干扰即可运行应用程序。 智能合约 智能合约仅仅是电脑程序。我们基于智能合约创建以太坊应用。虽然这个概念现在随着以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以太坊编程_I">
+<meta property="og:url" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="目录  迈出第一步  与合约进行交互  现实世界中的构架和工具   第一步 假设你已经有一些计算机编程方面的基础知识，并知道区块链数据结构是怎样的。如果不具备，请先了解ethfans的内容再回来看这篇博客。 以太坊 以太坊是一个开源的，分布式的，基于区块链技术的公共平台，无需审查及第三方干扰即可运行应用程序。 智能合约 智能合约仅仅是电脑程序。我们基于智能合约创建以太坊应用。虽然这个概念现在随着以">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg">
+<meta property="article:published_time" content="2018-02-24T13:21:09.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.134Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="solidity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>以太坊编程_I | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          以太坊编程_I
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-24 21:21:09" itemprop="dateCreated datePublished" datetime="2018-02-24T21:21:09+08:00">2018-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>目录</strong></p>
+<ol>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">迈出第一步</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">与合约进行交互</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/">现实世界中的构架和工具</a></p>
+</li>
+</ol>
+<p><strong>第一步</strong></p>
+<p>假设你已经有一些计算机编程方面的基础知识，并知道区块链数据结构是怎样的。如果不具备，请先了解<a target="_blank" rel="noopener" href="http://ethfans.org//">ethfans</a>的内容再回来看这篇博客。</p>
+<p><strong>以太坊</strong></p>
+<p>以太坊是一个开源的，分布式的，基于区块链技术的公共平台，无需审查及第三方干扰即可运行应用程序。</p>
+<p><strong>智能合约</strong></p>
+<p>智能合约仅仅是电脑程序。我们基于智能合约创建以太坊应用。虽然这个概念现在随着以太坊大红大紫，但是它实际上是由Nick Szabo于1996年提出。</p>
+<p><strong>EVM 以太坊虚拟机</strong></p>
+<p>EVM 是以太坊智能合约的沙盒运行时,是一个完全独立的环境。这意味着每个在EVM中运行的智能合约无法连接网络，无法调用文件系统和其他进程。</p>
+<p><strong>Gas</strong></p>
+<p>鉴于以太坊是一个分布式平台，所以必须有一种方式来限定智能合约的可用资源，否则整个网络的算力瘫痪都可能会被耗尽。Gas 通过为EVM中的每个指令确定执行成本来解决问题。重要的是，网络中的每笔交易都有一个“Gas预算”。如果预算的Gas用完了，交易将以失败告终，但是这笔交易仍然会被加载到区块链中。</p>
+<p><strong>Ether（ETH）</strong></p>
+<p>这是以太坊的加密数字货币。Gas／Ether的兑换价格用来衡量一个操作将花费多少ETH。执行交易所需支付的费用通过Gas用量与Gas价格相乘得出（计算所得的费用将使用ETH支付）。你可以将交易的Gas价格设置为任何值。但是，如果你设置的Gas价格太低的话，没有人会执行你的代码。</p>
+<p><strong>账户</strong></p>
+<p>每个账户都是由一个地址标识的。同一地址空间由两种账户共享。一种是由公私钥对控制的外部账户，该账户通常由用户持有，用来存储ETH。另一种是合约账户，合约账户下存储着智能合约的代码。重要的是，只有外部账户才能启动交易。</p>
+<p><strong>交易</strong></p>
+<p>交易是从一个账户发送到另一个账户的消息。消息内容可以是转移ETH。如果目的账户是合约账户，其智能合约代码将被执行。有关智能合约代码执行的每一笔交易将在网络中的所有节点上执行。所有的智能合约代码运行以及交易执行都将被记录在以太坊区块链上。</p>
+<p><strong>Solidity</strong></p>
+<p>Solidity 是一种面向合约的高级语言，其语法与JavaScript相似。Solidity是静态类型的，支持继承，库以及复杂的用户定义类型。编译后就是节点运行的EVM程序集。</p>
+<p><strong>WEB3</strong><br>先通过简单的将ETH从一个账户发送到另一个账户开始与以太坊互动。因为刚开始，我们可能会弄的一团糟，所以不想用真正的ETH来做这个实验，经过搜索，发现了testrpc，这是一个用于测试和开发的以太坊客户端，是由npm管理的。让我们安装这个客户端并开始使用它：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g ethereumjs-testrpc</span><br><span class="line">testrpc</span><br></pre></td></tr></table></figure>
+
+<p>你会注意到testrpc已经产生了10个地址，这些地址都拥有虚拟的ETH可供测试无需担心。有一点是testrpc的状态并不稳定，每次关闭后，节点和账户状态将被清除。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/JavaScript-API">Web3.js</a> 是一个实现了以太坊 JSON RPC 的JavaScript库。我们将使用Web3.js与以太坊节点（在这个例子中是testrpc）进行交互。安装只需运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g web3@0.20.1</span><br></pre></td></tr></table></figure>
+
+<p>顺便提一句，在这个例子中，安装 Web3 0.20.x 版本而不是公测1.0.0版本。首先，需要将本地testrpc测试节点连接到Web3.js,为了做到这一点，我们要求Web3 使用localhost provider。让我们打开一个节点控制台并输入以下命令：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Web3 = <span class="built_in">require</span>(<span class="string">&#x27;web3&#x27;</span>)</span><br><span class="line">provider = <span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&quot;http://localhost:8545&quot;</span>)</span><br><span class="line">web3 = <span class="keyword">new</span> Web3(provider)</span><br></pre></td></tr></table></figure>
+
+<p>我们正在使用默认的testrpc端口（8545），如果你设置了另一个端口，记得更改provider的URL。当你获得web3 实例后，首先运行以下命令以获得你的以太坊节点中的账户列表及其各自余额：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">account</span> =&gt;</span> &#123;</span><br><span class="line">balance = web3.eth.getBalance(account);</span><br><span class="line"><span class="built_in">console</span>.log(balance);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>你可能注意到了，输出不全是数字列表，这是因为Web3使用大数对象来处理数字值，而JavaScript无法正确处理大数类型。可以通过这个<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/JavaScript-API#a-note-on-big-numbers-in-web3js">链接</a>了解更多。</p>
+<p>同时，这些余额不是用ETH表示的，实际上它们的单位都是基本单位wei。1ETH是10¹⁸ wei。</p>
+<p>回到刚刚的话题，让我们试着在两个账户之间发送ETH。指需输入web3.eth.accounts并选择其中的两个，你可以使用sendTransaction方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">to = web3.eth.accounts[<span class="number">1</span>]</span><br><span class="line">transaction = &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">value</span>: <span class="number">100000</span> &#125;</span><br><span class="line">transactionHash = web3.eth.sendTransaction(transaction)</span><br></pre></td></tr></table></figure>
+
+<p>命令输出的是交易哈希，你也可以通过以下命令获得交易信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.getTransaction(transactionHash)</span><br></pre></td></tr></table></figure>
+
+<p>你可能还想检查你使用的账户的余额是否已经更改。你可以使用下面的命令来验证：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">account</span> =&gt;</span> &#123;</span><br><span class="line">balance = web3.eth.getBalance(account);</span><br><span class="line"><span class="built_in">console</span>.log(balance);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我使用HTML和jQuery以及一点Bootstrap搭建了一个简单的UI使得它更美观一点。你可以在<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/1-interacting-with-the-blockchain">repo</a>中看看它。这就是所说的DApp即分布式应用。也就是说，一个部分后端代码运行在分布式点对点网络上的应用程序；在这个例子中，分布式点对点网络是指以太坊网络。</p>
+<p><img src="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg"></p>
+<p><em>上图是用以测试ETH交易的DApp的UI</em></p>
+<p>你将找到UI的index.html文件以及与以太坊交互的app.js文件，这基本上就是我们前面所描述的用一些jQuery回调来填充UI。可以复制repo并运行起来试一下。</p>
+<p>谢谢你阅读这篇博客，如果你有任何问题，意见或者建议欢迎告诉我！如果你喜欢这篇博客，请继续关注本指南的第二部分，我将重点介绍智能合约！</p>
+<p>谢谢<a target="_blank" rel="noopener" href="https://medium.com/@maraoz?source=post_page">Manuel Araoz</a></p>
+<blockquote>
+<p>原文链接: <a target="_blank" rel="noopener" href="https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-1-783cc7796094">https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-1-783cc7796094</a></p>
+<p>作者: Facu Spagnuolo</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/" title="以太坊编程_I">https://willzhuang.github.io/2018/02/24/以太坊编程-I/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/solidity/" rel="tag"># solidity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/02/15/Jasper%E9%A1%B9%E7%9B%AE%E5%91%8A%E8%AF%89%E4%BD%A0-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%A7%E9%A2%9D%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A1%8C/" rel="prev" title="Jasper项目告诉你-分布式大额支付系统是否可行">
+                  <i class="fa fa-chevron-left"></i> Jasper项目告诉你-分布式大额支付系统是否可行
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/" rel="next" title="以太坊编程_II">
+                  以太坊编程_II <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '4e63d44fe810c74278171dcaeab57541',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

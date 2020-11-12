@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="ERC stands for “Ethereum Request for Comment” This is Ethereum’s version of a Request for Comments (RFC), a concept devised by the Internet Engineering Task Force. Memos within an RFC contain technica">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What is an ERC?">
+<meta property="og:url" content="https://willzhuang.github.io/2018/02/13/What-is-an-ERC/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="ERC stands for “Ethereum Request for Comment” This is Ethereum’s version of a Request for Comments (RFC), a concept devised by the Internet Engineering Task Force. Memos within an RFC contain technica">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-13T02:33:37.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.073Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="Token">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2018/02/13/What-is-an-ERC/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>What is an ERC? | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ERC20"><span class="nav-number">1.</span> <span class="nav-text">ERC20</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Extensions-%E6%89%A9%E5%BC%A0%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">Extensions\扩张功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Utilities-%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">Utilities\工具方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERC223"><span class="nav-number">2.</span> <span class="nav-text">ERC223</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERC621"><span class="nav-number">3.</span> <span class="nav-text">ERC621</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERC721"><span class="nav-number">4.</span> <span class="nav-text">ERC721</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERC1155"><span class="nav-number">5.</span> <span class="nav-text">ERC1155</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/02/13/What-is-an-ERC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          What is an ERC?
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-13 10:33:37" itemprop="dateCreated datePublished" datetime="2018-02-13T10:33:37+08:00">2018-02-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>ERC stands for “<strong>Ethereum Request for Comment</strong>” This is Ethereum’s version of a Request for Comments (RFC), a concept devised by the Internet Engineering Task Force. Memos within an RFC contain technical and organizational notes. For ERCs, this includes some technical guidelines for the buildout of the Ethereum network.</p>
+<p>This was written by Ethereum developers for the Ethereum community. Thus, the workflow of generating an ERC includes a developer. To create standards for the Ethereum platform, a developer submits an Ethereum Improvement Proposal (EIP). This includes protocol specifications and contract standards. Once that EIP is approved by a committee and finalized, it becomes an ERC. The complete list of EIPs can be found here.</p>
+<p>The finalized EIPs give the Ethereum developers a set of implementable standards. This allows Smart Contracts to be built with these standards, which a common interface can access. ERC20 is the most well-known of all the standards within the entire crypto community, and most tokens issued on top of the Ethereum platform use it.</p>
+<p>Sources link ==&gt; <a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts">https://github.com/OpenZeppelin/openzeppelin-contracts</a></p>
+<h3 id="ERC20"><a href="#ERC20" class="headerlink" title="ERC20"></a>ERC20</h3><p>任何 ERC20 代币都能立即兼容以太坊钱包（几乎所有支持以太币的钱包，包括Jaxx、MEW、imToken等，也支持 erc20的代币</p>
+<p>The ERC20 standard includes the following functions:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">totalSupply() <span class="comment">//returns total token supply</span></span><br><span class="line">balanceOf(address _owner) <span class="comment">//returns account balance of _owner’s account</span></span><br><span class="line">transfer(address _to, uint256 _value) <span class="comment">//takes in number _value and transfers that amount of tokens to address _to and triggers transferevent</span></span><br><span class="line">transferFrom(address _from, address _to, uint256 _value) <span class="comment">//transfers _value amount of tokens from the address _from to the address _to, and triggers the transfer event.拥有者从 _from地址给 _to地址转账授权范围内的一定额度的一类同质化通证。</span></span><br><span class="line">approve(address _spender, uint256 _value) <span class="comment">//allows _spender to withdraw any number up to _value amount</span></span><br><span class="line">allowance(address _owner, address _spender) <span class="comment">//returns the amount which the_spender is still allowed to withdraw from the _owner</span></span><br><span class="line"><span class="comment">// 授权给_spender账户一定额度。拥有者 _owner给消费者_spender在当前查询账户授权(approve)的额度。</span></span><br></pre></td></tr></table></figure>
+
+
+<p>The following events are triggered based on the functions above:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transfer(address indexed _from, address indexed _to, uint256 _value) <span class="comment">//this is triggered whenever tokens are transferred</span></span><br><span class="line">approval(address indexed _owner, address indexed _spender, uint256 _value) <span class="comment">//is triggered on any call to approve()</span></span><br></pre></td></tr></table></figure>
+
+<p>ERC20 was proposed in 2015 and officially formalized in September 2017. It is a great starting point for token standardization. However, some in the developer community have noted that it has certain flaws and vulnerabilities. Additionally, there are some use cases that require something different. </p>
+<p>另外，<a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20">https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20</a> </p>
+<h4 id="Extensions-扩张功能"><a href="#Extensions-扩张功能" class="headerlink" title="Extensions\扩张功能"></a>Extensions\扩张功能</h4>
+
+
+
+
+
+
+
+<h4 id="Utilities-工具方法"><a href="#Utilities-工具方法" class="headerlink" title="Utilities\工具方法"></a>Utilities\工具方法</h4>
+
+
+
+<h3 id="ERC223"><a href="#ERC223" class="headerlink" title="ERC223"></a>ERC223</h3><p>Status: Open</p>
+<p>Date Proposed: 3/5/2017</p>
+<p>一句话：ERC223令牌标准可以防止令牌在以太坊网络上丢失。</p>
+<p>A post by developer Dexaran describes these two scenarios in detail:</p>
+<p>There are two ways of performing a transaction in ERC20 tokens:</p>
+<ol>
+<li>transfer function.</li>
+<li>approve + transferFrom mechanism.</li>
+</ol>
+<p>Token balance is just a variable in the token contract.</p>
+<p>The transaction of a token is a change in the internal variables of the contract. The balance of the sender will be decreased and the balance of the recipient will be increased.</p>
+<p>The transfer function will not notify the recipient when the transaction occurs. The recipient will not be able to recognize the incoming transaction! I wrote this illustration of the process that is leading to unhandled transactions and money losses.<br>As a result, if the recipient is a contract, users must transfer their tokens using the approve +transferFrom mechanism. If the recipient is an externally owned account address, users must transfer their tokens via the transfer function. If a user makes a mistake and chooses the wrong function, the token will get stuck inside contract (contract will not recognize a transaction). There will be no way to extract stuck tokens.</p>
+<p>His proposed solution to this issue is contained within ERC223. It is very similar to the ERC20 standard, but it solves the problems described above. When tokens are transferred to a smart contract, a special function of that contract is tokenFallback. This allows the receiving contract to decline the tokens or trigger further actions. This can be used in place of the approvefunction in most cases.</p>
+<p>由openzeppelin-contracts <code>SafeERC20</code> 完成。</p>
+<h3 id="ERC621"><a href="#ERC621" class="headerlink" title="ERC621"></a>ERC621</h3><p>Status: Open</p>
+<p>Date Proposed: 5/1/2017</p>
+<p>一句话：发行 Token 总量可变。<strong>ERC621</strong> = ERC20 + increaseSupply() + decreaseSupply()</p>
+<p>ERC621 is an extension of the ERC20 token standard. It adds two additional functions, increaseSupply and decreaseSupply. This can increase and decrease the token supply in circulation. ERC20 only allows a single token issuance event. This restricts the supply to a certain amount which can’t be changed. ERC621 proposes that totalSupply can be modified.</p>
+<h3 id="ERC721"><a href="#ERC721" class="headerlink" title="ERC721"></a>ERC721</h3><p>Status: Open</p>
+<p>Date Proposed: 9/22/2017</p>
+<p>一句话：每个代币都是 unique，例如以太猫。</p>
+<p>ERC721 is very different than ERC20 and ERC223. It describes a non-fungible token. This means that each token is totally different and each one can have a different value to different users. One way to think about this is to recall CryptoKittes. Each one is its own separate commodity whose value is based on its own rarity and desirability by users.</p>
+<p>ERC721 tokens can be used in any exchange, but the token value is “a result of the uniqueness and rareness associated with each token.” The standard functions are name, symbol, totalSupply, balanceOf, ownerOf , approve , takeOwnership , transfer , tokenOfOwnerByIndex, and tokenMetadata. It also defines two events: Transfer and Approval. This article by Gerald Nash does a good job explaining the concept of fungibility as it relates to tokens and goes into good technical detail.</p>
+<h3 id="ERC1155"><a href="#ERC1155" class="headerlink" title="ERC1155"></a>ERC1155</h3><p>Status: Final</p>
+<p>Date Proposed: 2018-06-17</p>
+<p>一句话：ERC-1155的创造者是Enjin coin的CTO Witek Radomski。ERC1155标准定义了一种解决上述问题的新方法。现在“物品”（可能包含ERC20的token或ERC721的token或两者都有）可以被单一的一个合约（打包处理）来定义了。合约里包含区别token们所需的最小量的数据。</p>
+<p>ERC1155协议主要包括ERC1155Mintable.sol同质化可增发智能合约和ERC1155NonFungibleMintable.sol非同质化可增发智能合约，本章只讲解同质化可增发智能合约的功能。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2018/02/13/What-is-an-ERC/" title="What is an ERC?">https://willzhuang.github.io/2018/02/13/What-is-an-ERC/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Token/" rel="tag"># Token</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" rel="prev" title="tail 命令使用">
+                  <i class="fa fa-chevron-left"></i> tail 命令使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/" rel="next" title="Remix部署以太坊智能合约至远程节点">
+                  Remix部署以太坊智能合约至远程节点 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '165caf80e7a5c6080e679b6968abf82f',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

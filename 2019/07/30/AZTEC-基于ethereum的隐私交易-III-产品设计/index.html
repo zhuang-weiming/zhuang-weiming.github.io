@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="产品设计的关键步骤AZTEC 产品的关键步骤：1）生成 note；2）管理秘钥；3）验证 note AZTEC中的aztec.js能够工作在浏览器或者手机程序中，生成 proof 大约需要 10ms，非常高效。 1.生成 note证明（proof）中的保密 Token 需要用到 note。note 在票据登记所（note registry）中登记，proof 也在 note registry 中登">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AZTEC-基于ethereum的隐私交易-III-产品设计">
+<meta property="og:url" content="https://willzhuang.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="产品设计的关键步骤AZTEC 产品的关键步骤：1）生成 note；2）管理秘钥；3）验证 note AZTEC中的aztec.js能够工作在浏览器或者手机程序中，生成 proof 大约需要 10ms，非常高效。 1.生成 note证明（proof）中的保密 Token 需要用到 note。note 在票据登记所（note registry）中登记，proof 也在 note registry 中登">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://willzhuang.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/txprocess.png">
+<meta property="article:published_time" content="2019-07-30T02:01:04.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.014Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="零知识证明">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://willzhuang.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/txprocess.png">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>AZTEC-基于ethereum的隐私交易-III-产品设计 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">产品设计的关键步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%94%9F%E6%88%90-note"><span class="nav-number">2.</span> <span class="nav-text">1.生成 note</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%AE%A1%E7%90%86%E7%A7%98%E9%92%A5"><span class="nav-number">3.</span> <span class="nav-text">2.管理秘钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%B6%88%E8%B4%B9-note"><span class="nav-number">4.</span> <span class="nav-text">3.消费 note</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AZTEC-%E7%9A%84%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">AZTEC 的交易流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%80%9F%E8%B4%B7-ZkAsset"><span class="nav-number">6.</span> <span class="nav-text">1.借贷 ZkAsset</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-%E6%9E%84%E5%BB%BA-proof"><span class="nav-number">6.1.</span> <span class="nav-text">1.1.构建 proof</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-%E6%B3%A8%E5%86%8C-note"><span class="nav-number">6.2.</span> <span class="nav-text">1.2.注册 note</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%BB%93%E7%AE%97-ZkAsset"><span class="nav-number">7.</span> <span class="nav-text">2.结算 ZkAsset</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-%E6%89%B9%E5%87%86-ACE-%E5%90%88%E7%BA%A6%E4%BB%A3%E8%A1%A8-owner-%E8%8A%B1%E8%B4%B9-ERC20-Token"><span class="nav-number">7.1.</span> <span class="nav-text">2.1.批准 ACE 合约代表 owner 花费 ERC20 Token</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-%E6%9E%84%E5%BB%BA-proof"><span class="nav-number">7.2.</span> <span class="nav-text">2.2.构建 proof</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-%E6%89%B9%E5%87%86-ACE-%E5%90%88%E7%BA%A6%E8%8A%B1%E8%B4%B9-ERC20-Token"><span class="nav-number">7.3.</span> <span class="nav-text">2.3.批准 ACE 合约花费 ERC20 Token</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-%E8%BD%AC%E5%8F%91%E4%BA%A4%E6%98%93"><span class="nav-number">7.4.</span> <span class="nav-text">2.4.转发交易</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-5-%E5%A4%84%E7%90%86%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4-Transfer-Instructions"><span class="nav-number">7.5.</span> <span class="nav-text">2.5.处理转移指令(Transfer Instructions)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%BB%93%E7%AE%97%E8%B4%B7%E6%AC%BE%E5%A4%84%E7%90%86"><span class="nav-number">8.</span> <span class="nav-text">3.结算贷款处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-%E6%89%B9%E5%87%86%E7%BB%93%E7%AE%97%E5%90%88%E7%BA%A6%E6%9D%A5%E8%8A%B1%E8%B4%B9-note"><span class="nav-number">8.1.</span> <span class="nav-text">3.1.批准结算合约来花费 note</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-%E6%9E%84%E5%BB%BA-proof"><span class="nav-number">8.2.</span> <span class="nav-text">3.2.构建 proof</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-%E7%BB%88%E6%9E%81%E4%BA%A4%E6%98%93%E5%B9%B6%E6%9B%B4%E6%96%B0%E7%8A%B6%E6%80%81"><span class="nav-number">8.3.</span> <span class="nav-text">3.3.终极交易并更新状态</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AZTEC-基于ethereum的隐私交易-III-产品设计
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-30 10:01:04" itemprop="dateCreated datePublished" datetime="2019-07-30T10:01:04+08:00">2019-07-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="产品设计的关键步骤"><a href="#产品设计的关键步骤" class="headerlink" title="产品设计的关键步骤"></a>产品设计的关键步骤</h4><p>AZTEC 产品的关键步骤：1）生成 note；2）管理秘钥；3）验证 note</p>
+<p>AZTEC中的<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/aztec.js">aztec.js</a>能够工作在浏览器或者手机程序中，生成 proof 大约需要 10ms，非常高效。</p>
+<h4 id="1-生成-note"><a href="#1-生成-note" class="headerlink" title="1.生成 note"></a>1.生成 note</h4><p>证明（proof）中的保密 Token 需要用到 note。note 在票据登记所（note registry）中登记，proof 也在 note registry 中登记。</p>
+<p>生成一个新的 note 需要 owner 的<code>publicKey</code>，所有人使用其地址证明其 owner 的身份，<code>value</code>是 note 中保密 Token 的值：</p>
+<p><code>bobNote1 = await aztec.note.create(bob.publicKey, 100);</code></p>
+<h4 id="2-管理秘钥"><a href="#2-管理秘钥" class="headerlink" title="2.管理秘钥"></a>2.管理秘钥</h4><p>每一个 note 都有一个对应的查看秘钥（viewing key）；同时还有一个对应的暂存秘钥（ephemeral key）。暂存秘钥用于恢复查看秘钥，同时 note 的 owner 的 private key 也可以恢复查看秘钥。</p>
+<p>在服务器端，恢复查看秘钥并再次发送给到 owner 需要一套完备的管理系统，目前 AZTEC 还没有这样的系统。</p>
+<p>在客户端，建议将暂存秘钥加密后保存起来。</p>
+<h4 id="3-消费-note"><a href="#3-消费-note" class="headerlink" title="3.消费 note"></a>3.消费 note</h4><p>消费 note 使用标准的 Join Split 证明。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; proofData, expectedOutput, signatures &#125; = aztec.proof.joinSplit.encodeJoinSplitTransaction(&#123;</span><br><span class="line">  inputNotes: [bobNote1],</span><br><span class="line">  outputNotes: [sallyTaxiFee, bobNote2],</span><br><span class="line">  senderAddress: accounts[<span class="number">0</span>],</span><br><span class="line">  inputNoteOwners: [bob],</span><br><span class="line">  publicOwner: accounts[<span class="number">0</span>],</span><br><span class="line">  kPublic: <span class="number">0</span>,</span><br><span class="line">  validatorAddress: privateVenmoContract.address,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>kPublic是被转换的 ERC20 Token 的值。负值代表 ERC20 Token 被消耗，且转换为 note；正值代表将 note 兑换回到 ERC20 Token。且遵守<code>kPublic == outputNotes</code></p>
+<p>Join Split证明是自动使用<code>inputNoteOwners: [bob]</code>的私钥来签名交易的。更加严谨的话可以使用<code>confidentialApprove</code>方法，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> signature = aztec.signer.signNote(assetAddress, noteHash, spenderAddress, owner.privateKey);</span><br><span class="line">ZkAsset.confidentialApprove(noteHash, spender, <span class="literal">true</span>, signature);</span><br></pre></td></tr></table></figure>
+
+<p>最后再使用下面的语句最终消费掉 note：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> privateVenmoContract.confidentialTransfer(proofData, signatures, &#123;</span><br><span class="line">    <span class="keyword">from</span>: accounts[<span class="number">0</span>],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="AZTEC-的交易流程"><a href="#AZTEC-的交易流程" class="headerlink" title="AZTEC 的交易流程"></a>AZTEC 的交易流程</h4><p><img src="/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/txprocess.png"></p>
+<p>如图所示，结合<a target="_blank" rel="noopener" href="https://github.com/AztecProtocol/loan-dapp-starter-kit">借贷 DApp</a>，分析AZTEC的步骤：</p>
+<h4 id="1-借贷-ZkAsset"><a href="#1-借贷-ZkAsset" class="headerlink" title="1.借贷 ZkAsset"></a>1.借贷 ZkAsset</h4><h5 id="1-1-构建-proof"><a href="#1-1-构建-proof" class="headerlink" title="1.1.构建 proof"></a>1.1.构建 proof</h5><p>用 aztec.js 构建 proof。即 proofData：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">   proofData,</span><br><span class="line">&#125; = aztec.proof.mint.encodeMintTransaction(&#123;</span><br><span class="line">        newTotalMinted: newTotalNote,</span><br><span class="line">        oldTotalMinted: oldTotalNote,</span><br><span class="line">        adjustedNotes: [loanNotionalNote],</span><br><span class="line">        senderAddress: loanDappContract.address,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="1-2-注册-note"><a href="#1-2-注册-note" class="headerlink" title="1.2.注册 note"></a>1.2.注册 note</h5><p>proof 可以被 Mint 成为新的 note，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Loan(loanId).confidentialMint(MINT_PROOF, bytes(_proofData));</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-结算-ZkAsset"><a href="#2-结算-ZkAsset" class="headerlink" title="2.结算 ZkAsset"></a>2.结算 ZkAsset</h4><h5 id="2-1-批准-ACE-合约代表-owner-花费-ERC20-Token"><a href="#2-1-批准-ACE-合约代表-owner-花费-ERC20-Token" class="headerlink" title="2.1.批准 ACE 合约代表 owner 花费 ERC20 Token"></a>2.1.批准 ACE 合约代表 owner 花费 ERC20 Token</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> settlementToken.approve(aceContract.address, value);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-构建-proof"><a href="#2-2-构建-proof" class="headerlink" title="2.2.构建 proof"></a>2.2.构建 proof</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; </span><br><span class="line">     proofData, </span><br><span class="line">     expectedOutput</span><br><span class="line">&#125; = aztec.proof.joinSplit.encodeJoinSplitTransaction(&#123;</span><br><span class="line">    inputNotes: [],</span><br><span class="line">    outputNotes: [Note1, Note2], <span class="comment">// note values sum to kPublic</span></span><br><span class="line">    senderAddress: account.address,</span><br><span class="line">    inputNoteOwners: [],</span><br><span class="line">    publicOwner: account.address,</span><br><span class="line">    kPublic: -value, </span><br><span class="line">    validatorAddress: joinSplitContract.address,</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-批准-ACE-合约花费-ERC20-Token"><a href="#2-3-批准-ACE-合约花费-ERC20-Token" class="headerlink" title="2.3.批准 ACE 合约花费 ERC20 Token"></a>2.3.批准 ACE 合约花费 ERC20 Token</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> ACE.publicApprove(zkAsset.address, hashProof, kPublic, &#123;</span><br><span class="line">      <span class="keyword">from</span>: accounts[<span class="number">0</span>],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-4-转发交易"><a href="#2-4-转发交易" class="headerlink" title="2.4.转发交易"></a>2.4.转发交易</h5><p>转发 proof 给到 ACE，proof 中的senderAddress与发起调用ACE.validateProof的msg.sender 需保持一致。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(bytes memory _proofOutputs) = ACE.validateProof(JOIN_SPLIT_PROOF, address(<span class="built_in">this</span>), _proofData);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-5-处理转移指令-Transfer-Instructions"><a href="#2-5-处理转移指令-Transfer-Instructions" class="headerlink" title="2.5.处理转移指令(Transfer Instructions)"></a>2.5.处理转移指令(Transfer Instructions)</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_loanVariables.settlementToken.confidentialTransferFrom(JOIN_SPLIT_PROOF, _proofOutputs.get(<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-结算贷款处理"><a href="#3-结算贷款处理" class="headerlink" title="3.结算贷款处理"></a>3.结算贷款处理</h4><h5 id="3-1-批准结算合约来花费-note"><a href="#3-1-批准结算合约来花费-note" class="headerlink" title="3.1.批准结算合约来花费 note"></a>3.1.批准结算合约来花费 note</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> settlementSignature = signNote(</span><br><span class="line">   zkSettlementAsset.address,</span><br><span class="line">   settlementNoteHash,</span><br><span class="line">   loanId,</span><br><span class="line">   lender.privateKey);</span><br><span class="line"><span class="keyword">await</span> zkSettlementAsset.confidentialApprove(</span><br><span class="line">   settlementNoteHash,</span><br><span class="line">   loanId,</span><br><span class="line">   <span class="literal">true</span>,</span><br><span class="line">   settlementSignature, </span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">from</span>: lender.address,</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-构建-proof"><a href="#3-2-构建-proof" class="headerlink" title="3.2.构建 proof"></a>3.2.构建 proof</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">     proofData,</span><br><span class="line">&#125; = aztec.proof.bilateralSwap.encodeBilateralSwapTransaction(&#123;</span><br><span class="line">        inputNotes: [takerBid, takerAsk],</span><br><span class="line">        outputNotes: [makerAsk, makerBid],</span><br><span class="line">        senderAddress: loanId,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其中需要<code>takerBid == makerAsk</code> ; <code>takerAsk == makerBid</code></p>
+<h5 id="3-3-终极交易并更新状态"><a href="#3-3-终极交易并更新状态" class="headerlink" title="3.3.终极交易并更新状态"></a>3.3.终极交易并更新状态</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(bytes memory _proofOutputs) = ACE.validateProof(BILATERAL_SWAP_PROOF, address(<span class="built_in">this</span>), _proofData);</span><br><span class="line">(bytes memory _loanProofOutputs) = _proofOutputs.get(<span class="number">0</span>);</span><br><span class="line">(bytes memory _settlementProofOutputs) = _proofOutputs.get(<span class="number">1</span>);</span><br><span class="line">settlementZkAsset.confidentialTransferFrom(BILATERAL_SWAP_PROOF, _settlementProofOutputs);</span><br><span class="line">loanZkAsset.confidentialTransferFrom(BILATERAL_SWAP_PROOF, _loanProofOutputs);</span><br></pre></td></tr></table></figure>
+
+<p>由此完成了借贷以及结算，同时全部的账目均为保密。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" title="AZTEC-基于ethereum的隐私交易-III-产品设计">https://willzhuang.github.io/2019/07/30/AZTEC-基于ethereum的隐私交易-III-产品设计/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag"># 零知识证明</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/07/29/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-II-%E5%8F%91%E5%B8%83%E8%87%B3Ganache/" rel="prev" title="AZTEC-基于ethereum的隐私交易-II-发布至Ganache">
+                  <i class="fa fa-chevron-left"></i> AZTEC-基于ethereum的隐私交易-II-发布至Ganache
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/" rel="next" title="Headless-Commerce-无头电商与中台随想">
+                  Headless-Commerce-无头电商与中台随想 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '3a18749cda57649625b1e4e3d7bca092',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

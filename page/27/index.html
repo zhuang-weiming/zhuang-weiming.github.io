@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.2.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,11 +15,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
   <meta property="og:type" content="website">
@@ -28,10 +32,11 @@
 <meta property="article:author" content="Weiming Zhuang">
 <meta name="twitter:card" content="summary">
 
+
 <link rel="canonical" href="https://willzhuang.github.io/page/27/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -51,49 +56,61 @@
 
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">Zhuang's Diary</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
   </div>
@@ -106,9 +123,8 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
@@ -117,6 +133,11 @@
         <li class="menu-item menu-item-tags">
 
     <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -131,6 +152,62 @@
 
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
@@ -141,18 +218,23 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content index posts-expand">
-            
+    <div class="main-inner index posts-expand">
       
+
+      
+    
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/02/13/What-is-an-ERC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,24 +252,26 @@
             <a href="/2018/02/13/What-is-an-ERC/" class="post-title-link" itemprop="url">What is an ERC?</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-02-13 10:33:37" itemprop="dateCreated datePublished" datetime="2018-02-13T10:33:37+08:00">2018-02-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2018-02-13 10:33:37" itemprop="dateCreated datePublished" datetime="2018-02-13T10:33:37+08:00">2018-02-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -196,8 +280,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>ERC stands for “<strong>Ethereum Request for Comment</strong>” This is Ethereum’s version of a Request for Comments (RFC), a concept devised by the Internet Engineering Task Force. Memos within an RFC contain technical and organizational notes. For ERCs, this includes some technical guidelines for the buildout of the Ethereum network.</p>
 <p>This was written by Ethereum developers for the Ethereum community. Thus, the workflow of generating an ERC includes a developer. To create standards for the Ethereum platform, a developer submits an Ethereum Improvement Proposal (EIP). This includes protocol specifications and contract standards. Once that EIP is approved by a committee and finalized, it becomes an ERC. The complete list of EIPs can be found here.</p>
 <p>The finalized EIPs give the Ethereum developers a set of implementable standards. This allows Smart Contracts to be built with these standards, which a common interface can access. ERC20 is the most well-known of all the standards within the entire crypto community, and most tokens issued on top of the Ethereum platform use it.</p>
@@ -258,18 +340,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -287,24 +376,26 @@
             <a href="/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">tail 命令使用</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2012-06-08 16:28:14" itemprop="dateCreated datePublished" datetime="2012-06-08T16:28:14+08:00">2012-06-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2012-06-08 16:28:14" itemprop="dateCreated datePublished" datetime="2012-06-08T16:28:14+08:00">2012-06-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -313,8 +404,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>UNIX/Linux用户在系统或者应用中触发动作，想要看到针对动作的实时log，这个时候tail命令正是可以一展身手的时候了。</p>
 <p>例：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f sci.log.D20120224.T000000 | grep -v getCommonCodeList | grep -v getRuleDetails | grep -v getExceptionList | grep zhuangwm | grep <span class="string">&quot;Invoking api Method:&quot;</span></span><br></pre></td></tr></table></figure>
@@ -326,18 +415,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2011/11/15/one-year-later/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,24 +451,26 @@
             <a href="/2011/11/15/one-year-later/" class="post-title-link" itemprop="url">one year later</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2011-11-15 11:01:03" itemprop="dateCreated datePublished" datetime="2011-11-15T11:01:03+08:00">2011-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2011-11-15 11:01:03" itemprop="dateCreated datePublished" datetime="2011-11-15T11:01:03+08:00">2011-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -381,8 +479,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>==============================================================</p>
 <p>Gosh darnit, I miss you guys!</p>
 <p>Congrats to everyone with all of the great things that are going on in each of your lives!  I hope things just continue to progress more and more! Happy Birthday to you, Keith!</p>
@@ -392,7 +488,7 @@
 <p>Regina D. Holley Information Security Advisor and Global ISA Program Lead</p>
 <p>  ITD - Security Operations Management</p>
 <p>  972.561.6790 [TL:  861.6790]</p>
-<p>  <a href="mailto:&#104;&#111;&#x6c;&#108;&#x65;&#121;&#x72;&#x40;&#x75;&#x73;&#x2e;&#x69;&#98;&#109;&#x2e;&#99;&#111;&#109;">&#104;&#111;&#x6c;&#108;&#x65;&#121;&#x72;&#x40;&#x75;&#x73;&#x2e;&#x69;&#98;&#109;&#x2e;&#99;&#111;&#109;</a></p>
+<p>  <a href="mailto:&#104;&#111;&#108;&#x6c;&#x65;&#x79;&#x72;&#x40;&#117;&#115;&#46;&#x69;&#x62;&#109;&#x2e;&#x63;&#111;&#109;">&#104;&#111;&#108;&#x6c;&#x65;&#x79;&#x72;&#x40;&#117;&#115;&#46;&#x69;&#x62;&#109;&#x2e;&#x63;&#111;&#109;</a></p>
 <p>  “Do not follow the path. Go where there is no path to begin the trail.”</p>
 <p>-Ashanti proverb</p>
 <p>===============================================================</p>
@@ -429,7 +525,7 @@
 <p>Charleston, SC 29405</p>
 <p>Mobile: 843.860.9174</p>
 <p>Fax: 845.432.0121</p>
-<p><a href="mailto:&#x6b;&#98;&#97;&#110;&#116;&#108;&#x65;&#x40;&#x75;&#115;&#46;&#x69;&#98;&#109;&#x2e;&#x63;&#111;&#x6d;">&#x6b;&#98;&#97;&#110;&#116;&#108;&#x65;&#x40;&#x75;&#115;&#46;&#x69;&#98;&#109;&#x2e;&#x63;&#111;&#x6d;</a></p>
+<p><a href="mailto:&#x6b;&#x62;&#x61;&#x6e;&#116;&#x6c;&#x65;&#64;&#117;&#x73;&#x2e;&#x69;&#x62;&#x6d;&#46;&#99;&#111;&#x6d;">&#x6b;&#x62;&#x61;&#x6e;&#116;&#x6c;&#x65;&#64;&#117;&#x73;&#x2e;&#x69;&#x62;&#x6d;&#46;&#99;&#111;&#x6d;</a></p>
 <p>===============================================================</p>
 <p>From: Srinivas Manem/India/IBM@IBMIN</p>
 <p>To: Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Keith M Bantle/Fairfax/IBM@IBMUS, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
@@ -448,7 +544,7 @@
 <p>Global Telecom CoC </p>
 <p>IBM Global Business Services </p>
 <p>Mobile  +91 99497 03030 </p>
-<p>Email   <a href="mailto:&#x53;&#x72;&#x69;&#110;&#105;&#118;&#x61;&#x73;&#x2e;&#x4d;&#x61;&#110;&#x65;&#x6d;&#x40;&#105;&#x6e;&#46;&#105;&#x62;&#109;&#46;&#x63;&#111;&#109;">&#x53;&#x72;&#x69;&#110;&#105;&#118;&#x61;&#x73;&#x2e;&#x4d;&#x61;&#110;&#x65;&#x6d;&#x40;&#105;&#x6e;&#46;&#105;&#x62;&#109;&#46;&#x63;&#111;&#109;</a> </p>
+<p>Email   <a href="mailto:&#83;&#x72;&#x69;&#110;&#x69;&#x76;&#x61;&#x73;&#x2e;&#x4d;&#x61;&#x6e;&#x65;&#x6d;&#64;&#x69;&#x6e;&#x2e;&#105;&#98;&#109;&#46;&#x63;&#x6f;&#109;">&#83;&#x72;&#x69;&#110;&#x69;&#x76;&#x61;&#x73;&#x2e;&#x4d;&#x61;&#x6e;&#x65;&#x6d;&#64;&#x69;&#x6e;&#x2e;&#105;&#98;&#109;&#46;&#x63;&#x6f;&#109;</a> </p>
 <p>===============================================================</p>
 <p>From: Belen Martin Lopez/Spain/IBM@IBMES</p>
 <p>To: Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB</p>
@@ -462,7 +558,7 @@
 <p>Belén Martín López</p>
 <p>Senior Managing Consultant</p>
 <p>Phone: +34 660 413 703 </p>
-<p>email: <a href="mailto:&#98;&#x65;&#108;&#x65;&#x6e;&#x2e;&#109;&#97;&#x72;&#x74;&#105;&#110;&#64;&#x65;&#115;&#x2e;&#105;&#98;&#109;&#46;&#99;&#x6f;&#x6d;">&#98;&#x65;&#108;&#x65;&#x6e;&#x2e;&#109;&#97;&#x72;&#x74;&#105;&#110;&#64;&#x65;&#115;&#x2e;&#105;&#98;&#109;&#46;&#99;&#x6f;&#x6d;</a> </p>
+<p>email: <a href="mailto:&#98;&#x65;&#108;&#101;&#110;&#x2e;&#109;&#97;&#x72;&#116;&#x69;&#110;&#x40;&#101;&#115;&#x2e;&#105;&#98;&#109;&#46;&#99;&#x6f;&#x6d;">&#98;&#x65;&#108;&#101;&#110;&#x2e;&#109;&#97;&#x72;&#116;&#x69;&#110;&#x40;&#101;&#115;&#x2e;&#105;&#98;&#109;&#46;&#99;&#x6f;&#x6d;</a> </p>
 <p>IBM Global Services España, S.A.</p>
 <p>Mar Adriático, 2, 28830 San Fernando de Henares (Madrid)</p>
 <p>Registro Mercantil de Madrid, Folio 49; Tomo 6430; Hoja M-104.742</p>
@@ -482,7 +578,7 @@
 <p>Miss all of you. Must be let me if anyone come to Beijing or Dalian. Must!</p>
 <p>Have a good working day !</p>
 <p>==============================================</p>
-<p>庄伟铭/Wei Ming, E-mail: <a href="mailto:&#x7a;&#x68;&#117;&#x61;&#x6e;&#103;&#x77;&#x6d;&#x40;&#x63;&#x6e;&#x2e;&#x69;&#98;&#109;&#x2e;&#x63;&#111;&#109;">&#x7a;&#x68;&#117;&#x61;&#x6e;&#103;&#x77;&#x6d;&#x40;&#x63;&#x6e;&#x2e;&#x69;&#98;&#109;&#x2e;&#x63;&#111;&#109;</a></p>
+<p>庄伟铭/Wei Ming, E-mail: <a href="mailto:&#122;&#104;&#117;&#x61;&#110;&#x67;&#x77;&#x6d;&#64;&#x63;&#110;&#x2e;&#105;&#x62;&#x6d;&#x2e;&#99;&#111;&#x6d;">&#122;&#104;&#117;&#x61;&#110;&#x67;&#x77;&#x6d;&#64;&#x63;&#110;&#x2e;&#105;&#x62;&#x6d;&#x2e;&#99;&#111;&#x6d;</a></p>
 <p>TEL:0411-88151143 Tie-Line:61143 </p>
 <p>IBM Dalian Global Delivery Center, GBS/GCG</p>
 <p>==============================================</p>
@@ -513,7 +609,7 @@
 <p>Charleston, SC 29405</p>
 <p>Mobile: 843.860.9174</p>
 <p>Fax: 845.432.0121</p>
-<p><a href="mailto:&#x6b;&#x62;&#97;&#110;&#x74;&#108;&#101;&#x40;&#117;&#x73;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#x6f;&#109;">&#x6b;&#x62;&#97;&#110;&#x74;&#108;&#101;&#x40;&#117;&#x73;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#x6f;&#109;</a></p>
+<p><a href="mailto:&#107;&#98;&#97;&#110;&#116;&#108;&#101;&#64;&#117;&#115;&#46;&#x69;&#x62;&#x6d;&#46;&#x63;&#111;&#x6d;">&#107;&#98;&#97;&#110;&#116;&#108;&#101;&#64;&#117;&#115;&#46;&#x69;&#x62;&#x6d;&#46;&#x63;&#111;&#x6d;</a></p>
 <p>===============================================================</p>
 <p>From: Roy Hebert/CanWest/IBM@IBMCA</p>
 <p>To: Erika V Quezada/Mexico/IBM@IBMMX@IBMUS</p>
@@ -528,7 +624,7 @@
 <p>Roy Hebert</p>
 <p>Alberta Territory Manager, IBM</p>
 <p>Office 403 539 3145</p>
-<p><a href="mailto:&#114;&#104;&#101;&#98;&#101;&#x72;&#x74;&#64;&#x63;&#x61;&#x2e;&#105;&#x62;&#109;&#x2e;&#x63;&#x6f;&#x6d;">&#114;&#104;&#101;&#98;&#101;&#x72;&#x74;&#64;&#x63;&#x61;&#x2e;&#105;&#x62;&#109;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
+<p><a href="mailto:&#114;&#x68;&#101;&#98;&#101;&#x72;&#116;&#64;&#x63;&#97;&#x2e;&#x69;&#x62;&#x6d;&#x2e;&#99;&#111;&#x6d;">&#114;&#x68;&#101;&#98;&#101;&#x72;&#116;&#64;&#x63;&#97;&#x2e;&#x69;&#x62;&#x6d;&#x2e;&#99;&#111;&#x6d;</a></p>
 <p>===============================================================</p>
 <p>From: Erika V Quezada/Mexico/IBM@IBMMX</p>
 <p>To: Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Martin Jesko/Slovakia/IBM@IBMSK, Keith M Bantle/Fairfax/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS</p>
@@ -555,18 +651,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2010/11/07/remebering-csc-days/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -584,24 +687,26 @@
             <a href="/2010/11/07/remebering-csc-days/" class="post-title-link" itemprop="url">remebering csc days</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2010-11-07 14:56:22" itemprop="dateCreated datePublished" datetime="2010-11-07T14:56:22+08:00">2010-11-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2010-11-07 14:56:22" itemprop="dateCreated datePublished" datetime="2010-11-07T14:56:22+08:00">2010-11-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -610,8 +715,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>Sitting at my desk back in my office during my lunch break, I started to reminisce about my month long stay in Ghana with my 10 IBM colleagues – now my close friends. One week ago we were in Accra, the capital, preparing for our press conference, dressed in our business best (and the ladies looked amazing). Our goal for the press conference was to state what we had achieved for Ghana and our clients during our short stay. Five of us summarized the projects we worked on and the tangible deliverables in addition to the intangible short, medium, and long-term goals we left for our Ghanaian colleagues to achieve. It was the three client’s statements that really made us all realize the positive impact we had made – how much we had done for them in 16 working days, how we’ve shown them that when focused on a common set of goals, great things can be accomplished in a very short time. We all hope the excitement and drive we were able to share continues and the pace of success remains steady. </p>
 <p>29 days earlier eleven of us from all over the world landed in Accra – all IBMers but strangers nonetheless. We came from very diverse cultural and business backgrounds yet we all shared similar interests: the love of travel, the openness to new cultures, the joy of laughter and friendships, and the love of family and friends back home. Though our business skills were also diverse, we have core similarities there as well: we are all driven to achieve, we all have excellent problem solving skills, we all have great soft skills, and we all have excellent time management skills. We work hard, and we play hard – I guess that’s the IBM way.</p>
 <p>As the working days passed, the eleven of us became as close as family. We leaned on each other for support and wisdom; we celebrated each others’ successes and embraced each others’ challenges. We shared outstanding experiences touring Ghana and learning about its people and the growing economy. We realized how special this program was to us and our clients. Many of us shared stories where our clients first realized we were strangers when we started this assignment; they thought we had been working together for years. I don’t know how our team mates were selected, but I commend whomever it was that put the 11 of us together – it was perfect.</p>
@@ -624,18 +727,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2010/11/04/ghana-day-29/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -653,24 +763,26 @@
             <a href="/2010/11/04/ghana-day-29/" class="post-title-link" itemprop="url">ghana day 29</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2010-11-04 23:53:10" itemprop="dateCreated datePublished" datetime="2010-11-04T23:53:10+08:00">2010-11-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2010-11-04 23:53:10" itemprop="dateCreated datePublished" datetime="2010-11-04T23:53:10+08:00">2010-11-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -679,8 +791,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p>How times flying. I went back to China, but I can not forget what happened on my last working day in Ghana.</p>
 <p>On the last day, the last three team did their final presentations, including Chamber, GTB and NBSSI Team. The final presentation was very successful, we did a great job and we got a great satisfaction from client, and detailed action plan was created. It means we delivered these results to client, they are not only deliverables, but also they will become a big impact in future. I feel an honest and happy pride!</p>
 <p>In the evening, Mr.Hammond and staffs of GTB met Anouk and me in Valley Beach Hotel, they sent us great presents.</p>
@@ -695,13 +805,16 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
-  
-  
+</div>
+
+
+
 
 
   
@@ -711,8 +824,7 @@
 
 
 
-          </div>
-          
+      
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -721,7 +833,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -730,76 +842,20 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">141</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">69</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
+      
 
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
+      
 
 <div class="copyright">
   
@@ -811,65 +867,26 @@
   <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
 </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-<script src="/js/bookmark.js"></script>
-
-
-
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
   <script>
     (function(){
-      var canonicalURL, curProtocol;
-      //Get the <link> tag
-      var x=document.getElementsByTagName("link");
-		//Find the last canonical URL
-		if(x.length > 0){
-			for (i=0;i<x.length;i++){
-				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
-					canonicalURL=x[i].href;
-				}
-			}
-		}
-    //Get protocol
-	    if (!canonicalURL){
-	    	curProtocol = window.location.protocol.split(':')[0];
-	    }
-	    else{
-	    	curProtocol = canonicalURL.split(':')[0];
-	    }
-      //Get current URL if the canonical URL does not exist
-	    if (!canonicalURL) canonicalURL = window.location.href;
-	    //Assign script content. Replace current URL with the canonical URL
-      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
   </script>
+
+
+
 
 
 
@@ -887,17 +904,16 @@
 
   
 
+
+
+
+
+
+
+
   
-  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://willzhuang.github.io/page/27/',]
-      });
-      });
-  </script>
+
+  
 
 
 </body>

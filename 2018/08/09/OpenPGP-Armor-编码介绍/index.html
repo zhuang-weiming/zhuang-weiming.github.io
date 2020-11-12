@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="OpenPGP ArmorOpenPGP是使用最广泛的电子邮件加密标准。它由Internet工程任务组（IETF）的OpenPGP工作组定义为RFC 4880中的建议标准.OpenPGP最初源自由Phil Zimmermann创建的PGP软件。 虽然OpenPGP的主要目的是端到端加密电子邮件通信，但它也用于加密消息传递和其他用例，如密码管理器。 OpenPGP的加密消息，签名证书和密钥的基本描述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenPGP Armor 编码介绍">
+<meta property="og:url" content="https://willzhuang.github.io/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="OpenPGP ArmorOpenPGP是使用最广泛的电子邮件加密标准。它由Internet工程任务组（IETF）的OpenPGP工作组定义为RFC 4880中的建议标准.OpenPGP最初源自由Phil Zimmermann创建的PGP软件。 虽然OpenPGP的主要目的是端到端加密电子邮件通信，但它也用于加密消息传递和其他用例，如密码管理器。 OpenPGP的加密消息，签名证书和密钥的基本描述">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-08-09T09:31:43.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.073Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="OpenPGP">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>OpenPGP Armor 编码介绍 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenPGP-Armor"><span class="nav-number">1.</span> <span class="nav-text">OpenPGP Armor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ASCII-Armor%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">ASCII Armor的数据结构如下：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">具体示例：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#golang-org-x-crypto-openpgp-armor-%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">golang.org&#x2F;x&#x2F;crypto&#x2F;openpgp&#x2F;armor 代码分析：</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenPGP Armor 编码介绍
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-08-09 17:31:43" itemprop="dateCreated datePublished" datetime="2018-08-09T17:31:43+08:00">2018-08-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="OpenPGP-Armor"><a href="#OpenPGP-Armor" class="headerlink" title="OpenPGP Armor"></a>OpenPGP Armor</h3><p>OpenPGP是使用最广泛的电子邮件加密标准。它由Internet工程任务组（IETF）的OpenPGP工作组定义为RFC 4880中的建议标准.OpenPGP最初源自由Phil Zimmermann创建的PGP软件。</p>
+<p>虽然OpenPGP的主要目的是端到端加密电子邮件通信，但它也用于加密消息传递和其他用例，如密码管理器。</p>
+<p>OpenPGP的加密消息，签名证书和密钥的基本描述是八位的字节流。为了通过不能保障安全的网络通道传输OpenPGP的二进制八位字节，需要编码为可打印的二进制字符。OpenPGP提供将原始8位二进制八位字节流转换为可打印ASCII字符流，称为Radix-64编码或ASCII Armor。</p>
+<p>ASCII Armor是OpenPGP的可选功能。当OpenPGP将数据编码为ASCII Armor时，它会在Radix-64编码数据中放置特定的Header。OpenPGP可以使用ASCII Armor来保护原始二进制数据。OpenPGP通过使用Header告知用户在ASCII Armor中编码了什么类型的数据。</p>
+<h3 id="ASCII-Armor的数据结构如下："><a href="#ASCII-Armor的数据结构如下：" class="headerlink" title="ASCII Armor的数据结构如下："></a>ASCII Armor的数据结构如下：</h3><ul>
+<li>Armor标题行，匹配数据类型</li>
+<li>Armor Headers</li>
+<li>A Blank（零长度或仅包含空格） Line</li>
+<li>The ASCII-Armored data</li>
+<li>An Armor Checksum</li>
+<li>The Armor Tail，取决于护甲标题线</li>
+</ul>
+<h3 id="具体示例："><a href="#具体示例：" class="headerlink" title="具体示例："></a>具体示例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP MESSAGE-----</span><br><span class="line"></span><br><span class="line">Version: OpenPrivacy 0.99</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">yDgBO22WxBHv7O8X7O&#x2F;jygAEzol56iUKiXmV+XmpCtmpqQUKiQrFqclFqUDBovzSvBSFjNSiVHsuAA&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">&#x3D;njUN</span><br><span class="line"></span><br><span class="line">-----END PGP MESSAGE-----</span><br></pre></td></tr></table></figure>
+
+<h3 id="golang-org-x-crypto-openpgp-armor-代码分析："><a href="#golang-org-x-crypto-openpgp-armor-代码分析：" class="headerlink" title="golang.org/x/crypto/openpgp/armor 代码分析："></a><a href="golang.org/x/crypto/openpgp/armor">golang.org/x/crypto/openpgp/armor</a> 代码分析：</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Encode 返回一个 WriteCloser，它将对 写入的数据进行编码</span></span><br><span class="line"><span class="comment">// Encode returns a WriteCloser which will encode the data written to it in</span></span><br><span class="line"><span class="comment">// OpenPGP Armor.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Encode</span><span class="params">(out io.Writer, blockType <span class="keyword">string</span>, headers <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>)</span> <span class="params">(w io.WriteCloser, err error)</span></span> &#123;</span><br><span class="line">	bType := []<span class="keyword">byte</span>(blockType)</span><br><span class="line">	err = writeSlices(out, armorStart, bType, armorEndOfLineOut)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> k, v := <span class="keyword">range</span> headers &#123;</span><br><span class="line">		err = writeSlices(out, []<span class="keyword">byte</span>(k), armorHeaderSep, []<span class="keyword">byte</span>(v), newline)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	_, err = out.Write(newline)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	e := &amp;encoding&#123;</span><br><span class="line">		out:       out,</span><br><span class="line">		breaker:   newLineBreaker(out, <span class="number">64</span>),</span><br><span class="line">		crc:       crc24Init,</span><br><span class="line">		blockType: bType,</span><br><span class="line">	&#125;</span><br><span class="line">	e.b64 = base64.NewEncoder(base64.StdEncoding, e.breaker)</span><br><span class="line">	<span class="keyword">return</span> e, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将返回值进一步封装为字符串</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">EncodeArmor</span><span class="params">(blockType <span class="keyword">string</span>, headers <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>, data []<span class="keyword">byte</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	buf := <span class="built_in">new</span>(bytes.Buffer)</span><br><span class="line">	w, err := armor.Encode(buf, blockType, headers)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	_, err = w.Write(data)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	err = w.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> buf.String()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实际使用中将公钥导出为 ASCII Armor 格式</span></span><br><span class="line"><span class="comment">// ExportPubKey returns public keys in ASCII armored format.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">armorPubKeyBytes</span><span class="params">(bz []<span class="keyword">byte</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> armorBytes(bz, blockTypePubKey)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">armorBytes</span><span class="params">(bz []<span class="keyword">byte</span>, blockType <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	header := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;type&quot;</span>:    <span class="string">&quot;Info&quot;</span>,</span><br><span class="line">		<span class="string">&quot;version&quot;</span>: <span class="string">&quot;0.0.0&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> armor.EncodeArmor(blockType, header, bz)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ExportPubKey</span><span class="params">(name <span class="keyword">string</span>)</span> <span class="params">(armor <span class="keyword">string</span>, err error)</span></span> &#123;</span><br><span class="line">	bz := Get(infoKey(name))</span><br><span class="line">	<span class="keyword">if</span> bz == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, fmt.Errorf(<span class="string">&quot;no key to export with name %s&quot;</span>, name)</span><br><span class="line">	&#125;</span><br><span class="line">	info, err := readInfo(bz)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> armorPubKeyBytes(info.GetPubKey().Bytes()), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 CovalentChain 公钥、私钥的导入导出和传输等情况，使用 ASCII Armor 编码格式非常合适。另外，在私钥情况下，通常都需要在加密后，再进行编码处理。</p>
+<p>参考链接：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc4880">https://tools.ietf.org/html/rfc4880</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.openpgp.org/">https://www.openpgp.org/</a></li>
+<li><a href="golang.org/x/crypto/openpgp/armor">golang.org/x/crypto/openpgp/armor</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/" title="OpenPGP Armor 编码介绍">https://willzhuang.github.io/2018/08/09/OpenPGP-Armor-编码介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/OpenPGP/" rel="tag"># OpenPGP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/26/WebAssembly-%E4%BB%8B%E7%BB%8D/" rel="prev" title="WebAssembly 介绍">
+                  <i class="fa fa-chevron-left"></i> WebAssembly 介绍
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/20/Haproxy%E7%9A%84TCP%E5%B1%82%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/" rel="next" title="Haproxy的TCP层健康检查">
+                  Haproxy的TCP层健康检查 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '2e970dfd46528bcb056d067673977519',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

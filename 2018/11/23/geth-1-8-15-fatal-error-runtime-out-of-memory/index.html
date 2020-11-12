@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="Get a fatal error: runtime: out of memory in geth. Env is as below:  geth version: 1.8.15-stable go version: 1.11 linux&#x2F;amd64 Linux version 4.14.47-64.38.amzn2.x86_64  (mockbuild@ip-10-0-1-219) (gcc v">
+<meta property="og:type" content="article">
+<meta property="og:title" content="geth 1.8.15 fatal error runtime out of memory">
+<meta property="og:url" content="https://willzhuang.github.io/2018/11/23/geth-1-8-15-fatal-error-runtime-out-of-memory/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="Get a fatal error: runtime: out of memory in geth. Env is as below:  geth version: 1.8.15-stable go version: 1.11 linux&#x2F;amd64 Linux version 4.14.47-64.38.amzn2.x86_64  (mockbuild@ip-10-0-1-219) (gcc v">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-11-23T02:59:01.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:48.094Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="geth">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2018/11/23/geth-1-8-15-fatal-error-runtime-out-of-memory/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>geth 1.8.15 fatal error runtime out of memory | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/11/23/geth-1-8-15-fatal-error-runtime-out-of-memory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          geth 1.8.15 fatal error runtime out of memory
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-23 10:59:01" itemprop="dateCreated datePublished" datetime="2018-11-23T10:59:01+08:00">2018-11-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Get a <strong>fatal error: runtime: out of memory</strong> in geth. Env is as below:</p>
+<ul>
+<li>geth version: 1.8.15-stable</li>
+<li>go version: 1.11 linux/amd64</li>
+<li>Linux version 4.14.47-64.38.amzn2.x86_64 </li>
+<li>(mockbuild@ip-10-0-1-219)</li>
+<li>(gcc version 7.3.1 20180303 (Red Hat 7.3.1-5) (GCC))</li>
+<li>aws型号 c5.large | vCPU：2 | 内存 (GiB)：4</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">INFO [11-22|01:36:30.725] Submitted transaction                    fullhash&#x3D;0x583c48c36a165daed190212facf12813b2a5331b05e43ede7a1e8426936d83d6 recipient&#x3D;0xe2E55079E31cf95589B5433cF06beb448624d0A7</span><br><span class="line">INFO [11-22|01:36:31.286] Committing block                         stateHash&#x3D;cc2f6d…6fbe5b blockHash&#x3D;3b92a3…2a3b13</span><br><span class="line">INFO [11-22|01:36:31.287] Imported new chain segment               blocks&#x3D;1 txs&#x3D;1 mgas&#x3D;0.021 elapsed&#x3D;428.986µs mgasps&#x3D;48.953 number&#x3D;3 hash&#x3D;607b71…154d5e cache&#x3D;964.00B</span><br><span class="line">INFO [11-22|01:36:31.287] Commiting                                module&#x3D;oval        blockHash&#x3D;3b92a30f0a4b332a95b5bf304d133b5ebe76210f6c329b14148069a77c2a3b13 cbr&#x3D;cc2f6d729a06198723f407523b4ac61796a0198aa9e9e3d5a1c17e37e56fbe5b</span><br><span class="line">INFO [11-22|01:42:00.336] Committing block                         stateHash&#x3D;de1af6…3b83f8 blockHash&#x3D;71c97f…2c1bdc</span><br><span class="line">INFO [11-22|01:42:00.337] Imported new chain segment               blocks&#x3D;1 txs&#x3D;1 mgas&#x3D;0.075 elapsed&#x3D;456.862µs mgasps&#x3D;163.472 number&#x3D;4 hash&#x3D;295456…55f08d cache&#x3D;1.27kB</span><br><span class="line">INFO [11-22|01:42:00.337] Commiting                                module&#x3D;oval        blockHash&#x3D;71c97f9a55e28a03d9c114a9749d6a8f50dccbc2a3538f4ce6818fb2c52c1bdc cbr&#x3D;de1af60245d823ff58d280ced344046ef4348957b83900d55cfd8e108d3b83f8</span><br><span class="line">fatal error: runtime: out of memory</span><br><span class="line"></span><br><span class="line">runtime stack:</span><br><span class="line">runtime.throw(0x10bd3c9, 0x16)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;panic.go:608 +0x72</span><br><span class="line">runtime.sysMap(0xc0cc000000, 0x10000000, 0x217fdf8)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;mem_linux.go:156 +0xc7</span><br><span class="line">runtime.(*mheap).sysAlloc(0x2165e60, 0x10000000, 0x313d68, 0x7fcb9139acd8)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;malloc.go:619 +0x1c7</span><br><span class="line">runtime.(*mheap).grow(0x2165e60, 0x8000, 0x0)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;mheap.go:920 +0x42</span><br><span class="line">runtime.(*mheap).allocSpanLocked(0x2165e60, 0x8000, 0x217fe08, 0x448fab)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;mheap.go:848 +0x337</span><br><span class="line">runtime.(*mheap).alloc_m(0x2165e60, 0x8000, 0x7fcb9cf00101, 0x7fcb9cf025a0)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;mheap.go:692 +0x119</span><br><span class="line">runtime.(*mheap).alloc.func1()</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;mheap.go:759 +0x4c</span><br><span class="line">runtime.(*mheap).alloc(0x2165e60, 0x8000, 0x7fcb91010101, 0x42baf5)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;mheap.go:758 +0x8a</span><br><span class="line">runtime.largeAlloc(0x10000000, 0x460101, 0x7fcb9d0896c0)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;malloc.go:1019 +0x97</span><br><span class="line">runtime.mallocgc.func1()</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;malloc.go:914 +0x46</span><br><span class="line">runtime.systemstack(0xc000308480)</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;asm_amd64.s:351 +0x66</span><br><span class="line">runtime.mstart()</span><br><span class="line">	&#x2F;usr&#x2F;local&#x2F;go&#x2F;src&#x2F;runtime&#x2F;proc.go:1229</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>【原因分析】<br>geth莫名其妙自动关闭，日志未呈现异常。此问题是因为服务器内存不足触发Linux的OOM killer操作，被杀掉了。<br>【解决方案】</p>
+<ol>
+<li>设置 –cache，并不能解决问题。</li>
+<li>除了升级内存，没有太好的办法。只能依靠监控程序报警，发现问题重启即可。</li>
+<li>需要在节点间设置 rpc 通信的白名单，防止黑客暴力破解 keystore 的密码。</li>
+<li>其中折中的办法是设置swap。具体命令如下：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">free -m</span><br><span class="line">dd if=/dev/zero of=/swap bs=10M count=800</span><br><span class="line">chmod 600 /swap</span><br><span class="line">ll /swap</span><br><span class="line">mkswap /swap</span><br><span class="line">swapon /swap</span><br><span class="line">swapon -s</span><br><span class="line">free -m</span><br></pre></td></tr></table></figure>
+
+<p>相关链接：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ethereum/go-ethereum/issues/16377">https://github.com/ethereum/go-ethereum/issues/16377</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ethereum/go-ethereum/issues/15157">https://github.com/ethereum/go-ethereum/issues/15157</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2018/11/23/geth-1-8-15-fatal-error-runtime-out-of-memory/" title="geth 1.8.15 fatal error runtime out of memory">https://willzhuang.github.io/2018/11/23/geth-1-8-15-fatal-error-runtime-out-of-memory/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/geth/" rel="tag"># geth</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/11/20/Haproxy%E7%9A%84TCP%E5%B1%82%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5/" rel="prev" title="Haproxy的TCP层健康检查">
+                  <i class="fa fa-chevron-left"></i> Haproxy的TCP层健康检查
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/" rel="next" title="计算中文文本相似度有哪些好用的算法？">
+                  计算中文文本相似度有哪些好用的算法？ <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '07924450f22ce5fe45f1900d65dcb32d',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

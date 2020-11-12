@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.2.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,11 +15,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
   <meta property="og:type" content="website">
@@ -28,10 +32,11 @@
 <meta property="article:author" content="Weiming Zhuang">
 <meta name="twitter:card" content="summary">
 
+
 <link rel="canonical" href="https://willzhuang.github.io/page/16/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -51,49 +56,61 @@
 
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">Zhuang's Diary</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
   </div>
@@ -106,9 +123,8 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
@@ -117,6 +133,11 @@
         <li class="menu-item menu-item-tags">
 
     <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -131,6 +152,62 @@
 
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
@@ -141,18 +218,23 @@
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content index posts-expand">
-            
+    <div class="main-inner index posts-expand">
       
+
+      
+    
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/07/24/%E5%85%B3%E4%BA%8Eethereum%E9%9A%90%E7%A7%81%E6%95%B0%E6%8D%AE%E7%9A%84%E7%8E%B0%E7%8A%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,24 +252,26 @@
             <a href="/2019/07/24/%E5%85%B3%E4%BA%8Eethereum%E9%9A%90%E7%A7%81%E6%95%B0%E6%8D%AE%E7%9A%84%E7%8E%B0%E7%8A%B6/" class="post-title-link" itemprop="url">关于ethereum隐私数据的现状</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-07-24 17:34:04" itemprop="dateCreated datePublished" datetime="2019-07-24T17:34:04+08:00">2019-07-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2019-07-24 17:34:04" itemprop="dateCreated datePublished" datetime="2019-07-24T17:34:04+08:00">2019-07-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -196,8 +280,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h3 id="一句话概述：以太坊上没有隐私数据"><a href="#一句话概述：以太坊上没有隐私数据" class="headerlink" title="一句话概述：以太坊上没有隐私数据"></a>一句话概述：以太坊上没有隐私数据</h3><h5 id="private-声明帮不了你"><a href="#private-声明帮不了你" class="headerlink" title="private 声明帮不了你"></a>private 声明帮不了你</h5><p><code>string private secret;</code></p>
 <p>如上，将变量设置为private只是确保仅通过特定的 function 才能够更改变量的值。但就数据的隐私性“private”而言，这是没用的。基本上，以太坊smart contract上的所有内容都在（所有）节点（即所有矿工和参与者）的硬盘上，私有变量只是为了使阅读不方便，但并不意味着不可能。它不足以保护您的敏感、隐私信息。如下图所示。<br>而且，smart contract 的代码是透明的，private 的变量声明是很容易被以太坊用户识别的。</p>
 <p><img src="/2019/07/24/%E5%85%B3%E4%BA%8Eethereum%E9%9A%90%E7%A7%81%E6%95%B0%E6%8D%AE%E7%9A%84%E7%8E%B0%E7%8A%B6/setsecret.png"></p>
@@ -216,18 +298,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -245,24 +334,26 @@
             <a href="/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/" class="post-title-link" itemprop="url">zokrates-基于ethereum的zkp-II-进阶</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-07-24 16:01:04" itemprop="dateCreated datePublished" datetime="2019-07-24T16:01:04+08:00">2019-07-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2019-07-24 16:01:04" itemprop="dateCreated datePublished" datetime="2019-07-24T16:01:04+08:00">2019-07-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -271,8 +362,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h3 id="Project-link-gt-https-github-com-WillZhuang-zkp-workshop-project"><a href="#Project-link-gt-https-github-com-WillZhuang-zkp-workshop-project" class="headerlink" title="Project link -&gt; https://github.com/WillZhuang/zkp-workshop-project"></a>Project link -&gt; <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project">https://github.com/WillZhuang/zkp-workshop-project</a></h3><p>让我来 step by step 做介绍：</p>
 <h4 id="1-编写关于-bid-case-的-code"><a href="#1-编写关于-bid-case-的-code" class="headerlink" title="1.编写关于 bid case 的 code"></a>1.编写关于 bid case 的 code</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">/// This zksnark <span class="keyword">is</span> to be used to verify that an operator has choosen</span><br><span class="line">/// the lowest bid that was actually submitted by an approved supplier was choosen</span><br><span class="line">/// by the operator <span class="keyword">for</span> the work. For this proof of concept, we will structure the</span><br><span class="line">/// proof to use <span class="number">3</span> suppliers only.</span><br><span class="line"></span><br><span class="line">///    Inputs <span class="keyword">for</span> the SNARK</span><br><span class="line"></span><br><span class="line">///    PUBLIC FIELDS</span><br><span class="line">///    input_of_py: field[<span class="number">3</span>] public keys <span class="keyword">for</span> each supplier - should be EDDSA public keys</span><br><span class="line">///    *  A: Curve point. Public part of the key used to create S.</span><br><span class="line"></span><br><span class="line">///    PRIVATE FIELDS</span><br><span class="line">///    input_of_py: field[<span class="number">3</span>] actual bid <span class="keyword">from</span> each supplier</span><br><span class="line">///    input_of_py: Requires per each EDDSA signatures per supplier</span><br><span class="line">///    *  R: Curve point. Hidden version of the per-message nonce.</span><br><span class="line">///    *  S: Field element. Signature to be verified.</span><br><span class="line">///    input_of_py: a secret to aide <span class="keyword">in</span> building out the merkel tree of the results</span><br><span class="line"></span><br><span class="line">///    *  context: Curve parameters used to create S. Tells you which curve was used.</span><br><span class="line">///    The context can be generated <span class="keyword">from</span> the babyjubjub curve.</span><br><span class="line"></span><br><span class="line">///    Returns <span class="keyword">for</span> the SNARK</span><br><span class="line">///    <span class="keyword">return</span>: a merkel tree including...</span><br><span class="line">///    <span class="number">1.</span> private key of choosen supplier</span><br><span class="line">///    <span class="number">2.</span> secret</span><br><span class="line">///    <span class="number">3.</span> A: Curve point. Public part of the key used to create S.</span><br><span class="line"></span><br><span class="line">// In the vectors, the supplier order should be kept the same to compare/access (i.e. supplier one has first bid, supplier two second bid, etc.)</span><br><span class="line"></span><br><span class="line">//For signatures</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;ecc/babyjubjubParams.code&quot;</span> <span class="keyword">as</span> context</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;signatures/verifyEddsa.code&quot;</span> <span class="keyword">as</span> verifyEddsa</span><br><span class="line">//For unpacking bids correctly</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/unpack128.code&quot;</span> <span class="keyword">as</span> unpack128</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/pack128.code&quot;</span> <span class="keyword">as</span> pack128</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/nonStrictUnpack256.code&quot;</span> <span class="keyword">as</span> unpack256</span><br><span class="line">//For unpacking signatures correctly</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/pack128.code&quot;</span> <span class="keyword">as</span> pack128</span><br><span class="line">//For merkle tree - changed to padded</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;hashes/sha256/512bitPadded.code&quot;</span> <span class="keyword">as</span> sha256</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>(<span class="params">private field[<span class="number">6</span>] R, \</span></span></span><br><span class="line"><span class="function"><span class="params"> field[<span class="number">6</span>] A, \</span></span></span><br><span class="line"><span class="function"><span class="params"> field[<span class="number">3</span>] S, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field secret, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidone, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidtwo, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidthree</span>) -&gt; (field[2]):</span></span><br><span class="line"></span><br><span class="line">//Since each message <span class="keyword">is</span> constructed <span class="keyword">from</span> the bids, no way to input_of_py a faulty bid</span><br><span class="line"></span><br><span class="line">//Reconstruct messages:</span><br><span class="line">//Note: Field element can be a value between <span class="number">0</span> <span class="keyword">and</span> p (p upper limit: <span class="number">2</span>^<span class="number">254</span>)</span><br><span class="line">//Makes an assumption that every bid will be <span class="number">64</span> bit number</span><br><span class="line">//Message <span class="keyword">in</span> the signature should be <span class="number">512</span> bits</span><br><span class="line"></span><br><span class="line">field[<span class="number">128</span>] bidoneunpacked = unpack128(bidone)</span><br><span class="line">field[<span class="number">512</span>] bidonemessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidoneunpacked]</span><br><span class="line">field[<span class="number">128</span>] bidtwounpacked = unpack128(bidtwo)</span><br><span class="line">field[<span class="number">512</span>] bidtwomessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidtwounpacked]</span><br><span class="line">field[<span class="number">128</span>] bidthreeunpacked = unpack128(bidthree)</span><br><span class="line">field[<span class="number">512</span>] bidthreemessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidthreeunpacked]</span><br><span class="line"></span><br><span class="line">context = context()</span><br><span class="line"></span><br><span class="line">// Supplier <span class="number">1</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">0.</span><span class="number">.2</span>], S[<span class="number">0</span>], A[<span class="number">0.</span><span class="number">.2</span>], bidonemessage[<span class="number">0.</span><span class="number">.256</span>], bidonemessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line">// Supplier <span class="number">2</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">2.</span><span class="number">.4</span>], S[<span class="number">1</span>], A[<span class="number">2.</span><span class="number">.4</span>], bidtwomessage[<span class="number">0.</span><span class="number">.256</span>], bidtwomessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line">// Supplier <span class="number">3</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">4.</span><span class="number">.6</span>], S[<span class="number">2</span>], A[<span class="number">4.</span><span class="number">.6</span>], bidthreemessage[<span class="number">0.</span><span class="number">.256</span>], bidthreemessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line"></span><br><span class="line">//Lowest bid should correllate <span class="keyword">with</span> supplier</span><br><span class="line">//To Do: write the simplest implementation to simplify, each of the below would be a <span class="built_in">range</span> proof</span><br><span class="line">field[<span class="number">3</span>] lowestbidder = [...[<span class="number">0</span>; <span class="number">3</span>]] //Save supplier <span class="keyword">and</span> the lowest bid</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidone &lt; bidtwo &amp;&amp; bidone &lt; bidthree then [A[<span class="number">0</span>], A[<span class="number">1</span>], bidone] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidtwo &lt; bidone &amp;&amp; bidtwo &lt; bidthree then [A[<span class="number">2</span>], A[<span class="number">3</span>], bidtwo] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidthree &lt; bidone &amp;&amp; bidthree &lt; bidtwo then [A[<span class="number">4</span>], A[<span class="number">5</span>], bidthree] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line"></span><br><span class="line">//Now we have the lowest bid, supplier sig verified, and secret --&gt; ready for the merkle tree</span><br><span class="line">//<span class="number">512</span>bitpadded - same merkle tree <span class="keyword">as</span> ethereum</span><br><span class="line">//Leaf One: lowest bid + secret</span><br><span class="line">//Makes an assumption that every secret will be <span class="number">64</span> bit number</span><br><span class="line">field lowest = lowestbidder[<span class="number">2</span>]</span><br><span class="line">field[<span class="number">256</span>] lowestbidunpacked = unpack256(lowest)</span><br><span class="line">field[<span class="number">256</span>] secretunpacked = unpack256(secret)</span><br><span class="line">field[<span class="number">256</span>] leafone = sha256(lowestbidunpacked, secretunpacked)</span><br><span class="line"></span><br><span class="line">//Leaf Two: Curve point A: A[<span class="number">0</span>] + A[<span class="number">1</span>]</span><br><span class="line">//We know that A[<span class="number">0</span>] <span class="keyword">and</span> A[<span class="number">1</span>] will be <span class="number">64</span> bit numbers, need to unpack to <span class="number">256</span></span><br><span class="line">field[<span class="number">256</span>] a0unpacked = unpack256(A[<span class="number">0</span>])</span><br><span class="line">field[<span class="number">256</span>] a1unpacked = unpack256(A[<span class="number">1</span>])</span><br><span class="line">field[<span class="number">256</span>] leaftwo = sha256(a0unpacked, a1unpacked)</span><br><span class="line"></span><br><span class="line">//Build the root of leaf one + leaf two</span><br><span class="line">field[<span class="number">256</span>] root = sha256(leafone, leaftwo)</span><br><span class="line"></span><br><span class="line">//Before returning, compress back to field element root - split off <span class="number">128</span> bits</span><br><span class="line">res0 = pack128(root[.<span class="number">.128</span>])</span><br><span class="line">res1 = pack128(root[<span class="number">128.</span>.])</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [res0, res1]</span><br></pre></td></tr></table></figure>
 
@@ -305,18 +394,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/07/22/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-I-%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -334,24 +430,26 @@
             <a href="/2019/07/22/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-I-%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">zokrates-基于ethereum的zkp-I-介绍</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-07-22 15:53:04" itemprop="dateCreated datePublished" datetime="2019-07-22T15:53:04+08:00">2019-07-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2019-07-22 15:53:04" itemprop="dateCreated datePublished" datetime="2019-07-22T15:53:04+08:00">2019-07-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -360,8 +458,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h3 id="Zokrates"><a href="#Zokrates" class="headerlink" title="Zokrates"></a>Zokrates</h3><p><a target="_blank" rel="noopener" href="https://github.com/Zokrates/ZoKrates">ZoKrates</a>是以太坊上<a target="_blank" rel="noopener" href="https://github.com/scipr-lab/libsnark">zkSNARKs</a>的工具箱。它可以帮助您在DApp中使用可验证的计算，从高级语言的程序规范到生成计算证明，以及在Solidity中验证这些证明。</p>
 <p>闲话少叙，开搞</p>
 <p>1.编写 .code 文件</p>
@@ -387,18 +483,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/07/04/ERC20-721Token%E7%9A%84%E5%8F%91%E8%A1%8C-%E5%86%BB%E7%BB%93-%E5%A4%9A%E6%96%B9%E7%AD%BE%E5%90%8D%E5%8A%9F%E8%83%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -416,24 +519,26 @@
             <a href="/2019/07/04/ERC20-721Token%E7%9A%84%E5%8F%91%E8%A1%8C-%E5%86%BB%E7%BB%93-%E5%A4%9A%E6%96%B9%E7%AD%BE%E5%90%8D%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">ERC20-721Token的发行-冻结-多方签名功能</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-07-04 12:35:04" itemprop="dateCreated datePublished" datetime="2019-07-04T12:35:04+08:00">2019-07-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2019-07-04 12:35:04" itemprop="dateCreated datePublished" datetime="2019-07-04T12:35:04+08:00">2019-07-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -442,8 +547,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h3 id="发行"><a href="#发行" class="headerlink" title="发行"></a>发行</h3><p>ERC 代币的发行已经标准化，最好采用 <a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-solidity">openzeppelin</a> 的模板，并搭配 solidity5.x 版本和 <a target="_blank" rel="noopener" href="https://github.com/trufflesuite/truffle">truffle</a> 工具使用，效果更佳。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ERC 721</span></span><br><span class="line">pragma solidity ^<span class="number">0.5</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;openzeppelin-solidity/contracts/token/ERC721/ERC721Mintable.sol&#x27;</span>;</span><br><span class="line"></span><br><span class="line">contract MyNFT is ERC721Full, ERC721Mintable &#123;</span><br><span class="line">    <span class="title">constructor</span>(<span class="params"></span>) <span class="title">ERC721Full</span>(<span class="params"><span class="string">&quot;MyNFT&quot;</span>, <span class="string">&quot;MNFT&quot;</span></span>) <span class="title">public</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -486,18 +589,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/06/10/%E5%85%B3%E4%BA%8E%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%9A%84%E6%96%B0%E8%AE%A4%E7%9F%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -515,24 +625,26 @@
             <a href="/2019/06/10/%E5%85%B3%E4%BA%8E%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%9A%84%E6%96%B0%E8%AE%A4%E7%9F%A5/" class="post-title-link" itemprop="url">关于以太坊智能合约的新认知</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-06-10 10:35:04" itemprop="dateCreated datePublished" datetime="2019-06-10T10:35:04+08:00">2019-06-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-              </span>
+      <time title="Created: 2019-06-10 10:35:04" itemprop="dateCreated datePublished" datetime="2019-06-10T10:35:04+08:00">2019-06-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -541,8 +653,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h4 id="1-智能合约是可以删除的"><a href="#1-智能合约是可以删除的" class="headerlink" title="1. 智能合约是可以删除的"></a>1. 智能合约是可以删除的</h4><p>删除智能合约的 EVM 字节码为 SELFDESTRUCT (之前称为 SUICIDE)。该操作系统会提供 gas 退款，激励用户删除存储状态的方式释放资源。删除智能合约并不会清楚合约之前历史的交易记录，区块链本身并不可改变。</p>
 <h4 id="2-Solidity-目前的版本号码是Version-0-5-9"><a href="#2-Solidity-目前的版本号码是Version-0-5-9" class="headerlink" title="2. Solidity 目前的版本号码是Version 0.5.9"></a>2. Solidity 目前的版本号码是<a target="_blank" rel="noopener" href="https://github.com/ethereum/solidity/releases/tag/v0.5.9">Version 0.5.9</a></h4><p>其中主版本号是 0，它表示任何东西都有可能修改。次版本号是 5，在 Solidity 实际编码中，次版本号视为主版本号。9 为补丁号，实际编码中视为次版本号。当然建议开发者使用最新的版本。</p>
 <h4 id="3-ABI，Application-Binary-Interface，应用程序二进制接口"><a href="#3-ABI，Application-Binary-Interface，应用程序二进制接口" class="headerlink" title="3. ABI，Application Binary Interface，应用程序二进制接口"></a>3. ABI，Application Binary Interface，应用程序二进制接口</h4><p>ABI 定义了数据结构和函数如何在机器指令中被访问。ABI 是向机器指令层面编码和解码并传送数据的主要方式。与 API 不同。ABI 对智能合约进行编码，具体是对 EVM 的调用和从交易获取数据的调用进行编码。例如，钱包软件调用 withdraw 函数时，需要通过 ABI 知道，该调用需要一个 uint256 类型的变量，变量名称为 withdraw_amount。然后钱包软件就会提示用户输入该参数，接着创建一个以太坊交易，调用合约的 withdraw 函数。</p>
@@ -572,13 +682,16 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
-  
-  
+</div>
+
+
+
 
 
   
@@ -588,8 +701,7 @@
 
 
 
-          </div>
-          
+      
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -598,7 +710,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -607,76 +719,20 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">141</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">69</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
+      
 
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
+      
 
 <div class="copyright">
   
@@ -688,65 +744,26 @@
   <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
 </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-<script src="/js/bookmark.js"></script>
-
-
-
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
   <script>
     (function(){
-      var canonicalURL, curProtocol;
-      //Get the <link> tag
-      var x=document.getElementsByTagName("link");
-		//Find the last canonical URL
-		if(x.length > 0){
-			for (i=0;i<x.length;i++){
-				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
-					canonicalURL=x[i].href;
-				}
-			}
-		}
-    //Get protocol
-	    if (!canonicalURL){
-	    	curProtocol = window.location.protocol.split(':')[0];
-	    }
-	    else{
-	    	curProtocol = canonicalURL.split(':')[0];
-	    }
-      //Get current URL if the canonical URL does not exist
-	    if (!canonicalURL) canonicalURL = window.location.href;
-	    //Assign script content. Replace current URL with the canonical URL
-      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
   </script>
+
+
+
 
 
 
@@ -764,17 +781,16 @@
 
   
 
+
+
+
+
+
+
+
   
-  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://willzhuang.github.io/page/16/',]
-      });
-      });
-  </script>
+
+  
 
 
 </body>
