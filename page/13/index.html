@@ -211,7 +211,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">142</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -252,6 +252,233 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/10/29/%E8%81%94%E7%9B%9F%E9%93%BE%E7%A0%94%E5%8F%91%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83-2019-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/29/%E8%81%94%E7%9B%9F%E9%93%BE%E7%A0%94%E5%8F%91%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83-2019-10/" class="post-title-link" itemprop="url">联盟链研发以来的思考-2019-10</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-29 10:21:04" itemprop="dateCreated datePublished" datetime="2019-10-29T10:21:04+08:00">2019-10-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="区块链的核心价值："><a href="#区块链的核心价值：" class="headerlink" title="区块链的核心价值："></a>区块链的核心价值：</h3><ol>
+<li>提升多中心协作效率</li>
+<li>减轻中介持有信息不透明造成的摩擦</li>
+</ol>
+<p>中国的研究热点集中在联盟链上，同时监管技术也非常重要。目前联盟链的协议比较成熟，大致分为类EVM链和Hyperledger fabric。笔者从目前fabric的路线图和社区人员来看，认为类EVM更加有生命力。</p>
+<h4 id="联盟链的4个关键技术"><a href="#联盟链的4个关键技术" class="headerlink" title="联盟链的4个关键技术"></a>联盟链的4个关键技术</h4><ol>
+<li>软硬件协同</li>
+<li>安全交易隐私。其中SGX严重依赖Intel芯片，Security Zone以来Arm芯片，而服务器芯片大量采用Intel技术，所以基于cpu的可信计算环境实际上是Intel的宣传而已，在国内搞安全要求领域不建议使用。软件密码学实现交易可验证但是不可见，如同态加密，MPC。其中MPC由于通信次数多，独立于区块链的共识机制之外，可以独立运作，所以实际上MPC不需要和区块链结合，目前多方（两方以上）的MPC仍然属于研究阶段。同态加密+零知识证明目前逐渐成熟，如以太坊EIP1724，Zokrates，一账通的3D零知识证明都属本方向，笔者也认为此方向比较适用于区块链</li>
+<li>高可用性。如动态成员准入，节点失效后的快速恢复机制，网络持续工作中实现节点升级，节点/共识/存储/通信簿等全方位监控与报警等</li>
+<li>高可扩展。1）合约语言；2）存储支持多组织可信存储；3）语言机；4）跨链</li>
+</ol>
+<h3 id="两点思考："><a href="#两点思考：" class="headerlink" title="两点思考："></a>两点思考：</h3><ol>
+<li>BaaS(Blockchain as a Service) </li>
+</ol>
+<p>例如某文章中，xxx BaaS平台称，该平台目前已支撑了超过500亿元资产的真实性问题 。从这个阐述看，区块链的用户是信任xxx BaaS平台的，并且整条链都是部署与xxx BaaS平台的，那么问题是，既然一方或者多方都信任xxx平台，为什么还需要区块链呢？数据和流程都放置于xxx 的中心化的系统和数据库中，是不是同样的计算架构呢？</p>
+<ol start="2">
+<li>链上资产和实物资产的对应关系</li>
+</ol>
+<p>同样是也是对溯源的思考。经常会看到食品溯源的区块链案例，什么数据不可篡改，什么数据真实可靠。问题是，怎么能够证明手里面的视频和链上的数据是对应的呢？目前还没有看到靠谱的案例。</p>
+<p>笔者也在不断的思考以上两个问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/10/15/%E9%AB%98%E4%BB%B7%E5%80%BC%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/15/%E9%AB%98%E4%BB%B7%E5%80%BC%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/" class="post-title-link" itemprop="url">高价值商品验真</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-15 10:21:04" itemprop="dateCreated datePublished" datetime="2019-10-15T10:21:04+08:00">2019-10-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="sharma-kdd2017-fake.pdf">https://www.entrupy.com是高价值商品验真的核心技术企业，其论文链接请点击这里 ==&gt;link</a> 此文章发表于2017年，文章内容总结如下：</p>
+<h3 id="目前高价值商品验真的技术手段"><a href="#目前高价值商品验真的技术手段" class="headerlink" title="目前高价值商品验真的技术手段"></a>目前高价值商品验真的技术手段</h3><ol>
+<li>holograms 全息成像：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%85%A8%E6%81%AF%E5%9B%BE/11052216?fromtitle=Hologram&fromid=11052204">百度百科链接</a></li>
+<li>barcode and RFID supply integrity</li>
+</ol>
+<p>以上技术存在安全缺陷，标签可以被去除、伪造、复制或者被转移至另一件商品上。</p>
+<ol start="3">
+<li>taggants 标识剂，例如荧光</li>
+<li>PUFs(Physical Unclonable Functions) : 物理不可克隆函数按照实现方法可分为非电子PUF、模拟电路PUF和数字电路PUF。</li>
+</ol>
+<p>但是4、5方法都过于昂贵，市场难以接受。</p>
+<h3 id="本论文讲述的技术手段"><a href="#本论文讲述的技术手段" class="headerlink" title="本论文讲述的技术手段"></a>本论文讲述的技术手段</h3><ol>
+<li><p>可便携的、大广角、高倍率的放大镜，并可与手机相结合使用。使用此放大镜为商品拍摄大面积的高清照片。放大倍数为200-300x，精度为1cm*1cm。图片同时配有商品特性的文字说明。</p>
+</li>
+<li><p>AI算法为商品分类</p>
+<p>2.1 SVM/kNN分类器。此分类器被历史的、有保证的商品数据所训练，也就是真品图片并带有对特性的文字说明作为训练数据。正确率达到95%。</p>
+<p>2.2 CNN网络。作为分类器进一步分类。正确率达到98%。</p>
+<p><img src="/2019/10/15/%E9%AB%98%E4%BB%B7%E5%80%BC%E5%95%86%E5%93%81%E9%AA%8C%E7%9C%9F/cnn.png"></p>
+</li>
+<li><p>经过300万件商品的训练。包括了20类皮革，120类面料，10类纸质材料，10类秋衣。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">（1）皮革：我们从20种类型中捕获了30,000个显微图像皮革。皮革样品来自Restoration</span><br><span class="line">硬件，纽约的Abea Leather和制革厂Haas来自法国，该皮革供应大部分顶级皮革</span><br><span class="line">全球品牌。</span><br><span class="line">（2）面料：我们从120种面料中提取了6,000张图像。织物样品可从Fabric Science套件中获得。</span><br><span class="line">（3）塑料：我们从15种塑料中提取了2000张图像表面。</span><br><span class="line">（4）纸张：我们从10种纸张中提取了2000张图像。纸样品来自Neenah纸。</span><br><span class="line">（5）球衣：我们从2款正品NFL球衣中提取了500张图像。从NFL商店购买；并获得2件假NFL，来自街头小贩。</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="此技术手段的优点"><a href="#此技术手段的优点" class="headerlink" title="此技术手段的优点"></a>此技术手段的优点</h3><ol>
+<li>无需埋设任何标识，无需改变商品材料和构造，是一种非侵入式的技术手段</li>
+<li>无需对商品一一建立标识。本技术手段可以对复制品进行识别。</li>
+<li>可以对新商品进行检验。</li>
+<li>本技术手段经济适用，容易被市场所接受。</li>
+</ol>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>SVM better than kNN</th>
+<th>CNN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Leather皮革</td>
+<td>93.8%</td>
+<td>98.1%</td>
+</tr>
+<tr>
+<td>Fabric面料</td>
+<td>92%</td>
+<td>98.3%</td>
+</tr>
+<tr>
+<td>Plastic塑料</td>
+<td>92.5%</td>
+<td>95.3%</td>
+</tr>
+<tr>
+<td>paper纸质</td>
+<td>94.3%</td>
+<td>95.1%</td>
+</tr>
+<tr>
+<td>Jersey球衣</td>
+<td>94%</td>
+<td>98.8%</td>
+</tr>
+</tbody></table>
+<h3 id="BTW"><a href="#BTW" class="headerlink" title="BTW"></a>BTW</h3><p>经过笔者的尝试，单纯使用类似于opencv之类图像处理的方法可以解决商品是否是同一件商品，例如在出口到港后的检证。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -473,150 +700,6 @@
     <div class="post-body" itemprop="articleBody">
           <p>Google Developer Day 2</p>
 <p><a href="tfx.pdf">Tensorflow Extension 介绍以及在实践中的应用</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/09/10/Google-Developer-Day-memo4-Optimize/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/10/Google-Developer-Day-memo4-Optimize/" class="post-title-link" itemprop="url">Google-Developer-Day-memo4-Optimize</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-09-10 22:55:04" itemprop="dateCreated datePublished" datetime="2019-09-10T22:55:04+08:00">2019-09-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="tfoptimize.pdf">Tensorflow 对训练优化的应用</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/09/10/Google-Developer-Day-memo3-LeTV/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/10/Google-Developer-Day-memo3-LeTV/" class="post-title-link" itemprop="url">Google-Developer-Day-memo3-LeTV</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-09-10 21:51:04" itemprop="dateCreated datePublished" datetime="2019-09-10T21:51:04+08:00">2019-09-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="letv.pdf">乐视在 Tensorflow 的实践</a></p>
 
       
     </div>
