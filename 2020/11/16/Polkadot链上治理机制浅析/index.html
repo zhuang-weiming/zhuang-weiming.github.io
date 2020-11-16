@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="Polkadot的治理分为三个阶段，分别为提案、投票、计票阶段。 提案阶段可以通过以下几种方式启动提案：  由DOT持有人提交的公开提案。任何DOT持有人都可以通过抵押最少数量的DOT来提交公开提案，支持该提案的人需要抵押相同数量的DOT以认可该提案。公开提案存储在队列中，按照抵押的DOT数量进行排序，抵押的DOT数最多的提案会定期提交投票阶段。进入投票阶段后，抵押的DOT将被返还给持有人； 理事">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Polkadot链上治理机制浅析">
+<meta property="og:url" content="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="Polkadot的治理分为三个阶段，分别为提案、投票、计票阶段。 提案阶段可以通过以下几种方式启动提案：  由DOT持有人提交的公开提案。任何DOT持有人都可以通过抵押最少数量的DOT来提交公开提案，支持该提案的人需要抵押相同数量的DOT以认可该提案。公开提案存储在队列中，按照抵押的DOT数量进行排序，抵押的DOT数最多的提案会定期提交投票阶段。进入投票阶段后，抵押的DOT将被返还给持有人； 理事">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/1.png">
+<meta property="og:image" content="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/2.png">
+<meta property="og:image" content="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/3.png">
+<meta property="article:published_time" content="2020-11-16T06:16:04.000Z">
+<meta property="article:modified_time" content="2020-11-16T06:16:49.806Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/1.png">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Polkadot链上治理机制浅析 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E6%A1%88%E9%98%B6%E6%AE%B5"><span class="nav-number">1.</span> <span class="nav-text">提案阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%95%E7%A5%A8%E9%98%B6%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">投票阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%A5%A8%E9%98%B6%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">计票阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polkadot%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">Polkadot治理机制优缺点</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">142</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Polkadot链上治理机制浅析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2020-11-16 14:16:04 / Modified: 14:16:49" itemprop="dateCreated datePublished" datetime="2020-11-16T14:16:04+08:00">2020-11-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Polkadot的治理分为三个阶段，分别为<strong>提案</strong>、<strong>投票</strong>、<strong>计票阶段</strong>。</p>
+<h3 id="提案阶段"><a href="#提案阶段" class="headerlink" title="提案阶段"></a>提案阶段</h3><p>可以通过以下几种方式启动提案：</p>
+<ol>
+<li>由DOT持有人提交的公开提案。任何DOT持有人都可以通过抵押最少数量的DOT来提交公开提案，支持该提案的人需要抵押相同数量的DOT以认可该提案。公开提案存储在队列中，按照抵押的DOT数量进行排序，抵押的DOT数最多的提案会定期提交投票阶段。进入投票阶段后，抵押的DOT将被返还给持有人；</li>
+<li>理事会提交的理事会提案。理事会提交的提案也存储在队列中，理事会全员同意一个提案或者大多数理事会成员同意一个提案时，该提案便可以提交到投票阶段；</li>
+<li>作为前序公投执行的一部分而提交的提案；</li>
+<li>技术委员会提交的紧急提案。一般是Polkadot网络出现了bug，需要紧急修复而提交的紧急提案。</li>
+</ol>
+<h3 id="投票阶段"><a href="#投票阶段" class="headerlink" title="投票阶段"></a>投票阶段</h3><p>每隔 28天，将会有一个提案进行定期全民投票。</p>
+<p>这个提案来自DOT持有人提交的公共提案队列或者理事会提交的提案队列，在两个队列之间交替进行。</p>
+<p>比如这一次的提案来自DOT持有人提交的公共提案队列，28天以后的下一个投票阶段，提案便是来自理事会提交的提案队列。一般情况下同一时间段内只能进行一个投票，除非有紧急提案，紧急提案可以与定期投票同时举行。</p>
+<p>从投票结束到实施更改之间的时间称为执行延迟期。对于启动投票的前两种方式，该时间固定为 28 天。对于第三种方式，可以根据需要进行设置。紧急提案会有一个较短的执行时间。</p>
+<p>投票者可以投赞成或反对票，或者放弃投票。投票者如果要对公共提案进行投票，需要锁定一定数量的DOT，并且通常至少要锁定至在公投票结束后的执行延迟期内。</p>
+<p>投票的权重由锁定的DOT数量和锁定时间决定，因此，即使你拥有较少的DOT，但是如果锁定时间足够长，也可能拥有相对将高的权重；相反的，如果锁定时间很短，即便锁定了较多DOT，权重也不一定较高。</p>
+<p>采用这种机制是为了确保需要最小限度的经济投入并防止卖票行为，同时确保了长期致力于该制度的投票者有更大的发言权。</p>
+<h3 id="计票阶段"><a href="#计票阶段" class="headerlink" title="计票阶段"></a>计票阶段</h3><p>根据不同的实体提出的议案，以及是否所有理事会成员都投票赞成，Polkadot提供了三种不同的计票方案。</p>
+<p>如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>实体</th>
+<th>计票方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>公开提案</td>
+<td>正投票率偏差</td>
+</tr>
+<tr>
+<td>理事会（全票赞成）</td>
+<td>负投票率偏差</td>
+</tr>
+<tr>
+<td>理事会（多数赞成）</td>
+<td>简单多数制</td>
+</tr>
+</tbody></table>
+<p>下面来解释一下这三种方案。首先，定义四个术语：</p>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>approve</td>
+<td>赞成票数</td>
+</tr>
+<tr>
+<td>against</td>
+<td>反对票数</td>
+</tr>
+<tr>
+<td>turnout</td>
+<td>投票的代币总数</td>
+</tr>
+<tr>
+<td>electorate</td>
+<td>网络中的DOT发行总数</td>
+</tr>
+</tbody></table>
+<p><strong>▲ 正投票率偏差</strong></p>
+<p>该方案使用以下公式来表示，只有当不等式成立的时候，投票才通过。可以看到，在投票的代币总数较少的时候，需要得到绝大多数的赞成票数才能通过投票；当投票的代币总数越来越多，直至接近网络中的DOT发行总数时，赞成总数只需要超过半数就可以投票通过，此时演变成了简单多数制方案（见下文）。</p>
+<p><img src="/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/1.png"></p>
+<p><strong>▲ 负投票率偏差</strong></p>
+<p>该方案使用以下公式表示，该方案和上面的正投票率偏差正好相反：当投票的代币总数较少时，仅需要少量的赞成票数即可通过投票；当投票的代币总数达到网络中的DOT发行总数时，需要超过半数才能通过投票，此时也演变成了简单多数制方案。</p>
+<p><img src="/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/2.png"></p>
+<p>▲ 该方案用以下公式表示，该方案显而易见，即为简单的少数服从多数思想。</p>
+<p><img src="/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/3.png"></p>
+<p><strong>提出重要的提案</strong></p>
+<p>理事会提出的候选提案，需要获得绝大部分理事会成员的赞成票，并且没有成员投反对票。一个成员只能对一个提案投一次反对票，如果有成员对提案投了反对票，则需要进入冷静期，如果在冷静期之后重再次获得了大多数成员的赞成票，则该提案不可以再被否决。获得理事会成员多数票赞成的提案，将以简单多数制的投票方案进行投票。获得理事会成员全票赞成的提案，采用负投票率偏差的机制进行投票。</p>
+<p><strong>取消危险或恶意的提案</strong></p>
+<p>超过理事会三分之二成员的同意，可以取消投票。如果取消投票的争议很大，无法获得三分之二多数同意，那么将由全体利益相关者即DOT持有人来决定该提案。</p>
+<p><strong>理事会成员选举</strong></p>
+<p>Polkadot理事会将有23个席位，每个月进行一次投票选举，所有DOT持有人均可自由注册竞选理事会成员的资格，并可以给自己支持的候选人进行投票，投票权与其所持股份成正比。</p>
+<p>这里的投票方式为<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=Mzg2MDA2NzQwNw==&mid=2247483750&idx=1&sn=719ed60f2ecde4ec65f91e9d3e5fccab&chksm=ce2d4246f95acb50758e59bb497c98123d1520b25e3ffefc1bdb5d4b587f2b2f13c2407b8a95&scene=21#wechat_redirect"><strong>NPOS选举验证人的方式</strong></a>一样。</p>
+<h3 id="Polkadot治理机制优缺点"><a href="#Polkadot治理机制优缺点" class="headerlink" title="Polkadot治理机制优缺点"></a>Polkadot治理机制优缺点</h3><p>传统的区块链一般采用链下治理的方式，拿以太坊举例，由以太坊基金会在github上收集改进提案，然后由生态参与者进行讨论表达观点，之后由开发团队决定是否采纳提案。如果采纳，将对代码进行更新和升级，最后矿工节点决定是否使用新的代码以支持该提案。</p>
+<p>和上面这种链下治理相比，Polkadot的链上治理机制有几个明显的<strong>优点</strong>：</p>
+<ol>
+<li>Polkadot采用链上存储的WebAssembly代码，使得矿工节点无需重启便可以使用新的提案，从技术上避免了硬分叉。而链下治理的区块链，如果最后部分矿工或者节点运营商不支持提案，则不会使用更新后的代码，这样便出现了硬分叉。</li>
+<li>Polkadot采用的链上治理每一个阶段都有明确的时间。而链下治理的时间节点不定，github上可以看到很多以太坊多年前的提案还处于“draft”状态。</li>
+<li>每一个DOT持有人都可以参与Polkadot治理，社区治理权在DOT持有人手中。而采用链下治理，最终决定权在于项目的核心开发者，存在中心化问题。</li>
+</ol>
+<p>Polkadot的治理机制还是存在以下几个<strong>问题</strong>：</p>
+<ol>
+<li>大部分DOT持有人仅仅只是参与投资，不会参与社区治理，实际参与社区治理的用户数量不多，导致投票率不高。</li>
+<li>虽然治理最终决定权不在项目的开发者，但是持有大量DOT的用户可以影响投票结果，也降低了链上治理的去中心化程度。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/" title="Polkadot链上治理机制浅析">https://willzhuang.github.io/2020/11/16/Polkadot链上治理机制浅析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="prev" title="万向的产业区块链解决方案">
+                  <i class="fa fa-chevron-left"></i> 万向的产业区块链解决方案
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '24ce9a2ac38209ed4d7b4f3030635190',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
