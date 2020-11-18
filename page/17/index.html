@@ -211,14 +211,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-count">145</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -252,6 +252,102 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/" class="post-title-link" itemprop="url">zokrates-基于ethereum的zkp-II-进阶</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-24 16:01:04" itemprop="dateCreated datePublished" datetime="2019-07-24T16:01:04+08:00">2019-07-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Project-link-gt-https-github-com-WillZhuang-zkp-workshop-project"><a href="#Project-link-gt-https-github-com-WillZhuang-zkp-workshop-project" class="headerlink" title="Project link -&gt; https://github.com/WillZhuang/zkp-workshop-project"></a>Project link -&gt; <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project">https://github.com/WillZhuang/zkp-workshop-project</a></h3><p>让我来 step by step 做介绍：</p>
+<h4 id="1-编写关于-bid-case-的-code"><a href="#1-编写关于-bid-case-的-code" class="headerlink" title="1.编写关于 bid case 的 code"></a>1.编写关于 bid case 的 code</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">/// This zksnark <span class="keyword">is</span> to be used to verify that an operator has choosen</span><br><span class="line">/// the lowest bid that was actually submitted by an approved supplier was choosen</span><br><span class="line">/// by the operator <span class="keyword">for</span> the work. For this proof of concept, we will structure the</span><br><span class="line">/// proof to use <span class="number">3</span> suppliers only.</span><br><span class="line"></span><br><span class="line">///    Inputs <span class="keyword">for</span> the SNARK</span><br><span class="line"></span><br><span class="line">///    PUBLIC FIELDS</span><br><span class="line">///    input_of_py: field[<span class="number">3</span>] public keys <span class="keyword">for</span> each supplier - should be EDDSA public keys</span><br><span class="line">///    *  A: Curve point. Public part of the key used to create S.</span><br><span class="line"></span><br><span class="line">///    PRIVATE FIELDS</span><br><span class="line">///    input_of_py: field[<span class="number">3</span>] actual bid <span class="keyword">from</span> each supplier</span><br><span class="line">///    input_of_py: Requires per each EDDSA signatures per supplier</span><br><span class="line">///    *  R: Curve point. Hidden version of the per-message nonce.</span><br><span class="line">///    *  S: Field element. Signature to be verified.</span><br><span class="line">///    input_of_py: a secret to aide <span class="keyword">in</span> building out the merkel tree of the results</span><br><span class="line"></span><br><span class="line">///    *  context: Curve parameters used to create S. Tells you which curve was used.</span><br><span class="line">///    The context can be generated <span class="keyword">from</span> the babyjubjub curve.</span><br><span class="line"></span><br><span class="line">///    Returns <span class="keyword">for</span> the SNARK</span><br><span class="line">///    <span class="keyword">return</span>: a merkel tree including...</span><br><span class="line">///    <span class="number">1.</span> private key of choosen supplier</span><br><span class="line">///    <span class="number">2.</span> secret</span><br><span class="line">///    <span class="number">3.</span> A: Curve point. Public part of the key used to create S.</span><br><span class="line"></span><br><span class="line">// In the vectors, the supplier order should be kept the same to compare/access (i.e. supplier one has first bid, supplier two second bid, etc.)</span><br><span class="line"></span><br><span class="line">//For signatures</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;ecc/babyjubjubParams.code&quot;</span> <span class="keyword">as</span> context</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;signatures/verifyEddsa.code&quot;</span> <span class="keyword">as</span> verifyEddsa</span><br><span class="line">//For unpacking bids correctly</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/unpack128.code&quot;</span> <span class="keyword">as</span> unpack128</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/pack128.code&quot;</span> <span class="keyword">as</span> pack128</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/nonStrictUnpack256.code&quot;</span> <span class="keyword">as</span> unpack256</span><br><span class="line">//For unpacking signatures correctly</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/pack128.code&quot;</span> <span class="keyword">as</span> pack128</span><br><span class="line">//For merkle tree - changed to padded</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;hashes/sha256/512bitPadded.code&quot;</span> <span class="keyword">as</span> sha256</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>(<span class="params">private field[<span class="number">6</span>] R, \</span></span></span><br><span class="line"><span class="function"><span class="params"> field[<span class="number">6</span>] A, \</span></span></span><br><span class="line"><span class="function"><span class="params"> field[<span class="number">3</span>] S, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field secret, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidone, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidtwo, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidthree</span>) -&gt; (field[2]):</span></span><br><span class="line"></span><br><span class="line">//Since each message <span class="keyword">is</span> constructed <span class="keyword">from</span> the bids, no way to input_of_py a faulty bid</span><br><span class="line"></span><br><span class="line">//Reconstruct messages:</span><br><span class="line">//Note: Field element can be a value between <span class="number">0</span> <span class="keyword">and</span> p (p upper limit: <span class="number">2</span>^<span class="number">254</span>)</span><br><span class="line">//Makes an assumption that every bid will be <span class="number">64</span> bit number</span><br><span class="line">//Message <span class="keyword">in</span> the signature should be <span class="number">512</span> bits</span><br><span class="line"></span><br><span class="line">field[<span class="number">128</span>] bidoneunpacked = unpack128(bidone)</span><br><span class="line">field[<span class="number">512</span>] bidonemessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidoneunpacked]</span><br><span class="line">field[<span class="number">128</span>] bidtwounpacked = unpack128(bidtwo)</span><br><span class="line">field[<span class="number">512</span>] bidtwomessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidtwounpacked]</span><br><span class="line">field[<span class="number">128</span>] bidthreeunpacked = unpack128(bidthree)</span><br><span class="line">field[<span class="number">512</span>] bidthreemessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidthreeunpacked]</span><br><span class="line"></span><br><span class="line">context = context()</span><br><span class="line"></span><br><span class="line">// Supplier <span class="number">1</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">0.</span><span class="number">.2</span>], S[<span class="number">0</span>], A[<span class="number">0.</span><span class="number">.2</span>], bidonemessage[<span class="number">0.</span><span class="number">.256</span>], bidonemessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line">// Supplier <span class="number">2</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">2.</span><span class="number">.4</span>], S[<span class="number">1</span>], A[<span class="number">2.</span><span class="number">.4</span>], bidtwomessage[<span class="number">0.</span><span class="number">.256</span>], bidtwomessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line">// Supplier <span class="number">3</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">4.</span><span class="number">.6</span>], S[<span class="number">2</span>], A[<span class="number">4.</span><span class="number">.6</span>], bidthreemessage[<span class="number">0.</span><span class="number">.256</span>], bidthreemessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line"></span><br><span class="line">//Lowest bid should correllate <span class="keyword">with</span> supplier</span><br><span class="line">//To Do: write the simplest implementation to simplify, each of the below would be a <span class="built_in">range</span> proof</span><br><span class="line">field[<span class="number">3</span>] lowestbidder = [...[<span class="number">0</span>; <span class="number">3</span>]] //Save supplier <span class="keyword">and</span> the lowest bid</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidone &lt; bidtwo &amp;&amp; bidone &lt; bidthree then [A[<span class="number">0</span>], A[<span class="number">1</span>], bidone] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidtwo &lt; bidone &amp;&amp; bidtwo &lt; bidthree then [A[<span class="number">2</span>], A[<span class="number">3</span>], bidtwo] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidthree &lt; bidone &amp;&amp; bidthree &lt; bidtwo then [A[<span class="number">4</span>], A[<span class="number">5</span>], bidthree] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line"></span><br><span class="line">//Now we have the lowest bid, supplier sig verified, and secret --&gt; ready for the merkle tree</span><br><span class="line">//<span class="number">512</span>bitpadded - same merkle tree <span class="keyword">as</span> ethereum</span><br><span class="line">//Leaf One: lowest bid + secret</span><br><span class="line">//Makes an assumption that every secret will be <span class="number">64</span> bit number</span><br><span class="line">field lowest = lowestbidder[<span class="number">2</span>]</span><br><span class="line">field[<span class="number">256</span>] lowestbidunpacked = unpack256(lowest)</span><br><span class="line">field[<span class="number">256</span>] secretunpacked = unpack256(secret)</span><br><span class="line">field[<span class="number">256</span>] leafone = sha256(lowestbidunpacked, secretunpacked)</span><br><span class="line"></span><br><span class="line">//Leaf Two: Curve point A: A[<span class="number">0</span>] + A[<span class="number">1</span>]</span><br><span class="line">//We know that A[<span class="number">0</span>] <span class="keyword">and</span> A[<span class="number">1</span>] will be <span class="number">64</span> bit numbers, need to unpack to <span class="number">256</span></span><br><span class="line">field[<span class="number">256</span>] a0unpacked = unpack256(A[<span class="number">0</span>])</span><br><span class="line">field[<span class="number">256</span>] a1unpacked = unpack256(A[<span class="number">1</span>])</span><br><span class="line">field[<span class="number">256</span>] leaftwo = sha256(a0unpacked, a1unpacked)</span><br><span class="line"></span><br><span class="line">//Build the root of leaf one + leaf two</span><br><span class="line">field[<span class="number">256</span>] root = sha256(leafone, leaftwo)</span><br><span class="line"></span><br><span class="line">//Before returning, compress back to field element root - split off <span class="number">128</span> bits</span><br><span class="line">res0 = pack128(root[.<span class="number">.128</span>])</span><br><span class="line">res1 = pack128(root[<span class="number">128.</span>.])</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [res0, res1]</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-编译"><a href="#2-编译" class="headerlink" title="2.编译"></a>2.编译</h4><p><code>zokrates compile -i verifybid.code</code></p>
+<p>生成 out 和 out.code 文件。其中 out 文件为 102M，out.code 文件为 60M，文件 size 较大。</p>
+<h4 id="3-设置"><a href="#3-设置" class="headerlink" title="3.设置"></a>3.设置</h4><p><code>zokrates setup</code></p>
+<p>生成 proving.key 和 verification.key 文件。其中 proving.key 为 121M，文件较大。</p>
+<h4 id="4-执行程序"><a href="#4-执行程序" class="headerlink" title="4.执行程序"></a>4.执行程序</h4><p><code>zokrates compute-witness -a 10055980565918579776429468085502320403896861311334950973306171539247124720876 9872212025624827705538064352986283580914984702567748676648365783032194062540 15914440638590293656936968551196129378835493705090190454426890248467449623197 7164401624892807842686423552737135338148312648059491863415011813391162897156 17656893400745400645892949581714190787095935883004706460374622673779099869831 13238137875306891162631161684759202257598937454005976664682588856632564854848 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 6460329147541296150725376868570071708599740324087744825213520062979428542760 8063340131639693693865282091868641282847827816145781069349300386706996098818 21548706238088528999687556989620717323700520797702367873886065001951944889761 45 500 400 300</code></p>
+<p>-a 后面为执行程序的参数，即对应着<strong>verifybid.code</strong>中的入参 private field[6] R, field[6] A, field[3] S, private field secret, private field bidone, private field bidtwo, private field bidthree</p>
+<p>其中的 500，400，300 即为 3 方的报价，此处可在前序的智能合约中编写为下面的逻辑：</p>
+<p>party one，输入 500，执行 smart contract，</p>
+<p>party two，输入 400，执行 smart contract，</p>
+<p>party three，输入 300，执行smart contract，</p>
+<p>smart contract 收集到法定报价数量之后，verifier 端收到 event，执行 step5 和 step6。</p>
+<p>其余参数内容来自<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/input_files/inputs_of_command_paras">inputs_of_command_paras</a></p>
+<h4 id="5-生成证明"><a href="#5-生成证明" class="headerlink" title="5.生成证明"></a>5.生成证明</h4><p><code>zokrates generate-proof</code></p>
+<p>生成 witness 文件。其中 witness 文件为 82M，文件较大。</p>
+<h4 id="6-导出-solidity-verifier"><a href="#6-导出-solidity-verifier" class="headerlink" title="6.导出 solidity verifier"></a>6.导出 solidity verifier</h4><p><code>zokrates export-verifier</code></p>
+<p>生成<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/contracts/Verifier.sol">Verifier.sol</a>。</p>
+<h4 id="7-编写合约"><a href="#7-编写合约" class="headerlink" title="7.编写合约"></a>7.编写合约</h4><p>编写<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/contracts/Bid_operator.sol">Bid_operator.sol</a>合约，引用 verifyTx 函数。</p>
+<h4 id="8-使用-truffle-部署合约"><a href="#8-使用-truffle-部署合约" class="headerlink" title="8.使用 truffle 部署合约"></a>8.使用 truffle 部署合约</h4><p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/migrations/2_deploy_Verifier.js">2_deploy_Verifier.js</a> 和 <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/migrations/3_deploy_Bid_operator.js">3_deploy_Bid_operator.js</a> 作为配置文件。</p>
+<h4 id="9-测试"><a href="#9-测试" class="headerlink" title="9.测试"></a>9.测试</h4><p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/tree/master/test">test/bid_operator.js</a> 中的a, b, c 和 input 均来自于<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/zkp_files/proof.json">proof.json</a>。</p>
+<h4 id="回头来总结一下："><a href="#回头来总结一下：" class="headerlink" title="回头来总结一下："></a>回头来总结一下：</h4><p>1.本次的 bid case 的目的为验证operator选择了最低的 bid 报价，并且验证了该 bid 为 supplier 所提供；</p>
+<p><strong>不能证明</strong> supplier one，two，three 之间互相<strong>看不到</strong>其他 supplier 的 bid。</p>
+<p>2.zokrates默认的证明算法为 <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">G16</a>，<a target="_blank" rel="noopener" href="https://zokrates.github.io/reference/proving_schemes.html">根据 zokrates 的说明</a>，在使用了签名和 ethereum address 作为proofs 证明的情况下，G16 是安全的。并且 G16 无需引用<strong>libsnark</strong>，生成 witness 和 proof 的速度大大加快，使用配置文件的 size 大大降低。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -606,132 +702,6 @@
 <h3 id="4-Aleth-成熟度-五星"><a href="#4-Aleth-成熟度-五星" class="headerlink" title="4.Aleth 成熟度 五星"></a>4.Aleth 成熟度 五星</h3><p><a target="_blank" rel="noopener" href="https://aleth.io/">https://aleth.io/</a></p>
 <p>Lite version in <a target="_blank" rel="noopener" href="https://github.com/Alethio/ethereum-lite-explorer">here</a> , lite version don’t have any database, it is a live website. </p>
 <p><img src="/2019/05/06/%E9%80%82%E5%90%88%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%BD%9C%E4%B8%BA%E8%81%94%E7%9B%9F%E9%93%BE%E7%9A%84%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE/lite-explorer.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/03/27/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9C%80%E4%BD%B3%E9%92%B1%E5%8C%85%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/27/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9C%80%E4%BD%B3%E9%92%B1%E5%8C%85%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">以太坊最佳钱包总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-03-27 14:56:31" itemprop="dateCreated datePublished" datetime="2019-03-27T14:56:31+08:00">2019-03-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:48" itemprop="dateModified" datetime="2020-11-02T18:16:48+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在我看来，下面这些是加密货币钱包需要的：</p>
-<ul>
-<li>私钥 - 由钱包来控制用户的私钥</li>
-<li>易用性 - 优雅的用户界面，易于用户使用</li>
-<li>开发社群 - 活跃的开发社群支持钱包不断更新和优化</li>
-<li>备份和安全 - 备份和恢复的特性</li>
-<li>兼容性 - 与不同的操作系统相兼容</li>
-</ul>
-<p>个人认为，在寻找钱包时，需要确保满足上述要求。在这里，我列出了以太坊最好的钱包。 它们都符合上述要求。 </p>
-<p><strong>1.Ledger Nano S (Hardware Wallet)](<a target="_blank" rel="noopener" href="https://www.ledger.com/">https://www.ledger.com/</a>)</strong></p>
-<p>Ledger Nano S是最便宜的以太坊硬钱包之一（65美元）。此处，以太币在设备上脱机存储。 无论何时想花费以太币，Ledger都会使用存储在设备上的私钥对其进行签名。您可以存储ETH和ETC。</p>
-<p><img src="/2019/03/27/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9C%80%E4%BD%B3%E9%92%B1%E5%8C%85%E6%80%BB%E7%BB%93/LedgerNanoS.jpg"></p>
-<p>关于Ledger Nano S最棒的地方是它配备了一个小型OLED屏幕，可以控制您的交易。安全性非常强大，即使在黑客计算机上也可以使用Nano S设备。</p>
-<p><strong>2. <a target="_blank" rel="noopener" href="https://trezor.io/">Trezor (Hardware Wallet)</a></strong></p>
-<p>Trezor是比特币发明的第一个硬件钱包。但是，现在Trezor也可以通过MyEtherWallet Web界面用于以太坊。它还将以太币脱机存储在安全的电子芯片上，只有在您使用密码登录时才能激活。它是一种非常轻便的便携式设备，售价99美元。</p>
-<p><strong>3. <a target="_blank" rel="noopener" href="https://atomicwallet.io/">Atomic (Desktop)</a></strong></p>
-<p>Atomic钱包是以太坊和ERC20 Token的终极解决方案。钱包可以使用银行卡存储，交换和购买ETH。将来，以太坊将可用于交换Atomic Swaps——这是一种完全分布式的方式，用于在不涉及中介的情况下做 Token 交易。</p>
-<p>Atomic Wallet支持300多种加密货币，提供所有ERC20 Token 报价的界面。基本上，您可以输入联系地址并在自己的原子钱包中使用自定义代币。钱包会对您设备上的私钥进行加密，并为您提供对资金的完全访问权限和控制权。</p>
-<p>Atomic Wallet适用于任何桌面操作系统，适用于Android和iOS设备。</p>
-<p><strong>4. <a target="_blank" rel="noopener" href="https://www.exodus.io/">Exodus (Desktop Wallet)</a></strong></p>
-<p>Exodus是世界上第一个多加密货币桌面钱包。免费使用，用户界面非常具有吸引力。当您打开Exodus钱包，饼图就会显示您的整个Token组合。Exodus是第一款内置ShapeShift用于交换加密货币的桌面钱包。但是，在使用Exodus时，需要始终连接到互联网，但您不必担心，因为您的私钥永远不会离开您的机器。并且用于还原钱包的一键式电子邮件恢复和备份种子密钥等功能可确保您的资金安全。</p>
-<p>Exodus现在支持近100种加密货币！他们还有多个交易所合作伙伴（不仅仅是ShapeShift），这意味着我们可以提供更多可交换资产。从各个合作伙伴那里获取流动资金使得Exodus的交换更快更可靠。</p>
-<p>他们也不需要个人电子邮件 - 这是希望收到电子邮件备份链接的人的选项。可以使用任何电子邮件地址 - 或者根本不使用！电子邮件仅用于发送备份链接一次。隐私对Exodus非常重要，他们不存储任何客户个人数据 - 甚至不包括电子邮件地址。</p>
-<p><strong>5. <a target="_blank" rel="noopener" href="https://coinsutra.com/jaxx-wallet-review/">Jaxx</a> (Mobile Wallet)</strong></p>
-<p><img src="/2019/03/27/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9C%80%E4%BD%B3%E9%92%B1%E5%8C%85%E6%80%BB%E7%BB%93/Jaxx.jpg"></p>
-<p>Jaxx是一个多资产钱包，由总部位于加拿大<a target="_blank" rel="noopener" href="http://decentral.ca/">Decentral</a>创建。它支持13种加密货币(包括ETH)，具有优雅的设计和健壮的安全特性。</p>
-<p>在Jaxx上，私有密匙永远不会离开设备，而种子密匙等特性使您能够在需要时恢复资金。</p>
-<p>它有一个惊人的开发社区，负责产品的创新和维护。</p>
-<p>支持平台桌面(Windows, Mac OS, Linux)，扩展(Chrome, Firefox)，移动/平板(苹果，Android)。不需要注册或个人信息。支持智能合同。</p>
-<p>Jaxx钱包适用于Android、iOS、Mac OS、Windows和Linux。他们还将在未来几个月推出一款硬件钱包。</p>
-<p>6.<strong><a target="_blank" rel="noopener" href="https://metamask.io/">MetaMask</a> (Desktop Wallet)</strong></p>
-<p>MestaMask是我最喜欢的以太钱包之一。</p>
-<p>它就像一个浏览器访问以太网络。它不仅使您能够存储和发送Ethereum，还允许您访问Dapp程序。</p>
-<p>它有一个直观的设计，您可以在测试网络和主要以太网络之间快速切换。</p>
-<p>私钥是密码加密的，存储在您的机器上，您可以随时导出。</p>
-<p>支持的平台：Firefox，Chrome extensions。不需要注册或个人信息。支持智能合同。</p>
-<p><strong>7</strong>.<a target="_blank" rel="noopener" href="https://www.myetherwallet.com/"><strong>MyEtherWallet</strong> </a> <strong>(Web Wallet)</strong></p>
-<p>MestaMask是我最喜欢的以太钱包之二 :)。</p>
-<p>MyEtherWallet是一个离线的冷钱包，在这里你可以控制本地机器上以太坊的私钥。</p>
-<p>它是一个开源钱包，无需第三方服务器，可以在其中编写和访问智能合同。它有一个内置的BTC到ETH，以及多币种(反之亦然)交易设施。您还可以连接您的Trezor或Ledger Nano S，以访问您的资金在MyEther的浏览器环境。</p>
-<p><strong>8.</strong> <a target="_blank" rel="noopener" href="https://wallet.coinbase.com/"><strong>Coinbase</strong></a> <strong>(Mobile Wallet)</strong></p>
-<p>Coinbase支持比特币和以太坊。</p>
-<p>这是一种既便宜又快捷的储存以太的方法，前提是它们为你的国家服务。你可以在这里查一下你们国家是否有他们的服务。如果是，请按照以下步骤使用Coinbase:</p>
-<ol>
-<li><p>在Coinbase登记（邮箱注册，注册个人信息）。</p>
-</li>
-<li><p>获取你的公共地址。</p>
-</li>
-<li><p>把你的电子计算机转移到Coinbase的公共地址。</p>
-</li>
-<li><p>将ETH存储在Coinbase上。</p>
-</li>
-</ol>
-<p>然而，缺点是私钥不在您的控制中，因为它们存储在Coinbase的托管服务器上。Coinbase不支持智能合约。</p>
-<p>也就是说，这是一种很好的短期储存ETH的方法。如果打算长期持有以太币，应该使用纸质钱包的方法或使用像Ledger Nano S这样的硬件钱包。</p>
 
       
     </div>
