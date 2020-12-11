@@ -18,10 +18,11 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="Scalable，transparent， and post-quantum secure computational &#x3D;&#x3D;&gt; https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2018&#x2F;046.pdf 部分内容翻译： 0 介绍可扩展式验证的计算完整性，超过密文数据集  本文讨论的问题基于如下假设：想象警察 Police(P) 是负责国家法医DNA档案数据库 database(D)，声称一个即">
@@ -31,15 +32,15 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="Scalable，transparent， and post-quantum secure computational &#x3D;&#x3D;&gt; https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2018&#x2F;046.pdf 部分内容翻译： 0 介绍可扩展式验证的计算完整性，超过密文数据集  本文讨论的问题基于如下假设：想象警察 Police(P) 是负责国家法医DNA档案数据库 database(D)，声称一个即">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png">
-<meta property="og:image" content="https://willzhuang.github.io/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/2.png">
+<meta property="og:image" content="https://willzhuang.github.io/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png">
+<meta property="og:image" content="https://willzhuang.github.io/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/2.png">
 <meta property="article:published_time" content="2020-06-11T02:47:31.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.083Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="零知识证明">
 <meta property="article:tag" content="paper">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png">
+<meta name="twitter:image" content="https://willzhuang.github.io/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/">
@@ -352,7 +353,7 @@
 <p>IP — Interactive Proofs 交互式证明。如Hyrax。</p>
 <p>MPC — Secure multi-party computation 多方安全计算。如ZKBoo、Ligero。</p>
 <p>IVC — Incrementally Verifiable Computation 增量可验证计算。如hPKC-based IVC。</p>
-<p><img src="/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png"></p>
+<p><img data-src="ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png"></p>
 <h5 id="具体测试指标"><a href="#具体测试指标" class="headerlink" title="具体测试指标"></a>具体测试指标</h5><p>  测试均基于同一个硬件服务器，基于同样的DPM问题。</p>
 <p>  Arithmetic circuit complexity as standard measuring yard — 算术电路复杂度作为标准测量场。此处测试的所有系统(包括ZK-STARK)均为算术化之后的运算，将计算完整性(CI)语句简化为相关的有限域上的低次多项式系统。我们强调ZK-STARK也可以在素数场上运行，但代码中尚未实现。</p>
 <p>  在DPM计算中，数据库中具有n条数据，算术电路的参数如下：</p>
@@ -367,7 +368,7 @@
 <p>我们对ZK-STARK系统(证明方+验证方)进行了测量，本ZK-STARK具有60位(bits)的安全性，即n最大值≈60。libSNARK、SCI具有80位的安全性。BCCGP具有128位。Ligero具有60位的安全性。我们预估80位证明者的证明时间比60位最多长5％。<a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/59145/zk-snarks-vs-zk-starks-vs-bulletproofs-updated">如果您看到下图，则它们还包括一个没有setup的libSNARK线，并且明显位于ZK-STARK线之下。</a></p>
 </li>
 </ul>
-<p><img src="/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/2.png"></p>
+<p><img data-src="ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/2.png"></p>
 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>  在上述以对照的方式进行测试，ZK-STARK是测量的所有电路尺寸中生成证明最快的，特别是与libSNARK相比较，速度快了近10倍。在小电路情况下，ZKBoo和Ligero的通信时间更短，验证更快。在深度较小的电路的情况下，Hyrax的通信时间更短，验证更快。在同一固定电路上多次重复的计算，BulletProofs, Pinocchio, libSNARK的通信时间更短，验证更快。但是，对于一般的大规模计算，ZK-STARK的验证时间和通信复杂性优于其他透明系统。换句话说，我们对ZK-STARK的实践表明，对于实际相关的具体计算(例如DPM)，已经充分体现了完全可伸缩性和透明性的优势，并表明我们的系统类型对于构建可伸缩性解决方案很有用， 例如，用于分布式的加密货币。</p>
 
     </div>
@@ -471,6 +472,9 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
@@ -513,6 +517,12 @@
 
 
   
+
+  
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.css">
+
 
   
 

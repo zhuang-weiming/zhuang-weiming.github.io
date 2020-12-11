@@ -18,10 +18,11 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta property="og:type" content="website">
@@ -569,7 +570,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/bigpicturelabs/consensusPBFT">https://github.com/bigpicturelabs/consensusPBFT</a><br><img src="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg"></p>
+          <p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/bigpicturelabs/consensusPBFT">https://github.com/bigpicturelabs/consensusPBFT</a><br><img data-src="pbft-consensus-behavior.jpg"></p>
 <h4 id="Definitions-of-each-abbreviation-in-the-diagram-are"><a href="#Definitions-of-each-abbreviation-in-the-diagram-are" class="headerlink" title="Definitions of each abbreviation in the diagram are;"></a>Definitions of each abbreviation in the diagram are;</h4><p>m: Request message object<br>c: Client ID<br>t: Timestamp<br>v: View ID<br>n: Sequence ID<br>i: Peer(Node) ID<br>r: Result of the request’s operation</p>
 <h4 id="Why-count-gt-2"><a href="#Why-count-gt-2" class="headerlink" title="Why count &gt;= 2 ?"></a>Why count &gt;= 2 ?</h4><p>In the diagram, the peer change its state to prepared or committed when the count value, which is the number of verified messages from other peers, is larger than 2. Actually, the condition is count &gt;= 2*f where f is the maximum number of faulty peers, which the network can tolerate. In this case, f is just 1, so the condition is count &gt;= 2.</p>
 <h4 id="What-is-the-reply-message"><a href="#What-is-the-reply-message" class="headerlink" title="What is the reply message?"></a>What is the reply message?</h4><p>Every node replies the result of the request’s operation to the client individually. The client will collect these reply messages and if f + 1 valid reply messages are arrived, the client will accept the result. In this sample implementation, there is no client. So, every node including the primary will return its reply message to the primary.</p>
@@ -656,7 +657,7 @@
 <li>不可预测性一不能从过去的数列推测出”下一个出现的数</li>
 <li>不可重现性一除非将数列本身保存下来，否则不能重现相同的数列</li>
 </ul>
-<p>密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。<br><img src="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/1.png"></p>
+<p>密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。<br><img data-src="golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/1.png"></p>
 <h4 id="GoLang-中的伪随机数"><a href="#GoLang-中的伪随机数" class="headerlink" title="GoLang 中的伪随机数"></a>GoLang 中的伪随机数</h4><p>在 GoLang 中，我们可以通过 math/rand 包里的方法来生成一个伪随机数：</p>
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(rand.Int())   <span class="comment">// =&gt; 134020434</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -743,6 +744,9 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
@@ -785,6 +789,12 @@
 
 
   
+
+  
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.css">
+
 
   
 

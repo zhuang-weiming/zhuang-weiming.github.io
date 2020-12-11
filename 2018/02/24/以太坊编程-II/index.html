@@ -18,10 +18,11 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="目录  迈出第一步  与合约进行交互  现实世界中的构架和工具   2.尝试与合约进行交互 2.1以太坊智能合约介绍 阅读到这里，对以太坊已经有了基础的了解，已经与以太坊节点进行了交互，并在账户之间发送了一些交易等等。但除此之外，让以太坊如此惊艳的还有：智能合约。 正如我在简介中所说，智能合约是一个运行在以太坊虚拟机（EVM）上的程序。你可以创建智能合约来做任何你想做的事情，但是在今天，大多数智能">
@@ -31,13 +32,13 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="目录  迈出第一步  与合约进行交互  现实世界中的构架和工具   2.尝试与合约进行交互 2.1以太坊智能合约介绍 阅读到这里，对以太坊已经有了基础的了解，已经与以太坊节点进行了交互，并在账户之间发送了一些交易等等。但除此之外，让以太坊如此惊艳的还有：智能合约。 正如我在简介中所说，智能合约是一个运行在以太坊虚拟机（EVM）上的程序。你可以创建智能合约来做任何你想做的事情，但是在今天，大多数智能">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg">
+<meta property="og:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg">
 <meta property="article:published_time" content="2018-02-24T13:32:27.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.134Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="solidity">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">
@@ -383,7 +384,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.getTransaction(transactionHash)</span><br></pre></td></tr></table></figure>
 
 <p>我还为这个mini DApp设计了一个简单的UI，你可以在<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/2-interacting-with-a-contract">这里</a>看到它。你将看到一个包含了我们合约ABI的 <em>MyToken.json</em> 文件。我只是把solidity编译器生成的ABI的内容粘贴到这里面。你还可以看到一个与前一个应用相似的 app.js 文件，但是这个app.js文件还包含了我刚刚向你展示的用于发送代币以及展示账户代币余额详细信息的逻辑。</p>
-<p><img src="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg"><br><em>开发的用来测试 MyToken 转账的 DApp 的 UI</em></p>
+<p><img data-src="%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg"><br><em>开发的用来测试 MyToken 转账的 DApp 的 UI</em></p>
 <p>你也可以下载这个 App 并开始与它游戏。你将被要求提供你开发的合约案例的地址。</p>
 <p>注意：为了减轻术语负担，这篇文章中描述的代币并非ERC20标准的代币。如果你不知道什么是ERC20协议代币，我们会在下一篇文章中解释它。</p>
 <blockquote>
@@ -491,6 +492,9 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
@@ -533,6 +537,12 @@
 
 
   
+
+  
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.css">
+
 
   
 

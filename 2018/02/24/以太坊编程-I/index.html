@@ -18,10 +18,11 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="目录  迈出第一步  与合约进行交互  现实世界中的构架和工具   第一步 假设你已经有一些计算机编程方面的基础知识，并知道区块链数据结构是怎样的。如果不具备，请先了解ethfans的内容再回来看这篇博客。 以太坊 以太坊是一个开源的，分布式的，基于区块链技术的公共平台，无需审查及第三方干扰即可运行应用程序。 智能合约 智能合约仅仅是电脑程序。我们基于智能合约创建以太坊应用。虽然这个概念现在随着以">
@@ -31,13 +32,13 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="目录  迈出第一步  与合约进行交互  现实世界中的构架和工具   第一步 假设你已经有一些计算机编程方面的基础知识，并知道区块链数据结构是怎样的。如果不具备，请先了解ethfans的内容再回来看这篇博客。 以太坊 以太坊是一个开源的，分布式的，基于区块链技术的公共平台，无需审查及第三方干扰即可运行应用程序。 智能合约 智能合约仅仅是电脑程序。我们基于智能合约创建以太坊应用。虽然这个概念现在随着以">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg">
+<meta property="og:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg">
 <meta property="article:published_time" content="2018-02-24T13:21:09.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.134Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="solidity">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">
@@ -364,7 +365,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">account</span> =&gt;</span> &#123;</span><br><span class="line">balance = web3.eth.getBalance(account);</span><br><span class="line"><span class="built_in">console</span>.log(balance);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>接下来，我使用HTML和jQuery以及一点Bootstrap搭建了一个简单的UI使得它更美观一点。你可以在<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/1-interacting-with-the-blockchain">repo</a>中看看它。这就是所说的DApp即分布式应用。也就是说，一个部分后端代码运行在分布式点对点网络上的应用程序；在这个例子中，分布式点对点网络是指以太坊网络。</p>
-<p><img src="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg"></p>
+<p><img data-src="%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg"></p>
 <p><em>上图是用以测试ETH交易的DApp的UI</em></p>
 <p>你将找到UI的index.html文件以及与以太坊交互的app.js文件，这基本上就是我们前面所描述的用一些jQuery回调来填充UI。可以复制repo并运行起来试一下。</p>
 <p>谢谢你阅读这篇博客，如果你有任何问题，意见或者建议欢迎告诉我！如果你喜欢这篇博客，请继续关注本指南的第二部分，我将重点介绍智能合约！</p>
@@ -474,6 +475,9 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
@@ -516,6 +520,12 @@
 
 
   
+
+  
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.css">
+
 
   
 
