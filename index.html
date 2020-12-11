@@ -287,7 +287,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2020-12-11 13:50:04 / Modified: 13:50:12" itemprop="dateCreated datePublished" datetime="2020-12-11T13:50:04+08:00">2020-12-11</time>
+      <time title="Created: 2020-12-11 13:50:04 / Modified: 14:05:07" itemprop="dateCreated datePublished" datetime="2020-12-11T13:50:04+08:00">2020-12-11</time>
     </span>
 
   
@@ -338,7 +338,7 @@
 <p>但是，在具有“频繁大量添加”的约束系统中，Marlin的性能可能优于PlonK当前指定的变体。例如，这发生在一个“完全密集”的R1CS约束的极端情况下：<br>$$<br>( \sum_{j \in [m]}{a_j x_j} ) \cdot ( \sum_{j \in [m]}{b_j x_j} ) = \sum_{j \in [m]}{c_j x_j}<br>$$<br>其中a，b，c∈F 具有所有非零条目。</p>
 <p>此外，似乎分形中隐含的思想，或者将提及的稀疏二元评估协议“插入”到[Gab19]中，将通过此途径提高性能； 特别是在某些证明人工作可以委派给外部帮手的情况下（在PlonK中，这种委派的机会较少，因为检查证人本身的连线，而在[Gab19，CHM + 19，COS19]中,在某种意义上检查了验证者的随机系数）。</p>
 <hr>
-<p>=========================以下为本人对 Plonk 的理解和总结=========================</p>
+<p>=================以下为本人对 Plonk 的理解和总结=================</p>
 <p>PlonK（以及更早但更复杂的<a target="_blank" rel="noopener" href="https://www.benthamsgaze.org/2019/02/07/introducing-sonic-a-practical-zk-snark-with-a-nearly-trustless-setup/">SONIC</a>、以及最近的<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/1047.pdf">Marlin</a>）带来的是一系列的改进，这些改进可能会总体上大大提高这类证明的可用性及进展。</p>
 <p><strong>第一个改进</strong>：虽然PlonK仍需要一个类似Zcash SNARKs的可信设置过程，但它是一个“通用且可更新”的可信设置。这意味着两件事：首先，不需要为每一个你想证明的程序都设置一个单独的可信设置，而是为整个方案设置一个单独的可信设置，之后你可以将该方案与任何程序一起使用（在进行设置时可选择最大大小）。第二，有一种方法可以让多方参与可信设置，这样只要其中任何一方是诚实的，那这个可信设置就是安全的，而且这种多方过程是完全连续的：首先是第一个人参与，然后是第二个人，然后是第三个……参与者们甚至不需要提前知道，新的参与者可以把自己添加到最后。这使得可信设置很容易拥有大量参与者，从而在实践中确保设置是非常安全的。</p>
 <p><strong>第二个改进</strong>：它所依赖的“奇特密码学”是一个单一的标准化组件，称为“polynomial commitment”（多项式承诺）。PLONK使用基于可信设置和椭圆曲线对的“Kate commitments”（Kate承诺），但也可以用其它方案替换它，例如<a target="_blank" rel="noopener" href="https://vitalik.ca/general/2017/11/22/starks_part_2.html">FRI</a>（这将使<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/1020">PLONK变成一种STARK</a>）或者DARK（基于隐藏顺序组）。这意味着该方案在理论上与证明大小和安全性假设之间的任何（可实现的）权衡兼容。</p>
@@ -885,10 +885,50 @@
   
 
   
-      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/copy-tex.min.css">
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
 
+    
 
   
 
