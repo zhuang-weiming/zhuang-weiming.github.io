@@ -18,11 +18,10 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="CPU ProfilingGolang 提供了 pprof 包（runtime&#x2F;pprof）用于输出运行时的 profiling 数据，这些数据可以被 pprof 工具（或者 go tool pprof，其为 pprof 的变种）使用。通常我们这样来使用 pprof 包： 123456789101112131415161 &#x2F;&#x2F; 定义 flag cpuprofile2 var cpuprofile">
@@ -32,13 +31,13 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="CPU ProfilingGolang 提供了 pprof 包（runtime&#x2F;pprof）用于输出运行时的 profiling 数据，这些数据可以被 pprof 工具（或者 go tool pprof，其为 pprof 的变种）使用。通常我们这样来使用 pprof 包： 123456789101112131415161 &#x2F;&#x2F; 定义 flag cpuprofile2 var cpuprofile">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png">
+<meta property="og:image" content="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png">
 <meta property="article:published_time" content="2018-06-07T06:56:17.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.104Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="pprof">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/">
@@ -328,7 +327,7 @@
 
 <p>开启 CPU profiling 后，Golang 程序在 1 秒钟会停顿 100 次，每次停顿都会记录 1 个样本。上例中，前两列表示运行的函数的样本数量（the number of samples in which the function was running）和占总样本数的百分比，例如说 runtime.mapaccess1_fast64 函数在 298 次采样中（占总采样数量的 11.8%）正在运行。第三列表示前几行样本数量总和占总样本数的百分比（第二行 22.4% 为 11.8% + 10.6%）。第四、五列表示出现的函数的样本数量（the number of samples in which the function appeared）和占总样本数的百分比，这里“出现的函数”指的是在采样中正在运行或者等待某个被调用函数返回的函数，换句话就是采样中那些位于调用栈上的函数。我们可以使用 -cum（cumulative 的缩写）flag 来以第四、五列为标准排序。需要注意的是，每次采样只会包括最底下的 100 个栈帧（stack frames）。</p>
 <p>使用 web 命令能够以图形化的方式（SVG 格式）显示函数调用关系。例如（图片来源于 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> ）：</p>
-<p><img data-src="golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png"></p>
+<p><img src="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png"></p>
 <p>这里每个方块的大小由运行的函数的样本数量决定（这样就能方便的一眼看到热点函数）。箭头表示的是调用关系，箭头上的数字表示的是采样到的调用次数。web 命令还可以指定显示特定的函数，例如：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(pprof) web mapaccess1</span><br></pre></td></tr></table></figure>
 
@@ -471,9 +470,6 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   

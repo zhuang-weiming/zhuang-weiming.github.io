@@ -18,11 +18,10 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="欺负算法 We start with 6 processes,    all directly connected to each other.Process 6 is the leader,    as it has the highest number.Process 6 fails.Process 3 notices that Process 6 does not respond    So">
@@ -32,20 +31,20 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="欺负算法 We start with 6 processes,    all directly connected to each other.Process 6 is the leader,    as it has the highest number.Process 6 fails.Process 3 notices that Process 6 does not respond    So">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/1.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/2.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/3.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/4.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/5.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/6.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/7.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/8.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/1.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/2.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/3.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/4.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/5.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/6.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/7.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/8.gif">
 <meta property="article:published_time" content="2018-03-27T14:50:51.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.014Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="领导人选举算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/Bully-Election-Algorithm/1.gif">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/1.gif">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2018/03/27/Bully-Election-Algorithm/">
@@ -321,7 +320,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>欺负算法</p>
-<p>We start with 6 processes,<br>    all directly connected to each other.<br>Process 6 is the leader,<br>    as it has the highest number.<br><img data-src="Bully-Election-Algorithm/1.gif"><br>Process 6 fails.<br><img data-src="Bully-Election-Algorithm/2.gif"><br>Process 3 notices that Process 6 does not respond<br>    So it starts an election, notifying those processes<br>        with ids greater than 3.<br><img data-src="Bully-Election-Algorithm/3.gif"><br>Both Process 4 and Process 5 respond,<br>    telling Process 3 that they’ll take over from here.<br><img data-src="Bully-Election-Algorithm/4.gif"><br>Process 4 sends election messages<br>    to both Process 5 and Process 6.<br><img data-src="Bully-Election-Algorithm/5.gif"><br>Only Process 5 answers<br>    and takes over the election.<br><img data-src="Bully-Election-Algorithm/6.gif"><br>Process 5 sends out only one election message<br>    to Process 6.<br><img data-src="Bully-Election-Algorithm/7.gif"><br>When Process 6 does not respond<br>    Process 5 declares itself the winner.<br><img data-src="Bully-Election-Algorithm/8.gif"></p>
+<p>We start with 6 processes,<br>    all directly connected to each other.<br>Process 6 is the leader,<br>    as it has the highest number.<br><img src="/2018/03/27/Bully-Election-Algorithm/1.gif"><br>Process 6 fails.<br><img src="/2018/03/27/Bully-Election-Algorithm/2.gif"><br>Process 3 notices that Process 6 does not respond<br>    So it starts an election, notifying those processes<br>        with ids greater than 3.<br><img src="/2018/03/27/Bully-Election-Algorithm/3.gif"><br>Both Process 4 and Process 5 respond,<br>    telling Process 3 that they’ll take over from here.<br><img src="/2018/03/27/Bully-Election-Algorithm/4.gif"><br>Process 4 sends election messages<br>    to both Process 5 and Process 6.<br><img src="/2018/03/27/Bully-Election-Algorithm/5.gif"><br>Only Process 5 answers<br>    and takes over the election.<br><img src="/2018/03/27/Bully-Election-Algorithm/6.gif"><br>Process 5 sends out only one election message<br>    to Process 6.<br><img src="/2018/03/27/Bully-Election-Algorithm/7.gif"><br>When Process 6 does not respond<br>    Process 5 declares itself the winner.<br><img src="/2018/03/27/Bully-Election-Algorithm/8.gif"></p>
 
     </div>
 
@@ -423,9 +422,6 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   

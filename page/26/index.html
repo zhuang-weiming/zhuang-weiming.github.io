@@ -18,11 +18,10 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta property="og:type" content="website">
@@ -424,7 +423,7 @@
     <div class="post-body" itemprop="articleBody">
           <h6 id="web3"><a href="#web3" class="headerlink" title="web3"></a>web3</h6><p>Github： <a target="_blank" rel="noopener" href="https://github.com/ethereum/web3.js/">https://github.com/ethereum/web3.js/</a><br>web3.js是以太坊提供的一个Javascript库，它封装了以太坊的RPC通信API，提供了一系列与区块链交互方法，使js与以太坊交互变得简单。</p>
 <h6 id="infura"><a href="#infura" class="headerlink" title="infura"></a>infura</h6><p>官网： <a target="_blank" rel="noopener" href="https://infura.io/">https://infura.io/</a><br>本地安装geth的方法需要花比较多的时间和空间来同步区块，利用infura可以简单很多，infura提供公开以太坊和测试节点，可以利用infura提供的api访问以太坊以及IPFS。去官网只需要提供email注册得到链接即可。</p>
-<p><img data-src="%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/1.png"></p>
+<p><img src="/2018/03/14/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/1.png"></p>
 <p>使用web3和infura开发</p>
 <p>最常用的操作例如查看一个以太坊地址的ether余额为例（类似etherscan）.</p>
 <p>通过npm或其他方式引入web3, 并使用infura提供主网/测试网进行初始化。</p>
@@ -516,7 +515,7 @@
 <p>实验：</p>
 <p>下面我们使用 gRPC 定义一个接口，该接口实现对传入的数据进行大写的格式化处理。</p>
 <ol>
-<li>创建项目 golang Demo 工程：<br><img data-src="Golang-gRPC%E7%AC%94%E8%AE%B0/1.png"></li>
+<li>创建项目 golang Demo 工程：<br><img src="/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/1.png"></li>
 </ol>
 <blockquote>
 <p>client目录下的 main.go 实现了客户端用于发送数据并打印接收到 server 端处理后的数据</p>
@@ -640,7 +639,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Will:bin zhuangweiming$ protoc --version</span><br><span class="line">libprotoc 3.5.1</span><br></pre></td></tr></table></figure>
 <p>显示 libprotoc 3.5.1 则为成功。</p>
 <h3 id="安装-ProtoBuf-相关的-golang-依赖库。获取-goprotobuf-提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能。"><a href="#安装-ProtoBuf-相关的-golang-依赖库。获取-goprotobuf-提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能。" class="headerlink" title="安装 ProtoBuf 相关的 golang 依赖库。获取 goprotobuf 提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能。"></a>安装 ProtoBuf 相关的 golang 依赖库。获取 goprotobuf 提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能。</h3><p>$ go get -u github.com/golang/protobuf/{protoc-gen-go,proto}</p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>1.创建 protocDemo golang工程<br><img data-src="Golang-ProtoBuf%E7%AC%94%E8%AE%B0/1.png"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>1.创建 protocDemo golang工程<br><img src="/2018/03/07/Golang-ProtoBuf%E7%AC%94%E8%AE%B0/1.png"></p>
 <p>2.在 example 包中编写 person.proto</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">syntax &#x3D; &quot;proto3&quot;;</span><br><span class="line">package example;</span><br><span class="line"></span><br><span class="line">message person &#123;    &#x2F;&#x2F;  aa 会生成 Aa 命名的结构体</span><br><span class="line">    int32 id &#x3D; 1;</span><br><span class="line">    string name &#x3D; 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message all_person &#123;    &#x2F;&#x2F;  aa_bb 会生成 AaBb 的驼峰命名的结构体</span><br><span class="line">    repeated person Per &#x3D; 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -742,9 +741,9 @@
 <p>Token 的<em>角色</em>成为<em>权力</em>模型的首要因素。Token 是多用途的工具，我们开始更加清晰地看到 Token 如何应用。</p>
 <p>在分析了数十个过去和即将到来的ICO后，我对Token的作用，特征和目的进行了以下全面的分类。 这将有助于未来和现有的ICO公司进行磨合，并将精力集中到未来成功的重要因素上。</p>
 <p>我建议的框架有3个用于Token实用程序的原则：</p>
-<h5 id="角色-特征-目的"><a href="#角色-特征-目的" class="headerlink" title="角色 - 特征 - 目的"></a>角色 - 特征 - 目的</h5><p><img data-src="%E5%85%B3%E4%BA%8EToken%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E4%BB%B7%E5%80%BC%E7%9A%84%E5%95%86%E4%B8%9A%E6%8C%87%E5%8D%97/1.png"></p>
+<h5 id="角色-特征-目的"><a href="#角色-特征-目的" class="headerlink" title="角色 - 特征 - 目的"></a>角色 - 特征 - 目的</h5><p><img src="/2018/03/04/%E5%85%B3%E4%BA%8EToken%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E4%BB%B7%E5%80%BC%E7%9A%84%E5%95%86%E4%B8%9A%E6%8C%87%E5%8D%97/1.png"></p>
 <p>每个角色都有一个关键的目的，如下图所示。</p>
-<p><img data-src="%E5%85%B3%E4%BA%8EToken%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E4%BB%B7%E5%80%BC%E7%9A%84%E5%95%86%E4%B8%9A%E6%8C%87%E5%8D%97/2.png"></p>
+<p><img src="/2018/03/04/%E5%85%B3%E4%BA%8EToken%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E4%BB%B7%E5%80%BC%E7%9A%84%E5%95%86%E4%B8%9A%E6%8C%87%E5%8D%97/2.png"></p>
 <h5 id="权利"><a href="#权利" class="headerlink" title="权利"></a>权利</h5><p>拥有Token可赋予产品使用权，治理，贡献，投票权，市场访问权。在一些案例中，Token 可以准许赋予真实的所有权，例如，Numerai，DigixDAO，FirstBlood和Tezos。</p>
 <p>价值交换<br>Token也是特定市场或应用的价值交换的原子单位，在买卖双方之间创造交易经济。这包括允许用户获得价值，并将其花费在生态系统内部的服务和功能上。他们可以通过积极工作（实际工作和行动）或被动工作（例如共享数据）来赚取收入。这种内部经济的创造可以说是最重要的结果之一，而且必须持续一段时间。例如，Steemit，Kik，Tezos和Augur。</p>
 <h5 id="收费"><a href="#收费" class="headerlink" title="收费"></a>收费</h5><p>就像支付高速公路的费用一样，Token 可以用于区块链基础设施或使用产品的按次付费。这也确保了用户在游戏中拥有皮肤。它可以包括运行智能合约以执行特定功能，支付保证金或以交易费用或其他计量指标的形式使用费。例如，Gnosis，Augur，Melonport，Tezos，Dfinity，Ethereum和Bitcoin。</p>
@@ -854,9 +853,6 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   

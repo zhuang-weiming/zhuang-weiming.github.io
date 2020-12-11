@@ -18,11 +18,10 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta property="og:type" content="website">
@@ -383,7 +382,7 @@
     <div class="post-body" itemprop="articleBody">
           <p>zksync 与其他 layer2 方案相比较，优缺点如何？ ==&gt; <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/drgDM5mCZsBQdTIfszO97g">https://mp.weixin.qq.com/s/drgDM5mCZsBQdTIfszO97g</a></p>
 <p>先说结论如下图：</p>
-<p><img data-src="%E4%BD%93%E9%AA%8Czksync-2/1.png"></p>
+<p><img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/1.png"></p>
 <p>  在区块链 layer1 (以太坊) 中，所有的计算过程和数据存储都在主链进行（交易数据存在区块中，全节点执行所有计算过程）；但 layer2 不同，我们可以根据 layer2 如何解决这两个扩展相关的瓶颈问题（计算 &amp; 数据存储）来对他们分类，正如上图的二阶矩阵所示。</p>
 <h4 id="Plasma"><a href="#Plasma" class="headerlink" title="Plasma"></a>Plasma</h4><p>  Plasma 由 Vitalik Buterin 和 Joseph Poon 在 2017 年共同提出；Plasma 作为被寄予厚望的理论思想，可以说是开启了以太坊扩展研究的先驱。将其放在矩阵右下角。</p>
 <p>  从本质来说，Plasma 的思想相对直观。为了获得更好的扩展性，Plasma 将计算和数据存储都迁移到 layer 2 进行；由 layer 2 的执行者周期性地向主链递交 Merkle 根形式的 “状态承诺” 。如果执行者递交无效的状态，用户可以向主链上的智能合约提供错误性证明（fraud proof）；一旦确认执行者出现欺诈行为，则智能合约会罚没他的保证金。</p>
@@ -397,7 +396,7 @@
 <ol>
 <li>状态树(State Merkle Tree)</li>
 </ol>
-<p><img data-src="%E4%BD%93%E9%AA%8Czksync-2/2.png"></p>
+<p><img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/2.png"></p>
 <p>Ha 是 account tree 的高度。Hb 是 balance tree 的高度.</p>
 <ol start="2">
 <li>金额打包</li>
@@ -421,7 +420,7 @@
 <blockquote>
 <p>非常感谢 Georgios Konstantopoulos（Layer 2独立研究员），John Adler，Ben Jones，JD Kanani，Patrick McCorry，Justin Drake（以太坊基金会）和Brecht Devos（Loopring 路印），感谢他们对该表的审查和更正。</p>
 </blockquote>
-<p><img data-src="%E4%BD%93%E9%AA%8Czksync-2/3.png"></p>
+<p><img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/3.png"></p>
 <p>注：</p>
 <p>0 某些研究完全不认为侧链应被归入 L2 范畴，可见：<a target="_blank" rel="noopener" href="https://twitter.com/gakonst/status/1146793685545304064">https://twitter.com/gakonst/status/1146793685545304064</a></p>
 <p>1 要看相关升级机制的实现，不过一般来说都可以</p>
@@ -680,7 +679,7 @@
 </li>
 </ol>
 <p>在文章中我们用自然语言描述了aSVC的工作，如果你感兴趣，可以通过aSVC 的API定义来更清晰地了解它。如下图所示：第一个红框是初始化时生成承诺c，第二个红框是根据交易更新c；第一个绿框是初始化时生成证明π(i)，第二个绿框是根据交易更新π(i)；蓝框是出块节点用c和π(i)做验证。</p>
-<p><img data-src="%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/1.png"></p>
+<p><img src="/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/1.png"></p>
 <p>在上述过程中，最核心的工作是**根据交易引发的变动把旧的c变成新的c，把旧的π(i)变成新的π(i)**。不但要能够完成更新，且这种更新的开销是可以被接受的，这是aSVC要解决的关键问题。我们以c的更新为例来介绍aSVC是如何做的。</p>
 <p>如前文所述，c承诺的是V，从c到新c，实际上就是从承诺V到承诺一个新的V。对V来说，它是由一系列的点构成的，（地址1，余额1）是一个点，（地址2，余额2）是另一个点……（地址100，余额100）是第100个点。</p>
 <p>借助于拉格朗日插值法，可以把这一系列的点变成一个多项式（该多项式代表的曲线经过所有这些点），这意味着可以把对一系列点的承诺变成对一个多项式的承诺；从c到新c，也就等价于从承诺一个多项式到承诺另一个多项式。</p>
@@ -795,7 +794,7 @@
 <p>IP — Interactive Proofs 交互式证明。如Hyrax。</p>
 <p>MPC — Secure multi-party computation 多方安全计算。如ZKBoo、Ligero。</p>
 <p>IVC — Incrementally Verifiable Computation 增量可验证计算。如hPKC-based IVC。</p>
-<p><img data-src="ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png"></p>
+<p><img src="/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png"></p>
 <h5 id="具体测试指标"><a href="#具体测试指标" class="headerlink" title="具体测试指标"></a>具体测试指标</h5><p>  测试均基于同一个硬件服务器，基于同样的DPM问题。</p>
 <p>  Arithmetic circuit complexity as standard measuring yard — 算术电路复杂度作为标准测量场。此处测试的所有系统(包括ZK-STARK)均为算术化之后的运算，将计算完整性(CI)语句简化为相关的有限域上的低次多项式系统。我们强调ZK-STARK也可以在素数场上运行，但代码中尚未实现。</p>
 <p>  在DPM计算中，数据库中具有n条数据，算术电路的参数如下：</p>
@@ -810,7 +809,7 @@
 <p>我们对ZK-STARK系统(证明方+验证方)进行了测量，本ZK-STARK具有60位(bits)的安全性，即n最大值≈60。libSNARK、SCI具有80位的安全性。BCCGP具有128位。Ligero具有60位的安全性。我们预估80位证明者的证明时间比60位最多长5％。<a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/59145/zk-snarks-vs-zk-starks-vs-bulletproofs-updated">如果您看到下图，则它们还包括一个没有setup的libSNARK线，并且明显位于ZK-STARK线之下。</a></p>
 </li>
 </ul>
-<p><img data-src="ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/2.png"></p>
+<p><img src="/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/2.png"></p>
 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>  在上述以对照的方式进行测试，ZK-STARK是测量的所有电路尺寸中生成证明最快的，特别是与libSNARK相比较，速度快了近10倍。在小电路情况下，ZKBoo和Ligero的通信时间更短，验证更快。在深度较小的电路的情况下，Hyrax的通信时间更短，验证更快。在同一固定电路上多次重复的计算，BulletProofs, Pinocchio, libSNARK的通信时间更短，验证更快。但是，对于一般的大规模计算，ZK-STARK的验证时间和通信复杂性优于其他透明系统。换句话说，我们对ZK-STARK的实践表明，对于实际相关的具体计算(例如DPM)，已经充分体现了完全可伸缩性和透明性的优势，并表明我们的系统类型对于构建可伸缩性解决方案很有用， 例如，用于分布式的加密货币。</p>
 
       
@@ -886,9 +885,6 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   

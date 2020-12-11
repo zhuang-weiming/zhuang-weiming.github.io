@@ -18,11 +18,10 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="令牌环领导人选举算法 We start with 6 processes,    connected in a logical ring.Process 6 is the leader,    as it has the highest number.Process 6 fails.Process 3 notices that Process 6 does not respond    So it">
@@ -32,24 +31,24 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="令牌环领导人选举算法 We start with 6 processes,    connected in a logical ring.Process 6 is the leader,    as it has the highest number.Process 6 fails.Process 3 notices that Process 6 does not respond    So it">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/0.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/1.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/2.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/3.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/4.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/5.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/6.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/7.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/8.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/9.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/10.gif">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/11.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/0.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/1.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/2.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/3.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/4.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/5.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/6.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/7.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/8.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/9.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/10.gif">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/11.gif">
 <meta property="article:published_time" content="2018-03-27T14:51:18.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.073Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="令牌环领导人选举算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/Token-Ring-Election-Algorithm/0.gif">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/0.gif">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/">
@@ -325,7 +324,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>令牌环领导人选举算法</p>
-<p>We start with 6 processes,<br>    connected in a logical ring.<br>Process 6 is the leader,<br>    as it has the highest number.<br><img data-src="Token-Ring-Election-Algorithm/0.gif"><br>Process 6 fails.<br><img data-src="Token-Ring-Election-Algorithm/1.gif"><br>Process 3 notices that Process 6 does not respond<br>    So it starts an election,<br>        sending a message containing its id<br>    to the next node in the ring.<br><img data-src="Token-Ring-Election-Algorithm/2.gif"><br>Process 5 passes the message on,<br>    adding its own id to the message.<br><img data-src="Token-Ring-Election-Algorithm/3.gif"><br>Process 0 passes the message on,<br>    adding its own id to the message.<br><img data-src="Token-Ring-Election-Algorithm/4.gif"><br>Process 1 passes the message on,<br>    adding its own id to the message.<br><img data-src="Token-Ring-Election-Algorithm/5.gif"><br>Process 4 passes the message on,<br>    adding its own id to the message.<br><img data-src="Token-Ring-Election-Algorithm/6.gif"><br>When Process 3 receives the message back,<br>    it knows the message has gone around the ring,<br>        as its own id is in the list.<br>Picking the highest id in the list,<br>    it starts the coordinator message<br>        “5 is the leader” around the ring.<br><img data-src="Token-Ring-Election-Algorithm/7.gif"><br>Process 5 passes on the coordinator message.<br><img data-src="Token-Ring-Election-Algorithm/8.gif"><br>Process 0 passes on the coordinator message.<br><img data-src="Token-Ring-Election-Algorithm/9.gif"><br>Process 1 passes on the coordinator message.<br><img data-src="Token-Ring-Election-Algorithm/10.gif"><br>Process 4 passes on the coordinator message.<br><img data-src="Token-Ring-Election-Algorithm/11.gif"><br>Process 3 receives the coordinator message,<br>    and stops it.</p>
+<p>We start with 6 processes,<br>    connected in a logical ring.<br>Process 6 is the leader,<br>    as it has the highest number.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/0.gif"><br>Process 6 fails.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/1.gif"><br>Process 3 notices that Process 6 does not respond<br>    So it starts an election,<br>        sending a message containing its id<br>    to the next node in the ring.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/2.gif"><br>Process 5 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/3.gif"><br>Process 0 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/4.gif"><br>Process 1 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/5.gif"><br>Process 4 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/6.gif"><br>When Process 3 receives the message back,<br>    it knows the message has gone around the ring,<br>        as its own id is in the list.<br>Picking the highest id in the list,<br>    it starts the coordinator message<br>        “5 is the leader” around the ring.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/7.gif"><br>Process 5 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/8.gif"><br>Process 0 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/9.gif"><br>Process 1 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/10.gif"><br>Process 4 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/11.gif"><br>Process 3 receives the coordinator message,<br>    and stops it.</p>
 <p>让我们分析如何在ZooKeeper集合中选举leader节点，这个过程和令牌环原理是一致的。考虑一个集群中有N个节点。leader选举的过程如下：</p>
 <ul>
 <li>所有节点创建具有相同路径 /app/leader_election/guid_ 的顺序、临时节点。</li>
@@ -438,9 +437,6 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   

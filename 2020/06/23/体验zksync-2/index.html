@@ -18,11 +18,10 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="zksync 与其他 layer2 方案相比较，优缺点如何？ &#x3D;&#x3D;&gt; https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;drgDM5mCZsBQdTIfszO97g 先说结论如下图：    在区块链 layer1 (以太坊) 中，所有的计算过程和数据存储都在主链进行（交易数据存在区块中，全节点执行所有计算过程）；但 layer2 不同，我们可以根据 layer2 如何解决这两个扩展相关的">
@@ -32,15 +31,15 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="zksync 与其他 layer2 方案相比较，优缺点如何？ &#x3D;&#x3D;&gt; https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;drgDM5mCZsBQdTIfszO97g 先说结论如下图：    在区块链 layer1 (以太坊) 中，所有的计算过程和数据存储都在主链进行（交易数据存在区块中，全节点执行所有计算过程）；但 layer2 不同，我们可以根据 layer2 如何解决这两个扩展相关的">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/%E4%BD%93%E9%AA%8Czksync-2/1.png">
-<meta property="og:image" content="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/%E4%BD%93%E9%AA%8Czksync-2/2.png">
-<meta property="og:image" content="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/%E4%BD%93%E9%AA%8Czksync-2/3.png">
+<meta property="og:image" content="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/1.png">
+<meta property="og:image" content="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/2.png">
+<meta property="og:image" content="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/3.png">
 <meta property="article:published_time" content="2020-06-23T01:30:04.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.144Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="零知识证明">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/%E4%BD%93%E9%AA%8Czksync-2/1.png">
+<meta name="twitter:image" content="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/1.png">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/">
@@ -318,7 +317,7 @@
     <div class="post-body" itemprop="articleBody">
         <p>zksync 与其他 layer2 方案相比较，优缺点如何？ ==&gt; <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/drgDM5mCZsBQdTIfszO97g">https://mp.weixin.qq.com/s/drgDM5mCZsBQdTIfszO97g</a></p>
 <p>先说结论如下图：</p>
-<p><img data-src="%E4%BD%93%E9%AA%8Czksync-2/1.png"></p>
+<p><img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/1.png"></p>
 <p>  在区块链 layer1 (以太坊) 中，所有的计算过程和数据存储都在主链进行（交易数据存在区块中，全节点执行所有计算过程）；但 layer2 不同，我们可以根据 layer2 如何解决这两个扩展相关的瓶颈问题（计算 &amp; 数据存储）来对他们分类，正如上图的二阶矩阵所示。</p>
 <h4 id="Plasma"><a href="#Plasma" class="headerlink" title="Plasma"></a>Plasma</h4><p>  Plasma 由 Vitalik Buterin 和 Joseph Poon 在 2017 年共同提出；Plasma 作为被寄予厚望的理论思想，可以说是开启了以太坊扩展研究的先驱。将其放在矩阵右下角。</p>
 <p>  从本质来说，Plasma 的思想相对直观。为了获得更好的扩展性，Plasma 将计算和数据存储都迁移到 layer 2 进行；由 layer 2 的执行者周期性地向主链递交 Merkle 根形式的 “状态承诺” 。如果执行者递交无效的状态，用户可以向主链上的智能合约提供错误性证明（fraud proof）；一旦确认执行者出现欺诈行为，则智能合约会罚没他的保证金。</p>
@@ -332,7 +331,7 @@
 <ol>
 <li>状态树(State Merkle Tree)</li>
 </ol>
-<p><img data-src="%E4%BD%93%E9%AA%8Czksync-2/2.png"></p>
+<p><img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/2.png"></p>
 <p>Ha 是 account tree 的高度。Hb 是 balance tree 的高度.</p>
 <ol start="2">
 <li>金额打包</li>
@@ -356,7 +355,7 @@
 <blockquote>
 <p>非常感谢 Georgios Konstantopoulos（Layer 2独立研究员），John Adler，Ben Jones，JD Kanani，Patrick McCorry，Justin Drake（以太坊基金会）和Brecht Devos（Loopring 路印），感谢他们对该表的审查和更正。</p>
 </blockquote>
-<p><img data-src="%E4%BD%93%E9%AA%8Czksync-2/3.png"></p>
+<p><img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/3.png"></p>
 <p>注：</p>
 <p>0 某些研究完全不认为侧链应被归入 L2 范畴，可见：<a target="_blank" rel="noopener" href="https://twitter.com/gakonst/status/1146793685545304064">https://twitter.com/gakonst/status/1146793685545304064</a></p>
 <p>1 要看相关升级机制的实现，不过一般来说都可以</p>
@@ -466,9 +465,6 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   

@@ -18,11 +18,10 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="web3Github： https:&#x2F;&#x2F;github.com&#x2F;ethereum&#x2F;web3.js&#x2F;web3.js是以太坊提供的一个Javascript库，它封装了以太坊的RPC通信API，提供了一系列与区块链交互方法，使js与以太坊交互变得简单。 infura官网： https:&#x2F;&#x2F;infura.io&#x2F;本地安装geth的方法需要花比较多的时间和空间来同步区块，利用infura可以简单很多，infur">
@@ -32,13 +31,13 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="web3Github： https:&#x2F;&#x2F;github.com&#x2F;ethereum&#x2F;web3.js&#x2F;web3.js是以太坊提供的一个Javascript库，它封装了以太坊的RPC通信API，提供了一系列与区块链交互方法，使js与以太坊交互变得简单。 infura官网： https:&#x2F;&#x2F;infura.io&#x2F;本地安装geth的方法需要花比较多的时间和空间来同步区块，利用infura可以简单很多，infur">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2018/03/14/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/1.png">
+<meta property="og:image" content="https://willzhuang.github.io/2018/03/14/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/1.png">
 <meta property="article:published_time" content="2018-03-14T02:22:19.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.134Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="solidity">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2018/03/14/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/1.png">
+<meta name="twitter:image" content="https://willzhuang.github.io/2018/03/14/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/1.png">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2018/03/14/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/">
@@ -316,7 +315,7 @@
     <div class="post-body" itemprop="articleBody">
         <h6 id="web3"><a href="#web3" class="headerlink" title="web3"></a>web3</h6><p>Github： <a target="_blank" rel="noopener" href="https://github.com/ethereum/web3.js/">https://github.com/ethereum/web3.js/</a><br>web3.js是以太坊提供的一个Javascript库，它封装了以太坊的RPC通信API，提供了一系列与区块链交互方法，使js与以太坊交互变得简单。</p>
 <h6 id="infura"><a href="#infura" class="headerlink" title="infura"></a>infura</h6><p>官网： <a target="_blank" rel="noopener" href="https://infura.io/">https://infura.io/</a><br>本地安装geth的方法需要花比较多的时间和空间来同步区块，利用infura可以简单很多，infura提供公开以太坊和测试节点，可以利用infura提供的api访问以太坊以及IPFS。去官网只需要提供email注册得到链接即可。</p>
-<p><img data-src="%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/1.png"></p>
+<p><img src="/2018/03/14/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/1.png"></p>
 <p>使用web3和infura开发</p>
 <p>最常用的操作例如查看一个以太坊地址的ether余额为例（类似etherscan）.</p>
 <p>通过npm或其他方式引入web3, 并使用infura提供主网/测试网进行初始化。</p>
@@ -429,9 +428,6 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   

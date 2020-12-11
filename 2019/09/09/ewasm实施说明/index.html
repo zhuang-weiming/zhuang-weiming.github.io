@@ -18,11 +18,10 @@
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="概念介绍Hera 是 ewasm（revision 4）虚拟机的 C++版本，对接了 EVMC ABIv6。Hera 目的是利用各种 wasm 的后端，为 ethereum 提供服务。Hera 已经在 aleth 和 geth 上被测试过了。同时，Hera 支持各种匹配于 EVMC 的客户端。 ewasm 是以太坊系的 WebAssembly (Ethereum flavored WebAssem">
@@ -32,13 +31,13 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="概念介绍Hera 是 ewasm（revision 4）虚拟机的 C++版本，对接了 EVMC ABIv6。Hera 目的是利用各种 wasm 的后端，为 ethereum 提供服务。Hera 已经在 aleth 和 geth 上被测试过了。同时，Hera 支持各种匹配于 EVMC 的客户端。 ewasm 是以太坊系的 WebAssembly (Ethereum flavored WebAssem">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/1.jpg">
+<meta property="og:image" content="https://willzhuang.github.io/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/1.jpg">
 <meta property="article:published_time" content="2019-09-09T06:51:04.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:48.083Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="wasm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/1.jpg">
+<meta name="twitter:image" content="https://willzhuang.github.io/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/1.jpg">
 
 
 <link rel="canonical" href="https://willzhuang.github.io/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/">
@@ -356,7 +355,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> go get github.com/ethereum/go-ethereum</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">cd</span> <span class="variable">$GOROOT</span>/src/github.com/ethereum/go-ethereum</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git remote add gballet git@github.com:gballet/go-ethereum.git</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git fetch gballet add-ewasm</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout add-ewasm</span></span><br></pre></td></tr></table></figure>
 
 <p>架构图如下，请参考：</p>
-<p><img data-src="ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/1.jpg"></p>
+<p><img src="/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/1.jpg"></p>
 <p>参考链接==&gt; </p>
 <ul>
 <li><p>Ewasm public testnet : <a target="_blank" rel="noopener" href="https://github.com/ewasm/testnet">https://github.com/ewasm/testnet</a> </p>
@@ -465,9 +464,6 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
