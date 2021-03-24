@@ -6856,4 +6856,16 @@
         <tag>公司调查</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Start the CISCO VPN client from the command line</title>
+    <url>/2021/03/24/start_cisco_vpn_from_command_line/</url>
+    <content><![CDATA[<p>python gitst</p>
+<p><a href="https://gist.github.com/alecthegeek/62b340ecb1480326eee1a13252ea83bb">https://gist.github.com/alecthegeek/62b340ecb1480326eee1a13252ea83bb</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env expect -f</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Start the CISCO VPN client on a Mac. Adapted from</span></span><br><span class="line"><span class="comment"># https://blog.felipe-alfaro.com/2014/05/23/automating-cisco-anyconnect-secure-mobility-client-on-mac-os-x/</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> HOSTNAME vpn.server.com</span><br><span class="line"><span class="built_in">set</span> USER_NAME user.name</span><br><span class="line"><span class="built_in">set</span> PASSWORD password</span><br><span class="line"></span><br><span class="line">spawn /opt/cisco/anyconnect/<span class="built_in">bin</span>/vpn</span><br><span class="line"></span><br><span class="line">expect &#123;</span><br><span class="line">  <span class="string">&quot;state: Connected&quot;</span> &#123; send disconnect\n ; exp_continue; sleep <span class="number">3</span> &#125;</span><br><span class="line">  <span class="string">&quot;state: Disconnected&quot;</span>  &#123;sleep <span class="number">2</span>;send <span class="string">&quot;connect $HOSTNAME\n&quot;</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">expect -timeout <span class="number">60</span> -re <span class="string">&quot;Username: .+] &quot;</span>; send $USER_NAME\n</span><br><span class="line">expect <span class="string">&quot;Password: &quot;</span> ; send $PASSWORD\n</span><br><span class="line">expect <span class="string">&quot;state: Connected&quot;</span>; sleep <span class="number">2</span>; send exit\n</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>VPN</tag>
+      </tags>
+  </entry>
 </search>
