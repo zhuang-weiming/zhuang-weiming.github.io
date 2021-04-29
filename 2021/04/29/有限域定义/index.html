@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="有限域的定义​    有限域的数学定义是一个有限的数字集以及两个运算+(加法）和·(乘法）,并且满足下面的性质： 1.如果a和b属于集合，则a+b和a·b也属于集合。我们称此性质为封闭性。 2.存在0使得a+0&#x3D;a。我们称此性质为加法恒等。 3.存在1使得a·1&#x3D;a,我们称此性质为乘法恒等。 4.如果a属于集合，则-a属于集合；满足a+(-a)&#x3D;0。我们称此性质为加法逆。 5.如果a属于集合，$$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有限域定义">
+<meta property="og:url" content="https://willzhuang.github.io/2021/04/29/%E6%9C%89%E9%99%90%E5%9F%9F%E5%AE%9A%E4%B9%89/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="有限域的定义​    有限域的数学定义是一个有限的数字集以及两个运算+(加法）和·(乘法）,并且满足下面的性质： 1.如果a和b属于集合，则a+b和a·b也属于集合。我们称此性质为封闭性。 2.存在0使得a+0&#x3D;a。我们称此性质为加法恒等。 3.存在1使得a·1&#x3D;a,我们称此性质为乘法恒等。 4.如果a属于集合，则-a属于集合；满足a+(-a)&#x3D;0。我们称此性质为加法逆。 5.如果a属于集合，$$">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-29T03:50:04.000Z">
+<meta property="article:modified_time" content="2021-04-29T09:21:41.118Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2021/04/29/%E6%9C%89%E9%99%90%E5%9F%9F%E5%AE%9A%E4%B9%89/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>有限域定义 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E5%9F%9F%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">有限域的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%9C%89%E9%99%90%E9%9B%86%E5%90%88"><span class="nav-number">2.</span> <span class="nav-text">定义有限集合</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/04/29/%E6%9C%89%E9%99%90%E5%9F%9F%E5%AE%9A%E4%B9%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          有限域定义
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-04-29 11:50:04 / Modified: 17:21:41" itemprop="dateCreated datePublished" datetime="2021-04-29T11:50:04+08:00">2021-04-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="有限域的定义"><a href="#有限域的定义" class="headerlink" title="有限域的定义"></a>有限域的定义</h3><p>​    有限域的数学定义是一个有限的数字集以及两个运算+(加法）和·(乘法）,并且满足下面的性质：</p>
+<p>1.如果a和b属于集合，则a+b和a·b也属于集合。我们称此性质为封闭性。</p>
+<p>2.存在0使得a+0=a。我们称此性质为加法恒等。</p>
+<p>3.存在1使得a·1=a,我们称此性质为乘法恒等。</p>
+<p>4.如果a属于集合，则-a属于集合；满足a+(-a)=0。我们称此性质为加法逆。</p>
+<p>5.如果a属于集合，<br>$$<br>则 a^{-1}属于集合，满足 a \cdot a^{-1}=1。我们称此性质为乘法逆。<br>$$<br>​    我们来进一步分析这些准则。</p>
+<p>​    有一个有限的数的集合，因为集合是有限的，所以可以把集合大小定义为p，我们称之为集合的阶。</p>
+<p>​    性质1要求对加法和乘法封闭。这意味着定义加法和乘法时要使其运算结果仍然属于集合。比如集合{0,1,2}并不对加法封闭，因为1+2=3，3不在集合内；同理2+2=4也不符合定义。当然，可以对加法定义做一些修改来使其满足有限域的性质，但是“常见”的加法并不能使这个集合组成有限域。另外，集合{-1,0,1}对正常的乘法是封闭的。任意两个集合内的元素（共有9种组合）其乘积仍然属于集合。</p>
+<p>​    另一个选项是对乘法重新定义以满足有限域的封闭性。但是其核心概念是这里定义的加法和减法不同于我们熟悉的加法和减法。</p>
+<p>​    性质2和性质3意味着必须要有加法和乘法恒等元，也就是0和1必须在集合内。</p>
+<p>​    性质4意味着有加法逆。如果a在集合内，-a也在集合内，通过使用加法逆运算，我们可以定义减法。</p>
+<p>​    性质5意味着乘法有着相同的性质，如果a在集合内，则a-t也在集合内，即a·a’=1,通过乘法逆，我们可以定义除法。这是定义一个有限域最难的部分。</p>
+<h3 id="定义有限集合"><a href="#定义有限集合" class="headerlink" title="定义有限集合"></a>定义有限集合</h3><p>​    如果集合的阶（大小）是p，我们可以说该集合的元素有0,1,2,3,…,p-1。把这些数称为集合的元素，而不必称其为传统的数字0,1,2,3等。这些集合的元素在很多方面和传统数字一致，但是在如加法、减法和乘法等运算上仍有一些地方不太一样。有限域的数学表示如下：<br>​    Fp={0,1,2,…,p-1}构成有限域的是集合的元素。Fp是一个特定的有限域，读作“阶数为p的域”（field of p)、“阶数为29的有限域”或者其他阶数（重申：数学家把集合大小称为阶）。{}之间的数字代表域中的元素。我们将这些元素命名为0,1,2等，因为这些名字便于使用。</p>
+<p>一个阶数为11的域如下：<br>    F11={0,1,2,3,4,5,6,7,8,9,10}</p>
+<p>一个阶数为17的域如下：<br>    F17={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}</p>
+<p>一个阶数为983的域如下：<br>    F983={0,1,2,…，982}</p>
+<p>​    注意，域的阶数总是比最大元素大1。你可能注意到了每次我们给出的域的阶数都是质数。出于很多之后才能解释清楚的原因，域的阶数必须为质数的整数次幕，其中阶数为质数的有限域是我们特别关心的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2021/04/29/%E6%9C%89%E9%99%90%E5%9F%9F%E5%AE%9A%E4%B9%89/" title="有限域定义">https://willzhuang.github.io/2021/04/29/有限域定义/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/14/Plonk-4-%E7%BA%A6%E6%9D%9F%E4%B8%8E%E4%B8%BB%E5%8D%8F%E8%AE%AE/" rel="prev" title="Plonk-4-约束与主协议">
+                  <i class="fa fa-chevron-left"></i> Plonk-4-约束与主协议
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/" rel="next" title="椭圆曲线密码">
+                  椭圆曲线密码 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'ef245512b84b717397ec47f44ae6553c',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

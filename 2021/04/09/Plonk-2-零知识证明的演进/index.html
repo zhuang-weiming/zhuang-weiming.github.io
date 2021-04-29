@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="论文原文 &#x3D;&#x3D;&gt; 953.pdf (iacr.org)，PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge 摘要​    利用可更新的通用结构化参考字符串的zk-SNARK构造消除了部署zk-SNARKs [GKM +]的主要障碍之一。 Maller等人的重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plonk-2-零知识证明的演进">
+<meta property="og:url" content="https://willzhuang.github.io/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="论文原文 &#x3D;&#x3D;&gt; 953.pdf (iacr.org)，PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge 摘要​    利用可更新的通用结构化参考字符串的zk-SNARK构造消除了部署zk-SNARKs [GKM +]的主要障碍之一。 Maller等人的重">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-09T01:09:04.000Z">
+<meta property="article:modified_time" content="2021-04-29T09:21:41.113Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="零知识证明">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Plonk-2-零知识证明的演进 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%90%86%E6%83%B3%E7%9A%84%E4%BD%8E%E5%BA%A6%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">4.理想的低度协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1%E8%8C%83%E5%9B%B4%E4%B8%8A%E7%9A%84%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.1.</span> <span class="nav-text">4.1范围上的多项式协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2%E4%BB%8E%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%8F%E8%AE%AE%E5%88%B0%E4%BB%A3%E6%95%B0%E5%8D%8F%E8%AE%AE%E3%80%82"><span class="nav-number">2.2.</span> <span class="nav-text">4.2从多项式协议到代数协议。</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Plonk-2-零知识证明的演进
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-09 09:09:04" itemprop="dateCreated datePublished" datetime="2021-04-09T09:09:04+08:00">2021-04-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 17:21:41" itemprop="dateModified" datetime="2021-04-29T17:21:41+08:00">2021-04-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>论文原文 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">953.pdf (iacr.org)</a>，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge</a></p>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​    利用可更新的通用结构化参考字符串的zk-SNARK构造消除了部署zk-SNARKs [GKM +]的主要障碍之一。 Maller等人的重要工作，[MBKM19]提出了Sonic-第一个具有实用性的zk-SNARK，具有完全简洁的验证，可用于带有这种SRS(structured reference string)的通用算术电路。但是，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/601.pdf">支持完全简洁验证的Sonic版本</a>仍然需要相对较高的证明建造费用。 我们提出了一种具有完全简洁验证的通用SNARK结构，并且大大减少了证明方的运行时间（根据电路结构的不同，证明者的运行时间比完全简洁验证程序模式下的[MBKM19]少7.5-20倍）。与[MBKM19]类似，我们依赖于基于Bayer和Groth [BG12]的置换参数。但是，我们专注于“评估亚组而不是单项式系数”； 这样可以简化置换参数和算术化步骤。</p>
+<h3 id="4-理想的低度协议"><a href="#4-理想的低度协议" class="headerlink" title="4.理想的低度协议"></a>4.理想的低度协议</h3><p>​    我们在证明者和验证者之间定义了一种有限类型的协议，以清晰地捕获和抽象多项式承诺方案（例如[KZG10]）。在Plonk协议中，证明者将低度的多项式发送给第三方 <strong><em>I</em></strong>。然后，验证者可以询问 <strong><em>I</em></strong> ，证明者的多项式与验证者已知的其他预定义多项式之间是否存在某些恒等式。</p>
+<p><strong>定义 4.1.</strong> 定值正整数 <em>d, D, t, l</em> . A(<em>d, D, t, l</em>) 多项式协议，其中，证明者<strong>P</strong>poly，验证者<strong>V</strong>poly和受信方**<em>I**</em>之间存在多轮协议，其进行如下。</p>
+<p>1.协议定义包括一组预处理多项式 g1, … , gl ∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]。</p>
+<p>2.<strong>P</strong>poly的消息被发送到 <strong><em>I</em></strong>，并且对于f∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]，形式为f。 如果<strong>P</strong>poly发送的消息不是这种形式，则协议中止。</p>
+<p>3.<strong>V</strong>poly到<strong>P</strong>poly的消息是任意的（但是我们将集中讨论公共硬币协议，其中消息只是随机的硬币）</p>
+<p>4.在协议末尾，假设 f1, … , ft 是从<strong>P</strong>poly发送到 <strong><em>I</em></strong> 的多项式。<strong>V</strong>poly可能会问 <strong><em>I</em></strong> 在{f1, . . . , ft , g1, . . . , gl}之间是否存在某些多项式恒等式:<br>$$<br>F(X) := G(X,h_1(v_1(X)), … , h_M(v_M(X)))≡0<br>$$<br>其中，hi ∈  {f1, . . . , ft , g1, . . . , gl}，G ∈ <strong><em>F</em></strong> [X, X1, … , Xm], v1, … , vm ∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]，此 F ∈ <strong><em>F</em></strong> <em>&lt;D</em>[<strong>X</strong>]中，任一 f1, . . . , ft 都是<strong>P</strong>poly按照本协议制作的。</p>
+<p>5.在收到 <strong><em>I</em></strong> 的回答之后，如果所有身份均成立，则<strong>V</strong>poly输出 <strong>acc</strong>，否则输出 <strong>rej</strong>。</p>
+<p><strong>结论 4.2.</strong>  一个更加复杂的模型，<strong>P</strong>poly发送消息(f, n) 至 <strong><em>I</em></strong>，其中 <em>n</em> <em>≤</em> d ，由 <strong><em>I</em></strong> 执行 f ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>] 。但是，我们避免这样做，因为我们的协议不需要这种额外的功能，并且会导致效率降低，因为它转化为需要使用多项式承诺方案，并且能够动态实施小于d度的边界。</p>
+<p>​    我们以自然的方式为关系定义多项式协议。</p>
+<p><strong>定义 4.3.</strong> 给定关系<strong>R</strong>，<strong>R</strong>是具有以下属性的多项式协议。</p>
+<p>1.协议的第一步，<strong>P</strong>poly和<strong>V</strong>poly都被给与一个输入 x。假设<strong>P</strong>poly拥有w，并且 (x, ω) ∈ <strong>R</strong>。</p>
+<p>2.完整性(Completeness)：如果<strong>P</strong>poly正确地遵从协议，使用证明人 ω 生成 x，<strong>V</strong>poly将百分之百接受。</p>
+<p>3.知识健全性(Knowledge Soundness)：存在一个有效的 <strong>E</strong> 即给定对<strong>P</strong>poly的消息的访问权，给到 <strong><em>I</em></strong> ，输出ω，使得对于<strong>P</strong>poly的任何策略，下列事件的概率为negl(λ)。</p>
+<p>​    a.在协议的末尾，<strong>V</strong>poly输出<strong>acc</strong>，并且</p>
+<p>​    b. (x, ω) ∉ <strong>R</strong>。</p>
+<p><strong>结论 4.4.</strong> 我们故意不为理想的协议定义零知识属性，因为获得ZK取决于最终“编译”协议中泄漏给我的多项式的信息量。这又取决于用于编译的多项式承诺方案的具体细节。</p>
+<h4 id="4-1范围上的多项式协议"><a href="#4-1范围上的多项式协议" class="headerlink" title="4.1范围上的多项式协议"></a>4.1范围上的多项式协议</h4><p>​    在我们的协议中，<strong>V</strong>poly 实际上需要检查某些多项式方程式是否在输入值的特定范围内成立，而不是作为多项式恒等式。首次启发，对于子集 <strong><em>S</em></strong> ⊂ <strong><em>F</em></strong> ，我们定义了一个**<em>S**</em>范围(<em>d, D, t, l</em>)的多项式协议，该协议与 a(<em>d, D, t, l</em>) 多项式协议相同，不同之处在于：验证者询问他的恒等式是否在S的所有点上都成立，而不是完全一样。然后，我们以与定义4.3中完全相同的方式为关系定义范围多项式协议。</p>
+<p>​    我们表明，将范围协议转换为多项式协议只会产生一个额外的证明者多项式。</p>
+<p><strong>引理4.5.</strong> 令P为R的范围S的(<em>d, D, t, l</em>)多项式协议。然后我们可以构造 a(<em>max{d, |S|, D−|S|}, D, t+1,  l+1</em>)，也就是R的多项式协议P∗。</p>
+<p>本引理，我们使用以下简单声明。</p>
+<p><strong>断言4.6.</strong> 定义 <em>F1,…,Fk</em> ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]。定义 <strong><em>Z</em></strong> ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]。假设部分 i ∈ [k]，Z ∉ <strong><em>Fi</em></strong>。则：</p>
+<p>1.有一种可能性，1/|<strong><em>F</em></strong>| 之上存在a1,…,ak ∈ <strong><em>F</em></strong> ， Z 不属于 <strong><em>F</em></strong><br>$$<br>F := \sum ^k _{j=1} a_j \cdot F_j<br>$$<br>2.假设 Z 在 <strong><em>F</em></strong> 上分解为不同的线性因子，有一种可能，k/|<strong><em>F</em></strong>|之上存在a，a∈F，Z不属于 <strong><em>F</em></strong><br>$$<br>G:= \sum ^k _{j=1} a^ {j-1} \cdot F_j<br>$$<br><strong>证明.</strong> Z|F 等同于 (F mod Z)=0. 另有 R:= (<strong><em>Fi</em></strong> mod Z)， R ≠ 0，则R不为零二项式：<br>$$<br>F := \sum ^k _{j=1,j≠i} a_j \cdot F_j + a_i \cdot R(mod Z)<br>$$<br>因此，每一个特定的aj，最多有一个值 ai∈*<strong>F**<em>，该</em></strong>F*** mod Z = 0。第一点证明完毕。</p>
+<p>为了证明第二，类似地写：<br>$$<br>G := \sum ^k _{j=1,j≠i} a^{j-1} \cdot F_j + a^{i-1} \cdot R(mod Z)<br>$$<br>令 x ∈ <strong><em>F</em></strong> ，使 Z(x)=0，但 R(x)≠0。则 G mod <em>Z</em> = 0，即 G(x)=0，推导出 a 是非零多项式的根。<br>$$<br>g(Y) := \sum ^k _{j=1,j≠i} Y^{j-1} \cdot F_j(x) + Y^{i-1} \cdot R(x)<br>$$<br>最多k个a值是这种情况。</p>
+<p><strong>证明.</strong> (引理4.5.) 令P为范围S的(<em>d, D, t, l</em>)多项式协议。构建P*，同P一致，附加条件是 Zs(X) :=∏(X-a), a∈S。P* 的执行与P 一致，直到<strong>V</strong>poly在S域内请求恒等式。假设验证者请求 k 个恒等式：F1(X),…,Fk(X)，Fi的总维度的最大值是D，如定义4.1.所讲。P* 处理如下：</p>
+<ul>
+<li><p><strong>V</strong>poly发送队列a1,…,ak ∈ <strong><em>F</em></strong> 给到<strong>P</strong>poly。</p>
+</li>
+<li><p><strong>P</strong>poly计算二项式<br>$$<br>T:=\frac {\sum a_i \cdot F_i} {Z_S} ,i∈[k]<br>$$</p>
+</li>
+<li><p><strong>P</strong>poly发送 T 给到 <strong><em>I</em></strong></p>
+</li>
+<li><p><strong>V</strong>poly查询恒等式</p>
+</li>
+</ul>
+<p>$$<br>\sum _{i∈[k]} a_j \cdot F_i(X) ≡ T \cdot Z_S<br>$$</p>
+<p>遵循断言4.6，即有一种可能性，1/|<strong><em>F</em></strong>| 基于<strong>V</strong>poly的选择的a1,…,ak之上，适当的 T∈F[X]等同于<em>F1,…,Fk</em>，消失于范围S之中。这等效于<strong>V</strong>poly在P的类似执行中输出acc。</p>
+<h4 id="4-2从多项式协议到代数协议。"><a href="#4-2从多项式协议到代数协议。" class="headerlink" title="4.2从多项式协议到代数协议。"></a>4.2从多项式协议到代数协议。</h4><p>​    <a target="_blank" rel="noopener" href="https://books.google.co.jp/books?id=ce7gDwAAQBAJ&pg=PA97&lpg=PA97&dq=algebraic+adversary&source=bl&ots=7UqZAMlvRT&sig=ACfU3U1wBeYP14ZjOWj_RSZVmRLuwj9OQA&hl=en&sa=X&ved=2ahUKEwjbrbG7ofrvAhXOE4gKHT8fAwQQ6AEwBHoECAQQAw#v=onepage&q=algebraic%20adversary&f=false">离散对数甚至许多Diffie-Hellman式的问题都很困难。因此，打破具体小组中这种普遍困难的假设的唯一方法是以非平凡的方式使用基础小组表示形式。基于此，GGM(generic group model)可以非常有用地进行完整性检查，以验证给定假设的有效性，甚至可以保证给定密码方案的安全性。但是，GGM无法实施：GGM中存在安全的加密方案，但是在与任何具体组实例化时都不安全。</a></p>
+<p>​    AGM(algebraic group model)只考虑代数对象。一个代数对象A可以任意使用群组中的元素，但是必须根据输入组元素对其输出组元素中的任何一个提供显式分解，即A还必须输出一个解释，说明如何使用组操作从其输入中计算其输出中的任何组元素。</p>
+<p>​    我们希望使用Section 3的多项式承诺方案，将一个多项式协议编译成在代数组模型中具有知识健全性的协议（在第2.2节中定义）。</p>
+<p>​    具体证明略。</p>
+<p><strong>减少字段元素的数量</strong> ：我们描述了Mary Maller进行的优化，以减少来自M的证明中的*<strong>F*<strong>元素的数量。我们从一个说明性示例开始。假设</strong>V*<em>希望检查恒等式h1(X)·h2(X)-h3(X)≡0。上述编译将使P以随机x∈</em></strong>F*<strong>方式发送h1，h2，h3。</strong>V**将检查h1(x)h2(x)-h3(x)=0。因此，P发送了三个字段元素。</p>
+<p>​    但是请注意，我们可以让P只发送c:= h1(x)，然后在开放协议中简单地验证多项式L(X):=c·h2(X)-h3(X)是否在x处为零。请注意，我们可以计算com(L)= c·com(h2)-com(h3)</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/" title="Plonk-2-零知识证明的演进">https://willzhuang.github.io/2021/04/09/Plonk-2-零知识证明的演进/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag"># 零知识证明</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/24/start_cisco_vpn_from_command_line/" rel="prev" title="Start the CISCO VPN client from the command line">
+                  <i class="fa fa-chevron-left"></i> Start the CISCO VPN client from the command line
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/13/Plonk-3-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB%E6%8E%92%E5%88%97%E7%9A%84%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%8F%E8%AE%AE/" rel="next" title="Plonk-3-用于识别排列的多项式协议">
+                  Plonk-3-用于识别排列的多项式协议 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '13035808f869eeae960dba1066066823',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

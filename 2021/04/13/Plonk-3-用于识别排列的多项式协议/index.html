@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="论文原文 &#x3D;&#x3D;&gt; 953.pdf (iacr.org)，PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge 5.用于识别排列的多项式协议​    从根本上说，我们的通用SNARK是“排列检查”，其灵感来自于Bayer和Groth [[BG12](S. Bay">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plonk-3-用于识别排列的多项式协议">
+<meta property="og:url" content="https://willzhuang.github.io/2021/04/13/Plonk-3-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB%E6%8E%92%E5%88%97%E7%9A%84%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="论文原文 &#x3D;&#x3D;&gt; 953.pdf (iacr.org)，PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge 5.用于识别排列的多项式协议​    从根本上说，我们的通用SNARK是“排列检查”，其灵感来自于Bayer和Groth [[BG12](S. Bay">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-13T01:09:04.000Z">
+<meta property="article:modified_time" content="2021-04-29T09:21:41.111Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="零知识证明">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2021/04/13/Plonk-3-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB%E6%8E%92%E5%88%97%E7%9A%84%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%8F%E8%AE%AE/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Plonk-3-用于识别排列的多项式协议 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 progress a little bit every day</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB%E6%8E%92%E5%88%97%E7%9A%84%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">5.用于识别排列的多项式协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1%E6%A3%80%E6%9F%A5%E2%80%9C%E6%89%A9%E5%B1%95%E2%80%9D%E6%8E%92%E5%88%97"><span class="nav-number">1.1.</span> <span class="nav-text">5.1检查“扩展”排列</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/04/13/Plonk-3-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB%E6%8E%92%E5%88%97%E7%9A%84%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Plonk-3-用于识别排列的多项式协议
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-13 09:09:04" itemprop="dateCreated datePublished" datetime="2021-04-13T09:09:04+08:00">2021-04-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 17:21:41" itemprop="dateModified" datetime="2021-04-29T17:21:41+08:00">2021-04-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>论文原文 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">953.pdf (iacr.org)</a>，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge</a></p>
+<h3 id="5-用于识别排列的多项式协议"><a href="#5-用于识别排列的多项式协议" class="headerlink" title="5.用于识别排列的多项式协议"></a>5.用于识别排列的多项式协议</h3><p>​    从根本上说，我们的通用SNARK是“排列检查”，其灵感来自于Bayer和Groth [[BG12](S. Bayer and J. Groth. Effiffifficient zero-knowledge argument for correctness of a shufflfflffle. In *Advances in Cryptology - EUROCRYPT 2012 - 31st Annual* *International Conference on the Theory and Applications of Cryptographic* *Techniques, Cambridge, UK, April 15-19, 2012. Proceedings*, pages 263–280, 2012.)]及其在[[BCC+16](J.Bootle, A. Cerulli, P. Chaidos, J. Groth, and C. Petit. Effiffifficient zero knowledge arguments for arithmetic circuits in the discrete log setting. pages 327–357, 2016.)，[MBKM19](M. Maller, S. Bowe, M. Kohlweiss, and S. Meiklejohn. Sonic: Zero-knowledge snarks from linear-size universal and updateable structured ref-erence strings. *IACR Cryptology ePrint Archive*, 2019:99, 2019.)]中的变体所提出的排列参数。同样，与[[MBKM19](M. Maller, S. Bowe, M. Kohlweiss, and S. Meiklejohn. Sonic: Zero-knowledge snarks from linear-size universal and updateable structured ref-erence strings. *IACR Cryptology ePrint Archive*, 2019:99, 2019.)]相比，我们的主要优点是可以通过处理单变量多项式和可乘子组来获得更简单的协议。</p>
+<p>​    <strong>维度界限：</strong>我们使用两个整数参数n≤d。直观地讲，n是诚实证明者多项式的度，d是我们实际上对恶意证明者强制执行的范围。因此，我们在分析证明者效率并描述“正式”协议输入时假设度数为n。但是在分析稳健性时允许度数为d。</p>
+<p>​    我们假设存在生成器 <strong>g</strong> 的n阶乘子子集H⊂**<em>F**</em>。</p>
+<p>​    指定 i∈[n]，Li(X) 为**<em>F**</em> &lt;n[<strong>X</strong>]的一个元素，Li(<strong>g</strong>)=1且Li(a)=0，其中a∈<strong>H</strong> 与 <strong>g</strong>不同，例如，{Li}，其中 i∈[n] 是 <strong>H</strong>的拉格朗日基础。</p>
+<p>​    {Li} 可以”将点检查减少到范围检查“。</p>
+<p><strong>断言5.1.</strong> 给定i∈[n]和Z，Z*∈**<em>F**</em>[X]。 则针对每一个a∈<strong>H</strong>，有且只有Z(gi) = Z*(gi)时 Li(a)(Z(a) - Z*(a)) = 0。</p>
+<p>​    给定f，g∈**<em>F**</em>[X]和一个排列 σ：[n]→[n]，写为 g=σ(f)，针对每一个a∈<strong>H</strong>，g(<strong>g</strong>i) = f(<strong>g</strong>σ(i))</p>
+<p>​    我们提出了一个范围多项式协议，使<strong>P</strong>poly能够证明 g=σ(f)。</p>
+<p><strong>预处理多项式</strong>：多项式为 SID∈*<strong>F**<em>[X]，SID由S(gi)=i定义，对于每一个i∈[n]且Sσ∈</em></strong>F*<strong>[X]，Sσ(**g</strong>i) = σ(i)。</p>
+<p>输入：f，g∈**<em>F**</em>&lt;n[X]</p>
+<p><strong>协议：</strong></p>
+<p>1.<strong>V</strong>poly选择随机数β，γ∈**<em>F**</em>，并发送给到<strong>P</strong>poly。</p>
+<p>2.令 f’:=f+β·SID+γ，g’:=g+β·Sσ+γ。则，针对i∈[n]，有<br>$$<br>f’(g^i) = f(g^i) + β \cdot i + γ, g’(g^i)=g(g^i) + β \cdot σ(i) + γ<br>$$<br>3.<strong>P</strong>poly计算 <strong><em>Z</em></strong> ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]，且**<em>Z**</em>(g)=1；并且对于 i∈{2,…,n}<br>$$<br>Z(g^i)=\sum _{1 \leq j \leq i} f’(g^j)/g’(g^j)<br>$$<br>如果某元素未定义，在γ之上会发生的可能性为negl(λ)，协议则中止。</p>
+<p>4.<strong>P</strong>poly发送*<strong>Z***给到第三方 *</strong>I***。</p>
+<p>5.<strong>V</strong>poly检验a，其中a∈<strong>H</strong>。</p>
+<p>​    (a) L1(a)(Z(a)-1) = 1</p>
+<p>​    (b) Z(a)f’(a) = g’(a)Z(a·g)</p>
+<p>如果上述检验OK，则输出<strong>acc</strong>。</p>
+<h4 id="5-1检查“扩展”排列"><a href="#5-1检查“扩展”排列" class="headerlink" title="5.1检查“扩展”排列"></a>5.1检查“扩展”排列</h4><p><strong>预处理多项式</strong>：多项式为 SID1,…,SIDk∈**<em>F**</em>&lt;n[X]，SIDj由SID(gi)=(j-1)·n + i定义，对于每一个i∈[n]。</p>
+<p>输入：f1,…,fk，g1,…,gk∈**<em>F**</em>&lt;n[X]</p>
+<p><strong>协议：</strong></p>
+<p>1.<strong>V</strong>poly选择随机数β，γ∈**<em>F**</em>，并发送给到<strong>P</strong>poly。</p>
+<p>2.令 fj’:=fj+β·SIDj+γ，gj’:=gj+β·Sσj+γ。则，针对j∈[k]，i∈[n]，有<br>$$<br>f’ _j (g^i) = f _j (g^i) + β \cdot ((j-1) \cdot n + i) + γ, g_j’(g^i)=g_j(g^i) + β \cdot σ((j-1) \cdot n + i) + γ<br>$$<br>3.定义 f’，g‘∈*<strong>F*<strong>&lt;kn[X]如下：<br>$$<br>f’(X) := \prod _{j \isin [k]} f_j’(X),g’(X) := \prod _{j \isin [k]} g_j’(X)<br>$$<br>4.**P</strong>poly计算 *</strong>Z*** ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]，且*<strong>Z*<strong>(g)=1；并且对于 i∈{2,…,n}<br>$$<br>Z(g^i)=\sum _{1 \leq l \leq i} f’(g^j)/g’(g^j)<br>$$<br>5.**P</strong>poly发送*</strong>Z*<strong>给到第三方 **<em>I</em></strong>。</p>
+<p>5.<strong>V</strong>poly检验全部a，其中a∈<strong>H</strong>。</p>
+<p>​    (a) L1(a)(Z(a)-1) = 1</p>
+<p>​    (b) Z(a)f’(a) = g’(a)Z(a·g)</p>
+<p>如果上述检验OK，则输出<strong>acc</strong>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2021/04/13/Plonk-3-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB%E6%8E%92%E5%88%97%E7%9A%84%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%8F%E8%AE%AE/" title="Plonk-3-用于识别排列的多项式协议">https://willzhuang.github.io/2021/04/13/Plonk-3-用于识别排列的多项式协议/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" rel="tag"># 零知识证明</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/" rel="prev" title="Plonk-2-零知识证明的演进">
+                  <i class="fa fa-chevron-left"></i> Plonk-2-零知识证明的演进
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/14/Plonk-4-%E7%BA%A6%E6%9D%9F%E4%B8%8E%E4%B8%BB%E5%8D%8F%E8%AE%AE/" rel="next" title="Plonk-4-约束与主协议">
+                  Plonk-4-约束与主协议 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '86169d52b80be3d1bc3cba9a13a1f16b',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
