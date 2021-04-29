@@ -16,15 +16,14 @@
 
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-
-  <meta name="description" content="Chainlink是一个去中心化的预言机，但是你同样可以在私有环境中使用Chainlink，让它成为一个为私有链或联盟链服务的中心化的预言机系统。只要你的私有链环境支持完整的EVM环境，就可以利用Chainlink的开源实现，为自己的系统搭建一个具有广泛适配能力的预言机系统。 准备工作私有链&#x2F;联盟链（需支持EVM，开放WebSocket端口）由于目前Chainlink的合约系统都是在以太坊网络上的">
+<meta name="description" content="Chainlink是一个去中心化的预言机，但是你同样可以在私有环境中使用Chainlink，让它成为一个为私有链或联盟链服务的中心化的预言机系统。只要你的私有链环境支持完整的EVM环境，就可以利用Chainlink的开源实现，为自己的系统搭建一个具有广泛适配能力的预言机系统。 准备工作私有链&#x2F;联盟链（需支持EVM，开放WebSocket端口）由于目前Chainlink的合约系统都是在以太坊网络上的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="体验Chainlink">
 <meta property="og:url" content="https://willzhuang.github.io/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/index.html">
@@ -54,11 +53,8 @@
     lang   : 'en'
   };
 </script>
-
-  <title>体验Chainlink | Zhuang's Diary</title>
+<title>体验Chainlink | Zhuang's Diary</title>
   
-
-
 
 
 
@@ -107,7 +103,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -135,21 +131,9 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -160,8 +144,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -170,7 +153,7 @@
            placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -186,7 +169,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -206,12 +189,12 @@
 
       <div class="sidebar-panel-container">
         <!--noindex-->
-        <section class="post-toc-wrap sidebar-panel">
+        <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E9%93%BE-%E8%81%94%E7%9B%9F%E9%93%BE%EF%BC%88%E9%9C%80%E6%94%AF%E6%8C%81EVM%EF%BC%8C%E5%BC%80%E6%94%BEWebSocket%E7%AB%AF%E5%8F%A3%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">私有链&#x2F;联盟链（需支持EVM，开放WebSocket端口）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E9%83%A8%E7%BD%B2%E5%90%88%E7%BA%A6%E7%9A%84%E8%B4%A6%E6%88%B7%EF%BC%8C%E8%B4%A6%E6%88%B7%E9%9C%80%E6%8C%81%E6%9C%89%E8%B6%B3%E5%A4%9F%E6%95%B0%E9%87%8F%E7%9A%84Native-Token%EF%BC%88%E5%8E%9F%E7%94%9F%E4%BB%A3%E5%B8%81%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">用于部署合约的账户，账户需持有足够数量的Native Token（原生代币）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%94%A8%E4%BA%8E%E9%83%A8%E7%BD%B2Chainlink%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">一台服务器用于部署Chainlink节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89-%E5%87%86%E5%A4%87truffle-suite%E5%92%8Cnpm%E6%88%96WebIDE-Remix%E7%AD%89%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">(可选)准备truffle suite和npm或WebIDE Remix等开发部署工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%96%BD%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.</span> <span class="nav-text">实施步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-%E6%90%AD%E5%BB%BA-EVM-%E7%A7%81%E9%93%BE"><span class="nav-number">5.</span> <span class="nav-text">0.搭建 EVM 私链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%83%A8%E7%BD%B2Link-Token-%E5%90%88%E7%BA%A6"><span class="nav-number">6.</span> <span class="nav-text">1.部署Link Token 合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%83%A8%E7%BD%B2Chainlink%E8%8A%82%E7%82%B9"><span class="nav-number">7.</span> <span class="nav-text">2.部署Chainlink节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%AE%89%E8%A3%85docker%E3%80%81postgres-%EF%BC%88%E5%BB%BA%E8%AE%AEpostgres%E4%B9%9F%E5%9C%A8docker%E4%B8%AD%E5%AE%89%E8%A3%85%EF%BC%89"><span class="nav-number">7.1.</span> <span class="nav-text">2.1 安装docker、postgres （建议postgres也在docker中安装）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E5%88%9B%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">7.2.</span> <span class="nav-text">2.2 创建环境变量配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E9%80%9A%E8%BF%87docker%E5%90%AF%E5%8A%A8"><span class="nav-number">7.3.</span> <span class="nav-text">2.3 通过docker启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E8%AE%B0%E5%BD%95%E8%8A%82%E7%82%B9%E7%AE%A1%E7%90%86%E5%AF%86%E7%A0%81"><span class="nav-number">7.4.</span> <span class="nav-text">2.4 记录节点管理密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E5%88%9B%E5%BB%BAJob"><span class="nav-number">7.5.</span> <span class="nav-text">2.5 创建Job</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E5%90%91Chainlink%E8%8A%82%E7%82%B9-ACCOUNT-ADDRESS-%E8%BD%AC%E5%85%A5%E4%B8%80%E5%AE%9A%E6%95%B0%E9%87%8F%E7%9A%84Native-token%E7%94%A8%E4%BA%8E%E6%8F%90%E4%BA%A4%E4%BA%8B%E5%8A%A1"><span class="nav-number">7.6.</span> <span class="nav-text">2.6 向Chainlink节点(ACCOUNT_ADDRESS)转入一定数量的Native token用于提交事务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%83%A8%E7%BD%B2oracle-contract"><span class="nav-number">8.</span> <span class="nav-text">3.部署oracle contract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%BC%96%E5%86%99%E9%83%A8%E7%BD%B2%E7%94%A8%E6%88%B7%E5%90%88%E7%BA%A6"><span class="nav-number">9.</span> <span class="nav-text">4.编写部署用户合约</span></a></li></ol></div>
-        </section>
+        </div>
         <!--/noindex-->
 
-        <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
   <div class="site-description" itemprop="description"></div>
@@ -236,7 +219,7 @@
 
 
 
-        </section>
+        </div>
       </div>
     </div>
   </aside>
@@ -246,7 +229,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="Back to top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -259,9 +242,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -412,8 +393,7 @@
 
 
 
-      
-    <div class="comments" id="gitalk-container"></div>
+    <div class="comments gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -436,18 +416,14 @@
     });
   }
 </script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -460,71 +436,31 @@
   </footer>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
   <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-  
-
-  
-      <script>
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
+        tags: 'none'
       },
       options: {
         renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
           insertedScript: [200, () => {
             document.querySelectorAll('mjx-container').forEach(node => {
               const target = node.parentNode;
@@ -537,7 +473,7 @@
       }
     };
     const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
     script.defer = true;
     document.head.appendChild(script);
   } else {
@@ -548,15 +484,13 @@
   }
 </script>
 
-    
 
-  
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
 
 <script>
-NexT.utils.loadComments('#gitalk-container', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID    : 'bcfbeadd6147f39af62f',
       clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
@@ -564,10 +498,11 @@ NexT.utils.loadComments('#gitalk-container', () => {
       owner       : 'WillZhuang',
       admin       : ['WillZhuang'],
       id          : '1fa46660f6102e170acc41c5eb893e76',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
         language: 'zh-CN',
       distractionFreeMode: true
     });
-    gitalk.render('gitalk-container');
+    gitalk.render(document.querySelector('.gitalk-container'));
   }, window.Gitalk);
 });
 </script>

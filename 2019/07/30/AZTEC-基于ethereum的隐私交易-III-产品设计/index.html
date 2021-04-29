@@ -16,15 +16,14 @@
 
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-
-  <meta name="description" content="产品设计的关键步骤AZTEC 产品的关键步骤：1）生成 note；2）管理秘钥；3）验证 note AZTEC中的aztec.js能够工作在浏览器或者手机程序中，生成 proof 大约需要 10ms，非常高效。 1.生成 note证明（proof）中的保密 Token 需要用到 note。note 在票据登记所（note registry）中登记，proof 也在 note registry 中登">
+<meta name="description" content="产品设计的关键步骤AZTEC 产品的关键步骤：1）生成 note；2）管理秘钥；3）验证 note AZTEC中的aztec.js能够工作在浏览器或者手机程序中，生成 proof 大约需要 10ms，非常高效。 1.生成 note证明（proof）中的保密 Token 需要用到 note。note 在票据登记所（note registry）中登记，proof 也在 note registry 中登">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AZTEC-基于ethereum的隐私交易-III-产品设计">
 <meta property="og:url" content="https://willzhuang.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/index.html">
@@ -52,11 +51,8 @@
     lang   : 'en'
   };
 </script>
-
-  <title>AZTEC-基于ethereum的隐私交易-III-产品设计 | Zhuang's Diary</title>
+<title>AZTEC-基于ethereum的隐私交易-III-产品设计 | Zhuang's Diary</title>
   
-
-
 
 
 
@@ -105,7 +101,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -133,21 +129,9 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -158,8 +142,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -168,7 +151,7 @@
            placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -184,7 +167,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -204,12 +187,12 @@
 
       <div class="sidebar-panel-container">
         <!--noindex-->
-        <section class="post-toc-wrap sidebar-panel">
+        <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">产品设计的关键步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%94%9F%E6%88%90-note"><span class="nav-number">2.</span> <span class="nav-text">1.生成 note</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%AE%A1%E7%90%86%E7%A7%98%E9%92%A5"><span class="nav-number">3.</span> <span class="nav-text">2.管理秘钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%B6%88%E8%B4%B9-note"><span class="nav-number">4.</span> <span class="nav-text">3.消费 note</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AZTEC-%E7%9A%84%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">AZTEC 的交易流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%80%9F%E8%B4%B7-ZkAsset"><span class="nav-number">6.</span> <span class="nav-text">1.借贷 ZkAsset</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-%E6%9E%84%E5%BB%BA-proof"><span class="nav-number">6.1.</span> <span class="nav-text">1.1.构建 proof</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-%E6%B3%A8%E5%86%8C-note"><span class="nav-number">6.2.</span> <span class="nav-text">1.2.注册 note</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%BB%93%E7%AE%97-ZkAsset"><span class="nav-number">7.</span> <span class="nav-text">2.结算 ZkAsset</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-%E6%89%B9%E5%87%86-ACE-%E5%90%88%E7%BA%A6%E4%BB%A3%E8%A1%A8-owner-%E8%8A%B1%E8%B4%B9-ERC20-Token"><span class="nav-number">7.1.</span> <span class="nav-text">2.1.批准 ACE 合约代表 owner 花费 ERC20 Token</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-%E6%9E%84%E5%BB%BA-proof"><span class="nav-number">7.2.</span> <span class="nav-text">2.2.构建 proof</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-%E6%89%B9%E5%87%86-ACE-%E5%90%88%E7%BA%A6%E8%8A%B1%E8%B4%B9-ERC20-Token"><span class="nav-number">7.3.</span> <span class="nav-text">2.3.批准 ACE 合约花费 ERC20 Token</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-%E8%BD%AC%E5%8F%91%E4%BA%A4%E6%98%93"><span class="nav-number">7.4.</span> <span class="nav-text">2.4.转发交易</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-5-%E5%A4%84%E7%90%86%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4-Transfer-Instructions"><span class="nav-number">7.5.</span> <span class="nav-text">2.5.处理转移指令(Transfer Instructions)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%BB%93%E7%AE%97%E8%B4%B7%E6%AC%BE%E5%A4%84%E7%90%86"><span class="nav-number">8.</span> <span class="nav-text">3.结算贷款处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-%E6%89%B9%E5%87%86%E7%BB%93%E7%AE%97%E5%90%88%E7%BA%A6%E6%9D%A5%E8%8A%B1%E8%B4%B9-note"><span class="nav-number">8.1.</span> <span class="nav-text">3.1.批准结算合约来花费 note</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-%E6%9E%84%E5%BB%BA-proof"><span class="nav-number">8.2.</span> <span class="nav-text">3.2.构建 proof</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-%E7%BB%88%E6%9E%81%E4%BA%A4%E6%98%93%E5%B9%B6%E6%9B%B4%E6%96%B0%E7%8A%B6%E6%80%81"><span class="nav-number">8.3.</span> <span class="nav-text">3.3.终极交易并更新状态</span></a></li></ol></li></ol></div>
-        </section>
+        </div>
         <!--/noindex-->
 
-        <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
   <div class="site-description" itemprop="description"></div>
@@ -234,7 +217,7 @@
 
 
 
-        </section>
+        </div>
       </div>
     </div>
   </aside>
@@ -244,7 +227,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="Back to top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -257,9 +240,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -409,8 +390,7 @@
 
 
 
-      
-    <div class="comments" id="gitalk-container"></div>
+    <div class="comments gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -433,18 +413,14 @@
     });
   }
 </script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -457,71 +433,31 @@
   </footer>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
   <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-  
-
-  
-      <script>
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
+        tags: 'none'
       },
       options: {
         renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
           insertedScript: [200, () => {
             document.querySelectorAll('mjx-container').forEach(node => {
               const target = node.parentNode;
@@ -534,7 +470,7 @@
       }
     };
     const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
     script.defer = true;
     document.head.appendChild(script);
   } else {
@@ -545,15 +481,13 @@
   }
 </script>
 
-    
 
-  
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
 
 <script>
-NexT.utils.loadComments('#gitalk-container', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID    : 'bcfbeadd6147f39af62f',
       clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
@@ -561,10 +495,11 @@ NexT.utils.loadComments('#gitalk-container', () => {
       owner       : 'WillZhuang',
       admin       : ['WillZhuang'],
       id          : '3a18749cda57649625b1e4e3d7bca092',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
         language: 'zh-CN',
       distractionFreeMode: true
     });
-    gitalk.render('gitalk-container');
+    gitalk.render(document.querySelector('.gitalk-container'));
   }, window.Gitalk);
 });
 </script>

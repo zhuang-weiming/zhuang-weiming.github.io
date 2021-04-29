@@ -16,15 +16,14 @@
 
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","scheme":"Muse","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":2,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-
-  <meta name="description" content="1. 智能合约是可以删除的删除智能合约的 EVM 字节码为 SELFDESTRUCT (之前称为 SUICIDE)。该操作系统会提供 gas 退款，激励用户删除存储状态的方式释放资源。删除智能合约并不会清楚合约之前历史的交易记录，区块链本身并不可改变。 2. Solidity 目前的版本号码是Version 0.5.9其中主版本号是 0，它表示任何东西都有可能修改。次版本号是 5，在 Solidi">
+<meta name="description" content="1. 智能合约是可以删除的删除智能合约的 EVM 字节码为 SELFDESTRUCT (之前称为 SUICIDE)。该操作系统会提供 gas 退款，激励用户删除存储状态的方式释放资源。删除智能合约并不会清楚合约之前历史的交易记录，区块链本身并不可改变。 2. Solidity 目前的版本号码是Version 0.5.9其中主版本号是 0，它表示任何东西都有可能修改。次版本号是 5，在 Solidi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于以太坊智能合约的新认知">
 <meta property="og:url" content="https://willzhuang.github.io/2019/06/10/%E5%85%B3%E4%BA%8E%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%9A%84%E6%96%B0%E8%AE%A4%E7%9F%A5/index.html">
@@ -50,11 +49,8 @@
     lang   : 'en'
   };
 </script>
-
-  <title>关于以太坊智能合约的新认知 | Zhuang's Diary</title>
+<title>关于以太坊智能合约的新认知 | Zhuang's Diary</title>
   
-
-
 
 
 
@@ -103,7 +99,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
         <span class="toggle-line"></span>
@@ -131,21 +127,9 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -156,8 +140,7 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
@@ -166,7 +149,7 @@
            placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
@@ -182,7 +165,7 @@
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -202,12 +185,12 @@
 
       <div class="sidebar-panel-container">
         <!--noindex-->
-        <section class="post-toc-wrap sidebar-panel">
+        <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E6%98%AF%E5%8F%AF%E4%BB%A5%E5%88%A0%E9%99%A4%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">1. 智能合约是可以删除的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Solidity-%E7%9B%AE%E5%89%8D%E7%9A%84%E7%89%88%E6%9C%AC%E5%8F%B7%E7%A0%81%E6%98%AFVersion-0-5-9"><span class="nav-number">2.</span> <span class="nav-text">2. Solidity 目前的版本号码是Version 0.5.9</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-ABI%EF%BC%8CApplication-Binary-Interface%EF%BC%8C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">3. ABI，Application Binary Interface，应用程序二进制接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%AE%BE%E8%AE%A1%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4. 智能合约设计中的安全设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-%E9%87%8D%E5%85%A5%EF%BC%9A%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B%E4%B8%BADAO%E3%80%82"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 重入：典型案例为DAO。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-%E6%BA%A2%E5%87%BA%EF%BC%9A%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B%E4%B8%BA%E7%BE%8E%E5%9B%A2%E5%B8%81%E8%A2%AB%E7%9B%97%E3%80%82"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 溢出：典型案例为美团币被盗。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-%E4%BB%A5%E5%A4%AA%E5%B8%81%E4%BD%99%E9%A2%9D%E9%80%BB%E8%BE%91%E9%99%B7%E9%98%B1%EF%BC%9A%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B%E4%B8%BA%E6%B8%B8%E6%88%8F%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E5%AD%98-ether%EF%BC%8C%E4%B8%AD%E5%A5%96-ether%E6%BC%8F%E6%B4%9E%E3%80%82"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 以太币余额逻辑陷阱：典型案例为游戏应用中的存 ether，中奖 ether漏洞。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-%E5%B0%BD%E9%87%8F%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8-DELEGATECALL%EF%BC%8C%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8-library%E3%80%82%E4%BF%9D%E6%8C%81%E5%BA%93%E5%90%88%E7%BA%A6%E6%98%AF%E6%97%A0%E7%8A%B6%E6%80%81%E7%9A%84%EF%BC%8C%E4%B8%8D%E4%BC%9Aselfdestruct%E8%87%AA%E6%88%91%E9%94%80%E6%AF%81%E7%9A%84%E3%80%82%E5%85%B8%E5%9E%8B%E6%A1%88%E4%BE%8B-Parity-%E5%A4%9A%E9%87%8D%E7%AD%BE%E5%90%8D%E9%92%B1%E5%8C%85%E7%9A%84%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%85%B1%E8%AE%A1%E6%BC%8F%E6%B4%9E%E3%80%82"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 尽量避免使用 DELEGATECALL，尽量使用 library。保持库合约是无状态的，不会selfdestruct自我销毁的。典型案例 Parity 多重签名钱包的第二次共计漏洞。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-5-%E4%BF%9D%E6%8C%81%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%8F%AF%E8%A7%81%E6%80%A7%EF%BC%8Cpublic-private-internal%EF%BC%8C%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%9C%81%E7%95%A5%EF%BC%8C%E5%9B%A0%E4%B8%BA%E7%9C%81%E7%95%A5%E5%8D%B3%E4%B8%BA-public%E3%80%82"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 保持正确的可见性，public&#x2F;private&#x2F;internal，不建议省略，因为省略即为 public。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-6-%E5%8C%BA%E5%9D%97%E9%93%BE%E4%B8%8A%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%80%A7%E7%9B%AE%E5%89%8D%E8%BF%98%E6%98%AF%E4%B8%80%E4%B8%AA%E9%9A%BE%E9%A2%98%E3%80%82%E4%BD%BF%E7%94%A8%E8%BF%87%E5%BE%80%E6%88%96%E8%80%85%E6%9C%80%E8%BF%91%E7%9A%84%E5%8F%98%E9%87%8F%E9%83%BD%E6%98%AF%E7%81%BE%E9%9A%BE%E6%80%A7%E7%9A%84%E3%80%82"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 区块链上的随机性目前还是一个难题。使用过往或者最近的变量都是灾难性的。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-7-%E5%8F%82%E6%95%B0%E6%94%BB%E5%87%BB"><span class="nav-number">4.7.</span> <span class="nav-text">4.7 参数攻击</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-8-Tx-Origin"><span class="nav-number">4.8.</span> <span class="nav-text">4.8 Tx.Origin</span></a></li></ol></li></ol></div>
-        </section>
+        </div>
         <!--/noindex-->
 
-        <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
   <div class="site-description" itemprop="description"></div>
@@ -232,7 +215,7 @@
 
 
 
-        </section>
+        </div>
       </div>
     </div>
   </aside>
@@ -242,7 +225,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="Back to top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -255,9 +238,7 @@
 
 
     <div class="main-inner post posts-expand">
-      
 
-      
 
   
 
@@ -385,8 +366,7 @@
 
 
 
-      
-    <div class="comments" id="gitalk-container"></div>
+    <div class="comments gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -409,18 +389,14 @@
     });
   }
 </script>
-
-    </div>
+</div>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      
 
-      
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
@@ -433,71 +409,31 @@
   </footer>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
 
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
   <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-  
-
-  
-      <script>
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
+        tags: 'none'
       },
       options: {
         renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
           insertedScript: [200, () => {
             document.querySelectorAll('mjx-container').forEach(node => {
               const target = node.parentNode;
@@ -510,7 +446,7 @@
       }
     };
     const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
     script.defer = true;
     document.head.appendChild(script);
   } else {
@@ -521,15 +457,13 @@
   }
 </script>
 
-    
 
-  
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
 
 <script>
-NexT.utils.loadComments('#gitalk-container', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', () => {
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
     var gitalk = new Gitalk({
       clientID    : 'bcfbeadd6147f39af62f',
       clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
@@ -537,10 +471,11 @@ NexT.utils.loadComments('#gitalk-container', () => {
       owner       : 'WillZhuang',
       admin       : ['WillZhuang'],
       id          : '6bc51d6d85e8a7e65c7c8596a58844ef',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
         language: 'zh-CN',
       distractionFreeMode: true
     });
-    gitalk.render('gitalk-container');
+    gitalk.render(document.querySelector('.gitalk-container'));
   }, window.Gitalk);
 });
 </script>
