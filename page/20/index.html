@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">156</span>
+          <span class="site-state-item-count">157</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/06/10/%E5%85%B3%E4%BA%8E%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%9A%84%E6%96%B0%E8%AE%A4%E7%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/10/%E5%85%B3%E4%BA%8E%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%9A%84%E6%96%B0%E8%AE%A4%E7%9F%A5/" class="post-title-link" itemprop="url">关于以太坊智能合约的新认知</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-10 10:35:04" itemprop="dateCreated datePublished" datetime="2019-06-10T10:35:04+08:00">2019-06-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="1-智能合约是可以删除的"><a href="#1-智能合约是可以删除的" class="headerlink" title="1. 智能合约是可以删除的"></a>1. 智能合约是可以删除的</h4><p>删除智能合约的 EVM 字节码为 SELFDESTRUCT (之前称为 SUICIDE)。该操作系统会提供 gas 退款，激励用户删除存储状态的方式释放资源。删除智能合约并不会清楚合约之前历史的交易记录，区块链本身并不可改变。</p>
+<h4 id="2-Solidity-目前的版本号码是Version-0-5-9"><a href="#2-Solidity-目前的版本号码是Version-0-5-9" class="headerlink" title="2. Solidity 目前的版本号码是Version 0.5.9"></a>2. Solidity 目前的版本号码是<a target="_blank" rel="noopener" href="https://github.com/ethereum/solidity/releases/tag/v0.5.9">Version 0.5.9</a></h4><p>其中主版本号是 0，它表示任何东西都有可能修改。次版本号是 5，在 Solidity 实际编码中，次版本号视为主版本号。9 为补丁号，实际编码中视为次版本号。当然建议开发者使用最新的版本。</p>
+<h4 id="3-ABI，Application-Binary-Interface，应用程序二进制接口"><a href="#3-ABI，Application-Binary-Interface，应用程序二进制接口" class="headerlink" title="3. ABI，Application Binary Interface，应用程序二进制接口"></a>3. ABI，Application Binary Interface，应用程序二进制接口</h4><p>ABI 定义了数据结构和函数如何在机器指令中被访问。ABI 是向机器指令层面编码和解码并传送数据的主要方式。与 API 不同。ABI 对智能合约进行编码，具体是对 EVM 的调用和从交易获取数据的调用进行编码。例如，钱包软件调用 withdraw 函数时，需要通过 ABI 知道，该调用需要一个 uint256 类型的变量，变量名称为 withdraw_amount。然后钱包软件就会提示用户输入该参数，接着创建一个以太坊交易，调用合约的 withdraw 函数。</p>
+<h4 id="4-智能合约设计中的安全设计模式"><a href="#4-智能合约设计中的安全设计模式" class="headerlink" title="4. 智能合约设计中的安全设计模式"></a>4. 智能合约设计中的安全设计模式</h4><h5 id="4-1-重入：典型案例为DAO。"><a href="#4-1-重入：典型案例为DAO。" class="headerlink" title="4.1 重入：典型案例为DAO。"></a>4.1 重入：典型案例为DAO。</h5><ul>
+<li><p>尽可能地使用内置的 transfer 函数想外部合约发送以太币。因为 transfer 仅会给外部调用2300gas，所以不足以支持目标地址或者合约再次调用其他合约，也就不足以重入发送以太币的合约。避免使用 send 或者 call。</p>
+</li>
+<li><p>确保状态变量的修改都发生在合约发送以太币之前。即按照”检查-生效-交互”模式。</p>
+</li>
+<li><p>引入互斥锁，也就是增加一个状态变量在代码执行中锁定合约，避免重入的调用。请参照<a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约退款方式一文</a>。</p>
+</li>
+</ul>
+<h5 id="4-2-溢出：典型案例为美团币被盗。"><a href="#4-2-溢出：典型案例为美团币被盗。" class="headerlink" title="4.2 溢出：典型案例为美团币被盗。"></a>4.2 溢出：典型案例为美团币被盗。</h5><p>使用 openzeppelin 的 safemath 做计算防范溢出。</p>
+<h5 id="4-3-以太币余额逻辑陷阱：典型案例为游戏应用中的存-ether，中奖-ether漏洞。"><a href="#4-3-以太币余额逻辑陷阱：典型案例为游戏应用中的存-ether，中奖-ether漏洞。" class="headerlink" title="4.3 以太币余额逻辑陷阱：典型案例为游戏应用中的存 ether，中奖 ether漏洞。"></a>4.3 以太币余额逻辑陷阱：典型案例为游戏应用中的存 ether，中奖 ether漏洞。</h5><ul>
+<li><p>避免使用 this.balance 的具体数值，它可能会被操纵。</p>
+</li>
+<li><p>如果需要判断以太币的具体充值数额，可以使用一个自定义的变量在 payable 的数字中记录数额的变动。需要保证这个变量不会被 selfdestruct 调用强制发送的以太币所影响。</p>
+</li>
+</ul>
+<h5 id="4-4-尽量避免使用-DELEGATECALL，尽量使用-library。保持库合约是无状态的，不会selfdestruct自我销毁的。典型案例-Parity-多重签名钱包的第二次共计漏洞。"><a href="#4-4-尽量避免使用-DELEGATECALL，尽量使用-library。保持库合约是无状态的，不会selfdestruct自我销毁的。典型案例-Parity-多重签名钱包的第二次共计漏洞。" class="headerlink" title="4.4 尽量避免使用 DELEGATECALL，尽量使用 library。保持库合约是无状态的，不会selfdestruct自我销毁的。典型案例 Parity 多重签名钱包的第二次共计漏洞。"></a>4.4 尽量避免使用 DELEGATECALL，尽量使用 library。保持库合约是无状态的，不会selfdestruct自我销毁的。典型案例 Parity 多重签名钱包的第二次共计漏洞。</h5><h5 id="4-5-保持正确的可见性，public-private-internal，不建议省略，因为省略即为-public。"><a href="#4-5-保持正确的可见性，public-private-internal，不建议省略，因为省略即为-public。" class="headerlink" title="4.5 保持正确的可见性，public/private/internal，不建议省略，因为省略即为 public。"></a>4.5 保持正确的可见性，public/private/internal，不建议省略，因为省略即为 public。</h5><h5 id="4-6-区块链上的随机性目前还是一个难题。使用过往或者最近的变量都是灾难性的。"><a href="#4-6-区块链上的随机性目前还是一个难题。使用过往或者最近的变量都是灾难性的。" class="headerlink" title="4.6 区块链上的随机性目前还是一个难题。使用过往或者最近的变量都是灾难性的。"></a>4.6 区块链上的随机性目前还是一个难题。使用过往或者最近的变量都是灾难性的。</h5><p>随机数必须来自区块链外部。或者，由像”提交-揭示”这样的模式在节点之间来实现。或者通过更改一组参与者之间的信任模型来实现。例如：<a target="_blank" rel="noopener" href="https://github.com/randao/randao">randao</a> , <a target="_blank" rel="noopener" href="https://github.com/oraclize">oraclize</a> 。</p>
+<h5 id="4-7-参数攻击"><a href="#4-7-参数攻击" class="headerlink" title="4.7 参数攻击"></a>4.7 参数攻击</h5><p>向智能合约传递参数时，这些参数需要依照 ABI 规范进行编码。不过，发送的实际数据长度小于标准的参数编码长度也是可以的。在这种情况下，EVM 会在数据末尾补 0 使得数据长度达到要求。这可能会引起实际的转账以太币数量增长 10 倍，100倍甚至更高。防范方法是外部应用程序在把输入参数发送到区块链之前都应该对它们进行校验。由于数据填充发生在尾部，所以在合约中仔细考虑参数的顺序也可以在一定程度上减轻共计的危害。</p>
+<h5 id="4-8-Tx-Origin"><a href="#4-8-Tx-Origin" class="headerlink" title="4.8 Tx.Origin"></a>4.8 Tx.Origin</h5><p>智能合约中不应该使用Tx.Origin来进行验证授权。攻击者可以将共计合约的地址伪装成权限拥有人的地址，这样就可以通过验证，操作后续的（提款）逻辑。</p>
+<p>Don’t roll your own crypto!</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -592,124 +684,6 @@
 </li>
 </ul>
 <p>Hotel 客房预订的产品 MVP 的最主要需求是实时性，可靠性，正确性和容易地得到价格(曲线)</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/03/22/%E8%AF%A6%E8%BF%B0ethereum%E4%B8%ADChainID%E5%92%8CNetworkID/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/22/%E8%AF%A6%E8%BF%B0ethereum%E4%B8%ADChainID%E5%92%8CNetworkID/" class="post-title-link" itemprop="url">详述ethereum中ChainID和NetworkID</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-03-22 17:24:04" itemprop="dateCreated datePublished" datetime="2019-03-22T17:24:04+08:00">2019-03-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><p>ChainID和NetworkID有什么不同？<br>ChainID在<a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md">EIP-155</a>中有介绍，当NetworkID都为1时，ChainID来防止在ETH和ETC之间的replay attacks—重放攻击。</p>
-</li>
-<li><p>ChainID和NetworkID在没有个区块中都需要标识吗？还是只在genesis block创世区块中标识？</p>
-<p>ChainID通常是需要的。例如在为txs签名时，这样才能将ETH和ETC的tx区分开来。在<a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md">EIP-155</a>之前，为txs签名时需要NetworkID。</p>
-</li>
-<li><p>目前ChainID和NetworkID有哪些已经被使用？</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="right">CHAIN_ID</th>
-<th align="center">Chain(s)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="right">1</td>
-<td align="center">Ethereum mainnet</td>
-</tr>
-<tr>
-<td align="right">2</td>
-<td align="center">Morden (disused), Expanse mainnet</td>
-</tr>
-<tr>
-<td align="right">3</td>
-<td align="center">Ropsten</td>
-</tr>
-<tr>
-<td align="right">4</td>
-<td align="center">Rinkeby</td>
-</tr>
-<tr>
-<td align="right">5</td>
-<td align="center">Goerli</td>
-</tr>
-<tr>
-<td align="right">42</td>
-<td align="center">Kovan</td>
-</tr>
-<tr>
-<td align="right">1337</td>
-<td align="center">Geth private chains (default)</td>
-</tr>
-</tbody></table>
-<p>###在<a target="_blank" rel="noopener" href="https://chainid.network/">https://chainid.network/</a>中有更加详细的介绍。</p>
-<p>##参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md">https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md</a></p>
 
       
     </div>
