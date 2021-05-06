@@ -266,7 +266,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-05-06 11:41:04 / Modified: 15:49:30" itemprop="dateCreated datePublished" datetime="2021-05-06T11:41:04+08:00">2021-05-06</time>
+      <time title="Created: 2021-05-06 11:41:04 / Modified: 16:14:56" itemprop="dateCreated datePublished" datetime="2021-05-06T11:41:04+08:00">2021-05-06</time>
     </span>
 
   
@@ -340,7 +340,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs zkesc public.json proof.json</span><br><span class="line">[&quot;0x29b83d63472e4f47b092fd4ced43a566697f0575186964c7cc3deec2c5c1b0bd&quot;, &quot;0x2eb116882d2bacdbeece8a2adf2ab6d0f4420b60e82b4b66ddb18cc26ab2bae2&quot;],[[&quot;0x170d208ad3a8bf4358c207706bce9e87cbad11037f642d1ab06f65a5ebf10eb4&quot;, &quot;0x0dc07edd498cc16c5174c2a5a2aeed86c2f5689ed25486e8981768d7c7ceae13&quot;],[&quot;0x1c52e6144e980ae72e5c5679c979c70e0da4a519fc087dda3b96bbea09179b20&quot;, &quot;0x2849fdea744fa924ae19eb15917dac4543c0fa3b888293dfcd365c6251f25223&quot;]],[&quot;0x01918c12515eb00b823f0e2a63ef53e15792b4b4fd331b595ffc670e929d6b99&quot;, &quot;0x2246e9bb88119c6f8f1c04735beeee038ddc6e66572cb44f1c926575db80be9a&quot;],[&quot;0x0000000000000000000000000000000000000000000000000000000000000021&quot;]</span><br></pre></td></tr></table></figure>
 
 <p>​    验证者具有一个称为<code>verifyProof</code>的函数，当且仅当证明和输入有效时，该函数才返回<code>TRUE</code>。</p>
-<p><img src="/2021/05/06/circom%E8%AF%95%E7%94%A8/circom%E8%AF%95%E7%94%A8%5C1.png"></p>
+<p><img src="/2021/05/06/circom%E8%AF%95%E7%94%A8/1.png"></p>
 <p>​    如果仅更改参数中的任何位，则可以检查结果返回 false 。</p>
 <h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p>​    我们已经表明可以生成证明我们知道两个因子a和b使得<code>a*b=33</code>的证明。但这不能证明我们知道如何分解数字33，因为我们可以选择a = 1和b = 33，通常对于任何整数n，选择输入a=1，b=n。在此，我们需要修改电路，以便不可能将数字1分配给任何输入。为此，我们将使用0是唯一没有反数的事实。</p>
 <p>​    这里的技巧是使用0不可求倒数的属性，约束不接受 1 作为任何一个输入，即<code>(a-1)</code> 不可求倒数的方式来约束电路。</p>
