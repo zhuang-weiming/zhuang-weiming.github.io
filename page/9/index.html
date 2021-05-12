@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">157</span>
+          <span class="site-state-item-count">158</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,109 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/12/%E4%BD%93%E9%AA%8CHyperledger-Burrow-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/12/%E4%BD%93%E9%AA%8CHyperledger-Burrow-2/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-12 09:08:31" itemprop="dateCreated datePublished" datetime="2020-05-12T09:08:31+08:00">2020-05-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>文档链接=&gt;<a target="_blank" rel="noopener" href="https://hyperledger.github.io/burrow/">https://hyperledger.github.io/burrow/</a></p>
+<p>github链接=&gt;<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/">https://github.com/hyperledger/burrow/</a></p>
+<p>接前文《体验Hyperledger-Burrow-1》，启动4个节点如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  script ps aux | grep burrow</span><br><span class="line">USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">will      21409  2.1  0.8 133268 66036 pts/1    SNl  08:52   1:02 ./burrow start --config=burrow000.toml</span><br><span class="line">will      21410  1.9  0.7 133268 59212 pts/1    SNl  08:52   0:56 ./burrow start --config=burrow001.toml</span><br><span class="line">will      21411  2.0  0.8 133268 65924 pts/1    SNl  08:52   0:59 ./burrow start --config=burrow002.toml</span><br><span class="line">will      21416  2.0  0.7 133268 63416 pts/1    SNl  08:52   1:01 ./burrow start --config=burrow003.toml</span><br></pre></td></tr></table></figure>
+
+<h3 id="制作增加节点的配置文件"><a href="#制作增加节点的配置文件" class="headerlink" title="制作增加节点的配置文件"></a>制作增加节点的配置文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./burrow spec -v1 | ./burrow configure -s- &gt; burrow_add.toml</span><br></pre></td></tr></table></figure>
+
+<p>运行完成后，增加公私钥文档如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  data pwd</span><br><span class="line">/home/will/documents/burrow/script/.keys/data</span><br><span class="line">➜  data cat 035B1B192A16FF8086C36304024010502CEB2DE0.json </span><br><span class="line">&#123;&quot;CurveType&quot;:&quot;ed25519&quot;,&quot;Address&quot;:&quot;5ECA9967F5D363F21C4606CC971710200A64C5BC&quot;,&quot;PublicKey&quot;:&quot;4F3530024CF75A7AFC4D168CF2975C285D03CEBB1CBE82E21AD9C76531A63128&quot;,&quot;AddressHash&quot;:&quot;go-crypto-0.5.0&quot;,&quot;PrivateKey&quot;:&#123;&quot;Crypto&quot;:&quot;none&quot;,&quot;Plain&quot;:&quot;486059FB274248423F92B7522D5A237AB99B38C80F84D46F720EAE1506D8E2DF4F3530024CF75A7AFC4D168CF2975C285D03CEBB1CBE82E21AD9C76531A63128&quot;&#125;&#125;</span><br><span class="line">➜  names pwd</span><br><span class="line">/home/will/documents/burrow/script/.keys/names</span><br><span class="line">➜  names cat Validator_0</span><br><span class="line">035B1B192A16FF8086C36304024010502CEB2DE0</span><br></pre></td></tr></table></figure>
+
+<p>修改burrow_add.toml配置:<br>1.删除GenesisDoc的内容，因为genesis.json中已经包含了节点们的GenesisDoc；<br>2.增加PersistentPeers，PersistentPeers在burrow000.toml中可以找到；<br>3关闭grpc端口，关闭rpc.info等，否则会跟已有的4个节点端口冲突</p>
+<h3 id="发出增加validator的Tx"><a href="#发出增加validator的Tx" class="headerlink" title="发出增加validator的Tx"></a>发出增加validator的Tx</h3><p>制作增加validator Tx 交易的文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">AddValidator</span></span><br><span class="line">  <span class="attr">update-account:</span></span><br><span class="line">    <span class="attr">target:</span> <span class="string">4F3530024CF75A7AFC4D168CF2975C285D03CEBB1CBE82E21AD9C76531A63128</span></span><br><span class="line">    <span class="attr">power:</span> <span class="number">222222</span></span><br><span class="line">    <span class="attr">permissions:</span> [<span class="string">root</span>, <span class="string">send</span>, <span class="string">call</span>, <span class="string">createContract</span>, <span class="string">createAccount</span>, <span class="string">bond</span>, <span class="string">name</span>, <span class="string">proposal</span>, <span class="string">input</span>, <span class="string">batch</span>, <span class="string">identify</span>, <span class="string">hasBase</span>, <span class="string">setBase</span>, <span class="string">unsetBase</span>, <span class="string">setGlobal</span>, <span class="string">hasRole</span>, <span class="string">addRole</span>, <span class="string">removeRole</span>]</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>4F3530024CF75A7AFC4D168CF2975C285D03CEBB1CBE82E21AD9C76531A63128</code> 是新节点的publickey。</p>
+<p>执行交易命令（<code>DCF0F3BD45EA59B2D471729EC22838DF7B119012</code> 是增加节点前已经启动的4个节点中的Full Account节点。），即在已经启动的节点上执行本交易：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">./burrow deploy -c 127.0.0.1:10997 --mempool-signing=true --address=DCF0F3BD45EA59B2D471729EC22838DF7B119012 deploy.yaml</span><br><span class="line">log_channel=Info message=&quot;Using chain&quot; Chain=127.0.0.1:10997 Signer=</span><br><span class="line">log_channel=Info message=&quot;Loading Playbook File.&quot;</span><br><span class="line">log_channel=Info message=&quot;Loading playbook file&quot; path=/home/will/documents/burrow/script filename=/home/will/documents/burrow/script/deploy.yaml</span><br><span class="line">log_channel=Info message=&quot;*****Executing Job*****&quot; JobName=defaultAddr Type=Account</span><br><span class="line">log_channel=Info message=&quot;Setting Account&quot; account=DCF0F3BD45EA59B2D471729EC22838DF7B119012</span><br><span class="line">log_channel=Info message=&quot;*****Executing Job*****&quot; JobName=AddValidator Type=UpdateAccount</span><br><span class="line">log_channel=Info message=GovTx account=&quot;unsupported value type&quot;</span><br><span class="line">log_channel=Info message=&quot;Using mempool signing since no keyClient set, pass --keys to sign locally or elsewhere&quot;</span><br><span class="line">log_channel=Info message=&quot;Using mempool signing&quot;</span><br><span class="line">log_channel=Info message=&quot;Tx Return&quot; TransactionHash=5a1a57e975e5ead5079c12c63c473e1c04c59cf82fe9974f191faaf1d8aeb8b8 BlockHeight=18</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=input value=DCF0F3BD45EA59B2D471729EC22838DF7B119012</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=native value=</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=power value=222222</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=sequence value=</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=address value=</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=publicKey value=D90E05FAD677699B4FEE56B567F85D3A90438B4B627C27CED0D4C850BDC97876</span><br><span class="line">log_channel=Info message=&quot;Writing to current directory&quot; output=/home/will/documents/burrow/script/deploy.output.json</span><br><span class="line">log_channel=Info message=&quot;JOBS THAT SUCCEEEDED&quot; count=1</span><br><span class="line">log_channel=Info message=&quot;Playbook result&quot; jobNo=0 file=deploy.yaml time=230.744184ms</span><br></pre></td></tr></table></figure>
+
+<p>注意：新创建的validator没有余额。</p>
+<h3 id="启动新增加的节点"><a href="#启动新增加的节点" class="headerlink" title="启动新增加的节点"></a>启动新增加的节点</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./burrow start --config=burrow_add.toml --genesis=genesis.json --address=5ECA9967F5D363F21C4606CC971710200A64C5BC</span><br></pre></td></tr></table></figure>
+
+<p><code>5ECA9967F5D363F21C4606CC971710200A64C5BC</code> 是被增加节点的地址(address)。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  script ps aux | grep burrow</span><br><span class="line">USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">will      21409  2.1  0.8 133268 66036 pts/1    SNl  08:52   1:02 ./burrow start --config=burrow000.toml</span><br><span class="line">will      21410  1.9  0.7 133268 59212 pts/1    SNl  08:52   0:56 ./burrow start --config=burrow001.toml</span><br><span class="line">will      21411  2.0  0.8 133268 65924 pts/1    SNl  08:52   0:59 ./burrow start --config=burrow002.toml</span><br><span class="line">will      21416  2.0  0.7 133268 63416 pts/1    SNl  08:52   1:01 ./burrow start --config=burrow003.toml</span><br><span class="line">will      21505  2.2  0.7 133268 58864 pts/1    Sl+  08:55   1:01 ./burrow start --config=burrow_add.toml --genesis=genesis.json --address=DCF0F3BD45EA59B2D471729EC22838DF7B119012</span><br></pre></td></tr></table></figure>
+
+<p>ed25519是tendermint选择的加密曲线，secp256k1是ethereum选择的加密曲线。</p>
+<p>两者都可以在<code>./burrow keys list</code> 中看到账户地址和名称。在web3.getAccounts中只能够看到secp256k1曲线下生成的账户地址，metamask和remix也是如此。</p>
+<p><code> burrow keys gen -n -t secp256k1 --name zhuang</code> 如果不指定 <code>-n</code> 的话，需要输入密码。 </p>
+<h3 id="发送转账交易"><a href="#发送转账交易" class="headerlink" title="发送转账交易"></a>发送转账交易</h3><p>创建转账交易 deploy_sendToken.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">sendTxTest1</span></span><br><span class="line">  <span class="attr">send:</span></span><br><span class="line">      <span class="attr">destination:</span> <span class="string">0DE8C14FE07FA693D3A6F65D826647D39E9A3BB0</span></span><br><span class="line">      <span class="attr">amount:</span> <span class="number">2000</span></span><br></pre></td></tr></table></figure>
+
+<p>发起</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow keys gen -n -t secp256k1 --name zhuang1</span><br><span class="line">0DE8C14FE07FA693D3A6F65D826647D39E9A3BB0</span><br><span class="line">➜  script ./burrow deploy --address CCC93802D38A33B636D8B2B74218021A571CF252 deploy_sendToken.yaml</span><br><span class="line">log_channel=Info message=&quot;Using chain&quot; Chain=127.0.0.1:10997 Signer=</span><br><span class="line">log_channel=Info message=&quot;Loading Playbook File.&quot;</span><br><span class="line">log_channel=Info message=&quot;Loading playbook file&quot; path=/home/will/documents/burrow/script filename=/home/will/documents/burrow/script/deploy_sendToken.yaml</span><br><span class="line">log_channel=Info message=&quot;*****Executing Job*****&quot; JobName=defaultAddr Type=Account</span><br><span class="line">log_channel=Info message=&quot;Setting Account&quot; account=CCC93802D38A33B636D8B2B74218021A571CF252</span><br><span class="line">log_channel=Info message=&quot;*****Executing Job*****&quot; JobName=sendTxTest1 Type=Send</span><br><span class="line">log_channel=Info message=&quot;Sending Transaction&quot; source=CCC93802D38A33B636D8B2B74218021A571CF252 destination=0DE8C14FE07FA693D3A6F65D826647D39E9A3BB0 amount=2000</span><br><span class="line">log_channel=Info message=SendTx send=&quot;unsupported value type&quot;</span><br><span class="line">log_channel=Info message=&quot;Using mempool signing since no keyClient set, pass --keys to sign locally or elsewhere&quot;</span><br><span class="line">log_channel=Info message=&quot;Using mempool signing&quot;</span><br><span class="line">log_channel=Info message=&quot;Tx Return&quot; TransactionHash=a0abda87ea4751beaeae04d5ac67c35114b9f068720db6e1795ec7083c4a872e BlockHeight=27</span><br><span class="line">log_channel=Info message=&quot;Writing to current directory&quot; output=/home/will/documents/burrow/script/deploy_sendToken.output.json</span><br><span class="line">log_channel=Info message=&quot;JOBS THAT SUCCEEEDED&quot; count=1</span><br><span class="line">log_channel=Info message=&quot;Playbook result&quot; jobNo=0 file=deploy_sendToken.yaml time=347.234362ms</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -668,107 +771,6 @@
 <p>向部署好的用户合约地址转入Link token，用户在发起请求是支付给节点的费用。上述部署的Link Token为18位精度，建议使用 transfer 方法转移 Link token 2000,000000000000000000</p>
 <p>发起请求获取数据，使用getData方法获取天气数据。</p>
 <p><img src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/3.png" alt="image"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/" class="post-title-link" itemprop="url">本地玩转k8s-第I弹</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-04-10 17:31:01" itemprop="dateCreated datePublished" datetime="2020-04-10T17:31:01+08:00">2020-04-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="准备虚拟服务器"><a href="#准备虚拟服务器" class="headerlink" title="准备虚拟服务器"></a>准备虚拟服务器</h3><ol>
-<li><p>在vmware上安装centos7.7 server</p>
-</li>
-<li><p>vmware工具栏，虚拟机-&gt;管理-&gt;克隆，制作k8s-master</p>
-</li>
-<li><p>vmware工具栏，虚拟机-&gt;管理-&gt;克隆，制作k8s-worker01</p>
-</li>
-<li><p>vmware工具栏，虚拟机-&gt;管理-&gt;克隆，制作k8s-worker02</p>
-</li>
-<li><p>于k8s-master内，<code>/etc/sysconfig/network-scripts/ifcfg-ens33</code>，将server编辑为静态ip，</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">######################################</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## depends on vm network settings ####</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">######################################</span></span></span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=192.168.180.10</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.180.2</span><br><span class="line">DNS1=192.168.180.2</span><br><span class="line">ONBOOT=yes</span><br></pre></td></tr></table></figure>
-
-<p>其中，192.168.180.2来自vmware工具栏，<code>编辑-&gt;虚拟网络编辑器-&gt;NAT设置-&gt;子网IP</code>。</p>
-<p>重启server网卡如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmcli c reload ens33</span><br><span class="line">nmcli c up ens33</span><br></pre></td></tr></table></figure>
-
-<p>从windows登录k8s-master，登录IP为<code>192.168.180.10</code> </p>
-</li>
-<li><p>于k8s-worker01内，/etc/sysconfig/network-scripts，将server编辑为静态ip，IPADDR=192.168.180.<strong>11</strong></p>
-<p>重启server网卡如上</p>
-</li>
-<li><p>于k8s-worker01内，/etc/sysconfig/network-scripts，将server编辑为静态ip，IPADDR=192.168.180.<strong>12</strong></p>
-<p>重启server网卡如上</p>
-</li>
-<li><p>optional，检查vmware，<code>编辑-&gt;虚拟网络编辑器</code> 中的<code>VMnet8</code>的连通状态，如果有需要，在windows10-&gt;设置-&gt;更改适配器选项，重新启动<code>VMnet8</code>网卡</p>
-</li>
-</ol>
-<p><img src="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/1.png"></p>
-<p>从winscp端登录：</p>
-<p><img src="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/2.png"></p>
-<p>最后，按照 <a target="_blank" rel="noopener" href="https://kuboard.cn/install/install-k8s.html#%E9%85%8D%E7%BD%AE%E8%A6%81%E6%B1%82">kuboard -&gt; 安装 -&gt; 安装 kubernetes</a> 手册完成kubernetes安装。</p>
 
       
     </div>
