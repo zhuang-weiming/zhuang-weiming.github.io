@@ -266,7 +266,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-08-09 14:09:04 / Modified: 15:38:01" itemprop="dateCreated datePublished" datetime="2021-08-09T14:09:04+08:00">2021-08-09</time>
+      <time title="Created: 2021-08-09 14:09:04 / Modified: 19:07:29" itemprop="dateCreated datePublished" datetime="2021-08-09T14:09:04+08:00">2021-08-09</time>
     </span>
 
   
@@ -409,6 +409,7 @@
 <p>在此范例中将以 cryptogen 命令列生成各节点所需凭证，以下为签发凭证的指令。可以查看 git repo 中的 crypto-config.yaml 为<strong>签发凭证设定文件</strong>，crypto-config则为<strong>签发结果</strong>。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cryptogen generate --config=crypto-config.yaml --output ./crypto-config</span><br></pre></td></tr></table></figure>
 
+<p>(notice：练习中，需要再次生成新的凭证设定文件时，需要将./crypto-config文件夹删除后，再行运行上述命令。否则凭证设定文件不会被更新覆盖！)</p>
 <h3 id="四、准备创世区块"><a href="#四、准备创世区块" class="headerlink" title="四、准备创世区块"></a>四、准备创世区块</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsOrdererGenesis -channelID mychannel -outputBlock ./channel-artifacts/genesis.block</span><br></pre></td></tr></table></figure>
 
 <h3 id="五、产生Channel-所需档案"><a href="#五、产生Channel-所需档案" class="headerlink" title="五、产生Channel 所需档案"></a>五、产生Channel 所需档案</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 产生Channel 所需档案</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID &quot;mychannel&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 产生 Org1 使用的 channel 设定文件</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/org1Anchors.tx  -channelID &quot;mychannel&quot; -asOrg org1MSP</span><br><span class="line"><span class="meta">#</span><span class="bash"> 产生 Org2 使用的 channel 设定文件</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/org2Anchors.tx  -channelID &quot;mychannel&quot; -asOrg org2MSP</span><br></pre></td></tr></table></figure>
