@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">161</span>
+          <span class="site-state-item-count">164</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">76</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,331 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/09/30/node%E7%BC%96%E5%86%99%E7%9A%84PKI%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/30/node%E7%BC%96%E5%86%99%E7%9A%84PKI%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">node编写的PKI工具</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-30 15:11:04 / Modified: 15:42:03" itemprop="dateCreated datePublished" datetime="2021-09-30T15:11:04+08:00">2021-09-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="nodepki"><a href="#nodepki" class="headerlink" title="nodepki"></a>nodepki</h2><p>aditosoftware/nodepki: NodePKI is a simple NodeJS based PKI manager for small corporate environments. (github.com)](<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/nodepki">https://github.com/WillZhuang/nodepki</a>) NodePKI 是一个简单的基于 NodeJS 的 PKI 管理器，适用于小型企业环境。</p>
+<h3 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h3><ul>
+<li>Linux OS</li>
+<li>NodeJS</li>
+<li>NPM</li>
+<li>OpenSSL</li>
+</ul>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/aditosoftware/nodepki.git</span><br><span class="line">cd nodepki</span><br><span class="line">npm install  </span><br></pre></td></tr></table></figure>
+
+<h3 id="Configure-NodePKI"><a href="#Configure-NodePKI" class="headerlink" title="Configure NodePKI"></a>Configure NodePKI</h3><p>配置文件的例子有 <code>config.yml.default</code>，将其内容copy至 <code>NodePKI/data/config/config.yml</code>。修改 <code>config.yml</code> 根据你的配置。<code>config.yml</code> 中的密码将用于创建PKI。</p>
+<h3 id="Start-API-server"><a href="#Start-API-server" class="headerlink" title="Start API server"></a>Start API server</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
+
+<p>启动后，CA 文件将在 <code>data/mypki</code> 文件夹内创建。</p>
+<h3 id="用户登录接口-API-user-login"><a href="#用户登录接口-API-user-login" class="headerlink" title="用户登录接口 API user login"></a>用户登录接口 API user login</h3><h4 id="Add-new-user"><a href="#Add-new-user" class="headerlink" title="Add new user"></a>Add new user</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node nodepkictl useradd --username user1 --password user1password</span><br></pre></td></tr></table></figure>
+
+<h4 id="Remove-user"><a href="#Remove-user" class="headerlink" title="Remove user"></a>Remove user</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node nodepkictl userdel --username user1</span><br></pre></td></tr></table></figure>
+
+<h4 id="List-all-issued-certificates"><a href="#List-all-issued-certificates" class="headerlink" title="List all issued certificates"></a>List all issued certificates</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Content-type: application/json&quot; -d &#x27;&#123; &quot;data&quot;: &#123; &quot;state&quot;:&quot;all&quot; &#125;, &quot;auth&quot;: &#123; &quot;username&quot;:&quot;thomas&quot;, &quot;password&quot;:&quot;test&quot; &#125; &#125;&#x27; http://localhost:8080/api/v1/certificates/list</span><br></pre></td></tr></table></figure>
+
+<h4 id="Request-certificate-from-CSR"><a href="#Request-certificate-from-CSR" class="headerlink" title="Request certificate from CSR"></a>Request certificate from CSR</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Content-type: application/json&quot; -d &#x27;&#123; &quot;data&quot;: &#123; &quot;applicant&quot;:&quot;Thomas&quot;, &quot;csr&quot;:&quot;---CERTIFICATE SIGNING REQUEST---&quot;, &quot;lifetime&quot;:365, &quot;type&quot;:&quot;server&quot; &#125;, &quot;auth&quot;: &#123; &quot;username&quot;:&quot;thomas&quot;, &quot;password&quot;:&quot;test&quot; &#125; &#125;&#x27; http://localhost:8080/api/v1/certificate/request</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用-nodepki-client-管理你的-PKI"><a href="#利用-nodepki-client-管理你的-PKI" class="headerlink" title="利用 nodepki-client 管理你的 PKI"></a>利用 <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/nodepki-client">nodepki-client</a> 管理你的 PKI</h2><p>NodePKI 服务器的简单命令行客户端。</p>
+<h3 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h3><ul>
+<li>NodeJS</li>
+<li>NPM</li>
+<li>OpenSSL</li>
+</ul>
+<h3 id="Setup-1"><a href="#Setup-1" class="headerlink" title="Setup"></a>Setup</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;ThomasLeister&#x2F;nodepki-client.git</span><br><span class="line">cd nodepki-client</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configure"><a href="#Configure" class="headerlink" title="Configure"></a>Configure</h3><p>Copy config.default.yml to config/config.yml and set the settings according to your environment.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">node client help            </span><br><span class="line">[07:34:26] Reading config file data/config/config.yml ...</span><br><span class="line">Usage: client &lt;subcommand&gt; [options]</span><br><span class="line"></span><br><span class="line">命令：</span><br><span class="line">  request    Request a new certificate with or without .csr file</span><br><span class="line">  list       List issued certificates</span><br><span class="line">  get        Get issued certificate by serial number</span><br><span class="line">  revoke     Revoke certificate via cert file</span><br><span class="line">  getcacert  Get CA certificate</span><br><span class="line"></span><br><span class="line">选项：</span><br><span class="line">  -h, --help  显示帮助信息                                                [布尔]</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建证书-与私钥"><a href="#创建证书-与私钥" class="headerlink" title="创建证书(与私钥)"></a>创建证书(与私钥)</h3><p>Create new key + certificate from scratch and store both in out/ directory. Lifetime: 7 days.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --lifetime 7 --out out/</span><br></pre></td></tr></table></figure>
+
+<p>Create new key + certificate from scratch, add intermediate cert to cert and store in out/ directory</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --out out/ --fullchain</span><br></pre></td></tr></table></figure>
+
+<p>Lifetime defaults to <em>cert_lifetime_default</em> setting in config.yml</p>
+<p>Create a new client certificate:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --type client --out out/</span><br></pre></td></tr></table></figure>
+
+<p>获取发布的证书</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client list --state all</span><br></pre></td></tr></table></figure>
+
+<p>可用的状态 Valid states:</p>
+<ul>
+<li>all</li>
+<li>valid</li>
+<li>expired</li>
+<li>revoked</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client list --state valid</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取证书-Get-certificate-by-serial-number"><a href="#获取证书-Get-certificate-by-serial-number" class="headerlink" title="获取证书 Get certificate by serial number"></a>获取证书 Get certificate by serial number</h3><p>… and store certificate to out/cert.pem</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client get --serialnumber 324786EA --out out/cert.pem</span><br></pre></td></tr></table></figure>
+
+<h3 id="Revoke-issued-certificate"><a href="#Revoke-issued-certificate" class="headerlink" title="Revoke issued certificate"></a>Revoke issued certificate</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client revoke --cert cert.pem</span><br></pre></td></tr></table></figure>
+
+<h3 id="Get-CA-certificates"><a href="#Get-CA-certificates" class="headerlink" title="Get CA certificates"></a>Get CA certificates</h3><p>Get root certificate:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca root</span><br></pre></td></tr></table></figure>
+
+<p>Write root certificate to file:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca root --out out/root.cert.pem</span><br></pre></td></tr></table></figure>
+
+<p>Get intermediate certificate:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca intermediate</span><br></pre></td></tr></table></figure>
+
+<p>Get intermediate certificate + root certificate (=cert chain) and write to file:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca intermediate --chain --out out/ca-chain.cert.pem</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/08/20/%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/20/%E5%90%8C%E6%80%81%E5%8A%A0%E5%AF%86%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="post-title-link" itemprop="url">同态加密使用体验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-20 10:49:04" itemprop="dateCreated datePublished" datetime="2021-08-20T10:49:04+08:00">2021-08-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-30 15:41:46" itemprop="dateModified" datetime="2021-09-30T15:41:46+08:00">2021-09-30</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="什么是同态加密"><a href="#什么是同态加密" class="headerlink" title="什么是同态加密"></a>什么是同态加密</h3><p>虽然同态加密即使现在听起来也很陌生，但是其实这个概念来自 1978 年，由 RSA 算法的发明者的 R 和 A 以及 Dertouzos 提出。具体的定义如下：</p>
+<blockquote>
+<p>A way to delegate processing of your data, without giving away access to it.</p>
+</blockquote>
+<p>翻译成人话就是传统的加密方法和数据处理方法是互斥的，比如我需要计算两个数字的和（1 和 2），如果加密了之后，就无法对密文进行计算；如果想要进行计算，就必须知道这两个数字是 1 和 2。如果数据拥有方和计算方是同一方，那么知道 1 和 2 没啥问题；但如果数据拥有方和计算方并非同一方，并且数据拥有方还不想让计算方知道这两个数字是 1 和 2，这个时候就是同态加密发挥作用的时候了。</p>
+<p>同态加密将数据的处理和数据本身解耦了：计算方拿到的是加密之后的密文，但是依然可以相加，相加之后把结果告诉数据拥有方，最终数据拥有方解密就可以知道最终的计算结果。</p>
+<p>同态加密的这个特点使得云服务厂商非常在意，因为这一举解决了用户担心云服务厂商窃取数据的担心（因为加密了除了计算没法做其他事情），并且因为加密计算本身耗费更多计算资源，还可以变相提高营收。</p>
+<p>总结一下：同态加密使得数据可以在加密的状态下进行计算，至于支持什么计算，如何进行计算，我们接下来继续讲。</p>
+<h3 id="同态加密步骤"><a href="#同态加密步骤" class="headerlink" title="同态加密步骤"></a>同态加密步骤</h3><ol>
+<li>在本地生成用来加密数据的 Key</li>
+<li>用 Key 和 Encrypt 算法加密本地的数据，记为 <code>EncData = Encrypt(Key, Data)</code></li>
+<li>告诉云平台/区块链平台需要如何计算数据，记为函数 <code>F()</code></li>
+<li>云平台/区块链平台进行计算 Evaluate，即 <code>Evaluate(F(), EncData) = Encrypt(Key, F(Data))</code>，记为 <code>ProEncData</code></li>
+<li>平台将 <code>ProEncData</code> 发回给到我</li>
+<li>我用密钥进行解密 Decrypt，得到 <code>F(Data) = Decrypt(Key, ProEncData)</code>，也就是最终结果</li>
+</ol>
+<p>在以上六个步骤中，至少有四个函数是必须的：</p>
+<ol>
+<li>生成密钥的函数：本地执行，生成密钥</li>
+<li>Encrypt 函数：本地执行，加密数据，加密之后的数据不会暴露源数据的信息</li>
+<li>Evaluate 函数：用来执行用户给定的计算函数 <code>F()</code>，是唯一由云平台运行的函数</li>
+<li>Decrypt 函数：本地执行，解密数据</li>
+</ol>
+<p>根据支持的 <code>F()</code> 的不同，同态加密分成了两类：</p>
+<ol>
+<li>Fully Homomorphic Encryption, FHE：这种方式下，任何 <code>F()</code> 都可以，只要这个算法能够被计算机实现即可。不过这个计算开销非常大，目前暂无实际应用。</li>
+<li>Somewhat Homomorphic Encryption, SWHE：这种方式下，只支持某些特定的<code>F()</code> （比如只支持加法/乘法，并且只能执行有限次数）。这个方案有比较大的限制，但也因此计算开销较小，已经可以在实际中使用<ol>
+<li>乘法：RSA, Elgamal</li>
+<li>加法：Paillier</li>
+</ol>
+</li>
+</ol>
+<p>接下来我们会详细看看 Paillier 算法和 RSA 算法，对加法同态和乘法同态有更加深入的理解。</p>
+<h3 id="Paillier-算法"><a href="#Paillier-算法" class="headerlink" title="Paillier 算法"></a><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/gomorph">Paillier 算法</a></h3><p>总共有如下几个步骤：</p>
+<ol>
+<li>随机选择两个质数 p 和 q 满足 |p|=|q|=τ，这个条件保证了 p 和 q 的长度相等。</li>
+<li>计算 N=pq 和 λ=lcm(p−1,q−1)，注：lcm 表示最小公倍数</li>
+<li>随机选择 g∈Z∗,N2，满足 gcd(L(gλmodN2),N)=1gcd(L(gλmodN2),N)=1，注：gcd 表示最大公约数；Z 表示整数，下标表示该整数集合里有多少个元素；L(x)=x−1NL(x)=x−1N</li>
+<li>公钥为 (N,g)(N,g)</li>
+<li>私钥为 λ</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/08/12/MP-SPDZ%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/12/MP-SPDZ%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="post-title-link" itemprop="url">MP-SPDZ使用体验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-12 10:51:04" itemprop="dateCreated datePublished" datetime="2021-08-12T10:51:04+08:00">2021-08-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-30 15:41:46" itemprop="dateModified" datetime="2021-09-30T15:41:46+08:00">2021-09-30</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/data61/MP-SPDZ">data61/MP-SPDZ: Versatile framework for multi-party computation (github.com)</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>1）在ubuntu环境中，安装依赖包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install automake build-essential git libboost-dev libboost-thread-dev libntl-dev libsodium-dev libssl-dev libtool m4 python3 texinfo yasm</span><br></pre></td></tr></table></figure>
+
+<p>2）使用git下载项目源码，注意不是二进制的release文件。</p>
+<p>3）在项目目录中，编译代码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j 8 tldr</span><br></pre></td></tr></table></figure>
+
+<p>4）试用并执行 <a target="_blank" rel="noopener" href="https://github.com/data61/MP-SPDZ/blob/master/Programs/Source/tutorial.mpc">the tutorial</a> 教程，他是一个双方的、对恶意安全的教程。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  MP-SPDZ git:(master) ./compile.py tutorial</span><br><span class="line">Default bit length: 64</span><br><span class="line">Default security parameter: 40</span><br><span class="line">Compiling file /home/zhuang/Downloads/MP-SPDZ/Programs/Source/tutorial.mpc</span><br><span class="line">WARNING: Order of memory instructions not preserved, errors possible</span><br><span class="line">Writing to /home/zhuang/Downloads/MP-SPDZ/Programs/Schedules/tutorial.sch</span><br><span class="line">Writing to /home/zhuang/Downloads/MP-SPDZ/Programs/Bytecode/tutorial-0.bc</span><br><span class="line">Program requires:</span><br><span class="line">           4 integer inputs from player 0</span><br><span class="line">           4 integer inputs from player 1</span><br><span class="line">        5420 integer bits</span><br><span class="line">        2474 integer triples</span><br><span class="line">         238 virtual machine rounds</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -272,7 +597,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-10 14:10:16" itemprop="dateModified" datetime="2021-08-10T14:10:16+08:00">2021-08-10</time>
+        <time title="Modified: 2021-08-30 08:37:55" itemprop="dateModified" datetime="2021-08-30T08:37:55+08:00">2021-08-30</time>
       </span>
 
   
@@ -544,7 +869,6 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/hyperledger/fabric-samples/tree/v2.1.1">Hyperledger Git Repository</a></li>
 <li><a target="_blank" rel="noopener" href="https://hyperledgercn.github.io/hyperledgerDocs/">Hyperledger 中文文档</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.lijiaocn.com/%E9%A1%B9%E7%9B%AE/2018/04/26/hyperledger-fabric-deploy.html">Hyperledger 手动部署全纪录</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.lijiaocn.com/%E9%A1%B9%E7%9B%AE/2018/04/27/hyperledger-fabric-ca-usage.html">Hyperledger CA 使用方式说明</a></li>
 <li><a target="_blank" rel="noopener" href="https://medium.com/swlh/how-to-implement-hyperledger-fabric-external-chaincodes-within-a-kubernetes-cluster-fd01d7544523">部署Hyperledger2.2 于 Kubenetes</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/vanitas92/fabric-external-chaincodes/tree/v2.2.0">部署Hyperledger2.2 于 Kubenetes 代码</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/134024f823a0">凭证说明</a></li>
@@ -561,6 +885,11 @@
 <ul>
 <li><a target="_blank" rel="noopener" href="https://blog.skywebster.com/how-to-setup-nfs-server-on-centos-7-rhel-7/">NFS 架构参考</a></li>
 </ul>
+<ol start="4">
+<li><p>部署 fabric 和 CA 与 Kubenetes 之上</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/hyperledger-fabric-k8s">Deploy Hyperledger Fabric network on Kubernetes</a></p>
+</li>
+</ol>
 
       
     </div>
@@ -642,312 +971,6 @@
 <li>Solidity 合约 –&gt; Zolidity 合约 –&gt; zappify –&gt; zApp</li>
 </ul>
 <p>此转译器的主要目标是使开发人员能够快速为 zApps 起草框架。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/" class="post-title-link" itemprop="url">海量信息查重-simhash</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-27 16:21:04" itemprop="dateCreated datePublished" datetime="2021-05-27T16:21:04+08:00">2021-05-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-09 14:10:07" itemprop="dateModified" datetime="2021-08-09T14:10:07+08:00">2021-08-09</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>​    造成网页近重复的可能原因主要包括：镜像网站；内容复制；嵌入广告；计数改变；少量修改<br>​    传统比较两个文本相似性的方法，大多是将文本分词之后，转化为特征向量距离的度量，比如常见的欧氏距离、海明距离或者余弦角度等等。两两比较固然能很好地适应，但这种方法的一个最大的缺点就是，无法将其扩展到海量数据。例如，试想像Google那种收录了数以几十亿互联网信息的大型搜索引擎，每天都会通过爬虫的方式为自己的索引库新增的数百万网页，如果待收录每一条数据都去和网页库里面的每条记录算一下余弦角度，其计算量是相当恐怖的。<br>​    考虑采用为每一个web文档通过hash的方式生成一个指纹（fingerprint）。但是，传统的加密式hash，比如md5，其设计的目的是为了让整个分布尽可能地均匀，输入内容哪怕只有轻微变化，hash就会发生很大地变化。我们理想当中的哈希函数，需要对几乎相同的输入内容，产生相同或者相近的hashcode，换句话说，hashcode的相似程度要能直接反映输入内容的相似程度。很明显，前面所说的md5等传统hash无法满足我们的需求。<br>​    <a target="_blank" rel="noopener" href="http://jacoxu.com/%e5%85%b3%e4%ba%8esimhash%e7%ae%97%e6%b3%95%e5%8e%9f%e7%90%86/">simhash</a>是locality sensitive hash（局部敏感哈希）的一种，它产生的hash签名在一定程度上可以表征原内容的相似度。最早由Moses Charikar在《similarity estimation techniques from rounding algorithms》一文中提出。Google就是基于此算法实现网页文件查重的。假设有以下三段文本：<br>​    <strong>the cat sat on the mat</strong><br>​    <strong>the cat sat on a mat</strong><br>​    <strong>we all scream for ice cream</strong><br>使用传统hash可能会产生如下的结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">irb(main):006:0&gt; p1 = ‘the cat sat on the mat’</span><br><span class="line">irb(main):005:0&gt; p2 = ‘the cat sat on a mat’</span><br><span class="line">irb(main):007:0&gt; p3 = ‘we all scream for ice cream’</span><br><span class="line">irb(main):007:0&gt; p1.hash</span><br><span class="line">=&gt; 415542861</span><br><span class="line">irb(main):007:0&gt; p2.hash</span><br><span class="line">=&gt; 668720516</span><br><span class="line">irb(main):007:0&gt; p3.hash</span><br><span class="line">=&gt; 767429688</span><br></pre></td></tr></table></figure>
-
-<p>使用simhash会应该产生类似如下的结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">irb(main):003:0&gt; p1.simhash</span><br><span class="line">=&gt; 851459198</span><br><span class="line">00110010110000000011110001111110</span><br><span class="line">irb(main):004:0&gt; p2.simhash</span><br><span class="line">=&gt; 847263864</span><br><span class="line">00110010100000000011100001111000</span><br><span class="line">irb(main):002:0&gt; p3.simhash</span><br><span class="line">=&gt; 984968088</span><br><span class="line">00111010101101010110101110011000</span><br></pre></td></tr></table></figure>
-
-<p>​    海明距离的定义，为两个二进制串中不同位的数量。上述三个文本的simhash结果，其两两之间的海明距离为(p1,p2)=4，(p1,p3)=16以及(p2,p3)=12。事实上，这正好符合文本之间的相似度，p1和p2间的相似度要远大于与p3的。距离越小，则相似度越大。一般大文本去重，大小&lt;=3的即可判断为重复。<br>​    如何实现这种hash算法呢？simhash算法分为5个步骤：1、分词、2、hash、3、加权、4、合并、5、降维</p>
-<ol>
-<li>分词：</li>
-</ol>
-<p>选择适合自己的分词库进行分词即可。<br>如“欢迎来到随迹”-&gt;（分词后）“欢迎”、“来到”、“随迹”</p>
-<ol start="2">
-<li>hash：</li>
-</ol>
-<p>对每个词计算其hash值，hash值为二进制数01组成的n-bit签名。<br>设“欢迎“（100101）、“来到”（101011）、“随迹”（101011）</p>
-<ol start="3">
-<li>加权：</li>
-</ol>
-<p>对于给定的文本，权值即为分词后对应词出现的数量。给所有特征向量进行加权，即W = Hash * weight；这里我们假设三个词权值分别为4、5、9；<br>根据计算规则遇到1则hash值和权值正相乘，遇到0则hash值和权值负相乘<br>例如给“欢迎”的hash值“100101”加权得 到：W(欢迎) = 1001014 = 4 -4 -4 4 -4 4，给“来到”的hash值“101011”加权得到：W(来到)=1010115 = 5 -5 5 -5 5 5，剩下的按此规则计算</p>
-<ol start="4">
-<li>合并：</li>
-</ol>
-<p>将上述各个特征向量的加权结果累加，变成只有一个序列串。拿前两个特征向量举例，例如“欢迎”的“4 -4 -4 4 -4 4”和“来到”的“5 -5 5 -5 5 5”进行累加，得到“4+5 -4+-5 -4+5 4+-5 -4+5 4+5”，得到“9 -9 1 -1 1”。</p>
-<ol start="5">
-<li>降维：</li>
-</ol>
-<p>对于n-bit签名的累加结果，如果大于0则置1，否则置0，从而得到该语句的simhash值，最后我们便可以根据不同语句simhash的海 明距离来判断它们的相似度。例如把上面计算出来的“9 -9 1 -1 1 9”降维（某位大于0记为1，小于0记为0），得到的01串为：“1 0 1 0 1 1”，从而形成它们的simhash签名。</p>
-<p><img src="/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash%5C1.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/05/12/Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/12/Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Groth16的理解与总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-12 14:58:04" itemprop="dateCreated datePublished" datetime="2021-05-12T14:58:04+08:00">2021-05-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-25 14:04:48" itemprop="dateModified" datetime="2021-05-25T14:04:48+08:00">2021-05-25</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/%E4%B8%80%E6%96%87%E4%BA%86%E8%A7%A3%E6%9C%80%E7%83%AD%E9%97%A8%E7%9A%84zkSNARK%E6%96%B9%E6%A1%88-Groth16.pdf">Markdown ==&gt; 一文了解最热门的zkSNARK方案-Groth16.pdf</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/WillZhuang.github.io/blob/master/2021/05/12/Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/%E4%B8%80%E6%96%87%E4%BA%86%E8%A7%A3%E6%9C%80%E7%83%AD%E9%97%A8%E7%9A%84zkSNARK%E6%96%B9%E6%A1%88-Groth16.pdf">web ==&gt; 一文了解最热门的zkSNARK方案-Groth16.pdf</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/05/06/circom%E8%AF%95%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/06/circom%E8%AF%95%E7%94%A8/" class="post-title-link" itemprop="url">circom试用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-06 11:41:04 / Modified: 16:14:56" itemprop="dateCreated datePublished" datetime="2021-05-06T11:41:04+08:00">2021-05-06</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>参考链接 ==&gt; <a target="_blank" rel="noopener" href="https://docs.circom.io/">https://docs.circom.io/</a></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g circom</span><br><span class="line">npm install -g snarkjs</span><br></pre></td></tr></table></figure>
-
-<h2 id="构建电路"><a href="#构建电路" class="headerlink" title="构建电路"></a>构建电路</h2><h3 id="1-创建circuit-circom文件"><a href="#1-创建circuit-circom文件" class="headerlink" title="1.创建circuit.circom文件"></a>1.创建circuit.circom文件</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">template Multiplier() &#123;</span><br><span class="line">   signal private input a;</span><br><span class="line">   signal private input b;</span><br><span class="line">   signal output c;</span><br><span class="line">   c &lt;== a*b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">component main = Multiplier();</span><br></pre></td></tr></table></figure>
-
-<p>​    此电路的目的是让我们向某人证明我们能够因式分解整数c。具体来说，使用此电路，我们将能够证明我们知道两个数字（a和b）相乘得到c，而不会显示a和b。这个电路有2个 private 输入信号，名为 <code>a</code> 和 <code>b</code> ，还有一个输出 <code>c</code>。输入和输出使用<code>&lt;==</code>运算符进行关联。在circom中，&lt;==运算符做两件事。 首先是连接信号。 第二个是施加约束。在本例中，我们使用<code>&lt;==</code>将<code>c</code>连接到<code>a</code>和<code>b</code>，同时将<code>c</code>约束为<code>a * b</code>的值，即电路做的事情是让强制信号 <code>c</code> 为 <code>a*b</code> 的值。在声明 <code>Multiplier</code> 模板之后, 我们使用名为<code>main</code>的组件实例化它。注意：编译电路时，必须始终有一个名为<code>main</code>的组件。</p>
-<h3 id="2-编译电路"><a href="#2-编译电路" class="headerlink" title="2.编译电路"></a>2.编译电路</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">circom circuit.circom --r1cs --wasm --sym</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>--r1cs</code>: 生成 <code>circuit.r1cs</code> ( r1cs 电路的二进制格式约束系统)</li>
-<li><code>--wasm</code>: 生成 <code>circuit.wasm</code> ( wasm 代码用来生成见证 witness 稍后再介绍)</li>
-<li><code>--sym</code>: 生成 <code>circuit.sym</code> (以注释方式调试和打印约束系统所需的符号文件）</li>
-</ul>
-<p>r1cs是将代数电路转换为zk-snark的第一步。</p>
-<h2 id="构建零知识证明"><a href="#构建零知识证明" class="headerlink" title="构建零知识证明"></a>构建零知识证明</h2><p>​    使用<code>snarkjs</code> 来生成和验证 zk-SNARK 证明。我们将证明能够分解数字33。也就是说，将证明我们知道两个整数a和b，以便将它们相乘时得出33。</p>
-<h3 id="1-查看电路有关的信息"><a href="#1-查看电路有关的信息" class="headerlink" title="1.查看电路有关的信息"></a>1.查看电路有关的信息</h3><p>​    使用 snarkJS，您可以获得电路的一般统计数据并打印约束。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs info -r circuit.r1cs </span><br><span class="line">[INFO]  snarkJS: Curve: bn-128</span><br><span class="line">[INFO]  snarkJS: # of Wires: 4</span><br><span class="line">[INFO]  snarkJS: # of Constraints: 1</span><br><span class="line">[INFO]  snarkJS: # of Private Inputs: 2</span><br><span class="line">[INFO]  snarkJS: # of Public Inputs: 0</span><br><span class="line">[INFO]  snarkJS: # of Labels: 4</span><br><span class="line">[INFO]  snarkJS: # of Outputs: 1</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs print -r circuit.r1cs -s circuit.sym</span><br><span class="line">[INFO]  snarkJS: [ 21888242871839275222246405745257275088548364400416034343698204186575808495616main.a ] * [ main.b ] - [ 21888242871839275222246405745257275088548364400416034343698204186575808495616main.c ] = 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-setup"><a href="#2-setup" class="headerlink" title="2.setup"></a>2.setup</h3><p>2.1 设置的生成分为两个阶段：第一步是创建一些称为tau的幂的值。此处，我们将保留一个“ powers of tau”文件。 运行以下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs powersoftau new bn128 12 pot12_0000.ptau -v</span><br><span class="line">[DEBUG] snarkJS: Calculating First Challenge Hash</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG2</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: alphaTauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: betaTauG1</span><br><span class="line">[DEBUG] snarkJS: Blank Contribution Hash:</span><br><span class="line">		786a02f7 42015903 c6c6fd85 2552d272</span><br><span class="line">		912f4740 e1584761 8a86e217 f71f5419</span><br><span class="line">		d25e1031 afee5853 13896444 934eb04b</span><br><span class="line">		903a685b 1448b755 d56f701a fe9be2ce</span><br><span class="line">[INFO]  snarkJS: First Contribution Hash:</span><br><span class="line">		9e63a5f6 2b96538d aaed2372 481920d1</span><br><span class="line">		a40b9195 9ea38ef9 f5f6a303 3b886516</span><br><span class="line">		0710d067 c09d0961 5f928ea5 17bcdf49</span><br><span class="line">		ad75abd2 c8340b40 0e3b18e9 68b4ffef</span><br><span class="line">➜  circom snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name=&quot;First contribution&quot; -v</span><br><span class="line">Enter a random text. (Entropy): zhuangweiming</span><br><span class="line">[DEBUG] snarkJS: Calculating First Challenge Hash</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG2</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: alphaTauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: betaTauG1</span><br><span class="line">[DEBUG] snarkJS: processing: tauG1: 0/8191</span><br><span class="line">[DEBUG] snarkJS: processing: tauG2: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: alphaTauG1: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: betaTauG1: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: betaTauG2: 0/1</span><br><span class="line">[INFO]  snarkJS: Contribution Response Hash imported: </span><br><span class="line">		e15fa0f4 126ae14d 0e724ffa ee1adaba</span><br><span class="line">		1f9f44fb a963db61 e0eda605 4a172efa</span><br><span class="line">		124d177b 3a565656 1f1a3a23 6dea3366</span><br><span class="line">		3b21ec32 8a26d7b2 ac98ff89 2b1962ae</span><br><span class="line">[INFO]  snarkJS: Next Challenge Hash: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br></pre></td></tr></table></figure>
-
-<p>​    系统将提示您输入一些随机文本，这些文本将用作熵的来源。输入文本后，命令将输出一个名为pot12_001.ptau的脚本。设置的第一部分是通用的，对任何电路都有用，因此您可以将其保存以在以后的项目中重复使用。</p>
-<p>​    要获得zk-SNARK证明的证明和验证密钥，必须生成设置。此步骤需要生成一些需要消除的随机值。 消除过程至关重要：如果暴露了这些价值，则整个方案的安全性将受到损害。想要构建设置，我们使用多方计算（MPC）仪式，该仪式允许多个独立方共同构建参数。使用MPC，一个参与者删除其贡献的秘密副本就足够了，以确保整个方案的安全。<br>​    可信设置的构建分为两个阶段：对任何电路均有效的常规MPC仪式（称为<code>powers of tau ceremony</code>），以及为每个特定电路构造的第二阶段（阶段2）。任何人都可以通过其随机性参与MPC仪式，通常，在获取最终参数之前，将应用一个<strong>随机信标</strong>。</p>
-<p>2.2 下一步，称为设置的阶段2，运行命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v</span><br></pre></td></tr></table></figure>
-
-<p>​    以上命令运行完成后，pot12_final.ptau文件被生成。该计算在笔记本电脑上大概花费了3分钟时间。</p>
-<p>​    第二阶段的产生与我们使用tau的能力相似。将生成一个<code>.zkey</code>文件，其中将包含证明和验证密钥以及所有第二阶段贡献。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// Start a new zkey and make a contribution</span><br><span class="line">➜  circom snarkjs zkey new circuit.r1cs pot12_final.ptau circuit_0000.zkey</span><br><span class="line">[INFO]  snarkJS: Reading r1cs</span><br><span class="line">[INFO]  snarkJS: Reading tauG1</span><br><span class="line">[INFO]  snarkJS: Reading tauG2</span><br><span class="line">[INFO]  snarkJS: Reading alphatauG1</span><br><span class="line">[INFO]  snarkJS: Reading betatauG1</span><br><span class="line">[INFO]  snarkJS: Circuit hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line"></span><br><span class="line">➜  circom snarkjs zkey contribute circuit_0000.zkey circuit_final.zkey --name=&quot;1st Contributor Name&quot; -v</span><br><span class="line">Enter a random text. (Entropy): zhuangweiming</span><br><span class="line">[DEBUG] snarkJS: Applying key: L Section: 0/2</span><br><span class="line">[DEBUG] snarkJS: Applying key: H Section: 0/4</span><br><span class="line">[INFO]  snarkJS: Circuit Hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: Contribution Hash: </span><br><span class="line">		7987d679 5c914cb3 4138e57a ceee7ae4</span><br><span class="line">		8974b323 585bb48f 056fdd8f ea858cd3</span><br><span class="line">		a625d63e d8394b9c 974912e4 801aff06</span><br><span class="line">		0064f25a 677e727a a289252d 397b8d04</span><br></pre></td></tr></table></figure>
-
-<p>​    和上述步骤一样，系统将提示您输入一些随机文本以提供熵的来源。输出将是一个名为circuit_final.zkey的文件，我们将使用该文件导出验证密钥(verification key)。</p>
-<p>​    现在，来自circuit_final.zkey的验证密钥导出到文件Verification_key.json中。verification key:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="attr">&quot;protocol&quot;</span>: <span class="string">&quot;groth16&quot;</span>,</span><br><span class="line"> <span class="attr">&quot;curve&quot;</span>: <span class="string">&quot;bn128&quot;</span>,</span><br><span class="line"> <span class="attr">&quot;nPublic&quot;</span>: <span class="number">1</span>,</span><br><span class="line"> <span class="attr">&quot;vk_alpha_1&quot;</span>: [</span><br><span class="line">  <span class="string">&quot;15175462370442750548879662426586324604498073737772476635702014058846911119264&quot;</span>,</span><br><span class="line">  <span class="string">&quot;11126336670194938919608091368599342163660484801811140235738809534621680589277&quot;</span>,</span><br><span class="line">  <span class="string">&quot;1&quot;</span></span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_beta_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;5251596196706483766793357074374737595900200707659808196530067991530054260554&quot;</span>,</span><br><span class="line">   <span class="string">&quot;2264756861473257353315497004278362201201416308719887395373581359048933031269&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;10552939216865106848464515813683167112323139053174380454808956637789377680967&quot;</span>,</span><br><span class="line">   <span class="string">&quot;2701413932452289802745906093844601151278714195849736706988417564960748034273&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_gamma_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;10857046999023057135944570762232829481370756359578518086990519993285655852781&quot;</span>,</span><br><span class="line">   <span class="string">&quot;11559732032986387107991004021392285783925812861821192530917403151452391805634&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;8495653923123431417604973247489272438418190587263600148770280649306958101930&quot;</span>,</span><br><span class="line">   <span class="string">&quot;4082367875863433681332203403145435568316851327593401208105741076214120093531&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_delta_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;8590425680399084984710617722188581478119753421410764960451677916514215428082&quot;</span>,</span><br><span class="line">   <span class="string">&quot;15713152249579034550437632242139020796726126371657275384984401462748083625785&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;4862154669589263828958978916321240414342527577427918353789686327852433696883&quot;</span>,</span><br><span class="line">   <span class="string">&quot;9569117504828540945921139710836305890297695048604628362102771433345477012098&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_alphabeta_12&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   [</span><br><span class="line">    <span class="string">&quot;1121360319902761693820363426996646168569211552394580075970634177898785008311&quot;</span>,</span><br><span class="line">    <span class="string">&quot;14249756278025620543130105348741511241747839379662316431830590326729096142975&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;16423439174084021024919681708878615489972548829583206833909869670703901853110&quot;</span>,</span><br><span class="line">    <span class="string">&quot;9329143387573491748526724433415355164900218750592620992570237269470665264202&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;19623272010929083665872244835381945771016147820964222485760645671773298080071&quot;</span>,</span><br><span class="line">    <span class="string">&quot;9896773903597386179712166971836923631098313509393860803813715414524549373292&quot;</span></span><br><span class="line">   ]</span><br><span class="line">  ],[</span><br><span class="line">   [</span><br><span class="line">    <span class="string">&quot;18313799470766842592075662760908626166323669476646669856687182611043590126171&quot;</span>,</span><br><span class="line">    <span class="string">&quot;7532895603020793142335129648471958187885524608608576812436682807569433790546&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;20059629119556696413695556916087392540474931269939016250934117162067722623426&quot;</span>,</span><br><span class="line">    <span class="string">&quot;11285185652573117971807135387812020477130047554451136821582438888864777467010&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;18429091017205122590573696082242994893262627891230351210235517202888391625680&quot;</span>,</span><br><span class="line">    <span class="string">&quot;7734180768772801433386131669021273948517355047659921136453462913759461451288&quot;</span></span><br><span class="line">   ]</span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;IC&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;17305572679177982597803616153716539127293296363987765110136569516232291230411&quot;</span>,</span><br><span class="line">   <span class="string">&quot;7425872175786571904106950706682618227429476545503095908552111445555350791878&quot;</span>,</span><br><span class="line">   <span class="string">&quot;1&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;16125521217907931491019162042616560858833563034453402251972608389495277275869&quot;</span>,</span><br><span class="line">   <span class="string">&quot;20962607216912168718282504555696865046978428189883507401556888923455626427056&quot;</span>,</span><br><span class="line">   <span class="string">&quot;1&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    可以验证.ptau或.zkey文件的计算是否正确：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs powersoftau verify pot12_final.ptau</span><br><span class="line">[INFO]  snarkJS: Powers Of tau file OK!</span><br><span class="line">[INFO]  snarkJS: Next challenge hash: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br><span class="line">[INFO]  snarkJS: -----------------------------------------------------</span><br><span class="line">[INFO]  snarkJS: Contribution #1: First contribution</span><br><span class="line">[INFO]  snarkJS: Next Challenge: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br><span class="line">[INFO]  snarkJS: Response Hash:</span><br><span class="line">		e15fa0f4 126ae14d 0e724ffa ee1adaba</span><br><span class="line">		1f9f44fb a963db61 e0eda605 4a172efa</span><br><span class="line">		124d177b 3a565656 1f1a3a23 6dea3366</span><br><span class="line">		3b21ec32 8a26d7b2 ac98ff89 2b1962ae</span><br><span class="line">[INFO]  snarkJS: Response Hash:</span><br><span class="line">		9e63a5f6 2b96538d aaed2372 481920d1</span><br><span class="line">		a40b9195 9ea38ef9 f5f6a303 3b886516</span><br><span class="line">		0710d067 c09d0961 5f928ea5 17bcdf49</span><br><span class="line">		ad75abd2 c8340b40 0e3b18e9 68b4ffef</span><br><span class="line">[INFO]  snarkJS: -----------------------------------------------------</span><br><span class="line">[INFO]  snarkJS: Powers of Tau Ok!</span><br><span class="line">➜  circom snarkjs zkey verify circuit.r1cs pot12_final.ptau circuit_final.zkey</span><br><span class="line">[INFO]  snarkJS: Reading r1cs</span><br><span class="line">[INFO]  snarkJS: Reading tauG1</span><br><span class="line">[INFO]  snarkJS: Reading tauG2</span><br><span class="line">[INFO]  snarkJS: Reading alphatauG1</span><br><span class="line">[INFO]  snarkJS: Reading betatauG1</span><br><span class="line">[INFO]  snarkJS: Circuit hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: Circuit Hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: -------------------------</span><br><span class="line">[INFO]  snarkJS: contribution #1 1st Contributor Name:</span><br><span class="line">		7987d679 5c914cb3 4138e57a ceee7ae4</span><br><span class="line">		8974b323 585bb48f 056fdd8f ea858cd3</span><br><span class="line">		a625d63e d8394b9c 974912e4 801aff06</span><br><span class="line">		0064f25a 677e727a a289252d 397b8d04</span><br><span class="line">[INFO]  snarkJS: -------------------------</span><br><span class="line">[INFO]  snarkJS: ZKey Ok!</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-计算witness"><a href="#3-计算witness" class="headerlink" title="3.计算witness"></a>3.计算witness</h3><p>​    在创建任何证明之前，我们需要计算与电路的所有约束匹配的电路的所有信号。为此，我们将使用由circom生成的Wasm模块来帮助完成此工作。我们只需要提供一个包含输入的文件，模块将执行电路并计算所有中间信号和输出。输入，中间信号和输出的集合称为见证人(witness)。</p>
-<p>​    本次的范例中，我们想证明我们能够分解数字33。因此，指定a=3, b=11。创建一个文件，命名为 <code>input.json</code> </p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;a&quot;</span>: <span class="number">3</span>, <span class="attr">&quot;b&quot;</span>: <span class="number">11</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    下面开始就算 witness，生成 <code>witness</code> 文件， 命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs wtns calculate circuit.wasm input.json witness.wtns</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-创建证明"><a href="#4-创建证明" class="headerlink" title="4.创建证明"></a>4.创建证明</h3><p>​    这个命令默认会使用 <code> prooving_key.json</code> 和 <code>witness.json</code> 文件去生成 <code>proof.json</code> 和 <code>public.json</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json</span><br></pre></td></tr></table></figure>
-
-<p><code>proof.json</code> 文件包含了实际的证明。而 <code>public.json</code> 文件将仅包含公共的输入（当前的例子没有）和输出（当前的例子是 33）。</p>
-<h3 id="5-验证证明"><a href="#5-验证证明" class="headerlink" title="5.验证证明"></a>5.验证证明</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs groth16 verify verification_key.json public.json proof.json</span><br><span class="line">[INFO]  snarkJS: OK!</span><br></pre></td></tr></table></figure>
-
-<p>​    此命令使用我们之前导出的verify_key.json文件，proof.json和public.json来检查证明是否有效。如果证明有效，则命令输出OK。一个有效的证明不仅证明我们知道满足电路要求的一组信号，而且证明我们使用的公共输入和输出与public.json文件中描述的匹配。</p>
-<p>​    <strong>实际上，在此阶段，将把<code>proof.json</code>和<code>public.json</code>文件都交给验证者。</strong>但是，出于教程的目的，我们还将扮演验证者的角色。借助证明以及公共输入和输出，我们现在可以向验证者证明我们知道一个或多个满足电路约束的私有信号，而无需透露有关那些私有信号的任何信息。从验证者的角度来看，她可以验证我们是否知道见证中包含的一组私有信号，而无需访问它。这是zk-proof背后魔术的核心！</p>
-<h3 id="6-智能合约验证证明"><a href="#6-智能合约验证证明" class="headerlink" title="6.智能合约验证证明"></a>6.智能合约验证证明</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs zkey export solidityverifier circuit_final.zkey verifier.sol</span><br></pre></td></tr></table></figure>
-
-<p>​    上述命令使用验证密钥<code>circuit_final.zkey</code>并在名为<code>verifier.sol</code>的文件中输出合约代码。可以看到该代码包含两个协定：Pairing和Verifier。只需要部署Verifier合约。</p>
-<p>​    生成智能合约调用的参数，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs zkesc public.json proof.json</span><br><span class="line">[&quot;0x29b83d63472e4f47b092fd4ced43a566697f0575186964c7cc3deec2c5c1b0bd&quot;, &quot;0x2eb116882d2bacdbeece8a2adf2ab6d0f4420b60e82b4b66ddb18cc26ab2bae2&quot;],[[&quot;0x170d208ad3a8bf4358c207706bce9e87cbad11037f642d1ab06f65a5ebf10eb4&quot;, &quot;0x0dc07edd498cc16c5174c2a5a2aeed86c2f5689ed25486e8981768d7c7ceae13&quot;],[&quot;0x1c52e6144e980ae72e5c5679c979c70e0da4a519fc087dda3b96bbea09179b20&quot;, &quot;0x2849fdea744fa924ae19eb15917dac4543c0fa3b888293dfcd365c6251f25223&quot;]],[&quot;0x01918c12515eb00b823f0e2a63ef53e15792b4b4fd331b595ffc670e929d6b99&quot;, &quot;0x2246e9bb88119c6f8f1c04735beeee038ddc6e66572cb44f1c926575db80be9a&quot;],[&quot;0x0000000000000000000000000000000000000000000000000000000000000021&quot;]</span><br></pre></td></tr></table></figure>
-
-<p>​    验证者具有一个称为<code>verifyProof</code>的函数，当且仅当证明和输入有效时，该函数才返回<code>TRUE</code>。</p>
-<p><img src="/2021/05/06/circom%E8%AF%95%E7%94%A8/1.png"></p>
-<p>​    如果仅更改参数中的任何位，则可以检查结果返回 false 。</p>
-<h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p>​    我们已经表明可以生成证明我们知道两个因子a和b使得<code>a*b=33</code>的证明。但这不能证明我们知道如何分解数字33，因为我们可以选择a = 1和b = 33，通常对于任何整数n，选择输入a=1，b=n。在此，我们需要修改电路，以便不可能将数字1分配给任何输入。为此，我们将使用0是唯一没有反数的事实。</p>
-<p>​    这里的技巧是使用0不可求倒数的属性，约束不接受 1 作为任何一个输入，即<code>(a-1)</code> 不可求倒数的方式来约束电路。</p>
-<p>​    如果 a 是 1 则 <code>(a-1)*inv = 1</code> 是不可能成立的，通过 <code>1/(a-1)</code> 来计算 inv 。</p>
-<p>修正电路：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">template Multiplier() &#123;</span><br><span class="line">   signal private input a;</span><br><span class="line">   signal private input b;</span><br><span class="line">   signal output c;</span><br><span class="line">   signal inva;</span><br><span class="line">   signal invb;</span><br><span class="line"></span><br><span class="line">   inva &lt;-- <span class="number">1</span>/(a-<span class="number">1</span>);</span><br><span class="line">   (a-<span class="number">1</span>)*inva === <span class="number">1</span>;</span><br><span class="line">   invb &lt;-- <span class="number">1</span>/(b-<span class="number">1</span>);</span><br><span class="line">   (b-<span class="number">1</span>)*invb === <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">   c &lt;== a*b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">component main = Multiplier();</span><br></pre></td></tr></table></figure>
-
-<p>​    您可能已经注意到，我们引入了两个新的运算符 : <code>&lt;--</code> 和 <code>===</code> 。<code>&lt;--</code> 和 <code>--&gt;</code> 操作符运算符只为信号分配一个值，而不创建任何约束。<code>===</code> 操作符添加约束而不分配值。如前所述，<code>&lt;==</code> 为信号分配一个值并添加一个约束。这意味着它只是 <code>&lt;--</code>和 <code>===</code> 的组合。但是，由于并非总是希望在同一步骤中同时完成这两个步骤，因此circom 的灵活性使我们可以将这一步分为两步。</p>
-<p>​    事实证明，电路仍然存在一个细微的问题：由于运算是在有限域（Z_r）上进行的，因此我们需要确保乘法不会溢出。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>​    <a target="_blank" rel="noopener" href="https://github.com/iden3/circomlib">circomlib</a> 写好了一些基本的电路，如：binaritzations、comparators, eddsa, hashes, merkle trees 等等。</p>
 
       
     </div>
