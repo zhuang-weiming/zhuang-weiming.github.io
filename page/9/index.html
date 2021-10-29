@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">164</span>
+          <span class="site-state-item-count">165</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-count">77</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/06/22/%E4%BD%93%E9%AA%8Czksync-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/22/%E4%BD%93%E9%AA%8Czksync-1/" class="post-title-link" itemprop="url">体验zksync-1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-22 15:10:04" itemprop="dateCreated datePublished" datetime="2020-06-22T15:10:04+08:00">2020-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://github.com/matter-labs/zksync">zksync</a> 是用于以太坊的、可扩展的、隐私交易的引擎。它目前的功能范围包括以太币（ETH）和ERC20代币的隐私交易。zkSync建立在ZK Rollup架构上。zk Rollup 的本质是将链上的用户状态压缩存储在一棵 hash 树中，并将用户状态的变更转移到链下来，同时通过 zkSNARK 的证明来保证该链下用户状态变更过程的正确性。在链上直接处理用户状态的变更成本是比较高的，但是仅仅利用链上的智能合约来验证一个零知识证明的 PROOF 是否正确，成本是相对低很多的。另外必要的转账信息也会被和证明一起提交到合约，方便用户查账。用户具有存款、转账、取款等动作。通常，资产位于L1之上，经过存款动作即为将资产转移至Rollup L2。位于Rollup L2之上的字长方可转移。</p>
+<h4 id="step1-准备工作"><a href="#step1-准备工作" class="headerlink" title="step1 准备工作"></a>step1 准备工作</h4><p><a target="_blank" rel="noopener" href="https://github.com/matter-labs/zksync/blob/master/docs/setup-dev.md">https://github.com/matter-labs/zksync/blob/master/docs/setup-dev.md</a></p>
+<p>Docker、node（10.20.1以上，版本以10为基准，不建议11 或者12 ）、Yarn、Axel、gnu-sed、Envsubst、Rust、JQ、PSQL、Diesel、solc、drone cli都是必须要安装的。</p>
+<p>1.1 环境配置：</p>
+<p>讲下面的环境变量加入shell profile，以zsh为例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Add path here:</span></span><br><span class="line">export ZKSYNC_HOME=/path/to/zksync</span><br><span class="line">export PATH=$ZKSYNC_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> If you<span class="string">&#x27;re like me, uncomment:</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> <span class="variable">$ZKSYNC_HOME</span></span></span><br></pre></td></tr></table></figure>
+
+<p><code>ZKSYNC_HOME</code> 是zksync项目的目录即可，例如<code>/home/will/documents/zksync/</code> 。</p>
+<p>1.2 zshrc 配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;fpath=(~/.zsh_comp $fpath)&quot; &gt;&gt; ~/.zshrc</span><br><span class="line"></span><br><span class="line">mkdir -p ~/.zsh_comp</span><br></pre></td></tr></table></figure>
+
+<p>1.3 制作命令文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">compdef zksync</span></span><br><span class="line"></span><br><span class="line">cmds=( $&#123;(uf)&quot;$(grep -oE &#x27;^[a-zA-Z0-9_.-]+:([^=]|$)&#x27; $ZKSYNC_HOME/Makefile | sed &#x27;s/[^a-zA-Z0-9_.-]*$//&#x27;)&quot;&#125; )</span><br><span class="line"></span><br><span class="line">_describe &#x27;zksync make cmds&#x27; cmds</span><br></pre></td></tr></table></figure>
+
+<p>1.4 <code>source </code> zshrc 文件后，zksync命令即可用。</p>
+<h4 id="step2-zksync设置本地开发环境"><a href="#step2-zksync设置本地开发环境" class="headerlink" title="step2 zksync设置本地开发环境"></a>step2 zksync设置本地开发环境</h4><p>2.1 初始化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zksync init</span><br></pre></td></tr></table></figure>
+
+<p>首次初始化需要一次性下载 8 GB 的配置文件。如遇到初始化问题，请参看<code>zksync plonk-setup</code> 命令。本人网速580KB/s的情况下，接近4个小时完成下载。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -702,93 +791,6 @@
 <li>Zero-Knowledge Proofs ==&gt; <a target="_blank" rel="noopener" href="https://zkp.science/">https://zkp.science/</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/matter-labs/awesome-zero-knowledge-proofs">https://github.com/matter-labs/awesome-zero-knowledge-proofs</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-4/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-4</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-05-18 16:26:31" itemprop="dateCreated datePublished" datetime="2020-05-18T16:26:31+08:00">2020-05-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="CheckTx"><a href="#CheckTx" class="headerlink" title="CheckTx"></a>CheckTx</h3><p>在burrow项目中，<code>/consensus/abci/app.go</code>:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(app *App)</span> <span class="title">CheckTx</span><span class="params">(req types.RequestCheckTx)</span> <span class="title">types</span>.<span class="title">ResponseCheckTx</span></span> &#123;</span><br><span class="line">	......</span><br><span class="line">	checkTx := ExecuteTx(logHeader, app.checker, app.txDecoder, req.GetTx())</span><br><span class="line">	......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此处的 <code>ExecuteTx</code> 位于 <code>/execution/execution.go</code> :</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// If the tx is invalid, an error will be returned.</span></span><br><span class="line"><span class="comment">// Unlike ExecBlock(), state will not be altered.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(exe *executor)</span> <span class="title">Execute</span><span class="params">(txEnv *txs.Envelope)</span> <span class="params">(txe *exec.TxExecution, err error)</span></span> &#123;</span><br><span class="line">	......</span><br><span class="line">	<span class="comment">// Verify transaction signature against inputs</span></span><br><span class="line">	err = txEnv.Verify(exe.params.ChainID)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		logger.InfoMsg(<span class="string">&quot;Transaction Verify failed&quot;</span>, structure.ErrorKey, err)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> txExecutor, ok := exe.contexts[txEnv.Tx.Type()]; ok &#123;</span><br><span class="line">		<span class="comment">// Establish new TxExecution</span></span><br><span class="line">		txe := exe.block.Tx(txEnv)</span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			<span class="keyword">if</span> r := <span class="built_in">recover</span>(); r != <span class="literal">nil</span> &#123;</span><br><span class="line">				err = fmt.Errorf(<span class="string">&quot;recovered from panic in executor.Execute(%s): %v\n%s&quot;</span>, txEnv.String(), r,</span><br><span class="line">					debug.Stack())</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;()</span><br><span class="line"></span><br><span class="line">		err = exe.validateInputsAndStorePublicKeys(txEnv)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			logger.InfoMsg(<span class="string">&quot;Transaction validate failed&quot;</span>, structure.ErrorKey, err)</span><br><span class="line">			txe.PushError(err)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		err = txExecutor.Execute(txe, txe.Envelope.Tx.Payload)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			logger.InfoMsg(<span class="string">&quot;Transaction execution failed&quot;</span>, structure.ErrorKey, err)</span><br><span class="line">			txe.PushError(err)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Increment sequence numbers for Tx inputs</span></span><br><span class="line">		err = exe.updateSequenceNumbers(txEnv)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			logger.InfoMsg(<span class="string">&quot;Updating sequences failed&quot;</span>, structure.ErrorKey, err)</span><br><span class="line">			txe.PushError(err)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// Return execution for this tx</span></span><br><span class="line">		<span class="keyword">return</span> txe, <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">&quot;unknown transaction type: %v&quot;</span>, txEnv.Tx.Type())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此处 <code>txExecutor.Execute(txe, txe.Envelope.Tx.Payload)</code> 因 <code>txExecutor</code> 类型的不同，分别对应至 <code>/txs/payload/payload.go</code> 中的 <code>Type</code> ，如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Account transactions</span></span><br><span class="line">TypeSend  = Type(<span class="number">0x01</span>)</span><br><span class="line">TypeCall  = Type(<span class="number">0x02</span>)</span><br><span class="line">TypeName  = Type(<span class="number">0x03</span>)</span><br><span class="line">TypeBatch = Type(<span class="number">0x04</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Validation transactions</span></span><br><span class="line">TypeBond   = Type(<span class="number">0x11</span>)</span><br><span class="line">TypeUnbond = Type(<span class="number">0x12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Admin transactions</span></span><br><span class="line">TypePermissions = Type(<span class="number">0x21</span>)</span><br><span class="line">TypeGovernance  = Type(<span class="number">0x22</span>)</span><br><span class="line">TypeProposal    = Type(<span class="number">0x23</span>)</span><br><span class="line">TypeIdentify    = Type(<span class="number">0x24</span>)</span><br></pre></td></tr></table></figure>
-
-<p>根据 <code>Type</code> 不同，在如下 <code>contexts</code> 对应的 Context 的 Execute 方法则会不同，分别对应为如下代码文件中的 <code>Execute</code> 方法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">├── burrow</span><br><span class="line">│   ├── execution</span><br><span class="line">│   │   ├── contexts</span><br><span class="line">│   │   │   ├── bond_context.go</span><br><span class="line">│   │   │   ├── bond_context_test.go</span><br><span class="line">│   │   │   ├── call_context.go</span><br><span class="line">│   │   │   ├── governance_context.go</span><br><span class="line">│   │   │   ├── identify_context.go</span><br><span class="line">│   │   │   ├── name_context.go</span><br><span class="line">│   │   │   ├── permissions_context.go</span><br><span class="line">│   │   │   ├── proposal_context.go</span><br><span class="line">│   │   │   ├── send_context.go</span><br><span class="line">│   │   │   ├── shared.go</span><br><span class="line">│   │   │   └── unbond_context.go</span><br></pre></td></tr></table></figure>
-
-<p>例如，在执行发送 <code>TypeCall</code> 类型的交易时， <code>txExecutor.Execute(txe, txe.Envelope.Tx.Payload)</code> 对应的具体逻辑为 <code>/execution/contexts/call_context.go</code> 中的 <code>Execute</code> 方法：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ctx *CallContext)</span> <span class="title">Execute</span><span class="params">(txe *exec.TxExecution, p payload.Payload)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> ok <span class="keyword">bool</span></span><br><span class="line">	ctx.tx, ok = p.(*payload.CallTx)</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> fmt.Errorf(<span class="string">&quot;payload must be CallTx, but is: %v&quot;</span>, p)</span><br><span class="line">	&#125;</span><br><span class="line">	ctx.txe = txe</span><br><span class="line">	inAcc, outAcc, err := ctx.Precheck()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// That the fee less than the input amount is checked by Precheck to be greater than or equal to fee</span></span><br><span class="line">	value := ctx.tx.Input.Amount - ctx.tx.Fee</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ctx.RunCall &#123;</span><br><span class="line">		<span class="keyword">return</span> ctx.Deliver(inAcc, outAcc, value)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ctx.Check(inAcc, value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="DeliverTx"><a href="#DeliverTx" class="headerlink" title="DeliverTx"></a>DeliverTx</h3><p>在执行 <code>ExecuteTx(logHeader, app.committer, app.txDecoder, req.GetTx())</code> 中，<code>executor execution.Executor</code> 被指定为 <code>app.committer</code> , 与 CheckTX 执行同样的 <code>Execute</code> 逻辑</p>
-<h3 id="Commit"><a href="#Commit" class="headerlink" title="Commit"></a>Commit</h3><p>具体执行逻辑为 <code>/execution/execution.go</code> 中的 <code>func (exe *executor) Commit(header *abciTypes.Header) (stateHash []byte, err error)</code> </p>
 
       
     </div>
