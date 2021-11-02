@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-count">166</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,120 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/" class="post-title-link" itemprop="url">Plonk-2-零知识证明的演进</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-09 09:09:04" itemprop="dateCreated datePublished" datetime="2021-04-09T09:09:04+08:00">2021-04-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 17:35:37" itemprop="dateModified" datetime="2021-04-29T17:35:37+08:00">2021-04-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>论文原文 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">953.pdf (iacr.org)</a>，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge</a></p>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​    利用可更新的通用结构化参考字符串的zk-SNARK构造消除了部署zk-SNARKs [GKM +]的主要障碍之一。 Maller等人的重要工作，[MBKM19]提出了Sonic-第一个具有实用性的zk-SNARK，具有完全简洁的验证，可用于带有这种SRS(structured reference string)的通用算术电路。但是，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/601.pdf">支持完全简洁验证的Sonic版本</a>仍然需要相对较高的证明建造费用。 我们提出了一种具有完全简洁验证的通用SNARK结构，并且大大减少了证明方的运行时间（根据电路结构的不同，证明者的运行时间比完全简洁验证程序模式下的[MBKM19]少7.5-20倍）。与[MBKM19]类似，我们依赖于基于Bayer和Groth [BG12]的置换参数。但是，我们专注于“评估亚组而不是单项式系数”； 这样可以简化置换参数和算术化步骤。</p>
+<h3 id="4-理想的低度协议"><a href="#4-理想的低度协议" class="headerlink" title="4.理想的低度协议"></a>4.理想的低度协议</h3><p>​    我们在证明者和验证者之间定义了一种有限类型的协议，以清晰地捕获和抽象多项式承诺方案（例如[KZG10]）。在Plonk协议中，证明者将低度的多项式发送给第三方 <strong><em>I</em></strong>。然后，验证者可以询问 <strong><em>I</em></strong> ，证明者的多项式与验证者已知的其他预定义多项式之间是否存在某些恒等式。</p>
+<p><strong>定义 4.1.</strong> 定值正整数 <em>d, D, t, l</em> . A(<em>d, D, t, l</em>) 多项式协议，其中，证明者<strong>P</strong>poly，验证者<strong>V</strong>poly和受信方**<em>I**</em>之间存在多轮协议，其进行如下。</p>
+<p>1.协议定义包括一组预处理多项式 g1, … , gl ∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]。</p>
+<p>2.<strong>P</strong>poly的消息被发送到 <strong><em>I</em></strong>，并且对于f∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]，形式为f。 如果<strong>P</strong>poly发送的消息不是这种形式，则协议中止。</p>
+<p>3.<strong>V</strong>poly到<strong>P</strong>poly的消息是任意的（但是我们将集中讨论公共硬币协议，其中消息只是随机的硬币）</p>
+<p>4.在协议末尾，假设 f1, … , ft 是从<strong>P</strong>poly发送到 <strong><em>I</em></strong> 的多项式。<strong>V</strong>poly可能会问 <strong><em>I</em></strong> 在{f1, . . . , ft , g1, . . . , gl}之间是否存在某些多项式恒等式:<br>$$<br>F(X) := G(X,h_1(v_1(X)), … , h_M(v_M(X)))≡0<br>$$<br>其中，hi ∈  {f1, . . . , ft , g1, . . . , gl}，G ∈ <strong><em>F</em></strong> [X, X1, … , Xm], v1, … , vm ∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]，此 F ∈ <strong><em>F</em></strong> <em>&lt;D</em>[<strong>X</strong>]中，任一 f1, . . . , ft 都是<strong>P</strong>poly按照本协议制作的。</p>
+<p>5.在收到 <strong><em>I</em></strong> 的回答之后，如果所有身份均成立，则<strong>V</strong>poly输出 <strong>acc</strong>，否则输出 <strong>rej</strong>。</p>
+<p><strong>结论 4.2.</strong>  一个更加复杂的模型，<strong>P</strong>poly发送消息(f, n) 至 <strong><em>I</em></strong>，其中 <em>n</em> <em>≤</em> d ，由 <strong><em>I</em></strong> 执行 f ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>] 。但是，我们避免这样做，因为我们的协议不需要这种额外的功能，并且会导致效率降低，因为它转化为需要使用多项式承诺方案，并且能够动态实施小于d度的边界。</p>
+<p>​    我们以自然的方式为关系定义多项式协议。</p>
+<p><strong>定义 4.3.</strong> 给定关系<strong>R</strong>，<strong>R</strong>是具有以下属性的多项式协议。</p>
+<p>1.协议的第一步，<strong>P</strong>poly和<strong>V</strong>poly都被给与一个输入 x。假设<strong>P</strong>poly拥有w，并且 (x, ω) ∈ <strong>R</strong>。</p>
+<p>2.完整性(Completeness)：如果<strong>P</strong>poly正确地遵从协议，使用证明人 ω 生成 x，<strong>V</strong>poly将百分之百接受。</p>
+<p>3.知识健全性(Knowledge Soundness)：存在一个有效的 <strong>E</strong> 即给定对<strong>P</strong>poly的消息的访问权，给到 <strong><em>I</em></strong> ，输出ω，使得对于<strong>P</strong>poly的任何策略，下列事件的概率为negl(λ)。</p>
+<p>​    a.在协议的末尾，<strong>V</strong>poly输出<strong>acc</strong>，并且</p>
+<p>​    b. (x, ω) ∉ <strong>R</strong>。</p>
+<p><strong>结论 4.4.</strong> 我们故意不为理想的协议定义零知识属性，因为获得ZK取决于最终“编译”协议中泄漏给我的多项式的信息量。这又取决于用于编译的多项式承诺方案的具体细节。</p>
+<h4 id="4-1范围上的多项式协议"><a href="#4-1范围上的多项式协议" class="headerlink" title="4.1范围上的多项式协议"></a>4.1范围上的多项式协议</h4><p>​    在我们的协议中，<strong>V</strong>poly 实际上需要检查某些多项式方程式是否在输入值的特定范围内成立，而不是作为多项式恒等式。首次启发，对于子集 <strong><em>S</em></strong> ⊂ <strong><em>F</em></strong> ，我们定义了一个**<em>S**</em>范围(<em>d, D, t, l</em>)的多项式协议，该协议与 a(<em>d, D, t, l</em>) 多项式协议相同，不同之处在于：验证者询问他的恒等式是否在S的所有点上都成立，而不是完全一样。然后，我们以与定义4.3中完全相同的方式为关系定义范围多项式协议。</p>
+<p>​    我们表明，将范围协议转换为多项式协议只会产生一个额外的证明者多项式。</p>
+<p><strong>引理4.5.</strong> 令P为R的范围S的(<em>d, D, t, l</em>)多项式协议。然后我们可以构造 a(<em>max{d, |S|, D−|S|}, D, t+1,  l+1</em>)，也就是R的多项式协议P∗。</p>
+<p>本引理，我们使用以下简单声明。</p>
+<p><strong>断言4.6.</strong> 定义 <em>F1,…,Fk</em> ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]。定义 <strong><em>Z</em></strong> ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]。假设部分 i ∈ [k]，Z ∉ <strong><em>Fi</em></strong>。则：</p>
+<p>1.有一种可能性，1/|<strong><em>F</em></strong>| 之上存在a1,…,ak ∈ <strong><em>F</em></strong> ， Z 不属于 <strong><em>F</em></strong><br>$$<br>F := \sum ^k _{j=1} a_j \cdot F_j<br>$$<br>2.假设 Z 在 <strong><em>F</em></strong> 上分解为不同的线性因子，有一种可能，k/|<strong><em>F</em></strong>|之上存在a，a∈F，Z不属于 <strong><em>F</em></strong><br>$$<br>G:= \sum ^k _{j=1} a^ {j-1} \cdot F_j<br>$$<br><strong>证明.</strong> Z|F 等同于 (F mod Z)=0. 另有 R:= (<strong><em>Fi</em></strong> mod Z)， R ≠ 0，则R不为零二项式：<br>$$<br>F := \sum ^k _{j=1,j≠i} a_j \cdot F_j + a_i \cdot R(mod Z)<br>$$<br>因此，每一个特定的aj，最多有一个值 ai∈*<strong>F**<em>，该</em></strong>F*** mod Z = 0。第一点证明完毕。</p>
+<p>为了证明第二，类似地写：<br>$$<br>G := \sum ^k _{j=1,j≠i} a^{j-1} \cdot F_j + a^{i-1} \cdot R(mod Z)<br>$$<br>令 x ∈ <strong><em>F</em></strong> ，使 Z(x)=0，但 R(x)≠0。则 G mod <em>Z</em> = 0，即 G(x)=0，推导出 a 是非零多项式的根。<br>$$<br>g(Y) := \sum ^k _{j=1,j≠i} Y^{j-1} \cdot F_j(x) + Y^{i-1} \cdot R(x)<br>$$<br>最多k个a值是这种情况。</p>
+<p><strong>证明.</strong> (引理4.5.) 令P为范围S的(<em>d, D, t, l</em>)多项式协议。构建P*，同P一致，附加条件是 Zs(X) :=∏(X-a), a∈S。P* 的执行与P 一致，直到<strong>V</strong>poly在S域内请求恒等式。假设验证者请求 k 个恒等式：F1(X),…,Fk(X)，Fi的总维度的最大值是D，如定义4.1.所讲。P* 处理如下：</p>
+<ul>
+<li><p><strong>V</strong>poly发送队列a1,…,ak ∈ <strong><em>F</em></strong> 给到<strong>P</strong>poly。</p>
+</li>
+<li><p><strong>P</strong>poly计算二项式<br>$$<br>T:=\frac {\sum a_i \cdot F_i} {Z_S} ,i∈[k]<br>$$</p>
+</li>
+<li><p><strong>P</strong>poly发送 T 给到 <strong><em>I</em></strong></p>
+</li>
+<li><p><strong>V</strong>poly查询恒等式</p>
+</li>
+</ul>
+<p>$$<br>\sum _{i∈[k]} a_j \cdot F_i(X) ≡ T \cdot Z_S<br>$$</p>
+<p>遵循断言4.6，即有一种可能性，1/|<strong><em>F</em></strong>| 基于<strong>V</strong>poly的选择的a1,…,ak之上，适当的 T∈F[X]等同于<em>F1,…,Fk</em>，消失于范围S之中。这等效于<strong>V</strong>poly在P的类似执行中输出acc。</p>
+<h4 id="4-2从多项式协议到代数协议。"><a href="#4-2从多项式协议到代数协议。" class="headerlink" title="4.2从多项式协议到代数协议。"></a>4.2从多项式协议到代数协议。</h4><p>​    <a target="_blank" rel="noopener" href="https://books.google.co.jp/books?id=ce7gDwAAQBAJ&pg=PA97&lpg=PA97&dq=algebraic+adversary&source=bl&ots=7UqZAMlvRT&sig=ACfU3U1wBeYP14ZjOWj_RSZVmRLuwj9OQA&hl=en&sa=X&ved=2ahUKEwjbrbG7ofrvAhXOE4gKHT8fAwQQ6AEwBHoECAQQAw#v=onepage&q=algebraic%20adversary&f=false">离散对数甚至许多Diffie-Hellman式的问题都很困难。因此，打破具体小组中这种普遍困难的假设的唯一方法是以非平凡的方式使用基础小组表示形式。基于此，GGM(generic group model)可以非常有用地进行完整性检查，以验证给定假设的有效性，甚至可以保证给定密码方案的安全性。但是，GGM无法实施：GGM中存在安全的加密方案，但是在与任何具体组实例化时都不安全。</a></p>
+<p>​    AGM(algebraic group model)只考虑代数对象。一个代数对象A可以任意使用群组中的元素，但是必须根据输入组元素对其输出组元素中的任何一个提供显式分解，即A还必须输出一个解释，说明如何使用组操作从其输入中计算其输出中的任何组元素。</p>
+<p>​    我们希望使用Section 3的多项式承诺方案，将一个多项式协议编译成在代数组模型中具有知识健全性的协议（在第2.2节中定义）。</p>
+<p>​    具体证明略。</p>
+<p><strong>减少字段元素的数量</strong> ：我们描述了Mary Maller进行的优化，以减少来自M的证明中的*<strong>F*<strong>元素的数量。我们从一个说明性示例开始。假设</strong>V*<em>希望检查恒等式h1(X)·h2(X)-h3(X)≡0。上述编译将使P以随机x∈</em></strong>F*<strong>方式发送h1，h2，h3。</strong>V**将检查h1(x)h2(x)-h3(x)=0。因此，P发送了三个字段元素。</p>
+<p>​    但是请注意，我们可以让P只发送c:= h1(x)，然后在开放协议中简单地验证多项式L(X):=c·h2(X)-h3(X)是否在x处为零。请注意，我们可以计算com(L)= c·com(h2)-com(h3)</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -693,106 +807,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/11/22/%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E7%9A%84%E8%B5%84%E4%BA%A7%E4%BA%A4%E6%98%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/11/22/%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E7%9A%84%E8%B5%84%E4%BA%A7%E4%BA%A4%E6%98%93/" class="post-title-link" itemprop="url">去中心化的资产交易</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-22 10:11:04" itemprop="dateCreated datePublished" datetime="2020-11-22T10:11:04+08:00">2020-11-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-23 10:11:48" itemprop="dateModified" datetime="2020-11-23T10:11:48+08:00">2020-11-23</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="一、去中心化的KYC-AML"><a href="#一、去中心化的KYC-AML" class="headerlink" title="一、去中心化的KYC/AML"></a>一、去中心化的KYC/AML</h3><p>区块链可以被视为区块链中心化的证书颁发机构，可以将身份维护映射到公钥。智能合约还可以增加逻辑，实现ACL(权限赋予、撤销、恢复)，减轻用户的密钥管理负担。这通常称之为Self-sovereign Identity，目前DID(decentralized Identify)的标准初稿已经发布。</p>
-<h3 id="二、去中心化的自动做市商、订单薄以及订单撮合"><a href="#二、去中心化的自动做市商、订单薄以及订单撮合" class="headerlink" title="二、去中心化的自动做市商、订单薄以及订单撮合"></a>二、去中心化的自动做市商、订单薄以及订单撮合</h3><h5 id="（一）自动做市商模式"><a href="#（一）自动做市商模式" class="headerlink" title="（一）自动做市商模式"></a>（一）自动做市商模式</h5><p>典型代表有Uniswap、Bancor和Kyber。</p>
-<p>Bancor和Kyber都采用了中央对手方模式提供交易流动性，其中央对手方是区块链上的一个智能合约。</p>
-<p>Bancor交易流程：1）Taker找到一个以代币A和B为储备代币的Bancor合约，向合约中转入储备代币A，获得智能代币A_B_RESERVE，兑换价格有智能合约根据公式计算；2）Taker向智能代币合约转入智能代币A_B_RESERVE，获取储备代币B。</p>
-<p>Kyber交易流程：1）Makers向智能合约写入他们的交易报价和数量信息；2）Takers查询链上的报价信息，并根据报价发送自己的订单；3）交易所合约执行交易并通知交易双方。</p>
-<p>因此不存在违约的风险。两者的差异在Bancor提供的买卖报价是根绝其储备资产动态计算的，而Kyber的报价则由储备员持续更新。</p>
-<h5 id="（二）订单撮合模式"><a href="#（二）订单撮合模式" class="headerlink" title="（二）订单撮合模式"></a>（二）订单撮合模式</h5><h6 id="1）链上订单簿"><a href="#1）链上订单簿" class="headerlink" title="1）链上订单簿"></a>1）链上订单簿</h6><p>Ripple、Stellar、Etherdelta、<a target="_blank" rel="noopener" href="https://oasisdex.com/">OasisDex</a>、<a target="_blank" rel="noopener" href="https://dydx.exchange/">dYdX</a>、Bitshares等项目采用链上订单簿模式，所有未完成的挂盘订单都会记录在区块链上的订单集（Order Book）中，订单集中的订单能否成交都取决于买卖方的挂盘及交易时设定的成交策略。在买卖盘的资产匹配时，跨资产类型的交易可以通过挂盘直接成交方式完成；在Ripple/Stellar中，若无直接匹配的资产，则网络会在订单集中寻找可以利用中间资产达成买卖交易的交易路径。</p>
-<p>Etherdelta的技术方案中，充值、提现、挂单、结算全部由智能合约完成。基本思路是：maker用私钥签名一笔订单，提交到链上，maker挂单时可以选择在多少个区块后若订单未成交则自动取消。随后，taker从订单簿中选择想要成交的订单，生成对应的交易，交易签名后提交至链上智能合约。智能合约验证完成订单中交易者的签名和订单有效时间后，进行资金结算。Etherdelta没有自动撮合订单的机制，每笔交易需链上确定，其交易效率收到以太坊的影响，同时还可能因链上确认存在问题而导致成交失败。</p>
-<p>链上订单簿模式的可用性存在一些问题，例如交易费用高、订单修改成本高、市场割裂导致深度不够等等。</p>
-<h6 id="2）链外订单簿"><a href="#2）链外订单簿" class="headerlink" title="2）链外订单簿"></a>2）链外订单簿</h6><p>0x协议没有充值和提现过程，而是直接授权符合ERC20的智能合约进行token转账。其机制是：链下订单中继、链上最终结算。只有在结算时才上链。0x由中继链进行订单的托管和维护。中继链收取手续费，其事先创建了交易费用计划和地址。其规则时：中继链从交易者接受并检查订单，检查通过后将订单发至订单集，订单集完成处理后将订单提交给0x的智能合约，完成链上操作。</p>
-<p>出于流动性共享的需求，0x以及airswap协议希望打通不同去中心化交易所的流动性壁垒，实现订单在不同交易所和relayer之间自由流转。以传统场外交易业务做对比，0x协议中relayer的角色和经纪商相似，提供订单转发和撮合服务，但交易的最终清算由订单的taker发起，无需经过relayer，由区块链直接结算，不存在违约风险。</p>
-<p>0x和airswap协议目前都仅服务于ERC20的直接交易，对于低流动性资产有一定的局限性。</p>
-<p>0x交易流程：1）Maker发送一个签名订单给Relayer(或则直接发送给Taker)；2）Taker向Relayer查询未成交订单；3）Taker选择一个订单进行匹配；4）Taker向交易所合约提交订单。</p>
-<p>airswap交易流程：1）Maker广播一个交易对表明成交意愿，给到Indexer；2）Taker向Indexer查询交易对；3）Taker获取到可作为交易对手方的Maker信息；4）Maker和Taker直接协商一个合适的交易条件；5）Taker向交易所合约提交订单，执行交易。</p>
-<h3 id="三、去中心化的清结算服务"><a href="#三、去中心化的清结算服务" class="headerlink" title="三、去中心化的清结算服务"></a>三、去中心化的清结算服务</h3><h5 id="（一）备付金模式"><a href="#（一）备付金模式" class="headerlink" title="（一）备付金模式"></a>（一）备付金模式</h5><p>Taker事先使用现金，兑换成为ERC20 Token—和现金1:1，存入区块链账户；同时，该Token可以在交易所随意兑换成为现金。交易时，使用该Token进行原子交易。此方式不存在资金违约的情况。</p>
-<h5 id="（二）信用模式"><a href="#（二）信用模式" class="headerlink" title="（二）信用模式"></a>（二）信用模式</h5><p>Taker根据自身的信用，在交易所内即可透资一定额度；同时，该Token额度不可以在交易所兑换成为现金。交易时，使用该Token进行原子交易。Maker侧可以使用该Token兑换现金，由银行（或者交易所）垫付，垫付资金即为短期贷款，此方式存在资金违约的可能。</p>
-<h5 id="（三）跨链清结算"><a href="#（三）跨链清结算" class="headerlink" title="（三）跨链清结算"></a>（三）跨链清结算</h5><p>如哈希锁定（hash-locking，如雷电网络）、侧链（sidechains，如开发进行中的cosmos）、公证人（notary schemes，如Interledger）</p>
-<h3 id="四、去中心化的行情发布"><a href="#四、去中心化的行情发布" class="headerlink" title="四、去中心化的行情发布"></a>四、去中心化的行情发布</h3><p>优点：区块链的开放性。价格信息的多种来源，不存在信息垄断，有助于促进市场竞争，使整个市场价格更为透明与高效。</p>
-<p>风险：某些局部市场因流动性不足，易于被操纵，恶意的交易者可以发布虚假订单，伪造成交量，或则针对不同交易协议的弱点进行攻击，以达到影响全局市场的目的。</p>
-<p>因此，去中心化交易的体系中建立合理的行情发布机制，既实现价格透明，同时又保障全局价格的真实性。</p>
-<h3 id="五、去中心化交易所的监管合规"><a href="#五、去中心化交易所的监管合规" class="headerlink" title="五、去中心化交易所的监管合规"></a>五、去中心化交易所的监管合规</h3><p>充分借助科技监管（区块链、大数据、人工智能等）：设置监管接入点，对节点运行、合约代码进行技术巡查；对KYC、AML、信息披露、风险监测进行实时报送。对项目尽调、风险评级展开详尽的调查和分析。</p>
-<h3 id="六、与传统中心化交易的对比分析"><a href="#六、与传统中心化交易的对比分析" class="headerlink" title="六、与传统中心化交易的对比分析"></a>六、与传统中心化交易的对比分析</h3><h5 id="（一）安全性"><a href="#（一）安全性" class="headerlink" title="（一）安全性"></a>（一）安全性</h5><p>区块链在系统弹性、可靠性、健壮性上具有较好应对节点故障的能力。</p>
-<p>在去中心化交易所中，有可能存在设计上的缺陷而被黑客攻击，甚至导致Token被非法转移的情况。</p>
-<h5 id="（二）交易性能"><a href="#（二）交易性能" class="headerlink" title="（二）交易性能"></a>（二）交易性能</h5><p>较快的去中心化交易所可以达到2s的要以延时，1000的系统吞吐量，相对于1ms的成盘速度的传统证券交易所系统，在性能上还有较大的差距。</p>
-<p>（三）结算风险</p>
-<p>区块链中，资产转移指令和现金转移指令同时作为单个交易的最后一步执行，无结算风险。但对于跨链资产交易，可能面临结算风险。</p>
-<p>（四）隐私保护</p>
-<p>传统中心化交易中，用户入场需要经过身份认证，且交易过程完全由中心机构记录，若监管缺失，可能导致大量敏感信息泄露。去中心化的方案可以更好地解耦用户敏感信息存储与用户资金交易。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
