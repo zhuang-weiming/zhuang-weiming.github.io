@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">168</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-count">79</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -241,6 +241,281 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/12/14/CBDC-III-%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%B6%E6%9E%84%E7%9A%84%E9%80%89%E6%8B%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/14/CBDC-III-%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%B6%E6%9E%84%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">CBDC-III-设计与架构的选择</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-14 11:42:00" itemprop="dateCreated datePublished" datetime="2021-12-14T11:42:00+08:00">2021-12-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-12-15 15:57:27" itemprop="dateModified" datetime="2021-12-15T15:57:27+08:00">2021-12-15</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.itu.int/en/ITU-T/focusgroups/dfc/Documents/DFC-O-005_Report%20on%20Digital%20Currency%20Implementation%20Checklist%20for%20Central%20Banks.pdf">Digital Currency Implementation Checklist for Central Banks</a></p>
+<h4 id="快问快答"><a href="#快问快答" class="headerlink" title="快问快答"></a>快问快答</h4><ol>
+<li>Is the DFC(Digital Fiat Currency) to be a token-based or account-based system, or some combination? Discussion:  Account-based systems are actor-centric, while token-based systems are object centric. Each has specific benefits and disadvantages relating to interoperability, (de)centralization, efficiency, and security. The relative merits of the two approaches have been discussed in depth elsewhere in the CBDC and DFC literature, and ultimately depends on the specific needs and goals of the jurisdiction in question. 基于帐户的系统以参与者为中心，而基于令牌的系统以对象为中心。每个都有与互操作性、（去）中心化、效率和安全性相关的特定优点和缺点。这两种方法的相对优点已在 CBDC 和 DFC 文献的其他地方进行了深入讨论，最终取决于相关司法管辖区的具体需求和目标。</li>
+<li>Will interest be paid on DFC balances? If so, how much, and under what conditions? Discussion: In contexts where the goal of implementation of DFC is merely to replace physical coins and paper currency, the capacity to pay interest directly on DFC balances is of less importance. Conversely, if the aim of introducing DFC is to precipitate a broader reorganization of the payments system, the ability to pay interest directly on DFC balances may be important to the implementation of monetary and fiscal policy, as well as for preserving technical features of the existing payments system (i.e. the capacity to pay interest on-reserves). 如果引入 DFC 的目的是促成更广泛的支付系统重组，那么直接为 DFC 余额支付利息的能力对于货币和财政政策的实施以及保留现有技术特征可能很重要。</li>
+<li>Will DFC funds have durational features? If so, how much, and under what conditions? Discussion: DFC instruments are commonly thought of as a digital equivalent to cash instruments, or a retail-accessible form of digital reserve balances, both of which have zero duration. However, in the modern central banking era, government securities accounts also operate on similar payments and accounts infrastructure. Hence, DFC has the potential to perform other functions that involve duration, such as providing consumer savings and/or investor securities accounts, and also serving as the settlement layer for smart contracts and financial trading platforms.  DFC 工具通常被认为是现金工具的数字等价物，或零售可访问的数字准备金余额形式，两者的久期均为零。然而，在现代中央银行时代，政府证券账户也在类似的支付和账户基础设施上运作。因此，DFC 有潜力执行其他涉及持续时间的功能，例如提供消费者储蓄和/或投资者证券账户，以及充当智能合约和金融交易平台的结算层。</li>
+<li>Will certain kinds of transactions be prohibited at the technical layer? What?<br>Discussion: It is possible to design a DFC system to allow for discrimination and censorship on a transaction-by-transaction basis. Doing so would further a range of law enforcement and security interests. However, such interests must also be weighed against privacy and security considerations. Once the capacity for transactional censorship is hardwired into the DFC infrastructure, it cannot be easily removed and may be used for purposes beyond the initial scope that justified its adoption. 可以设计一个 DFC 系统以允许在逐笔交易的基础上进行歧视和审查。这样做将促进一系列执法和安全利益。然而，这些利益也必须与隐私和安全考虑进行权衡。一旦交易审查能力被硬连接到 DFC 基础设施中，它就不能轻易删除，并且可能用于超出其采用的初始范围的目的。</li>
+<li>Will DFC transactions and wallets be usable offline? How? Discussion: While digital payments systems offer many benefits over physical cash, they suffer from vulnerabilities regarding network-connection and power consumption. In order to provide a true substitute for physical cash, some form of offline transaction capacity is crucial. Such capacity is also important in the event of network failure, and/or for actors who exist on the margins of the electric/internet grid. 离线交易是必要的。</li>
+<li>Will the DFC intermediary network be an open system, or restricted to a limited number of pre-approved institutions? Discussion: Most DFC systems, at least in the first iteration, will likely incorporate and/or rely on intermediaries to fulfill some core infrastructural functions, from wallet-management through to data-storage. Consequently, it is important for regulators to develop a framework for evaluating and approving potential intermediaries, to maintain quality and security standards while simultaneously avoiding excessive regulations that stifle innovation and widespread adoption. One way of authorizing intermediaries is to subjectively identify and approval specific applicants on an institution-by-institution basis. Another approach is to develop objective standards and criteria and approve any and all actors that meet those criteria. Determining which approach to use (or some combination) will depend on the needs and interests of the specific jurisdiction. 大多数 DFC 系统，至少在第一次迭代中，从钱包管理到数据存储，可能会合并和/或依赖中介来实现一些核心基础设施功能。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/" class="post-title-link" itemprop="url">CBDC-II-共性的需求</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-13 10:53:00" itemprop="dateCreated datePublished" datetime="2021-12-13T10:53:00+08:00">2021-12-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-12-15 15:38:38" itemprop="dateModified" datetime="2021-12-15T15:38:38+08:00">2021-12-15</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Central Bank Digital Currency === Digital Fiat Currency === Digital base money === Central Bank E-money. “a widely accessible digital form of fiat money that could be legal tender”(IMF defines). </p>
+<p><strong>Money</strong> is a recognized medium of exchange for goods and services. <strong>Money supply</strong> depicts a form of money known as MB or M0.  <strong>Commercial bank money</strong>  is a form of money that is a claim on financial institutions that can be used to purchase goods and services. <strong>Commercial money supply</strong> depicts this form of money as M1-M3. <strong>Central bank digital currency (CBDC)</strong> would represent a stake on the issuing governments M0 money supply in a digital form.</p>
+<p>Three functions of money:</p>
+<ol>
+<li>A unit of account </li>
+<li>Medium of exchange </li>
+<li>Store of value </li>
+</ol>
+<p>那么CBDC与上述money相比较，有何不同</p>
+<ol>
+<li>同样，CBDC would need to have a 1:1 ratio with the current M0 money supply and maintain the current value of fiat money. </li>
+<li>同样，CBDC是交换媒介，它需要被广泛接受，并且保护消费者，减少纳税人的成本。</li>
+</ol>
+<p>综上，得到<strong>CBDC design (five) features</strong>：</p>
+<p><img src="/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/1.png" alt="CBDC-II-共性的需求"></p>
+<ol>
+<li>*<em>7</em>24服务可用**。那么CBDC是应该面相全社会呢？还是仅仅面相金融机构呢？理想答案是全社会每一个人和机构。要根据技术和商业的进步，逐步实施。</li>
+<li><strong>匿名性</strong>。首先要看央行对于隐私性的担忧；其次还取决于人们在多大程度上希望减少逃税、洗钱和资助恐怖主义等非法金融交易；最终将成为用户对隐私的偏好与试图降低与财务诚信相关的风险之间的权衡。<ol>
+<li>商业银行管理自身的用户的账户和交易，不可以见到其他商业银行的用户账户和无关交易</li>
+<li>多家央行相互间可以看见货币发行的总额 ( 经济体量小的国家的喜好？)</li>
+</ol>
+</li>
+<li><strong>转账机制</strong>。使用中间人，例如中央银行或其他第三方，将被视为集中转移机制。点对点方式将被视为一种去中心化的传输机制，因为它发生在两方之间，不需要中央调解器。区块链为上述两种机制都提供了可能性的道路。</li>
+<li><strong>利息</strong>。理想的CBDC应该是记息。</li>
+<li><strong>发行上限</strong>。对任何个人可以持有或在账户之间转移的 CBDC 数量实施限制或上限，可能有助于阻止与此类资金相关的不良影响。而且在ATM机提取现金的数量也是有上限的。QE同理。</li>
+<li>===========================&gt;以下为扩展内容&lt;===========================</li>
+<li><strong>审计</strong>。交易可追溯。</li>
+<li><strong>控制</strong>。冻结某账户。</li>
+<li><strong>公链扩展</strong>。</li>
+<li><strong>中央银行实施监督国内账户以及跨境交易</strong>。</li>
+</ol>
+<p>Optional features：</p>
+<ol>
+<li><p>无手机网络的情况下，理想的CBDC应该仍然可以交易。手机未开机的情况下，CBDC无法交易。手表等其他电子设备同理。</p>
+</li>
+<li><p>反洗钱 / 反资助恐怖主义 / 逃税。在涉嫌违法情况下的交易，被自动终止，无法交易，需要人工介入判断后，再行交易。</p>
+</li>
+<li><p>KYC。资金运行板块/类别，如ESG。</p>
+</li>
+<li><p>跨系统交易能力。如区块链跨链以支撑cross board payment。</p>
+</li>
+<li><p>有效时间限制。如消费券。</p>
+</li>
+</ol>
+<p>Wholesale CBDC的多数业务交易涉及资金和资产的流动，<strong>通过区块链，任何资产的交易，无论是股票、债券还是衍生品，都可以被记录下来，从而允许对分类账进行原子性的记录</strong>。这个过程将资金的全部和最终结算与资产的移动联系起来。</p>
+<p>Retail CBDC的两种token存储形式：1）Token存储在本地，DLT Token可以增强这种模型的匿名性(零知识证明，quorum项目的隐私交易通道等技术)，交易不需要第三方，但是如果用户丢失了token，将无法找回；2）Token存储在DLT账本，类似于目前银行的账本。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/12/10/CBDC-I-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81CBDC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/10/CBDC-I-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81CBDC/" class="post-title-link" itemprop="url">CBDC-I-为什么需要CBDC</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-10 17:25:00" itemprop="dateCreated datePublished" datetime="2021-12-10T17:25:00+08:00">2021-12-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-12-15 15:38:38" itemprop="dateModified" datetime="2021-12-15T15:38:38+08:00">2021-12-15</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://core.ac.uk/reader/288306889">Central bank digital currency (CBDC) : an explorative study on its impact and implications for monetary policy and the banking sector </a></p>
+<p>原因一：Barontini 和 Holden（2019 年）早些时候引用的调查发现，实施数字货币的最重要动力是<strong>支付安全和国内效率</strong>。对于批发 CBDC 而言，普惠金融是最不重要的因素，而跨境支付效率在零售 CBDC 中排名最低（Barontini &amp; Holden，2019 年）。发达经济体和新兴市场的央行之间也存在显着差异。OMFIF 和 IBM 2018年进行的一项调查发现，大多数受访者追求 <strong>wholesale CBDC 的主要动机是提高速度和成本效率</strong>的潜力。OMFIF 和 IBM 2019年还发布了一项关于 <strong>retail CBDC 动机</strong>的调查，受访者表示，<strong>维持有竞争力的支付系统和更好地实施反洗钱</strong>是主要的原因。中央银行想要发行 CBDC 的原因有很多，本节将考虑其中的大部分。</p>
+<p>原因二：Barrdear 和 Kumhof (2016年) 分析了美国经济的动态随机一般均衡模型，发现采用 **CBDC 使实际 GDP 提高了约 3%**。</p>
+<p>原因三：<strong>支付技术（例如加密货币市场、Facebook 的 Libra 计划和其他私营电子货币）近期和未来的快速创新可能最终使它们成为未来几年中央银行发行的法定货币的主要竞争者</strong>。如果这些私营货币获得足够大的用户群，可能会影响中央银行控制货币供应量、执行货币政策和维持金融稳定的能力（Bordo &amp; Levin，2017）。例如：如果政府使用法定货币发行社会福利，而私营电子货币垄断支付，这可能会产生社会福利成本，公民获得的福利也可能受到影响。另一个问题是，提供私营货币服务的公司专注于利润最大化，因此，私营发行电子货币的激励措施与法定货币的目的不一致（Ward &amp; Rochemont，2019 年）。鉴于这些考虑，许多中央银行正在考虑引入 CBDC 以做应对。与实物现金不同，CBDC 可能会与技术的快速发展更加协调，并可以帮助中央银行保持对货币供应的控制（Bordo &amp; Levin，2017 年）。最后，CBDC 不需要尝试垄断支付市场，而是可以作为对私营实体提供的服务的补充。CBDC 可以确保准垄断不会出现在支付市场上（Bordo &amp; Levin，2017 年）。</p>
+<p>原因四：提升跨境支付效率</p>
+<p>原因五：<strong>使用 CBDC 来改善金融稳定性</strong>。许多国家的金融体系以高杠杆银行为特色，其中流动性和期限转换是支付系统的核心。商业银行发行的债权（商业银行货币）既用作交换媒介又用作价值储存。这些要求被称为“内部货币”，当经济中出现不利的负外部性时，可能会相对不稳定。<strong>CBDC（“外部货币”）根据其设计，将被用作交换媒介和价值储存手段，并可以降低金融部门的整体风险</strong>。这一特性是由于 CBDC 几乎没有风险。从银行存款到 CBDC 的可能转变也可能对银行资金和信贷准备金产生影响，这也会影响稳定性（OMFIF 和 IBM 2019）。如果 CBDC 设计为有息的，并且在取消这种纸币的基础上，还可以采用更先进的货币政策。这种设计可以消除 ZLB 的约束，也可以忽略“通胀缓冲”（Bordo &amp; Levin 2017）。</p>
+<p>原因六：铸币税是中央银行预算的一个组成部分。加拿大银行进行的研究发现，随着现金使用量的下降，一些中央银行已经看到他们铸币税收入减少（Ward &amp; Rochemont，2019 年）。采用外币（通常是美元）作为国内交换手段的国家面临着类似的问题，放弃了潜在收入。对于以美元为主要货币的经济体来说，CBDC 可能是一种重新获得一些铸币税的经济体，而发达经济体可以增加其收入（OMFIF 和 IBM 2019）。这种影响取决于 CBDC 的设计决策。对于美元化的经济体，CBDC 可以提供一种重新获得对其国内货币体系更大控制权的手段。马绍尔群岛就是这样一个经济体，目前正在开发一种名为“主权”的数字货币，因为他们试图重新获得货币主权。然而，<strong>在 OMFIF 和 IBM 的研究中，66% 的受访者认为 CBDC 对铸币税的影响很小，需要进一步研究以充分了解影响</strong>（OMFIF 和 IBM 2019）</p>
+<p>原因七：CBDC 的广泛使用与纸币的过时相结合，可能有助于阻止逃税、洗钱和恐怖主义融资等非法活动。发达经济体的收益可能很大，但对于大部分经济活动都是用现金完成的新兴经济体来说更是如此，从而导致逃税率很高。根据 CBDC 的设计，小额交易可以相对匿名地进行，而更大量的交易则需要有经过验证的身份与之相关联（Bordo &amp; Levin 2017）。如果 CBDC 采用基于代币的形式，具有类似现金的离线支付可能性，追踪将很困难。但是，<strong>现有的法规可以在匿名性和可追溯性之间找到可靠的平衡</strong>。这些是管理卡支付的规则，欧洲洗钱指令要求这些规则限制这种风险，并可能适用于 CBDC。从更广泛的意义上讲，<strong>用 CBDC 代替现金可以帮助当局采取反洗钱措施和打击非法活动</strong>（OMFIF 和 IBM 2019）。</p>
+<p>原因八：<strong>随着有息 CBDC 的引入，银行系统的竞争力可以提高</strong>。Bordo &amp; Levin 2017)年指出从事“relationship banking”的机构可能不会受到影响。然而，其他竞争力较弱的机构可能会失去存款，因为用户可以选择将资金转移到 CBDC（Wadsworth，2018b）。CBDC 还可以替代纸币、借记卡和信用卡、支票和其他实物支付方式。因此，零售支付的可竞争性可能会增加，并且由于在银行和企业之间使用 CBDC 进行大额交易是可能的，它可以在批发支付行业提供更多竞争。通过实施上述货币，它可以促进更广泛的直觉访问中央银行的资产负债表。反过来，这种准入可以使公司更容易进入支付市场，从而增加竞争（Engert &amp; Fung，2017 年）。</p>
+<p>原因八：国际货币基金组织和国际清算银行表明，金融包容性是新兴市场和发展中国家的主要动力之一（Rochon 等人，2018 年；Barontini &amp; Holden，2019 年）。这种好处是专门针对零售 CBDC 的。世界银行表示，有 17 亿人没有银行账户，他们无法使用商业银行或账户，主要是在发展中国家（Demirguc-Kunt、Klapper、Singer、Ansar 和 Hess，2017 年）。零售 CBDC 可以促进这些经济体的数字化，从而促进社会和经济发展（Shirai，2019 年）。有一种观点认为，金融包容性是减少贫困的重要方式，因为银行账户对于扩大业务和提高交易效率和安全性至关重要（Adrian，2019 年）。还有其他方法可以在不使用 CBDC 的情况下实现这种类型的包容。肯尼亚的 M-Pesa 和秘鲁的 Modelo 就是这样一种支付机制，可以在不依赖 CBDC 的情况下增加包容性。对于大多数发达经济体来说，金融包容性并不是一个值得注意的问题。2014 年，经合组织高收入国家 94% 的成年人表示他们拥有银行账户。因此，<strong>新兴经济体对通过 CBDC 实现金融包容性更感兴趣</strong>（Hodgson，2017 年）。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/11/26/%E8%87%AA%E5%8A%A8%E5%81%9A%E5%B8%82AMM%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -266,7 +541,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-11-26 11:26:00 / Modified: 13:20:14" itemprop="dateCreated datePublished" datetime="2021-11-26T11:26:00+08:00">2021-11-26</time>
+      <time title="Created: 2021-11-26 11:26:00 / Modified: 13:21:14" itemprop="dateCreated datePublished" datetime="2021-11-26T11:26:00+08:00">2021-11-26</time>
     </span>
 
   
@@ -379,277 +654,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">cosmos-SDK介绍</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-11-02 09:55:26 / Modified: 11:11:34" itemprop="dateCreated datePublished" datetime="2021-11-02T09:55:26+08:00">2021-11-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/1.png" alt="cosmos作为上层应用的整体架构"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/10/29/Tendermint-I-ABCI%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/29/Tendermint-I-ABCI%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">Tendermint-I-ABCI介绍</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-29 14:50:26" itemprop="dateCreated datePublished" datetime="2021-10-29T14:50:26+08:00">2021-10-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-08 10:01:03" itemprop="dateModified" datetime="2021-11-08T10:01:03+08:00">2021-11-08</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/2021/10/29/Tendermint-I-ABCI%E4%BB%8B%E7%BB%8D/1.png" alt="tendermint ABCI接口时序图"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/09/30/node%E7%BC%96%E5%86%99%E7%9A%84PKI%E5%B7%A5%E5%85%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/30/node%E7%BC%96%E5%86%99%E7%9A%84PKI%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">node编写的PKI工具</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-09-30 15:11:04 / Modified: 15:42:03" itemprop="dateCreated datePublished" datetime="2021-09-30T15:11:04+08:00">2021-09-30</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="nodepki"><a href="#nodepki" class="headerlink" title="nodepki"></a>nodepki</h2><p>aditosoftware/nodepki: NodePKI is a simple NodeJS based PKI manager for small corporate environments. (github.com)](<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/nodepki">https://github.com/WillZhuang/nodepki</a>) NodePKI 是一个简单的基于 NodeJS 的 PKI 管理器，适用于小型企业环境。</p>
-<h3 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h3><ul>
-<li>Linux OS</li>
-<li>NodeJS</li>
-<li>NPM</li>
-<li>OpenSSL</li>
-</ul>
-<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/aditosoftware/nodepki.git</span><br><span class="line">cd nodepki</span><br><span class="line">npm install  </span><br></pre></td></tr></table></figure>
-
-<h3 id="Configure-NodePKI"><a href="#Configure-NodePKI" class="headerlink" title="Configure NodePKI"></a>Configure NodePKI</h3><p>配置文件的例子有 <code>config.yml.default</code>，将其内容copy至 <code>NodePKI/data/config/config.yml</code>。修改 <code>config.yml</code> 根据你的配置。<code>config.yml</code> 中的密码将用于创建PKI。</p>
-<h3 id="Start-API-server"><a href="#Start-API-server" class="headerlink" title="Start API server"></a>Start API server</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
-
-<p>启动后，CA 文件将在 <code>data/mypki</code> 文件夹内创建。</p>
-<h3 id="用户登录接口-API-user-login"><a href="#用户登录接口-API-user-login" class="headerlink" title="用户登录接口 API user login"></a>用户登录接口 API user login</h3><h4 id="Add-new-user"><a href="#Add-new-user" class="headerlink" title="Add new user"></a>Add new user</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node nodepkictl useradd --username user1 --password user1password</span><br></pre></td></tr></table></figure>
-
-<h4 id="Remove-user"><a href="#Remove-user" class="headerlink" title="Remove user"></a>Remove user</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node nodepkictl userdel --username user1</span><br></pre></td></tr></table></figure>
-
-<h4 id="List-all-issued-certificates"><a href="#List-all-issued-certificates" class="headerlink" title="List all issued certificates"></a>List all issued certificates</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Content-type: application/json&quot; -d &#x27;&#123; &quot;data&quot;: &#123; &quot;state&quot;:&quot;all&quot; &#125;, &quot;auth&quot;: &#123; &quot;username&quot;:&quot;thomas&quot;, &quot;password&quot;:&quot;test&quot; &#125; &#125;&#x27; http://localhost:8080/api/v1/certificates/list</span><br></pre></td></tr></table></figure>
-
-<h4 id="Request-certificate-from-CSR"><a href="#Request-certificate-from-CSR" class="headerlink" title="Request certificate from CSR"></a>Request certificate from CSR</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Content-type: application/json&quot; -d &#x27;&#123; &quot;data&quot;: &#123; &quot;applicant&quot;:&quot;Thomas&quot;, &quot;csr&quot;:&quot;---CERTIFICATE SIGNING REQUEST---&quot;, &quot;lifetime&quot;:365, &quot;type&quot;:&quot;server&quot; &#125;, &quot;auth&quot;: &#123; &quot;username&quot;:&quot;thomas&quot;, &quot;password&quot;:&quot;test&quot; &#125; &#125;&#x27; http://localhost:8080/api/v1/certificate/request</span><br></pre></td></tr></table></figure>
-
-<h2 id="利用-nodepki-client-管理你的-PKI"><a href="#利用-nodepki-client-管理你的-PKI" class="headerlink" title="利用 nodepki-client 管理你的 PKI"></a>利用 <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/nodepki-client">nodepki-client</a> 管理你的 PKI</h2><p>NodePKI 服务器的简单命令行客户端。</p>
-<h3 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h3><ul>
-<li>NodeJS</li>
-<li>NPM</li>
-<li>OpenSSL</li>
-</ul>
-<h3 id="Setup-1"><a href="#Setup-1" class="headerlink" title="Setup"></a>Setup</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;ThomasLeister&#x2F;nodepki-client.git</span><br><span class="line">cd nodepki-client</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Configure"><a href="#Configure" class="headerlink" title="Configure"></a>Configure</h3><p>Copy config.default.yml to config/config.yml and set the settings according to your environment.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">node client help            </span><br><span class="line">[07:34:26] Reading config file data/config/config.yml ...</span><br><span class="line">Usage: client &lt;subcommand&gt; [options]</span><br><span class="line"></span><br><span class="line">命令：</span><br><span class="line">  request    Request a new certificate with or without .csr file</span><br><span class="line">  list       List issued certificates</span><br><span class="line">  get        Get issued certificate by serial number</span><br><span class="line">  revoke     Revoke certificate via cert file</span><br><span class="line">  getcacert  Get CA certificate</span><br><span class="line"></span><br><span class="line">选项：</span><br><span class="line">  -h, --help  显示帮助信息                                                [布尔]</span><br></pre></td></tr></table></figure>
-
-<h3 id="创建证书-与私钥"><a href="#创建证书-与私钥" class="headerlink" title="创建证书(与私钥)"></a>创建证书(与私钥)</h3><p>Create new key + certificate from scratch and store both in out/ directory. Lifetime: 7 days.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --lifetime 7 --out out/</span><br></pre></td></tr></table></figure>
-
-<p>Create new key + certificate from scratch, add intermediate cert to cert and store in out/ directory</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --out out/ --fullchain</span><br></pre></td></tr></table></figure>
-
-<p>Lifetime defaults to <em>cert_lifetime_default</em> setting in config.yml</p>
-<p>Create a new client certificate:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --type client --out out/</span><br></pre></td></tr></table></figure>
-
-<p>获取发布的证书</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client list --state all</span><br></pre></td></tr></table></figure>
-
-<p>可用的状态 Valid states:</p>
-<ul>
-<li>all</li>
-<li>valid</li>
-<li>expired</li>
-<li>revoked</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client list --state valid</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取证书-Get-certificate-by-serial-number"><a href="#获取证书-Get-certificate-by-serial-number" class="headerlink" title="获取证书 Get certificate by serial number"></a>获取证书 Get certificate by serial number</h3><p>… and store certificate to out/cert.pem</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client get --serialnumber 324786EA --out out/cert.pem</span><br></pre></td></tr></table></figure>
-
-<h3 id="Revoke-issued-certificate"><a href="#Revoke-issued-certificate" class="headerlink" title="Revoke issued certificate"></a>Revoke issued certificate</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client revoke --cert cert.pem</span><br></pre></td></tr></table></figure>
-
-<h3 id="Get-CA-certificates"><a href="#Get-CA-certificates" class="headerlink" title="Get CA certificates"></a>Get CA certificates</h3><p>Get root certificate:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca root</span><br></pre></td></tr></table></figure>
-
-<p>Write root certificate to file:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca root --out out/root.cert.pem</span><br></pre></td></tr></table></figure>
-
-<p>Get intermediate certificate:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca intermediate</span><br></pre></td></tr></table></figure>
-
-<p>Get intermediate certificate + root certificate (=cert chain) and write to file:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca intermediate --chain --out out/ca-chain.cert.pem</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
