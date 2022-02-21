@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,89 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/27/Token-Ring-Election-Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/03/27/Token-Ring-Election-Algorithm/" class="post-title-link" itemprop="url">Token Ring Election Algorithm</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-03-27 22:51:18" itemprop="dateCreated datePublished" datetime="2018-03-27T22:51:18+08:00">2018-03-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>令牌环领导人选举算法</p>
+<p>We start with 6 processes,<br>    connected in a logical ring.<br>Process 6 is the leader,<br>    as it has the highest number.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/0.gif"><br>Process 6 fails.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/1.gif"><br>Process 3 notices that Process 6 does not respond<br>    So it starts an election,<br>        sending a message containing its id<br>    to the next node in the ring.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/2.gif"><br>Process 5 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/3.gif"><br>Process 0 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/4.gif"><br>Process 1 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/5.gif"><br>Process 4 passes the message on,<br>    adding its own id to the message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/6.gif"><br>When Process 3 receives the message back,<br>    it knows the message has gone around the ring,<br>        as its own id is in the list.<br>Picking the highest id in the list,<br>    it starts the coordinator message<br>        “5 is the leader” around the ring.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/7.gif"><br>Process 5 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/8.gif"><br>Process 0 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/9.gif"><br>Process 1 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/10.gif"><br>Process 4 passes on the coordinator message.<br><img src="/2018/03/27/Token-Ring-Election-Algorithm/11.gif"><br>Process 3 receives the coordinator message,<br>    and stops it.</p>
+<p>让我们分析如何在ZooKeeper集合中选举leader节点，这个过程和令牌环原理是一致的。考虑一个集群中有N个节点。leader选举的过程如下：</p>
+<ul>
+<li>所有节点创建具有相同路径 /app/leader_election/guid_ 的顺序、临时节点。</li>
+<li>ZooKeeper集合将附加10位序列号到路径，创建的znode将是 /app/leader_election/guid_0000000001，/app/leader_election/guid_0000000002等。</li>
+<li>对于给定的实例，在znode中创建最小数字的节点成为leader，而所有其他节点是follower。</li>
+<li>每个follower节点监视下一个具有最小数字的znode。例如，创建znode/app/leader_election/guid_0000000008的节点将监视znode/app/leader_election/guid_0000000007，创建znode/app/leader_election/guid_0000000007的节点将监视znode/app/leader_election/guid_0000000006。</li>
+<li>如果leader关闭，则其相应的znode/app/leader_electionN会被删除。</li>
+<li>下一个在线follower节点将通过监视器获得关于leader移除的通知。</li>
+<li>下一个在线follower节点将检查是否存在其他具有最小数字的znode。如果没有，那么它将承担leader的角色。否则，它找到的创建具有最小数字的znode的节点将作为leader。</li>
+<li>类似地，所有其他follower节点选举创建具有最小数字的znode的节点作为leader。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -609,98 +692,6 @@
 <p>有关如何在Zcash中构建屏蔽事务的更深入解释，请参阅我们的博客文章，了解屏蔽地址之间的事务如何工作。有关当前Zcash协议的完整详细信息，请参阅我们的<a target="_blank" rel="noopener" href="https://github.com/zcash/zips/blob/master/protocol/protocol.pdf">协议规范</a>。</p>
 <h3 id="ZK-SNARKS的未来应用"><a href="#ZK-SNARKS的未来应用" class="headerlink" title="ZK-SNARKS的未来应用"></a>ZK-SNARKS的未来应用</h3><p>在Zcash中创建屏蔽交易只是zk-SNARKs许多可能应用中的一个例子。从理论上讲，您可以使用zk-SNARK来验证任何关系，而不会泄露输入或泄露信息。对复杂函数生成证明的计算量仍然过大，许多程序还不适用，但Zcash团队正在推动优化zk-SNARKs的界限，并且已经以更高效的实施方式开创了新局面。</p>
 <p>就目前而言，Zcash的zk-SNARKs实现可以作为企业用例的<a target="_blank" rel="noopener" href="https://z.cash/blog/zsl.html">零知识安全层</a>添加到任何现有的分布式分类帐解决方案中。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/20/awesome-links-of-zero-knowledge-proof/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/03/20/awesome-links-of-zero-knowledge-proof/" class="post-title-link" itemprop="url">awesome links of zero knowledge proof</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-03-20 22:23:28" itemprop="dateCreated datePublished" datetime="2018-03-20T22:23:28+08:00">2018-03-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://z.cash/zh/technology/zksnarks.html">zk-SNARKs 原文链接</a></p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a target="_blank" rel="noopener" href="https://github.com/zcash/zips/blob/master/protocol/protocol.pdf">Zcash协议规范</a></p>
-<h4 id="解释SNARKs系列文章"><a href="#解释SNARKs系列文章" class="headerlink" title="解释SNARKs系列文章"></a>解释SNARKs系列文章</h4><p><a target="_blank" rel="noopener" href="https://z.cash/blog/snark-explain.html">1. 同态隐藏</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/blog/snark-explain2.html">2. 多项式盲评估</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/blog/snark-explain3.html">3. 系数测试知识和假设</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/blog/snark-explain4.html">4. 如何验证多项式盲评估</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/blog/snark-explain5.html">5. 从计算到多项式</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/blog/snark-explain6.html">6. Pinocchio Protocol — 皮诺曹协议</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/blog/snark-explain7.html">7. 配对椭圆曲线</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zero-knowledge-proofs">8. 零知识证明在 Quorum 中是如何使用的 — Zero Knowledge Proofs and how they can be implemented in Quorum</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkrangeproof">9. 零知识证明在以太坊智能合约端如何实现区间证明 — zero knowledge range-proof precompiled contract for the go-ethereum client</a></p>
-<h4 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h4><p><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2013/279.pdf">1. 皮诺曹协议</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/zcash/mpc/blob/master/whitepaper.pdf">2. Paramgen白皮书</a></p>
-<p><a target="_blank" rel="noopener" href="http://zerocash-project.org/media/pdf/zerocash-extended-20140518.pdf">3. Zerocash论文</a></p>
-<h4 id="技术博客文章"><a href="#技术博客文章" class="headerlink" title="技术博客文章"></a>技术博客文章</h4><p><a target="_blank" rel="noopener" href="https://blog.cryptographyengineering.com/2014/11/27/zero-knowledge-proofs-illustrated-primer/">1. Matt Green: 零知识证明</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/anatomy-of-zcash.html">2. Zcash交易解剖</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/zcash-private-transactions.html">3. 隐私交易如何完成的</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/generating-zcash-parameters.html">4. Zcash的参数是如何生成的</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/pairing-cryptography-in-rust.html">5. 在Rust进行密码学配对</a></p>
-<h4 id="相关项目"><a href="#相关项目" class="headerlink" title="相关项目"></a>相关项目</h4><p><a target="_blank" rel="noopener" href="http://oblivm.com/hawk/">1. HAWK：私有的智能合约</a></p>
-<p><a target="_blank" rel="noopener" href="https://z.cash/blog/bolt-private-payment-channels.html">2. BOLT：私有的支付通道</a></p>
-<p>后面的博客中会针对上述内容进行分析。</p>
 
       
     </div>

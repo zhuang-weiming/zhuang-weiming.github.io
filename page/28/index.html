@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,78 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/" class="post-title-link" itemprop="url">PBFT协议为什么要求N>3f+1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-25 17:00:31" itemprop="dateCreated datePublished" datetime="2018-05-25T17:00:31+08:00">2018-05-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-09 16:16:47" itemprop="dateModified" datetime="2021-04-09T16:16:47+08:00">2021-04-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最坏的情况是：f个节点是有问题的，由于到达顺序的问题，有可能f个有问题的节点比正常的f个节点先返回消息，又要保证收到的正常的节点比有问题的节点多，所以需要满足N-f-f&gt;f =&gt; N&gt;3f，所以至少3f+1个节点。</p>
+<p>为什么至少要2f个prepare (包括自己的pre-prepare共2f+1)。这是因为之前论证的，如果有f个fault 节点，那么节点总数至少是N=3f+1。简单说一下论证过程，假设总数N个节点，f个fault节点，那么必须接收到N-f个消息应答，才能够判断出结果(因为fault节点可能不发送应答)。N-f个应答中有f个可能是假的(fault节点发出的)，那么真实的是N-f-f，要求真实的应答大于假的应答，即N-f-f &gt; f ==&gt; N &gt; 3f。所以: N_min = 3f+1 所以在prepare和commit两个阶段必须收到2f+1(包括自己) 的应答消息，才能证明有f+1非fault节点发送了应答。(注意前提是非fault对于相同的消息，会产生相同的消息应答)那么这里也有个问题：就是接收2f+1个消息的时，判断是否一致，是否需要对比数据的的签名。我的看法是，如果2f+1个v，n都相同，d(m)只需要f+1相同就可以了。否则就共识失败了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -638,138 +710,6 @@
     <div class="post-body" itemprop="articleBody">
           <p><img src="/2018/05/04/algorand-%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/1.jpg"></p>
 <p>相关博文：<br><a href="https://willzhuang.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/">Algorand算法特性总结</a><br><a href="https://willzhuang.github.io/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">可验证随机函数VRF之Algorand共识算法</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/04/16/Dominic-Williams-talking-about-DFINITY-consensus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/16/Dominic-Williams-talking-about-DFINITY-consensus/" class="post-title-link" itemprop="url">Dominic Williams talking about DFINITY consensus</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-16 15:33:53" itemprop="dateCreated datePublished" datetime="2018-04-16T15:33:53+08:00">2018-04-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>摘自<br><a target="_blank" rel="noopener" href="https://twitter.com/dominic_w/status/932047902905634816">https://twitter.com/dominic_w/status/932047902905634816</a></p>
-<p>Dominic Williams 18 Nov 2017 DFINITY</p>
-<p>I spent much of 2014 repurposing BFT (Byzantine Fault Tolerant) consensus protocols from traditional distributed computing for the decentralized setting. My aim was to make faster blockchains.</p>
-<p>2014年，Dominic Williams 花了很多时间将传统分布式计算的BFT（拜占庭容错）共识协议重新用于分布式环境。目标是制作更快的区块链。</p>
-<p>Such consensus protocols proceed through rounds of message passing and “decide” on an output value, providing instant consistency rather than converging on a value like a traditional blockchain</p>
-<p>这种共识协议通过消息传递和”决定”产生输出值，提供即时的一致性，而不是像传统区块链一样收敛。</p>
-<p>The protocols come in three main flavors: Synchronous, Partially Synchronous and Asynchronous consensus. The first two flavors make assumptions about how fast participants in the protocol can exchange messages over the network.</p>
-<p>（共识）协议有三种主要形式：同步，部分同步和异步共识。前两种形式假设协议的参与者可以通过网络交换消息的速度非常快。</p>
-<p>When network asynchrony is sufficiently high - e.g. when a DDoS attack slows down message passing - Synchronous protocols become unsafe and fail to output a value, and Partially Synchronous protocols remain safe but also fail to output a value.</p>
-<p>当网络异步性足够高的时候 - 例如当DDoS攻击减缓了消息的传递时 - 同步协议变得不安全且无法输出值，此时，部分同步协议仍然是安全的，但也无法输出值。</p>
-<p>Currently both Cosmos and Algorand involve Partially Synchronous consensus protocols and thus are vulnerable to “DDoS Flatline” attacks that could cause them to output null blocks.</p>
-<p>目前，Cosmos和Algorand都涉及部分同步共识协议，因此容易受到”DDoS”攻击，可能导致它们输出空块。</p>
-<p>During 2014 I worked exclusively on repurposing leader-free Asynchronous consensus protocols that don’t make timing assumptions and thus aren’t vulnerable to DDoS Flatline attacks. These are slower but provide a better fit for the decentralized setting.</p>
-<p>2014年，我专门致力于重新调整无领导人的异步共识协议，这些协议不做时序假设，因此不易受到DDos攻击。这会使速度变慢，但更适合分布式环境。</p>
-<p>Asynchronous consensus protocols are necessarily probabilistic in nature. To drive participants to a decision on an output, they must produce random numbers and use them to direct message passing.</p>
-<p>异步共识协议本质上是概率性的。为了促使参与者对输出做出决定，他们必须产生随机数并使用它们指导消息传递。</p>
-<p>The first Asynchronous consensus protocol that generated random numbers using cryptography in a practical way was described in 2000 by Cachin, Klaus &amp; Shoup <a target="_blank" rel="noopener" href="http://gridsec.org/docs/abba.pdf">http://gridsec.org/docs/abba.pdf</a> </p>
-<p>使用加密技术，以工程方式生成随机数的第一个异步共识协议是在2000年由Cachin，Klaus＆Shoup发布的。 [<a target="_blank" rel="noopener" href="http://gridsec.org/docs/abba.pdf]">http://gridsec.org/docs/abba.pdf]</a>(<a target="_blank" rel="noopener" href="http://gridsec.org/">http://gridsec.org</a> /docs/abba.pdf）</p>
-<p>Unfortunately, the RSA threshold signature scheme they used to generate random numbers doesn’t have a companion distributed key generation (DKG) protocol and, depending on a trusted dealer, is unsuitable for decentralized networks.</p>
-<p>不幸的是，他们用来生成随机数的RSA门限签名方案没有配套的分布式密钥生成（DKG）协议，并且必须依赖可信的分发人，所以不适合分布式网络。</p>
-<p>In early 2014 I found a “unique deterministic” threshold signature scheme with a DKG <a target="_blank" rel="noopener" href="https://hal.inria.fr/hal-00983149/document">https://hal.inria.fr/hal-00983149/document</a> &amp; was constructing new protocols derived from <a target="_blank" rel="noopener" href="https://hal.archives-ouvertes.fr/hal-01176110/document">https://hal.archives-ouvertes.fr/hal-01176110/document</a></p>
-<p>2014年初，我发现了一个DKG的”唯一确定性”的门限签名方案<a target="_blank" rel="noopener" href="https://hal.inria.fr/hal-00983149/">https://hal.inria.fr/hal-00983149/document</a>，努力构建从<a target="_blank" rel="noopener" href="https://hal.archives-ouvertes.fr/hal-01176110/document">https://hal.archives-ouvertes.fr/hal-01176110/document</a>派生的新协议。</p>
-<p>As 2014 closed however, I concluded that eventually-consistent blockchain-like protocols driven by random numbers created using cryptography could be constructed that were far superior in the decentralized setting.</p>
-<p>然而，截至2014年，我的结论是，在分布式环境中，可以构建出最终一致的区块链式协议，这种协议由使用密码技术创建的随机数驱动。</p>
-<p>Readers may have observed Proof-of-Work drives eventual agreement using random number production (random “puzzle solutions”/hashes are used for leader selection). Clearly by moving the expense of Sybil resistance elsewhere, random numbers can be generated more efficiently.</p>
-<p>读者可能已经观察到使用随机数生产（随机”谜题解决方案”/ 散列用于领导者选择）的工作证明驱动器最终协议。很显然，通过将Sybil阻力转移到别处，可以更有效地生成随机数。</p>
-<p>Unique deterministic signature schemes can <em>only</em> produce a single signature (which is a big number) given some input message and key pair (= unmanipulability and verifiability) and signatures are random numbers or they would be predictable and the schemes thus insecure.</p>
-<p>独特的确定性签名方案只能产生一个签名（一个很大的数字），给定一些输入消息和密钥对（= 不可处理性和可验证性），签名是随机数，或者它们是可预测的，因此此方案不安全。</p>
-<p>Trivially, if everyone in the network has an unforgeable key pair (e.g. created by PoS) they could create a random “priority” number by signing the round/block height. If nodes only forward the block containing the highest priority number seen, voila, you have a blockchain.</p>
-<p>如果网络中的每个人都有一个不可伪造的密钥对（例如由PoS创建的），他们可以通过签署轮数/块高度来创建一个具有”优先级”的随机数。如果节点只转发包含所看到的最高优先级数的块，瞧，你成功创建了一个区块链。</p>
-<p>This is too simple for various reasons (it would be a selfish miner’s dream!!), but I developed many different schemes that generate or apply cryptographic randomness in the decentralized setting. Generally, I only talk about schemes DFINITY will use in the nearest future.</p>
-<p>由于各种原因，这太简单了（这将是一个自私的矿工的梦想!!），但我开发了许多不同的方案，在分布式环境中产生或应用密码随机性。通常我只谈论DFINITY将在不久的将来使用的方案。</p>
-<p>By early 2015 DFINITY research was using “Threshold Relay” to generate randomness.  On the advice of Dan Boneh, I started using BLS as the unique deterministic threshold signature scheme, and Benn Lynn (the “L” in BLS) works full time on DFINITY</p>
-<p>到2015年初，DFINITY的研究使用”阈值继电器”来产生随机性。根据Dan Boneh的建议，我开始使用BLS作为唯一的确定性门限签名方案，而Benn Lynn（BLS中的”L”）全职工作于DFINITY。</p>
-<p>Between then and now, DFINITY team members Timo Hanke (AsicBoost) and Mahnush Movahedi (Yale postdoc) have worked on this and derivative protocols, including “Probabilistic Slot Consensus”. The security properties and performance are stunning</p>
-<p>至此之后，DFINITY团队成员Timo Hanke（AsicBoost）和Mahnush Movahedi（耶鲁博士后）一直致力于这一衍生协议，包括”概率性时隙共识”。安全属性和性能令人惊叹。</p>
-<p>It turned out we could design blockchain protocols that are 1. far faster than those using traditional consensus, 2. scale to any number of participants as they should and 3. continue to make progress during asynchrony.</p>
-<p>事实证明，我们设计区块链协议，1.比使用传统共识的区块链协议速度快得多; 2.参与者数量可以任意规模扩展; 3.在不同步时继续取得进展。</p>
-<p>In its pursuit of unbounded capacity, DFINITY protocols rely upon the unmanipulable, unpredictable and highly fault tolerant production of random numbers by Threshold Relay. Powered by perfect randomness, DFINITY plans to change IT.</p>
-<p>为了追求无限容量，DFINITY协议依靠阈值中继产生随机数，这些随机数是难以执行的，不可预测的和高度容错的。凭借完美的随机性，DFINITY计划使用它。</p>
-<p>Back to the Q of whether Algorand’s “cryptographic sortition” is a big invention. Sounds fishy to me! What about Satoshi’s Proof-of-Work? Doesn’t he use cryptographically calculated random puzzle solutions to decide which new blocks are valid and what their priorities are?</p>
-<p>回到Algorand的”密码分类”是否是一个重大发明的问题。听起来很腥！那么工作证明呢？他不使用密码计算的随机谜题解决方案来决定哪些新块是有效的，他们的优先级是什么？</p>
-<p>But anyway, since Algorand is both much slower and less secure than Threshold Relay and PSC I don’t worry myself too much about it, notwithstanding Miscali’s MIT patent attorneys will have tried to be as broad as possible.</p>
-<p>但无论如何，因为Algorand比Threshold Relay和PSC慢得多而且不太安全，所以我不用担心自己太多了，尽管Miscali的MIT专利律师会尽可能广泛地尝试。</p>
-<p>Aside: given the Algorand patent situation, their claim to be the first truly “democratic ledger” is as ridiculous as Tezos claiming a “A new digital commonwealth” then redirecting investor funds back to themselves.</p>
-<p>除此之外：鉴于Algorand的专利情况，他们声称自己是第一个真正的”民主分类账”，这是荒谬的，因为Tezos宣称”一个新的数字联邦”将投资者资金重新导回自己。</p>
-<p>To wrap up, all theoretical work starts with important inputs. I think I was the first to apply cryptography in the ways described, but I drew inspiration from traditional asynchronous consensus algorithms and Nakamoto/PoW</p>
-<p>总而言之，所有的理论工作都从重要的投入开始。我认为我是第一个以所描述的方式应用密码学的人，但我是从传统的异步共识算法和Nakamoto / PoW中取得的灵感。</p>
-<p>Finally, I will make the claim that unless something better emerges, decentralization is going to be driven by random numbers generated by applied cryptography. Currently Threshold Relay and PSC are state of the art</p>
-<p>最后，本人声称，除非有更好的选择出现，分布式将由应用密码学产生的随机数驱动。目前阈值继电器和PSC是最先进的。</p>
-<p>Our foundational Threshold Relay protocol has probabilistic fault tolerance e.g.</p>
-<ul>
-<li>Network 10,000 nodes. 7,000 are correct. 3,000 are faulty</li>
-<li>Group size 400, threshold 201</li>
-<li>In this network, probability some group contains &gt;=200 faulty nodes, such that system stalls, is 10e-17</li>
-</ul>
-<p>我们的基础门限中继协议具有概率容错能力，例如</p>
-<ul>
-<li>网络10,000个节点。 7,000是正确的。 3,000是错误的；</li>
-<li>集群规模400，门槛201；</li>
-<li>在这个网络中，某个集群包含 &gt; = 200 个故障节点的概率（如系统失速）为10e-17</li>
-</ul>
 
       
     </div>

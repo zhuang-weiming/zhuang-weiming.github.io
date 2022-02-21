@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,146 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/04/14/Plonk-4-%E7%BA%A6%E6%9D%9F%E4%B8%8E%E4%B8%BB%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/14/Plonk-4-%E7%BA%A6%E6%9D%9F%E4%B8%8E%E4%B8%BB%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">Plonk-4-约束与主协议</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-14 07:52:04" itemprop="dateCreated datePublished" datetime="2021-04-14T07:52:04+08:00">2021-04-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 17:35:37" itemprop="dateModified" datetime="2021-04-29T17:35:37+08:00">2021-04-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>论文原文 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">953.pdf (iacr.org)</a>，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge</a></p>
+<h3 id="6-约束系统Constraint-systems"><a href="#6-约束系统Constraint-systems" class="headerlink" title="6 约束系统Constraint systems"></a>6 约束系统Constraint systems</h3><p>​    给定整数m，n，且n≤m≤2n我们提出一种约束系统，该系统捕获扇入的两个算术电路，这些算术电路具有n个门和m条导线，不受限制地扇出。</p>
+<p>​    约束系统 C=(V,Q) 定义如下:</p>
+<ul>
+<li><p>V的约束是 V=(a,b,c)，其中a,b,c∈[m]，[m]的阶数为n。我们将a，b，c分别视为C的左，右和输出序列。</p>
+</li>
+<li><p>Q=(qL,qR,qO,qM,qC)∈(<strong><em>F</em></strong>n)，其中(<strong><em>F</em></strong>n)的阶数为5，qL,qR,qO,qM,qC∈**<em>F**</em>n 为选择器向量，每个选择器向量的阶数为n。</p>
+</li>
+</ul>
+<p>x∈*<strong>F***m，i∈[n]，为了满足C，需要满足以下条件：<br>$$<br>(qL)<em>i \cdot X</em>{a_i} + (qR)<em>i \cdot X</em>{b_i} + (qO)<em>i \cdot X</em>{c_i} + (qM)<em>i \cdot (X</em>{a_i}X_{b_i}) + (qC)_i = 0<br>$$<br>​    为了定义基于C的关系，我们将其扩展为包括正整数l≤m和“公共输入”的子集 *</strong>I*<strong>⊂[m]。在不失一般性的前提下，假设**<em>I</em></strong>= {1,…,l}。</p>
+<p>​    定义Rc为一组集合对(x,ω)，其中x∈*<strong>F**<em>l，l为阶数，ω∈</em></strong>F***m_l，m-l 为阶数，则 x:=(x,ω)满足C。</p>
+<p>​    我们将继续展示此类约束的一些有用实例。</p>
+<p><strong>算术电路</strong>：n个门且扇入为2的电路，每个门是加法门或乘法门，约束系统可以如下：</p>
+<p>1.m设置为线路数，每根线路与索引i∈[m]相关联。</p>
+<p>​    针对每一个i∈[n]，</p>
+<p>2.设定<strong>a</strong>i，<strong>b</strong>i，<strong>c</strong>i为第i个门的左、右、输出线路。</p>
+<p>3.设定(qL)i=0，(qR)i=0，(qM)i=1，(qO)i=-1，当第i个门是乘法门。</p>
+<p>4.设定(qL)i=1，(qR)i=1，(qM)i=0，(qO)i=-1，当第i个门是加法门。（同时可以使用线性组合门，(qL)i，(qR)i为非零整数值）</p>
+<p>5.(qC)i=0。</p>
+<p><strong>布尔约束</strong>：证明系统中常见的一种情况是需要强制执行 <strong>X</strong>j∈{0,1}，其中j∈[m]，i∈[n]，则：</p>
+<p>​        <strong>a</strong>i=<strong>b</strong>i=j，(qL)i=-1，(qM)i=1，(qR)i=(qO)i=(qC)i=0</p>
+<p><strong>增强公共输入</strong>：非常方便直接，强制执行公共输入值<strong>X</strong>1,…,<strong>X</strong>l：强制约束<strong>X</strong>j=Xj，i∈[n]，则：</p>
+<p>​        <strong>a</strong>i=j，(qL)i=1，(qM)i=(qR)i=(qO)i=0，(qC)i=-xj</p>
+<h3 id="7-主协议Main-protocol"><a href="#7-主协议Main-protocol" class="headerlink" title="7 主协议Main protocol"></a>7 主协议Main protocol</h3><p>​    令C=(V,Q)为第6节所述形式的约束系统。我们介绍关系Rc的主要协议。首先，如下定义C的分区（称为Tc）将很方便。</p>
+<p>​    令 V=(a,b,c)，认为V是[m]中的一个向量<strong>V</strong>，[m]的阶数为3n。令i∈[m]，Ti⊂[3n]为是索引集j∈[3n]，如Vj=i。现在定义：<br>$$<br>T_c := {T_i}_{i∈[m]}<br>$$<br>​    在介绍本协议之前，我们先做一个最终定义。如果i∈[l]，我们说C为l个公共输入做好了准备。</p>
+<p>​        <strong>a</strong>i=i，(qL)i=1，(qM)i=(qR)i=(qO)i=0，(qC)i=0</p>
+<p>​    回顾 H∈{g,. . .,gn}，我们提出用于Rc的H范围多项式协议</p>
+<p><strong>前处理</strong>：令 <em>σ</em> = <em>σ</em>(Tc)</p>
+<p>​    如5.1节所讲，多项式SID1，SID2，SID3，Sσ1，Sσ2，Sσ3∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]。</p>
+<p>​    多项式qL，qR，qO，qM，qC ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]，针对每一个i∈[n]均满足：<br>$$<br>q_L(g^i):=(q_L)_i,q_R(g^i):=(q_R)_i,q_O(g^i):=(q_O)_i,q_M(g^i):=(q_M)_i,q_C(g^i):=(q_C)_i<br>$$<br><strong>协议</strong>：</p>
+<p>1.<strong>X</strong>∈ <strong><em>F</em></strong>，*<strong>F*<strong>的阶数为m，令</strong>X<strong>为</strong>P<strong>poly的公共输入X。</strong>P**poly计算3个多项式fL，fR，fO∈ *</strong>F*** &lt;n[<strong>X</strong>]，i∈[n]，<br>$$<br>f_L(i)=X_{a_i},f_R(i)=X_{b_i},f_O(i)=X_{c_i}<br>$$<br><strong>P</strong>poly发送fL，fR，fO给到第三方 <strong><em>I</em></strong>。</p>
+<p>2.<strong>P</strong>poly和<strong>V</strong>poly使用5.1节所讲到的排列协议，使用排列σ，σ介于(fL, fR, fO)与自身之间。如5.2阶所讲，将确切地检查(fL, fR, fO)是否满足Tc。</p>
+<p>3.<strong>V</strong>poly计算公共输入多项式：<br>$$<br>PI(X):= \sum _{i∈[l]}-x_i \cdot L_i(X)<br>$$<br>4.<strong>V</strong>poly在H范围内检验恒等式：<br>$$<br>q_L \cdot f_L + q_R \cdot f_R + q_O \cdot f_O + q_M \cdot f_L \cdot f_R + (q_C + PI) = 0<br>$$</p>
+<h3 id="8-最终协议"><a href="#8-最终协议" class="headerlink" title="8.最终协议"></a>8.最终协议</h3><h4 id="8-1-多项式定义一个专用电路"><a href="#8-1-多项式定义一个专用电路" class="headerlink" title="8.1 多项式定义一个专用电路"></a>8.1 多项式定义一个专用电路</h4><p>以下多项式，唯一性地定义一个通用的SNARK电路：</p>
+<ul>
+<li><p>qM(X)，qL(X)，qR(X)，qO(X)，qC(X)，定义电路算术化的“选择器”多项式</p>
+</li>
+<li><p>SID1(X)=X，SID2(X)=k1X，SID3(X)=k2X：应用于a, b, c的恒等式排列。选择k1，k2∈*<strong>F*** ，使得H，k1·H，k2·H是*</strong>F****中H的不同的协集，因此由3n个不同的元素组成。例如，ω是二次残基的，k1为任何二次非残基，而k2为不包含在k1·H中的二次非残基。</p>
+</li>
+<li><p>Sσ1(X)，Sσ2(X)，Sσ3(X)：复制排列应用于a，b，c</p>
+</li>
+<li><p>n为给定电路总的门数。V使用它来计算消失的多项式：<br>$$<br>Z_H(X)=X^n-1<br>$$</p>
+</li>
+</ul>
+<h4 id="8-2-对线路价值的承诺Commitments-to-wire-values"><a href="#8-2-对线路价值的承诺Commitments-to-wire-values" class="headerlink" title="8.2 对线路价值的承诺Commitments to wire values"></a>8.2 对线路价值的承诺Commitments to wire values</h4><p>对于以下协议，我们描述了包含n个算术门的通用SNARK电路的证明关系。证据proof的见证人witnesses是线路价值的见证。承诺commitments [a]1，[b]1，[c]1将Kate多项式承诺通过计算方式绑定到线路价值。</p>
+<h4 id="8-3-展开的通用的SNARK证明关系"><a href="#8-3-展开的通用的SNARK证明关系" class="headerlink" title="8.3 展开的通用的SNARK证明关系"></a>8.3 展开的通用的SNARK证明关系</h4><p>$$<br>Rsnark(λ)=\begin{Bmatrix} (x,w,crs) = ((w_i)<em>{i \in [l]}),((w_i) ^{3n} _{i=1,i \in [l]}),((q</em>{M_i},q_{L_i},q_{R_i},q_{O_i},q_{C_i}) ^n _{i=1}, n, σ(x))\<br>\text {For all } i \in {1,…,3n }:w_i \in F_p, </p>
+<p>\ \text {and for all } i \in {1,…,n}:w_iw_{n+i}q_{M_i} + w_iq_{L_i} + w_{n+i}q_{R_i} + w_{2n+i}q_{O_i} + q_{C_i} = 0<br>\ \text { and for all } i \in {1,…,3n}:w_i=w_{σ(i)}<br>\end{Bmatrix}<br>$$</p>
+<h4 id="8-4-协议"><a href="#8-4-协议" class="headerlink" title="8.4 协议"></a>8.4 协议</h4><p>​    我们将下面的协议描述为使用Fiat-Shamir启发式技术的非交互式协议。为此，我们总是通过笔录表示共同的预处理输入，公共输入以及证明者在特定时间点之前编写的证明元素的串联。使用<strong>transcript</strong>通过(Fiat-Shamir)获得随机挑战。或者，可以通过发送随机字段元素的验证程序替换我们在“compute challenges”下写下的所有要点，以获得交互式协议，从中可以得出非交互式协议。使用R来指代哈希函数R:{0,1}→**<em>F**</em>p来模拟随机预言。</p>
+<p><strong>共同的预处理输入：</strong><br>$$<br>\begin{matrix}<br>n,(x \cdot [1]<em>1,…,x^{n+5} \cdot [1]<em>1),(q</em>{M_i},q_{L_i},q_{R_i},q_{O_i},q_{C_i}) ^n _{i=1} ,  σ(X), \<br>q_M(X)=\sum ^n _{i=1} q</em>{M_i}L_i(X),\<br>q_L(X)=\sum ^n <em>{i=1} q</em>{L_i}L_i(X),\<br>q_R(X)=\sum ^n <em>{i=1} q</em>{R_i}L_i(X),\<br>q_O(X)=\sum ^n <em>{i=1} q</em>{O_i}L_i(X),\<br>q_C(X)=\sum ^n <em>{i=1} q</em>{C_i}L_i(X),\</p>
+<p>S_{σ1}(X)=\sum ^n <em>{i=1} σ(i)L_i(X),\<br>S_{σ2}(X)=\sum ^n _{i=1} σ(n+i)L_i(X),\<br>S</em>{σ3}(X)=\sum ^n <em>{i=1} σ(2n+i)L_i(X),\<br>\end{matrix}<br>$$<br><strong>公共输入：</strong><br>$$<br>l,(w_i)</em>{i \in [l]}<br>$$</p>
+<h4 id="证明人算法："><a href="#证明人算法：" class="headerlink" title="证明人算法："></a>证明人算法：</h4><p><strong>证明人输入：</strong><br>$$<br>(w_i)_{i \in [3n]}<br>$$<br><strong>Round 1:</strong></p>
+<p>​    生成随机的盲标量(b1,…,b9)∈ <strong><em>F</em></strong>p</p>
+<p>​    计算线路多项式 a(X)，b(X)，c(X):<br>$$<br>\begin{matrix}<br>a(X)=(b_1X+b_2)Z_H(X)+\sum <em>{i=1} ^n w_iL_i(X)    \<br>b(X)=(b_3X+b_4)Z_H(X)+\sum _{i=1} ^n w</em>{n+i}L_i(X)    \<br>c(X)=(b_5X+b_6)Z_H(X)+\sum <em>{i=1} ^n w</em>{2n+i}L_i(X)    \<br>\end{matrix}<br>$$<br>​    计算<br>$$<br>[a]_1 := [ \alpha (x)]_1,[b]_1 := [b(x)]_1,[c]_1 := [c(x)]_1<br>$$<br>​    第一个输出 <strong><em>P</em></strong> 为：<br>$$<br>[a]_1 ,[b]_1 ,[c]_1<br>$$<br><strong>Round 2:</strong></p>
+<p>​    计算排列挑战(β, γ)∈ <strong><em>F</em></strong>p: β = R(transcript,0), γ = R(transcript,1)</p>
+<p>​    计算排列多项式 z(X):<br>$$<br>\begin{matrix}<br>z(X)=<br>(b_7X^2+b_8X+b_9)Z_H(X)+    \<br>L_1(X)+    \<br>\sum <em>{i=1} ^{n-1}\left(L</em>{i+1}(X) \prod ^i <em>{j=1} \frac{(w_j+\beta w^{j-1}+\gamma)(w_{n+j}+\beta k_1w^{j-1}+\gamma)(w_{2n+j}+\beta k_2w^{j-1}+\gamma)}{(w_j+\sigma(j)\beta+\gamma))(w</em>{n+j}+\sigma(n+j)\beta+\gamma)(w_{2n+j}+\sigma(2n+j)\beta+\gamma)}\right)<br>\end{matrix}<br>$$<br>​    计算:<br>$$<br>[z]_1:=[z(x)]_1<br>$$<br>​    第二个输出 <strong><em>P</em></strong> 为：<br>$$<br>([z]_1)<br>$$<br><strong>Round 3:</strong></p>
+<p>​    计算商数挑战α∈ <strong><em>F</em></strong>p：<em>α</em> = <em>R</em>(transcript)</p>
+<p>​    计算商数二项式t(X)：<br>$$<br>\begin{matrix}<br>t(X)=(a(X)b(X)q_M(X)+a(X)q_L(X)+b(X)q_R(X)+c(X)q_O(X)+PI(X)+q_C(X)) \frac{1}{Z_H(X)} \+ ((a(X)+\beta X+\gamma)(b(X)+\beta k_1X+\gamma)(c(X)+\beta k_2X+\gamma)z(X)) \frac{\alpha}{Z_H(X)}<br>\- ((a(X)+\beta S_{\sigma 1} (X)+\gamma)(b(X)+\beta S_{\sigma 2} (X)+\gamma)(c(X)+\beta S_{\sigma 3} (X)+\gamma)z(X\omega))\frac{\alpha}{Z_H(X)}<br>\+ ((z(X)-1)L_1(X)\frac{\alpha ^2}{Z_H(X)}<br>\end{matrix}<br>$$<br>​    拆分 t(X) 为多项式 tlo(X)，tmid(X)和thi(X)， tlo(X)阶数&lt;n，thi(X)阶数≤n+5，即<br>$$<br>t(X)=t_{lo}(X)+X^nt_{mind}(X)+X^{2n}t_{hi}(X)<br>$$<br>​    计算<br>$$<br>[t_{lo}]<em>1:=[t</em>{lo}(x)]<em>1, [t</em>{mid}]_1:=[tmid(x)]<em>1, [t</em>{hi}]<em>1:=[t</em>{hi}(x)]<em>1<br>$$<br>​    第三个输出 <strong><em>P</em></strong> 为：<br>$$<br>([t</em>{lo}]<em>1,[t</em>{mid}]<em>1,[t</em>{hi}]_1)<br>$$<br><strong>Round 4:</strong></p>
+<p>​    计算评估挑战ζ∈ <strong><em>F</em></strong>p：ζ= <em>R</em>(transcript)</p>
+<p>​    计算开放评估：<br>$$<br>\overline a=a(ζ),\overline b=b(ζ), \overline c=c(ζ),\overline S_{\sigma 1}=S_{\sigma 1}(ζ), \overline S_{\sigma 2}=S_{\sigma 2}(ζ), \overline t=t(ζ), \overline z=z(ζω)<br>$$<br>​    计算线性化多项式 r(X)：<br>$$<br>\begin{matrix}<br>r(X)=(\overline a \overline b \cdot q_M(X)+\overline a \cdot q_L(X)+\overline b \cdot q_R(X)+ \overline c \cdot q_O(X)+q_C(X)) \</p>
+<ul>
+<li>((\overline a+\beta ζ+\gamma)(\overline b+\beta k_1ζ+\gamma)(\overline c+\beta k_2ζ+\gamma)\cdot z(X))\alpha<br>\- ((\overline a+\beta \overline S_{\sigma 1}+\gamma)(\overline b+\beta S_{\sigma 2}+\gamma)\beta \overline z_ω \cdot S_{\sigma 3}(X)) \alpha<br>\+ ((z(X))L_1(ζ){\alpha ^2}<br>\end{matrix}<br>$$<br>​    计算线性化评估<br>$$<br>\overline r = r(ζ)<br>$$<br>​    第四个输出 <strong><em>P</em></strong> 为：<br>$$<br>(\overline a, \overline b, \overline c, \overline S_{\sigma 1},\overline S_{\sigma 2},\overline z_ω,\overline t,\overline r)<br>$$</li>
+</ul>
+<p><strong>Round 5:</strong></p>
+<p>​    计算开放挑战 υ∈ <strong><em>F</em></strong>p：υ= <em>R</em>(transcript)</p>
+<p>​    计算开放证明多项式 Wζ(X)：<br>$$<br>W_ζ(X)=\frac{1}{X-ζ}\left(<br>\begin{matrix}<br>(t_{lo}(X)+ζ^nt_{mid}(X)+ζ^{2n}t_{hi}(X)-\overline t)\<br>+υ(r(X)-\overline r)\<br>+υ^2(a(X)-\overline a)\<br>+υ^3(b(X)-\overline b)\<br>+υ^4(c(X)-\overline c)\<br>+υ^5(S_{\sigma 1}(X)-\overline S_{\sigma 1})\<br>+υ^6(S_{\sigma 2}(X)-\overline S_{\sigma 2})\</p>
+<p>\end{matrix}<br>\right)<br>$$<br>​    计算开放证明多项式：<br>$$<br>W_{ζω}(X)=\frac{(z(X)-\overline z_ω)}{X-ζω}<br>$$<br>​    计算：<br>$$<br>[W_ζ]<em>1:=[W_ζ(x)]_1,[W_ζω]_1:=[W_ζω(x)]_1<br>$$<br>​    第五个输出P为<br>$$<br>([W_ζ]_1,[W_ζω]_1)<br>$$<br>​    返回<br>$$<br>π</em>{SNARK}=\left(<br>[a]<em>1,[b]<em>1,[c]_1,[z]_1,[t</em>{lo}]<em>1,[t</em>{mid}]<em>1,[t</em>{hi}]<em>1,[W_ζ]_1,[W_ζω]_1,\overline a, \overline b, \overline c, \overline S</em>{\sigma 1},\overline S</em>{\sigma 2},\overline r, \overline z_ω<br>\right)<br>$$<br>​    计算多点评估挑战 u∈ <strong><em>F</em></strong>p：u = R(transcript)</p>
+<p>​    现在，我们以最小化<strong>G1</strong>标量乘法次数的方式描述验证程序算法。</p>
+<h4 id="验证人算法："><a href="#验证人算法：" class="headerlink" title="验证人算法："></a>验证人算法：</h4><p><strong>验证预处理输入：</strong><br>$$<br>\begin{matrix}<br>[q_M]<em>1:=q_M(x)\cdot [1]_1\,<br>[q_L]_1:=q_L(x)\cdot [1]_1\<br>,[q_R]_1:=q_R(x)\cdot [1]_1\<br>,[q_O]_1:=q_O(x)\cdot [1]_1\<br>,[S</em>{\sigma 1}]<em>1:=S</em>{\sigma 1}(x)\cdot [1]<em>1\<br>,[S</em>{\sigma 2}]<em>1:=S</em>{\sigma 2}(x)\cdot [1]<em>1\<br>,[S</em>{\sigma 3}]<em>1:=S</em>{\sigma 3}(x)\cdot [1]_1\<br>x \cdot [1]_2<br>\end{matrix}<br>$$</p>
+<p>$$<br>\begin{matrix}<br>1.验证 \left(<br>[a]<em>1,[b]<em>1,[c]_1,[z]_1,[t</em>{lo}]<em>1,[t</em>{mid}]<em>1,[t</em>{hi}]_1,[W_ζ]_1,[W_ζω]_1<br>\right) \in G_1 \<br>2.验证\left(<br>\overline a, \overline b, \overline c, \overline S</em>{\sigma 1},\overline S_{\sigma 2},\overline r, \overline z_ω<br>\right) \in F ^7 <em>p \<br>3.验证 (w_i)_{i \in [l]} \in F ^l _p \<br>4.计算 \beta,\gamma,\alpha,ζ,v, u \in F_p 如证明人算法描述 \<br>5.计算零多项式评估 Z_H(ζ)=ζ^n-1 \<br>6.计算拉格朗日多项式评估 L_1(ζ)=\frac{ζ^n-1}{n(ζ-1)} \<br>7.计算公共多项式评估 PI(ζ)=\sum</em>{i\in l} w_iL_i(ζ) \<br>8.计算求商多项式评估 \overline t = \frac{\overline r + PI(ζ) - ((\overline a+\beta \overline S_{\sigma 1}+\gamma)(\overline b+\beta \overline S_{\sigma 2}+\gamma)(\overline c+\gamma) \overline z_ω)\alpha - L_1(ζ)\alpha ^2)}{Z_H(ζ)}<br>\end{matrix}<br>$$</p>
+<p>9.计算第一部分的批多项式承诺<br>10.计算整体批多项式承诺<br>11.计算群编码批评估<br>12.验证全部评估</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -604,181 +744,6 @@
 <p><a target="_blank" rel="noopener" href="https://gist.github.com/alecthegeek/62b340ecb1480326eee1a13252ea83bb">https://gist.github.com/alecthegeek/62b340ecb1480326eee1a13252ea83bb</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env expect -f</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Start the CISCO VPN client on a Mac. Adapted from</span></span><br><span class="line"><span class="comment"># https://blog.felipe-alfaro.com/2014/05/23/automating-cisco-anyconnect-secure-mobility-client-on-mac-os-x/</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> HOSTNAME vpn.server.com</span><br><span class="line"><span class="built_in">set</span> USER_NAME user.name</span><br><span class="line"><span class="built_in">set</span> PASSWORD password</span><br><span class="line"></span><br><span class="line">spawn /opt/cisco/anyconnect/<span class="built_in">bin</span>/vpn</span><br><span class="line"></span><br><span class="line">expect &#123;</span><br><span class="line">  <span class="string">&quot;state: Connected&quot;</span> &#123; send disconnect\n ; exp_continue; sleep <span class="number">3</span> &#125;</span><br><span class="line">  <span class="string">&quot;state: Disconnected&quot;</span>  &#123;sleep <span class="number">2</span>;send <span class="string">&quot;connect $HOSTNAME\n&quot;</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">expect -timeout <span class="number">60</span> -re <span class="string">&quot;Username: .+] &quot;</span>; send $USER_NAME\n</span><br><span class="line">expect <span class="string">&quot;Password: &quot;</span> ; send $PASSWORD\n</span><br><span class="line">expect <span class="string">&quot;state: Connected&quot;</span>; sleep <span class="number">2</span>; send exit\n</span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/03/10/clearpool%E5%85%AC%E5%8F%B8%E8%B0%83%E7%A0%94/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/10/clearpool%E5%85%AC%E5%8F%B8%E8%B0%83%E7%A0%94/" class="post-title-link" itemprop="url">clearpool公司调研</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-03-10 17:10:01 / Modified: 17:37:54" itemprop="dateCreated datePublished" datetime="2021-03-10T17:10:01+08:00">2021-03-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>2020-04-06，电子交易解决方案提供商、独立代理经纪交易商<a target="_blank" rel="noopener" href="https://clearpoolgroup.com/">Clearpool</a> Group周一宣布，该公司现已被<a target="_blank" rel="noopener" href="https://www.bmo.com/">BMO</a>金融集团收购。根据该公司的声明，收购交易的完成将加速其电子交易解决方案的开发，其并未透露收购金额方面的条款。收购后，Clearpool将作为BMO Financial Group旗下的一个独立品牌。</p>
-<p><a target="_blank" rel="noopener" href="https://clearpoolgroup.com/">https://clearpoolgroup.com/</a></p>
-<h3 id="透明，信任和控制"><a href="#透明，信任和控制" class="headerlink" title="透明，信任和控制"></a>透明，信任和控制</h3><p>在算法交易中，Clearpool的算法管理系统（AMS）正在使用完全可自定义的算法交易工具套件对电子交易进行转型，从而提供从策略到执行的全面可见性和控制力。</p>
-<p>一个独立的取证工具，用于检查整个股票市场的历史场馆表现。</p>
-<ul>
-<li>每月或每季度查看一次场地绩效。</li>
-<li>获取可行的数据以分析场地的性能并在算法的路由表中优化场地的优先级。</li>
-<li>根据订单的意图确定最合适的场地，而不是将每个场地的表现都视为绝对。 例如，某些场所可能更适合激进订单，而其他场所则更适合中点流动性。</li>
-<li>根据MiFID II和拟议的SEC增强的订单透明度规则，有充分的条件证明您最好的防爆协议。一个独立的取证工具，用于检查整个股票市场的历史场馆表现。</li>
-</ul>
-<p>对通过Clearpool的AMS发送的流程执行对等分析。</p>
-<ul>
-<li><p>同时订阅Venue Analysis的Clearpool AMS用户还可以在一个屏幕上查看我们自己的流量范围，此外还可以查看自己的流量。</p>
-</li>
-<li><p>查看Clearpool的整个匿名执行数据范围，其中包括我们由100多个经纪商组成的网络，这些经纪人为世界上许多最大的资产管理公司提供服务。</p>
-</li>
-<li><p>与我们具有统计意义的数据集比较并对比您自己数据中的趋势。</p>
-</li>
-<li><p>使用此数据可帮助您在如何优化访问场所方面做出公正的决定。</p>
-</li>
-</ul>
-<p>强大的交互式可视化功能使您可以轻松地钻取数据。</p>
-<ul>
-<li>我们的工具可以为您可视化数据，使您可以轻松发现趋势和离群值，并花费更少的时间清理数据和分析电子表格。</li>
-<li>使用多个过滤器，只需单击几下即可对数据进行切片和切块，包括策略，场所类型，市值等。</li>
-<li>通过单击交互式条形图，饼形图或热图，甚至可以进一步展开操作，以显示用于所选数据的新仪表板。</li>
-</ul>
-<h3 id="以你的方式交易"><a href="#以你的方式交易" class="headerlink" title="以你的方式交易"></a>以你的方式交易</h3><p>Clearpool的基于云的AMS为您的算法交易策略提供了自定义，执行，分析和优化的功能。 通过完全透明和最终的路由控制，您拥有有效地大规模协作和管理自己的算法交易技术的工具和见解。</p>
-<p>AMS-Algorithmic Management System：算法管理系统<br>一个完整的基于云的算法交易平台，提供交易前合规性和风险检查，算法策略和路由协议的自定义可配置性以及高级分析，以在整个电子交易生命周期中提高透明度和控制力。</p>
-<p>场地分析<br>Clearpool的场所分析为市场参与者提供了独立的解决方案，可以评估整个股票市场的场所。这是一种取证工具，可以每月或每季度检查一次场地绩效，为您提供可行的数据来分析和优化绩效。用它来帮助验证您的路由协议以证明最佳性能。</p>
-<p>掌握您的电子交易性能和成本。</p>
-<ul>
-<li><p>设计定制的路由协议，确定场所的优先级以实现最佳执行，最大程度地减少信息泄漏和滑移，并在各个策略和阶段中添加或删除场所。</p>
-</li>
-<li><p>设置被动和激进的紧急程度，通过基于策略目标管理调度程序逻辑，拍卖参与，调整大小，数量跟踪和其他高级协议来实现高级算法行为。</p>
-</li>
-<li><p>通过基于Web的AMS客户门户无缝管理算法交易。</p>
-</li>
-</ul>
-<p>从策略配置到订单执行的内置透明度。</p>
-<ul>
-<li><p>可视化策略和场地绩效，并通过填充率，返工和贸易成本评估绩效。</p>
-</li>
-<li><p>基准性能，评估场所并确定其优先级，并通过优化策略配置使分析结果可付诸实践。</p>
-</li>
-<li><p>受益于我们的汇总订单智能逻辑，该逻辑通过汇总类似的订单来最大化场地队列优先级，以维持最佳的队列位置并实现更好的质量执行。</p>
-</li>
-</ul>
-<p>拥有数十年电子贸易领域专业知识的技术合作伙伴，值得信赖。</p>
-<ul>
-<li><p>将您的算法交易基础架构外包，以支持您的电子交易产品。</p>
-</li>
-<li><p>获得您的客户经理，我们的定量团队和服务台的全力支持，以协助进行与贸易有关的查询。</p>
-</li>
-<li><p>作为一个完整的SaaS解决方案，无需进行持续的硬件维护，并且所有软件更新都将部署在AMS的安全分区中的云中。</p>
-</li>
-</ul>
-<p>受益于基于云的基础架构的规模和效率。</p>
-<ul>
-<li><p>提供无需资本投资的差异化电子交易产品。</p>
-</li>
-<li><p>将技术留给专家，并最大程度地减少进行日常维护所需的内部资源。</p>
-</li>
-<li><p>受益于我们的整体规模，基础架构和执行服务。</p>
-</li>
-</ul>
-<h3 id="Clearpool执行服务"><a href="#Clearpool执行服务" class="headerlink" title="Clearpool执行服务"></a>Clearpool执行服务</h3><p>Clearpool的独立代理经纪人交易商可提供无冲突的流动性访问。CES不会针对客户流进行交易或进行任何专有交易。我们的路由协议是完全透明的。结合我们AMS的强大功能，我们可以有效地为合作伙伴提供流动性并确保最佳执行质量。</p>
-<ul>
-<li><p>仅代理商的订单执行和经纪人中立的流动性访问。</p>
-</li>
-<li><p>Clearpool原则上不进行交易。</p>
-</li>
-<li><p>我们不拥有或投资黑池或ATS。</p>
-</li>
-<li><p>我们不会违反您的订单流程。</p>
-</li>
-<li><p>我们利用经纪交易商来促进AMS订单的有效执行。</p>
-</li>
-<li><p>所有订单都是匿名发送的。</p>
-</li>
-</ul>
-<p>场地关系由Clearpool Execution Services建立和维护。</p>
-<ul>
-<li><p>美国所有交易所的成员。</p>
-</li>
-<li><p>可进入40多个黑暗场所，包括ATS，有条件场所，做市商和单一交易商。</p>
-</li>
-<li><p>多个结算关系。</p>
-</li>
-<li><p>全面的供应商管理。 会员，交叉连接和实施费用由CES承担。</p>
-</li>
-</ul>
-<p>全面的贸易支持和服务。</p>
-<ul>
-<li><p>我们深厚的电子交易和场馆知识将为您提供专业的服务支持。</p>
-</li>
-<li><p>我们的定量团队和开发人员团队对每个场所的订单要求都有明确的了解，以促进无缝的订单执行。</p>
-</li>
-<li><p>边缘控件有助于在场所级别管理风险。</p>
-</li>
-<li><p>我们的支持团队可以对不合格的订单流，已取消和拒绝的订单以及会话/场地断开进行实时故障排除。</p>
-</li>
-</ul>
-<h3 id="被收购前，公司主页地址-https-www-clearpool-io"><a href="#被收购前，公司主页地址-https-www-clearpool-io" class="headerlink" title="被收购前，公司主页地址: https://www.clearpool.io/"></a>被收购前，公司主页地址: <a target="_blank" rel="noopener" href="https://www.clearpool.io/">https://www.clearpool.io/</a></h3><h4 id="准备就绪的，代币化的交易所"><a href="#准备就绪的，代币化的交易所" class="headerlink" title="准备就绪的，代币化的交易所"></a>准备就绪的，代币化的交易所</h4><p>Clearpool是一家由华尔街和纽约市聚集的资深创新者组成的公司，正在建立世界上第一个真正的代币化多边贸易基金，在FCA的授权下，它引入了完全数字化的机构级交易所，没有场馆驱动的托管风险，并进入了欧洲市场。</p>
-<p>由具有数十年经验的全球交易所专家集中设计和建造，以达到最高的技术和法规标准。Clearpool将为加密资产交易带来可靠性和性能的新标准，并为全新的金融服务交付方法定下基调。</p>
-<p>运营受监管的市场并确保合规很难，参与者别无选择，只能相信监管者的做法是正确的。 但是我们可以做得更好。Clearpool开发了一种独特的方法来跟踪场内状态，该方法允许创建和发布实时可验证的市场数据，参与者可以使用这些数据来验证预期的场地行为。</p>
-<p>不仅如此。 我们将底层的加密安全监视事件流与可派生的仲裁事件流一起使用。 通过将这些流锚定到抗审查性的区块链，我们获得了可完美扩展，不可辩驳的审计跟踪，从而使监管机构可以验证所有场所行为-完全透明，而不会泄漏信息。 更好的是，它还可以用于非加密资产，例如传统股票黑池。</p>
-<h4 id="我们的愿景"><a href="#我们的愿景" class="headerlink" title="我们的愿景"></a>我们的愿景</h4><p>我们的目标一直是为所有参与者提供公平的市场，并为监管者的愿望提供智能和创新的支持。为此，我们看到了两个关键领域：改进市场微观结构，以使衡量市场公平性和质量更加客观；其次，改善市场交付本身的基础结构，以便更轻松地取消对互操作活动的监管，并提供更好的一流服务。支持验证公平，安全的市场运作。</p>
-<p>Clearpool的愿景是将这两项改进结合到一个受监管的场所中，以证明对市场微观结构的切实改进，同时重要地是对公平，优质市场的交付，可验证和可计量的数量进行验证。我们可以通过将我们在市场微观结构方面拥有的现有知识和IP与我们开发的新技术相结合来实现这两个目标，这些新技术采用了分布式分类帐和区块链空间的一些创新，并将其应用于解决我们希望解决的特定问题讲话。</p>
-<p>Clearpool MTF将成为世界上第一个完全标记化的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/MTF%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0/16701370">MTF</a>，其中数字化在交易基础设施中不可或缺。这将允许参与者实时地以及由管理者追溯地验证场地上的所有交易和活动。实际上，该场所为监管机构提供了无可辩驳的参考，并为减轻参与者的监管负担，同时增加了所有人的洞察力和价值铺平了道路。</p>
-<h4 id="使用到的技术栈"><a href="#使用到的技术栈" class="headerlink" title="使用到的技术栈"></a>使用到的技术栈</h4><p>networking library <a target="_blank" rel="noopener" href="https://think-async.com/Asio/">asio</a> and the scons-based build system <a target="_blank" rel="noopener" href="https://github.com/ja11sop/cuppa">Cuppa</a>. You’ve probably heard of <a target="_blank" rel="noopener" href="https://think-async.com/Asio/">asio</a>, or <a target="_blank" rel="noopener" href="https://www.boost.org/doc/html/boost_asio.html">boost::asio</a> before — it’s the networking library that underpins many ultra low latency financial systems, as well payment networks like <a target="_blank" rel="noopener" href="https://ripple.com/">Ripple</a>, blockchains like <a target="_blank" rel="noopener" href="https://ethereum.org/">Ethereum</a>, and utility libraries like <a target="_blank" rel="noopener" href="https://www.libtorrent.org/">libtorrent</a>.</p>
 
       
     </div>
