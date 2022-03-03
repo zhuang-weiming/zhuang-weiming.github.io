@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,285 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/" class="post-title-link" itemprop="url">以太坊编程_II</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-24 21:32:27" itemprop="dateCreated datePublished" datetime="2018-02-24T21:32:27+08:00">2018-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>目录</strong></p>
+<ol>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">迈出第一步</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">与合约进行交互</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/">现实世界中的构架和工具</a></p>
+</li>
+</ol>
+<p><strong>2.尝试与合约进行交互</strong></p>
+<p><strong>2.1以太坊智能合约介绍</strong></p>
+<p>阅读到这里，对以太坊已经有了基础的了解，已经与以太坊节点进行了交互，并在账户之间发送了一些交易等等。但除此之外，让以太坊如此惊艳的还有：智能合约。</p>
+<p>正如我在简介中所说，智能合约是一个运行在以太坊虚拟机（EVM）上的程序。你可以创建智能合约来做任何你想做的事情，但是在今天，大多数智能合约都被用于像I-C-Os或者代币销售那样的众筹工具。接下来请允许我解释这些概念。</p>
+<p>从众筹开始说起，相信这是一个你非常熟悉的概念。举办众筹活动的项目，其目的是为了开展项目而筹集资金。你可以几乎零成本的发行一种与你的项目相关的数字资产，并将其出售给任何人。这就是我们所说的初始代币发行（I-C-O）。</p>
+<p>要想实现一个具有智能合约的I-C-O，你只需要实现使你的数字资产可交易并且有价值的逻辑。这听起来不错，这些就是以太坊代币，是以太坊生态系统中的一种数字资产。</p>
+<p>接下来让我们试着通过一个例子来分析这些例子。</p>
+<p>假设你的健康食品公司想要推出一种新的品牌。你决定进行一次I-C-O来筹集20,000个ETH。你用10个代币换取你收集到的每个ETH，并承诺，贡献者可以在你的商店使用这些代币购买食物。为此，你需要开发一个代币智能合约为每个贡献者存储他们相应的代币数量。</p>
+<p>现在，假设你筹集到了这笔钱，开展了你的项目并开了你的第一家店。然后，你决定每份沙拉以1个代币的价格出售。一周以后，你的客人越来越多，但是沙拉的供应却是有限的，客人意识到这一点并开始把你的代币当作资产交易，从而提高了其市场价值。</p>
+<p>这一过程在现实生活中实际存在，因为以太坊几乎允许任何人创建他们自己的可交易的数字资产。</p>
+<p><strong>2.2你的第一个智能合约</strong></p>
+<p>让我们看看如何建立一种基本的以太坊代币吧。我将通过这个例子介绍一些Solidity的基础知识。</p>
+<p>请记住这个例子仅用于学习，不能使用它从事商业活动。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.0;</span><br><span class="line">contract MyToken &#123;</span><br><span class="line"> address public creator;</span><br><span class="line"> uint256 public totalSupply;</span><br><span class="line"> mapping (address &#x3D;&gt; uint256) public balances;</span><br><span class="line"> </span><br><span class="line"> function MyToken() public &#123;</span><br><span class="line">   creator &#x3D; msg.sender;</span><br><span class="line">   totalSupply &#x3D; 10000;</span><br><span class="line">   balances[creator] &#x3D; totalSupply;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> function balanceOf(address owner) public constant returns(uint256)&#123;</span><br><span class="line">   return balances[owner];</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> function sendTokens(address receiver, uint256 amount) public returns(bool)&#123;</span><br><span class="line">   address owner &#x3D; msg.sender;</span><br><span class="line"></span><br><span class="line">   require(amount &gt; 0);</span><br><span class="line">   require(balances[owner] &gt;&#x3D; amount);</span><br><span class="line"></span><br><span class="line">   balances[owner] -&#x3D; amount;</span><br><span class="line">   balances[receiver] +&#x3D; amount;</span><br><span class="line">   return true;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让我们一步步来。<em>pragma</em>关键词显示了你使用的源码的Solidity版本。然后，用合约的名字进行合约定义初始化，在这个例子中，名字就是<em>MyToken</em>。</p>
+<p>接下来，你可以看到三个变量：</p>
+<p><em>creator</em> 是一个地址变量，用于存储该合约的拥有者。</p>
+<p><em>TotalSupply</em> 是一个256位的无符号整数，用于存储愿意与投资者共享的代币总数。</p>
+<p><em>balance</em> 是从地址到无符号整数的映射，其记录着每个投资者的余额。</p>
+<p>之后，你将看到构造函数。正如你所见，这是一个与合约同名的函数，同时每当该合约的一个新的实例被部署在网络中时它将被调用一次。这就是合约的所有者被存储的地方。由于所有的函数调用都是一笔交易，因此可以通过交易的发送者即 <em>msg.sender</em> 获得合约的所有者信息。这个合约定义了总共10,000个代币。</p>
+<p>下一个函数十分简单：<em>balanceOf</em> 用于展示参数指定的地址的余额。也许你想知道 <em>constant</em> 关键字是什么意思。这是因为Solidity的函数分为两种，一种是常量函数，一种是非常量函数。</p>
+<p>非常量函数执行后状态会发生变化。另一方面，常量函数只读一次，这意味着它不执行任何状态转换，而是只读取数据。实际上，共有两种类型的常量函数：</p>
+<p><em>view</em> 声明函数承诺不修改状态（常量的别名）</p>
+<p><em>pure</em> 声明函数承诺不读取或者修改状态</p>
+<p><em>sendTokens</em> 函数允许我们在地址间交换代币。这是一个非常量函数或者说是一个交易函数，因为使用这个函数将改变余额。该函数的参数是接收者的地址以及欲转移的代币数量，函数的返回值是一个表示交易是否成功执行的布尔（Boolean）类型数据。你可以跳过第一行，它只是把函数的发送者保存在<em>owner</em>变量中。</p>
+<p>接下来，你将看到两个先决条件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">require(amount &gt; 0);</span><br><span class="line">require(balances[owner] &gt;&#x3D; amount);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><em>Require</em> 是你可以用来检查条件或者进行验证的方法之一。它将评估一个条件并在条件不满足时恢复原状。因此，在这个例子中，要求被转移的代币 <em>amount</em> 大于零，同时要保证发送者有足够的余额来支付该笔代币转移。</p>
+<p>最后，你要从 <em>owner</em> 的余额中减去交易转移的代币数量，并将其添加到 <em>receiver</em> 的余额中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> balances[owner] -&#x3D; amount;</span><br><span class="line"> balances[receiver] +&#x3D; amount;</span><br><span class="line"> return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.3 部署智能合约</strong></p>
+<p>现在让我们开始试着玩一下智能合约吧！首先需要在网络上部署智能合约。为了实现部署，需要使用名为 solc的Solidity编译器用于编译node.js。你可以通过以下指令安装它：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g solc</span><br></pre></td></tr></table></figure>
+
+<p>创建一个叫做 <em>MyToken.sol</em> 的文件并把合约代码粘贴到文件中，并在放置该文件的路径下打开一个控制终端。首先，通过运行以下指令编译文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solcjs MyToken.sol --bin</span><br></pre></td></tr></table></figure>
+
+<p>执行完该指令，编译器将创建一个 <em>MyToken_sol_MyToken.bin</em> 文件作为输出。你可以看到该文件只包含字节码。接着，你将需要使用solc来构建ABI（应用二进制接口），它是合约的接口或者说模板，通过它你可以获得可用的方法。这就是与Web3的联系点。你只需要运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solcjs MyToken.sol --abi</span><br></pre></td></tr></table></figure>
+
+<p>接着，你将看到一个叫做 <em>MyTolen_sol_MyToken.abi</em> 的新文件，其中包含的JSON内容定义了你的合约的接口。</p>
+<p>最后，你只需要使用在后台运行的 <em>testrpc</em> ，通过node.js控制台部署你的合约。你完成了这些工作后，我们就开始初始化 <em>web3</em> 吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instance web3</span></span><br><span class="line">Web3 = <span class="built_in">require</span>(<span class="string">&#x27;web3&#x27;</span>)</span><br><span class="line">provider = <span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&quot;http://localhost:8545&quot;</span>)</span><br><span class="line">web3 = <span class="keyword">new</span> Web3(provider)</span><br></pre></td></tr></table></figure>
+
+<p>Web3 为你提供了解析合约ABI的可能性，并提供了一个JavaScriot API 与之交互。接着，你只需使用字节码就可以将该合约的一个新实例部署到 <em>testrpc</em> 上。请按照下面的命令输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// load files</span></span><br><span class="line">myTokenABIFile = fs.readFileSync(<span class="string">&#x27;MyToken_sol_MyToken.abi&#x27;</span>)</span><br><span class="line">myTokenABI  = <span class="built_in">JSON</span>.parse(myTokenABIFile.toString())</span><br><span class="line">myTokenBINFile = fs.readFileSync(<span class="string">&#x27;MyToken_sol_MyToken.bin&#x27;</span>)</span><br><span class="line">myTokenByteCode = myTokenBINFile.toString()</span><br><span class="line"><span class="comment">//deploy</span></span><br><span class="line">account = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">MyTokenContract = web3.eth.contract(myTokenABI)</span><br><span class="line">contractData = &#123; <span class="attr">data</span>: myTokenByteCode, <span class="attr">from</span>: account, <span class="attr">gas</span>: <span class="number">999999</span> &#125;</span><br><span class="line">deployedContract = MyTokenContract.new(contractData)</span><br></pre></td></tr></table></figure>
+
+<p>最后，你可以通过调用 <em>deployedContract.address</em> 检查新部署的合约地址。请保存该地址，因为将需要使用这个地址与你的合约进行交互 :) 。</p>
+<p><strong>2.4 Web3与智能合约</strong></p>
+<p>让我们从搜索你的 <em>testrpc</em> 账户余额开始。为此，你首先需要访问已部署的合约实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">contractAddress = deployedContract.address</span><br><span class="line">instance = MyTokenContract.at(contractAddress)</span><br><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">address</span> =&gt;</span> &#123;</span><br><span class="line"> tokens = instance.balanceOf.call(address)</span><br><span class="line"> <span class="built_in">console</span>.log(address + <span class="string">&quot;: &quot;</span> + tokens)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>正如我们所预期的，第一个账户拥有所有的代币。太棒了！接下来，让我们将一部分代币转移到其他账户：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// send tokens</span></span><br><span class="line">amount = <span class="number">10</span></span><br><span class="line"><span class="keyword">from</span> = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">to = web3.eth.accounts[<span class="number">1</span>]</span><br><span class="line">transactionHash = instance.sendTokens(to, amount, &#123; <span class="attr">from</span>: <span class="keyword">from</span> &#125;)</span><br><span class="line"><span class="comment">// checkout balances again</span></span><br><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">address</span> =&gt;</span> &#123;</span><br><span class="line"> tokens = instance.balanceOf.call(address)</span><br><span class="line"> <span class="built_in">console</span>.log(address + <span class="string">&quot;: &quot;</span> + tokens)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>你应该可以看到，现在第二个地址有了10个代币！你也可以搜索交易信息，正如你在本指南第一部分所做的那样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.getTransaction(transactionHash)</span><br></pre></td></tr></table></figure>
+
+<p>我还为这个mini DApp设计了一个简单的UI，你可以在<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/2-interacting-with-a-contract">这里</a>看到它。你将看到一个包含了我们合约ABI的 <em>MyToken.json</em> 文件。我只是把solidity编译器生成的ABI的内容粘贴到这里面。你还可以看到一个与前一个应用相似的 app.js 文件，但是这个app.js文件还包含了我刚刚向你展示的用于发送代币以及展示账户代币余额详细信息的逻辑。</p>
+<p><img src="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg"><br><em>开发的用来测试 MyToken 转账的 DApp 的 UI</em></p>
+<p>你也可以下载这个 App 并开始与它游戏。你将被要求提供你开发的合约案例的地址。</p>
+<p>注意：为了减轻术语负担，这篇文章中描述的代币并非ERC20标准的代币。如果你不知道什么是ERC20协议代币，我们会在下一篇文章中解释它。</p>
+<blockquote>
+<p>原文链接: <a target="_blank" rel="noopener" href="https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-2-7bbf15e1a953">https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-2-7bbf15e1a953</a></p>
+<p>作者: Facu Spagnuolo</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/" class="post-title-link" itemprop="url">以太坊编程_I</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-24 21:21:09" itemprop="dateCreated datePublished" datetime="2018-02-24T21:21:09+08:00">2018-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>目录</strong></p>
+<ol>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">迈出第一步</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">与合约进行交互</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/">现实世界中的构架和工具</a></p>
+</li>
+</ol>
+<p><strong>第一步</strong></p>
+<p>假设你已经有一些计算机编程方面的基础知识，并知道区块链数据结构是怎样的。如果不具备，请先了解<a target="_blank" rel="noopener" href="http://ethfans.org//">ethfans</a>的内容再回来看这篇博客。</p>
+<p><strong>以太坊</strong></p>
+<p>以太坊是一个开源的，分布式的，基于区块链技术的公共平台，无需审查及第三方干扰即可运行应用程序。</p>
+<p><strong>智能合约</strong></p>
+<p>智能合约仅仅是电脑程序。我们基于智能合约创建以太坊应用。虽然这个概念现在随着以太坊大红大紫，但是它实际上是由Nick Szabo于1996年提出。</p>
+<p><strong>EVM 以太坊虚拟机</strong></p>
+<p>EVM 是以太坊智能合约的沙盒运行时,是一个完全独立的环境。这意味着每个在EVM中运行的智能合约无法连接网络，无法调用文件系统和其他进程。</p>
+<p><strong>Gas</strong></p>
+<p>鉴于以太坊是一个分布式平台，所以必须有一种方式来限定智能合约的可用资源，否则整个网络的算力瘫痪都可能会被耗尽。Gas 通过为EVM中的每个指令确定执行成本来解决问题。重要的是，网络中的每笔交易都有一个“Gas预算”。如果预算的Gas用完了，交易将以失败告终，但是这笔交易仍然会被加载到区块链中。</p>
+<p><strong>Ether（ETH）</strong></p>
+<p>这是以太坊的加密数字货币。Gas／Ether的兑换价格用来衡量一个操作将花费多少ETH。执行交易所需支付的费用通过Gas用量与Gas价格相乘得出（计算所得的费用将使用ETH支付）。你可以将交易的Gas价格设置为任何值。但是，如果你设置的Gas价格太低的话，没有人会执行你的代码。</p>
+<p><strong>账户</strong></p>
+<p>每个账户都是由一个地址标识的。同一地址空间由两种账户共享。一种是由公私钥对控制的外部账户，该账户通常由用户持有，用来存储ETH。另一种是合约账户，合约账户下存储着智能合约的代码。重要的是，只有外部账户才能启动交易。</p>
+<p><strong>交易</strong></p>
+<p>交易是从一个账户发送到另一个账户的消息。消息内容可以是转移ETH。如果目的账户是合约账户，其智能合约代码将被执行。有关智能合约代码执行的每一笔交易将在网络中的所有节点上执行。所有的智能合约代码运行以及交易执行都将被记录在以太坊区块链上。</p>
+<p><strong>Solidity</strong></p>
+<p>Solidity 是一种面向合约的高级语言，其语法与JavaScript相似。Solidity是静态类型的，支持继承，库以及复杂的用户定义类型。编译后就是节点运行的EVM程序集。</p>
+<p><strong>WEB3</strong><br>先通过简单的将ETH从一个账户发送到另一个账户开始与以太坊互动。因为刚开始，我们可能会弄的一团糟，所以不想用真正的ETH来做这个实验，经过搜索，发现了testrpc，这是一个用于测试和开发的以太坊客户端，是由npm管理的。让我们安装这个客户端并开始使用它：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g ethereumjs-testrpc</span><br><span class="line">testrpc</span><br></pre></td></tr></table></figure>
+
+<p>你会注意到testrpc已经产生了10个地址，这些地址都拥有虚拟的ETH可供测试无需担心。有一点是testrpc的状态并不稳定，每次关闭后，节点和账户状态将被清除。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/JavaScript-API">Web3.js</a> 是一个实现了以太坊 JSON RPC 的JavaScript库。我们将使用Web3.js与以太坊节点（在这个例子中是testrpc）进行交互。安装只需运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g web3@0.20.1</span><br></pre></td></tr></table></figure>
+
+<p>顺便提一句，在这个例子中，安装 Web3 0.20.x 版本而不是公测1.0.0版本。首先，需要将本地testrpc测试节点连接到Web3.js,为了做到这一点，我们要求Web3 使用localhost provider。让我们打开一个节点控制台并输入以下命令：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Web3 = <span class="built_in">require</span>(<span class="string">&#x27;web3&#x27;</span>)</span><br><span class="line">provider = <span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&quot;http://localhost:8545&quot;</span>)</span><br><span class="line">web3 = <span class="keyword">new</span> Web3(provider)</span><br></pre></td></tr></table></figure>
+
+<p>我们正在使用默认的testrpc端口（8545），如果你设置了另一个端口，记得更改provider的URL。当你获得web3 实例后，首先运行以下命令以获得你的以太坊节点中的账户列表及其各自余额：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">account</span> =&gt;</span> &#123;</span><br><span class="line">balance = web3.eth.getBalance(account);</span><br><span class="line"><span class="built_in">console</span>.log(balance);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>你可能注意到了，输出不全是数字列表，这是因为Web3使用大数对象来处理数字值，而JavaScript无法正确处理大数类型。可以通过这个<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/JavaScript-API#a-note-on-big-numbers-in-web3js">链接</a>了解更多。</p>
+<p>同时，这些余额不是用ETH表示的，实际上它们的单位都是基本单位wei。1ETH是10¹⁸ wei。</p>
+<p>回到刚刚的话题，让我们试着在两个账户之间发送ETH。指需输入web3.eth.accounts并选择其中的两个，你可以使用sendTransaction方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">to = web3.eth.accounts[<span class="number">1</span>]</span><br><span class="line">transaction = &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">value</span>: <span class="number">100000</span> &#125;</span><br><span class="line">transactionHash = web3.eth.sendTransaction(transaction)</span><br></pre></td></tr></table></figure>
+
+<p>命令输出的是交易哈希，你也可以通过以下命令获得交易信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.getTransaction(transactionHash)</span><br></pre></td></tr></table></figure>
+
+<p>你可能还想检查你使用的账户的余额是否已经更改。你可以使用下面的命令来验证：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">account</span> =&gt;</span> &#123;</span><br><span class="line">balance = web3.eth.getBalance(account);</span><br><span class="line"><span class="built_in">console</span>.log(balance);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我使用HTML和jQuery以及一点Bootstrap搭建了一个简单的UI使得它更美观一点。你可以在<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/1-interacting-with-the-blockchain">repo</a>中看看它。这就是所说的DApp即分布式应用。也就是说，一个部分后端代码运行在分布式点对点网络上的应用程序；在这个例子中，分布式点对点网络是指以太坊网络。</p>
+<p><img src="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg"></p>
+<p><em>上图是用以测试ETH交易的DApp的UI</em></p>
+<p>你将找到UI的index.html文件以及与以太坊交互的app.js文件，这基本上就是我们前面所描述的用一些jQuery回调来填充UI。可以复制repo并运行起来试一下。</p>
+<p>谢谢你阅读这篇博客，如果你有任何问题，意见或者建议欢迎告诉我！如果你喜欢这篇博客，请继续关注本指南的第二部分，我将重点介绍智能合约！</p>
+<p>谢谢<a target="_blank" rel="noopener" href="https://medium.com/@maraoz?source=post_page">Manuel Araoz</a></p>
+<blockquote>
+<p>原文链接: <a target="_blank" rel="noopener" href="https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-1-783cc7796094">https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-1-783cc7796094</a></p>
+<p>作者: Facu Spagnuolo</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -536,315 +815,6 @@
 <p>Date Proposed: 2018-06-17</p>
 <p>一句话：ERC-1155的创造者是Enjin coin的CTO Witek Radomski。ERC1155标准定义了一种解决上述问题的新方法。现在“物品”（可能包含ERC20的token或ERC721的token或两者都有）可以被单一的一个合约（打包处理）来定义了。合约里包含区别token们所需的最小量的数据。</p>
 <p>ERC1155协议主要包括ERC1155Mintable.sol同质化可增发智能合约和ERC1155NonFungibleMintable.sol非同质化可增发智能合约，本章只讲解同质化可增发智能合约的功能。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">tail 命令使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2012-06-08 16:28:14" itemprop="dateCreated datePublished" datetime="2012-06-08T16:28:14+08:00">2012-06-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>UNIX/Linux用户在系统或者应用中触发动作，想要看到针对动作的实时log，这个时候tail命令正是可以一展身手的时候了。</p>
-<p>例：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f sci.log.D20120224.T000000 | grep -v getCommonCodeList | grep -v getRuleDetails | grep -v getExceptionList | grep zhuangwm | grep <span class="string">&quot;Invoking api Method:&quot;</span></span><br></pre></td></tr></table></figure>
-<p>tail —用于输出文件的最后10行信息的内容。-f  是指当文件长度增长的时候，输出文件增长的部分。<br>sci.log.D20120224.T000000 —被搜索的文件名称。<br>|  —是指管道，用于将前面的输出作为输入到后面的命令中<br>grep -v getCommonCodeList —是查找文件里符合条件的字符串。 -v 是指反转查找，用于排除所列出来的文字对象</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2011/11/15/one-year-later/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2011/11/15/one-year-later/" class="post-title-link" itemprop="url">one year later</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2011-11-15 11:01:03" itemprop="dateCreated datePublished" datetime="2011-11-15T11:01:03+08:00">2011-11-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>==============================================================</p>
-<p>Gosh darnit, I miss you guys!</p>
-<p>Congrats to everyone with all of the great things that are going on in each of your lives!  I hope things just continue to progress more and more! Happy Birthday to you, Keith!</p>
-<p>I’m glad that I’ve had a chance to see Erika and Belen, but since I’ve started a new position where I’m traveling ALL of the time, I’m hoping to be in a city near each of you soon!  </p>
-<p>Much love to G5!</p>
-<p>Regards,</p>
-<p>Regina D. Holley Information Security Advisor and Global ISA Program Lead</p>
-<p>  ITD - Security Operations Management</p>
-<p>  972.561.6790 [TL:  861.6790]</p>
-<p>  <a href="mailto:&#104;&#111;&#x6c;&#x6c;&#x65;&#121;&#114;&#64;&#117;&#x73;&#x2e;&#x69;&#98;&#x6d;&#x2e;&#99;&#111;&#x6d;">&#104;&#111;&#x6c;&#x6c;&#x65;&#121;&#114;&#64;&#117;&#x73;&#x2e;&#x69;&#98;&#x6d;&#x2e;&#99;&#111;&#x6d;</a></p>
-<p>  “Do not follow the path. Go where there is no path to begin the trail.”</p>
-<p>-Ashanti proverb</p>
-<p>===============================================================</p>
-<p>From: Erika V Quezada/Mexico/IBM@IBMMX</p>
-<p>To: Keith M Bantle/Fairfax/IBM@IBMUS</p>
-<p>Cc: Srinivas Manem/India/IBM@IBMIN, Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>Date: 10/27/2011 01:34 AM</p>
-<p>Subject: Re: One year later….</p>
-<p>FELIZ CUMPLEAÑOS KEITH!!!</p>
-<p>My best wishes to you!  Pls put a picture of Wilson next to your shots.  And drink one wooden boat shot for us =)  Have a great birthday!!</p>
-<p>I will be in NYC from friday to wednesday morning for vacation, aren’t you planning to be there for Halloween?  </p>
-<p>Srini, are you part of the Acapulco mexican team? If yes you should visit us,  Is the biggest project in Mexico!!</p>
-<p>Today, I was chatting with Tina by Facebook and she ask me to say hello to everybody, she is now an expert surffer and still miss all of us.</p>
-<p>Kisses!</p>
-<p>Saludos,</p>
-<p>Erika V. Quezada Ruiz</p>
-<p>Sales Manager</p>
-<p>Public Sector</p>
-<p>IBM de México</p>
-<p>Tel. (55) 52703701</p>
-<p>Cel. 04455 54551278</p>
-<p>===============================================================</p>
-<p>From: Keith M Bantle/Fairfax/IBM@IBMUS</p>
-<p>To: Srinivas Manem/India/IBM@IBMIN</p>
-<p>Cc: Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>Date: 26/10/2011 11:57</p>
-<p>Subject: Re: One year later….</p>
-<p>Yes, all such wonderful memories for all of us!  I still cannot even imagine a better team!</p>
-<p>ps- and for the record, I will be using my little wooden boat ‘shooter’ for my birthday shots this evening!</p>
-<p>Keith Bantle</p>
-<p>IBM Global Business Services</p>
-<p>AIS - Application Innovation Services</p>
-<p>4401 Belle Oaks Drive, Ashley Center</p>
-<p>Charleston, SC 29405</p>
-<p>Mobile: 843.860.9174</p>
-<p>Fax: 845.432.0121</p>
-<p><a href="mailto:&#107;&#98;&#97;&#110;&#116;&#x6c;&#101;&#64;&#117;&#x73;&#x2e;&#x69;&#98;&#x6d;&#x2e;&#99;&#x6f;&#x6d;">&#107;&#98;&#97;&#110;&#116;&#x6c;&#101;&#64;&#117;&#x73;&#x2e;&#x69;&#98;&#x6d;&#x2e;&#99;&#x6f;&#x6d;</a></p>
-<p>===============================================================</p>
-<p>From: Srinivas Manem/India/IBM@IBMIN</p>
-<p>To: Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Keith M Bantle/Fairfax/IBM@IBMUS, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>Date: 10/26/2011 12:44 PM</p>
-<p>Subject: Re: One year later….</p>
-<p>Hi Keith,</p>
-<p>Wish you a very happy Birthday..!! Have a great time</p>
-<p>It’s already been an year.. The memories are still very fresh in my mind. I really miss all those great days. Last year, this week we were rushing to complete projects &amp; finalizing our presentations.. </p>
-<p>Playing golf, eating fufu, early morning monkey search, playing darts, wonderful excursions on the weekends &amp; wonderful team work to complete the projects.. We had so much of fun in just one month time.. </p>
-<p>Truly, ours is the BEST TEAM ever..  Wish we’d meet again some day!!</p>
-<p>Freddie:  Congratulations on your new house.. :)  Please share some pictures.. </p>
-<p>Thanks &amp; Regards, </p>
-<p>Srini </p>
-<p>Srinivas Manem,</p>
-<p>Release Management, Acapulco,</p>
-<p>Global Telecom CoC </p>
-<p>IBM Global Business Services </p>
-<p>Mobile  +91 99497 03030 </p>
-<p>Email   <a href="mailto:&#83;&#114;&#x69;&#110;&#105;&#x76;&#97;&#115;&#x2e;&#77;&#97;&#110;&#101;&#109;&#64;&#105;&#110;&#x2e;&#105;&#x62;&#x6d;&#x2e;&#99;&#111;&#109;">&#83;&#114;&#x69;&#110;&#105;&#x76;&#97;&#115;&#x2e;&#77;&#97;&#110;&#101;&#109;&#64;&#105;&#110;&#x2e;&#105;&#x62;&#x6d;&#x2e;&#99;&#111;&#109;</a> </p>
-<p>===============================================================</p>
-<p>From: Belen Martin Lopez/Spain/IBM@IBMES</p>
-<p>To: Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB</p>
-<p>Cc: Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Keith M Bantle/Fairfax/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA, Srinivas Manem/India/IBM@IBMIN</p>
-<p>Date: 10/26/2011 02:07 PM</p>
-<p>Subject: Re: One year later….</p>
-<p>I almost forgot,</p>
-<p>Happy Birthday Keith!!</p>
-<p>Have a great day! Wilson and I miss you!</p>
-<p>Saludos/Regards</p>
-<p>Belén Martín López</p>
-<p>Senior Managing Consultant</p>
-<p>Phone: +34 660 413 703 </p>
-<p>email: <a href="mailto:&#x62;&#101;&#x6c;&#101;&#110;&#x2e;&#109;&#97;&#x72;&#x74;&#x69;&#x6e;&#x40;&#x65;&#x73;&#x2e;&#x69;&#98;&#109;&#46;&#x63;&#111;&#x6d;">&#x62;&#101;&#x6c;&#101;&#110;&#x2e;&#109;&#97;&#x72;&#x74;&#x69;&#x6e;&#x40;&#x65;&#x73;&#x2e;&#x69;&#98;&#109;&#46;&#x63;&#111;&#x6d;</a> </p>
-<p>IBM Global Services España, S.A.</p>
-<p>Mar Adriático, 2, 28830 San Fernando de Henares (Madrid)</p>
-<p>Registro Mercantil de Madrid, Folio 49; Tomo 6430; Hoja M-104.742</p>
-<p>CIF A80-599459 </p>
-<p>===============================================================</p>
-<p>Wei Ming Zhuang/China/IBM@IBMCN</p>
-<p>26/10/2011 10:36 </p>
-<p> To</p>
-<p> Keith M Bantle/Fairfax/IBM@IBMUS@IBMAU, Regina D Holley/Dallas/IBM@IBMUS</p>
-<p> cc</p>
-<p> Roy Hebert/CanWest/IBM@IBMCA, Erika V Quezada/Mexico/IBM@IBMMX@IBMUS, Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Srinivas Manem/India/IBM@IBMIN</p>
-<p> Subject</p>
-<p> Re: One year later….</p>
-<p>Hi,</p>
-<p>I often talk about our G5 experience with friends and others, I do not know why, a lot of things become more clear with the flow at time.</p>
-<p>Last week Regina was the most close to me (about 4 hours fly from Dalian to Hong Kong, Taipei). But I am still so happy to know this, just like one guy in island after air crash shouts at the near boat. </p>
-<p>Miss all of you. Must be let me if anyone come to Beijing or Dalian. Must!</p>
-<p>Have a good working day !</p>
-<p>==============================================</p>
-<p>庄伟铭/Wei Ming, E-mail: <a href="mailto:&#x7a;&#104;&#117;&#97;&#x6e;&#103;&#x77;&#109;&#x40;&#x63;&#x6e;&#x2e;&#x69;&#98;&#x6d;&#46;&#x63;&#111;&#x6d;">&#x7a;&#104;&#117;&#97;&#x6e;&#103;&#x77;&#109;&#x40;&#x63;&#x6e;&#x2e;&#x69;&#98;&#x6d;&#46;&#x63;&#111;&#x6d;</a></p>
-<p>TEL:0411-88151143 Tie-Line:61143 </p>
-<p>IBM Dalian Global Delivery Center, GBS/GCG</p>
-<p>==============================================</p>
-<p>From: Keith M Bantle/Fairfax/IBM@IBMUS</p>
-<p>To: Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>Cc: Erika V Quezada/Mexico/IBM@IBMMX@IBMUS, Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN</p>
-<p>Date: 2011-10-26 02:23</p>
-<p>Subject: Re: One year later….</p>
-<p>Hello, ¡Hola , Hallo, Ello,  Ahoj, 您好,??????, and Top O’ the Mornin’ to Ya (that one is for you, Roy, and I hope the others are correct),</p>
-<p>I think we need a G5 summit!  It really is very hard to believe it’s been a year already!  I have been thinking of all of you, especially as the month of October has been passing by, remembering what we were doing ‘that week’.  </p>
-<p>It certainly does appear that the girls have been much better about staying in touch and Belen has even come to visit already!  Hopefully she and Carlos enjoyed their stay in Charleston (Savannah and Asheville too), which was still too short.  I must admit that I was tempted to surprise her one day by pounding ‘fufu’ and putting a ball of pizza dough in some tomato soup, although she may have actually preferred that over the real thing.  </p>
-<p>Roy, I was disappointed to see the Sabres schedule does not include Calgary this season, but hopefully next year and I promise I will be there.  No excuses!  Bring on the wings and Canadian beer!!</p>
-<p>Freddie, congrats on your new house!!  I forgot to tell you about our 3 day Dave Matthews concert in NYC last month- it was awesome!</p>
-<p>Erika, thanks for rounding all of us up and glad to hear you are enjoying life!  I miss all of the different candy!</p>
-<p>Anouk, hopefully you are doing well and keep us posted on your baby’s arrival!  We’ll have to figure out his or her Ghanaian name and we can always have some of that awful clove porridge I made the mistake of eating early one morning exported to you…</p>
-<p>GoG and AB- it was great speaking with both of you earlier today!!</p>
-<p>Srini, I hope you’ve continued playing golf… you must be preparing for the PGA already!</p>
-<p>Martin, I’m sure you are as glad as I am that the NHL season is underway- hope you have been playing as often as you can!</p>
-<p>Herbie, I wonder if you and Anouk have played darts and been able to replicate your double dart achievements?!</p>
-<p>Will, every time I see ‘Firefly Sweet Tea Vodka’, I remember you drinking that whole bottle at once!</p>
-<p>Hope everyone is doing well and look forward to catching up soon!</p>
-<p>Keith</p>
-<p>ps- if anyone needs about a lb. or so of shea butter, I still have 98.2% of the container remaining… Belen can attest to that!</p>
-<p>Keith Bantle</p>
-<p>IBM Global Business Services</p>
-<p>AIS - Application Innovation Services</p>
-<p>4401 Belle Oaks Drive, Ashley Center</p>
-<p>Charleston, SC 29405</p>
-<p>Mobile: 843.860.9174</p>
-<p>Fax: 845.432.0121</p>
-<p><a href="mailto:&#x6b;&#x62;&#97;&#x6e;&#116;&#108;&#x65;&#x40;&#x75;&#x73;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#111;&#109;">&#x6b;&#x62;&#97;&#x6e;&#116;&#108;&#x65;&#x40;&#x75;&#x73;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#111;&#109;</a></p>
-<p>===============================================================</p>
-<p>From: Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>To: Erika V Quezada/Mexico/IBM@IBMMX@IBMUS</p>
-<p>Cc: Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Keith M Bantle/Fairfax/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN</p>
-<p>Date: 10/25/2011 11:23 AM</p>
-<p>Subject: Re: One year later….</p>
-<p>I know … have been thinking about our 1 year anniversary all month!    </p>
-<p>By the way, the girls seem to be ruling in the reunion category … Freddie travelled to Mexico to visit Ms. Erica, and Regina and Erica have connected …. Regina I think you and Friddie met up in London?  I think Belen has met with at least one of you as well?</p>
-<p>Le girls rule, as usual.   </p>
-<p>Keith … was looking forward to hosting you for a Sabres game vs the Flames this year … but your beloved team doesn’t come to Calgary this season.  </p>
-<p>With fondest memories of my best team ever!!   </p>
-<p>Roy Hebert</p>
-<p>Alberta Territory Manager, IBM</p>
-<p>Office 403 539 3145</p>
-<p><a href="mailto:&#114;&#104;&#x65;&#x62;&#101;&#x72;&#x74;&#x40;&#x63;&#97;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#x6f;&#109;">&#114;&#104;&#x65;&#x62;&#101;&#x72;&#x74;&#x40;&#x63;&#97;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#x6f;&#109;</a></p>
-<p>===============================================================</p>
-<p>From: Erika V Quezada/Mexico/IBM@IBMMX</p>
-<p>To: Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Martin Jesko/Slovakia/IBM@IBMSK, Keith M Bantle/Fairfax/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS</p>
-<p>Date: 10/25/2011 08:43 AM</p>
-<p>Subject: One year later….</p>
-<p>Hellooo Superb Team!!!</p>
-<p>How are u one year later??  Hope everything is good with all of you….  To me, it has been a year of many changes either in my personal and professional life.  But I am very happy enjoying my life,  Still remember each particular moment we shared in Ghana and the things I learned of all of u that marked my life.</p>
-<p>I already met with Regina and Freddie … and I really hope to meet with all of u anytime.</p>
-<p>Big kiss and huge hug!</p>
-<p>Miss u all!!</p>
-<p>Remember:   we are The Best Team Ever!!!</p>
-<p>Erika Q</p>
-<p>Erika V. Quezada Ruiz</p>
-<p>Sales Manager</p>
-<p>Public Sector</p>
-<p>IBM de México</p>
-<p>Tel. (55) 52703701</p>
-<p>Cel. 04455 54551278</p>
-<p>=============================================================</p>
 
       
     </div>
