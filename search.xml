@@ -7931,4 +7931,148 @@
         <tag>零知识证明</tag>
       </tags>
   </entry>
+  <entry>
+    <title>touch firefly</title>
+    <url>/2022/03/31/touch%20firefly/</url>
+    <content><![CDATA[<p>firefly is a very interesting project ==&gt; <a href="https://hyperledger.github.io/firefly/">https://hyperledger.github.io/firefly/</a> </p>
+<p>To help with the FireFly evaluation, especially how it makes digital assets management easy by supporting token standards (ERC20, ERC721, ERC1155, and other standard contracts or your custom implementations via extensions) with REST APIs and event streams, we have a minimal tutorial that you can set up locally on your laptop. Please give it a try and let us know if you have any questions.</p>
+<ol>
+<li>install the latest FireFly CLI:</li>
+</ol>
+<p>$ go install <a href="https://urldefense.com/v3/__http:/github.com/hyperledger/firefly-cli/ff@latest__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpZUVgtKg$">github.com/hyperledger/firefly-cli/ff@latest</a></p>
+<ol start="2">
+<li>initialize the FireFly stack using Ethereum as the underlying blockchain, and load the ERC20/ERC721 token connector:</li>
+</ol>
+<p>$ ff init -t erc20_erc721</p>
+<ol start="3">
+<li>start the stack named “digital-assets”</li>
+</ol>
+<p>$ ff start digital-assets</p>
+<ol start="4">
+<li>deploy the token contract. the easiest way is using Truffle. The Hyperledger implementation of the token connector has sample ERC20 and ERC721 contracts you can use to deploy to Ethereum:</li>
+</ol>
+<p>$ git clone <a href="mailto:git@github.com:hyperledger/firefly-tokens-erc20-erc721.git">git@github.com:hyperledger/firefly-tokens-erc20-erc721.git</a></p>
+<p>$ cd firefly-tokens-erc20-erc721</p>
+<p>$ cd solidity</p>
+<p>$ npm install</p>
+<p>$ truffle migrate</p>
+<ol start="5">
+<li>copy the contract address for the deployed ERC20 token contract (highlighted below in the sample output), to use in the next step</li>
+</ol>
+<h1 id="Starting-migrations…"><a href="#Starting-migrations…" class="headerlink" title="Starting migrations…"></a>Starting migrations…</h1><p> &gt; Network name:   ‘development’<br> &gt; Network id:    2021<br> &gt; Block gas limit: 4722986 (0x48112a)</p>
+<h1 id="1-initial-migration-js"><a href="#1-initial-migration-js" class="headerlink" title=" 1_initial_migration.js"></a> 1_initial_migration.js</h1><p>   Deploying ‘Migrations’<br>   -———————<br>   ⠋ Blocks: 0       Seconds: 0  &gt; transaction hash:   0xb81c60fd920bf28775bd8610271c60a40380e278af97ccd18458efafe852dc99<br>   &gt; Blocks: 0       Seconds: 0<br>   &gt; contract address:   0x0C2c9222835692912b3999D6DAE955a9d306393d<br>   &gt; block number:     6<br>   &gt; block timestamp:   1648585628<br>   &gt; account:       0x1eAecAb9D796Ee765865f47a78De13735619c914<br>   &gt; balance:       904625697166532776746648320380374280103671755200316906558.262375061821325312<br>   &gt; gas used:       272788 (0x42994)<br>   &gt; gas price:      0 gwei<br>   &gt; value sent:      0 ETH<br>   &gt; total cost:      0 ETH</p>
+<p>   &gt; Saving migration to chain.<br>   &gt; Saving artifacts<br>   -————————————<br>   &gt; Total cost:          0 ETH</p>
+<h1 id="2-deploy-contracts-js"><a href="#2-deploy-contracts-js" class="headerlink" title=" 2_deploy_contracts.js"></a> 2_deploy_contracts.js</h1><p>   Deploying ‘ERC20WithData’<br>   -————————<br>   ⠋ Blocks: 0       Seconds: 0  &gt; transaction hash:   0x748a60953ceacda47431210752c2a9991f77b552d19397827500feef086fc3cf<br>   &gt; Blocks: 0       Seconds: 0<br>   &gt; contract address:   <strong>0xB6728020f998f32afb4936f9CEcE04B1d3951895</strong><br>   &gt; block number:     8<br>   &gt; block timestamp:   1648585628<br>   &gt; account:       0x1eAecAb9D796Ee765865f47a78De13735619c914<br>   &gt; balance:       904625697166532776746648320380374280103671755200316906558.262375061821325312<br>   &gt; gas used:       1948804 (0x1dbc84)<br>   &gt; gas price:      0 gwei<br>   &gt; value sent:      0 ETH<br>   &gt; total cost:      0 ETH</p>
+<p>   &gt; Saving migration to chain.<br>   &gt; Saving artifacts<br>   -————————————<br>   &gt; Total cost:          0 ETH</p>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title=" Summary"></a> Summary</h1><p> &gt; Total deployments:  2<br> &gt; Final cost:      0 ETH</p>
+<ol start="6">
+<li>teach FireFly about the token contract so that it can start tracking transactions on the contract. For this step you can use the Swagger UI that comes with FireFly. Open <a href="https://urldefense.com/v3/__http:/localhost:5000/api__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpI4RuZkA$">http://localhost:5000/api</a>, and expand the request entry POST /namespaces/{ns}/tokens/pools. Plugin the values as shown below (you can delete all the other optional properties in the payload): </li>
+</ol>
+<p><img src="/2022/03/31/touch%20firefly/clip_image002.png" alt="image.png"></p>
+<ol start="7">
+<li>Now you can start using FireFly APIs to manage the new token contract: mint/transfer/burn.</li>
+</ol>
+<ol start="8">
+<li>You can use the following JSON RPC command to create additional Ethereum addresses in the go-ethereum node’s built-in wallet:</li>
+</ol>
+<p>$ curl -H ‘Content-Type: application/json’ -d ‘{“jsonrpc”:”2.0”,”id”:”1”,”method”:”personal_newAccount”,”params”:[“<strong>passw0rd</strong>“]}’ <a href="https://urldefense.com/v3/__http:/localhost:5100__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpXnXqo_Q$">http://localhost:5100</a> | jq<br> {<br>  “jsonrpc”: “2.0”,<br>  “id”: “1”,<br>  “result”: “<strong>0xfd5d5d96879a700c693da5092e2a6ef5ed399684</strong>“<br> }</p>
+<p>$ curl -H ‘Content-Type: application/json’ -d ‘{“jsonrpc”:”2.0”,”id”:”1”,”method”:”personal_unlockAccount”,”params”:[“<strong>0xfd5d5d96879a700c693da5092e2a6ef5ed399684</strong>“,”<strong>passw0rd</strong>“,0]}’  <a href="https://urldefense.com/v3/__http:/localhost:5100__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpXnXqo_Q$">http://localhost:5100</a> |jq<br> {<br>  “jsonrpc”: “2.0”,<br>  “id”: “1”,<br>  “result”: true<br> }</p>
+<ol start="9">
+<li>Try the minting API using the POST /namespaces/{ns}/tokens/mint endpoint: </li>
+</ol>
+<p><img src="/2022/03/31/touch%20firefly/clip_image004.png" alt="image.png"></p>
+<ol start="10">
+<li>check the result of the minting transaction in the FireFly UI at <a href="https://urldefense.com/v3/__http:/localhost:5000/ui__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZloTMvxMnw$">http://localhost:5000/ui</a> (for org0) and http//localhost:5001/ui (for org1): </li>
+</ol>
+<p><img src="/2022/03/31/touch%20firefly/clip_image006.png" alt="image.png"></p>
+<p>That’s it! Now you have a local setup to explore the many features of FireFly.</p>
+]]></content>
+      <tags>
+        <tag>blockchain</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS251_Final_Exam_2021-stanford.edu-1</title>
+    <url>/2022/03/10/CS251_Final_Exam_2021-stanford.edu-2/</url>
+    <content><![CDATA[<h4 id="Problem-1-18-points-Questions-from-all-over"><a href="#Problem-1-18-points-Questions-from-all-over" class="headerlink" title="Problem 1. [18 points]: Questions from all over."></a>Problem 1. [18 points]: Questions from all over.</h4><p><strong>A) Briefly explain why a Rollup system stores all transaction data on chain? What would go wrong if transaction data were discarded and not stored anywhere?</strong></p>
+<p>answer - The main goal of Rollup is to increase transaction speed (faster finality), and transaction throughput (high transactions per second), without sacrificing decentralization or security. </p>
+<p>Some Rollup solutions are <a href="https://ethereum.org/en/developers/docs/scaling/optimistic-rollups/">optimistic rollups</a>, <a href="https://ethereum.org/en/developers/docs/scaling/zk-rollups/">zero-knowledge rollups</a> or <a href="https://ethereum.org/en/developers/docs/scaling/state-channels/">state channels</a>. Transactions are rolled up into a single transaction to Mainnet Ethereum, reducing gas fees for users making Ethereum more inclusive and accessible for people everywhere. Rollups perform transaction execution outside layer 1 and then the data is posted to layer 1 where consensus is reached. As transaction data is included in layer 1 blocks, this allows rollups to be secured by native Ethereum security. That is why Rollup system stores all transaction data. </p>
+<p>So If Rollup system has only one single data storage and its transaction data were discarded, the transaction data before rollup will lose and can not get back. Usually, Rollup system is a blockchain and data saved in decentralized nodes, so original transaction data will not lose when one of blockchain nodes is down or broken.</p>
+<p><strong>B) Consider the following Solidity code:</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>; </span><br><span class="line">contract ERC20 is IERC20 &#123;</span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> uint256) private _balances; </span><br><span class="line">  event Transfer(address indexed <span class="keyword">from</span>, address indexed to, uint256 value); </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_transfer</span>(<span class="params">address sender, address recipient, uint256 amount</span>) </span>&#123;</span><br><span class="line">    emit Transfer(sender, recipient, amount); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Suppose this code is deployed in two contracts: a contract at address X and a contract at address Y . Which of the following can read the state of _balances in contract X? Circle the correct answer(s). </p>
+<ul>
+<li>A  Code in the _transfer() function in contract ERC20 at address X </li>
+<li>B  Code in the _transfer() function in contract ERC20 at address Y </li>
+<li>C  An enduser using etherscan.io</li>
+</ul>
+<p>answer C is correct.</p>
+<p><strong>C) Continuing with part (B),</strong> </p>
+<p>which of the following can read the log entry Transfer emitted when the function _transfer() is called? Circle the correct answer(s). </p>
+<ul>
+<li>A  Code in the function getBalance() defined in contract ERC20 at address X </li>
+<li>B  Code in the function getBalance() defined in contract ERC20 at address Y </li>
+<li>C  An enduser using etherscan.io</li>
+</ul>
+<p>answer C is correct.</p>
+<p><strong>D) Two Ethereum transactions, tx1 and tx2, are submitted to the network at the same time.</strong> Transaction tx1 has maxPriorityFee set to y and transaction tx2 has maxPriorityFee set to 2y. Will tx2 necessarily be executed on chain before tx1? Justify your answer. You can assume that maxFee for both tx1 and tx2 is greater than baseFee + maxPriorityFee.</p>
+<p>answer - Assume that maxFee (tx1 and tx2) is greater than baseFee + maxPriorityFee, tx1 and tx2 will mine by miner both,  they will execute in the same block, that is the most possibility, because usually miner nodes are working for tx order base on gasFee from high to low. But still has other possibilities - 1) send tx1 in node 1, send tx2 in node2, the network of node 1 is bad, and all txs in txpool of node 1 maybe blocked , so the speed and status of network of node is very important for transaction success; 2) the other transactions’ maxPriorityFee, if they all very high than 2y, the block is full and cannot take tx2 in, then tx1 and tx2 will not execute, and their executed order will depends on the next block. Or they all very high than y, the block is full and cannot take tx1 in, but the block take tx2 in, so tx1 will not execute, tx2 will execute.</p>
+<p>Catch up high Miner extractable value (MEV) may cause a miner to take priority of a lower fee transaction because it benefits them in some way, it is good for DeFi and application boom, but bad for UX, blockchain network congestion, even make blockchain block order re-organization and consensus instability.</p>
+<p><strong>E) Alice wants to buy a car from dealer Bob.</strong> She sends 1 BTC to Bob’s Bitcoin address. Bob waits for a transaction where (i) the input is from Alice’s address, and (ii) one of the outputs is a UTXO bound to Bob’s address with a value of 1 BTC. As soon as Bob sees this transaction on the Bitcoin blockchain, he gives Alice the keys, and she drives away. Is this safe? Could Alice get the car for free? If so, explain why. If not, explain what Bob should do to ensure that he gets paid. </p>
+<p>answer - In bitcoin with PoW consensus protocol, the tx finality need to wait 6 blocks. so Bob should to wait 6 blocks after the block of tx.</p>
+<p><strong>F) Alice owns a brand new Tesla Model Y.</strong> Can she currently use her car as collateral for a loan in the Compound system? (without selling the car) If yes, explain how. If no, explain why not.</p>
+<p>answer - no, physical car cannot come into digital Compound system yet, because the car maybe bad, maybe broken, maybe stole from somewhere illegally, the car loan needs many kinds of service to confirm its value and price. Compound now only provide cryptocurrencies as collateral for a loan.</p>
+]]></content>
+      <tags>
+        <tag>数字资产</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS251_Final_Exam_2021-stanford.edu-2</title>
+    <url>/2022/03/11/CS251_Final_Exam_2021-stanford.edu-1/</url>
+    <content><![CDATA[<h4 id="Problem-2-20-points-Byzantine-broadcast"><a href="#Problem-2-20-points-Byzantine-broadcast" class="headerlink" title="Problem 2. [20 points]: Byzantine broadcast."></a>Problem 2. [20 points]: Byzantine broadcast.</h4><p>Consider n parties, where n ≥ 3, and where one of the parties is designated as a sender. The sender has a bit b ∈ {0, 1}. A broadcast protocol is a protocol where the parties send messages to one another, and eventually every party outputs a bit bi , for i = 1, . . . , n, or outputs nothing. </p>
+<ul>
+<li><p>We say that the protocol has consistency if for every two honest parties, if one party outputs b and the other outputs b’ , then b = b’ . </p>
+</li>
+<li><p>We say that the protocol has validity if when the sender is honest, the output of all honest parties is equal to the sender’s input bit b. </p>
+</li>
+<li><p>We say that the protocol has totality if whenever some honest party outputs a bit, then eventually all honest parties output a bit. </p>
+</li>
+</ul>
+<p>A reliable broadcast protocol (RBC) is a broadcast protocol that satisfies all three properties. Let us assume that there is a public key infrastructure (PKI), meaning that every party has a secret signing key, and every party knows the correct public signature verification key for every other party. </p>
+<p>In a synchronous network, consider the following broadcast protocol: </p>
+<ul>
+<li><p>step 0: The sender sends its input bit b (along with its signature) to all other parties. The sender then outputs its bit b and terminates. </p>
+</li>
+<li><p>step 1: Every non-sender party i echoes what it heard from the sender to all the other non-sender parties (with i’s signature added). If the party heard nothing from the sender, it does nothing in this step. Similarly, the party does nothing in this step if the sender’s message is malformed: for example, if the sender’s signature is invalid, or the message is not a single bit. </p>
+</li>
+<li><p>step 2: Every non-sender party collects all the messages it received (up to n−1 messages, with at most one from the sender in step 0 and at most one from each non-sender party in step 1). If some two of the received messages contain a valid signature by the sender, but for opposite bits (i.e., in one signed message the bit is 0 and in the other signed message the bit is 1) then the sender is dishonest and the party outputs 0 and terminates. Otherwise, all the properly signed bits from the sender are the same, and the party outputs that bit. If the non-sender received no messages, it outputs nothing. </p>
+</li>
+</ul>
+<p>For each of the following questions, describe an attack or explain why there is no attack. </p>
+<p><strong>A) If there is at most one dishonest party, does the protocol have consistency?</strong></p>
+<p>answer - a dishonest party have options as below in step 1 &amp; 2 to cheat a honest part:</p>
+<ol>
+<li><p>don’t answer / response;</p>
+</li>
+<li><p>broke sender’s signature but cannot make a fake/wrong bit b, because broken signature cannot verify correct.</p>
+</li>
+<li><p>broke node’s signature itself. </p>
+</li>
+</ol>
+<p>If the sender is a dishonest party, in step 0, dishonest part can send b to some parties, and send a different b’ to other parties. Then it <strong>don’t have consistency</strong>. If the sender is a honest part, the dishonest party don’t  response, so other nodes can’t accumulate “all the properly signed bits from the sender are the same, and the party outputs that bit”, then other nodes have no response. Then it still <strong>don’t have consistency</strong>.</p>
+<p><strong>B) If there is at most one dishonest party, does the protocol have validity?</strong></p>
+<p>answer - dishonest party don’t response any message , and make other nodes cannot reach “all the properly signed bits from the sender are the same, and the party outputs that bit.”  So this protocol don’t have validity.</p>
+<p><strong>C) If there are at most two dishonest parties, show that the protocol does not have consistency.</strong></p>
+<p>answer - As answer A)</p>
+<p><strong>D) If there are at most two dishonest parties, does the protocol have validity?</strong></p>
+<p>answer - two dishonest parties can send out the same dishonest message or they don’t response, and make other nodes cannot reach “all the properly signed bits from the sender are the same, and the party outputs that bit.”  So this protocol don’t have validity.  </p>
+<p><strong>E) Does the protocol have totality (for any number of dishonest parties)?</strong></p>
+<p>answer - It assume that this protocol run in a reliable broadcast protocol (RBC). But the dishonest party can send a (or some) correct response to one (or some other) party, but don’t response any message to one (or some other) party in step 1. Dishonest party also can do the same in step 0. So these honest party cannot have the same result. Then this protocol don’t have totality.</p>
+]]></content>
+      <tags>
+        <tag>数字资产</tag>
+      </tags>
+  </entry>
 </search>
