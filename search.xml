@@ -7932,66 +7932,6 @@
       </tags>
   </entry>
   <entry>
-    <title>touch firefly</title>
-    <url>/2022/03/31/touch%20firefly/</url>
-    <content><![CDATA[<p>firefly is a very interesting project ==&gt; <a href="https://hyperledger.github.io/firefly/">https://hyperledger.github.io/firefly/</a> </p>
-<p>To help with the FireFly evaluation, especially how it makes digital assets management easy by supporting token standards (ERC20, ERC721, ERC1155, and other standard contracts or your custom implementations via extensions) with REST APIs and event streams, we have a minimal tutorial that you can set up locally on your laptop. Please give it a try and let us know if you have any questions.</p>
-<ol>
-<li>install the latest FireFly CLI:</li>
-</ol>
-<p>$ go install <a href="https://urldefense.com/v3/__http:/github.com/hyperledger/firefly-cli/ff@latest__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpZUVgtKg$">github.com/hyperledger/firefly-cli/ff@latest</a></p>
-<ol start="2">
-<li>initialize the FireFly stack using Ethereum as the underlying blockchain, and load the ERC20/ERC721 token connector:</li>
-</ol>
-<p>$ ff init -t erc20_erc721</p>
-<ol start="3">
-<li>start the stack named “digital-assets”</li>
-</ol>
-<p>$ ff start digital-assets</p>
-<ol start="4">
-<li>deploy the token contract. the easiest way is using Truffle. The Hyperledger implementation of the token connector has sample ERC20 and ERC721 contracts you can use to deploy to Ethereum:</li>
-</ol>
-<p>$ git clone <a href="mailto:git@github.com:hyperledger/firefly-tokens-erc20-erc721.git">git@github.com:hyperledger/firefly-tokens-erc20-erc721.git</a></p>
-<p>$ cd firefly-tokens-erc20-erc721</p>
-<p>$ cd solidity</p>
-<p>$ npm install</p>
-<p>$ truffle migrate</p>
-<ol start="5">
-<li>copy the contract address for the deployed ERC20 token contract (highlighted below in the sample output), to use in the next step</li>
-</ol>
-<h1 id="Starting-migrations…"><a href="#Starting-migrations…" class="headerlink" title="Starting migrations…"></a>Starting migrations…</h1><p> &gt; Network name:   ‘development’<br> &gt; Network id:    2021<br> &gt; Block gas limit: 4722986 (0x48112a)</p>
-<h1 id="1-initial-migration-js"><a href="#1-initial-migration-js" class="headerlink" title=" 1_initial_migration.js"></a> 1_initial_migration.js</h1><p>   Deploying ‘Migrations’<br>   -———————<br>   ⠋ Blocks: 0       Seconds: 0  &gt; transaction hash:   0xb81c60fd920bf28775bd8610271c60a40380e278af97ccd18458efafe852dc99<br>   &gt; Blocks: 0       Seconds: 0<br>   &gt; contract address:   0x0C2c9222835692912b3999D6DAE955a9d306393d<br>   &gt; block number:     6<br>   &gt; block timestamp:   1648585628<br>   &gt; account:       0x1eAecAb9D796Ee765865f47a78De13735619c914<br>   &gt; balance:       904625697166532776746648320380374280103671755200316906558.262375061821325312<br>   &gt; gas used:       272788 (0x42994)<br>   &gt; gas price:      0 gwei<br>   &gt; value sent:      0 ETH<br>   &gt; total cost:      0 ETH</p>
-<p>   &gt; Saving migration to chain.<br>   &gt; Saving artifacts<br>   -————————————<br>   &gt; Total cost:          0 ETH</p>
-<h1 id="2-deploy-contracts-js"><a href="#2-deploy-contracts-js" class="headerlink" title=" 2_deploy_contracts.js"></a> 2_deploy_contracts.js</h1><p>   Deploying ‘ERC20WithData’<br>   -————————<br>   ⠋ Blocks: 0       Seconds: 0  &gt; transaction hash:   0x748a60953ceacda47431210752c2a9991f77b552d19397827500feef086fc3cf<br>   &gt; Blocks: 0       Seconds: 0<br>   &gt; contract address:   <strong>0xB6728020f998f32afb4936f9CEcE04B1d3951895</strong><br>   &gt; block number:     8<br>   &gt; block timestamp:   1648585628<br>   &gt; account:       0x1eAecAb9D796Ee765865f47a78De13735619c914<br>   &gt; balance:       904625697166532776746648320380374280103671755200316906558.262375061821325312<br>   &gt; gas used:       1948804 (0x1dbc84)<br>   &gt; gas price:      0 gwei<br>   &gt; value sent:      0 ETH<br>   &gt; total cost:      0 ETH</p>
-<p>   &gt; Saving migration to chain.<br>   &gt; Saving artifacts<br>   -————————————<br>   &gt; Total cost:          0 ETH</p>
-<h1 id="Summary"><a href="#Summary" class="headerlink" title=" Summary"></a> Summary</h1><p> &gt; Total deployments:  2<br> &gt; Final cost:      0 ETH</p>
-<ol start="6">
-<li>teach FireFly about the token contract so that it can start tracking transactions on the contract. For this step you can use the Swagger UI that comes with FireFly. Open <a href="https://urldefense.com/v3/__http:/localhost:5000/api__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpI4RuZkA$">http://localhost:5000/api</a>, and expand the request entry POST /namespaces/{ns}/tokens/pools. Plugin the values as shown below (you can delete all the other optional properties in the payload): </li>
-</ol>
-<p><img src="/2022/03/31/touch%20firefly/clip_image002.png" alt="image.png"></p>
-<ol start="7">
-<li>Now you can start using FireFly APIs to manage the new token contract: mint/transfer/burn.</li>
-</ol>
-<ol start="8">
-<li>You can use the following JSON RPC command to create additional Ethereum addresses in the go-ethereum node’s built-in wallet:</li>
-</ol>
-<p>$ curl -H ‘Content-Type: application/json’ -d ‘{“jsonrpc”:”2.0”,”id”:”1”,”method”:”personal_newAccount”,”params”:[“<strong>passw0rd</strong>“]}’ <a href="https://urldefense.com/v3/__http:/localhost:5100__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpXnXqo_Q$">http://localhost:5100</a> | jq<br> {<br>  “jsonrpc”: “2.0”,<br>  “id”: “1”,<br>  “result”: “<strong>0xfd5d5d96879a700c693da5092e2a6ef5ed399684</strong>“<br> }</p>
-<p>$ curl -H ‘Content-Type: application/json’ -d ‘{“jsonrpc”:”2.0”,”id”:”1”,”method”:”personal_unlockAccount”,”params”:[“<strong>0xfd5d5d96879a700c693da5092e2a6ef5ed399684</strong>“,”<strong>passw0rd</strong>“,0]}’  <a href="https://urldefense.com/v3/__http:/localhost:5100__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpXnXqo_Q$">http://localhost:5100</a> |jq<br> {<br>  “jsonrpc”: “2.0”,<br>  “id”: “1”,<br>  “result”: true<br> }</p>
-<ol start="9">
-<li>Try the minting API using the POST /namespaces/{ns}/tokens/mint endpoint: </li>
-</ol>
-<p><img src="/2022/03/31/touch%20firefly/clip_image004.png" alt="image.png"></p>
-<ol start="10">
-<li>check the result of the minting transaction in the FireFly UI at <a href="https://urldefense.com/v3/__http:/localhost:5000/ui__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZloTMvxMnw$">http://localhost:5000/ui</a> (for org0) and http//localhost:5001/ui (for org1): </li>
-</ol>
-<p><img src="/2022/03/31/touch%20firefly/clip_image006.png" alt="image.png"></p>
-<p>That’s it! Now you have a local setup to explore the many features of FireFly.</p>
-]]></content>
-      <tags>
-        <tag>blockchain</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CS251_Final_Exam_2021-stanford.edu-1</title>
     <url>/2022/03/10/CS251_Final_Exam_2021-stanford.edu-2/</url>
     <content><![CDATA[<h4 id="Problem-1-18-points-Questions-from-all-over"><a href="#Problem-1-18-points-Questions-from-all-over" class="headerlink" title="Problem 1. [18 points]: Questions from all over."></a>Problem 1. [18 points]: Questions from all over.</h4><p><strong>A) Briefly explain why a Rollup system stores all transaction data on chain? What would go wrong if transaction data were discarded and not stored anywhere?</strong></p>
@@ -8073,6 +8013,70 @@
 ]]></content>
       <tags>
         <tag>数字资产</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>体验firefly</title>
+    <url>/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/</url>
+    <content><![CDATA[<p>firefly is a very interesting project ==&gt; <a href="https://hyperledger.github.io/firefly/">https://hyperledger.github.io/firefly/</a> </p>
+<p>To help with the FireFly evaluation, especially how it makes digital assets management easy by supporting token standards (ERC20, ERC721, ERC1155, and other standard contracts or your custom implementations via extensions) with REST APIs and event streams, we have a minimal tutorial that you can set up locally on your laptop. Please give it a try and let us know if you have any questions.</p>
+<ol>
+<li>install the latest FireFly CLI:</li>
+</ol>
+<p>$ go install <a href="https://urldefense.com/v3/__http:/github.com/hyperledger/firefly-cli/ff@latest__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpZUVgtKg$">github.com/hyperledger/firefly-cli/ff@latest</a></p>
+<ol start="2">
+<li>initialize the FireFly stack using Ethereum as the underlying blockchain, and load the ERC20/ERC721 token connector:</li>
+</ol>
+<p>$ ff init -t erc20_erc721</p>
+<ol start="3">
+<li>start the stack named “digital-assets”</li>
+</ol>
+<p>$ ff start digital-assets</p>
+<ol start="4">
+<li>deploy the token contract. the easiest way is using Truffle. The Hyperledger implementation of the token connector has sample ERC20 and ERC721 contracts you can use to deploy to Ethereum:</li>
+</ol>
+<p>$ git clone <a href="mailto:git@github.com:hyperledger/firefly-tokens-erc20-erc721.git">git@github.com:hyperledger/firefly-tokens-erc20-erc721.git</a></p>
+<p>$ cd firefly-tokens-erc20-erc721</p>
+<p>$ cd solidity</p>
+<p>$ npm install</p>
+<p>$ truffle migrate</p>
+<ol start="5">
+<li>copy the contract address for the deployed ERC20 token contract (highlighted below in the sample output), to use in the next step</li>
+</ol>
+<h1 id="Starting-migrations…"><a href="#Starting-migrations…" class="headerlink" title="Starting migrations…"></a>Starting migrations…</h1><p> &gt; Network name:   ‘development’<br> &gt; Network id:    2021<br> &gt; Block gas limit: 4722986 (0x48112a)</p>
+<h1 id="1-initial-migration-js"><a href="#1-initial-migration-js" class="headerlink" title=" 1_initial_migration.js"></a> 1_initial_migration.js</h1><p>   Deploying ‘Migrations’<br>   -———————<br>   ⠋ Blocks: 0       Seconds: 0  &gt; transaction hash:   0xb81c60fd920bf28775bd8610271c60a40380e278af97ccd18458efafe852dc99<br>   &gt; Blocks: 0       Seconds: 0<br>   &gt; contract address:   0x0C2c9222835692912b3999D6DAE955a9d306393d<br>   &gt; block number:     6<br>   &gt; block timestamp:   1648585628<br>   &gt; account:       0x1eAecAb9D796Ee765865f47a78De13735619c914<br>   &gt; balance:       904625697166532776746648320380374280103671755200316906558.262375061821325312<br>   &gt; gas used:       272788 (0x42994)<br>   &gt; gas price:      0 gwei<br>   &gt; value sent:      0 ETH<br>   &gt; total cost:      0 ETH</p>
+<p>   &gt; Saving migration to chain.<br>   &gt; Saving artifacts<br>   -————————————<br>   &gt; Total cost:          0 ETH</p>
+<h1 id="2-deploy-contracts-js"><a href="#2-deploy-contracts-js" class="headerlink" title=" 2_deploy_contracts.js"></a> 2_deploy_contracts.js</h1><p>   Deploying ‘ERC20WithData’<br>   -————————<br>   ⠋ Blocks: 0       Seconds: 0  &gt; transaction hash:   0x748a60953ceacda47431210752c2a9991f77b552d19397827500feef086fc3cf<br>   &gt; Blocks: 0       Seconds: 0<br>   &gt; contract address:   <strong>0xB6728020f998f32afb4936f9CEcE04B1d3951895</strong><br>   &gt; block number:     8<br>   &gt; block timestamp:   1648585628<br>   &gt; account:       0x1eAecAb9D796Ee765865f47a78De13735619c914<br>   &gt; balance:       904625697166532776746648320380374280103671755200316906558.262375061821325312<br>   &gt; gas used:       1948804 (0x1dbc84)<br>   &gt; gas price:      0 gwei<br>   &gt; value sent:      0 ETH<br>   &gt; total cost:      0 ETH</p>
+<p>   &gt; Saving migration to chain.<br>   &gt; Saving artifacts<br>   -————————————<br>   &gt; Total cost:          0 ETH</p>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title=" Summary"></a> Summary</h1><p> &gt; Total deployments:  2<br> &gt; Final cost:      0 ETH</p>
+<ol start="6">
+<li>teach FireFly about the token contract so that it can start tracking transactions on the contract. For this step you can use the Swagger UI that comes with FireFly. Open <a href="https://urldefense.com/v3/__http:/localhost:5000/api__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpI4RuZkA$">http://localhost:5000/api</a>, and expand the request entry POST /namespaces/{ns}/tokens/pools. Plugin the values as shown below (you can delete all the other optional properties in the payload): </li>
+</ol>
+<p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/1.png"></p>
+<ol start="7">
+<li>Now you can start using FireFly APIs to manage the new token contract: mint/transfer/burn.</li>
+</ol>
+<ol start="8">
+<li>You can use the following JSON RPC command to create additional Ethereum addresses in the go-ethereum node’s built-in wallet:</li>
+</ol>
+<p>$ curl -H ‘Content-Type: application/json’ -d ‘{“jsonrpc”:”2.0”,”id”:”1”,”method”:”personal_newAccount”,”params”:[“<strong>passw0rd</strong>“]}’ <a href="https://urldefense.com/v3/__http:/localhost:5100__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpXnXqo_Q$">http://localhost:5100</a> | jq<br> {<br>  “jsonrpc”: “2.0”,<br>  “id”: “1”,<br>  “result”: “<strong>0xfd5d5d96879a700c693da5092e2a6ef5ed399684</strong>“<br> }</p>
+<p>$ curl -H ‘Content-Type: application/json’ -d ‘{“jsonrpc”:”2.0”,”id”:”1”,”method”:”personal_unlockAccount”,”params”:[“<strong>0xfd5d5d96879a700c693da5092e2a6ef5ed399684</strong>“,”<strong>passw0rd</strong>“,0]}’  <a href="https://urldefense.com/v3/__http:/localhost:5100__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpXnXqo_Q$">http://localhost:5100</a> |jq<br> {<br>  “jsonrpc”: “2.0”,<br>  “id”: “1”,<br>  “result”: true<br> }</p>
+<ol start="9">
+<li>Try the minting API using the POST /namespaces/{ns}/tokens/mint endpoint: </li>
+</ol>
+<p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/2.png"></p>
+<ol start="10">
+<li>check the result of the minting transaction in the FireFly UI at <a href="https://urldefense.com/v3/__http:/localhost:5000/ui__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZloTMvxMnw$">http://localhost:5000/ui</a> (for org0) and http//localhost:5001/ui (for org1): </li>
+</ol>
+<p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/3.png"></p>
+<p>That’s it! Now you have a local setup to explore the many features of FireFly.</p>
+<ol start="11">
+<li>connect with metamask as below. by the way, the para when you add a network for firefly , please refer the info at ~/.firefly/stacks/oh/blockchain/genesis.json, here you can cat genesis block info.</li>
+</ol>
+<p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/4.png"></p>
+]]></content>
+      <tags>
+        <tag>blockchain</tag>
       </tags>
   </entry>
 </search>
