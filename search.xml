@@ -8221,4 +8221,21 @@
         <tag>wallet</tag>
       </tags>
   </entry>
+  <entry>
+    <title>IBFT是什么</title>
+    <url>/2022/04/08/IBFT%E6%98%AF%E4%BB%80%E4%B9%88/</url>
+    <content><![CDATA[<p>Istanbul Byzantine Fault Tolerance (IBFT) is a proof-of-authority blockchain consensus protocol that ensures immediate finality. IBFT Consensus is inspired by <a href="http://pmg.csail.mit.edu/papers/osdi99.pdf">Castro-Liskov 99 PBFT paper</a>. </p>
+<ul>
+<li>在 IBFT 中，没有客户端向网络提交请求；这些验证者节点之一将被任意选择为提议者。这个单一的提议者在收到来自验证者池的消息后，将决定将什么添加到链中。</li>
+<li>与 PBFT 相同，区块由PREPREPARE - PREPARE - COMMIT三个阶段。</li>
+<li>IBFT 允许两种类型的节点：参与共识协议的验证者和验证区块但不参与共识协议的标准节点。（与tendermint相同）。</li>
+<li>PBFT 中的验证器集是静态的，而 IBFT 具有动态验证器集，可以将验证器添加到集合中或从中删除。</li>
+<li>IBFT 规定了 PBFT 的所谓 View-Change 消息的简化版本，不包括 PBFT 协议中包含的所谓 New-View 消息。<br>虽然 IBFT 没有明确使用检查点，但每个 IBFT 块都可以被视为 PBFT 检查点的 IBFT 等效项。</li>
+</ul>
+<p>采用IBFT的区块链有 Consensys Quorum 和 Besu。</p>
+]]></content>
+      <tags>
+        <tag>blockchain</tag>
+      </tags>
+  </entry>
 </search>
