@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-count">189</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,419 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/" class="post-title-link" itemprop="url">可聚合子向量承诺应用于无状态加密货币</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-20 19:30:31" itemprop="dateCreated datePublished" datetime="2020-06-20T19:30:31+08:00">2020-06-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>将可聚合子向量承诺应用于无状态加密货币 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2020/527.pdf">https://eprint.iacr.org/2020/527.pdf</a></p>
+<h3 id="0-摘要"><a href="#0-摘要" class="headerlink" title="0.摘要"></a>0.摘要</h3><p>可聚合子向量承诺（aSVC, An aggregatable subvector commitment）方案是一种向量承诺（VC）方案，可以将多个证明聚合到单个小的子向量证明中。本文中，我们对aSVC进行了形式化处理，通过恒定大小的多项式承诺，给出了素数阶组的有效构造，并使用它来引向高效的无状态加密货币。</p>
+<p>aSVC支持：</p>
+<ul>
+<li><p>在 O(n log n) 时间内计算所有n个 O(1) 大小的证明</p>
+</li>
+<li><p>在 O(1) 时间内更新证明</p>
+</li>
+<li><p>将b个证明汇总到 O(1) 大小的子向量证明，时间为 O(b log2 b)。</p>
+</li>
+</ul>
+<p>重要的是，我们的方案具有 O(n) 大小的证明密钥，O(1) 大小的验证密钥和 O(1) 大小的更新密钥。相比之下，先前在素数阶组中具有恒定大小证明的方案：</p>
+<ul>
+<li><p>需要 O(n2) 时间来计算所有证明</p>
+</li>
+<li><p>需要 O(n) 大小的更新密钥来更新 O(1) 中的证明时间</p>
+</li>
+<li><p>或不支持汇总证明。</p>
+<p>此外，基于隐藏顺序组的方案：</p>
+</li>
+<li><p>具有更大的具体证明大小和计算时间</p>
+</li>
+<li><p>不支持证明更新</p>
+</li>
+</ul>
+<p>我们使用aSVC具有非常低的通信和计算开销，在此基础上，构建无状态加密货币。 具体来说，大小固定的可聚合证明将每个块的证明开销减少到一个组元素。 相反，以前的工作需要O(b log n)组元素，其中b是每个块的交易数。 此外，较小证明将区块验证时间从O(b log n)配对减少到只有两个配对和O(b)大小的多幂运算。最后，与先前工作中的O(b log n)相比，aSVC较小的更新密钥仅占用O(b)区块空间。同样，它们的可验证性将矿工存储从O(n)减少到O(1)。最终结果将是一种无状态的加密货币超过了现有技术。</p>
+<h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h3><p>在无状态加密货币中，矿工和加密货币用户都不需要存储完整的区块链。取而代之的是，使用经过身份验证的数据结构（ADS, authenticated data structure）对由用户帐户余额组成的区块链状态进行身份验证。这样，矿工仅存储区块链状态的简要摘要。 尽管如此，矿工仍然可以验证用户发送的交易，这些用户现在提供了他们有足够余额的证明。 此外，矿工仍可以提议新的区块，并且用户可以在新区块发布时轻松地同步或更新其证明。</p>
+<p>由于无状态加密货币的诸多优势，已引起越来越多的关注：</p>
+<ul>
+<li>针对摘要的无状态事务验证要比针对已存储数据库的有状态验证更好地扩展</li>
+<li>无状态加密货币消除了矿工或整个节点验证区块所需的数百GB的存储空间</li>
+<li>无状态性通过允许矿工有效地从一个碎片切换到另一个碎片，使碎片变得更加容易</li>
+<li>由于验证块是无状态且高效的，因此任何人都可以成为完整节点，从而产生更具弹性的分布式加密货币</li>
+</ul>
+<p>先前的工作显示了如何使用RSA累加器或Merkle哈希树有效地获取基于UTXO的无状态加密货币。但是，对于基于帐户的加密货币，当前的解决方案要么具有比理想的证明大小大的值，要么基于隐蔽的组，而后者实际上要慢一些。因此，本文的重点是改善基于帐户的无状态加密货币的具体和渐进复杂性。（在[Zah18，But16，Cor16，Pat17，Eth17，Yan16]中深入讨论了基于帐户和基于UTXO的设计的优缺点。）</p>
+<p><strong>向量承诺（VC）中基于帐户的无状态加密货币。</strong>先前的工作开创了在任何矢量承诺（VC）方案之上构建基于帐户的无状态加密货币的想法。在较高级别，VC方案允许证明方计算向量v = [v0, v1, . . . , vn−1]的简洁承诺c，此处具有n个元素，其中vi∈Zp。重要的是，证明者可以生成证明πi，证明vi是v中位于位置i的元素，并且任何验证者都可以根据承诺c对其进行检查。</p>
+<p>证明者需要证明密钥<strong>prk</strong>来提交向量并计算证明，而验证者需要验证密钥<strong>vrk</strong>来验证证明（通常|vrk| &lt;&lt; |prk|）。某些VC方案支持更新：如果向量中的一个或多个元素发生更改，则可以有效地更新承诺和证明。 为此，需要绑定到更新位置<strong>j</strong>的更新密钥<strong>upkj</strong>。证明，验证和更新密钥一起被称为VC的公共参数。</p>
+<h4 id="1-1本文的贡献"><a href="#1-1本文的贡献" class="headerlink" title="1.1本文的贡献"></a>1.1本文的贡献</h4><p>如果基础VC具有：</p>
+<ul>
+<li><p>具有亚线性时间验证的亚线性大小的可更新证明</p>
+</li>
+<li><p>可更新承诺</p>
+</li>
+<li><p>亚线性大小的更新密钥</p>
+</li>
+</ul>
+<p>则可以从VC有效地构建无状态加密货币。我们说这样的VC方案具有”可扩展的更新”。不幸的是，大多数VC没有可伸缩的更新，或者如果具有，它们的证明和更新密钥大小也并不理想。最后，虽然可以通过可伸缩的更新来增强隐藏顺序组中的方案，但是其具体性能与原始顺序组中的方案不匹配。在本文中，我们提出了一种具有可扩展更新的新型VC，它具有最佳的证明大小，并使用它来构建有效的无状态加密货币。</p>
+<p><strong>具有可伸缩更新的可聚合子向量承诺（aSVC）</strong>。 我们提出了可聚合子向量承诺（aSVC）的新概念，即支持承诺更新，证明更新以及将证明聚合为子向量证明的SVC。 然后，我们构建了一个在配对友好组上具有可伸缩更新的aSVC。 我们的aSVC在多个方面都优于以前的工作：</p>
+<ul>
+<li>具有恒定大小的 I-subvector 证明：一组元素。</li>
+<li>具有恒定大小的更新密钥：两个组元素（或在无状态加密货币设置中使用时，一个组元素）</li>
+<li>它可以在O(1)时间内更新证明和承诺</li>
+<li>它可以使用O(|<strong><em>I</em></strong>|)幂和O(|<strong><em>I</em></strong>| log2 |<strong><em>I</em></strong>|)场运算将多个证明快速聚合为 I-subvector </li>
+<li>我们的aSVC可以通过用于多项式承诺的预计算证明的新技术，在O(n log n)时间内快速计算所有证明</li>
+</ul>
+<p>Vitalik提出一个新思想：使用部分分数分解来聚合多项式承诺中的证明。我们不仅使用此功能来汇总证明，还可以减少更新密钥的大小。此外，为了证明aSVC的安全性，我们必须加强<strong>KZG</strong>多项式承诺的安全性定义，并证明它们仍然可以满足aSVC。最后，aSVC可用于通过有效更新，可更新的基本零知识数据库，匿名凭证和无状态智能合约验证来改进可验证的数据库。</p>
+<p>以下内容转自 ==&gt; <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ifelfFEsHc71SijQ5MC4jQ">https://mp.weixin.qq.com/s/ifelfFEsHc71SijQ5MC4jQ</a></p>
+<p>不需要账本就能记账听上去不可思议，但其思路是简单的：在以前，节点有账本，一笔交易来后它翻看账本，查询交易是否合法；在以后，节点没有账本，交易发送方在提交交易的同时需要提交一个密码学证明（为了区分，后文特指密码学证明时都用proof表示），自己证明自己的这笔交易是合法的。</p>
+<p>可出块节点为什么能够通过一个proof来判断某笔交易是否合法？这里涉及到两个密码学的重要概念，第一个叫<strong>「成员证明」</strong>。它指的是通过某种方法，证明个体是群体的一部分。如果能够证明某个账户状态是整个账本状态的一部分，出块节点当然就能相信这个账户状态，并以此为根据进行交易合法性的判断。第二个叫<strong>「向量承诺」</strong>，它可以将群体，不管这个群体有多庞大，压缩成仅仅一个数，然后给出成员证明，该成员证明表明的是某个个体是属于这个数背后所关联的群体的，且能证明个体在群体中的位置，以及进行证明的更新。</p>
+<p>可聚合子向量承诺（aSVC）的工作过程是这样的：</p>
+<ol>
+<li><p>初始化分片，即在账本建立时确定账户的初始情况。假设某个分片建立时有100个账户，这些账户都有初始的余额，我们需要用v(i)代表第i个账户，它是（地址i，余额i）这样的一对值；用V代表全部账户，它是（地址1，余额1）（地址2，余额2）……（地址100，余额100）这样的一组值。同时需要生成两个值，第一个叫c，它是对V的承诺，代表的是此时该分片所有账户和账户里的余额。出块节点手中都握有c，（可以对比Merkle树根来便于理解），它是将来用于验证的摘要。第二个叫π(i)，它是对v(i) 是V的成员的证明，代表第i个账户及该账户的余额是在总账本V中。每个账户都握有且只握有自己的π(i)，它是将来发送交易时提交给出块节点的proof。在初始化阶段，承诺和证明的生成是需要初始「状态」的。</p>
+</li>
+<li><p>第一笔交易。账户 i 发起整个分片的第一笔交易，此时它需要把π(i)和交易一起提交给出块节点，出块节点对π(i)进行计算，看结果是否与自己手中的c相符合，如果一致就可以相信发送方账户确实有多少余额，并以此判断它提交的交易是否合法。</p>
+</li>
+<li><p>接下来是关键之处：对c和π(i)进行更新。</p>
+</li>
+</ol>
+<p>c（对整个账本的承诺）不再是根据状态生成，它是用第一笔交易发生之前的c，以及第一笔交易引起的余额变动生成的；π(i)（账户对自己的证明）也不是根据状态生成，它是用第一笔交易发生之前的π(i)，以及第一笔交易对该账户的改变生成的。</p>
+<p>在完成c和π(i)的更新之后，出块节点手中便有了可以承诺所有用户新余额的新承诺（新c），账户手中也有了可以证明自己新余额的新proof（新π(i)）。</p>
+<p>以此类推，每笔交易都会改变一次c，改变一次全部π(i)，但这种改变不再依赖于状态数据，它取决于旧的c和π(i)，以及上一笔交易；当需要验证一笔新交易时，出块节点手中总有最新的c，它通过c和账户提供的π(i)就能判断某笔交易是否合法，是否可被打包进区块。</p>
+<p>那么到这一步，就终于实现了「不需要账本就能记账」，不管对于出块节点，还是对于账户，它们手中握着的都是某种密码学的证明，而不是账本的状态。另需一提的是，无状态与分片似乎是绝配，但无状态并不是针对分片的一种设计，它是针对公链的一种设计。</p>
+<p>aSVC的设计目标是要成为一个高效的成员证明，降低上述过程中的通信开销和计算开销，使得这种方案可用于无状态区块链的实现。从论文来看，使用aSVC方案，c和π(i)的大小仅为几十个字节，π(i)的更新时间为O(1)，验证时间也为O(1)，该方案还支持把多个proof聚合为一个O(1)大小的proof，这种低开销的实现正是aSVC的意义所在。不过就像Vitalik在以太坊研究者论坛中展开的相关讨论，aSVC还需要做进一步的优化。</p>
+<p>文章的最后是对全文的简要总结：分布式系统的状态分片设计与密码学的成员证明设计相结合，实现以太坊2.0在性能上突破。</p>
+<ol>
+<li><p>为了安全，以太坊2.0的状态分片需要随机分配出块节点。</p>
+</li>
+<li><p>如果出块节点需要账本，账本同步会成为新的性能瓶颈，账本存储也会影响PoS的去中心化。</p>
+</li>
+<li><p>是否有不需要账本就能验证余额的方式？</p>
+</li>
+<li><p>第一个思路转变：把查找账本的方式改为证明账本的方式。这需要借助于密码学来完成。</p>
+</li>
+<li><p>第二个思路转变：把证明账本状态的方式改为证明交易行为的方式，实现无状态和无需账本的记账。这需要借助于密码学来完成。</p>
+</li>
+<li><p>密码学的工具有很多，当有了目标后，需要根据应用需求选择和组合适当的工具形成方案，并对方案进行优化。</p>
+</li>
+</ol>
+<p>在文章中我们用自然语言描述了aSVC的工作，如果你感兴趣，可以通过aSVC 的API定义来更清晰地了解它。如下图所示：第一个红框是初始化时生成承诺c，第二个红框是根据交易更新c；第一个绿框是初始化时生成证明π(i)，第二个绿框是根据交易更新π(i)；蓝框是出块节点用c和π(i)做验证。</p>
+<p><img src="/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/1.png"></p>
+<p>在上述过程中，最核心的工作是**根据交易引发的变动把旧的c变成新的c，把旧的π(i)变成新的π(i)**。不但要能够完成更新，且这种更新的开销是可以被接受的，这是aSVC要解决的关键问题。我们以c的更新为例来介绍aSVC是如何做的。</p>
+<p>如前文所述，c承诺的是V，从c到新c，实际上就是从承诺V到承诺一个新的V。对V来说，它是由一系列的点构成的，（地址1，余额1）是一个点，（地址2，余额2）是另一个点……（地址100，余额100）是第100个点。</p>
+<p>借助于拉格朗日插值法，可以把这一系列的点变成一个多项式（该多项式代表的曲线经过所有这些点），这意味着可以把对一系列点的承诺变成对一个多项式的承诺；从c到新c，也就等价于从承诺一个多项式到承诺另一个多项式。</p>
+<p>而<strong>多项式有着各种神奇的属性，对多项式及多项式变换的承诺可以是小的、快速的</strong>。那么通过这种从点到多项式的转化，就可以把c的更新开销变为可接受的。</p>
+<p>但这只是对aSVC方案思路的一个简单、片面的介绍，在该方案中还使用了诸多其他工具和方法，而且它依然在追求更好的设计。</p>
+<p>如果你想更多的了解它，可以去阅读原论文，其中的3.1节和4.1节是最有助于理解整篇论文的部分。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/" class="post-title-link" itemprop="url">ZK-STARK论文-翻译</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-11 10:47:31" itemprop="dateCreated datePublished" datetime="2020-06-11T10:47:31+08:00">2020-06-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Scalable，transparent， and post-quantum secure computational ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2018/046.pdf">https://eprint.iacr.org/2018/046.pdf</a> 部分内容翻译：</p>
+<h3 id="0-介绍"><a href="#0-介绍" class="headerlink" title="0 介绍"></a>0 介绍</h3><h5 id="可扩展式验证的计算完整性，超过密文数据集"><a href="#可扩展式验证的计算完整性，超过密文数据集" class="headerlink" title="可扩展式验证的计算完整性，超过密文数据集"></a>可扩展式验证的计算完整性，超过密文数据集</h5><p>  本文讨论的问题基于如下假设：想象警察 <em>Police</em>(P) 是负责国家法医DNA档案数据库 <em>database</em>(D)，声称一个即将任命(或者据称可能发生腐败案)的DNA档案文件 profile(p)没有出现在D中。加密协议能否说服怀疑者相信警察的声称，并且不进入D或p，不依赖于任何外部信任方（例如，首席大法官）和具有”合理”计算资源？</p>
+<p>  DNA配置文件匹配 (<em>DNA profile match</em>, DPM) 示例是一个普遍问题的特殊情况。某一方(<em>party</em>, P)在数据集(D)上执行计算(C)能会有错误报告，而不是正确输出 (C(D))，提出了计算完整性问题 (<em>computational integrity</em> ,CI)，以确保P确实报告C(D)。当数据集 D 是公开时，任何有兴趣验证 CI 的一方 (<em>verifier</em>, V) 都可以在 D 上重新执行 C 并将其输出与 P 报告输出进行比较，因为客户可能会检查餐厅账单，或作为一个新的比特币节点将验证其区块链。此原始的解决方案无法扩展，因为验证器 (Tv)花费的时间与执行程序 (Tc)所需的时间一样大，V 必须读取完整的数据集D。基于加密哈希函数的承诺方案常用于计算大型数据集 Dt，t 时刻状态的”指纹”哈希为cmt。通常，与 Dt 相比，cmt 的长度可以忽略不计，作为公告可以很容易地张贴在块链上。但是，CI 的方案中，我们希望解决扩展性问题，也就是增加参数和计算深度的问题，其中验证时间和计算复杂度近似于 logTc 和 |cmt|(cmt的bit长度)，而不是 Tc 和 |Dt|；至少 验证时间/通信 应该严格小于 Tc 和 |Dt|。</p>
+<p>  当数据集 D 包含机密数据时，无法再实现原始的解决方案，并且负责D的P方可能以保密的面纱隐瞒违反计算完整性的行为。当对机密数据强制实施 CI 的方法则依赖于”受信任方”，例如审计师或会计师代表公众验证计算。此解决方案不提供可扩展，就像数据公开的方案一样。更糟糕的是，它要求公众信任第三方，这创造了一个潜在的协议中的失败点，因为第三方可能违反协议，如收到恶意方贿赂或胁迫。</p>
+<p>  零知识(ZK)证明和论证系统是取代人工审核员的自动化协议。为了保证计算完整性同时基于机密数据，实现有效的计算，消除腐败并降低成本。ZK系统中，S和计算C是一对随机算法，S=(P, V)；证明人 P 是用于证明计算完整性的算法；验证人 V 检验这样子的证明(proofs)。S 的完整性和健全性意味着 P 可以有效地证明所有真相，但无法说服 V 任何谬论。关于 ZK 系统针对通用计算的可扩展式验证，最早出现在1990年代，基于 <em>Probabilistically Checkable Proofs (PCP)</em> 这一篇论文。PCP 定理提供了一种平衡，证明人构建证明花费的时间(Tp)和验证人验证的时间(Tv)的平衡。这种平衡意味着生成证明的时间多项式式增加(Tp=Tc多项式)，同时验证时间指数式增加(Tv=logTc多项式)。</p>
+<h5 id="基于PCP定理（ZK-PCP）的ZK系统具有三个附加优点，这使得公众信任计算完整性至关重要。"><a href="#基于PCP定理（ZK-PCP）的ZK系统具有三个附加优点，这使得公众信任计算完整性至关重要。" class="headerlink" title="基于PCP定理（ZK-PCP）的ZK系统具有三个附加优点，这使得公众信任计算完整性至关重要。"></a>基于PCP定理（ZK-PCP）的ZK系统具有三个附加优点，这使得公众信任计算完整性至关重要。</h5><p>  (一) 这些构建安全的假设被建造起来了。即交互式解决方案具有抗碰撞哈希函数，非交互式函数具有对随机函数(“随机预言模型”) 的通用访问权限，这些理论基础在目前认为还不会受到大型量子计算机的影响，我们称之为后量子安全(<em>post-quantum secure</em>)。量子计算机规模以及对后量子密码协议的需求都在增长，如，美国国家标准与技术研究院技术(NIST)强调了后量子安全ZK解决方案的重要性。</p>
+<p>  (二) ZK-PCP是知识证明(<em>proof of knowledge</em>, POK)系统，或者当如上所述实现时，是知识论证(<em>argument of knowledge</em>, ARK)系统。非正式地，在DPM示例的背景下，ZK-ARK是一个证明，使公众相信警察已经使用了“真实的”数据集Dt和总统候选人DNA配置文件p，总统候选人的承诺是先前已经宣布过的。</p>
+<p>  (三)  最重要的是，ZK-PCP是透明的 (或“公共随机性”)，这意味着验证者使用的随机性是公共的。特别是，与更加新一些的ZK解决方案（包括Zcash加密货币使用的解决方案）相比，ZK-PCP不需要外部受信任的设置阶段。透明性对于能否取得公众信任至关重要，因为它限制了当事人P滥用系统的能力，因为，只要在可观察的宇宙中存在不可预测的事物，透明的系统就是公众可能会信赖的系统。</p>
+<h5 id="综上所述，ZK-PCP是确保公众对机密数据CI信任的最佳方法，并具有六项核心优点。"><a href="#综上所述，ZK-PCP是确保公众对机密数据CI信任的最佳方法，并具有六项核心优点。" class="headerlink" title="综上所述，ZK-PCP是确保公众对机密数据CI信任的最佳方法，并具有六项核心优点。"></a>综上所述，ZK-PCP是确保公众对机密数据CI信任的最佳方法，并具有六项核心优点。</h5><p>  (一) 透明性；</p>
+<p>  (二) 普遍性—适用于任何有效的计算C，即使它需要上述Dt之类的辅助输入；</p>
+<p>  (三) 机密性，即零知识性(ZK)—请勿破坏Dt等辅助输入；</p>
+<p>  (四) 后量子安全；</p>
+<p>  (五) 基于知识的证明(或者论据)；</p>
+<p>  (六) 可扩展的验证。</p>
+<p>  虽然 ZK-PCP在上个世纪90年代已经被知晓，但并没有被实现，因为“PCP定理产生的证明既漫长又复杂，以至于要花费数千年的时间来生成和检验它们，并且将需要比宇宙中原子更多的存储位”。ZK系统在为通用计算的努力过程中，仍没有完全实现 (一) — (六) 的替代技术上，尽管某些算法对于某些具体的电路尺寸和计算开销是有效的。</p>
+<h3 id="1-本文的主要贡献"><a href="#1-本文的主要贡献" class="headerlink" title="1 本文的主要贡献"></a>1 本文的主要贡献</h3><p>  我们在IOP(Interactive Oracle Proofs)模型中提出了一个（双重）可扩展和透明的ZK系统的新结构（Scalable Transparent IOP of Knowledge, ZK-STIK）。我们将该系统实现为ZK-STARK，并将其应用于概念验证POC“有意义”的计算，该计算本质上是高度顺序的，如前面介绍的DPM问题。我们实现了如下两点：</p>
+<p>  (一) 验证时间严格小于原始运行时间 (Tv&lt;Tc)</p>
+<p>  (二) 通信复杂度严格小于见证人大小</p>
+<p>  本系统中核心创新和改进性能的主要来源是对IOP模型的扩展，包括快速FRI (Fast Reed-Solomon (RS) IOP of Proximity (IOPP)) 协议，这里的IOP是 <em>Interactive Oracle Proofs</em>，还有一个新的算法规程。我们强调，验证时间和验证大小适用于为任意见证者定义的任何计算，尽管加速实现的具体点取决于计算的复杂性。</p>
+<h5 id="DNA档案匹配计算"><a href="#DNA档案匹配计算" class="headerlink" title="DNA档案匹配计算"></a>DNA档案匹配计算</h5><p>ZK-STARK是一个“有意义”的概念验证(POC)，特别适用于DNA档案匹配问题(DNA profile match (DPM))。该计算做出了以下场景假设：假设警察(充当证明人P)负责国家法医DNA档案数据库(D)，并且在先前时间的t，发布数据库状态Dt(例如，在区块链上)隐藏承诺cmt。警察现在声称，即将任命的和据称腐败的总统候选人的DNA档案p没有出现在Dt中，因此希望以可扩展的方式创建一个有说服力的证据，使得公众认为DPM计算正确无误，并且警方报告的输出(关于p和Dt)是正确的。</p>
+<p>在超过50个国家/地区中使用的DNA图谱的主要标准是联合DNA索引系统(CODIS)格式； 根据该标准，个人由其DNA的短串联重复序列(STR)表示，针对一组20个“核心基因”进行了测量。假定对CODIS数据库状态Dt的承诺(commitment) cmt是公共信息(如，在时间t，公开于区块链之上)，对于总统候选人简历p的承诺是cmp。我们假设p是由独立实验室提取的，然后在公开发布cmp时将其(秘密地)交给了警察。 假设警察宣布：</p>
+<p>  <em>“该值a是在具有承诺cmt的数据库中，对具有承诺cmp的档案文件进行匹配搜索的结果”</em></p>
+<p>  答案是三种可能性之一：“不匹配”，“部分匹配”或“完全匹配”。公开(开源)计算C是将由可信任的第三方执行的用于验证上述声明的计算。此计算需要三个公共输入(cmt, cmp和A)，以及两个机密输入：DNA文档数据库D’和个人DNA文档文件p’。当且仅当公共输入(cmt, cmp, A)和机密输入(D’, p’)满足以下三个条件时，计算C则成功终止：</p>
+<p> (i)针对机密输入D’的承诺cm’与公开输入cmt相等；</p>
+<p> (ii)针对机密输入p’的承诺cmp’与公开输入cmp相等；</p>
+<p> (iii)在机密数据集D’中对机密输入p’进行匹配搜索后，得到输出则会公开宣布结果a.</p>
+<p>  令|D(n)|为数据集D(n)的比特长度，n为DNA档案的条目数量(每条档案为40字节长度)。令CC(n)为ZK-STARK的通信复杂度，数据集仍然为D(n)，例如，在证明人与验证人之间，总的通信比特值。令Tc(n)为原始验证计算C在D上执行时，数据量为n时，所耗费的时间。令Tv(n)为V验证所耗费的时间。以上时间是同为一台物理服务器上测试所得。</p>
+<h3 id="2-讨论-—-权力下放的社会职能的应用"><a href="#2-讨论-—-权力下放的社会职能的应用" class="headerlink" title="2 讨论 — 权力下放的社会职能的应用"></a>2 讨论 — 权力下放的社会职能的应用</h3><p>  以比特币为首的加密货币通过建议完全分布式的货币体系来代替法定货币，加密货币同时正在破坏已建立的金融系统。 金钱只是可以分布式的社会功能之一，法律合同已经被以太坊区块链中的自动智能合同取代。 在本节结束时，我们将讨论ZK-STARK系统对分散式公共分类账的两个预期影响。</p>
+<h5 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h5><p>  现如今，在区块链中进行了激烈的讨论，围绕着适当的方式来扩展交易吞吐量，而又不会增加参与网络的节点的时间和空间。正如其中一位作者首次指出的那样，并且最近被数种加密货币计划所采用，完全可扩展的证明系统(即使没有零知识)也可以通过成倍地减少验证时间来解决可扩展性问题。更详细地讲，单个“证明人节点”可以在准线性时间内生成一个证明，该证明将说服其他节点接受账本当前状态是有效的，而无需那些节点原始地重新数据库查询计算，也不需要存储整个区块链的状态。</p>
+<h5 id="隐私性"><a href="#隐私性" class="headerlink" title="隐私性"></a>隐私性</h5><p>  ZK证明的保密性已被用于增强加密货币的互换能力和隐私能力。最近在Zcash加密货币中实现并使用一种特殊的零知识证明，即ZK-SNARK，它基于密码学指数知识(knowledge of exponent, KOE)的假设，以完整地维护其条目的分布式注册表，该注册表隐藏着未动用资金的承诺。</p>
+<p>  ZK-SNARK(zero-knowledge succint non-interactive arguments of knowledge。Zero knowledge：零知识证明；Succinctness：证据信息较短，方便验证；Non-interactivity：无交互，证明者基本上只要提供一个字符串义工验证。对于区块链来说，这一点至关重要，意味着可以把该消息放在链上公开验证；Arguments：证明过程是计算完好（computationally soundness）的，证明者无法在合理的时间内造出伪证（破解）。跟计算完好对应的是理论完好（perfect soundness)，密码学里面一般都是要求计算完好；knowledge：对于一个证明者来说，在不知晓特定证明 (witness) 的前提下，构建一个有效的零知识证据是不可能的。</p>
+<p>  ZK-SNARK是不是透明的，因为它们需要一个“设置阶段setup phase”，该阶段使用了非公开的随机性，如果受到损害，则可以用来损害系统的安全性。展望未来，ZK-STARK可以替代ZK-SNARK，透明地实现Zcash的可替代性和机密性。<strong>当前，ZK-SNARK比ZK-STARK证明size小约1000倍，因此用ZK-STARK替换ZKSNARK还需要进行更多的研究以缩短证明长度，或者使用可增量验证的计算来汇总和压缩多个ZK-STARK证明。</strong>例如，ZK-SNARK的证明size为几百bytes，ZK-STARK的证明size为几百Kbytes。</p>
+<h3 id="3-与其他的ZK系统相比较"><a href="#3-与其他的ZK系统相比较" class="headerlink" title="3 与其他的ZK系统相比较"></a>3 与其他的ZK系统相比较</h3><p>hPKC — Homomorphic public-key cryptography 同态公钥密码，如Pinocchio和libSNARK。</p>
+<p>DLP — Discrete logarithm problem 离散对数问题，如BulletProofs。</p>
+<p>IP — Interactive Proofs 交互式证明。如Hyrax。</p>
+<p>MPC — Secure multi-party computation 多方安全计算。如ZKBoo、Ligero。</p>
+<p>IVC — Incrementally Verifiable Computation 增量可验证计算。如hPKC-based IVC。</p>
+<p><img src="/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/1.png"></p>
+<h5 id="具体测试指标"><a href="#具体测试指标" class="headerlink" title="具体测试指标"></a>具体测试指标</h5><p>  测试均基于同一个硬件服务器，基于同样的DPM问题。</p>
+<p>  Arithmetic circuit complexity as standard measuring yard — 算术电路复杂度作为标准测量场。此处测试的所有系统(包括ZK-STARK)均为算术化之后的运算，将计算完整性(CI)语句简化为相关的有限域上的低次多项式系统。我们强调ZK-STARK也可以在素数场上运行，但代码中尚未实现。</p>
+<p>  在DPM计算中，数据库中具有n条数据，算术电路的参数如下：</p>
+<ul>
+<li><p>电路深度 depthn = 62·n</p>
+</li>
+<li><p>电路宽度 w = 81</p>
+</li>
+<li><p>验证复杂度 witn = 40·n bytes</p>
+</li>
+<li><p>乘法复杂度 multn = 1467·62·n ≈ (2^16.4)·n</p>
+<p>我们对ZK-STARK系统(证明方+验证方)进行了测量，本ZK-STARK具有60位(bits)的安全性，即n最大值≈60。libSNARK、SCI具有80位的安全性。BCCGP具有128位。Ligero具有60位的安全性。我们预估80位证明者的证明时间比60位最多长5％。<a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/59145/zk-snarks-vs-zk-starks-vs-bulletproofs-updated">如果您看到下图，则它们还包括一个没有setup的libSNARK线，并且明显位于ZK-STARK线之下。</a></p>
+</li>
+</ul>
+<p><img src="/2020/06/11/ZK-STARK%E8%AE%BA%E6%96%87-%E7%BF%BB%E8%AF%91/2.png"></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>  在上述以对照的方式进行测试，ZK-STARK是测量的所有电路尺寸中生成证明最快的，特别是与libSNARK相比较，速度快了近10倍。在小电路情况下，ZKBoo和Ligero的通信时间更短，验证更快。在深度较小的电路的情况下，Hyrax的通信时间更短，验证更快。在同一固定电路上多次重复的计算，BulletProofs, Pinocchio, libSNARK的通信时间更短，验证更快。但是，对于一般的大规模计算，ZK-STARK的验证时间和通信复杂性优于其他透明系统。换句话说，我们对ZK-STARK的实践表明，对于实际相关的具体计算(例如DPM)，已经充分体现了完全可伸缩性和透明性的优势，并表明我们的系统类型对于构建可伸缩性解决方案很有用， 例如，用于分布式的加密货币。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/30/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/30/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">数字货币入门</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-30 14:57:01" itemprop="dateCreated datePublished" datetime="2020-05-30T14:57:01+08:00">2020-05-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>2020年1月21日，国际清算银行（BIS）、加拿大央行、英国央行、日本央行、欧央行、瑞典央行和瑞士央行官网同时发布一则信息：成立央行小组，开展CBDC应用案例研发。</p>
+<h3 id="加拿大"><a href="#加拿大" class="headerlink" title="加拿大"></a>加拿大</h3><p>加拿大央行与瑞典央行已进入CBDC的试验测试阶段：2016年加拿大银行和新加坡金融管理局分别启动了Jasper和Ubin项目，探索分布式账户技术（DLT）在银行间大额支付系统的应用。双方都采用了R3联盟的DLT技术，开发了国内银行间支付结算的批发型数字货币原型系统，并经过几个阶段的后续试验验证，但仅限于在国内尝试。2019年加拿大银行和新加坡金管局合作开发Jasper-Ubin项目，在没有中介代理的环境下，实现了跨境、跨币种和跨平台支付中应用CBDC的试验成功。可以说在批发型CBDC应用于银行间大额支付结算和跨境支付方面，加拿大央行已经进入了概念验证试验的阶段，走在国际前列。</p>
+<h3 id="瑞典"><a href="#瑞典" class="headerlink" title="瑞典"></a>瑞典</h3><p>瑞典央行的情况与加拿大不同，其无现金化趋势和速度为全球关注。发行CBDC“电子克朗“的目的是确保国家货币发行权、维护国内支付结算体系稳定发展、让金融服务普惠社会各类群体。从2017年启动电子克朗研发计划到目前进入测试阶段。它着眼的方向是零售型CBDC。</p>
+<p>英国央行与欧央行对CBDC进行了原型设计与概念验证：笔者前文《英国：发行数字货币，还是发行塑料钞，这是一个问题》对英国开展数字货币的研发有介绍。简单说，英国作为全球首个央行数字货币模型RSCoin的创始者，虽然后来没有像加拿大、瑞典那样有更实质性的动作，但研究的步子一直没有停顿。加新两国的联合项目，也有英国的参与：2018年下，英格兰银行和加拿大央行、新加坡金管局以及4家商业银行、2家第三方机构参与了Jasper项目第4阶段的研究活动，对解决跨境支付存在的挑战和摩擦，创建交易新模式提出了建议，为2019年加新两国的DLT系统对接奠定了研究基础。此外，英国央行前行长马克·卡尼提出了一个“合成霸权货币”的概念，意欲以此取代目前以美元为主导的国际货币组合。</p>
+<h3 id="欧央行"><a href="#欧央行" class="headerlink" title="欧央行"></a>欧央行</h3><p>对CBDC的研发早已做了大量准备工作，拉加德就任行长以来，欧央行在CBDC方面的研发大幅度提速，最近在它主导下，十几个欧盟国家央行与埃森哲和R3联盟合作，开发设计了一种基于DLT的“欧洲链”系统，解决CBDC小额支付中隐私与反洗钱的平衡问题。并经过概念验证。</p>
+<h3 id="日本"><a href="#日本" class="headerlink" title="日本"></a>日本</h3><p>日本央行与瑞士央行暂处于CBDC理论研究阶段：日本是一个现金偏好明显的国家，80%日常购物仍使用现金（《日本时报》，2019）。甚至在2019政府为抵销消费税上涨而推出的非现金支付积分奖励情况下，民调50-70岁以上的人仍有31%至 54%无意使用非现支付手段（《每日新闻》，2019）。显然缺乏开展零售型CBDC研发的动机。天秤币发行计划推出后，日本官方态度保持低调，直到12月央行行长黑田东彦还称，当前没有推出CBDC的需要。但最近，其副行长雨宫正佳（Masayoshi Amamiya）表示：“在日本，公众对CBDC的需求可能会激增，这取决于结算系统的发展情况。如果发生这种情况，我们必须做好应对的准备。”</p>
+<p>去年底央行发表了一个有关CBDC法律问题的报告，对CBDC发行后给现行私法和刑法、日本银行法、数据收集法、行政法和竞争法等法律领域带来的影响进行了探讨，是目前所见CBDC研究中讨论法律问题最为全面、深入的报告，说明准备工作并没有停顿。</p>
+<h3 id="瑞士"><a href="#瑞士" class="headerlink" title="瑞士"></a>瑞士</h3><p>瑞士情况和日本相似，公众有强烈的现金偏好，即使是年轻人如此。其他国家纷纷出于反洗钱和反恐融资等目的而取消大面额现钞，降低现金消费限额，而瑞士法郎仍然保留最大面额1000瑞郎，现金交易上限是10万瑞郎。对于私人加密货币的态度它也和日本一样比较友好，有众多加密货币机构在瑞士设立。央行高管曾表态数字货币还是私有化比较合适，去年底瑞士联邦委员会仍称CBDC目前不会给瑞士带来好处，相反将引发金融稳定等风险。</p>
+<h3 id="美国"><a href="#美国" class="headerlink" title="美国"></a>美国</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.digitaldollarproject.org/"><em>DIGITAL DOLLARS: ELECTRONIC CASH VS DIGITAL CURRENCY</em></a><br><em>New technological capabilities have created a dynamic, via tokenization, that allows for a digital version of central bank currency, without sacrificing stability, security or privacy.  This is about more than a federal government payments infrastructure.</em></p>
+<p><em>In addition to coins and paper money, a dollar-based Central Bank Digital Currency (CBDC) could operate as a third form of money backed by the full faith and credit of the United States of America, but brings it into the truly portable digital world, opening up new possible use cases and applications.</em></p>
+<p><em>Considering the importance of the U.S. dollar to the global economy, our work on a U.S. dollar-based CBDC via the Digital Dollar Project is a logical and important step as we drive towards a digital transformation of the global financial system.</em> </p>
+<p><em>The Digital Dollar Project will be driven by an open, innovative, collaborative mindset, which will explore the full range of possibilities on how to best bring this to fruition</em></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.digitaldollarproject.org/">数字美元：电子现金与数字货币</a><br>新的技术通过Token化创建了一种动态的功能，该功能允许在不牺牲稳定性，安全性或私密性的情况下使用数字版本的中央银行货币。这远远超出了美国联邦政府的支付基础设施。</p>
+<p>除硬币和纸币外，以美元为基础的中央银行数字货币（CBDC）可以作为第三种形式的货币，以美利坚合众国的充分信仰和信誉为后盾，但将其带入真正的便携式数字世界，打开新的可能的用例和应用程序。</p>
+<p>考虑到美元对全球经济的重要性，在我们朝着全球金融体系的数字化转型迈进的过程中，我们通过“数字美元项目”在以美元为基础的CBDC方面的工作是合乎逻辑且重要的一步。</p>
+<p>数字美元项目将以开放，创新，协作的心态驱动，它将探索各种方式来最大程度地实现这一目标。</p>
+<p><img src="/2020/05/30/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%85%A5%E9%97%A8/5.png"></p>
+<p>和中国CBDC的设计几乎完全一致。本白皮书内容中并未提及”blockchain”。白皮书作者为Digital Dollar Project办公室与埃森哲</p>
+<p><img src="/2020/05/30/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%85%A5%E9%97%A8/6.png"></p>
+<h3 id="中国"><a href="#中国" class="headerlink" title="中国"></a>中国</h3><p><img src="/2020/05/30/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%85%A5%E9%97%A8/1.png"></p>
+<p>中国人民银行拟推出的CBDC本质上是法定货币人民币的数字化版本，由法币储备（M0）按照1比1的比例进行兑换。</p>
+<p>“从央行角度来讲，无论你是区块链还是集中账户体系，是电子支付还是所谓的移动货币，你采取任何一种技术路线，央行都可以适应。当然，你的技术路线要符合我们的门槛，比如因为是针对零售，至少要满足高并发需求，至少达到30万笔/秒。” 穆长春在会议上说到。</p>
+<p>易纲在新闻发布会上表示，人民银行把数字货币和电子支付工具结合起来，将推出一揽子计划，目标是替代一部分现金。</p>
+<p>作为理论上无成本的交换媒介，CBDC将能够提高支付系统的效率。 同时，在跨境金融交易的情况下，CBDC可以促成更快，更安全的结算，并允许数字金融服务领域进行更多的创新。此外，CBDC的推出还有助于打击假币，因为每个令牌和交易都需要由集中式系统进行实时的密码验证。</p>
+<p>农业银行的PoC如下：</p>
+<p><img src="/2020/05/30/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%85%A5%E9%97%A8/2.jpg"></p>
+<p><img src="/2020/05/30/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%85%A5%E9%97%A8/3.png"></p>
+<p><img src="/2020/05/30/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E5%85%A5%E9%97%A8/4.jpg"></p>
+<h3 id="姚前"><a href="#姚前" class="headerlink" title="姚前"></a>姚前</h3><p>2020-04刊文</p>
+<p>目前大多数国家的央行数字货币（Central Bank Digital Currency，CBDC）实验都是基于区块链技术展开的。但时至今日，CBDC是否采用区块链技术依然存有争议，一种典型的观点是区块链的去中心化与中央银行的集中管理存在冲突，因此不建议CBDC采用该技术。笔者认为，区块链技术正以前所未有的速度在发展，并与各项主流技术在深度融合，因此无论从技术角度还是业务角度，现实应用中的区块链都与“原教旨主义”的理解有所不同。如何运用区块链技术来更好的服务于中心化管理下的分布式运营，可能是CBDC当前需要重点探索的方向。本文以三个典型场景为例，讨论了区块链在CBDC中的可能应用和解决方案，指出虽然区块链的技术特点是不依赖中心机构，但不代表其不能纳入到现有中心机构的体系内，只要通过合理的设计，中央银行恰恰可以利用区块链将分布式运营有效整合起来，更好地实现对CBDC的中心化管控，两者并不存在必然冲突。</p>
+<p><strong>场景一：CBDC验钞</strong></p>
+<p>笔者曾提出“一币、两库、三中心”的央行数字货币体系。“一币”即央行数字货币，是由央行担保并签名发行的代表具体金额的加密数字串。“两库”指数字货币发行库和数字货币商业银行库，前者是中央银行在CBDC私有云上存放CBDC发行基金的数据库，按照中央银行的现金运营管理体系进行管理，后者是商业银行存放CBDC的数据库，可以在商业银行的数据中心也可以在CBDC私有云上，遵循商业银行现金运营管理规范。“三中心”则包括认证中心、登记中心和大数据分析中心。</p>
+<p>其中，登记中心记录CBDC及对应用户身份，完成权属登记，并记录流水，完成CBDC产生、流通、清点核对及消亡全过程登记。其主要功能组件分为发行登记、确权发布、确权查询网站应用、分布式账本服务几个部分。发行登记进行CBDC的发行、流通、回笼过程及权属记录；确权发布将发行登记的权属信息进行脱敏后异步发布到CBDC确权分布式账本中；确权查询网站依托分布式账本面向公众提供在线权属查询服务；分布式账本服务保证中央银行与商业银行的CBDC权属信息的一致。</p>
+<p>通俗来说，可以理解为我们在登记中心利用分布式账本不可篡改、不可伪造特性，构建了一个“网上验钞机”，即CBDC确权账本，对外通过互联网提供查询服务。这种设计对当前分布式账本技术而言，在中央银行和商业银行既集中又分散的二元模式下，提供了一种巧妙的应用思路，一方面将核心的发行登记账本对外界进行隔离和保护，同时利用分布式账本优势，提高确权查询数据和系统的安全性和可信度；另一方面，由于分布式账本仅用于对外提供查询访问，交易处理仍由发行登记系统来完成，以细化原子交易颗粒度的方式来进行交易的分布式计算处理，这样可以通过业务设计的方式有效规避现有分布式账本在交易处理上的技术性能瓶颈。显然，这样的设计充分发挥了区块链的技术优势，保障CBDC验钞的可信，但并未影响中央银行对CBDC的全局管控。</p>
+<p>尤其是，这种双账本包容性设计，既延续了传统技术的成熟稳定性，又为新的分布式账本技术留有空间，使得两种分布式技术相互兼容、并行不悖、优势互补，并在演进过程中，竞争择优。</p>
+<p><strong>场景二：批发端支付结算</strong></p>
+<p>目前各国正在开展的CBDC实验，主要针对批发端场景，且大多基于区块链技术。比如，加拿大的 Jasper 项目，试验基于区块链技术的大额支付系统；新加坡的Ubin项目，评估在分布式账本上以数字新元的代币形式进行支付结算的效果；欧洲央行和日本央行的Stella项目，旨在研究分布式账本技术（DLT）在金融市场基础设施中的应用，评估现有支付体系的特定功能是否能够在DLT环境下安全高效地运转。还有中国香港的LionRock项目、泰国的Inthanon项目等均是试验基于区块链技术的CBDC。这些区块链技术的应用都在中央银行的集中管理和严格控制下展开。</p>
+<p>以新加坡的Ubin项目为例，其采用了与加拿大Jasper项目一样的数字存托凭证（Digital Deposit Receipt，DDR）模式。为了支持分布式账本中DDR的发行，现有新加坡电子支付系统（MEPS +），也就是新加坡的RTGS系统，专门建立一个DDR资金抵押账户，每日开始时，参与银行请求中央银行将其RTGS账户中的资金转移到DDR资金抵押账户，以此作为抵押，分布式账本创建相应等值的DDR，发送到各银行的DDR钱包，由此参与银行之间可开展基于分布式账本的转账和支付。日终，分布式账本系统将向MEPS+发送一个网络结算文件，MEPS+依此调整DDR资金抵押账户余额，匹配参与者在DLT网络中的DDR余额。</p>
+<p>可见，去中心化的分布式账本与现有成熟的中央主导的金融基础设施并不排斥，完全可以相互融合，相互补充。一方面，基于区块链的DDR支付系统为现有RTGS系统提供了一种不依赖传统账户的新型支付方式，有效补充了现有支付清算体系。另一方面，DDR作为RTGS中电子化法定货币的数字化形态延伸，其最终可以转换回RTGS账户价值，并通过RTGS系统对外结算，也就是说，RTGS系统解决了区块链DDR到传统账户资金的结算最终性问题，这侧面也说明了区块链的结算最终性可以有机融合到现有清结算体系中。此外，由于DDR 是通过100%资金抵押生成，不影响货币供应量，因此分布式账本也不会影响到中央银行对货币的总量管控。</p>
+<p>显然，在技术逻辑上，中央银行主导的基于区块链的新型支付系统是完全可行的。某种意义上，参照Ubin项目的数字存托凭证模式，可以无需借助类似网联支付平台这样的中间渠道，各家支付机构和商业银行可以通过在金融专网中构建对等网络的方式，以统一的区块链网络连接起来，开展支付清算。考虑到目前区块链技术的交易性能还在演进的过程中，上述清算业务宜在批发层面展开。</p>
+<p>应该说，区块链的去中心化是指去中介，但不去监管。在联盟链的环境下，中央银行等监管部门不但可以对区块链所承载的业务及其风险进行中心化管控，而且还可以实现穿透式非现场监管。</p>
+<p><strong>场景三：现金数字化</strong></p>
+<p>似乎现金的数字化与准备金的数字化（即前述的数字存托凭证）没有本质上的差别，只是前者面向社会公众，而后者仅局限于银行间流通，但面向社会公众就引发了一个难题，倘若允许公众在中央银行开户，中央银行将面临着极大的服务压力，并可能引发存款搬家，导致狭义银行。</p>
+<p>一种解决思路是100%备付准备金模式。代理运营机构向中央银行存缴100%备付准备金，随后在其账本上发行相应数额的数字货币可视为央行数字货币。IMF经济学家把它称为合成央行数字货币（sCBDC）。据此，我国第三方支付机构100%备付准备金存缴中央银行之后，它们虚拟账户中的资金就是央行数字货币了。若此，则中国早就是全球首个实现法币数字化的泱泱大国。</p>
+<p>但仔细琢磨，这一思路存在着缺陷：一是技术上，100%准备金存缴意味着数字货币的发行、流通、回笼等全生命周期均要依附于传统账户体系，尤其是跨机构CBDC的流通，除了CBDC账本更新外，还要处理相应准备金账户间的清结算，只能牺牲系统灵活性，加以额度管控的方式去应对，而且还需要成立专门的清算机构提供互联互通服务。这不仅增大中央银行中心系统的压力和复杂性，也就是说，还是没有解决央行的服务压力，而且难以实现“账户松耦合”的要求；二是管理上，这种方式央行和运营机构在发行流通过程中是紧绑定的，央行依然承担中心化压力。如何保证代理运营机构100%备付准备金后没有超发货币，尤其是当代理运营机构运营的支付网络不受中心化管控时，中央银行更难以掌控运营代理层的货币发行量，这在一定程度上也构成了某些反对区块链技术应用于CBDC的理由。</p>
+<p>视角决定思路，如果换一个角度看，会得到另一种完全不同的更优的解决方案。现在提到CBDC，许多人是自顶向下，从中央银行发行到商业银行，再从商业银行发行到个人的视角来理解CBDC的技术逻辑，所以总有一个乱发票子的担忧。实物货币受制于印钞造币环节，非如此不可，但数字货币的“印钞造币”可以瞬间完成，无需这种制约，而这才是其优势所在。如果以自底向上的视角看，可以惊讶地发现，数字货币最终用户并没有“发行”的概念，而是“兑换”的理念，是手里有多少现金，有多少存款，去兑换CBDC。所以从这角度看，乱发票子的问题并没有那么突出，代理运营机构兑换出的CBDC，不是中央银行给与的货币发行额度，而是用户用实实在在的真金白银等额兑换的结果，中央银行只是站在全局的角度统计相关信息并予以监管。实际上，目前无论是私人的稳定代币，还是各国研发的CBDC，都是按需兑换的思路，而不是扩表发行，这是一个非常关键的点。这一点对货币政策而言，意义重大，表明其没有根本性的变化；对于技术路线而言，意味着可以不拘泥于实物货币的发行流程，系统的设计可以更为简洁，局面因此大为改观。</p>
+<p>基于自底向上的兑换视角，可以提出一个CBDC简化版实现方案。具体思路是：业务由底层客户发起，客户申请兑换CBDC并将其托管至代理运营机构。代理运营机构记录客户托管CBDC的明细账本，为每个托管客户单独建立明细账。代理运营机构收到客户兑换并托管CBDC请求后，在收取现金或扣减客户存款的同时，将等额CBDC记录在该客户明细账下，然后向中央银行缴回现金或扣减存款准备金，并以批量方式混同托管至中央银行。中央银行记录代理运营机构的总账本，是一个总量的概念，与代理运营机构的明细账本构成上下两级双账本结构。当同一家代理运营机构的客户之间发生CBDC支付时，只需在该机构的明细账本上变更权属，无需变更中央银行总账本。当发生跨代理运营机构的CBDC支付时，首先由相关的代理运营机构交互处理，在各自明细账本上完成CBDC的权属变更，然后由中央银行在总账本上定期批量变更各机构总账。为提高效率，减少风险，可考虑引入持续净额头寸调整、流动性节约（LSM）等机制。</p>
+<p>这一方案有以下优点：一是明确了持有者对CBDC具有完全掌控权。未经持有者的签名或同意，其他任何主体均不能动用CBDC。这就使CBDC真正具备现金属性，与存款类货币本质不同。二是央行不对底层客户单独建档，也就是说，普通公众不在中央银行“开户”，降低了中央银行的服务压力，同时真正实现了“账户松耦合”的要求，因准备金账户批量调整，CBDC系统相对独立于RTGS系统。三是各家代理运营机构可以根据自己的理解，在满足统一标准的基础上，发挥各自特长构建自身的数字货币代理运营系统，有助于竞争，便于客户选择。由于是按需兑换，而不是扩表发行，因此就没有了运营代理层超发货币的担忧。另外，虽然底层客户交易信息只存储在中间层，不存储在中央银行账本上，出于政策需要或监管需要，中央银行有权向下一层的代理运营机构提取信息明细，从而在分布式运营条件下实现了中心化管控。</p>
+<p><strong>结语</strong></p>
+<p>区块链作为一种可能成为未来金融基础设施的新兴技术，对于中央银行和商业银行二元模式而言，有助于实现分布式运营，同时并不会影响集中管理。本文通过三个典型场景进一步论证了区块链技术的去中心化特点可以纳入到CBDC的分布式运营与央行的集中管理体系中。可将区块链技术应用于CBDC的登记账本，对CBDC验钞，保障可信。在批发端场景，各国开展的实验也表明，基于区块链技术的CBDC和支付系统具有可行性。而在现金数字化的零售场景，本文认为之所以目前CBDC研发方案一直无法发挥出央行中心管控下的分布式运营应有的优势，问题在于自顶向下的“发行”视角，对此，本文基于自底向上的“兑换”视角，提出了全新的CBDC实现方案，这一方案同时实现了“管控中心化，运营分布式”的目标。</p>
+<p>“物物而不物于物”，“形而上者之为道，形而下者之为器，以道御器”，这是我国古代哲人的思想。集中管理与分布处理历来需要辩证统一地看待，不宜“先入为主”地将制度层面的中心化管控与技术层面的分布式处理简单对立起来。当前，各国基于区块链技术的央行数字货币实验进展迅速，内容已涉及隐私保护、数据安全、交易性能、身份认证、券款对付、款款对付等广泛议题。作为一项崭新的技术，区块链当然还有这样那样的缺点与不足，但这不是我们轻言放弃的理由。Facebook的Libra项目已在研发基于安全、可扩展和可靠区块链的新一代金融基础设施，这是一个全新的赛道，机遇与挑战并存，“逆水行舟，不进则退”。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -376,296 +789,6 @@
 
 <h3 id="DeliverTx"><a href="#DeliverTx" class="headerlink" title="DeliverTx"></a>DeliverTx</h3><p>在执行 <code>ExecuteTx(logHeader, app.committer, app.txDecoder, req.GetTx())</code> 中，<code>executor execution.Executor</code> 被指定为 <code>app.committer</code> , 与 CheckTX 执行同样的 <code>Execute</code> 逻辑</p>
 <h3 id="Commit"><a href="#Commit" class="headerlink" title="Commit"></a>Commit</h3><p>具体执行逻辑为 <code>/execution/execution.go</code> 中的 <code>func (exe *executor) Commit(header *abciTypes.Header) (stateHash []byte, err error)</code> </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-3/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-3</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-05-18 14:52:31" itemprop="dateCreated datePublished" datetime="2020-05-18T14:52:31+08:00">2020-05-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="burrow-natives-Dump-Solidity-interface-contracts-for-Burrow-native-contracts"><a href="#burrow-natives-Dump-Solidity-interface-contracts-for-Burrow-native-contracts" class="headerlink" title="./burrow natives , Dump Solidity interface contracts for Burrow native contracts."></a>./burrow natives , Dump Solidity interface contracts for Burrow native contracts.</h3><p>抽出Burrow内置的solidity接口合约。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow natives       </span><br><span class="line">pragma solidity &gt;=<span class="number">0.4</span><span class="number">.24</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* acmstate.ReaderWriter for managing Secure Native authorizations.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>This interface describes the functions exposed by the native permissions layer in burrow.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>These functions can be accessed as if this contract were deployed at a special address (0x0A758FEB535243577C1A79AE55BED8CA03E226EC).</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>This special address is defined as the last 20 bytes of the sha3 hash of the the contract name.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>To instantiate the contract use:</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>Permissions permissions = Permissions(address(uint256(keccak256(&quot;Permissions&quot;))));</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">interface Permissions &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Adds a role to an account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether role was added</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Removes a role from an account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether role was removed</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">removeRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Indicates whether an account has a role</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether account has role</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Sets the permission flags for an account. Makes them explicitly set (on or off).</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the base permissions flags to set for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Set whether to set or unset the permissions flags at the account level</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was set as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setBase</span>(<span class="params">address _account, uint64 _permission, bool _set</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Unsets the permissions flags for an account. Causes permissions being unset to fall through to global permissions.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags to unset for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was unset as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">unsetBase</span>(<span class="params">address _account, uint64 _permission</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Indicates whether an account has a subset of permissions set</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags (mask) to check whether enabled against base permissions for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether account has the passed permissions flags set</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasBase</span>(<span class="params">address _account, uint64 _permission</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Sets the global (default) permissions flags for the entire chain</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags to set</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Set whether to set (or unset) the permissions flags</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was set as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setGlobal</span>(<span class="params">uint64 _permission, bool _set</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="burrow-dump-Dump-chain-state-to-backup"><a href="#burrow-dump-Dump-chain-state-to-backup" class="headerlink" title="./burrow dump , Dump chain state to backup"></a>./burrow dump , Dump chain state to backup</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow dump local backup_dump</span><br><span class="line">Sourcing config <span class="keyword">from</span> first <span class="keyword">of</span>: defaults</span><br><span class="line">Sourcing config <span class="keyword">from</span> defaults</span><br><span class="line">Sourcing config <span class="keyword">from</span> first <span class="keyword">of</span>: genesis file at genesis.json</span><br><span class="line">Sourcing config <span class="keyword">from</span> genesis file at genesis.json</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping accounts&quot;</span>&#125;</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping names&quot;</span>&#125;</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping events&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="burrow-restore-Restore-new-chain-from-backup"><a href="#burrow-restore-Restore-new-chain-from-backup" class="headerlink" title="./burrow restore, Restore new chain from backup"></a>./burrow restore, Restore new chain from backup</h3><p>从backup文件恢复区块链</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/12/%E4%BD%93%E9%AA%8CHyperledger-Burrow-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/05/12/%E4%BD%93%E9%AA%8CHyperledger-Burrow-2/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-05-12 09:08:31" itemprop="dateCreated datePublished" datetime="2020-05-12T09:08:31+08:00">2020-05-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>文档链接=&gt;<a target="_blank" rel="noopener" href="https://hyperledger.github.io/burrow/">https://hyperledger.github.io/burrow/</a></p>
-<p>github链接=&gt;<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/">https://github.com/hyperledger/burrow/</a></p>
-<p>接前文《体验Hyperledger-Burrow-1》，启动4个节点如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  script ps aux | grep burrow</span><br><span class="line">USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">will      21409  2.1  0.8 133268 66036 pts/1    SNl  08:52   1:02 ./burrow start --config=burrow000.toml</span><br><span class="line">will      21410  1.9  0.7 133268 59212 pts/1    SNl  08:52   0:56 ./burrow start --config=burrow001.toml</span><br><span class="line">will      21411  2.0  0.8 133268 65924 pts/1    SNl  08:52   0:59 ./burrow start --config=burrow002.toml</span><br><span class="line">will      21416  2.0  0.7 133268 63416 pts/1    SNl  08:52   1:01 ./burrow start --config=burrow003.toml</span><br></pre></td></tr></table></figure>
-
-<h3 id="制作增加节点的配置文件"><a href="#制作增加节点的配置文件" class="headerlink" title="制作增加节点的配置文件"></a>制作增加节点的配置文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./burrow spec -v1 | ./burrow configure -s- &gt; burrow_add.toml</span><br></pre></td></tr></table></figure>
-
-<p>运行完成后，增加公私钥文档如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  data pwd</span><br><span class="line">/home/will/documents/burrow/script/.keys/data</span><br><span class="line">➜  data cat 035B1B192A16FF8086C36304024010502CEB2DE0.json </span><br><span class="line">&#123;&quot;CurveType&quot;:&quot;ed25519&quot;,&quot;Address&quot;:&quot;5ECA9967F5D363F21C4606CC971710200A64C5BC&quot;,&quot;PublicKey&quot;:&quot;4F3530024CF75A7AFC4D168CF2975C285D03CEBB1CBE82E21AD9C76531A63128&quot;,&quot;AddressHash&quot;:&quot;go-crypto-0.5.0&quot;,&quot;PrivateKey&quot;:&#123;&quot;Crypto&quot;:&quot;none&quot;,&quot;Plain&quot;:&quot;486059FB274248423F92B7522D5A237AB99B38C80F84D46F720EAE1506D8E2DF4F3530024CF75A7AFC4D168CF2975C285D03CEBB1CBE82E21AD9C76531A63128&quot;&#125;&#125;</span><br><span class="line">➜  names pwd</span><br><span class="line">/home/will/documents/burrow/script/.keys/names</span><br><span class="line">➜  names cat Validator_0</span><br><span class="line">035B1B192A16FF8086C36304024010502CEB2DE0</span><br></pre></td></tr></table></figure>
-
-<p>修改burrow_add.toml配置:<br>1.删除GenesisDoc的内容，因为genesis.json中已经包含了节点们的GenesisDoc；<br>2.增加PersistentPeers，PersistentPeers在burrow000.toml中可以找到；<br>3关闭grpc端口，关闭rpc.info等，否则会跟已有的4个节点端口冲突</p>
-<h3 id="发出增加validator的Tx"><a href="#发出增加validator的Tx" class="headerlink" title="发出增加validator的Tx"></a>发出增加validator的Tx</h3><p>制作增加validator Tx 交易的文件：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">AddValidator</span></span><br><span class="line">  <span class="attr">update-account:</span></span><br><span class="line">    <span class="attr">target:</span> <span class="string">4F3530024CF75A7AFC4D168CF2975C285D03CEBB1CBE82E21AD9C76531A63128</span></span><br><span class="line">    <span class="attr">power:</span> <span class="number">222222</span></span><br><span class="line">    <span class="attr">permissions:</span> [<span class="string">root</span>, <span class="string">send</span>, <span class="string">call</span>, <span class="string">createContract</span>, <span class="string">createAccount</span>, <span class="string">bond</span>, <span class="string">name</span>, <span class="string">proposal</span>, <span class="string">input</span>, <span class="string">batch</span>, <span class="string">identify</span>, <span class="string">hasBase</span>, <span class="string">setBase</span>, <span class="string">unsetBase</span>, <span class="string">setGlobal</span>, <span class="string">hasRole</span>, <span class="string">addRole</span>, <span class="string">removeRole</span>]</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>4F3530024CF75A7AFC4D168CF2975C285D03CEBB1CBE82E21AD9C76531A63128</code> 是新节点的publickey。</p>
-<p>执行交易命令（<code>DCF0F3BD45EA59B2D471729EC22838DF7B119012</code> 是增加节点前已经启动的4个节点中的Full Account节点。），即在已经启动的节点上执行本交易：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">./burrow deploy -c 127.0.0.1:10997 --mempool-signing=true --address=DCF0F3BD45EA59B2D471729EC22838DF7B119012 deploy.yaml</span><br><span class="line">log_channel=Info message=&quot;Using chain&quot; Chain=127.0.0.1:10997 Signer=</span><br><span class="line">log_channel=Info message=&quot;Loading Playbook File.&quot;</span><br><span class="line">log_channel=Info message=&quot;Loading playbook file&quot; path=/home/will/documents/burrow/script filename=/home/will/documents/burrow/script/deploy.yaml</span><br><span class="line">log_channel=Info message=&quot;*****Executing Job*****&quot; JobName=defaultAddr Type=Account</span><br><span class="line">log_channel=Info message=&quot;Setting Account&quot; account=DCF0F3BD45EA59B2D471729EC22838DF7B119012</span><br><span class="line">log_channel=Info message=&quot;*****Executing Job*****&quot; JobName=AddValidator Type=UpdateAccount</span><br><span class="line">log_channel=Info message=GovTx account=&quot;unsupported value type&quot;</span><br><span class="line">log_channel=Info message=&quot;Using mempool signing since no keyClient set, pass --keys to sign locally or elsewhere&quot;</span><br><span class="line">log_channel=Info message=&quot;Using mempool signing&quot;</span><br><span class="line">log_channel=Info message=&quot;Tx Return&quot; TransactionHash=5a1a57e975e5ead5079c12c63c473e1c04c59cf82fe9974f191faaf1d8aeb8b8 BlockHeight=18</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=input value=DCF0F3BD45EA59B2D471729EC22838DF7B119012</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=native value=</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=power value=222222</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=sequence value=</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=address value=</span><br><span class="line">log_channel=Info message=&quot;Job Vars&quot; name=publicKey value=D90E05FAD677699B4FEE56B567F85D3A90438B4B627C27CED0D4C850BDC97876</span><br><span class="line">log_channel=Info message=&quot;Writing to current directory&quot; output=/home/will/documents/burrow/script/deploy.output.json</span><br><span class="line">log_channel=Info message=&quot;JOBS THAT SUCCEEEDED&quot; count=1</span><br><span class="line">log_channel=Info message=&quot;Playbook result&quot; jobNo=0 file=deploy.yaml time=230.744184ms</span><br></pre></td></tr></table></figure>
-
-<p>注意：新创建的validator没有余额。</p>
-<h3 id="启动新增加的节点"><a href="#启动新增加的节点" class="headerlink" title="启动新增加的节点"></a>启动新增加的节点</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./burrow start --config=burrow_add.toml --genesis=genesis.json --address=5ECA9967F5D363F21C4606CC971710200A64C5BC</span><br></pre></td></tr></table></figure>
-
-<p><code>5ECA9967F5D363F21C4606CC971710200A64C5BC</code> 是被增加节点的地址(address)。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  script ps aux | grep burrow</span><br><span class="line">USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">will      21409  2.1  0.8 133268 66036 pts/1    SNl  08:52   1:02 ./burrow start --config=burrow000.toml</span><br><span class="line">will      21410  1.9  0.7 133268 59212 pts/1    SNl  08:52   0:56 ./burrow start --config=burrow001.toml</span><br><span class="line">will      21411  2.0  0.8 133268 65924 pts/1    SNl  08:52   0:59 ./burrow start --config=burrow002.toml</span><br><span class="line">will      21416  2.0  0.7 133268 63416 pts/1    SNl  08:52   1:01 ./burrow start --config=burrow003.toml</span><br><span class="line">will      21505  2.2  0.7 133268 58864 pts/1    Sl+  08:55   1:01 ./burrow start --config=burrow_add.toml --genesis=genesis.json --address=DCF0F3BD45EA59B2D471729EC22838DF7B119012</span><br></pre></td></tr></table></figure>
-
-<p>ed25519是tendermint选择的加密曲线，secp256k1是ethereum选择的加密曲线。</p>
-<p>两者都可以在<code>./burrow keys list</code> 中看到账户地址和名称。在web3.getAccounts中只能够看到secp256k1曲线下生成的账户地址，metamask和remix也是如此。</p>
-<p><code> burrow keys gen -n -t secp256k1 --name zhuang</code> 如果不指定 <code>-n</code> 的话，需要输入密码。 </p>
-<h3 id="发送转账交易"><a href="#发送转账交易" class="headerlink" title="发送转账交易"></a>发送转账交易</h3><p>创建转账交易 deploy_sendToken.yaml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">sendTxTest1</span></span><br><span class="line">  <span class="attr">send:</span></span><br><span class="line">      <span class="attr">destination:</span> <span class="string">0DE8C14FE07FA693D3A6F65D826647D39E9A3BB0</span></span><br><span class="line">      <span class="attr">amount:</span> <span class="number">2000</span></span><br></pre></td></tr></table></figure>
-
-<p>发起</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow keys gen -n -t secp256k1 --name zhuang1</span><br><span class="line">0DE8C14FE07FA693D3A6F65D826647D39E9A3BB0</span><br><span class="line">➜  script ./burrow deploy --address CCC93802D38A33B636D8B2B74218021A571CF252 deploy_sendToken.yaml</span><br><span class="line">log_channel=Info message=&quot;Using chain&quot; Chain=127.0.0.1:10997 Signer=</span><br><span class="line">log_channel=Info message=&quot;Loading Playbook File.&quot;</span><br><span class="line">log_channel=Info message=&quot;Loading playbook file&quot; path=/home/will/documents/burrow/script filename=/home/will/documents/burrow/script/deploy_sendToken.yaml</span><br><span class="line">log_channel=Info message=&quot;*****Executing Job*****&quot; JobName=defaultAddr Type=Account</span><br><span class="line">log_channel=Info message=&quot;Setting Account&quot; account=CCC93802D38A33B636D8B2B74218021A571CF252</span><br><span class="line">log_channel=Info message=&quot;*****Executing Job*****&quot; JobName=sendTxTest1 Type=Send</span><br><span class="line">log_channel=Info message=&quot;Sending Transaction&quot; source=CCC93802D38A33B636D8B2B74218021A571CF252 destination=0DE8C14FE07FA693D3A6F65D826647D39E9A3BB0 amount=2000</span><br><span class="line">log_channel=Info message=SendTx send=&quot;unsupported value type&quot;</span><br><span class="line">log_channel=Info message=&quot;Using mempool signing since no keyClient set, pass --keys to sign locally or elsewhere&quot;</span><br><span class="line">log_channel=Info message=&quot;Using mempool signing&quot;</span><br><span class="line">log_channel=Info message=&quot;Tx Return&quot; TransactionHash=a0abda87ea4751beaeae04d5ac67c35114b9f068720db6e1795ec7083c4a872e BlockHeight=27</span><br><span class="line">log_channel=Info message=&quot;Writing to current directory&quot; output=/home/will/documents/burrow/script/deploy_sendToken.output.json</span><br><span class="line">log_channel=Info message=&quot;JOBS THAT SUCCEEEDED&quot; count=1</span><br><span class="line">log_channel=Info message=&quot;Playbook result&quot; jobNo=0 file=deploy_sendToken.yaml time=347.234362ms</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-05-11 17:33:01" itemprop="dateCreated datePublished" datetime="2020-05-11T17:33:01+08:00">2020-05-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>文档链接=&gt;<a target="_blank" rel="noopener" href="https://hyperledger.github.io/burrow/">https://hyperledger.github.io/burrow/</a></p>
-<p>github链接=&gt;<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/">https://github.com/hyperledger/burrow/</a></p>
-<p>Burrow是一个权限控制较为严格、以太坊EVM和WASM虚拟机支持、运行于Tendermint共识之上的区块链客户端。其主要由Monax贡献，并由Monax 和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%8B%B1%E7%89%B9%E5%B0%94">英特尔</a>赞助。</p>
-<p>其强调的设计理念包括：</p>
-<ol>
-<li>防篡改的Merkle状态—Tamper-resistant merkle state</li>
-<li>PoS支持</li>
-<li>链上治理原生支持</li>
-<li>以太坊账户一览</li>
-<li>可以根据每个帐户设置代码执行权限</li>
-<li>事件流支持</li>
-<li>智能合约事件弹出至SQL表记录</li>
-<li>GRPC和Protobuf支持</li>
-<li>Javascript SDK支持，客户端库可以生成代码来访问合约，生成的代码是静态的Typescript对象</li>
-<li>Keys服务，提供代理签名服务器</li>
-<li>Web3 RPC，兼容Ethereum主网的开发工具，如 Truffle、 Metamask、Remix</li>
-</ol>
-<p><strong>Burrow应用于多个区块链生产项目</strong>。</p>
-<h3 id="初始化Burrow节点"><a href="#初始化Burrow节点" class="headerlink" title="初始化Burrow节点"></a>初始化Burrow节点</h3><p>从<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/%E4%B8%8B%E8%BD%BD%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%EF%BC%8C%E6%9C%AC%E6%96%87%E4%BB%A5">https://github.com/hyperledger/burrow/下载可执行文件，本文以</a> ubuntu 环境为例。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./burrow spec -f2 -p2 | ./burrow configure --curve-type secp256k1 -s- --pool --separate-genesis-doc=genesis.json</span><br></pre></td></tr></table></figure>
-
-<p><code>./burrow spec</code> 建立一个GenesisSpec作为GenesisDoc和configure命令的模板，f2是指2个full-accounts，p2是指2个participant-accounts。</p>
-<p><code>--curve-type secp256k1</code> 是指定加密曲线的类型。</p>
-<p><code>./burrow configure -s-</code> 通过使用GenesisDoc或GenesisSpec，创建密钥并创建配置文档。<code>--pool </code> 为名为burrowNNN.toml的所有共识节点（validators）编写配置文件。<code>--separate-genesis-doc</code> 将genesis文档投送至 JSON或者TOML文件。</p>
-<ul>
-<li><p>validator-accounts 共识的参与者，需要抵押一部分资金</p>
-</li>
-<li><p>root-accounts 根账户</p>
-</li>
-<li><p>developer-accounts 开发者，功能很多和全节点很像</p>
-</li>
-<li><p>participant-accounts 参与者</p>
-</li>
-<li><p>full-accounts 全功能</p>
-</li>
-</ul>
-<h3 id="启动Burrow节点"><a href="#启动Burrow节点" class="headerlink" title="启动Burrow节点"></a>启动Burrow节点</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow start --config=burrow000.toml &amp;</span><br><span class="line">./burrow start --config=burrow001.toml &amp;</span><br><span class="line">./burrow start --config=burrow002.toml &amp;</span><br><span class="line">./burrow start --config=burrow003.toml &amp;</span><br><span class="line">[5] 12458</span><br><span class="line">[6] 12459</span><br><span class="line">[7] 12460</span><br><span class="line">[8] 12464</span><br></pre></td></tr></table></figure>
-
-<h3 id="网页端访问RPC服务"><a href="#网页端访问RPC服务" class="headerlink" title="网页端访问RPC服务"></a>网页端访问RPC服务</h3><p><a target="_blank" rel="noopener" href="http://127.0.0.1:26759/">http://127.0.0.1:26759/</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Available endpoints:</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account_stats</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;accounts</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;chain_id</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;consensus</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;genesis</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;network</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;network&#x2F;registry</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;validators</span><br><span class="line"></span><br><span class="line">Endpoints that require arguments:</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account_human?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;block?height&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;blocks?minHeight&#x3D;_&amp;maxHeight&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;dump_storage?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;name?name&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;names?regex&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;status?block_time_within&#x3D;_&amp;block_seen_time_within&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;storage?address&#x3D;_&amp;key&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;unconfirmed_txs?maxTxs&#x3D;_</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
