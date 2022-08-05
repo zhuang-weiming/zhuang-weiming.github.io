@@ -8298,7 +8298,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install medusa-plugin-filestorage-local</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Setup config in medusa-config.js</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> plugins = [</span><br><span class="line">  <span class="string">`medusa-fulfillment-manual`</span>,</span><br><span class="line">  <span class="string">`medusa-payment-manual`</span>,</span><br><span class="line">  &#123;</span><br><span class="line">  	resolve: <span class="string">`medusa-plugin-filestorage-local`</span>,</span><br><span class="line">  	options: &#123;</span><br><span class="line"> 	   <span class="comment">// The baseurl for your medusajs server</span></span><br><span class="line">    	   serverBaseUrl: <span class="string">&quot;http://localhost:9000&quot;</span>,</span><br><span class="line">    	   <span class="comment">// when enabled saves the file as a base64 encoded string inside the database (deleting that row is not yet supported)</span></span><br><span class="line">    	   saveInDatabase: <span class="literal">false</span>, <span class="comment">// recommended: false</span></span><br><span class="line">    	   <span class="comment">// the folder where your files are stored on the server</span></span><br><span class="line">    	   fileLocation: <span class="string">&quot;uploads/persistent&quot;</span>,</span><br><span class="line">    	&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> plugins = [</span><br><span class="line">  <span class="string">`medusa-fulfillment-manual`</span>,</span><br><span class="line">  <span class="string">`medusa-payment-manual`</span>,</span><br><span class="line">  &#123;</span><br><span class="line">  	resolve: <span class="string">`medusa-plugin-filestorage-local`</span>,</span><br><span class="line">  	options: &#123;</span><br><span class="line"> 	   <span class="comment">// The baseurl for your medusajs server</span></span><br><span class="line">    	   serverBaseUrl: <span class="string">&quot;http://localhost:9000&quot;</span>,</span><br><span class="line">    	   <span class="comment">// when enabled saves the file as a base64 encoded string inside the database (deleting that row is not yet supported)</span></span><br><span class="line">    	   saveInDatabase: <span class="literal">false</span>, <span class="comment">// recommended: false</span></span><br><span class="line">    	   <span class="comment">// the folder where your files are stored on the server</span></span><br><span class="line">    	   fileLocation: <span class="string">&quot;uploads/persistent/&quot;</span>,</span><br><span class="line">    	&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Restart medusa server</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">medusa develop</span><br><span class="line">// or</span><br><span class="line">medusa start</span><br></pre></td></tr></table></figure>
@@ -9112,6 +9112,34 @@
 <h4 id="5-1-预测复数的预测市场"><a href="#5-1-预测复数的预测市场" class="headerlink" title="5.1 预测复数的预测市场"></a>5.1 预测复数的预测市场</h4><h4 id="5-2-人工智能到多元智能"><a href="#5-2-人工智能到多元智能" class="headerlink" title="5.2 人工智能到多元智能"></a>5.2 人工智能到多元智能</h4><h4 id="5-3-可编程复数隐私"><a href="#5-3-可编程复数隐私" class="headerlink" title="5.3 可编程复数隐私"></a>5.3 可编程复数隐私</h4>]]></content>
       <tags>
         <tag>Ethereum</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>区块链架构分析-读互链网心得</title>
+    <url>/2022/08/04/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90-%E8%AF%BB%E4%BA%92%E9%93%BE%E7%BD%91%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<p>区块链架构分类：</p>
+<p>1） “小飞象” Dumbo 模型</p>
+<p>目前的区块链是构建在互链网之上，安全，身份，都必须由区块链自身来完成，区块链更像是互联网的一个应用，就像一个小飞象，可以飞，但是体重太重。这样的模型以后必定会有大风险，会出问题，就像将高楼建立在沙滩上，风来了，雨来了，必将倾倒。</p>
+<p>账户存储在应用层，而不是存储在操作系统底层。央行为了监管比特币和以太坊，需要获得全部交易数据，才能达到国家监管的要求。所以，针对多个国家部署、构成全球网络的区块链，监管机制不应该放在应用层，监管机制需要放入核心层，才能够达到监管的目的。“小飞象”模型这样子的设计，监管机制很可能不能到位。</p>
+<p>2）“操作数据库系统”Operation Database System</p>
+<p>对所有交易进行监管，所有账户和交易信息任务需要在系统内执行，而且部分任务由硬件处理，保护隐私，增加处理速度。区块链是一个分布式数据系统，这样子的操作系统就可能成为“操作数据库系统”，不再只是操作系统。这是“可监管操作系统”的设计原则。</p>
+<p>如上，操作系统具有两个主要进程 — 交易进程（transaction process）和监管进程（regulation process）。同时，操作系统负责追踪交易数据，交易多方各自保证各自的信息真实。如果出错，出错方需要为损失负责。</p>
+<p>一种观点是，该“操作数据库系统”Operation Database System可以在现有操作系统上进行改造。例如，在Linux内核的基础上增加一层共识层，该层主要由文件系统加解密，网络传输加解密以及共识协议等服务组成，为上层应用提供加解密和共识协议接口。</p>
+<p>3）互链网网络模型</p>
+<p>在“操作数据库系统”Operation Database System等基础上，互链网成为其上的应用，互链网需要链接各式各样的链。单链网需要具备的特性：<strong>高性能；安全性和隐私性；可扩展性；容错性</strong>。</p>
+<p>组成链网，还需要的特性：多链式架构（同构/异构）；互通性；可延伸性（用户参与）；可更改性（用户加入/退出）；可复制性（快速同步）；可管理性及非对称结构（监管节点/域名服务/控制节点/种子节点等）；层次性（高层次的链和节点具有不对称的权利）；一致性（每条链具有自己的一致性，链与链之间也要有一致性）；高可靠性；完备性（共识机制及消息来源与可靠性不同，所以各链的完备性不一样。高完备性的链可以将信息传输给低完备性的链，反之，则不可以）</p>
+<p>身份信息处理方式分类：</p>
+<p>1）中心化处理：由政府发证，公民使用身份证来注册，交易，上学，就医等等。</p>
+<p>2）联邦制处理：有另外一群组织来管理身份。</p>
+<p>3）用户管理：个人管理身份。</p>
+<p>4）用户自主管控：自我主权身份 self- sovereign identity。</p>
+<p>数据保护方面处理分类：</p>
+<p>1）不存储关键数据：例如，私钥，例如Sorvin项目就采取这样子的设计，但是这种设计使得系统操作性比较差，因为系统如果需要处理信息，每次都需要对数字身份发起请求，而且在请求协议中，也可能遭到攻击。</p>
+<p>2）存储加密信息：在系统里面，关键信息都加密，每次客户使用公钥来读、写、传递加密信息。为了一直保证安全性，系统每隔一段时间需要更换私钥。</p>
+<p>3）系统存储明文信息：部分操作系统例如内核是可以相信的，只有内核可以出来保密信息，许多作业都由硬件处理，由硬件来保护，这是目前传统可信操作系统的设计。如intel SGX（Software Guard Extensions），ARM TrustZone等技术。</p>
+]]></content>
+      <tags>
+        <tag>架构</tag>
       </tags>
   </entry>
 </search>
