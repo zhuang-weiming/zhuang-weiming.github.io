@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">193</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,324 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/07/26/JSON-WEB-TOKEN-%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/26/JSON-WEB-TOKEN-%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">JSON WEB TOKEN 介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-26 08:56:12" itemprop="dateCreated datePublished" datetime="2018-07-26T08:56:12+08:00">2018-07-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案。</p>
+<h4 id="一、跨域认证的问题"><a href="#一、跨域认证的问题" class="headerlink" title="一、跨域认证的问题"></a>一、跨域认证的问题</h4><p>互联网服务离不开用户认证。一般流程是下面这样。</p>
+<blockquote>
+<ol>
+<li>用户向服务器发送用户名和密码。</li>
+<li>服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
+<li>服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
+<li>用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
+<li>服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
+</ol>
+</blockquote>
+<p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p>
+<p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
+<p>一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p>
+<p>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</p>
+<h4 id="二、JWT-的原理"><a href="#二、JWT-的原理" class="headerlink" title="二、JWT 的原理"></a>二、JWT 的原理</h4><p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;姓名&quot;</span>: <span class="string">&quot;张三&quot;</span>,</span><br><span class="line">  <span class="string">&quot;角色&quot;</span>: <span class="string">&quot;管理员&quot;</span>,</span><br><span class="line">  <span class="string">&quot;到期时间&quot;</span>: <span class="string">&quot;2018年7月1日0点0分&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。</p>
+<p>服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
+<h4 id="三、JWT-的数据结构"><a href="#三、JWT-的数据结构" class="headerlink" title="三、JWT 的数据结构"></a>三、JWT 的数据结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span><br></pre></td></tr></table></figure>
+<p>它是一个很长的字符串，中间用点（.）分隔成三个部分。注意，JWT 内部是没有换行的，这里只是为了便于展示，将它写成了几行。</p>
+<p>JWT 的三个部分依次如下:</p>
+<ul>
+<li>Header（头部）</li>
+<li>Payload（负载）</li>
+<li>Signature（签名）</li>
+</ul>
+<p>写成一行，就是下面的样子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Header.Payload.Signature</span><br></pre></td></tr></table></figure>
+<p>下面依次介绍这三个部分。</p>
+<h5 id="3-1-Header"><a href="#3-1-Header" class="headerlink" title="3.1 Header"></a>3.1 Header</h5><p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;alg&quot;</span>: <span class="string">&quot;HS256&quot;</span>,</span><br><span class="line">  <span class="string">&quot;typ&quot;</span>: <span class="string">&quot;JWT&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，alg属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；typ属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。</p>
+<p>最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p>
+<h5 id="3-2-Payload"><a href="#3-2-Payload" class="headerlink" title="3.2 Payload"></a>3.2 Payload</h5><p>Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
+<ul>
+<li>iss (issuer)：签发人</li>
+<li>exp (expiration time)：过期时间</li>
+<li>sub (subject)：主题</li>
+<li>aud (audience)：受众</li>
+<li>nbf (Not Before)：生效时间</li>
+<li>iat (Issued At)：签发时间</li>
+<li>jti (JWT ID)：编号</li>
+</ul>
+<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;sub&quot;</span>: <span class="string">&quot;1234567890&quot;</span>,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;John Doe&quot;</span>,</span><br><span class="line">  <span class="string">&quot;admin&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。<br>这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p>
+<h5 id="3-3-Signature"><a href="#3-3-Signature" class="headerlink" title="3.3 Signature"></a>3.3 Signature</h5><p>Signature 部分是对前两部分的签名，防止数据篡改。</p>
+<p>首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + <span class="string">&quot;.&quot;</span> +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用”点”（.）分隔，就可以返回给用户。</p>
+<h5 id="3-4-Base64URL"><a href="#3-4-Base64URL" class="headerlink" title="3.4 Base64URL"></a>3.4 Base64URL</h5><p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。</p>
+<p>JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符+、/和=，在 URL 里面有特殊含义，所以要被替换掉：=被省略、+替换成-，/替换成_ 。这就是 Base64URL 算法。</p>
+<h4 id="四、JWT-的使用方式"><a href="#四、JWT-的使用方式" class="headerlink" title="四、JWT 的使用方式"></a>四、JWT 的使用方式</h4><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+
+<p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
+<h4 id="五、JWT-的几个特点"><a href="#五、JWT-的几个特点" class="headerlink" title="五、JWT 的几个特点"></a>五、JWT 的几个特点</h4><ol>
+<li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</li>
+<li>JWT 不加密的情况下，不能将秘密数据写入 JWT。</li>
+<li>JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。</li>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。</li>
+<li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
+<li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</li>
+</ol>
+<p>参考链接： <a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/07/23/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7-%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/23/%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7-%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE/" class="post-title-link" itemprop="url">数学符号- 朝花夕拾</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-23 09:09:56" itemprop="dateCreated datePublished" datetime="2018-07-23T09:09:56+08:00">2018-07-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li>Α α alpha a:lf 阿尔法 角度；系数</li>
+<li>Β β beta bet 贝塔 磁通系数；角度；系数</li>
+<li>Γ γ gamma ga:m 伽马 电导系数（小写）</li>
+<li>Δ δ delta delt 德尔塔 变动；密度；屈光度</li>
+<li>Ε ε epsilon  伊普西龙 对数之基数</li>
+<li>Ζ ζ zeta zat 截塔 系数；方位角；阻抗；相对粘度；原子序数</li>
+<li>Η η eta eit 艾塔 磁滞系数；效率（小写）</li>
+<li>Θ θ thet θit 西塔 温度；相位角</li>
+<li>Ι ι iot aiot 约塔 微小，一点儿</li>
+<li>Κ κ kappa kap 卡帕 介质常数</li>
+<li>∧ λ lambda lambd 兰布达波长（小写）；体积</li>
+<li>Μ μ mu mju 缪 磁导系数；微（千分之一）；放大因数（小写）</li>
+<li>Ν ν nu nju 纽 磁阻系数</li>
+<li>Ξ ξ xi ksi 克西</li>
+<li>Ο ο omicron 奥密克戎</li>
+<li>∏ π pi pai 派 圆周率=圆周÷直径=3.1416</li>
+<li>Ρ ρ rho rou 肉 电阻系数（小写）</li>
+<li>∑ σ sigma  西格马 总和（大写），表面密度；跨导（小写）</li>
+<li>Τ τ tau tau 套 时间常数</li>
+<li>Υ υ upsilon 宇普西龙 位移</li>
+<li>Φ φ phi fai 佛爱 磁通；角</li>
+<li>Χ χ chi phai 西</li>
+<li>Ψ ψ psi psai 普西 角速；介质电通量（静电力线）；角</li>
+<li>Ω ω omega o`miga 欧米伽 欧姆（大写）；角速（小写）；角</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/07/14/%E5%A5%B3%E5%B7%AB%E6%94%BB%E5%87%BBSybil-Attack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/14/%E5%A5%B3%E5%B7%AB%E6%94%BB%E5%87%BBSybil-Attack/" class="post-title-link" itemprop="url">女巫攻击Sybil_Attack</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-14 22:40:42" itemprop="dateCreated datePublished" datetime="2018-07-14T22:40:42+08:00">2018-07-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="什么是女巫攻击？"><a href="#什么是女巫攻击？" class="headerlink" title="什么是女巫攻击？"></a>什么是女巫攻击？</h3><blockquote>
+<p>在对等网络中，但节点通常具有多个身份标识，通过控制系统的大部分节点来消弱冗余备份的作用。</p>
+</blockquote>
+<h3 id="八卦一下这个名字的来路："><a href="#八卦一下这个名字的来路：" class="headerlink" title="八卦一下这个名字的来路："></a>八卦一下这个名字的来路：</h3><blockquote>
+<p>根据 Flora Rhea Schreiberie 在1973年的小说《女巫》（Sybil）改编的同名电影，是一个化名 Sybil Dorsett 的女人心理治疗的故事。她被诊断为分离性身份认同障碍，兼具16种人格。</p>
+</blockquote>
+<p>女巫攻击是在P2P网络中，因为节点随时加入退出等原因，为了维持网络稳定，同一份数据通常需要备份到多个分布式节点上，这就是数据冗余机制。女巫攻击是攻击数据冗余机制的一种有效手段。</p>
+<p>如果网络中存在一个恶意节点，那么同一个恶意节点可以具有多重身份，就如电影的女主角都可以分裂出16个身份，那么恶意节点比女猪脚更加分裂。这一分可好，原来需要备份到多个节点的数据被欺骗地备份到了同一个恶意节点（该恶意节点伪装成多重身份），这就是女巫攻击。</p>
+<h3 id="怎么解决女巫攻击？"><a href="#怎么解决女巫攻击？" class="headerlink" title="怎么解决女巫攻击？"></a>怎么解决女巫攻击？</h3><p>一种方法是工作量证明机制，即证明你是一个节点，别只说不练，而是要用计算能力证明，这样极大地增加了攻击的成本。</p>
+<p>另一种方法是身份认证（相对于PoW协议，女巫攻击是基于BFT拜占庭使用容错协议的Blockchain需要考虑的问题，需要采用相应的身份认证机制）。</p>
+<p>认证机制分为二类：</p>
+<p>1）基于第三方的身份认证</p>
+<p>每加入一个新的节点都需要与某一个可靠的第三方节点进行身份验证。</p>
+<p>2）纯分布式的身份认证</p>
+<p>每加入一个新的节点都需要获得当前网络中所有可靠节点的认证，这种方法采用了随机密钥分发验证的公钥体制的认证方式，需要获得网络中大多数节点的认证才能加入该网络。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -387,317 +705,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" class="post-title-link" itemprop="url">golang 随机数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-25 10:39:42" itemprop="dateCreated datePublished" datetime="2018-06-25T10:39:42+08:00">2018-06-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>随机数主要分为以下三类：</p>
-<ul>
-<li>弱伪随机数</li>
-<li>强伪随机数</li>
-<li>真随机数</li>
-</ul>
-<p>随机数的分类是根据随机数的性质进行的分类。随机数的性质分为以下三类：</p>
-<ul>
-<li>随机性一不存在统计学偏差，是完全杂乱的数列</li>
-<li>不可预测性一不能从过去的数列推测出”下一个出现的数</li>
-<li>不可重现性一除非将数列本身保存下来，否则不能重现相同的数列</li>
-</ul>
-<p>密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。<br><img src="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/1.png"></p>
-<h4 id="GoLang-中的伪随机数"><a href="#GoLang-中的伪随机数" class="headerlink" title="GoLang 中的伪随机数"></a>GoLang 中的伪随机数</h4><p>在 GoLang 中，我们可以通过 math/rand 包里的方法来生成一个伪随机数：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(rand.Int())   <span class="comment">// =&gt; 134020434</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>你会发现运行的结果一直是 134020434，怎样才能显示不同的结果，需要了解一下“随机种子”的概念。</p>
-<h4 id="随机种子"><a href="#随机种子" class="headerlink" title="随机种子"></a>随机种子</h4><p>伪随机数，是使用一个确定性的算法计算出来的似乎是随机的数序，因此伪随机数实际上并不随机。</p>
-<p>那么自然，在计算伪随机数时假如使用的开始值不变的话，那么算法计算出的伪随机数的数序自然也是不变的咯。</p>
-<p>这个“开始值”，就被称为随机种子。</p>
-<p>可以通过 rand.Seed 方法设置随机种子，如果不设置，则默认值显示为 1，为了保证每次伪随机数生成器工作时使用的是不同的种子，通常的做法是采用当前时间作为种子。</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    rand.Seed(<span class="keyword">int64</span>(time.Now().Unix()))</span><br><span class="line">    fmt.Println(rand.Intn(<span class="number">100</span>))     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="真随机数"><a href="#真随机数" class="headerlink" title="真随机数"></a>真随机数</h4><p>如果我们的应用对安全性要求比较高，需要使用真随机数的话，那么可以使用 crypto/rand 包中的方法。</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;crypto/rand&quot;</span></span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/big&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    result, _ := rand.Int(rand.Reader, big.NewInt(<span class="number">100</span>))</span><br><span class="line">    fmt.Println(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">go pprof trace完整操作</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-07 15:24:04" itemprop="dateCreated datePublished" datetime="2018-06-07T15:24:04+08:00">2018-06-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>第一步：也是最重要的一步，就是下载谷歌浏览器！</p>
-<p>第二步：下载 Graphviz   <a target="_blank" rel="noopener" href="http://graphviz.org/download/">http://graphviz.org/download/</a><br>安装后配置环境变量，再path里面添加安装目录！<br><img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/1.png"></p>
-<p>第三步：添加以下测试代码 （添加   _”net/http/pprof” 不然不会有效果！）</p>
-<p>具体看源码</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="keyword">package</span> main</span><br><span class="line"><span class="number">2</span> <span class="keyword">import</span> (</span><br><span class="line"><span class="number">3</span>    <span class="string">&quot;net/http&quot;</span></span><br><span class="line"><span class="number">4</span>    <span class="string">&quot;runtime&quot;</span></span><br><span class="line"><span class="number">5</span>    <span class="string">&quot;os&quot;</span></span><br><span class="line"><span class="number">6</span>    <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="number">7</span>    <span class="string">&quot;runtime/trace&quot;</span></span><br><span class="line"><span class="number">8</span>    _<span class="string">&quot;net/http/pprof&quot;</span></span><br><span class="line"><span class="number">9</span>    <span class="string">&quot;runtime/debug&quot;</span></span><br><span class="line"><span class="number">10</span>   <span class="string">&quot;time&quot;</span></span><br><span class="line"><span class="number">11</span>   <span class="string">&quot;sync&quot;</span></span><br><span class="line"><span class="number">12</span> )</span><br><span class="line"><span class="number">13</span> <span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="number">14</span>   <span class="comment">//开启强大的分析器</span></span><br><span class="line"><span class="number">15</span>   <span class="keyword">go</span> pprof()</span><br><span class="line"><span class="number">16</span>    <span class="comment">//以下是运行测试(也可以贴你自己的)代码</span></span><br><span class="line"><span class="number">17</span>   <span class="keyword">var</span> c sync.Map</span><br><span class="line"><span class="number">18</span>   <span class="keyword">for</span> i:=<span class="number">0</span>;i&lt;<span class="number">100</span>;i++&#123;</span><br><span class="line"><span class="number">19</span>      time.Sleep(time.Second*<span class="number">1</span>)</span><br><span class="line"><span class="number">20</span>      <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="number">21</span>         <span class="keyword">for</span> j:=<span class="number">0</span>;j&lt;<span class="number">1000000</span>;j++&#123;</span><br><span class="line"><span class="number">22</span>            time.Sleep(time.Millisecond*<span class="number">20</span>)</span><br><span class="line"><span class="number">23</span>            c.Store(fmt.Sprintf(<span class="string">&quot;%d&quot;</span>,j),j)</span><br><span class="line"><span class="number">24</span>            fmt.Println(c.Load(fmt.Sprintf(<span class="string">&quot;%d&quot;</span>,j)))</span><br><span class="line"><span class="number">25</span>         &#125;</span><br><span class="line"><span class="number">26</span>      &#125;()</span><br><span class="line"><span class="number">27</span>   &#125;</span><br><span class="line"><span class="number">28</span>   time.Sleep(time.Second*<span class="number">20</span>)</span><br><span class="line"><span class="number">29</span>    fmt.Scan()</span><br><span class="line"><span class="number">30</span> &#125;</span><br><span class="line"><span class="number">31</span> <span class="comment">//运行pprof分析器</span></span><br><span class="line"><span class="number">32</span> <span class="function"><span class="keyword">func</span> <span class="title">pprof</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="number">33</span>   <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="number">34</span>      <span class="comment">//关闭GC</span></span><br><span class="line"><span class="number">35</span>      debug.SetGCPercent(<span class="number">-1</span>)</span><br><span class="line"><span class="number">36</span>      <span class="comment">//运行trace</span></span><br><span class="line"><span class="number">37</span>      http.HandleFunc(<span class="string">&quot;/start&quot;</span>, traces)</span><br><span class="line"><span class="number">38</span>      <span class="comment">//停止trace</span></span><br><span class="line"><span class="number">39</span>      http.HandleFunc(<span class="string">&quot;/stop&quot;</span>, traceStop)</span><br><span class="line"><span class="number">40</span>      <span class="comment">//手动GC</span></span><br><span class="line"><span class="number">41</span>      http.HandleFunc(<span class="string">&quot;/gc&quot;</span>, gc)</span><br><span class="line"><span class="number">42</span>      <span class="comment">//网站开始监听</span></span><br><span class="line"><span class="number">43</span>      http.ListenAndServe(<span class="string">&quot;:6060&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line"><span class="number">44</span>   &#125;()</span><br><span class="line"><span class="number">45</span> &#125;</span><br><span class="line"><span class="number">46</span> <span class="comment">//手动GC</span></span><br><span class="line"><span class="number">47</span> <span class="function"><span class="keyword">func</span> <span class="title">gc</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line"><span class="number">48</span>   runtime.GC()</span><br><span class="line"><span class="number">49</span>   w.Write([]<span class="keyword">byte</span>(<span class="string">&quot;StartGC&quot;</span>))</span><br><span class="line"><span class="number">50</span> &#125;</span><br><span class="line"><span class="number">51</span> <span class="comment">//运行trace</span></span><br><span class="line"><span class="number">52</span> <span class="function"><span class="keyword">func</span> <span class="title">traces</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span>&#123;</span><br><span class="line"><span class="number">53</span>   f, err := os.Create(<span class="string">&quot;trace.out&quot;</span>)</span><br><span class="line"><span class="number">54</span>   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">55</span>      <span class="built_in">panic</span>(err)</span><br><span class="line"><span class="number">56</span>   &#125;</span><br><span class="line"><span class="number">57</span>   err = trace.Start(f)</span><br><span class="line"><span class="number">58</span>   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">59</span>      <span class="built_in">panic</span>(err)</span><br><span class="line"><span class="number">60</span>   &#125;</span><br><span class="line"><span class="number">61</span>   w.Write([]<span class="keyword">byte</span>(<span class="string">&quot;TrancStart&quot;</span>))</span><br><span class="line"><span class="number">62</span>   fmt.Println(<span class="string">&quot;StartTrancs&quot;</span>)</span><br><span class="line"><span class="number">63</span> &#125;</span><br><span class="line"><span class="number">64</span> <span class="comment">//停止trace</span></span><br><span class="line"><span class="number">65</span> <span class="function"><span class="keyword">func</span> <span class="title">traceStop</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span>&#123;</span><br><span class="line"><span class="number">66</span>   trace.Stop()</span><br><span class="line"><span class="number">67</span>   w.Write([]<span class="keyword">byte</span>(<span class="string">&quot;TrancStop&quot;</span>))</span><br><span class="line"><span class="number">68</span>   fmt.Println(<span class="string">&quot;StopTrancs&quot;</span>)</span><br><span class="line"><span class="number">69</span> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>第四步：接下来就看图说话了。</p>
-<p>程序运行后随便打开一个CMD 然后输入</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof  http://localhost:6060/debug/pprof/profile</span><br></pre></td></tr></table></figure>
-
-<p>需要等待分析时间，大约30秒，然后再输入 </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web</span><br></pre></td></tr></table></figure>
-<p>查看具体pprof的信息了<br><img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/2.png"></p>
-<p>第五步：查看trace的信息，在谷歌浏览器中输入<br><img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/3.png"></p>
-<p>然后等一会儿，再输入<br><img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/4.png"></p>
-<p>当然期间也可以手动gc。在程序运行的地方自动生成一个文件<br><img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/5.png"></p>
-<p>在cmd中输入 go tool trace    trace.out(具体路径)<br><img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/6.png"></p>
-<p>它会生成一个URL 地址，使用谷歌浏览器打开即可<br><img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/7.png"><br><img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/8.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" class="post-title-link" itemprop="url">golang调优工具-pprof</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-07 14:56:17" itemprop="dateCreated datePublished" datetime="2018-06-07T14:56:17+08:00">2018-06-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="CPU-Profiling"><a href="#CPU-Profiling" class="headerlink" title="CPU Profiling"></a>CPU Profiling</h4><p>Golang 提供了 pprof 包（runtime/pprof）用于输出运行时的 profiling 数据，这些数据可以被 pprof 工具（或者 go tool pprof，其为 pprof 的变种）使用。通常我们这样来使用 pprof 包：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 定义 flag cpuprofile</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">var</span> cpuprofile = flag.String(<span class="string">&quot;cpuprofile&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;write cpu profile to file&quot;</span>)</span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="number">4</span>    flag.Parse()</span><br><span class="line"><span class="number">5</span>    <span class="comment">// 如果命令行设置了 cpuprofile</span></span><br><span class="line"><span class="number">6</span>    <span class="keyword">if</span> *cpuprofile != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line"><span class="number">7</span>        <span class="comment">// 根据命令行指定文件名创建 profile 文件</span></span><br><span class="line"><span class="number">8</span>        f, err := os.Create(*cpuprofile)</span><br><span class="line"><span class="number">9</span>        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">10</span>            log.Fatal(err)</span><br><span class="line"><span class="number">11</span>        &#125;</span><br><span class="line"><span class="number">12</span>        <span class="comment">// 开启 CPU profiling</span></span><br><span class="line"><span class="number">13</span>        pprof.StartCPUProfile(f)</span><br><span class="line"><span class="number">14</span>        <span class="keyword">defer</span> pprof.StopCPUProfile()</span><br><span class="line"><span class="number">15</span>    &#125;</span><br><span class="line"><span class="number">16</span>    ...</span><br></pre></td></tr></table></figure>
-
-<p>假定我们编写的一个程序 mytest 中加入了上述代码则可以执行并生成 profile 文件：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mytest -cpuprofile=mytest.prof</span><br></pre></td></tr></table></figure>
-
-<p>这里，我们生成了 mytest.prof profile 文件。有了 profile 文件就可以使用 go tool pprof 程序来解析此文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof mytest mytest.prof</span><br></pre></td></tr></table></figure>
-
-<p>pprof 程序中最重要的命令就是 topN，此命令用于显示 profile 文件中的最靠前的 N 个样本（samples），例如（此例为 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> 中的例子）：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) top10</span><br><span class="line">2 Total: 2525 samples</span><br><span class="line">3    298  11.8%  11.8%    345  13.7% runtime.mapaccess1_fast64</span><br><span class="line">4    268  10.6%  22.4%   2124  84.1% main.FindLoops</span><br><span class="line">5    251   9.9%  32.4%    451  17.9% scanblock</span><br><span class="line">6    178   7.0%  39.4%    351  13.9% hash_insert</span><br><span class="line">7    131   5.2%  44.6%    158   6.3% sweepspan</span><br><span class="line">8    119   4.7%  49.3%    350  13.9% main.DFS</span><br><span class="line">9     96   3.8%  53.1%     98   3.9% flushptrbuf</span><br><span class="line">10    95   3.8%  56.9%     95   3.8% runtime.aeshash64</span><br><span class="line">11    95   3.8%  60.6%    101   4.0% runtime.settype_flush</span><br><span class="line">12    88   3.5%  64.1%    988  39.1% runtime.mallocgc</span><br></pre></td></tr></table></figure>
-
-<p>开启 CPU profiling 后，Golang 程序在 1 秒钟会停顿 100 次，每次停顿都会记录 1 个样本。上例中，前两列表示运行的函数的样本数量（the number of samples in which the function was running）和占总样本数的百分比，例如说 runtime.mapaccess1_fast64 函数在 298 次采样中（占总采样数量的 11.8%）正在运行。第三列表示前几行样本数量总和占总样本数的百分比（第二行 22.4% 为 11.8% + 10.6%）。第四、五列表示出现的函数的样本数量（the number of samples in which the function appeared）和占总样本数的百分比，这里“出现的函数”指的是在采样中正在运行或者等待某个被调用函数返回的函数，换句话就是采样中那些位于调用栈上的函数。我们可以使用 -cum（cumulative 的缩写）flag 来以第四、五列为标准排序。需要注意的是，每次采样只会包括最底下的 100 个栈帧（stack frames）。</p>
-<p>使用 web 命令能够以图形化的方式（SVG 格式）显示函数调用关系。例如（图片来源于 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> ）：</p>
-<p><img src="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png"></p>
-<p>这里每个方块的大小由运行的函数的样本数量决定（这样就能方便的一眼看到热点函数）。箭头表示的是调用关系，箭头上的数字表示的是采样到的调用次数。web 命令还可以指定显示特定的函数，例如：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(pprof) web mapaccess1</span><br></pre></td></tr></table></figure>
-
-<p>当我们有大致的想法（也就是确定热点函数）后，就可以深入特定的函数。我们使用 list 命令（此例为 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> 中的例子）：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list DFS</span><br><span class="line">2 Total: 2525 samples</span><br><span class="line">3 ROUTINE ====================== main.DFS <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak1.go</span><br><span class="line">4    119    697 Total samples (flat / cumulative)</span><br><span class="line">5      3      3  240: func DFS(currentNode *BasicBlock, nodes []*UnionFindNode, number map[*BasicBlock]int, last []int, current int) int &#123;</span><br><span class="line">6      1      1  241:     nodes[current].Init(currentNode, current)</span><br><span class="line">7      1     37  242:     number[currentNode] = current</span><br><span class="line">8      .      .  243:</span><br><span class="line">9      1      1  244:     lastid := current</span><br><span class="line">10    89     89  245:     <span class="keyword">for</span> _, target := range currentNode.OutEdges &#123;</span><br><span class="line">11     9    152  246:             <span class="keyword">if</span> number[target] == unvisited &#123;</span><br><span class="line">12     7    354  247:                     lastid = DFS(target, nodes, number, last, lastid+1)</span><br><span class="line">13     .      .  248:             &#125;</span><br><span class="line">14     .      .  249:     &#125;</span><br><span class="line">15     7     59  250:     last[number[currentNode]] = lastid</span><br><span class="line">16     1      1  251:     <span class="built_in">return</span> lastid</span><br></pre></td></tr></table></figure>
-
-<p>上例中，第一列为运行到此行时的样本数，第二列为运行到此行或从此行调用的样本数，第三列为行号。如果需要显示汇编，可以使用命令 disasm（使用命令 weblist 可以同时显示源码和汇编代码， 这里 有一个范例）。通过样本数，我们可以定位到热点行，然后考虑适合的优化策略。</p>
-<h4 id="pprof-包"><a href="#pprof-包" class="headerlink" title="pprof 包"></a>pprof 包</h4><p>pprof 包进行 profiling 有两种方式：</p>
-<ul>
-<li>采样。CPU Profiling 需要不断采样，（如上所述）pprof 包提供了一套特殊的 API（StartCPUProfile / StopCPUProfile）</li>
-<li>快照。下面详细谈这种方式（同样可以使用 go tool pprof 程序来解析输出的 profile 文件）</li>
-</ul>
-<p>pprof 包预先定义了（还可以自己扩展）4 种快照模式：</p>
-<ul>
-<li>goroutine，当前所有 goroutines 的 stack traces</li>
-<li>heap，所有的堆内存分配（为降低开销仅获取一个近似值，To reduce overhead, the memory profiler only records information for approximately one block per half megabyte allocated (the “1-in-524288 sampling rate”), so these are approximations to the actual counts）</li>
-<li>threadcreate，致使新系统线程创建的 stack traces</li>
-<li>block，致使在同步原语上阻塞的 stack traces</li>
-</ul>
-<p>相关 API 具体用法如下：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 根据名字查找 Profile</span></span><br><span class="line"><span class="number">2</span> p := pprof.Lookup(<span class="string">&quot;heap&quot;</span>)</span><br><span class="line"><span class="number">3</span> <span class="comment">// 将一个 pprof（程序）格式的快照写入 w</span></span><br><span class="line"><span class="number">4</span> p.WriteTo(w, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<p>这里的 WriteTo 方法原型为：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">func</span> <span class="params">(p *Profile)</span> <span class="title">WriteTo</span><span class="params">(w io.Writer, debug <span class="keyword">int</span>)</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
-
-<p>其中 debug 参数：</p>
-<ul>
-<li>为 0 时，仅仅输出 pprof（程序）需要的十六进制地址</li>
-<li>为 1 时，输出时增加函数名和行号，这样无需工具也可以阅读此 profile</li>
-<li>为 2 时，并且当输出 goroutine profile 时，输出的 goroutine 栈的格式为未 recovered panic 时的格式</li>
-</ul>
-<h4 id="memory-profiling"><a href="#memory-profiling" class="headerlink" title="memory profiling"></a>memory profiling</h4><p>以 <a target="_blank" rel="noopener" href="https://blog.golang.org/profiling-go-programs">https://blog.golang.org/profiling-go-programs</a> 中的例子为例：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 定义 flag memprofile</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">var</span> memprofile = flag.String(<span class="string">&quot;memprofile&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;write memory profile to this file&quot;</span>)</span><br><span class="line"><span class="number">3</span> ...</span><br><span class="line"><span class="number">4</span>    <span class="comment">// 需要 profiling 的函数</span></span><br><span class="line"><span class="number">5</span>    FindHavlakLoops(cfgraph, lsgraph)</span><br><span class="line"><span class="number">6</span>    <span class="keyword">if</span> *memprofile != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line"><span class="number">7</span>        f, err := os.Create(*memprofile)</span><br><span class="line"><span class="number">8</span>        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">9</span>            log.Fatal(err)</span><br><span class="line"><span class="number">10</span>        &#125;</span><br><span class="line"><span class="number">11</span>        <span class="comment">// WriteHeapProfile 等价于 Lookup(&quot;heap&quot;).WriteTo(w, 0)</span></span><br><span class="line"><span class="number">12</span>        pprof.WriteHeapProfile(f)</span><br><span class="line"><span class="number">13</span>        <span class="comment">// 关闭文件</span></span><br><span class="line"><span class="number">14</span>        f.Close()</span><br><span class="line"><span class="number">15</span>        <span class="keyword">return</span></span><br><span class="line"><span class="number">16</span>    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用 go tool pprof 程序打开生成的 profile 文件：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) top5</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3    56.3  68.4%  68.4%     56.3  68.4% main.FindLoops</span><br><span class="line">4    17.6  21.3%  89.7%     17.6  21.3% main.(*CFG).CreateNode</span><br><span class="line">5     8.0   9.7%  99.4%     25.6  31.0% main.NewBasicBlockEdge</span><br><span class="line">6     0.5   0.6% 100.0%      0.5   0.6% itab</span><br><span class="line">7     0.0   0.0% 100.0%      0.5   0.6% fmt.init</span><br></pre></td></tr></table></figure>
-
-<p>这里显示了函数当前大致分配的内存。类似 CPU profiling，通过 list 命令查看函数具体的内存分配情况：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list FindLoops</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3 ROUTINE ====================== main.FindLoops <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak3.go</span><br><span class="line">4   56.3   56.3 Total MB (flat / cumulative)</span><br><span class="line">5...</span><br><span class="line">6    1.9    1.9  268:     nonBackPreds := make([]map[int]bool, size)</span><br><span class="line">7    5.8    5.8  269:     backPreds := make([][]int, size)</span><br><span class="line">8      .      .  270:</span><br><span class="line">9    1.9    1.9  271:     number := make([]int, size)</span><br><span class="line">10   1.9    1.9  272:     header := make([]int, size, size)</span><br><span class="line">11   1.9    1.9  273:     types := make([]int, size, size)</span><br><span class="line">12   1.9    1.9  274:     last := make([]int, size, size)</span><br><span class="line">13   1.9    1.9  275:     nodes := make([]*UnionFindNode, size, size)</span><br><span class="line">14     .      .  276:</span><br><span class="line">15     .      .  277:     <span class="keyword">for</span> i := 0; i &lt; size; i++ &#123;</span><br><span class="line">16   9.5    9.5  278:             nodes[i] = new(UnionFindNode)</span><br><span class="line">17     .      .  279:     &#125;</span><br><span class="line">18...</span><br><span class="line">19     .      .  286:     <span class="keyword">for</span> i, bb := range cfgraph.Blocks &#123;</span><br><span class="line">20     .      .  287:             number[bb.Name] = unvisited</span><br><span class="line">21  29.5   29.5  288:             nonBackPreds[i] = make(map[int]bool)</span><br><span class="line">22     .      .  289:     &#125;</span><br></pre></td></tr></table></figure>
-
-<p>有了这些信息，我们就可以着手进行优化了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/29/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/31/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/29/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/31/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

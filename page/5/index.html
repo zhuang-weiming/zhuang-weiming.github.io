@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">193</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,296 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/02/05/%E5%85%B3%E4%BA%8EPoA-Proof-of-Authority-Chains/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/05/%E5%85%B3%E4%BA%8EPoA-Proof-of-Authority-Chains/" class="post-title-link" itemprop="url">关于PoA-Proof-of-Authority-Chains</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-05 12:32:00" itemprop="dateCreated datePublished" datetime="2022-02-05T12:32:00+08:00">2022-02-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-06 10:52:48" itemprop="dateModified" datetime="2022-02-06T10:52:48+08:00">2022-02-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Proof-of-Authority is a replacement for Proof-of-Work, already working in production of Ethereum, like <a target="_blank" rel="noopener" href="https://openethereum.github.io/Proof-of-Authority-Chains">OpenEthereum</a>, <a target="_blank" rel="noopener" href="https://geth.ethereum.org/">geth</a>.</p>
+<h4 id="This-article-show-path-of-dev-and-move-to-production-steps-as-my-github-project-WillZhuang-geth-poa-tutorial-Clique-Proof-of-Authority-Tutorial-github-com-it-is-working-under-Geth-v1-10-15"><a href="#This-article-show-path-of-dev-and-move-to-production-steps-as-my-github-project-WillZhuang-geth-poa-tutorial-Clique-Proof-of-Authority-Tutorial-github-com-it-is-working-under-Geth-v1-10-15" class="headerlink" title="This article show path of dev, and move to production steps as my github project: WillZhuang/geth-poa-tutorial: Clique Proof-of-Authority Tutorial (github.com). it is working under Geth v1.10.15."></a>This article show path of dev, and move to production steps as my github project: <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/geth-poa-tutorial">WillZhuang/geth-poa-tutorial: Clique Proof-of-Authority Tutorial (github.com)</a>. it is working under Geth v1.10.15.</h4><p><strong>appendix:</strong></p>
+<ol>
+<li>guide about node append / delete : <a target="_blank" rel="noopener" href="https://geth.ethereum.org/docs/rpc/ns-clique">https://geth.ethereum.org/docs/rpc/ns-clique</a>.</li>
+</ol>
+<p><code>clique.propose(address, auth)</code> / <code>clique.discard(address)</code></p>
+<ol start="2">
+<li><p>Original <a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-225">EIP-225: Clique proof-of-authority consensus protocol (ethereum.org)</a></p>
+</li>
+<li><p>benchmark: <a target="_blank" rel="noopener" href="https://github.com/drandreaskrueger/chainhammer">drandreaskrueger/chainhammer: fire many transactions at Ethereum node, then produce diagrams of TPS, blocktime, gasUsed and gasLimit, and blocksize. (github.com)</a></p>
+</li>
+</ol>
+<p>CBDC pay attention on PoA:</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.hkma.gov.hk/media/eng/doc/key-functions/financial-infrastructure/Inthanon-LionRock_to_mBridge_Building_a_multi_CBDC_platform_for_international_payments.pdf">Inthanon-LionRock to mBridge: Building a multi CBDC platform for international payments (hkma.gov.hk)</a></p>
+</li>
+<li><p>The Joinup under European Commission report on 2019 : <a target="_blank" rel="noopener" href="https://joinup.ec.europa.eu/collection/blockchain-egov-services/document/user-guide-how-setup-private-ethereum-poa-blockchain-network">User guide on how to setup a private Ethereum POA Blockchain Network | Joinup (europa.eu)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.banque-france.fr/sites/default/files/media/2021/11/09/821338_rapport_mnbc-04.pdf">page 20 /_rapport_mnbc-04.pdf (banque-france.fr)</a> </p>
+</li>
+<li><p>[CBDC Report Final.pdf (eublockchainforum.eu)](<a target="_blank" rel="noopener" href="https://www.eublockchainforum.eu/sites/default/files/reports/CBDC">https://www.eublockchainforum.eu/sites/default/files/reports/CBDC</a> Report Final.pdf)</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://wiki.hyperledger.org/display/events/Global+CBDC+Challenge">Global CBDC Challenge - Community of Hyperledger</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/12/14/CBDC-III-%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%B6%E6%9E%84%E7%9A%84%E9%80%89%E6%8B%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/14/CBDC-III-%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%B6%E6%9E%84%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">CBDC-III-设计与架构的选择</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-14 11:42:00" itemprop="dateCreated datePublished" datetime="2021-12-14T11:42:00+08:00">2021-12-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-12-15 15:57:27" itemprop="dateModified" datetime="2021-12-15T15:57:27+08:00">2021-12-15</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.itu.int/en/ITU-T/focusgroups/dfc/Documents/DFC-O-005_Report%20on%20Digital%20Currency%20Implementation%20Checklist%20for%20Central%20Banks.pdf">Digital Currency Implementation Checklist for Central Banks</a></p>
+<h4 id="快问快答"><a href="#快问快答" class="headerlink" title="快问快答"></a>快问快答</h4><ol>
+<li>Is the DFC(Digital Fiat Currency) to be a token-based or account-based system, or some combination? Discussion:  Account-based systems are actor-centric, while token-based systems are object centric. Each has specific benefits and disadvantages relating to interoperability, (de)centralization, efficiency, and security. The relative merits of the two approaches have been discussed in depth elsewhere in the CBDC and DFC literature, and ultimately depends on the specific needs and goals of the jurisdiction in question. 基于帐户的系统以参与者为中心，而基于令牌的系统以对象为中心。每个都有与互操作性、（去）中心化、效率和安全性相关的特定优点和缺点。这两种方法的相对优点已在 CBDC 和 DFC 文献的其他地方进行了深入讨论，最终取决于相关司法管辖区的具体需求和目标。</li>
+<li>Will interest be paid on DFC balances? If so, how much, and under what conditions? Discussion: In contexts where the goal of implementation of DFC is merely to replace physical coins and paper currency, the capacity to pay interest directly on DFC balances is of less importance. Conversely, if the aim of introducing DFC is to precipitate a broader reorganization of the payments system, the ability to pay interest directly on DFC balances may be important to the implementation of monetary and fiscal policy, as well as for preserving technical features of the existing payments system (i.e. the capacity to pay interest on-reserves). 如果引入 DFC 的目的是促成更广泛的支付系统重组，那么直接为 DFC 余额支付利息的能力对于货币和财政政策的实施以及保留现有技术特征可能很重要。</li>
+<li>Will DFC funds have durational features? If so, how much, and under what conditions? Discussion: DFC instruments are commonly thought of as a digital equivalent to cash instruments, or a retail-accessible form of digital reserve balances, both of which have zero duration. However, in the modern central banking era, government securities accounts also operate on similar payments and accounts infrastructure. Hence, DFC has the potential to perform other functions that involve duration, such as providing consumer savings and/or investor securities accounts, and also serving as the settlement layer for smart contracts and financial trading platforms.  DFC 工具通常被认为是现金工具的数字等价物，或零售可访问的数字准备金余额形式，两者的久期均为零。然而，在现代中央银行时代，政府证券账户也在类似的支付和账户基础设施上运作。因此，DFC 有潜力执行其他涉及持续时间的功能，例如提供消费者储蓄和/或投资者证券账户，以及充当智能合约和金融交易平台的结算层。</li>
+<li>Will certain kinds of transactions be prohibited at the technical layer? What?<br>Discussion: It is possible to design a DFC system to allow for discrimination and censorship on a transaction-by-transaction basis. Doing so would further a range of law enforcement and security interests. However, such interests must also be weighed against privacy and security considerations. Once the capacity for transactional censorship is hardwired into the DFC infrastructure, it cannot be easily removed and may be used for purposes beyond the initial scope that justified its adoption. 可以设计一个 DFC 系统以允许在逐笔交易的基础上进行歧视和审查。这样做将促进一系列执法和安全利益。然而，这些利益也必须与隐私和安全考虑进行权衡。一旦交易审查能力被硬连接到 DFC 基础设施中，它就不能轻易删除，并且可能用于超出其采用的初始范围的目的。</li>
+<li>Will DFC transactions and wallets be usable offline? How? Discussion: While digital payments systems offer many benefits over physical cash, they suffer from vulnerabilities regarding network-connection and power consumption. In order to provide a true substitute for physical cash, some form of offline transaction capacity is crucial. Such capacity is also important in the event of network failure, and/or for actors who exist on the margins of the electric/internet grid. 离线交易是必要的。</li>
+<li>Will the DFC intermediary network be an open system, or restricted to a limited number of pre-approved institutions? Discussion: Most DFC systems, at least in the first iteration, will likely incorporate and/or rely on intermediaries to fulfill some core infrastructural functions, from wallet-management through to data-storage. Consequently, it is important for regulators to develop a framework for evaluating and approving potential intermediaries, to maintain quality and security standards while simultaneously avoiding excessive regulations that stifle innovation and widespread adoption. One way of authorizing intermediaries is to subjectively identify and approval specific applicants on an institution-by-institution basis. Another approach is to develop objective standards and criteria and approve any and all actors that meet those criteria. Determining which approach to use (or some combination) will depend on the needs and interests of the specific jurisdiction. 大多数 DFC 系统，至少在第一次迭代中，从钱包管理到数据存储，可能会合并和/或依赖中介来实现一些核心基础设施功能。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/" class="post-title-link" itemprop="url">CBDC-II-共性的需求</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-13 10:53:00" itemprop="dateCreated datePublished" datetime="2021-12-13T10:53:00+08:00">2021-12-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-12-15 15:38:38" itemprop="dateModified" datetime="2021-12-15T15:38:38+08:00">2021-12-15</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Central Bank Digital Currency === Digital Fiat Currency === Digital base money === Central Bank E-money. “a widely accessible digital form of fiat money that could be legal tender”(IMF defines). </p>
+<p><strong>Money</strong> is a recognized medium of exchange for goods and services. <strong>Money supply</strong> depicts a form of money known as MB or M0.  <strong>Commercial bank money</strong>  is a form of money that is a claim on financial institutions that can be used to purchase goods and services. <strong>Commercial money supply</strong> depicts this form of money as M1-M3. <strong>Central bank digital currency (CBDC)</strong> would represent a stake on the issuing governments M0 money supply in a digital form.</p>
+<p>Three functions of money:</p>
+<ol>
+<li>A unit of account </li>
+<li>Medium of exchange </li>
+<li>Store of value </li>
+</ol>
+<p>那么CBDC与上述money相比较，有何不同</p>
+<ol>
+<li>同样，CBDC would need to have a 1:1 ratio with the current M0 money supply and maintain the current value of fiat money. </li>
+<li>同样，CBDC是交换媒介，它需要被广泛接受，并且保护消费者，减少纳税人的成本。</li>
+</ol>
+<p>综上，得到<strong>CBDC design (five) features</strong>：</p>
+<p><img src="/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/1.png" alt="CBDC-II-共性的需求"></p>
+<ol>
+<li>*<em>7</em>24服务可用**。那么CBDC是应该面相全社会呢？还是仅仅面相金融机构呢？理想答案是全社会每一个人和机构。要根据技术和商业的进步，逐步实施。</li>
+<li><strong>匿名性</strong>。首先要看央行对于隐私性的担忧；其次还取决于人们在多大程度上希望减少逃税、洗钱和资助恐怖主义等非法金融交易；最终将成为用户对隐私的偏好与试图降低与财务诚信相关的风险之间的权衡。<ol>
+<li>商业银行管理自身的用户的账户和交易，不可以见到其他商业银行的用户账户和无关交易</li>
+<li>多家央行相互间可以看见货币发行的总额 ( 经济体量小的国家的喜好？)</li>
+</ol>
+</li>
+<li><strong>转账机制</strong>。使用中间人，例如中央银行或其他第三方，将被视为集中转移机制。点对点方式将被视为一种去中心化的传输机制，因为它发生在两方之间，不需要中央调解器。区块链为上述两种机制都提供了可能性的道路。</li>
+<li><strong>利息</strong>。理想的CBDC应该是记息。</li>
+<li><strong>发行上限</strong>。对任何个人可以持有或在账户之间转移的 CBDC 数量实施限制或上限，可能有助于阻止与此类资金相关的不良影响。而且在ATM机提取现金的数量也是有上限的。QE同理。</li>
+<li>===========================&gt;以下为扩展内容&lt;===========================</li>
+<li><strong>审计</strong>。交易可追溯。</li>
+<li><strong>控制</strong>。冻结某账户。</li>
+<li><strong>公链扩展</strong>。</li>
+<li><strong>中央银行实施监督国内账户以及跨境交易</strong>。</li>
+</ol>
+<p>Optional features：</p>
+<ol>
+<li><p>无手机网络的情况下，理想的CBDC应该仍然可以交易。手机未开机的情况下，CBDC无法交易。手表等其他电子设备同理。</p>
+</li>
+<li><p>反洗钱 / 反资助恐怖主义 / 逃税。在涉嫌违法情况下的交易，被自动终止，无法交易，需要人工介入判断后，再行交易。</p>
+</li>
+<li><p>KYC。资金运行板块/类别，如ESG。</p>
+</li>
+<li><p>跨系统交易能力。如区块链跨链以支撑cross board payment。</p>
+</li>
+<li><p>有效时间限制。如消费券。</p>
+</li>
+</ol>
+<p>Wholesale CBDC的多数业务交易涉及资金和资产的流动，<strong>通过区块链，任何资产的交易，无论是股票、债券还是衍生品，都可以被记录下来，从而允许对分类账进行原子性的记录</strong>。这个过程将资金的全部和最终结算与资产的移动联系起来。</p>
+<p>Retail CBDC的两种token存储形式：1）Token存储在本地，DLT Token可以增强这种模型的匿名性(零知识证明，quorum项目的隐私交易通道等技术)，交易不需要第三方，但是如果用户丢失了token，将无法找回；2）Token存储在DLT账本，类似于目前银行的账本。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -384,219 +674,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/11/08/Tendermint-II-%E8%BD%BB%E5%AE%A2%E6%88%B7%E7%AB%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/08/Tendermint-II-%E8%BD%BB%E5%AE%A2%E6%88%B7%E7%AB%AF/" class="post-title-link" itemprop="url">Tendermint-II-轻客户端</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-11-08 10:50:26" itemprop="dateCreated datePublished" datetime="2021-11-08T10:50:26+08:00">2021-11-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-15 16:53:55" itemprop="dateModified" datetime="2021-11-15T16:53:55+08:00">2021-11-15</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="区块链轻客户端需要解决的的问题"><a href="#区块链轻客户端需要解决的的问题" class="headerlink" title="区块链轻客户端需要解决的的问题"></a>区块链轻客户端需要解决的的问题</h3><p>如何如需信任任何固定的区块链节点，包括验证者集合和全节点，如何做到仅相信作为整体的活跃验证者集合。</p>
-<p>基于PoS机制的区块链中，全节点和轻客户端都会面临弱主观性问题：由于无法仅依赖数学或者PoW等机制验证某个高度的状态，全节点和轻客户端都需要通过某种方式获取关于区块链在某个高度的可信状态。</p>
-<p>Tendermint Core轻客户端和Gaia Lite轻客户端都解决了上述问题，基于可信的初始活跃验证者集合，通过跟踪活跃验证者集合的演变，持续具有验证区块链合法性的能力。新区块链通过活跃验证者参与共识投票完成；通过Merkle证明进一步验证交易的合法性和链上状态的合法性。</p>
-<p><img src="/2021/11/08/Tendermint-II-%E8%BD%BB%E5%AE%A2%E6%88%B7%E7%AB%AF/1.png"></p>
-<p>轻客户端本身保存着当前的活跃验证者集合。当收到新的区块后，1）首先对区块头做检查；2）区块头中的验证者集合与轻客户端本身存储的验证者集合做比较，若相同，则通过+2/3的投票，通过验证，若不同，更新轻客户端的活跃验证者集合，再次验证；3）当轻客户端的安全性不足时（如高度不连续、bft超过1/3等等），与全节点进行交互验证。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">cosmos-SDK介绍</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-11-02 09:55:26 / Modified: 11:11:34" itemprop="dateCreated datePublished" datetime="2021-11-02T09:55:26+08:00">2021-11-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/1.png" alt="cosmos作为上层应用的整体架构"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/10/29/Tendermint-I-ABCI%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/29/Tendermint-I-ABCI%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">Tendermint-I-ABCI介绍</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-29 14:50:26" itemprop="dateCreated datePublished" datetime="2021-10-29T14:50:26+08:00">2021-10-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-08 10:01:03" itemprop="dateModified" datetime="2021-11-08T10:01:03+08:00">2021-11-08</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/2021/10/29/Tendermint-I-ABCI%E4%BB%8B%E7%BB%8D/1.png" alt="tendermint ABCI接口时序图"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
