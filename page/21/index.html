@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">193</span>
+          <span class="site-state-item-count">194</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-count">82</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,294 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/20/%E5%85%B3%E4%BA%8EPBFT%E7%9B%91%E6%8E%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/12/20/%E5%85%B3%E4%BA%8EPBFT%E7%9B%91%E6%8E%A7/" class="post-title-link" itemprop="url">关于PBFT监控</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-20 21:08:04" itemprop="dateCreated datePublished" datetime="2019-12-20T21:08:04+08:00">2019-12-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-08-28 09:21:35" itemprop="dateModified" datetime="2022-08-28T09:21:35+08:00">2022-08-28</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>关于PBFT的监控，已tendermint为例，已经具备 <a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a> 监控能力。</p>
+<p><img src="/2019/12/20/%E5%85%B3%E4%BA%8EPBFT%E7%9B%91%E6%8E%A7/1.jpg"></p>
+<p>具体参数请参见 ==&gt; <a target="_blank" rel="noopener" href="https://docs.tendermint.com/master/tendermint-core/metrics.html">https://docs.tendermint.com/master/tendermint-core/metrics.html</a></p>
+<h2 id="List-of-available-metrics"><a href="#List-of-available-metrics" class="headerlink" title="List of available metrics"></a>List of available metrics</h2><p>The following metrics are available:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Since</strong></th>
+<th><strong>Tags</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>consensus_height</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Height of the chain</td>
+</tr>
+<tr>
+<td>consensus_validators</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of validators</td>
+</tr>
+<tr>
+<td>consensus_validators_power</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Total voting power of all validators</td>
+</tr>
+<tr>
+<td>consensus_validator_power</td>
+<td>Gauge</td>
+<td>0.33.0</td>
+<td></td>
+<td>Voting power of the node if in the validator set</td>
+</tr>
+<tr>
+<td>consensus_validator_last_signed_height</td>
+<td>Gauge</td>
+<td>0.33.0</td>
+<td></td>
+<td>Last height the node signed a block, if the node is a validator</td>
+</tr>
+<tr>
+<td>consensus_validator_missed_blocks</td>
+<td>Gauge</td>
+<td>0.33.0</td>
+<td></td>
+<td>Total amount of blocks missed for the node, if the node is a validator</td>
+</tr>
+<tr>
+<td>consensus_missing_validators</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of validators who did not sign</td>
+</tr>
+<tr>
+<td>consensus_missing_validators_power</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Total voting power of the missing validators</td>
+</tr>
+<tr>
+<td>consensus_byzantine_validators</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of validators who tried to double sign</td>
+</tr>
+<tr>
+<td>consensus_byzantine_validators_power</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Total voting power of the byzantine validators</td>
+</tr>
+<tr>
+<td>consensus_block_interval_seconds</td>
+<td>Histogram</td>
+<td>0.21.0</td>
+<td></td>
+<td>Time between this and last block (Block.Header.Time) in seconds</td>
+</tr>
+<tr>
+<td>consensus_rounds</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of rounds</td>
+</tr>
+<tr>
+<td>consensus_num_txs</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of transactions</td>
+</tr>
+<tr>
+<td>consensus_total_txs</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Total number of transactions committed</td>
+</tr>
+<tr>
+<td>consensus_block_parts</td>
+<td>counter</td>
+<td>on dev</td>
+<td>peer_id</td>
+<td>number of blockparts transmitted by peer</td>
+</tr>
+<tr>
+<td>consensus_latest_block_height</td>
+<td>gauge</td>
+<td>on dev</td>
+<td></td>
+<td>/status sync_info number</td>
+</tr>
+<tr>
+<td>consensus_fast_syncing</td>
+<td>gauge</td>
+<td>on dev</td>
+<td></td>
+<td>either 0 (not fast syncing) or 1 (syncing)</td>
+</tr>
+<tr>
+<td>consensus_block_size_bytes</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Block size in bytes</td>
+</tr>
+<tr>
+<td>p2p_peers</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of peers node’s connected to</td>
+</tr>
+<tr>
+<td>p2p_peer_receive_bytes_total</td>
+<td>counter</td>
+<td>on dev</td>
+<td>peer_id, chID</td>
+<td>number of bytes per channel received from a given peer</td>
+</tr>
+<tr>
+<td>p2p_peer_send_bytes_total</td>
+<td>counter</td>
+<td>on dev</td>
+<td>peer_id, chID</td>
+<td>number of bytes per channel sent to a given peer</td>
+</tr>
+<tr>
+<td>p2p_peer_pending_send_bytes</td>
+<td>gauge</td>
+<td>on dev</td>
+<td>peer_id</td>
+<td>number of pending bytes to be sent to a given peer</td>
+</tr>
+<tr>
+<td>p2p_num_txs</td>
+<td>gauge</td>
+<td>on dev</td>
+<td>peer_id</td>
+<td>number of transactions submitted by each peer_id</td>
+</tr>
+<tr>
+<td>p2p_pending_send_bytes</td>
+<td>gauge</td>
+<td>on dev</td>
+<td>peer_id</td>
+<td>amount of data pending to be sent to peer</td>
+</tr>
+<tr>
+<td>mempool_size</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of uncommitted transactions</td>
+</tr>
+<tr>
+<td>mempool_tx_size_bytes</td>
+<td>histogram</td>
+<td>on dev</td>
+<td></td>
+<td>transaction sizes in bytes</td>
+</tr>
+<tr>
+<td>mempool_failed_txs</td>
+<td>counter</td>
+<td>on dev</td>
+<td></td>
+<td>number of failed transactions</td>
+</tr>
+<tr>
+<td>mempool_recheck_times</td>
+<td>counter</td>
+<td>on dev</td>
+<td></td>
+<td>number of transactions rechecked in the mempool</td>
+</tr>
+<tr>
+<td>state_block_processing_time</td>
+<td>histogram</td>
+<td>on dev</td>
+<td></td>
+<td>time between BeginBlock and EndBlock in ms</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -563,92 +851,6 @@
 <p><strong>2.去信任含义的辨析</strong></p>
 <p>去信任源于Token被交易时，Token的状态变更和交易确认同步发生这一安排。设想Alice以比特币向Bob买入某一货物。Alice向Bob支付比特币这一过程无需两人之间有任何了解，也无需受信任的第三方机构，就可以在区块链内有保障地进行。这是去信任的真正含义。但在交易的另一端，Alice如何确保Bob会按时向她交付合格的货物？只要做不到一手交比特币、一手交货，就存在不容忽视的交易对手信用风险。只有准确识别、评估信用风险并引入风险防范措施，很多交易才能进行。比如，在暗网交易中，交易平台通常设立第三方托管账户（escrow account）。买方先将比特币打入第三方托管账户，等收到商品并确认后，才通知交易平台将比特币转给卖方。如果没有第三方托管账目这个增信手段，比特币忠实拥趸之间的交易也会大幅减少。</p>
 <p>因此，区块链内的去信任环境，不能简单外推到区块链外。一旦脱离Token交易等原生场景，区块链要解决现实中的信任问题，往往需要引入区块链外的可信中心机制予以辅助。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/12/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">以太坊磁盘空间</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-12-04 18:18:04" itemprop="dateCreated datePublished" datetime="2019-12-04T18:18:04+08:00">2019-12-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>refer link==&gt; <a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/143/what-are-the-ethereum-disk-space-needs">https://ethereum.stackexchange.com/questions/143/what-are-the-ethereum-disk-space-needs</a></p>
-<p>Update on Dec 9th, 2018 / Block ~ 6_850_000</p>
-<h3 id="Geth-Go"><a href="#Geth-Go" class="headerlink" title="Geth (Go)"></a>Geth (Go)</h3><p><em>Last Update: May 14th, 2018 / Block ~ 5_600_000</em></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Client / Mode         | Block <span class="built_in">Number</span>   | Disk Space</span><br><span class="line">======================|================|===========</span><br><span class="line">geth light            | <span class="number">5_600_000</span>      | <span class="number">363</span>M</span><br><span class="line">geth fast full        | <span class="number">5_600_000</span>      | <span class="number">142</span>G</span><br><span class="line">geth full full        | <span class="number">4_980_000</span> [<span class="number">1</span>]  | <span class="number">239</span>G + [<span class="number">1</span>]</span><br><span class="line">geth full archive     | <span class="number">4_980_000</span> [<span class="number">2</span>]  | <span class="number">671</span>G</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Geth 1.8.3</li>
-<li>Ubuntu 16.4 LTS, VPS instance with SSD backed storage</li>
-</ul>
-<h3 id="Parity-Rust"><a href="#Parity-Rust" class="headerlink" title="Parity (Rust)"></a>Parity (Rust)</h3><p><em>Last Update: May 14th, 2018 / Block ~ 5_600_000</em></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Client / Mode         | Block <span class="built_in">Number</span>   | Disk Space</span><br><span class="line">======================|================|===========</span><br><span class="line">parity light          | <span class="number">5_600_000</span>      |  <span class="number">89</span>M</span><br><span class="line">parity warp fast      | <span class="number">5_600_000</span>      |  <span class="number">82</span>G</span><br><span class="line">parity full fast      | <span class="number">5_600_000</span>      |  <span class="number">78</span>G</span><br><span class="line">parity full archive   | <span class="number">5_600_000</span>      | <span class="number">1.1</span>T</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Parity 1.10.0</li>
-<li>Ubuntu 16.4 LTS, VPS instance with SSD backed storage</li>
-</ul>
 
       
     </div>

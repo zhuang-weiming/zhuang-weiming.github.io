@@ -1630,7 +1630,7 @@
 <p>为什么至少要2f个prepare (包括自己的pre-prepare共2f+1)。这是因为之前论证的，如果有f个fault 节点，那么节点总数至少是N=3f+1。简单说一下论证过程，假设总数N个节点，f个fault节点，那么必须接收到N-f个消息应答，才能够判断出结果(因为fault节点可能不发送应答)。N-f个应答中有f个可能是假的(fault节点发出的)，那么真实的是N-f-f，要求真实的应答大于假的应答，即N-f-f &gt; f ==&gt; N &gt; 3f。所以: N_min = 3f+1 所以在prepare和commit两个阶段必须收到2f+1(包括自己) 的应答消息，才能证明有f+1非fault节点发送了应答。(注意前提是非fault对于相同的消息，会产生相同的消息应答)那么这里也有个问题：就是接收2f+1个消息的时，判断是否一致，是否需要对比数据的的签名。我的看法是，如果2f+1个v，n都相同，d(m)只需要f+1相同就可以了。否则就共识失败了。</p>
 ]]></content>
       <tags>
-        <tag>pbft</tag>
+        <tag>共识算法</tag>
       </tags>
   </entry>
   <entry>
@@ -3245,7 +3245,7 @@
 <h4 id="What-is-the-reply-message"><a href="#What-is-the-reply-message" class="headerlink" title="What is the reply message?"></a>What is the reply message?</h4><p>Every node replies the result of the request’s operation to the client individually. The client will collect these reply messages and if f + 1 valid reply messages are arrived, the client will accept the result. In this sample implementation, there is no client. So, every node including the primary will return its reply message to the primary.</p>
 ]]></content>
       <tags>
-        <tag>pbft</tag>
+        <tag>共识算法</tag>
       </tags>
   </entry>
   <entry>
@@ -4409,7 +4409,7 @@
 </tbody></table>
 ]]></content>
       <tags>
-        <tag>PBFT</tag>
+        <tag>共识算法</tag>
       </tags>
   </entry>
   <entry>
@@ -5728,7 +5728,7 @@
 <p>Dfinity 主要是通过 threshold 签名来保证 VRF 的每一轮都能确定性地收到 signature。结合Random Beacon 和 Notaries 来使每一轮的成员都随机选择，并且提交的块按照本轮随机数进行排名。但是一个潜在的经济学博弈问题是，threshold 签名可以通过多个成员的合谋的方法来预测，合谋的成员可以协同计算出群私钥，快速预测出下一轮的随机数。通过作恶 DoS 攻击下一轮的成员的目的，合谋者可以破坏网络的公平性。因为这种攻击是不容易被发现的，所以可以做到零成本收益，因而在现实世界必然会出现。</p>
 ]]></content>
       <tags>
-        <tag>产品设计</tag>
+        <tag>共识算法</tag>
       </tags>
   </entry>
   <entry>
@@ -8235,7 +8235,7 @@
 <p>采用IBFT的区块链有 Consensys Quorum 和 Besu。</p>
 ]]></content>
       <tags>
-        <tag>blockchain</tag>
+        <tag>共识算法</tag>
       </tags>
   </entry>
   <entry>
@@ -9270,6 +9270,42 @@
 ]]></content>
       <tags>
         <tag>架构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sui consensus-Narwhal and Tusk</title>
+    <url>/2022/08/28/sui%20consensus-Narwhal%20and%20Tusk/</url>
+    <content><![CDATA[<p>sui - <a href="https://github.com/MystenLabs/sui">https://github.com/MystenLabs/sui</a></p>
+<p>Narwhal consensus - <a href="https://github.com/MystenLabs/narwhal">https://github.com/MystenLabs/narwhal</a></p>
+<p>Narwhal and Tusk consensus paper - <a href="https://dl.acm.org/doi/10.1145/3492321.3519594">https://dl.acm.org/doi/10.1145/3492321.3519594</a></p>
+<p>Narwhal and Tusk consensus feature - <a href="https://github.com/MystenLabs/sui/blob/main/doc/src/learn/architecture/consensus.md">https://github.com/MystenLabs/sui/blob/main/doc/src/learn/architecture/consensus.md</a></p>
+<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>Narwhal and Tusk拥有一个更好的内存池，可靠地分配交易，是高性能分类账的关键推动者。 它应该完全从共识协议中分离出来，让共识只剩下订购小型固定大小参考的工作。 这导致整个系统的吞吐量在很大程度上不受共识吞吐量的影响。</p>
+<p><img src="/2022/08/28/sui%20consensus-Narwhal%20and%20Tusk/1.png"></p>
+<h3 id="Narwhal-的设计理念"><a href="#Narwhal-的设计理念" class="headerlink" title="Narwhal 的设计理念"></a>Narwhal 的设计理念</h3><p>在本节中，我们将这一基本设计逐步扩展到独角鲸，以（i）在领导者提出块时减少双重传输的需求，以及（ii）在有更多资源可用时实现横向扩展。</p>
+<ol>
+<li>第一步是<strong>广播块</strong>而不是交易，并让领导者提出一个块的哈希，依靠 Mempool 层提供其完整性保护的内容。 然而，验证者还需要确保哈希代表可用块，要求他们在验证块之前下载它们——在共识算法的关键路径内。</li>
+<li>为确保可用性，作为第二步，持续广播该块，从而生成该块可供下载的证书。领导者提出一个简短的证书，证明该块将可用。但是，每个 Mempool 块必须包含一个证书，如果共识暂时失去活性，那么要提交的证书数量可能会无限增长。</li>
+<li>第三步，添加<strong>因果关系</strong>，<strong>为多个 Mempool 块提出单一证书</strong>：Mempool 块包括来自所有验证者的过去 Mempool 块的证书。 因此，证书指的是一个区块及其完整的因果历史。 因此，提议这种固定大小证书的领导者提议对包含其完整历史中的块的序列进行扩展。 这种设计非常节省领导者的带宽，并确保达成共识的延迟会影响延迟，但不会影响平均吞吐量——因为内存池块会继续产生并最终提交。 尽管如此，仍然存在两个问题：（i）一个非常快的验证器可能会通过高速生成块来迫使其他人执行大量下载； (ii) 诚实的验证者可能没有足够的带宽与他人分享他们的区块——导致潜在的审查。</li>
+<li>第四步通过对区块创建率施加限制来提供链质量。来自验证者的每个区块都包含一个<strong>轮数</strong>，并且必须包含来自<strong>上一轮的证书的法定人数</strong>才能有效。结果，一小部分诚实验证者的区块被包含在任何提案中。此外，在一些诚实的人结束上一轮之前，验证人无法进入内存池轮次，从而防止假交易泛滥。因此，Narwhal 提供了共识层的抗审查性（如 HoneyBadger BFT 中所定义），而无需使用任何额外的机制，例如阈值加密。因此，Narwhal-Hotstuff 系统是唯一提供抗审查性的基于部分同步仲裁的协议。对手无法杀死领导人，因为它不喜欢该提案，因为所有提案都包含至少 50% 的诚实交易，即使是来自拜占庭领导人的交易。</li>
+<li>最后的第五个设计步骤是启用横向扩展。每个验证者的多个工作（worker）机器可以共享 Mempool 子块，而不是让单个机器创建 Mempool 块，称为批次-batches。一个主工作者在 Mempool 主块中集成对它们的引用。这使验证者能够将大量计算、存储和网络资源用于共享事务的任务——允许准线性扩展。</li>
+</ol>
+<h3 id="Narwhal-的设计核心"><a href="#Narwhal-的设计核心" class="headerlink" title="Narwhal 的设计核心"></a>Narwhal 的设计核心</h3><ol>
+<li>The Narwhal Mempool - Narwhal 交易池</li>
+</ol>
+<p><img src="/2022/08/28/sui%20consensus-Narwhal%20and%20Tusk/2.png"></p>
+<ol start="2">
+<li>使用 Narwhal 达成共识</li>
+</ol>
+<p>Narwhal-Hotstuff 算法/机制中，leader 领导者可以提议一个或多个在 Narwhal 创建的可用性证书，而不是提议一个交易块。提交时，证书的完整未提交因果历史被确定地排序和提交。Narwhal 保证在给定证书的情况下，所有验证者都会看到相同的因果历史，这本身就是区块上的 DAG。因此，该 DAG 上的任何确定性规则都会导致所有验证者的区块总排序相同，从而达成共识。此外，由于 Narwhal 的可用性属性，所有已提交的块都可以被检索和交易排序。</p>
+<p>与直接发送交易块相比，使用独角鲸的领导者有很多优势。即使在没有失败的情况下，广播交易的领导者也会导致资源使用不均：轮领导者必须使用大量的带宽，而其他每个验证者的带宽都没有得到充分利用。相比之下，Narwhal 可确保始终高效、均匀地共享批量交易信息，从而提高网络利用率和吞吐量。</p>
+<p><img src="/2022/08/28/sui%20consensus-Narwhal%20and%20Tusk/4.png"></p>
+<p>最终同步的共识协议不能在异步期间或领导者是拜占庭时提供正确共识。因此，在简单的内存池实现中，总体共识吞吐量在此期间变为零。相比之下，即使在异步网络下，Narwhal 也会继续共享区块并形成可用性证书，因此区块始终以最大吞吐量进行认证。一旦共识协议设法提交摘要-digest hash，验证者也会提交其因果历史，在异步期间没有间隙。尽管如此，最终同步的协议在异步期间仍然会失去正确共识，从而导致延迟增加。 我们展示了如何用 Tusk 克服这个问题。</p>
+<p><img src="/2022/08/28/sui%20consensus-Narwhal%20and%20Tusk/3.png"></p>
+<p><img src="/2022/08/28/sui%20consensus-Narwhal%20and%20Tusk/5.png"></p>
+<p><img src="/2022/08/28/sui%20consensus-Narwhal%20and%20Tusk/6.png"></p>
+]]></content>
+      <tags>
+        <tag>共识算法</tag>
       </tags>
   </entry>
 </search>
