@@ -9278,7 +9278,7 @@
     <content><![CDATA[<p>sui - <a href="https://github.com/MystenLabs/sui">https://github.com/MystenLabs/sui</a></p>
 <p>Narwhal consensus - <a href="https://github.com/MystenLabs/narwhal">https://github.com/MystenLabs/narwhal</a></p>
 <p>Narwhal and Tusk consensus paper - <a href="https://dl.acm.org/doi/10.1145/3492321.3519594">https://dl.acm.org/doi/10.1145/3492321.3519594</a></p>
-<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>Narwhal and Tusk拥有一个更好的内存池，可靠地分配交易，是高性能分类账的关键推动者。 它应该完全从共识协议中分离出来，让共识只剩下订购小型固定大小参考的工作。 这导致整个系统的吞吐量在很大程度上不受共识吞吐量的影响。</p>
+<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>Narwhal and Tusk拥有一个更好的内存池，可靠地分配交易，是高性能分类账的关键推动者。 它应该完全从共识协议中分离出来，让共识只剩下订购小型的固定大小的参考工作。 这导致整个系统的吞吐量在很大程度上不受共识吞吐量的影响。</p>
 <p><img src="/2022/08/28/sui_consensus-Narwhal_and_Tusk/1.png"></p>
 <h3 id="Narwhal-的设计理念"><a href="#Narwhal-的设计理念" class="headerlink" title="Narwhal 的设计理念"></a>Narwhal 的设计理念</h3><p>在本节中，我们将这一基本设计逐步扩展到独角鲸，以（i）在领导者提出块时减少双重传输的需求，以及（ii）在有更多资源可用时实现横向扩展。</p>
 <ol>
@@ -9306,6 +9306,7 @@
 <li>Narwhal 设计 Mempool，从架构角度来看，实际上是数据提交过程中的一个阶段，配合上 Hotstuff 的3阶段数据提交，可以认为Narwhal 实际上是一个 4 阶段提交的共识机制。在实际上线mainnet之后，理论上比 tendermint 的 per transaction delay time 要长；吞吐量会大幅增长。目前Cosmos Hub区块链上共有342个验证者，有效验证人150，平均区块时间7.29秒，理论上 10,000 TPS。</li>
 <li>对有人提出，将 <a href="https://www.paradigm.xyz/2022/07/experiment-narwhal-bullshark-cosmos-stack">Narwhal + EVM</a> 的<a href="https://github.com/gakonst/narwhal-abci-evm">观点</a>，本人并不认同：因为在 EVM 中，Smart Contract 之间是可以调用的，但是 Narwhal 的 Mempool 无法认知其关联关系，导致共识机制无法正确地对交易进行排序。而 Move 在变成语言层面对智能合约的状态进行隔离，不存在上述 EVM 中的问题。</li>
 </ol>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p>Move 相比 Solidity 的三大优势 - <a href="https://mirror.xyz/snapfingersdao.eth/0MExjukNkgMfaIl5FiI87DeCfaeONy_ameYULkiAeNA">https://mirror.xyz/snapfingersdao.eth/0MExjukNkgMfaIl5FiI87DeCfaeONy_ameYULkiAeNA</a></p>
 ]]></content>
       <tags>
         <tag>共识算法</tag>
