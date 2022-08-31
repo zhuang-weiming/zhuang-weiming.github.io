@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-4/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-18 16:26:31" itemprop="dateCreated datePublished" datetime="2020-05-18T16:26:31+08:00">2020-05-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="CheckTx"><a href="#CheckTx" class="headerlink" title="CheckTx"></a>CheckTx</h3><p>在burrow项目中，<code>/consensus/abci/app.go</code>:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(app *App)</span> <span class="title">CheckTx</span><span class="params">(req types.RequestCheckTx)</span> <span class="title">types</span>.<span class="title">ResponseCheckTx</span></span> &#123;</span><br><span class="line">	......</span><br><span class="line">	checkTx := ExecuteTx(logHeader, app.checker, app.txDecoder, req.GetTx())</span><br><span class="line">	......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此处的 <code>ExecuteTx</code> 位于 <code>/execution/execution.go</code> :</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// If the tx is invalid, an error will be returned.</span></span><br><span class="line"><span class="comment">// Unlike ExecBlock(), state will not be altered.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(exe *executor)</span> <span class="title">Execute</span><span class="params">(txEnv *txs.Envelope)</span> <span class="params">(txe *exec.TxExecution, err error)</span></span> &#123;</span><br><span class="line">	......</span><br><span class="line">	<span class="comment">// Verify transaction signature against inputs</span></span><br><span class="line">	err = txEnv.Verify(exe.params.ChainID)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		logger.InfoMsg(<span class="string">&quot;Transaction Verify failed&quot;</span>, structure.ErrorKey, err)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> txExecutor, ok := exe.contexts[txEnv.Tx.Type()]; ok &#123;</span><br><span class="line">		<span class="comment">// Establish new TxExecution</span></span><br><span class="line">		txe := exe.block.Tx(txEnv)</span><br><span class="line">		<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			<span class="keyword">if</span> r := <span class="built_in">recover</span>(); r != <span class="literal">nil</span> &#123;</span><br><span class="line">				err = fmt.Errorf(<span class="string">&quot;recovered from panic in executor.Execute(%s): %v\n%s&quot;</span>, txEnv.String(), r,</span><br><span class="line">					debug.Stack())</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;()</span><br><span class="line"></span><br><span class="line">		err = exe.validateInputsAndStorePublicKeys(txEnv)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			logger.InfoMsg(<span class="string">&quot;Transaction validate failed&quot;</span>, structure.ErrorKey, err)</span><br><span class="line">			txe.PushError(err)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		err = txExecutor.Execute(txe, txe.Envelope.Tx.Payload)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			logger.InfoMsg(<span class="string">&quot;Transaction execution failed&quot;</span>, structure.ErrorKey, err)</span><br><span class="line">			txe.PushError(err)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Increment sequence numbers for Tx inputs</span></span><br><span class="line">		err = exe.updateSequenceNumbers(txEnv)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			logger.InfoMsg(<span class="string">&quot;Updating sequences failed&quot;</span>, structure.ErrorKey, err)</span><br><span class="line">			txe.PushError(err)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// Return execution for this tx</span></span><br><span class="line">		<span class="keyword">return</span> txe, <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">&quot;unknown transaction type: %v&quot;</span>, txEnv.Tx.Type())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此处 <code>txExecutor.Execute(txe, txe.Envelope.Tx.Payload)</code> 因 <code>txExecutor</code> 类型的不同，分别对应至 <code>/txs/payload/payload.go</code> 中的 <code>Type</code> ，如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Account transactions</span></span><br><span class="line">TypeSend  = Type(<span class="number">0x01</span>)</span><br><span class="line">TypeCall  = Type(<span class="number">0x02</span>)</span><br><span class="line">TypeName  = Type(<span class="number">0x03</span>)</span><br><span class="line">TypeBatch = Type(<span class="number">0x04</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Validation transactions</span></span><br><span class="line">TypeBond   = Type(<span class="number">0x11</span>)</span><br><span class="line">TypeUnbond = Type(<span class="number">0x12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Admin transactions</span></span><br><span class="line">TypePermissions = Type(<span class="number">0x21</span>)</span><br><span class="line">TypeGovernance  = Type(<span class="number">0x22</span>)</span><br><span class="line">TypeProposal    = Type(<span class="number">0x23</span>)</span><br><span class="line">TypeIdentify    = Type(<span class="number">0x24</span>)</span><br></pre></td></tr></table></figure>
+
+<p>根据 <code>Type</code> 不同，在如下 <code>contexts</code> 对应的 Context 的 Execute 方法则会不同，分别对应为如下代码文件中的 <code>Execute</code> 方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">├── burrow</span><br><span class="line">│   ├── execution</span><br><span class="line">│   │   ├── contexts</span><br><span class="line">│   │   │   ├── bond_context.go</span><br><span class="line">│   │   │   ├── bond_context_test.go</span><br><span class="line">│   │   │   ├── call_context.go</span><br><span class="line">│   │   │   ├── governance_context.go</span><br><span class="line">│   │   │   ├── identify_context.go</span><br><span class="line">│   │   │   ├── name_context.go</span><br><span class="line">│   │   │   ├── permissions_context.go</span><br><span class="line">│   │   │   ├── proposal_context.go</span><br><span class="line">│   │   │   ├── send_context.go</span><br><span class="line">│   │   │   ├── shared.go</span><br><span class="line">│   │   │   └── unbond_context.go</span><br></pre></td></tr></table></figure>
+
+<p>例如，在执行发送 <code>TypeCall</code> 类型的交易时， <code>txExecutor.Execute(txe, txe.Envelope.Tx.Payload)</code> 对应的具体逻辑为 <code>/execution/contexts/call_context.go</code> 中的 <code>Execute</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ctx *CallContext)</span> <span class="title">Execute</span><span class="params">(txe *exec.TxExecution, p payload.Payload)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> ok <span class="keyword">bool</span></span><br><span class="line">	ctx.tx, ok = p.(*payload.CallTx)</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> fmt.Errorf(<span class="string">&quot;payload must be CallTx, but is: %v&quot;</span>, p)</span><br><span class="line">	&#125;</span><br><span class="line">	ctx.txe = txe</span><br><span class="line">	inAcc, outAcc, err := ctx.Precheck()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// That the fee less than the input amount is checked by Precheck to be greater than or equal to fee</span></span><br><span class="line">	value := ctx.tx.Input.Amount - ctx.tx.Fee</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ctx.RunCall &#123;</span><br><span class="line">		<span class="keyword">return</span> ctx.Deliver(inAcc, outAcc, value)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ctx.Check(inAcc, value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="DeliverTx"><a href="#DeliverTx" class="headerlink" title="DeliverTx"></a>DeliverTx</h3><p>在执行 <code>ExecuteTx(logHeader, app.committer, app.txDecoder, req.GetTx())</code> 中，<code>executor execution.Executor</code> 被指定为 <code>app.committer</code> , 与 CheckTX 执行同样的 <code>Execute</code> 逻辑</p>
+<h3 id="Commit"><a href="#Commit" class="headerlink" title="Commit"></a>Commit</h3><p>具体执行逻辑为 <code>/execution/execution.go</code> 中的 <code>func (exe *executor) Commit(header *abciTypes.Header) (stateHash []byte, err error)</code> </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -590,148 +677,6 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/Qihoo360/wayne">wayne</a> 对用户的权限管理会优秀一些。但是经过docker-compose实验，启动为dev版本，未成功打开页面</li>
 <li><a target="_blank" rel="noopener" href="https://www.rancher.cn/">rancher</a>（<a target="_blank" rel="noopener" href="https://github.com/rancher/%EF%BC%89Rancher%E4%B8%BA%E6%82%A8%E6%8F%90%E4%BE%9B%E2%80%9CKubernetes%E5%8D%B3%E6%9C%8D%E5%8A%A1(Kubernetes-as-a-Service)%E2%80%9D%E3%80%82%E5%9C%A8%E5%9B%BD%E5%86%85%E5%8C%97%E4%BA%AC%E3%80%81%E4%B8%8A%E6%B5%B7%E3%80%81%E6%B7%B1%E5%9C%B3%E3%80%81%E6%B2%88%E9%98%B3%E5%9D%87%E6%9C%89%E5%8A%9E%E5%85%AC%E5%9C%B0%E7%82%B9%EF%BC%8C%E6%B1%89%E8%AF%AD%E6%94%AF%E6%8C%81%E8%BE%83%E5%A5%BD%E3%80%82%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E3%80%82">https://github.com/rancher/）Rancher为您提供“Kubernetes即服务(Kubernetes-as-a-Service)”。在国内北京、上海、深圳、沈阳均有办公地点，汉语支持较好。推荐使用。</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/" class="post-title-link" itemprop="url">小文件存储系统seaweedfs</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-04-16 17:14:01" itemprop="dateCreated datePublished" datetime="2020-04-16T17:14:01+08:00">2020-04-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>SeaweedFS 是开源的，简单的，高伸缩性的分布式文件系统。SeaweedFS 作为支持全 POSIX 文件系统语义替代，Seaweed-FS 选择仅实现 key-file 的映射，类似 “NoSQL”，也可以说是 “NoFS”。</p>
-<p>SeaweedFS 仅花费 40 字节的硬盘来存储每个文件的元数据。</p>
-<h4 id="与GlusterFS-Ceph相比较"><a href="#与GlusterFS-Ceph相比较" class="headerlink" title="与GlusterFS, Ceph相比较"></a>与<a target="_blank" rel="noopener" href="https://www.gluster.org/">GlusterFS</a>, <a target="_blank" rel="noopener" href="https://ceph.io/">Ceph</a>相比较</h4><table>
-<thead>
-<tr>
-<th>System</th>
-<th>File Meta</th>
-<th>File Content Read</th>
-<th>POSIX</th>
-<th>REST API</th>
-<th>Optimized for small files</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SeaweedFS</td>
-<td>lookup volume id, cacheable</td>
-<td>O(1) disk seek</td>
-<td></td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>SeaweedFS Filer</td>
-<td>Linearly Scalable, Customizable</td>
-<td>O(1) disk seek</td>
-<td>FUSE</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>GlusterFS</td>
-<td>hashing</td>
-<td></td>
-<td>FUSE, NFS</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Ceph</td>
-<td>hashing + rules</td>
-<td></td>
-<td>FUSE</td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td>MooseFS</td>
-<td>in memory</td>
-<td></td>
-<td>FUSE</td>
-<td></td>
-<td>No</td>
-</tr>
-</tbody></table>
-<h4 id="体验seaweedfs"><a href="#体验seaweedfs" class="headerlink" title="体验seaweedfs"></a>体验seaweedfs</h4><p>参考==&gt;<a target="_blank" rel="noopener" href="https://hub.docker.com/r/chrislusf/seaweedfs">https://hub.docker.com/r/chrislusf/seaweedfs</a></p>
-<ol>
-<li>拉取 docker-compose 文件，<code>wget https://raw.githubusercontent.com/chrislusf/seaweedfs/master/docker/seaweedfs-compose.yml</code></li>
-<li>启动，<code>docker-compose -f seaweedfs-compose.yml -p seaweedfs up</code></li>
-</ol>
-<p>参考 =&gt; <a target="_blank" rel="noopener" href="https://github.com/chrislusf/seaweedfs/wiki/Volume-Server-API">https://github.com/chrislusf/seaweedfs/wiki/Volume-Server-API</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  seaweedfs: curl http://localhost:9333/dir/assign</span><br><span class="line">&#123;&quot;fid&quot;:&quot;7,01248b7b86&quot;,&quot;url&quot;:&quot;172.18.0.3:8080&quot;,&quot;publicUrl&quot;:&quot;172.18.0.3:8080&quot;,&quot;count&quot;:1&#125;%                                                                         </span><br><span class="line">➜  seaweedfs: curl -F file=@/home/will/documents/zaq12wsxcde3--de4064dc15870163a9aab589a1ccf7900dd68ef4 http://127.0.0.1:8080/7,01248b7b86</span><br><span class="line">&#123;&quot;name&quot;:&quot;zaq12wsxcde3--de4064dc15870163a9aab589a1ccf7900dd68ef4&quot;,&quot;size&quot;:489,&quot;eTag&quot;:&quot;468de108&quot;&#125;%                                                                 </span><br><span class="line">➜  seaweedfs: curl http://localhost:9333/dir/lookup\?volumeId\=7</span><br><span class="line">&#123;&quot;volumeId&quot;:&quot;7&quot;,&quot;locations&quot;:[&#123;&quot;url&quot;:&quot;172.18.0.3:8080&quot;,&quot;publicUrl&quot;:&quot;172.18.0.3:8080&quot;&#125;]&#125;% </span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><code>curl http://localhost:9333/dir/assign</code> 获取fid</li>
-<li><code>curl -F file=@/home/will/documents/zaq12wsxcde3--de4064dc15870163a9aab589a1ccf7900dd68ef4 http://127.0.0.1:8080/7,01248b7b86</code> 上传文件</li>
-<li><code>curl http://localhost:9333/dir/lookup\?volumeId\=7</code> 查询</li>
-<li>在浏览器中打开 <code>http://172.18.0.3:8080/7,01248b7b86</code>，查看文档</li>
-<li>master 的url：<code>http://127.0.0.1:9333/</code></li>
-<li>volume的url：<code>http://172.18.0.3:8080/ui/index.html</code></li>
-</ol>
-<p><img src="/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/1.png"></p>
-<p><img src="/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/2.png"></p>
 
       
     </div>

@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">194</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,154 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/" class="post-title-link" itemprop="url">以太坊编程_II</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-24 21:32:27" itemprop="dateCreated datePublished" datetime="2018-02-24T21:32:27+08:00">2018-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>目录</strong></p>
+<ol>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">迈出第一步</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">与合约进行交互</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/">现实世界中的构架和工具</a></p>
+</li>
+</ol>
+<p><strong>2.尝试与合约进行交互</strong></p>
+<p><strong>2.1以太坊智能合约介绍</strong></p>
+<p>阅读到这里，对以太坊已经有了基础的了解，已经与以太坊节点进行了交互，并在账户之间发送了一些交易等等。但除此之外，让以太坊如此惊艳的还有：智能合约。</p>
+<p>正如我在简介中所说，智能合约是一个运行在以太坊虚拟机（EVM）上的程序。你可以创建智能合约来做任何你想做的事情，但是在今天，大多数智能合约都被用于像I-C-Os或者代币销售那样的众筹工具。接下来请允许我解释这些概念。</p>
+<p>从众筹开始说起，相信这是一个你非常熟悉的概念。举办众筹活动的项目，其目的是为了开展项目而筹集资金。你可以几乎零成本的发行一种与你的项目相关的数字资产，并将其出售给任何人。这就是我们所说的初始代币发行（I-C-O）。</p>
+<p>要想实现一个具有智能合约的I-C-O，你只需要实现使你的数字资产可交易并且有价值的逻辑。这听起来不错，这些就是以太坊代币，是以太坊生态系统中的一种数字资产。</p>
+<p>接下来让我们试着通过一个例子来分析这些例子。</p>
+<p>假设你的健康食品公司想要推出一种新的品牌。你决定进行一次I-C-O来筹集20,000个ETH。你用10个代币换取你收集到的每个ETH，并承诺，贡献者可以在你的商店使用这些代币购买食物。为此，你需要开发一个代币智能合约为每个贡献者存储他们相应的代币数量。</p>
+<p>现在，假设你筹集到了这笔钱，开展了你的项目并开了你的第一家店。然后，你决定每份沙拉以1个代币的价格出售。一周以后，你的客人越来越多，但是沙拉的供应却是有限的，客人意识到这一点并开始把你的代币当作资产交易，从而提高了其市场价值。</p>
+<p>这一过程在现实生活中实际存在，因为以太坊几乎允许任何人创建他们自己的可交易的数字资产。</p>
+<p><strong>2.2你的第一个智能合约</strong></p>
+<p>让我们看看如何建立一种基本的以太坊代币吧。我将通过这个例子介绍一些Solidity的基础知识。</p>
+<p>请记住这个例子仅用于学习，不能使用它从事商业活动。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.0;</span><br><span class="line">contract MyToken &#123;</span><br><span class="line"> address public creator;</span><br><span class="line"> uint256 public totalSupply;</span><br><span class="line"> mapping (address &#x3D;&gt; uint256) public balances;</span><br><span class="line"> </span><br><span class="line"> function MyToken() public &#123;</span><br><span class="line">   creator &#x3D; msg.sender;</span><br><span class="line">   totalSupply &#x3D; 10000;</span><br><span class="line">   balances[creator] &#x3D; totalSupply;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> function balanceOf(address owner) public constant returns(uint256)&#123;</span><br><span class="line">   return balances[owner];</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> function sendTokens(address receiver, uint256 amount) public returns(bool)&#123;</span><br><span class="line">   address owner &#x3D; msg.sender;</span><br><span class="line"></span><br><span class="line">   require(amount &gt; 0);</span><br><span class="line">   require(balances[owner] &gt;&#x3D; amount);</span><br><span class="line"></span><br><span class="line">   balances[owner] -&#x3D; amount;</span><br><span class="line">   balances[receiver] +&#x3D; amount;</span><br><span class="line">   return true;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让我们一步步来。<em>pragma</em>关键词显示了你使用的源码的Solidity版本。然后，用合约的名字进行合约定义初始化，在这个例子中，名字就是<em>MyToken</em>。</p>
+<p>接下来，你可以看到三个变量：</p>
+<p><em>creator</em> 是一个地址变量，用于存储该合约的拥有者。</p>
+<p><em>TotalSupply</em> 是一个256位的无符号整数，用于存储愿意与投资者共享的代币总数。</p>
+<p><em>balance</em> 是从地址到无符号整数的映射，其记录着每个投资者的余额。</p>
+<p>之后，你将看到构造函数。正如你所见，这是一个与合约同名的函数，同时每当该合约的一个新的实例被部署在网络中时它将被调用一次。这就是合约的所有者被存储的地方。由于所有的函数调用都是一笔交易，因此可以通过交易的发送者即 <em>msg.sender</em> 获得合约的所有者信息。这个合约定义了总共10,000个代币。</p>
+<p>下一个函数十分简单：<em>balanceOf</em> 用于展示参数指定的地址的余额。也许你想知道 <em>constant</em> 关键字是什么意思。这是因为Solidity的函数分为两种，一种是常量函数，一种是非常量函数。</p>
+<p>非常量函数执行后状态会发生变化。另一方面，常量函数只读一次，这意味着它不执行任何状态转换，而是只读取数据。实际上，共有两种类型的常量函数：</p>
+<p><em>view</em> 声明函数承诺不修改状态（常量的别名）</p>
+<p><em>pure</em> 声明函数承诺不读取或者修改状态</p>
+<p><em>sendTokens</em> 函数允许我们在地址间交换代币。这是一个非常量函数或者说是一个交易函数，因为使用这个函数将改变余额。该函数的参数是接收者的地址以及欲转移的代币数量，函数的返回值是一个表示交易是否成功执行的布尔（Boolean）类型数据。你可以跳过第一行，它只是把函数的发送者保存在<em>owner</em>变量中。</p>
+<p>接下来，你将看到两个先决条件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">require(amount &gt; 0);</span><br><span class="line">require(balances[owner] &gt;&#x3D; amount);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><em>Require</em> 是你可以用来检查条件或者进行验证的方法之一。它将评估一个条件并在条件不满足时恢复原状。因此，在这个例子中，要求被转移的代币 <em>amount</em> 大于零，同时要保证发送者有足够的余额来支付该笔代币转移。</p>
+<p>最后，你要从 <em>owner</em> 的余额中减去交易转移的代币数量，并将其添加到 <em>receiver</em> 的余额中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> balances[owner] -&#x3D; amount;</span><br><span class="line"> balances[receiver] +&#x3D; amount;</span><br><span class="line"> return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.3 部署智能合约</strong></p>
+<p>现在让我们开始试着玩一下智能合约吧！首先需要在网络上部署智能合约。为了实现部署，需要使用名为 solc的Solidity编译器用于编译node.js。你可以通过以下指令安装它：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g solc</span><br></pre></td></tr></table></figure>
+
+<p>创建一个叫做 <em>MyToken.sol</em> 的文件并把合约代码粘贴到文件中，并在放置该文件的路径下打开一个控制终端。首先，通过运行以下指令编译文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solcjs MyToken.sol --bin</span><br></pre></td></tr></table></figure>
+
+<p>执行完该指令，编译器将创建一个 <em>MyToken_sol_MyToken.bin</em> 文件作为输出。你可以看到该文件只包含字节码。接着，你将需要使用solc来构建ABI（应用二进制接口），它是合约的接口或者说模板，通过它你可以获得可用的方法。这就是与Web3的联系点。你只需要运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solcjs MyToken.sol --abi</span><br></pre></td></tr></table></figure>
+
+<p>接着，你将看到一个叫做 <em>MyTolen_sol_MyToken.abi</em> 的新文件，其中包含的JSON内容定义了你的合约的接口。</p>
+<p>最后，你只需要使用在后台运行的 <em>testrpc</em> ，通过node.js控制台部署你的合约。你完成了这些工作后，我们就开始初始化 <em>web3</em> 吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instance web3</span></span><br><span class="line">Web3 = <span class="built_in">require</span>(<span class="string">&#x27;web3&#x27;</span>)</span><br><span class="line">provider = <span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&quot;http://localhost:8545&quot;</span>)</span><br><span class="line">web3 = <span class="keyword">new</span> Web3(provider)</span><br></pre></td></tr></table></figure>
+
+<p>Web3 为你提供了解析合约ABI的可能性，并提供了一个JavaScriot API 与之交互。接着，你只需使用字节码就可以将该合约的一个新实例部署到 <em>testrpc</em> 上。请按照下面的命令输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// load files</span></span><br><span class="line">myTokenABIFile = fs.readFileSync(<span class="string">&#x27;MyToken_sol_MyToken.abi&#x27;</span>)</span><br><span class="line">myTokenABI  = <span class="built_in">JSON</span>.parse(myTokenABIFile.toString())</span><br><span class="line">myTokenBINFile = fs.readFileSync(<span class="string">&#x27;MyToken_sol_MyToken.bin&#x27;</span>)</span><br><span class="line">myTokenByteCode = myTokenBINFile.toString()</span><br><span class="line"><span class="comment">//deploy</span></span><br><span class="line">account = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">MyTokenContract = web3.eth.contract(myTokenABI)</span><br><span class="line">contractData = &#123; <span class="attr">data</span>: myTokenByteCode, <span class="attr">from</span>: account, <span class="attr">gas</span>: <span class="number">999999</span> &#125;</span><br><span class="line">deployedContract = MyTokenContract.new(contractData)</span><br></pre></td></tr></table></figure>
+
+<p>最后，你可以通过调用 <em>deployedContract.address</em> 检查新部署的合约地址。请保存该地址，因为将需要使用这个地址与你的合约进行交互 :) 。</p>
+<p><strong>2.4 Web3与智能合约</strong></p>
+<p>让我们从搜索你的 <em>testrpc</em> 账户余额开始。为此，你首先需要访问已部署的合约实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">contractAddress = deployedContract.address</span><br><span class="line">instance = MyTokenContract.at(contractAddress)</span><br><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">address</span> =&gt;</span> &#123;</span><br><span class="line"> tokens = instance.balanceOf.call(address)</span><br><span class="line"> <span class="built_in">console</span>.log(address + <span class="string">&quot;: &quot;</span> + tokens)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>正如我们所预期的，第一个账户拥有所有的代币。太棒了！接下来，让我们将一部分代币转移到其他账户：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// send tokens</span></span><br><span class="line">amount = <span class="number">10</span></span><br><span class="line"><span class="keyword">from</span> = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">to = web3.eth.accounts[<span class="number">1</span>]</span><br><span class="line">transactionHash = instance.sendTokens(to, amount, &#123; <span class="attr">from</span>: <span class="keyword">from</span> &#125;)</span><br><span class="line"><span class="comment">// checkout balances again</span></span><br><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">address</span> =&gt;</span> &#123;</span><br><span class="line"> tokens = instance.balanceOf.call(address)</span><br><span class="line"> <span class="built_in">console</span>.log(address + <span class="string">&quot;: &quot;</span> + tokens)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>你应该可以看到，现在第二个地址有了10个代币！你也可以搜索交易信息，正如你在本指南第一部分所做的那样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.getTransaction(transactionHash)</span><br></pre></td></tr></table></figure>
+
+<p>我还为这个mini DApp设计了一个简单的UI，你可以在<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/2-interacting-with-a-contract">这里</a>看到它。你将看到一个包含了我们合约ABI的 <em>MyToken.json</em> 文件。我只是把solidity编译器生成的ABI的内容粘贴到这里面。你还可以看到一个与前一个应用相似的 app.js 文件，但是这个app.js文件还包含了我刚刚向你展示的用于发送代币以及展示账户代币余额详细信息的逻辑。</p>
+<p><img src="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg"><br><em>开发的用来测试 MyToken 转账的 DApp 的 UI</em></p>
+<p>你也可以下载这个 App 并开始与它游戏。你将被要求提供你开发的合约案例的地址。</p>
+<p>注意：为了减轻术语负担，这篇文章中描述的代币并非ERC20标准的代币。如果你不知道什么是ERC20协议代币，我们会在下一篇文章中解释它。</p>
+<blockquote>
+<p>原文链接: <a target="_blank" rel="noopener" href="https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-2-7bbf15e1a953">https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-2-7bbf15e1a953</a></p>
+<p>作者: Facu Spagnuolo</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -667,80 +815,6 @@
 <p>Date Proposed: 2018-06-17</p>
 <p>一句话：ERC-1155的创造者是Enjin coin的CTO Witek Radomski。ERC1155标准定义了一种解决上述问题的新方法。现在“物品”（可能包含ERC20的token或ERC721的token或两者都有）可以被单一的一个合约（打包处理）来定义了。合约里包含区别token们所需的最小量的数据。</p>
 <p>ERC1155协议主要包括ERC1155Mintable.sol同质化可增发智能合约和ERC1155NonFungibleMintable.sol非同质化可增发智能合约，本章只讲解同质化可增发智能合约的功能。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">tail 命令使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2012-06-08 16:28:14" itemprop="dateCreated datePublished" datetime="2012-06-08T16:28:14+08:00">2012-06-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>UNIX/Linux用户在系统或者应用中触发动作，想要看到针对动作的实时log，这个时候tail命令正是可以一展身手的时候了。</p>
-<p>例：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f sci.log.D20120224.T000000 | grep -v getCommonCodeList | grep -v getRuleDetails | grep -v getExceptionList | grep zhuangwm | grep <span class="string">&quot;Invoking api Method:&quot;</span></span><br></pre></td></tr></table></figure>
-<p>tail —用于输出文件的最后10行信息的内容。-f  是指当文件长度增长的时候，输出文件增长的部分。<br>sci.log.D20120224.T000000 —被搜索的文件名称。<br>|  —是指管道，用于将前面的输出作为输入到后面的命令中<br>grep -v getCommonCodeList —是查找文件里符合条件的字符串。 -v 是指反转查找，用于排除所列出来的文字对象</p>
 
       
     </div>
