@@ -9338,4 +9338,72 @@
         <tag>network</tag>
       </tags>
   </entry>
+  <entry>
+    <title>startup-product-20220917</title>
+    <url>/2022/09/17/startup-product-20220917/</url>
+    <content><![CDATA[<p>学习国内黑客松大赛，分析目前 web3 创业项目分类。</p>
+<ol>
+<li><p><strong>DAO社区</strong></p>
+<p>1.1 Discord-2D游戏-社区，将 Discord 新人加入的过程游戏化。</p>
+<p>1.2 Crypto Bless社区，给亲人朋友赠送 NFT，FT。</p>
+</li>
+<li><p><strong>存储</strong></p>
+<p>2.1 将IPFS，Filecoin存储协议增强为 S3 接口协议。</p>
+</li>
+<li><p><strong>DID</strong></p>
+<p>3.1 DID wallet，展示个人信息（e.g. 姓名/年龄/地址），NTF形式展示 SBT（门票/社区会员），ZKP以及验证。</p>
+<p>3.2 DID Reputation，true-ownership（个人金融评分，教育经历，社交凭证，专业能力-blockhat），Reward&amp;Punishment 奖惩机制（认证节点 —&gt; 发型，认证，检举，惩罚，对认证节点进行分级，早期邀请背调公司作为高级认证节点），辅助以 AI 技术对流程进行作弊发现。应用于Token精准airdrop，lending，联合其他DID-SBT。</p>
+</li>
+<li><p><strong>NFT</strong></p>
+<p>4.1 数字藏品NFT拍卖市场。由湖南广电，阿里巴巴，网易云联合推出。e.g. 非遗文化藏品，圆明园十二生肖虎头形象。</p>
+</li>
+<li><p><strong>Metaverse</strong></p>
+<p>5.1 与Decentraland高度类似。VR land，创作者可以创建NFT / FT。</p>
+<p>5.2 智能室内设计。社内设计NFT —&gt; 创作 —&gt; 出版 —&gt; 交易，如上循环♻️。加以 AI 技术，图片处理技术，进行设计风格转化。利用区块链进行版权保护（IPFS），并交易。</p>
+<p>5.3 SonarMeta为众筹者（创作蓝图），3D模型创作者（NFT-数字形象），游戏创作者（游戏引擎，游戏情节），广告商（如CoCaCola），提供了创作，交易以及经济分润的平台。</p>
+<p>5.4 数字虚拟人。将真人舞蹈，面部表情，五官动作实时转化为虚拟人物跳舞，表情。可以为直播，VR游戏提供解决方案。</p>
+</li>
+<li><p><strong>Marketing</strong></p>
+<p>6.1 数字资产服务商。1）价格分析，市场分析；2）价格指标，因素建议，时间建议；3）高频交易API，市场做市商，自动交易机器人。</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>product</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>startup-product-20220917</title>
+    <url>/2022/09/19/golang-fsm/</url>
+    <content><![CDATA[<p><a href="http://github.com/looplab/fsm">http://github.com/looplab/fsm</a></p>
+<p>定义状态机的时候有三部分组成：状态机的初始状态，状态机的事</p>
+<p>件（包括了多个源事件和一个目的事件），状态机的事件回调。整体来说，回</p>
+<p>调可以分为四组8个回调，按执行顺序依次为：</p>
+<p>1，事件开始之前</p>
+<p>​    A，before_xxx，特定的状态之前</p>
+<p>​    B，before_event所有状态之前</p>
+<p>2，离开老状态</p>
+<p>​    A，leave_xxx 离开特定状态</p>
+<p>​    B，leave_state 离开所有状态</p>
+<p>3，进入新状态</p>
+<p>​    A，enter_xxx,进入特定状态</p>
+<p>​    B，enter_state 进入所有状态</p>
+<p>4，事件执行完毕之后</p>
+<p>​    A，after_xxx 进入特定状态之后</p>
+<p>​    B，after_event 进入所有状态</p>
+<p>状态机实现的函数接口有：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">AvailableTransitions</span><span class="params">()</span> []<span class="title">string</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Can</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Cannot</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Current</span><span class="params">()</span> <span class="title">string</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Event</span><span class="params">(event <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Is</span><span class="params">(state s/ring)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Metadata</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">SetMetadata</span><span class="params">(key <span class="keyword">string</span>, dataValue <span class="keyword">interface</span>&#123;&#125;)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">SetState</span><span class="params">(state <span class="keyword">string</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Transition</span><span class="params">()</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Can</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line">  _, ok := f.transitions[eKey&#123;event, f.current&#125;]</span><br><span class="line">  <span class="keyword">return</span> ok &amp;&amp; (f.transition == <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="comment">//执行事件流转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Event</span><span class="params">(event <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span>&#123;</span><br><span class="line">    e := &amp;Event&#123;f, event, f.current, dst, <span class="literal">nil</span>, args, <span class="literal">false</span>, <span class="literal">false</span>&#125;</span><br><span class="line">    err := f.beforeEventCallbacks(e)</span><br><span class="line">   f.transition = <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">     f.enterStateCallbacks(e)</span><br><span class="line">     f.afterEventCallbacks(e)</span><br><span class="line">    &#125;</span><br><span class="line">   f.leaveStateCallbacks(e)</span><br><span class="line">   err = f.doTransition()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">enterStateCallbacks</span><span class="params">(e *Event)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> fn, ok := f.callbacks[cKey&#123;f.current, callbackEnterState&#125;]; ok &#123;</span><br><span class="line">        fn(e)</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> fn, ok := f.callbacks[cKey&#123;<span class="string">&quot;&quot;</span>, callbackEnterState&#125;]; ok &#123;</span><br><span class="line">       fn(e)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="comment">//执行</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Transition</span><span class="params">()</span> <span class="title">error</span></span>&#123;</span><br><span class="line">     <span class="keyword">return</span> f.doTransition()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">doTransition</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> f.transitionerObj.transition(f)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>product</tag>
+      </tags>
+  </entry>
 </search>

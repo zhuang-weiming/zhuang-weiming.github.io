@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="http:&#x2F;&#x2F;github.com&#x2F;looplab&#x2F;fsm 定义状态机的时候有三部分组成：状态机的初始状态，状态机的事 件（包括了多个源事件和一个目的事件），状态机的事件回调。整体来说，回 调可以分为四组8个回调，按执行顺序依次为： 1，事件开始之前 ​    A，before_xxx，特定的状态之前 ​    B，before_event所有状态之前 2，离开老状态 ​    A，leave_x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="startup-product-20220917">
+<meta property="og:url" content="https://willzhuang.github.io/2022/09/19/golang-fsm/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="http:&#x2F;&#x2F;github.com&#x2F;looplab&#x2F;fsm 定义状态机的时候有三部分组成：状态机的初始状态，状态机的事 件（包括了多个源事件和一个目的事件），状态机的事件回调。整体来说，回 调可以分为四组8个回调，按执行顺序依次为： 1，事件开始之前 ​    A，before_xxx，特定的状态之前 ​    B，before_event所有状态之前 2，离开老状态 ​    A，leave_x">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-19T01:40:00.000Z">
+<meta property="article:modified_time" content="2022-09-19T01:50:43.067Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="product">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2022/09/19/golang-fsm/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>startup-product-20220917 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐 // never too late</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">198</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">85</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/09/19/golang-fsm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          startup-product-20220917
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-09-19 09:40:00 / Modified: 09:50:43" itemprop="dateCreated datePublished" datetime="2022-09-19T09:40:00+08:00">2022-09-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="http://github.com/looplab/fsm">http://github.com/looplab/fsm</a></p>
+<p>定义状态机的时候有三部分组成：状态机的初始状态，状态机的事</p>
+<p>件（包括了多个源事件和一个目的事件），状态机的事件回调。整体来说，回</p>
+<p>调可以分为四组8个回调，按执行顺序依次为：</p>
+<p>1，事件开始之前</p>
+<p>​    A，before_xxx，特定的状态之前</p>
+<p>​    B，before_event所有状态之前</p>
+<p>2，离开老状态</p>
+<p>​    A，leave_xxx 离开特定状态</p>
+<p>​    B，leave_state 离开所有状态</p>
+<p>3，进入新状态</p>
+<p>​    A，enter_xxx,进入特定状态</p>
+<p>​    B，enter_state 进入所有状态</p>
+<p>4，事件执行完毕之后</p>
+<p>​    A，after_xxx 进入特定状态之后</p>
+<p>​    B，after_event 进入所有状态</p>
+<p>状态机实现的函数接口有：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">AvailableTransitions</span><span class="params">()</span> []<span class="title">string</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Can</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Cannot</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Current</span><span class="params">()</span> <span class="title">string</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Event</span><span class="params">(event <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Is</span><span class="params">(state s/ring)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Metadata</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">SetMetadata</span><span class="params">(key <span class="keyword">string</span>, dataValue <span class="keyword">interface</span>&#123;&#125;)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">SetState</span><span class="params">(state <span class="keyword">string</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Transition</span><span class="params">()</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Can</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line">  _, ok := f.transitions[eKey&#123;event, f.current&#125;]</span><br><span class="line">  <span class="keyword">return</span> ok &amp;&amp; (f.transition == <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行事件流转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Event</span><span class="params">(event <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span>&#123;</span><br><span class="line">    e := &amp;Event&#123;f, event, f.current, dst, <span class="literal">nil</span>, args, <span class="literal">false</span>, <span class="literal">false</span>&#125;</span><br><span class="line">    err := f.beforeEventCallbacks(e)</span><br><span class="line">   f.transition = <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">     f.enterStateCallbacks(e)</span><br><span class="line">     f.afterEventCallbacks(e)</span><br><span class="line">    &#125;</span><br><span class="line">   f.leaveStateCallbacks(e)</span><br><span class="line">   err = f.doTransition()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">enterStateCallbacks</span><span class="params">(e *Event)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> fn, ok := f.callbacks[cKey&#123;f.current, callbackEnterState&#125;]; ok &#123;</span><br><span class="line">        fn(e)</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> fn, ok := f.callbacks[cKey&#123;<span class="string">&quot;&quot;</span>, callbackEnterState&#125;]; ok &#123;</span><br><span class="line">       fn(e)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Transition</span><span class="params">()</span> <span class="title">error</span></span>&#123;</span><br><span class="line">     <span class="keyword">return</span> f.doTransition()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">doTransition</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> f.transitionerObj.transition(f)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2022/09/19/golang-fsm/" title="startup-product-20220917">https://willzhuang.github.io/2022/09/19/golang-fsm/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/product/" rel="tag"># product</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/17/startup-product-20220917/" rel="prev" title="startup-product-20220917">
+                  <i class="fa fa-chevron-left"></i> startup-product-20220917
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'e8d6a9c229c4228322801fc37e7cede5',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
