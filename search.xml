@@ -9425,55 +9425,6 @@
       </tags>
   </entry>
   <entry>
-    <title>FMR-学习1-波动率</title>
-    <url>/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/</url>
-    <content><![CDATA[<p>金融资产价格包括股票，期货，期权，目前本人在思考加密货币的价格是否可以套用经典的金融风险模型，学习笔记汇报如下，<u>由于比较书写数学公式不便，本文只记录了关键说明和程序代码</u>。</p>
-<h3 id="1-EWMA"><a href="#1-EWMA" class="headerlink" title="1. EWMA"></a>1. EWMA</h3><p>指数移动加权平均 - Exponentially  Weighted Moving Average, EWMA.</p>
-<p>EWMA波动率迭代告诉我们，当前一天的波动率是前一天波动率的函数，这也提供了一种用过去波动率预测未来波动率的方法。这种方法，不需要保存过去所有的数值，而且计算量较小，因此在实际中广泛使用。</p>
-<p>The ewm() function is used to provide exponential weighted functions. 指数加权功能。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># Creating the series. Using the range() function, we create a series and set the index to shot.</span></span><br><span class="line">my_series=pd.Series(<span class="built_in">range</span>(<span class="number">1</span>,<span class="number">20</span>,<span class="number">5</span>), index=[x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">&#x27;shot&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Printing the series</span></span><br><span class="line">print(my_series)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using Series.ewm(). We calculate the exponential weight of elements in the series using the ewm() function and set the com and adjust parameters.</span></span><br><span class="line">print(my_series.ewm(com=<span class="number">0.5</span>, adjust=<span class="literal">True</span>).mean())</span><br></pre></td></tr></table></figure>
-
-<p>其中，</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Series.ewm(self, com=<span class="literal">None</span>, span=<span class="literal">None</span>, halflife=<span class="literal">None</span>, alpha=<span class="literal">None</span>, min_periods=<span class="number">0</span>, adjust=<span class="literal">True</span>, ignore_na=<span class="literal">False</span>, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong><code>com</code></strong>: This represents the decay in terms of the center of mass, α=1/(1+com), for com≥0. 根据Center of Mass质心指定衰减。</p>
-</li>
-<li><p><strong><code>span</code></strong>: This represents the decay in terms of the span, α=2/(span+1), for span≥1. 根据跨度范围（例如，天数）指定衰减。</p>
-</li>
-<li><p><strong><code>halflife</code></strong>: This represents the decay in terms of the half-life, α=1−exp(log(0.5)/halflife), for halflife&gt;0. 根据半衰期指定衰减。</p>
-</li>
-<li><p><strong><code>alpha</code></strong>: This indicates smoothing factor α, 0&lt;α≤1. 衰减系数。</p>
-</li>
-<li><p><strong><code>min_periods</code></strong>: This represents the minimum number of observations needed to have a value in the window. The default value is <code>0</code>. </p>
-</li>
-<li><p><strong><code>adjust</code></strong>: This is divided by the decaying adjustment factor into the initial periods to consider the imbalance in the relative weightings (looking at the EWMA as a moving average). 计算权重的方式。</p>
-</li>
-<li><p><strong><code>ignore_na</code></strong>: This specifies that the missing values should be ignored when calculating weights. The default is <code>False</code>. 如何对待空值。</p>
-</li>
-<li><p><strong><code>axis</code></strong>: The default value is 0. It specifies the axis on which the function is to be performed. If the value is 0, the operation is performed across the rows. Otherwise, the operation is performed across the columns. 数轴。</p>
-</li>
-</ul>
-<h3 id="2-自回归条件异方差模型ARCH"><a href="#2-自回归条件异方差模型ARCH" class="headerlink" title="2. 自回归条件异方差模型ARCH"></a>2. 自回归条件异方差模型ARCH</h3><p>EWMA与实际情况有不符合的地方，例如，股票收益的波动率是随着时间而变化的。异方差（heteroscedasticity）是指一系列的随机变量值的方差不同。这个模型以自回归方式，通过刻画随时间变异的条件方差，成功解决了时间序列的波动性问题。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas_datareader</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt </span><br><span class="line"><span class="keyword">from</span> arch <span class="keyword">import</span> arch_model</span><br><span class="line"><span class="comment"># sp500 price</span></span><br><span class="line">sp500 = pandas_datareader.data.DataReader([<span class="string">&#x27;sp500&#x27;</span>], data_source=<span class="string">&#x27;fred&#x27;</span>, start=<span class="string">&#x27;12-28-2009&#x27;</span>, end=<span class="string">&#x27;12-28-2020&#x27;</span>)</span><br><span class="line"><span class="comment"># daily log return</span></span><br><span class="line">log_return_daily = np.log(sp500 / sp500.shift(<span class="number">1</span>))</span><br><span class="line">log_return_daily.dropna(inplace=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># ARCH(1) model</span></span><br><span class="line">arch=arch_model(y=log_return_daily,mean=<span class="string">&#x27;Constant&#x27;</span>,lags=<span class="number">0</span>,vol=<span class="string">&#x27;ARCH&#x27;</span>,p=<span class="number">1</span>,o=<span class="number">0</span>,q=<span class="number">0</span>,dist=<span class="string">&#x27;normal&#x27;</span>)</span><br><span class="line">archmodel=arch.fit()</span><br><span class="line">archmodel.summary()</span><br><span class="line">archmodel.plot()</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="3-广义自回归条件异方差模型GARCH"><a href="#3-广义自回归条件异方差模型GARCH" class="headerlink" title="3. 广义自回归条件异方差模型GARCH"></a>3. 广义自回归条件异方差模型GARCH</h3><p>GARCH是对ARCH建模的一种重要推广。其后，又有诸如NGARCH，IGARCH，EGARCH等一系列针对不同应用等衍生模型相继出现。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GARCH(1,1) model</span></span><br><span class="line">garch=arch_model(y=log_return_daily,mean=<span class="string">&#x27;Constant&#x27;</span>,lags=<span class="number">0</span>,vol=<span class="string">&#x27;GARCH&#x27;</span>,p=<span class="number">1</span>,o=<span class="number">0</span>,q=<span class="number">1</span>,dist=<span class="string">&#x27;normal&#x27;</span>)</span><br><span class="line">garchmodel=garch.fit()</span><br><span class="line">garchmodel.summary()</span><br><span class="line">garchmodel.plot()</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="4-模型比较"><a href="#4-模型比较" class="headerlink" title="4.模型比较"></a>4.模型比较</h3><p>对于EWMA模型，利用了通常用的0.94，即 JP Morgan 的RiskMetrics采用的设定。所以，下图中，EWMA中的 λ 通常为 0.94。当GARCH(1, 1)模型的参数 β=0 时，即为ARCH(1, 1)模型。而当 ω=0，α=1-λ，β=λ 时，GARCH(1, 1)模型变换成为EWMA模型。</p>
-<p><img src="/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png"></p>
-<h3 id="5-隐含波动率"><a href="#5-隐含波动率" class="headerlink" title="5.隐含波动率"></a>5.隐含波动率</h3><p>请参考相关阅读中的金融分享管理 - 视频 <a href="https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176%E3%80%82">https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176。</a></p>
-<p>相关阅读：</p>
-]]></content>
-      <tags>
-        <tag>Finance Risk Management</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>用Go实现一个异步网络库</title>
     <url>/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/</url>
     <content><![CDATA[<p>在需要高性能、节省资源的场景下，比如海量的连接、很高的并发，我们发现Go开始变得吃力，不但内存开销大，而且还会有频繁的goroutine调度。GC时间也变得越来越长，甚至还会把系统搞挂。这时，我们就可以考虑用Go构建经典的Reactor网络模型，来应对这种场景。</p>
@@ -9643,6 +9594,105 @@
 <h4 id="关联阅读-》-https-github-com-panjf2000-gnet"><a href="#关联阅读-》-https-github-com-panjf2000-gnet" class="headerlink" title="关联阅读==》 https://github.com/panjf2000/gnet"></a>关联阅读==》 <a href="https://github.com/panjf2000/gnet">https://github.com/panjf2000/gnet</a></h4>]]></content>
       <tags>
         <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>FMR-波动率</title>
+    <url>/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/</url>
+    <content><![CDATA[<p>金融资产价格包括股票，期货，期权，目前本人在思考加密货币的价格是否可以套用经典的金融风险模型，学习笔记汇报如下，<u>由于比较书写数学公式不便，本文只记录了关键说明和程序代码</u>。</p>
+<h3 id="1-EWMA"><a href="#1-EWMA" class="headerlink" title="1. EWMA"></a>1. EWMA</h3><p>指数移动加权平均 - Exponentially  Weighted Moving Average, EWMA.</p>
+<p>EWMA波动率迭代告诉我们，当前一天的波动率是前一天波动率的函数，这也提供了一种用过去波动率预测未来波动率的方法。这种方法，不需要保存过去所有的数值，而且计算量较小，因此在实际中广泛使用。</p>
+<p>The ewm() function is used to provide exponential weighted functions. 指数加权功能。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># Creating the series. Using the range() function, we create a series and set the index to shot.</span></span><br><span class="line">my_series=pd.Series(<span class="built_in">range</span>(<span class="number">1</span>,<span class="number">20</span>,<span class="number">5</span>), index=[x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">&#x27;shot&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Printing the series</span></span><br><span class="line">print(my_series)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using Series.ewm(). We calculate the exponential weight of elements in the series using the ewm() function and set the com and adjust parameters.</span></span><br><span class="line">print(my_series.ewm(com=<span class="number">0.5</span>, adjust=<span class="literal">True</span>).mean())</span><br></pre></td></tr></table></figure>
+
+<p>其中，</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Series.ewm(self, com=<span class="literal">None</span>, span=<span class="literal">None</span>, halflife=<span class="literal">None</span>, alpha=<span class="literal">None</span>, min_periods=<span class="number">0</span>, adjust=<span class="literal">True</span>, ignore_na=<span class="literal">False</span>, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong><code>com</code></strong>: This represents the decay in terms of the center of mass, α=1/(1+com), for com≥0. 根据Center of Mass质心指定衰减。</p>
+</li>
+<li><p><strong><code>span</code></strong>: This represents the decay in terms of the span, α=2/(span+1), for span≥1. 根据跨度范围（例如，天数）指定衰减。</p>
+</li>
+<li><p><strong><code>halflife</code></strong>: This represents the decay in terms of the half-life, α=1−exp(log(0.5)/halflife), for halflife&gt;0. 根据半衰期指定衰减。</p>
+</li>
+<li><p><strong><code>alpha</code></strong>: This indicates smoothing factor α, 0&lt;α≤1. 衰减系数。</p>
+</li>
+<li><p><strong><code>min_periods</code></strong>: This represents the minimum number of observations needed to have a value in the window. The default value is <code>0</code>. </p>
+</li>
+<li><p><strong><code>adjust</code></strong>: This is divided by the decaying adjustment factor into the initial periods to consider the imbalance in the relative weightings (looking at the EWMA as a moving average). 计算权重的方式。</p>
+</li>
+<li><p><strong><code>ignore_na</code></strong>: This specifies that the missing values should be ignored when calculating weights. The default is <code>False</code>. 如何对待空值。</p>
+</li>
+<li><p><strong><code>axis</code></strong>: The default value is 0. It specifies the axis on which the function is to be performed. If the value is 0, the operation is performed across the rows. Otherwise, the operation is performed across the columns. 数轴。</p>
+</li>
+</ul>
+<h3 id="2-自回归条件异方差模型ARCH"><a href="#2-自回归条件异方差模型ARCH" class="headerlink" title="2. 自回归条件异方差模型ARCH"></a>2. 自回归条件异方差模型ARCH</h3><p>EWMA与实际情况有不符合的地方，例如，股票收益的波动率是随着时间而变化的。异方差（heteroscedasticity）是指一系列的随机变量值的方差不同。这个模型以自回归方式，通过刻画随时间变异的条件方差，成功解决了时间序列的波动性问题。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas_datareader</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt </span><br><span class="line"><span class="keyword">from</span> arch <span class="keyword">import</span> arch_model</span><br><span class="line"><span class="comment"># sp500 price</span></span><br><span class="line">sp500 = pandas_datareader.data.DataReader([<span class="string">&#x27;sp500&#x27;</span>], data_source=<span class="string">&#x27;fred&#x27;</span>, start=<span class="string">&#x27;12-28-2009&#x27;</span>, end=<span class="string">&#x27;12-28-2020&#x27;</span>)</span><br><span class="line"><span class="comment"># daily log return</span></span><br><span class="line">log_return_daily = np.log(sp500 / sp500.shift(<span class="number">1</span>))</span><br><span class="line">log_return_daily.dropna(inplace=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># ARCH(1) model</span></span><br><span class="line">arch=arch_model(y=log_return_daily,mean=<span class="string">&#x27;Constant&#x27;</span>,lags=<span class="number">0</span>,vol=<span class="string">&#x27;ARCH&#x27;</span>,p=<span class="number">1</span>,o=<span class="number">0</span>,q=<span class="number">0</span>,dist=<span class="string">&#x27;normal&#x27;</span>)</span><br><span class="line">archmodel=arch.fit()</span><br><span class="line">archmodel.summary()</span><br><span class="line">archmodel.plot()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-广义自回归条件异方差模型GARCH"><a href="#3-广义自回归条件异方差模型GARCH" class="headerlink" title="3. 广义自回归条件异方差模型GARCH"></a>3. 广义自回归条件异方差模型GARCH</h3><p>GARCH是对ARCH建模的一种重要推广。其后，又有诸如NGARCH，IGARCH，EGARCH等一系列针对不同应用等衍生模型相继出现。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GARCH(1,1) model</span></span><br><span class="line">garch=arch_model(y=log_return_daily,mean=<span class="string">&#x27;Constant&#x27;</span>,lags=<span class="number">0</span>,vol=<span class="string">&#x27;GARCH&#x27;</span>,p=<span class="number">1</span>,o=<span class="number">0</span>,q=<span class="number">1</span>,dist=<span class="string">&#x27;normal&#x27;</span>)</span><br><span class="line">garchmodel=garch.fit()</span><br><span class="line">garchmodel.summary()</span><br><span class="line">garchmodel.plot()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-模型比较"><a href="#4-模型比较" class="headerlink" title="4.模型比较"></a>4.模型比较</h3><p>对于EWMA模型，利用了通常用的0.94，即 JP Morgan 的RiskMetrics采用的设定。所以，下图中，EWMA中的 λ 通常为 0.94。当GARCH(1, 1)模型的参数 β=0 时，即为ARCH(1, 1)模型。而当 ω=0，α=1-λ，β=λ 时，GARCH(1, 1)模型变换成为EWMA模型。</p>
+<p><img src="/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png"></p>
+<h3 id="5-隐含波动率"><a href="#5-隐含波动率" class="headerlink" title="5.隐含波动率"></a>5.隐含波动率</h3><p>请参考相关阅读中的金融分享管理 - 视频 <a href="https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176%E3%80%82">https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176。</a></p>
+<p>相关阅读：</p>
+]]></content>
+      <tags>
+        <tag>Finance Risk Management</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DID-veramo</title>
+    <url>/2022/12/26/DID-veramo/</url>
+    <content><![CDATA[<p>Veramo 中的功能是通过插件系统添加到代理中的。</p>
+<h3 id="Plugins-Architecture"><a href="#Plugins-Architecture" class="headerlink" title="Plugins Architecture"></a><a href="https://veramo.io/docs/veramo_agent/plugins">Plugins Architecture</a></h3><p><img src="/2022/12/26/DID-veramo/1.jpeg"></p>
+<h3 id="DID-Methods"><a href="#DID-Methods" class="headerlink" title="DID Methods"></a>DID Methods</h3><p><img src="/2022/12/26/DID-veramo/2.jpeg" alt="DIDs and DID documents are recorded on a Verifiable Data Registry; DIDs resolve   to DID documents; DIDs refer to DID subjects; a DID controller controls a DID document; DID URLs contains a DID; DID URLs dereferenced to DID document fragments or external resources; DID resolver implements resolve function; DID URL dereferencer implements dereferencing function; DID method operates a   Verfiable Data Registry; DID resolver and DID URL dereferencer instruct a DID method."></p>
+<h3 id="Core-Supported-DID-Methods"><a href="#Core-Supported-DID-Methods" class="headerlink" title="Core Supported DID Methods"></a>Core Supported DID Methods</h3><p>Veramo 核心插件支持以下 did 方法。</p>
+<h3 id="did-ethr"><a href="#did-ethr" class="headerlink" title="did:ethr"></a><code>did:ethr</code></h3><p><code>did:ethr:0xc530503a148babcaca68565cfa576d6f43427a2d</code></p>
+<p>Ethr-DID 为以太坊地址提供了一种可扩展的身份识别方法，使任何以太坊地址都能够收集链上和链下数据。因为 Ethr-DID 允许任何以太坊密钥对成为身份，所以它比基于智能合约的身份方法更具可扩展性和隐私保护性。</p>
+<p>这种特殊的 DID 方法依赖于 ethr-did-registry。 ethr-did-registry 是一个智能合约，可以促进链下（和链上）身份验证的公钥解析。 它还有助于密钥轮换、委托分配和撤销以允许第 3 方签名者，以及设置和撤销链下属性数据。 这些交互和事件被聚合使用以使用 ethr-did-resolver 构建 DID 文档。</p>
+<h3 id="did-web"><a href="#did-web" class="headerlink" title="did:web"></a><code>did:web</code></h3><p><code>did:web:veramo-agent.herokuapp.com</code></p>
+<p>Web-DID 利用域名系统，允许 Web 来源的所有者将其转换为 DID。创建 Web-DID 就像创建 DID 文档并将其托管在众所周知的 URL 下一样简单。 每次解析 DID 时，DID 文档都必须通过 HTTPS GET 可用。 这意味着创建一个 DID，不需要区块链，但它有一定的权衡。 Web-DID 的安全性通过实施 TLS 植根于现有的互联网 PKI。 Web-DID 可以直接托管在网络域的众所周知的 URL 下，例如 <a href="http://www.example.com/.well-known/did.json%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%89%98%E7%AE%A1%E5%9C%A8%E7%89%B9%E5%AE%9A%E7%9A%84%E5%AD%90%E8%B7%AF%E5%BE%84%E4%B8%8B%E3%80%82%E4%BD%BF%E7%94%A8%E5%AD%90%E8%B7%AF%E5%BE%84%E5%85%81%E8%AE%B8%E5%9C%A8%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C%E5%9F%9F%E4%B8%8B%E6%89%98%E7%AE%A1%E5%A4%9A%E4%B8%AA">www.example.com/.well-known/did.json，也可以托管在特定的子路径下。使用子路径允许在一个网络域下托管多个</a> DID。此方法还可用于允许 Web 应用程序为其用户创建 Web-DID，例如 <a href="http://www.example.com/users/username/.well-known/did.json%E3%80%82">www.example.com/users/username/.well-known/did.json。</a></p>
+<p>虽然 Web-DID 是一种非常有用的技术，可以将 Web2 连接到 Web3，并且特别允许公司非常轻松地创建他们的 DID，但它在安全和隐私方面存在一些缺点（例如，跟踪）。</p>
+<h3 id="did-key"><a href="#did-key" class="headerlink" title="did:key"></a><code>did:key</code></h3><p>did: key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH</p>
+<p>Key-DID 代表了一种非常轻量级的自我证明 DID 方法，它不需要任何外部实用程序，例如区块链。Key-DID 是通过生成加密密钥对（例如，Curve25519）创建的。使用 Curve25519 将自动向 DID 文档添加两个条目，可用于 EdDSA（即 Ed25519）和 ECDH/加密（即，使用 X25519）。Key-DID 始终解析为相同的 DID 文档，并且由于它是不可变的，所以添加服务端点和其他密钥是不可能的。</p>
+<h3 id="Message-Handlers"><a href="#Message-Handlers" class="headerlink" title="Message Handlers"></a>Message Handlers</h3><p>创建代理实例时，您指定要使用的消息处理程序以及调用它们的顺序。例如，如果您的应用程序从 QR 码捕获可验证凭证，其中数据被编码为 JWT，您将在代理设置中按顺序指定 <strong>url</strong>、<strong>did-comm</strong>、<strong>did-jwt</strong> 和 <strong>credential-w3c</strong> 处理程序。</p>
+<h3 id="url"><a href="#url" class="headerlink" title="url"></a><code>url</code></h3><p>UrlMessageHandler 解析来自 URL 的消息，通常来自查询字符串。进一步的解析可能在 JWT 和/或 DIDComm 处理程序中执行。该处理程序支持获取缩短的 URL 重定向。</p>
+<h3 id="did-comm"><a href="#did-comm" class="headerlink" title="did-comm"></a><code>did-comm</code></h3><p>DIDCommMessageHandler 使用收件人的私钥解密传入的消息。 解密的消息将传递给后续的消息处理程序。</p>
+<p><img src="/2022/12/26/DID-veramo/3.jpeg"></p>
+<h3 id="did-jwt"><a href="#did-jwt" class="headerlink" title="did-jwt"></a><code>did-jwt</code></h3><p>JWT MessageHandler 解码 JWT 并创建消息对象。</p>
+<p><img src="/2022/12/26/DID-veramo/4.jpeg"></p>
+<h3 id="credential-w3c"><a href="#credential-w3c" class="headerlink" title="credential-w3c"></a><code>credential-w3c</code></h3><p>W3CMessageHandler 检查可验证凭证和可验证演示的消息有效负载，并相应地格式化消息对象。</p>
+<p><img src="/2022/12/26/DID-veramo/5.jpeg"></p>
+]]></content>
+      <tags>
+        <tag>DID</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DID-VC</title>
+    <url>/2022/12/26/DID-VC/</url>
+    <content><![CDATA[<h3 id="Verifiable-Credential"><a href="#Verifiable-Credential" class="headerlink" title="Verifiable Credential"></a>Verifiable Credential</h3><p>可验证数据只是使用加密算法进行数字签名的数据。Verifiable Credential 可验证凭证，可以代表物理凭证所代表的所有相同信息。</p>
+<p>它具有<strong>发行者</strong>、<strong>主题</strong>、<strong>证明</strong>和<strong>可验证数据</strong>等属性。</p>
+<p><a href="https://www.w3.org/TR/vc-data-model/#example-a-simple-example-of-a-verifiable-credential">目前W3C的示例</a>：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@context&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;https://www.w3.org/2018/credentials/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://www.w3.org/2018/credentials/examples/v1&quot;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;http://example.edu/credentials/1872&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;type&quot;</span>: [<span class="string">&quot;VerifiableCredential&quot;</span>, <span class="string">&quot;AlumniCredential&quot;</span>],</span><br><span class="line">  <span class="attr">&quot;issuer&quot;</span>: <span class="string">&quot;https://example.edu/issuers/565049&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;issuanceDate&quot;</span>: <span class="string">&quot;2010-01-01T19:23:24Z&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;credentialSubject&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;did:example:ebfeb1f712ebc6f1c276e12ec21&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;alumniOf&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;did:example:c276e12ec21ebfeb1f712ebc6f1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: [&#123;</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;Example University&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;lang&quot;</span>: <span class="string">&quot;en&quot;</span></span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;Exemple d&#x27;Université&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;lang&quot;</span>: <span class="string">&quot;fr&quot;</span></span><br><span class="line">      &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="attr">&quot;proof&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;RsaSignature2018&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;created&quot;</span>: <span class="string">&quot;2017-06-18T21:19:10Z&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;proofPurpose&quot;</span>: <span class="string">&quot;assertionMethod&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;verificationMethod&quot;</span>: <span class="string">&quot;https://example.edu/issuers/565049#key-1&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;jws&quot;</span>: <span class="string">&quot;eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X</span></span><br><span class="line"><span class="string">      sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc</span></span><br><span class="line"><span class="string">      X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj</span></span><br><span class="line"><span class="string">      PAYuNzVBAh4vGHSrQyHUdBBPM&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Decentralized-Identifier"><a href="#Decentralized-Identifier" class="headerlink" title="Decentralized Identifier"></a>Decentralized Identifier</h3><p>DID 的风格或更准确地说是 DID 方法定义了如何执行该 DID 方法的 DID 的 CRUD 操作。 每个 DID 方法在特定用例中都有不同的权衡。 例如，可以在没有区块链的情况下创建 Web DID，但存在依赖于区块链的 DID 方法。 它们都是有效的 DID，但有不同的保证。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// https://veramo.dev/.well-known/did.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@context&quot;</span>: <span class="string">&quot;https://w3id.org/did/v1&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;did:web:veramo.dev&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;publicKey&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;did:web:veramo.dev#0405aa19bb98a5fd29c15a730cb5064ca128dea19247b896b1a7bdad0b4bccccda9b47366cd1359e740d938e5a47d7bed0501150e8a1623805ac47c489421b1506&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;Secp256k1VerificationKey2018&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;controller&quot;</span>: <span class="string">&quot;did:web:veramo.dev&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;publicKeyHex&quot;</span>: <span class="string">&quot;0405aa19bb98a5fd29c15a730cb5064ca128dea19247b896b1a7bdad0b4bccccda9b47366cd1359e740d938e5a47d7bed0501150e8a1623805ac47c489421b1506&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;authentication&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;Secp256k1SignatureAuthentication2018&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;publicKey&quot;</span>: <span class="string">&quot;did:web:veramo.dev#0405aa19bb98a5fd29c15a730cb5064ca128dea19247b896b1a7bdad0b4bccccda9b47366cd1359e740d938e5a47d7bed0501150e8a1623805ac47c489421b1506&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;service&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;did:web:veramo.dev#msg&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;Messaging&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;serviceEndpoint&quot;</span>: <span class="string">&quot;https://veramo.dev/messaging&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;Handles incoming POST messages&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+]]></content>
+      <tags>
+        <tag>DID</tag>
       </tags>
   </entry>
 </search>

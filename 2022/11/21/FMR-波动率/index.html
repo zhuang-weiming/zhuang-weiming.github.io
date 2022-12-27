@@ -25,21 +25,21 @@
   </script>
 <meta name="description" content="金融资产价格包括股票，期货，期权，目前本人在思考加密货币的价格是否可以套用经典的金融风险模型，学习笔记汇报如下，由于比较书写数学公式不便，本文只记录了关键说明和程序代码。 1. EWMA指数移动加权平均 - Exponentially  Weighted Moving Average, EWMA. EWMA波动率迭代告诉我们，当前一天的波动率是前一天波动率的函数，这也提供了一种用过去波动率预测未来">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FMR-学习1-波动率">
-<meta property="og:url" content="https://willzhuang.github.io/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/index.html">
+<meta property="og:title" content="FMR-波动率">
+<meta property="og:url" content="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="金融资产价格包括股票，期货，期权，目前本人在思考加密货币的价格是否可以套用经典的金融风险模型，学习笔记汇报如下，由于比较书写数学公式不便，本文只记录了关键说明和程序代码。 1. EWMA指数移动加权平均 - Exponentially  Weighted Moving Average, EWMA. EWMA波动率迭代告诉我们，当前一天的波动率是前一天波动率的函数，这也提供了一种用过去波动率预测未来">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png">
+<meta property="og:image" content="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png">
 <meta property="article:published_time" content="2022-11-21T07:21:00.000Z">
-<meta property="article:modified_time" content="2022-11-21T08:29:51.238Z">
+<meta property="article:modified_time" content="2022-12-26T03:23:54.565Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="Finance Risk Management">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png">
+<meta name="twitter:image" content="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/">
+<link rel="canonical" href="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/">
 
 
 <script class="page-configurations">
@@ -51,7 +51,7 @@
     lang   : 'en'
   };
 </script>
-<title>FMR-学习1-波动率 | Zhuang's Diary</title>
+<title>FMR-波动率 | Zhuang's Diary</title>
   
 
 
@@ -202,7 +202,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-count">203</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -250,7 +250,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -263,7 +263,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          FMR-学习1-波动率
+          FMR-波动率
         </h1>
 
         <div class="post-meta-container">
@@ -273,10 +273,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-11-21 15:21:00 / Modified: 16:29:51" itemprop="dateCreated datePublished" datetime="2022-11-21T15:21:00+08:00">2022-11-21</time>
+      <time title="Created: 2022-11-21 15:21:00" itemprop="dateCreated datePublished" datetime="2022-11-21T15:21:00+08:00">2022-11-21</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-12-26 11:23:54" itemprop="dateModified" datetime="2022-12-26T11:23:54+08:00">2022-12-26</time>
+      </span>
 
   
 </div>
@@ -326,7 +332,7 @@
 
 
 <h3 id="4-模型比较"><a href="#4-模型比较" class="headerlink" title="4.模型比较"></a>4.模型比较</h3><p>对于EWMA模型，利用了通常用的0.94，即 JP Morgan 的RiskMetrics采用的设定。所以，下图中，EWMA中的 λ 通常为 0.94。当GARCH(1, 1)模型的参数 β=0 时，即为ARCH(1, 1)模型。而当 ω=0，α=1-λ，β=λ 时，GARCH(1, 1)模型变换成为EWMA模型。</p>
-<p><img src="/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png"></p>
+<p><img src="/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png"></p>
 <h3 id="5-隐含波动率"><a href="#5-隐含波动率" class="headerlink" title="5.隐含波动率"></a>5.隐含波动率</h3><p>请参考相关阅读中的金融分享管理 - 视频 <a target="_blank" rel="noopener" href="https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176%E3%80%82">https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176。</a></p>
 <p>相关阅读：</p>
 
@@ -346,7 +352,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2022/11/21/FMR-%E5%AD%A6%E4%B9%A01-%E6%B3%A2%E5%8A%A8%E7%8E%87/" title="FMR-学习1-波动率">https://willzhuang.github.io/2022/11/21/FMR-学习1-波动率/</a>
+      <a href="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/" title="FMR-波动率">https://willzhuang.github.io/2022/11/21/FMR-波动率/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -367,6 +373,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/12/26/DID-VC/" rel="next" title="DID-VC">
+                  DID-VC <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -482,7 +491,7 @@ NexT.utils.loadComments('.gitalk-container', () => {
       repo        : 'willzhuang.github.io',
       owner       : 'WillZhuang',
       admin       : ['WillZhuang'],
-      id          : 'fabab4edf5e4992e40a36634c4648494',
+      id          : '3fcedccb2b82c7545407899ed5f44850',
       proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
         language: 'zh-CN',
       distractionFreeMode: true

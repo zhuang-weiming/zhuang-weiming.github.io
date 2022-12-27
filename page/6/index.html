@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">201</span>
+          <span class="site-state-item-count">203</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,251 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/" class="post-title-link" itemprop="url">体验firefly</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-31 20:15:00" itemprop="dateCreated datePublished" datetime="2022-03-31T20:15:00+08:00">2022-03-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-04-01 22:50:03" itemprop="dateModified" datetime="2022-04-01T22:50:03+08:00">2022-04-01</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>firefly is a very interesting project ==&gt; <a target="_blank" rel="noopener" href="https://hyperledger.github.io/firefly/">https://hyperledger.github.io/firefly/</a> </p>
+<p>To help with the FireFly evaluation, especially how it makes digital assets management easy by supporting token standards (ERC20, ERC721, ERC1155, and other standard contracts or your custom implementations via extensions) with REST APIs and event streams, we have a minimal tutorial that you can set up locally on your laptop. Please give it a try and let us know if you have any questions.</p>
+<ol>
+<li>install the latest FireFly CLI:</li>
+</ol>
+<p>$ go install <a target="_blank" rel="noopener" href="https://urldefense.com/v3/__http:/github.com/hyperledger/firefly-cli/ff@latest__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpZUVgtKg$">github.com/hyperledger/firefly-cli/ff@latest</a></p>
+<ol start="2">
+<li>initialize the FireFly stack using Ethereum as the underlying blockchain, and load the ERC20/ERC721 token connector:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ff init -t erc20_erc721</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>start the stack named “digital-assets”</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ff start digital-assets</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="4">
+<li>deploy the token contract. the easiest way is using Truffle. The Hyperledger implementation of the token connector has sample ERC20 and ERC721 contracts you can use to deploy to Ethereum:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> [git@github.com:hyperledger/firefly-tokens-erc20-erc721.git](mailto:git@github.com:hyperledger/firefly-tokens-erc20-erc721.git)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> firefly-tokens-erc20-erc721</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> solidity</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> npm install</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> truffle migrate</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="5">
+<li>copy the contract address for the deployed ERC20 token contract (highlighted below in the sample output), to use in the next step</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">Starting migrations...</span><br><span class="line"></span><br><span class="line"> \&gt; Network name:   &#x27;development&#x27;</span><br><span class="line"> \&gt; Network id:    2021</span><br><span class="line"> \&gt; Block gas limit: 4722986 (0x48112a)</span><br><span class="line"></span><br><span class="line"> 1_initial_migration.js</span><br><span class="line"></span><br><span class="line">   Deploying &#x27;Migrations&#x27;</span><br><span class="line">   \----------------------</span><br><span class="line">   ⠋ Blocks: 0       Seconds: 0  &gt; transaction hash:   0xb81c60fd920bf28775bd8610271c60a40380e278af97ccd18458efafe852dc99</span><br><span class="line">   \&gt; Blocks: 0       Seconds: 0</span><br><span class="line">   \&gt; contract address:   0x0C2c9222835692912b3999D6DAE955a9d306393d</span><br><span class="line">   \&gt; block number:     6</span><br><span class="line">   \&gt; block timestamp:   1648585628</span><br><span class="line">   \&gt; account:       0x1eAecAb9D796Ee765865f47a78De13735619c914</span><br><span class="line">   \&gt; balance:       904625697166532776746648320380374280103671755200316906558.262375061821325312</span><br><span class="line">   \&gt; gas used:       272788 (0x42994)</span><br><span class="line">   \&gt; gas price:      0 gwei</span><br><span class="line">   \&gt; value sent:      0 ETH</span><br><span class="line">   \&gt; total cost:      0 ETH</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   \&gt; Saving migration to chain.</span><br><span class="line">   \&gt; Saving artifacts</span><br><span class="line">   \-------------------------------------</span><br><span class="line">   \&gt; Total cost:          0 ETH</span><br><span class="line"></span><br><span class="line"> 2_deploy_contracts.js</span><br><span class="line"></span><br><span class="line">   Deploying &#x27;ERC20WithData&#x27;</span><br><span class="line">   \-------------------------</span><br><span class="line">   ⠋ Blocks: 0       Seconds: 0  &gt; transaction hash:   0x748a60953ceacda47431210752c2a9991f77b552d19397827500feef086fc3cf</span><br><span class="line">   \&gt; Blocks: 0       Seconds: 0</span><br><span class="line">   \&gt; contract address:   **0xB6728020f998f32afb4936f9CEcE04B1d3951895**</span><br><span class="line">   \&gt; block number:     8</span><br><span class="line">   \&gt; block timestamp:   1648585628</span><br><span class="line">   \&gt; account:       0x1eAecAb9D796Ee765865f47a78De13735619c914</span><br><span class="line">   \&gt; balance:       904625697166532776746648320380374280103671755200316906558.262375061821325312</span><br><span class="line">   \&gt; gas used:       1948804 (0x1dbc84)</span><br><span class="line">   \&gt; gas price:      0 gwei</span><br><span class="line">   \&gt; value sent:      0 ETH</span><br><span class="line">   \&gt; total cost:      0 ETH</span><br><span class="line"></span><br><span class="line">   \&gt; Saving migration to chain.</span><br><span class="line">   \&gt; Saving artifacts</span><br><span class="line">   \-------------------------------------</span><br><span class="line">   \&gt; Total cost:          0 ETH</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Summary"><a href="#Summary" class="headerlink" title=" Summary"></a> Summary</h1><p> &gt; Total deployments:  2<br> &gt; Final cost:      0 ETH</p>
+<ol start="6">
+<li>teach FireFly about the token contract so that it can start tracking transactions on the contract. For this step you can use the Swagger UI that comes with FireFly. Open <a target="_blank" rel="noopener" href="https://urldefense.com/v3/__http:/localhost:5000/api__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpI4RuZkA$">http://localhost:5000/api</a>, and expand the request entry POST /namespaces/{ns}/tokens/pools. Plugin the values as shown below (you can delete all the other optional properties in the payload): </li>
+</ol>
+<p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/1.png"></p>
+<ol start="7">
+<li>Now you can start using FireFly APIs to manage the new token contract: mint/transfer/burn.</li>
+</ol>
+<ol start="8">
+<li>You can use the following JSON RPC command to create additional Ethereum addresses in the go-ethereum node’s built-in wallet:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&#x27;&#123;&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:&quot;1&quot;,&quot;method&quot;:&quot;personal_newAccount&quot;,&quot;params&quot;:[&quot;**passw0rd**&quot;]&#125;&#x27;</span> [http://localhost:5100](https://urldefense.com/v3/__http:/localhost:5100__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpXnXqo_Q$) | jq</span></span><br><span class="line"> &#123;</span><br><span class="line">  &quot;jsonrpc&quot;: &quot;2.0&quot;,</span><br><span class="line">  &quot;id&quot;: &quot;1&quot;,</span><br><span class="line">  &quot;result&quot;: &quot;**0xfd5d5d96879a700c693da5092e2a6ef5ed399684**&quot;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&#x27;&#123;&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:&quot;1&quot;,&quot;method&quot;:&quot;personal_unlockAccount&quot;,&quot;params&quot;:[&quot;**0xfd5d5d96879a700c693da5092e2a6ef5ed399684**&quot;,&quot;**passw0rd**&quot;,0]&#125;&#x27;</span>  [http://localhost:5100](https://urldefense.com/v3/__http:/localhost:5100__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZlpXnXqo_Q$) |jq</span></span><br><span class="line"> &#123;</span><br><span class="line">  &quot;jsonrpc&quot;: &quot;2.0&quot;,</span><br><span class="line">  &quot;id&quot;: &quot;1&quot;,</span><br><span class="line">  &quot;result&quot;: true</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="9">
+<li>Try the minting API using the POST /namespaces/{ns}/tokens/mint endpoint: </li>
+</ol>
+<p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/2.png"></p>
+<ol start="10">
+<li>check the result of the minting transaction in the FireFly UI at <a target="_blank" rel="noopener" href="https://urldefense.com/v3/__http:/localhost:5000/ui__;!!LSAcJDlP!hkQGL7MWpqV_y1r5RSaiFUgGNz3QpZ8L09BtbpQtqCn9e1jOOHhtfO9Jf5tIZloTMvxMnw$">http://localhost:5000/ui</a> (for org0) and http//localhost:5001/ui (for org1): </li>
+</ol>
+<p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/3.png"></p>
+<p>That’s it! Now you have a local setup to explore the many features of FireFly.</p>
+<ol start="11">
+<li>connect with metamask as below. by the way, the para when you add a network for firefly , please refer the info at <code>~/.firefly/stacks/oh/blockchain/genesis.json</code>, here you can cat genesis block info.</li>
+</ol>
+<p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/4.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/03/11/CS251_Final_Exam_2021-stanford.edu-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/11/CS251_Final_Exam_2021-stanford.edu-1/" class="post-title-link" itemprop="url">CS251_Final_Exam_2021-stanford.edu-2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-11 18:54:00" itemprop="dateCreated datePublished" datetime="2022-03-11T18:54:00+08:00">2022-03-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-03-31 20:17:13" itemprop="dateModified" datetime="2022-03-31T20:17:13+08:00">2022-03-31</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="Problem-2-20-points-Byzantine-broadcast"><a href="#Problem-2-20-points-Byzantine-broadcast" class="headerlink" title="Problem 2. [20 points]: Byzantine broadcast."></a>Problem 2. [20 points]: Byzantine broadcast.</h4><p>Consider n parties, where n ≥ 3, and where one of the parties is designated as a sender. The sender has a bit b ∈ {0, 1}. A broadcast protocol is a protocol where the parties send messages to one another, and eventually every party outputs a bit bi , for i = 1, . . . , n, or outputs nothing. </p>
+<ul>
+<li><p>We say that the protocol has consistency if for every two honest parties, if one party outputs b and the other outputs b’ , then b = b’ . </p>
+</li>
+<li><p>We say that the protocol has validity if when the sender is honest, the output of all honest parties is equal to the sender’s input bit b. </p>
+</li>
+<li><p>We say that the protocol has totality if whenever some honest party outputs a bit, then eventually all honest parties output a bit. </p>
+</li>
+</ul>
+<p>A reliable broadcast protocol (RBC) is a broadcast protocol that satisfies all three properties. Let us assume that there is a public key infrastructure (PKI), meaning that every party has a secret signing key, and every party knows the correct public signature verification key for every other party. </p>
+<p>In a synchronous network, consider the following broadcast protocol: </p>
+<ul>
+<li><p>step 0: The sender sends its input bit b (along with its signature) to all other parties. The sender then outputs its bit b and terminates. </p>
+</li>
+<li><p>step 1: Every non-sender party i echoes what it heard from the sender to all the other non-sender parties (with i’s signature added). If the party heard nothing from the sender, it does nothing in this step. Similarly, the party does nothing in this step if the sender’s message is malformed: for example, if the sender’s signature is invalid, or the message is not a single bit. </p>
+</li>
+<li><p>step 2: Every non-sender party collects all the messages it received (up to n−1 messages, with at most one from the sender in step 0 and at most one from each non-sender party in step 1). If some two of the received messages contain a valid signature by the sender, but for opposite bits (i.e., in one signed message the bit is 0 and in the other signed message the bit is 1) then the sender is dishonest and the party outputs 0 and terminates. Otherwise, all the properly signed bits from the sender are the same, and the party outputs that bit. If the non-sender received no messages, it outputs nothing. </p>
+</li>
+</ul>
+<p>For each of the following questions, describe an attack or explain why there is no attack. </p>
+<p><strong>A) If there is at most one dishonest party, does the protocol have consistency?</strong></p>
+<p>answer - a dishonest party have options as below in step 1 &amp; 2 to cheat a honest part:</p>
+<ol>
+<li><p>don’t answer / response;</p>
+</li>
+<li><p>broke sender’s signature but cannot make a fake/wrong bit b, because broken signature cannot verify correct.</p>
+</li>
+<li><p>broke node’s signature itself. </p>
+</li>
+</ol>
+<p>If the sender is a dishonest party, in step 0, dishonest part can send b to some parties, and send a different b’ to other parties. Then it <strong>don’t have consistency</strong>. If the sender is a honest part, the dishonest party don’t  response, so other nodes can’t accumulate “all the properly signed bits from the sender are the same, and the party outputs that bit”, then other nodes have no response. Then it still <strong>don’t have consistency</strong>.</p>
+<p><strong>B) If there is at most one dishonest party, does the protocol have validity?</strong></p>
+<p>answer - dishonest party don’t response any message , and make other nodes cannot reach “all the properly signed bits from the sender are the same, and the party outputs that bit.”  So this protocol don’t have validity.</p>
+<p><strong>C) If there are at most two dishonest parties, show that the protocol does not have consistency.</strong></p>
+<p>answer - As answer A)</p>
+<p><strong>D) If there are at most two dishonest parties, does the protocol have validity?</strong></p>
+<p>answer - two dishonest parties can send out the same dishonest message or they don’t response, and make other nodes cannot reach “all the properly signed bits from the sender are the same, and the party outputs that bit.”  So this protocol don’t have validity.  </p>
+<p><strong>E) Does the protocol have totality (for any number of dishonest parties)?</strong></p>
+<p>answer - It assume that this protocol run in a reliable broadcast protocol (RBC). But the dishonest party can send a (or some) correct response to one (or some other) party, but don’t response any message to one (or some other) party in step 1. Dishonest party also can do the same in step 0. So these honest party cannot have the same result. Then this protocol don’t have totality.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -479,180 +724,6 @@
     <div class="post-body" itemprop="articleBody">
           <p>链接==&gt; <a target="_blank" rel="noopener" href="https://ethereum.org/en/upgrades/">Ethereum upgrades (formerly ‘Eth2’) | ethereum.org</a></p>
 <p>个人认为这可能是有史以来规模最大(应用数量，客户数量最多)的一次系统升级。其设计，方式，方法均值得好好学习。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/02/05/%E5%85%B3%E4%BA%8EPoA-Proof-of-Authority-Chains/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/05/%E5%85%B3%E4%BA%8EPoA-Proof-of-Authority-Chains/" class="post-title-link" itemprop="url">关于PoA-Proof-of-Authority-Chains</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-05 12:32:00" itemprop="dateCreated datePublished" datetime="2022-02-05T12:32:00+08:00">2022-02-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-02-06 10:52:48" itemprop="dateModified" datetime="2022-02-06T10:52:48+08:00">2022-02-06</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Proof-of-Authority is a replacement for Proof-of-Work, already working in production of Ethereum, like <a target="_blank" rel="noopener" href="https://openethereum.github.io/Proof-of-Authority-Chains">OpenEthereum</a>, <a target="_blank" rel="noopener" href="https://geth.ethereum.org/">geth</a>.</p>
-<h4 id="This-article-show-path-of-dev-and-move-to-production-steps-as-my-github-project-WillZhuang-geth-poa-tutorial-Clique-Proof-of-Authority-Tutorial-github-com-it-is-working-under-Geth-v1-10-15"><a href="#This-article-show-path-of-dev-and-move-to-production-steps-as-my-github-project-WillZhuang-geth-poa-tutorial-Clique-Proof-of-Authority-Tutorial-github-com-it-is-working-under-Geth-v1-10-15" class="headerlink" title="This article show path of dev, and move to production steps as my github project: WillZhuang/geth-poa-tutorial: Clique Proof-of-Authority Tutorial (github.com). it is working under Geth v1.10.15."></a>This article show path of dev, and move to production steps as my github project: <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/geth-poa-tutorial">WillZhuang/geth-poa-tutorial: Clique Proof-of-Authority Tutorial (github.com)</a>. it is working under Geth v1.10.15.</h4><p><strong>appendix:</strong></p>
-<ol>
-<li>guide about node append / delete : <a target="_blank" rel="noopener" href="https://geth.ethereum.org/docs/rpc/ns-clique">https://geth.ethereum.org/docs/rpc/ns-clique</a>.</li>
-</ol>
-<p><code>clique.propose(address, auth)</code> / <code>clique.discard(address)</code></p>
-<ol start="2">
-<li><p>Original <a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-225">EIP-225: Clique proof-of-authority consensus protocol (ethereum.org)</a></p>
-</li>
-<li><p>benchmark: <a target="_blank" rel="noopener" href="https://github.com/drandreaskrueger/chainhammer">drandreaskrueger/chainhammer: fire many transactions at Ethereum node, then produce diagrams of TPS, blocktime, gasUsed and gasLimit, and blocksize. (github.com)</a></p>
-</li>
-</ol>
-<p>CBDC pay attention on PoA:</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://www.hkma.gov.hk/media/eng/doc/key-functions/financial-infrastructure/Inthanon-LionRock_to_mBridge_Building_a_multi_CBDC_platform_for_international_payments.pdf">Inthanon-LionRock to mBridge: Building a multi CBDC platform for international payments (hkma.gov.hk)</a></p>
-</li>
-<li><p>The Joinup under European Commission report on 2019 : <a target="_blank" rel="noopener" href="https://joinup.ec.europa.eu/collection/blockchain-egov-services/document/user-guide-how-setup-private-ethereum-poa-blockchain-network">User guide on how to setup a private Ethereum POA Blockchain Network | Joinup (europa.eu)</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.banque-france.fr/sites/default/files/media/2021/11/09/821338_rapport_mnbc-04.pdf">page 20 /_rapport_mnbc-04.pdf (banque-france.fr)</a> </p>
-</li>
-<li><p>[CBDC Report Final.pdf (eublockchainforum.eu)](<a target="_blank" rel="noopener" href="https://www.eublockchainforum.eu/sites/default/files/reports/CBDC">https://www.eublockchainforum.eu/sites/default/files/reports/CBDC</a> Report Final.pdf)</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://wiki.hyperledger.org/display/events/Global+CBDC+Challenge">Global CBDC Challenge - Community of Hyperledger</a></p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/12/14/CBDC-III-%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%B6%E6%9E%84%E7%9A%84%E9%80%89%E6%8B%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/14/CBDC-III-%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%B6%E6%9E%84%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">CBDC-III-设计与架构的选择</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-12-14 11:42:00" itemprop="dateCreated datePublished" datetime="2021-12-14T11:42:00+08:00">2021-12-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-12-15 15:57:27" itemprop="dateModified" datetime="2021-12-15T15:57:27+08:00">2021-12-15</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.itu.int/en/ITU-T/focusgroups/dfc/Documents/DFC-O-005_Report%20on%20Digital%20Currency%20Implementation%20Checklist%20for%20Central%20Banks.pdf">Digital Currency Implementation Checklist for Central Banks</a></p>
-<h4 id="快问快答"><a href="#快问快答" class="headerlink" title="快问快答"></a>快问快答</h4><ol>
-<li>Is the DFC(Digital Fiat Currency) to be a token-based or account-based system, or some combination? Discussion:  Account-based systems are actor-centric, while token-based systems are object centric. Each has specific benefits and disadvantages relating to interoperability, (de)centralization, efficiency, and security. The relative merits of the two approaches have been discussed in depth elsewhere in the CBDC and DFC literature, and ultimately depends on the specific needs and goals of the jurisdiction in question. 基于帐户的系统以参与者为中心，而基于令牌的系统以对象为中心。每个都有与互操作性、（去）中心化、效率和安全性相关的特定优点和缺点。这两种方法的相对优点已在 CBDC 和 DFC 文献的其他地方进行了深入讨论，最终取决于相关司法管辖区的具体需求和目标。</li>
-<li>Will interest be paid on DFC balances? If so, how much, and under what conditions? Discussion: In contexts where the goal of implementation of DFC is merely to replace physical coins and paper currency, the capacity to pay interest directly on DFC balances is of less importance. Conversely, if the aim of introducing DFC is to precipitate a broader reorganization of the payments system, the ability to pay interest directly on DFC balances may be important to the implementation of monetary and fiscal policy, as well as for preserving technical features of the existing payments system (i.e. the capacity to pay interest on-reserves). 如果引入 DFC 的目的是促成更广泛的支付系统重组，那么直接为 DFC 余额支付利息的能力对于货币和财政政策的实施以及保留现有技术特征可能很重要。</li>
-<li>Will DFC funds have durational features? If so, how much, and under what conditions? Discussion: DFC instruments are commonly thought of as a digital equivalent to cash instruments, or a retail-accessible form of digital reserve balances, both of which have zero duration. However, in the modern central banking era, government securities accounts also operate on similar payments and accounts infrastructure. Hence, DFC has the potential to perform other functions that involve duration, such as providing consumer savings and/or investor securities accounts, and also serving as the settlement layer for smart contracts and financial trading platforms.  DFC 工具通常被认为是现金工具的数字等价物，或零售可访问的数字准备金余额形式，两者的久期均为零。然而，在现代中央银行时代，政府证券账户也在类似的支付和账户基础设施上运作。因此，DFC 有潜力执行其他涉及持续时间的功能，例如提供消费者储蓄和/或投资者证券账户，以及充当智能合约和金融交易平台的结算层。</li>
-<li>Will certain kinds of transactions be prohibited at the technical layer? What?<br>Discussion: It is possible to design a DFC system to allow for discrimination and censorship on a transaction-by-transaction basis. Doing so would further a range of law enforcement and security interests. However, such interests must also be weighed against privacy and security considerations. Once the capacity for transactional censorship is hardwired into the DFC infrastructure, it cannot be easily removed and may be used for purposes beyond the initial scope that justified its adoption. 可以设计一个 DFC 系统以允许在逐笔交易的基础上进行歧视和审查。这样做将促进一系列执法和安全利益。然而，这些利益也必须与隐私和安全考虑进行权衡。一旦交易审查能力被硬连接到 DFC 基础设施中，它就不能轻易删除，并且可能用于超出其采用的初始范围的目的。</li>
-<li>Will DFC transactions and wallets be usable offline? How? Discussion: While digital payments systems offer many benefits over physical cash, they suffer from vulnerabilities regarding network-connection and power consumption. In order to provide a true substitute for physical cash, some form of offline transaction capacity is crucial. Such capacity is also important in the event of network failure, and/or for actors who exist on the margins of the electric/internet grid. 离线交易是必要的。</li>
-<li>Will the DFC intermediary network be an open system, or restricted to a limited number of pre-approved institutions? Discussion: Most DFC systems, at least in the first iteration, will likely incorporate and/or rely on intermediaries to fulfill some core infrastructural functions, from wallet-management through to data-storage. Consequently, it is important for regulators to develop a framework for evaluating and approving potential intermediaries, to maintain quality and security standards while simultaneously avoiding excessive regulations that stifle innovation and widespread adoption. One way of authorizing intermediaries is to subjectively identify and approval specific applicants on an institution-by-institution basis. Another approach is to develop objective standards and criteria and approve any and all actors that meet those criteria. Determining which approach to use (or some combination) will depend on the needs and interests of the specific jurisdiction. 大多数 DFC 系统，至少在第一次迭代中，从钱包管理到数据存储，可能会合并和/或依赖中介来实现一些核心基础设施功能。</li>
-</ol>
 
       
     </div>
