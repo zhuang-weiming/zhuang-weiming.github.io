@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">204</span>
+          <span class="site-state-item-count">205</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,115 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/04/02/Plonk-1-%E5%9F%BA%E4%BA%8E%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E7%9A%84%E6%8E%92%E5%88%97%E4%BB%A5%E7%94%A8%E4%BA%8E%E9%80%9A%E7%94%A8%E7%9A%84%E9%9D%9E%E6%8E%A5%E8%A7%A6%E7%9A%84%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/02/Plonk-1-%E5%9F%BA%E4%BA%8E%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E7%9A%84%E6%8E%92%E5%88%97%E4%BB%A5%E7%94%A8%E4%BA%8E%E9%80%9A%E7%94%A8%E7%9A%84%E9%9D%9E%E6%8E%A5%E8%A7%A6%E7%9A%84%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/" class="post-title-link" itemprop="url">Plonk-1-基于拉格朗日乘子法的排列以用于通用的非接触的零知识证明</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-02 13:50:04" itemprop="dateCreated datePublished" datetime="2021-04-02T13:50:04+08:00">2021-04-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-06 16:03:07" itemprop="dateModified" datetime="2021-05-06T16:03:07+08:00">2021-05-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>论文原文 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">953.pdf (iacr.org)</a>，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge</a></p>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​    利用可更新的通用结构化参考字符串的zk-SNARK构造消除了部署zk-SNARKs [GKM +]的主要障碍之一。 Maller等人的重要工作，[MBKM19]提出了Sonic-第一个具有实用性的zk-SNARK，具有完全简洁的验证，可用于带有这种SRS(structured reference string)的通用算术电路。但是，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/601.pdf">支持完全简洁验证的Sonic版本</a>仍然需要相对较高的证明建造费用。 我们提出了一种具有完全简洁验证的通用SNARK结构，并且大大减少了证明方的运行时间（根据电路结构的不同，证明者的运行时间比完全简洁验证程序模式下的[MBKM19]少7.5-20倍）。与[MBKM19]类似，我们依赖于基于Bayer和Groth [BG12]的置换参数。但是，我们专注于“评估亚组而不是单项式系数”； 这样可以简化置换参数和算术化步骤。</p>
+<h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h3><p>​    由于zk-SNARK的实际部署，以“通用和可更新”的方式构造结构化参考字符串（SRS）引起了人们的极大兴趣。这意味着相同的SRS可以用于有关一定范围内所有电路的陈述；并且在任何时间点，SRS都可以由新的参与方进行更新，因此，从健全到现在为止，所有更新者中只有一个方是诚实的。为简便起见，让我们将这种安装过程称为通用的zk-SNARK。</p>
+<p>​    出于介绍的目的，让我们说用于电路可满足性的zk-SNARK完全简洁：<br>1.预处理1阶段/ SRS生成运行时间与电路规模是准线性的。<br>2.证明者的运行时间与电路规模是准线性的。<br>3.证明长度与电路规模是对数乘方关系。<br>4.验证程序的运行时间与电路规模是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%9A%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0">对数多项式关系</a>。</p>
+<p>​    Maller等人[MBKM19]首次为电路可满足性构建了一个通用的，完全简洁的zkSNARK，称为Sonic。[MBKM19]还提供了Sonic的版本，该版本具有显着改善的证明程序运行时间，但仅以某种摊销意义上的有效验证为代价。</p>
+<h4 id="1-1本文的结果"><a href="#1-1本文的结果" class="headerlink" title="1.1本文的结果"></a>1.1本文的结果</h4><p>​    在这项工作中，我们提供了一种通用的完全简洁的zk-SNARK，与完全简洁的Sonic相比，其证明者的运行时间大大缩短。</p>
+<p>​    在较高的水平上，我们的改进源自与[BCC + 16]启发的[MBKM19]算术更直接的电路算术化。这与针对乘法子组的单变量评估而不是如[MBKM19]中的双变量多项式的系数的置换参数结合在一起。</p>
+<p>​    简而言之，可乘子组有用的一个原因是，包括Sonic在内的几种协议都使用了基于Bayer和Groth [BG12]的置换参数。最终，在“大积论证”中，这简化为检查“相邻单项式”处的多项式系数之间的关系。我们观察到，如果我们将点x，g·x视为邻居，其中g是域**<em>F**</em>的乘法子群的生成器，检查这些点对处不同多项式之间的关系非常方便。</p>
+<p>​    一个相关的改进是乘法子群与拉格朗日乘子法很好地相互作用。例如，假设*<strong>H**<em>⊂</em></strong>F*<strong>是n + 1阶的乘子群，且x∈**<em>H</em></strong>。在H \ {x}上消失并具有 f(x)=1 的n阶多项式 Lx 表格的稀疏表示：<br>$$<br>L_x(X)=\frac{C_x(X^{n+1}-1)}{X-x}<br>$$<br>对于恒定的 Cx，当根据多项式恒等构造有效可验证的[BG12]样式置换参数时，这是有帮助的。</p>
+<h4 id="1-2效能分析"><a href="#1-2效能分析" class="headerlink" title="1.2效能分析"></a>1.2效能分析</h4><p>​    对于非通用SNARK和通用SNARK，我们将这项工作的性能与最新技术进行了比较。 在发布之时，唯一完全简洁的通用SNARK结构是<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/601.pdf">Sonic协议[MBKM19]</a>（完全简洁的版本）。 该协议要求证明者计算273n个G1组指数，其中n是乘法门的数量。在完全简洁的Sonic中，每条线只能以三种线性关系使用，要求添加“虚拟”乘法门以容纳多于三个加法门的线。乘法门计数的这种增加被计入证明者的计算估计中（有关详细信息，请参见[MBKM19]）。</p>
+<p>​    我们的通用SNARK要求证明者计算6个多项式承诺，并结合两个开放证明以在随机挑战点评估多项式承诺。PlonK有两种“口味”，以适合用户的口味。通过将证明大小增加两个分组元素，证明者的总计算量可以减少约10％。多项式的组合度为 <code>9(n + a)</code>（更大的证明）或 <code>11(n + a)</code>（较小的证明，减少的检验器工作），其中n是乘法门的数量，a是加法门的数量。当前，最有效的，最简洁的SNARK构造是Groth的2016构造[Gro16]，它需要每个电路唯一的，不可更新的CRS。证明构造时间主要受 <code>3n+m</code> G1和 <code>n</code> G2组指数的支配，其中 <code>m</code>形式上是R1CS变量的数量，通常以n为界（为简单起见，本节的其余部分，读者可能会假设m = n） 。如果我们假设一个G2指数等于三个G1指数，则将产生<code>6n + m</code>个等价的G1组指数。</p>
+<p>​    在这些SNARK算术之间进行直接比较需要一些公认的主观假设。在评估通用电路时，我们发现加法门的数量是乘法门的数量的2倍，但是在假设加法门为“自由”的情况下进行优化的电路（在基于[Gro16]的基于R1CS的系统中很常见）将给出更差的估计。</p>
+<p>​    在一个极端情况下，对于不包含加法门而仅扇入2倍乘法门的电路，我们通用的SNARK证明要求的证明者工作量比[Gro16]高1.1倍，而证明者的工作量比Sonic少30倍。 如果<code>a = 2n</code>，则比率变为比[Gro16]高约2.25倍的证明者工作量，和比Sonic低约≈10倍。 如果<code>a = 5n</code>，则其工作量比[Gro16]大约3倍，而工作量则比Sonic少5倍。 我们应该注意，这些比较只是在比较所需的组幂运算数。</p>
+<p>​    我们还注意到，PlonK的结构化参考字符串的程度等于电路中门的数量（如果使用PlonK的“快速”风味）。与现有技术相比，这极大地减少了SRS的大小。</p>
+<p>​    在比较证明构造时，由于构造证明所需的快速傅立叶变换的数目是不平凡的，因此我们还包括PlonK的字段乘法次数。 所有其他简洁的通用SNARK结构也具有较高的FFT</p>
+<p>如下Table 1: Prover comparison. m = number of wires, n = number of multiplication gates, a = number of addition gates</p>
+<p><img src="/2021/04/02/Plonk-1-%E5%9F%BA%E4%BA%8E%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E7%9A%84%E6%8E%92%E5%88%97%E4%BB%A5%E7%94%A8%E4%BA%8E%E9%80%9A%E7%94%A8%E7%9A%84%E9%9D%9E%E6%8E%A5%E8%A7%A6%E7%9A%84%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/1.png"></p>
+<p>​    转换成本，但是由于很难找到硬数字，因此我们无法将其包括在上表中。定性分析表明，FFT消耗的计算时间比G1组指数的消耗少。 关于字段乘法次数的更多详细信息，请参见第1.3节。</p>
+<p>​    每个证明的验证者计算如表2所示。由于提交的证明者多项式的结构简单，因此仅需要两个双线性配对操作。 此外，每个配对中的G2元素都是固定的，从而可以进行优化，从而将配对计算时间减少≈30％[CS10]。</p>
+<p>Table 2: Verifier comparison per proof, P=pairing, `=num of pub inputs. For nonsuccinct protocols, additional helper work is specified</p>
+<p><img src="/2021/04/02/Plonk-1-%E5%9F%BA%E4%BA%8E%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E7%9A%84%E6%8E%92%E5%88%97%E4%BB%A5%E7%94%A8%E4%BA%8E%E9%80%9A%E7%94%A8%E7%9A%84%E9%9D%9E%E6%8E%A5%E8%A7%A6%E7%9A%84%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/2.png"></p>
+<h4 id="1-3-Performance-and-Benchmarks"><a href="#1-3-Performance-and-Benchmarks" class="headerlink" title="1.3 Performance and Benchmarks"></a>1.3 Performance and Benchmarks</h4><p>Figure 1: Benchmarks for test PlonK circuits using the BN254 curve. Does not include witness generation. Tests performed on a Surface pro 6 with 16GB RAM and a core i7-8650U CPU, utilizing all 8 logical/4 physical cores.</p>
+<p><img src="/2021/04/02/Plonk-1-%E5%9F%BA%E4%BA%8E%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E7%9A%84%E6%8E%92%E5%88%97%E4%BB%A5%E7%94%A8%E4%BA%8E%E9%80%9A%E7%94%A8%E7%9A%84%E9%9D%9E%E6%8E%A5%E8%A7%A6%E7%9A%84%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E/3.png"></p>
+<p>​    上图 图1提供了一些构建和验证PlonK证明所需时间的估计。有问题的基准利用Barretenberg ecc库利用BN254椭圆曲线。即使对于门数超过一百万的电路，PlonK证明也能够在不超过23秒的时间内在消费级硬件上构建。这标志着通用SNARK效率的显着提高，这些SNARK现在可用于各种实际使用案例。</p>
+<p>​    电路预处理是一次性的计算，对于每个编入PlonK电路的程序都需要进行。此步骤生成验证证明所需的“选择器”多项式的多项式承诺。</p>
+<p>​    构造证明时，执行所需的FFT快速傅立叶变换所需的时间与椭圆曲线标量乘法所需的时间相当。表1中的场乘法数是从大小为4n的8个FFT，大小为2n的5个FFT和大小为n的12个FFT获得的。</p>
+<p>​    如果提供电路的预处理多项式作为对单位的第4n个根（而不是基于拉格朗日的形式）的评估，则FFT变换的次数可以大大减少。但是，由于这大大增加了构造证明所需的信息量，因此我们在基准测试中忽略了这种优化。</p>
+<p>​    我们以与相关并发工作的比较作为对导言的总结。</p>
+<h4 id="1-4-与随机求和检查方法和Fractal-Marlin的比较"><a href="#1-4-与随机求和检查方法和Fractal-Marlin的比较" class="headerlink" title="1.4 与随机求和检查方法和Fractal / Marlin的比较"></a>1.4 与随机求和检查方法和Fractal / Marlin的比较</h4><p>​    粗略地说，所有简洁的证明系统都是通过使用随机性将许多约束检查压缩为一个来工作的。获得这种压缩的一般方法是采用约束的随机线性组合。在R1CS和类似系统的情况下，要压缩的更困难的约束是系统变量之间的线性关系，即形式为 &lt;ai，x&gt; = 0的约束，其中x∈F 是系统变量，而ai∈F 表示约束之一。这些类似于电路可满足性陈述中较为笼统的“接线约束”，其形式为xi = xj（例如，当xi表示门G的输出线，而xj表示输入线时，从G到另一个门G‘）。</p>
+<p>线性约束的随机线性组合可能具有以下形式：<br>$$<br>\sum_{i\in [n]}{r^i&lt;a_i} , x&gt;=0<br>$$<br>对于均匀的r∈F。</p>
+<p>​    跳过一些细节，[MBKM19]和随后的[Gab19]工作（依赖[BCR + 19]）减少了这种检查，从而可以在随机点上评估n次双变量S的程度；使得S中的非零单项式的数目对应于约束向量{ai}中非零项的数目。[MBKM19]在这一点上设计了一个聪明的策略，以在许多证明中分摊S的许多评估的成本。[MBKM19]的这种变体在证明者效率上要高得多，但由于需要验证者自己计算至少一个S评估，因此不能完全简洁。</p>
+<p>因此，对于证明者更为有效的Sonic版本（以及[Gab19]的完全简洁版本）而言，完全简洁的障碍是一种仅在S仅包含S的情况下有效验证评估S(z，y)的方法。 O(n)非零单项式。</p>
+<p>​    最近的并行分形和马林系统[CHM + 19，COS19]的重大技术贡献是“在拉格朗日基础上”解决此问题的方法。</p>
+<p>​    具体来说，假设H，K是F的大小<code>O(n)</code>的乘法子组，使得S在 <code>H×K</code> 上仅具有M个非零值；然后[CHM + 19，COS19]设计了一个协议，以使简洁的验证者确信<code>S(z，y)= t</code>，证明者的工作在M中是线性的。这是一个很好的观点，指出自然而然地可以解决这个问题将[KZG10]推广到双变量多项式承诺方案将导致<code>O(n2)</code>证明时间。</p>
+<p>​    回到PlonK上，我们不需要“双变量评估突破”的原因是，我们专注于恒定扇入电路，而不是R1CS /无限加法扇入； 因此，我们的线性约束只是布线约束，可以简化为置换检查（如第5.2、6节所述）。 一种解释[BG12]技术的方法是“与一般线性约束相比，可以更简单地组合与置换对应的线性约束”。 例如，在上述等式中，每个约束都乘以一个不同的随机系数，而在[BG12]随机化中，在一定意义上将相同的随机移位添加到每个变量值就足够了。（有关详细信息，请参见第5节中的置换协议。）</p>
+<h5 id="与Marlin的具体比较。"><a href="#与Marlin的具体比较。" class="headerlink" title="与Marlin的具体比较。"></a>与Marlin的具体比较。</h5><p>​    尽管Fractal在透明递归SNARK的情况下利用了稀疏的双变量评估技术，但Marlin像本文中一样专注于构建完全简洁的（通用）SNARK。 </p>
+<p>​    比较这项工作和[CHM + 19]并非完全简单，因为我们处于具体常量领域，并且两项工作使用的基本度量是不同的。 我们将主要参数n设为扇入式两个电路中的加法门和乘法门的数量； [CHM + 19]将描述R1CS的三个矩阵之一中的最大非零数用作其主要参数。对于相同的n值，PlonK胜过Marlin，例如，在证明者组操作和证明大小方面大约是原来的两倍。 在只有乘法门的电路的极端情况下，这确实代表了两个系统之间的性能差异。 </p>
+<p>​    但是，在具有“频繁大量添加”的约束系统中，Marlin的性能可能优于PlonK当前指定的变体。例如，这发生在一个“完全密集”的R1CS约束的极端情况下：<br>$$<br>( \sum_{j \in [m]}{a_j x_j} ) \cdot ( \sum_{j \in [m]}{b_j x_j} ) = \sum_{j \in [m]}{c_j x_j}<br>$$<br>其中a，b，c∈F 具有所有非零条目。</p>
+<p>​    此外，似乎分形中隐含的思想，或者将提及的稀疏二元评估协议“插入”到[Gab19]中，将通过此途径提高性能； 特别是在某些证明人工作可以委派给外部帮手的情况下（在PlonK中，这种委派的机会较少，因为检查证人本身的连线，而在[Gab19，CHM + 19，COS19]中,在某种意义上检查了验证者的随机系数）。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -664,96 +773,6 @@
 <p>区块链中，资产转移指令和现金转移指令同时作为单个交易的最后一步执行，无结算风险。但对于跨链资产交易，可能面临结算风险。</p>
 <p>（四）隐私保护</p>
 <p>传统中心化交易中，用户入场需要经过身份认证，且交易过程完全由中心机构记录，若监管缺失，可能导致大量敏感信息泄露。去中心化的方案可以更好地解耦用户敏感信息存储与用户资金交易。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/11/18/%E5%85%B3%E4%BA%8E%E5%8C%BA%E5%9D%97%E9%93%BE%E8%8A%82%E7%82%B9%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/11/18/%E5%85%B3%E4%BA%8E%E5%8C%BA%E5%9D%97%E9%93%BE%E8%8A%82%E7%82%B9%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86/" class="post-title-link" itemprop="url">关于区块链节点服务治理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2020-11-18 09:39:04 / Modified: 10:58:12" itemprop="dateCreated datePublished" datetime="2020-11-18T09:39:04+08:00">2020-11-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-https-ethereumnodes-com"><a href="#1-https-ethereumnodes-com" class="headerlink" title="1. https://ethereumnodes.com/"></a>1. <a target="_blank" rel="noopener" href="https://ethereumnodes.com/">https://ethereumnodes.com/</a></h3><p>该网页内收集了以太坊各个节点的服务。如：Infura、Alchemy、MyCrypto等</p>
-<h3 id="2-https-dashboard-alchemyapi-io"><a href="#2-https-dashboard-alchemyapi-io" class="headerlink" title="2. https://dashboard.alchemyapi.io/"></a>2. <a target="_blank" rel="noopener" href="https://dashboard.alchemyapi.io/">https://dashboard.alchemyapi.io/</a></h3><p>Alchemy Supernode是最广泛使用的以太坊API。获得节点的所有功能，包括JSON-RPC支持，直接从dashboard进行JSON-RPC调用，并快速扫描最近的请求和错误。Alchemy Notify允许开发人员将实时推送通知发送给用户，以进行挖矿，延迟和掉落的交易，赚取的利息，已烧掉的令牌和其他重要事件。包括强大的网络钩子和一键式集成。Alchemy Monitor是一套全面的仪表板和警报，可用于检测应用程序的运行状况，性能和用户行为。</p>
-<p>用户包括：kyber network、0x、MEW、opensea等等</p>
-<h3 id="3-https-mycrypto-com"><a href="#3-https-mycrypto-com" class="headerlink" title="3. https://mycrypto.com/"></a>3. <a target="_blank" rel="noopener" href="https://mycrypto.com/">https://mycrypto.com/</a></h3><p>MyCrypto是一个开放源代码的客户端工具，用于生成以太币钱包，处理转账、合约管理等功能。自2015年以来，由社区开发并为社区开发。</p>
-<h3 id="4-EtherAddressLookup"><a href="#4-EtherAddressLookup" class="headerlink" title="4. EtherAddressLookup"></a>4. <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/etheraddresslookup/pdknmigbbbhmllnmgdfalmedcmcefdfn">EtherAddressLookup</a></h3><ul>
-<li><p>使以太坊地址（和ENS地址）成为您喜欢的区块浏览器的链接。</p>
-</li>
-<li><p>使用0x地址或交易哈希搜索区块链，并获得可读的结果。</p>
-</li>
-<li><p>在地址中添加标签-可以在地址中添加可读标签，则无需记住较长的十六进制字符串。创建与区块浏览器功能集成的自己的地址簿。</p>
-</li>
-<li><p>阻止您进入恶意域，EAL会每天更新一次已知钓鱼域的黑名单，以帮助您保护资金/秘密安全。黑名单每10分钟保存在本地到扩展程序中，以保持您的隐私完整。您唯一一次点击第三方服务的时间是该扩展程序缓存黑名单时，服务方是Github。</p>
-</li>
-<li><p>等等功能。</p>
-</li>
-</ul>
-<h3 id="5-https-governance-docs-pokt-network"><a href="#5-https-governance-docs-pokt-network" class="headerlink" title="5. https://governance.docs.pokt.network/"></a>5. <a target="_blank" rel="noopener" href="https://governance.docs.pokt.network/">https://governance.docs.pokt.network/</a></h3><p>pokt系统关于链治理的说明文档。</p>
-<h3 id="6-https-www-myetherwallet-com"><a href="#6-https-www-myetherwallet-com" class="headerlink" title="6.https://www.myetherwallet.com/"></a>6.<a target="_blank" rel="noopener" href="https://www.myetherwallet.com/">https://www.myetherwallet.com/</a></h3><p>MyEtherWallet（MEW）是一个免费的客户端界面，可帮助您与以太坊区块链进行交互。具体包含转账、合约管理等功能。</p>
-<p><strong>相关文章：</strong></p>
-<ol>
-<li><a href="https://willzhuang.github.io/2019/12/20/%E5%85%B3%E4%BA%8EGeth%E7%9B%91%E6%8E%A7/?highlight=%E7%9B%91%E6%8E%A7">关于Geth监控</a></li>
-<li><a href="https://willzhuang.github.io/2019/05/06/%E9%80%82%E5%90%88%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%BD%9C%E4%B8%BA%E8%81%94%E7%9B%9F%E9%93%BE%E7%9A%84%E7%9B%91%E6%8E%A7%E9%A1%B9%E7%9B%AE/?highlight=%E7%9B%91%E6%8E%A7">适合以太坊作为联盟链的监控项目</a></li>
-<li><a href="https://willzhuang.github.io/2019/12/20/%E5%85%B3%E4%BA%8EPBFT%E7%9B%91%E6%8E%A7/?highlight=%E7%9B%91%E6%8E%A7">关于PBFT监控</a></li>
-<li><a href="https://willzhuang.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/?highlight=%E6%B2%BB%E7%90%86">Polkadot链上治理机制浅析</a></li>
-<li><a href="https://willzhuang.github.io/2019/12/05/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%86%85%E7%9A%84%E5%85%B1%E8%AF%86%E4%B8%8E%E4%BF%A1%E4%BB%BB/?highlight=%E6%B2%BB%E7%90%86">区块链内的共识与信任</a></li>
-</ol>
 
       
     </div>
