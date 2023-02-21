@@ -9457,7 +9457,7 @@
 <p><strong>一个Reactor接管所有的事件安排</strong>，如果是建立连接事件，就交给Acceptor处理，接着创建对应的Handler处理该连接后续的读写事件。如果不是建立连接事件，就调用连接对应的Event Handler来响应。单Reator1和2的区别是2带了个线程池，一定程度上解放Event Handler线程，让Handler专注数据读写处理，特别是在遇到一些笨重、高耗时的业务逻辑时。</p>
 <p>再来看多Reactor，这个是本文的主角，第三节内容就是怎么实现它。多Reactor就是主从多Reactor，它的特点是<strong>多个Reactor在多个单独的线/进程中运行，MainReactor负责处理建立连接事件，交给它的Acceptor处理，处理完了，它再分配连接给SubReactor；SubReactor则处理这个连接后续的读写事件，SubReactor自己调用EventHandlers做事情</strong>。</p>
 <p>这种实现看起来职责就很明确，可以方便通过增加SubReactor数量来充分利用CPU资源，也是当前主流的服务端网络编程模型。</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/VY8SELNGe95VxoqjGm1IfuicBMt3YLNVkdvG5jWdiafh6tU1Gic9bfatibjuic7DcYrJHGIbQU0ibLoLjSRxroca0lXA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="Image"></p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.1.jpeg"></p>
 <h4 id="（二）Proactor模型自带主角光环"><a href="#（二）Proactor模型自带主角光环" class="headerlink" title="（二）Proactor模型自带主角光环"></a>（二）Proactor模型自带主角光环</h4><p>尽管本文的主角是主从多Reactor，但如果Proactor要当主角，就没Reactor什么事。</p>
 <p>Proactor模型跟Reactor模型的<strong>本质区别是异步I/O和同步I/O的区别，即底层I/O实现</strong>。</p>
 <p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/3.png"></p>
@@ -9850,6 +9850,22 @@
 ]]></content>
       <tags>
         <tag>量子</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于chatGPT的认识</title>
+    <url>/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/</url>
+    <content><![CDATA[<p>下图多来自中科大校友，粤港澳大湾区数字经济研究院工程总监，曾任微软（中国）操作系统工程院院长，微软亚洲互联网工程院副院长，谢育涛，在2月19日的分享。</p>
+<p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/1.jpg"></p>
+<p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/2.jpg"></p>
+<p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/3.jpg"></p>
+<p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/4.jpg"></p>
+<p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/5.jpg"></p>
+<p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/6.jpg"></p>
+<p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/7.jpg"></p>
+]]></content>
+      <tags>
+        <tag>AI</tag>
       </tags>
   </entry>
 </search>
