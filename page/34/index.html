@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">208</span>
+          <span class="site-state-item-count">209</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,80 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" class="post-title-link" itemprop="url">pbft图解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-25 10:46:16" itemprop="dateCreated datePublished" datetime="2018-06-25T10:46:16+08:00">2018-06-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-08-28 09:21:13" itemprop="dateModified" datetime="2022-08-28T09:21:13+08:00">2022-08-28</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/bigpicturelabs/consensusPBFT">https://github.com/bigpicturelabs/consensusPBFT</a><br><img src="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg"></p>
+<h4 id="Definitions-of-each-abbreviation-in-the-diagram-are"><a href="#Definitions-of-each-abbreviation-in-the-diagram-are" class="headerlink" title="Definitions of each abbreviation in the diagram are;"></a>Definitions of each abbreviation in the diagram are;</h4><p>m: Request message object<br>c: Client ID<br>t: Timestamp<br>v: View ID<br>n: Sequence ID<br>i: Peer(Node) ID<br>r: Result of the request’s operation</p>
+<h4 id="Why-count-gt-2"><a href="#Why-count-gt-2" class="headerlink" title="Why count &gt;= 2 ?"></a>Why count &gt;= 2 ?</h4><p>In the diagram, the peer change its state to prepared or committed when the count value, which is the number of verified messages from other peers, is larger than 2. Actually, the condition is count &gt;= 2*f where f is the maximum number of faulty peers, which the network can tolerate. In this case, f is just 1, so the condition is count &gt;= 2.</p>
+<h4 id="What-is-the-reply-message"><a href="#What-is-the-reply-message" class="headerlink" title="What is the reply message?"></a>What is the reply message?</h4><p>Every node replies the result of the request’s operation to the client individually. The client will collect these reply messages and if f + 1 valid reply messages are arrived, the client will accept the result. In this sample implementation, there is no client. So, every node including the primary will return its reply message to the primary.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -632,106 +706,6 @@
 <li><p>开发或维护遵循 GPL 协议开发的软件的公司或个人，可以对使用者收取一定的服务费用。但还是一句老话——必须无偿提供软件的完整源代码，不得将源代码与服务做捆绑或任何变相捆绑销售。</p>
 </li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/" class="post-title-link" itemprop="url">Decentralized Identity Foundation first anniversary</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-02 01:40:41" itemprop="dateCreated datePublished" datetime="2018-06-02T01:40:41+08:00">2018-06-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://note.youdao.com/noteshare?id=40a9c148897c69d4e65cafd722ff57d3">Decentralized Identity Foundation Grows To 56 Members In Our First Year</a></p>
-<p>May 23, 2018 marks the <a target="_blank" rel="noopener" href="http://identity.foundation/">Decentralized Identity Foundation</a>’s first anniversary. Over the past year, DIF has grown from a handful of founding organizations to 56 members. Together, we’re working to shape the future of decentralized identity technology and standards.</p>
-<p><img src="/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/1.jpeg"></p>
-<h4 id="Technology-Under-Development"><a href="#Technology-Under-Development" class="headerlink" title="Technology Under Development"></a>Technology Under Development</h4><p>DIF members are working together to build a variety of technologies. Much of this work is being done in collaboration with the larger open source community through the W3C and events such as Rebooting Web of Trust and the Internet Identity Workshop.</p>
-<h4 id="Decentralized-Identifiers-DIDs"><a href="#Decentralized-Identifiers-DIDs" class="headerlink" title="Decentralized Identifiers (DIDs)"></a>Decentralized Identifiers (DIDs)</h4><p><a target="_blank" rel="noopener" href="https://w3c-ccg.github.io/did-spec/">Decentralized Identifiers (DIDs)</a> are a new type of identifier for verifiable, “self-sovereign” digital identity. DIDs are fully under the control of their owner, independent from any centralized registry, identity provider, or certificate authority.</p>
-<h4 id="Universal-Resolver"><a href="#Universal-Resolver" class="headerlink" title="Universal Resolver"></a>Universal Resolver</h4><p>The <a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/universal-resolver">Universal Resolver</a> is similar to Bind in the DNS system. However, instead of working with domain names, it works with self-sovereign identifiers that can be created and registered directly by their owners. This project was organized by DIF members with funding from British Columbia.</p>
-<h4 id="Chainpoint"><a href="#Chainpoint" class="headerlink" title="Chainpoint"></a>Chainpoint</h4><p><a target="_blank" rel="noopener" href="http://chaipoint.org/">Chainpoint</a> is an open standard for anchoring data to a blockchain and creating a timestamp proof.</p>
-<h4 id="Hubs"><a href="#Hubs" class="headerlink" title="Hubs"></a>Hubs</h4><p><a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/hubs/">Hubs</a> are datastores containing semantic data objects at well-known locations. Each object in a Hub is signed by an identity and accessible via a globally recognized API format that explicitly maps to semantic data objects. Hubs are addressable via unique identifiers maintained in a global namespace. Several members within DIF have announced work on hub implementations, including Microsoft and <a target="_blank" rel="noopener" href="https://sovrin.org/">Sovrin</a>.</p>
-<h4 id="DIF-Steering-Committee-Members"><a href="#DIF-Steering-Committee-Members" class="headerlink" title="DIF Steering Committee Members"></a>DIF Steering Committee Members</h4><p>We’d like to thank the following Steering Committee members for providing leadership and helping DIF grow over the past year.</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/drummondreed/">Drummond Reed</a> — Chief Trust Officer, <a target="_blank" rel="noopener" href="https://www.evernym.com/">Evernym</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/rouvenheck/">Rouven Heck</a> — Co-Founder &amp; Project Lead, <a target="_blank" rel="noopener" href="http://uport.me/">uPort</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/ryaneshea/">Ryan Shea</a> — Co-founder, <a target="_blank" rel="noopener" href="http://blockstack.org/">Blockstack</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/muneebali/">Muneeb Ali</a> — Co-founder, Blockstack</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/wayne/">Wayne Vaughan</a> — Chief Executive Officer, <a target="_blank" rel="noopener" href="http://tierion.com/">Tierion</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/dbuchner/">Daniel Buchner</a> — Senior PM, Decentralized Identity, Microsoft</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/sivakannan/">Siva Kannan </a>— Chief Software Development Officer, <a target="_blank" rel="noopener" href="http://gem.co/">Gem</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/imthedoctor/">Matt Smith </a>— Software Architect, Gem</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/vinomaster/">Dan Gisolfi</a> — CTO Trusted Identity |Distinguished Engineer, IBM</p>
-</li>
-</ul>
-<h4 id="More-Projects-companies-working-on-blockchain-and-identity"><a href="#More-Projects-companies-working-on-blockchain-and-identity" class="headerlink" title="More Projects/companies working on blockchain and identity"></a>More Projects/companies working on blockchain and identity</h4><p><a target="_blank" rel="noopener" href="https://github.com/peacekeeper/blockchain-identity">More Projects/companies working on blockchain and identity. </a></p>
 
       
     </div>
