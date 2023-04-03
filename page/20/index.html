@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-count">212</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-count">87</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,344 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-11 17:33:01" itemprop="dateCreated datePublished" datetime="2020-05-11T17:33:01+08:00">2020-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>文档链接=&gt;<a target="_blank" rel="noopener" href="https://hyperledger.github.io/burrow/">https://hyperledger.github.io/burrow/</a></p>
+<p>github链接=&gt;<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/">https://github.com/hyperledger/burrow/</a></p>
+<p>Burrow是一个权限控制较为严格、以太坊EVM和WASM虚拟机支持、运行于Tendermint共识之上的区块链客户端。其主要由Monax贡献，并由Monax 和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%8B%B1%E7%89%B9%E5%B0%94">英特尔</a>赞助。</p>
+<p>其强调的设计理念包括：</p>
+<ol>
+<li>防篡改的Merkle状态—Tamper-resistant merkle state</li>
+<li>PoS支持</li>
+<li>链上治理原生支持</li>
+<li>以太坊账户一览</li>
+<li>可以根据每个帐户设置代码执行权限</li>
+<li>事件流支持</li>
+<li>智能合约事件弹出至SQL表记录</li>
+<li>GRPC和Protobuf支持</li>
+<li>Javascript SDK支持，客户端库可以生成代码来访问合约，生成的代码是静态的Typescript对象</li>
+<li>Keys服务，提供代理签名服务器</li>
+<li>Web3 RPC，兼容Ethereum主网的开发工具，如 Truffle、 Metamask、Remix</li>
+</ol>
+<p><strong>Burrow应用于多个区块链生产项目</strong>。</p>
+<h3 id="初始化Burrow节点"><a href="#初始化Burrow节点" class="headerlink" title="初始化Burrow节点"></a>初始化Burrow节点</h3><p>从<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/%E4%B8%8B%E8%BD%BD%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%EF%BC%8C%E6%9C%AC%E6%96%87%E4%BB%A5">https://github.com/hyperledger/burrow/下载可执行文件，本文以</a> ubuntu 环境为例。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./burrow spec -f2 -p2 | ./burrow configure --curve-type secp256k1 -s- --pool --separate-genesis-doc=genesis.json</span><br></pre></td></tr></table></figure>
+
+<p><code>./burrow spec</code> 建立一个GenesisSpec作为GenesisDoc和configure命令的模板，f2是指2个full-accounts，p2是指2个participant-accounts。</p>
+<p><code>--curve-type secp256k1</code> 是指定加密曲线的类型。</p>
+<p><code>./burrow configure -s-</code> 通过使用GenesisDoc或GenesisSpec，创建密钥并创建配置文档。<code>--pool </code> 为名为burrowNNN.toml的所有共识节点（validators）编写配置文件。<code>--separate-genesis-doc</code> 将genesis文档投送至 JSON或者TOML文件。</p>
+<ul>
+<li><p>validator-accounts 共识的参与者，需要抵押一部分资金</p>
+</li>
+<li><p>root-accounts 根账户</p>
+</li>
+<li><p>developer-accounts 开发者，功能很多和全节点很像</p>
+</li>
+<li><p>participant-accounts 参与者</p>
+</li>
+<li><p>full-accounts 全功能</p>
+</li>
+</ul>
+<h3 id="启动Burrow节点"><a href="#启动Burrow节点" class="headerlink" title="启动Burrow节点"></a>启动Burrow节点</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow start --config=burrow000.toml &amp;</span><br><span class="line">./burrow start --config=burrow001.toml &amp;</span><br><span class="line">./burrow start --config=burrow002.toml &amp;</span><br><span class="line">./burrow start --config=burrow003.toml &amp;</span><br><span class="line">[5] 12458</span><br><span class="line">[6] 12459</span><br><span class="line">[7] 12460</span><br><span class="line">[8] 12464</span><br></pre></td></tr></table></figure>
+
+<h3 id="网页端访问RPC服务"><a href="#网页端访问RPC服务" class="headerlink" title="网页端访问RPC服务"></a>网页端访问RPC服务</h3><p><a target="_blank" rel="noopener" href="http://127.0.0.1:26759/">http://127.0.0.1:26759/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Available endpoints:</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account_stats</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;accounts</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;chain_id</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;consensus</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;genesis</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;network</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;network&#x2F;registry</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;validators</span><br><span class="line"></span><br><span class="line">Endpoints that require arguments:</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account_human?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;block?height&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;blocks?minHeight&#x3D;_&amp;maxHeight&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;dump_storage?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;name?name&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;names?regex&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;status?block_time_within&#x3D;_&amp;block_seen_time_within&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;storage?address&#x3D;_&amp;key&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;unconfirmed_txs?maxTxs&#x3D;_</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/04/17/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACII%E5%BC%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/04/17/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACII%E5%BC%B9/" class="post-title-link" itemprop="url">本地玩转k8s-第II弹</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-04-17 17:52:01" itemprop="dateCreated datePublished" datetime="2020-04-17T17:52:01+08:00">2020-04-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Kuboard 是 Kubernetes 的一款图形化管理界面。参考如下链接：<a target="_blank" rel="noopener" href="https://kuboard.cn/install/install-dashboard.html">https://kuboard.cn/install/install-dashboard.html</a> 安装kuboard</p>
+<ol>
+<li>kuboard 首页</li>
+</ol>
+<p><img src="/2020/04/17/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACII%E5%BC%B9/1.png"></p>
+<ol start="2">
+<li>Deployment 视图页面</li>
+</ol>
+<p><img src="/2020/04/17/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACII%E5%BC%B9/2.png"></p>
+<p>体验结论：</p>
+<ol>
+<li>kuboard 比 <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/">Kubernetes Dashboard</a>（Kubernetes 的官方 Web UI）要友好许多，并且 Kubernetes Dashboard 需要在操作机中具备 Kubectl；</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Qihoo360/wayne">wayne</a> 对用户的权限管理会优秀一些。但是经过docker-compose实验，启动为dev版本，未成功打开页面</li>
+<li><a target="_blank" rel="noopener" href="https://www.rancher.cn/">rancher</a>（<a target="_blank" rel="noopener" href="https://github.com/rancher/%EF%BC%89Rancher%E4%B8%BA%E6%82%A8%E6%8F%90%E4%BE%9B%E2%80%9CKubernetes%E5%8D%B3%E6%9C%8D%E5%8A%A1(Kubernetes-as-a-Service)%E2%80%9D%E3%80%82%E5%9C%A8%E5%9B%BD%E5%86%85%E5%8C%97%E4%BA%AC%E3%80%81%E4%B8%8A%E6%B5%B7%E3%80%81%E6%B7%B1%E5%9C%B3%E3%80%81%E6%B2%88%E9%98%B3%E5%9D%87%E6%9C%89%E5%8A%9E%E5%85%AC%E5%9C%B0%E7%82%B9%EF%BC%8C%E6%B1%89%E8%AF%AD%E6%94%AF%E6%8C%81%E8%BE%83%E5%A5%BD%E3%80%82%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E3%80%82">https://github.com/rancher/）Rancher为您提供“Kubernetes即服务(Kubernetes-as-a-Service)”。在国内北京、上海、深圳、沈阳均有办公地点，汉语支持较好。推荐使用。</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/" class="post-title-link" itemprop="url">小文件存储系统seaweedfs</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-04-16 17:14:01" itemprop="dateCreated datePublished" datetime="2020-04-16T17:14:01+08:00">2020-04-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>SeaweedFS 是开源的，简单的，高伸缩性的分布式文件系统。SeaweedFS 作为支持全 POSIX 文件系统语义替代，Seaweed-FS 选择仅实现 key-file 的映射，类似 “NoSQL”，也可以说是 “NoFS”。</p>
+<p>SeaweedFS 仅花费 40 字节的硬盘来存储每个文件的元数据。</p>
+<h4 id="与GlusterFS-Ceph相比较"><a href="#与GlusterFS-Ceph相比较" class="headerlink" title="与GlusterFS, Ceph相比较"></a>与<a target="_blank" rel="noopener" href="https://www.gluster.org/">GlusterFS</a>, <a target="_blank" rel="noopener" href="https://ceph.io/">Ceph</a>相比较</h4><table>
+<thead>
+<tr>
+<th>System</th>
+<th>File Meta</th>
+<th>File Content Read</th>
+<th>POSIX</th>
+<th>REST API</th>
+<th>Optimized for small files</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SeaweedFS</td>
+<td>lookup volume id, cacheable</td>
+<td>O(1) disk seek</td>
+<td></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SeaweedFS Filer</td>
+<td>Linearly Scalable, Customizable</td>
+<td>O(1) disk seek</td>
+<td>FUSE</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>GlusterFS</td>
+<td>hashing</td>
+<td></td>
+<td>FUSE, NFS</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ceph</td>
+<td>hashing + rules</td>
+<td></td>
+<td>FUSE</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>MooseFS</td>
+<td>in memory</td>
+<td></td>
+<td>FUSE</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h4 id="体验seaweedfs"><a href="#体验seaweedfs" class="headerlink" title="体验seaweedfs"></a>体验seaweedfs</h4><p>参考==&gt;<a target="_blank" rel="noopener" href="https://hub.docker.com/r/chrislusf/seaweedfs">https://hub.docker.com/r/chrislusf/seaweedfs</a></p>
+<ol>
+<li>拉取 docker-compose 文件，<code>wget https://raw.githubusercontent.com/chrislusf/seaweedfs/master/docker/seaweedfs-compose.yml</code></li>
+<li>启动，<code>docker-compose -f seaweedfs-compose.yml -p seaweedfs up</code></li>
+</ol>
+<p>参考 =&gt; <a target="_blank" rel="noopener" href="https://github.com/chrislusf/seaweedfs/wiki/Volume-Server-API">https://github.com/chrislusf/seaweedfs/wiki/Volume-Server-API</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  seaweedfs: curl http://localhost:9333/dir/assign</span><br><span class="line">&#123;&quot;fid&quot;:&quot;7,01248b7b86&quot;,&quot;url&quot;:&quot;172.18.0.3:8080&quot;,&quot;publicUrl&quot;:&quot;172.18.0.3:8080&quot;,&quot;count&quot;:1&#125;%                                                                         </span><br><span class="line">➜  seaweedfs: curl -F file=@/home/will/documents/zaq12wsxcde3--de4064dc15870163a9aab589a1ccf7900dd68ef4 http://127.0.0.1:8080/7,01248b7b86</span><br><span class="line">&#123;&quot;name&quot;:&quot;zaq12wsxcde3--de4064dc15870163a9aab589a1ccf7900dd68ef4&quot;,&quot;size&quot;:489,&quot;eTag&quot;:&quot;468de108&quot;&#125;%                                                                 </span><br><span class="line">➜  seaweedfs: curl http://localhost:9333/dir/lookup\?volumeId\=7</span><br><span class="line">&#123;&quot;volumeId&quot;:&quot;7&quot;,&quot;locations&quot;:[&#123;&quot;url&quot;:&quot;172.18.0.3:8080&quot;,&quot;publicUrl&quot;:&quot;172.18.0.3:8080&quot;&#125;]&#125;% </span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><code>curl http://localhost:9333/dir/assign</code> 获取fid</li>
+<li><code>curl -F file=@/home/will/documents/zaq12wsxcde3--de4064dc15870163a9aab589a1ccf7900dd68ef4 http://127.0.0.1:8080/7,01248b7b86</code> 上传文件</li>
+<li><code>curl http://localhost:9333/dir/lookup\?volumeId\=7</code> 查询</li>
+<li>在浏览器中打开 <code>http://172.18.0.3:8080/7,01248b7b86</code>，查看文档</li>
+<li>master 的url：<code>http://127.0.0.1:9333/</code></li>
+<li>volume的url：<code>http://172.18.0.3:8080/ui/index.html</code></li>
+</ol>
+<p><img src="/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/1.png"></p>
+<p><img src="/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/2.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -449,359 +787,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" class="post-title-link" itemprop="url">关于golang服务重启</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-03-30 09:11:01" itemprop="dateCreated datePublished" datetime="2020-03-30T09:11:01+08:00">2020-03-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-09-29 09:07:53" itemprop="dateModified" datetime="2022-09-29T09:07:53+08:00">2022-09-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>我相信每个人都会想，每次更新完代码，更新完配置文件后，就直接这么 <code>ctrl+c</code> 真的没问题吗，<code>ctrl+c</code>到底做了些什么事情呢？</p>
-<p>本文我们讨论 <code>ctrl+c</code> 背后的<strong>信号</strong>以及如何<strong>优雅的重启服务</strong>，以及对 <code>HTTP</code> 服务进行热更新。</p>
-<h3 id="ctrl-c"><a href="#ctrl-c" class="headerlink" title="ctrl + c"></a>ctrl + c</h3><p>在终端执行特定的组合键可以使系统发送特定的信号给此进程，完成一系列的动作</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>信号</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ctrl + c</td>
-<td>SIGINT</td>
-<td>强制进程结束</td>
-</tr>
-<tr>
-<td>ctrl + z</td>
-<td>SIGTSTP</td>
-<td>任务中断，进程挂起</td>
-</tr>
-<tr>
-<td>ctrl + \</td>
-<td>SIGQUIT</td>
-<td>进程结束 和 <code>dump core</code></td>
-</tr>
-<tr>
-<td>ctrl + d</td>
-<td></td>
-<td>EOF</td>
-</tr>
-<tr>
-<td>常用于重启、重新加载进程</td>
-<td>SIGHUP</td>
-<td>若程序中没有捕捉该信号，当收到该信号时，进程就会退出</td>
-</tr>
-<tr>
-<td></td>
-<td>SIGPIPE</td>
-<td>在进程往一个已经关闭的管道写数据时会产生</td>
-</tr>
-</tbody></table>
-<p>因此在我们执行<code>ctrl + c</code>关闭服务端时，<strong>会强制进程结束，导致正在访问的用户等出现问题</strong>。</p>
-<p>常见的 <code>kill -9 pid</code> 会发送 <code>SIGKILL</code> 信号给进程，也是类似的结果。</p>
-<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><p>本段中出现<strong>信号</strong>是什么呢？</p>
-<p>信号是 <code>Unix</code> 、类 <code>Unix</code> 以及其他 <code>POSIX</code> 兼容的操作系统中进程间通讯的一种有限制的方式。</p>
-<p>它是一种异步的通知机制，用来提醒进程一个事件（硬件异常、程序执行异常、外部发出信号）已经发生。当一个信号发送给一个进程，操作系统中断了进程正常的控制流程。此时，任何非原子操作都将被中断。如果进程定义了信号的处理函数，那么它将被执行，否则就执行默认的处理函数。</p>
-<h4 id="所有信号"><a href="#所有信号" class="headerlink" title="所有信号"></a>所有信号</h4><p>从go语言 go root SDK中 <code>zerrors_linux_amd64.go</code> 来看，关于信号有如下常量：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">SIGABRT   </span><br><span class="line">SIGALRM   </span><br><span class="line">SIGBUS    </span><br><span class="line">SIGCHLD   </span><br><span class="line">SIGCLD    </span><br><span class="line">SIGCONT   </span><br><span class="line">SIGFPE    </span><br><span class="line">SIGHUP    </span><br><span class="line">SIGILL    </span><br><span class="line">SIGINT    </span><br><span class="line">SIGIO     </span><br><span class="line">SIGIOT    </span><br><span class="line">SIGKILL   </span><br><span class="line">SIGPIPE   </span><br><span class="line">SIGPOLL   </span><br><span class="line">SIGPROF   </span><br><span class="line">SIGPWR    </span><br><span class="line">SIGQUIT   </span><br><span class="line">SIGSEGV   </span><br><span class="line">SIGSTKFLT </span><br><span class="line">SIGSTOP   </span><br><span class="line">SIGSYS    </span><br><span class="line">SIGTERM   </span><br><span class="line">SIGTRAP   </span><br><span class="line">SIGTSTP   </span><br><span class="line">SIGTTIN   </span><br><span class="line">SIGTTOU   </span><br><span class="line">SIGUNUSED </span><br><span class="line">SIGURG    </span><br><span class="line">SIGUSR1   </span><br><span class="line">SIGUSR2   </span><br><span class="line">SIGVTALRM </span><br><span class="line">SIGWINCH  </span><br><span class="line">SIGXCPU   </span><br><span class="line">SIGXFSZ   </span><br></pre></td></tr></table></figure>
-
-<h3 id="怎样算优雅"><a href="#怎样算优雅" class="headerlink" title="怎样算优雅"></a>怎样算优雅</h3><h4 id="优雅地退出"><a href="#优雅地退出" class="headerlink" title="优雅地退出"></a>优雅地退出</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TrapSignal catches the SIGTERM/SIGINT/SIGKILL and executes cb function. </span></span><br><span class="line"><span class="comment">// After that it exits with code 0.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TrapSignal</span><span class="params">(cb <span class="keyword">func</span>()</span>)</span> &#123;</span><br><span class="line">	c := <span class="built_in">make</span>(<span class="keyword">chan</span> os.Signal, <span class="number">1</span>)</span><br><span class="line">	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> sig := <span class="keyword">range</span> c &#123;</span><br><span class="line">			fmt.Sprintf(<span class="string">&quot;captured %v, exiting...&quot;</span>, sig)</span><br><span class="line">			<span class="keyword">if</span> cb != <span class="literal">nil</span> &#123;</span><br><span class="line">				cb()</span><br><span class="line">			&#125;</span><br><span class="line">			os.Exit(<span class="number">0</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在接收退出信号<code>SIGTERM/SIGINT/SIGKILL</code>之后，系统退出<code>os.Exit(0)</code>之前，执行cb() callback函数。具体执行方法建议如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Cmd</span><span class="params">(ctx *cli.Context)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// program of business logic</span></span><br><span class="line">    start()</span><br><span class="line">    </span><br><span class="line">    TrapSignal(logger, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// program of business exit here</span></span><br><span class="line">		stop()</span><br><span class="line">	&#125;)</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="gin退出"><a href="#gin退出" class="headerlink" title="gin退出"></a>gin退出</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	engine := gin.Default()</span><br><span class="line">	engine.GET(<span class="string">&quot;/ping&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;</span><br><span class="line">			<span class="string">&quot;message&quot;</span>: <span class="string">&quot;pong&quot;</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	TrapSignal(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;before exit.&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	engine.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/03/23/ERC%E5%85%B3%E6%B3%A8%E5%88%97%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/23/ERC%E5%85%B3%E6%B3%A8%E5%88%97%E8%A1%A8/" class="post-title-link" itemprop="url">ERC关注列表</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-03-23 13:42:01" itemprop="dateCreated datePublished" datetime="2020-03-23T13:42:01+08:00">2020-03-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以下列表均为<a target="_blank" rel="noopener" href="https://eips.ethereum.org/erc">Ethereum token</a>相关的提案：</p>
-<p>EIP1080 这个是一种可以恢复的 token，其诞生的主要原因是因为以太坊的DAO之前的币被盗用才创建这个ip的，可以从合约层面恢复被盗或丢失的账户，这也减轻合理可证明的令牌或资产损失或盗窃的影响，并帮助解决其他冲突。不应该因为丢失、盗窃或冲突而修改Ethereum的协议，但是可以在智能契约层解决这些问题。其中定义的接口有一个抽象方法叫做claimLost，我在想这个东西是否可以利用在一些类似于财产险的场景中</p>
-<p>EIP1132 可以对ERC20进行时间锁定，这就使得在一些交易过程中不需要将ERC20转给其他第三方的资金托管智能合约，因为这种托管的方式你需要额外的信任这个托管合约，而且在转账给托管合约的时候会造成gas的消耗</p>
-<p>EIP998 是一种针对721和20以及223的扩展，使721token能够拥有其他721token和20token，使20和223能够由721令牌拥有，该规范涵盖了四种不同类型的可组合，998721(20)自顶向下的可组合token，用于接收、持有和传输721(20)token，998721(20)自底向上的可组合token，它们将自己附加到其他721token上，还包含一个rootowner的概念，这种token组合是一个树形的结构</p>
-<p>EIP1175 是一种区块链电商的解决方案，通过提供一个center，这个center面向buyer能够快速建立一个钱包，面向saler可以快速建立一个商店，而且能够创建自己商店的结算erc20token。经分析可以使用在积分，代金券，优惠券等场景中</p>
-<p>EIP902 token validator 提供token所有权和传输验证的服务协议，服务于监管机构的KYC和AML验证，因为监管机构需要将诸如身份等的非链合规信息与链上服务联系起来，通过一个共享的白名单而不是每个token都建立自己的白名单</p>
-<p>EIP1207 类似于OAuth经过第三方授权</p>
-<p>EIP1261 成员资格验证令牌 MVT 依然属于KYC的范畴，比如一些许可证的签发，例如在一些区块链的反洗钱应用，需要把一些地址和成员资格关联起来，达到监管的目的，也存在一种场景，就是我们自己发行的erc20token我们希望只能在我们许可的会员间传递</p>
-<p>EIP1450 给了我一个启发就是合规和监管对应的要求应该从合约层面解决，仅仅是对原有的ERC20加了一些modifier就可以满足监管和法律的要求，ERC-1450必须防止任何人执行转移、允许和批准功能和/或实现这些功能，否则总是会失败，ERC-1450更新了transferFrom、mint和burnFrom函数。转让方、铸币方和burnFrom只能由RTA执行，且受限于唯一发布的转让方修改人。此外，ERC-1450还定义了transferOwnership、setTransferAgent、setPhysicalAddressOfOperation和isTransferAgent等函数。只有发行者可以调用transferOwnership、setTransferAgent和setPhysicalAddressOfOperation函数。任何人都可以调用isTransferAgent函数。</p>
-<p>EIP1462 基本的安全token 这些要求包括KYC(了解您的客户)和AML(反洗钱)规则，以及为账户锁定令牌并限制其因法律纠纷而转移的能力。还可以附加附加的法律文档，以便在令牌和off-chain法律实体之间建立双重绑定关系。这个草案对EIP1400和EIP1450都不太认同，因为这两个草案都包含一些特定的场景，是比较小众的需求，1411和1410无法支持777，1066将引入一个转移检查功能，这包含四个新函数，用于检查所提供的输入是否允许操作</p>
-<p>EIP1523 保单721标准，提供了一个jsonSchema，这个jsonSchema类似一个Interface接口，包含符合该标准的一些属性和需要实现的方法</p>
-<p>EIP1948 对721的一个升级，因为有需求希望NFT用例能够与一个动态数据进行关联，该token可以在其生命周期内更改这个动态数据，如果有了这个，区块链电子病历和电子保单就能拥有动态的可修改的数据了</p>
-<p>EIP1996 可持有的token，这里指的是这个token可以被hold，而不是以前的token只能被own，这就意味着第三方可以hold同一笔token而不是own他，这位监管提供了一个很好的方案，持有指定了付款人、收款人、最高金额、公证员和到期日。在创建持有时，将暂停支付方的指定令牌余额。持有余额在执行或释放之前不能转移。持有只能由公证人执行，这将触发令牌从付款人向收款人的转移。如果在任何时候由公证员或在期满后由任何人解除持有，则不进行任何转让，并且支付人可以再次获得该金额。在一些业务下，必须在事先不知道确切金额的情况下保证付款，比如酒店可以暂停客人的账户，作为对任何可能的额外服务(如客房服务)的担保。当客人结账离开时，持有部分被执行，剩余的金额仍然在客人的账户上。而在其他一些业务情况下，在使用其服务之前必须保证支付。例如:当入住酒店时，酒店会hold客人的账户，以确保在交钥匙之前有足够的余额支付房间费用。</p>
-<p>EIP2018 可清除的token，其角色包含一个清算代理，操作员，开证申请人，清算过程将资金转移的承诺转化为资金从一个账户到另一个账户的实际流动。清算代理决定是否可以执行转移。应当转让的数额不能从支付人的余额中扣除，也不能用于其他转让，因此，保证了转让的执行是成功的。一个受管制的令牌需要符合所有的法律要求，特别是KYC和AML。其中一些检查可能无法在链上完成，因此传输可能无法在一个步骤中完成。目前还没有EIP来实现这样的外链检查。这个提议允许用户订购一个转移，可以由一个链外清算代理进行检查。根据它的结果，清算代理将执行或取消转移。要提供有关为何取消转账的更多信息，清算代理可以添加未执行转账的原因。</p>
-<p>EIP2019 可资助的令牌，ERC-20标准令牌的扩展，允许令牌钱包所有者通过调用智能契约并附加一个资金指令字符串来请求为钱包提供资金。其角色包含一个令牌钱包的主人，象征性的合约所有者/代理人，开证申请人，令牌钱包所有者(或经过批准的地址)可以通过区块链订购令牌化请求。这是通过调用orderFund或orderFundFrom方法来完成的，这些方法启动令牌契约操作符的工作流，以支持或拒绝资金请求。在这种情况下，在提交请求时提供资金指令，操作人员使用这些指令来确定要借记的资金来源，以便(通过minting)为令牌钱包提供资金。一般而言，在区块链上逐字逐句地放置用于借记资金的显式路由指令是不可取的，建议使用私有通信替代方法，如私有通道、加密存储或类似的方法(在区块链分类帐之外)来这样做。另一种(不太理想的)可能性是将这些指令以加密的形式放在指令字段中。现在，大多数的令牌发行/资金请求，基于任何基于菲亚特的支付方法，需要一个以前的集中交易，能够获得所需的令牌发行请求者的钱包。为了尝试将所有需要的步骤引入到分散化中，公开令牌生命周期和支付事务的所有需要的步骤，一个资金请求可以允许钱包所有者通过区块链发起资金请求。关键好处:资金和付款的可追溯性得到了加强，从而使入账成为可能。所有的付款状态可以存储在链。几乎所有的货币/令牌生命周期都是通过一种分散的方法来覆盖的，并辅之以在生态系统中普遍使用的私有通信。</p>
-<p>EIP2020 电子货币标准，如今，金融机构使用电子系统，这些系统在核心银行系统的数据库中保存账户余额。为了让一家机构能够保留客户账户余额的记录，并将其提供给客户，该机构必须在一个已知的法律框架下进行监管，而且必须拥有这样做的许可证。在监管监督下维持许可证，需要确保合规(即对所有客户执行KYC，并在允许交易前确保良好的“反洗钱”操作)，并通过定期审计证明其技术和运营偿付能力，以便向机构存放资金的客户可以放心，他们的资金是安全的。</p>
-<p>EIP2021 可支付令牌，令牌钱包的所有者(或批准的地址)可以通过区块链订购支付请求。这是通过调用orderPayoutFrom或orderPayoutFrom方法来完成的，这些方法启动令牌契约操作符的工作流，以支持或拒绝支付请求。在这种情况下，在提交请求时提供支付指令，操作人员使用这些指令来确定资金的目的地。通常，不建议在区块链上逐字逐句地为支出设置显式路由指令，建议使用私有通信替代方法，例如私有通道、加密存储或类似的方法(在区块链分类账之外)。另一种(不太理想的)可能性是将这些指令以加密的形式放在指令字段中。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/03/15/127.0.0.1%E5%92%8C0.0.0.0%E5%9C%B0%E5%9D%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/15/127.0.0.1%E5%92%8C0.0.0.0%E5%9C%B0%E5%9D%80/" class="post-title-link" itemprop="url">127.0.0.1和0.0.0.0地址</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-03-15 17:01:04" itemprop="dateCreated datePublished" datetime="2020-03-15T17:01:04+08:00">2020-03-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="IP地址介绍"><a href="#IP地址介绍" class="headerlink" title="IP地址介绍"></a>IP地址介绍</h3><p>IP地址由两个部分组成，net-id和host-id，即网络号和主机号。<br>net-id：表示ip地址所在的网络号。<br>host-id：表示ip地址所在网络中的某个主机号码。</p>
-<p>即：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IP-address ::=  &#123; &lt;Network-number&gt;, &lt;Host-number&gt; &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="IP地址分类"><a href="#IP地址分类" class="headerlink" title="IP地址分类"></a>IP地址分类</h3><p>IP地址一共分为5类，即A～E，它们分类的依据是其net-id所占的字节长度以及网络号前几位。</p>
-<ul>
-<li><p>A类地址:网络号占1个字节。</p>
-<p>网络号的第一位固定为0。</p>
-</li>
-<li><p>B类地址：</p>
-<p>网络号占2个字节。</p>
-<p>网络号的前两位固定为10。</p>
-</li>
-<li><p>C类地址：</p>
-<p>网络号占3个字节。</p>
-<p>网络号的前三位固定位110。</p>
-</li>
-<li><p>D类地址：</p>
-<p>前四位是1110，用于多播(multicast)，即一对多通信。</p>
-</li>
-<li><p>E类地址：</p>
-<p>前四位是1111，保留为以后使用。</p>
-</li>
-</ul>
-<p>其中，ABC三类地址为单播地址（unicast)，用于一对一通信，是最常用的。</p>
-<h3 id="特殊IP地址"><a href="#特殊IP地址" class="headerlink" title="特殊IP地址"></a>特殊IP地址</h3><p>就是用来做一些特殊的事情。RFC1700中定义了以下特殊IP地址。</p>
-<ol>
-<li>{0,0}：网络号和主机号都全部为0，表示“本网络上的本主机”，只能用作源地址。</li>
-<li>{0，host-id}：本网络上的某台主机。只能用作源地址。</li>
-<li>{-1,-1}：表示网络号和主机号的所有位上都是1（二进制），用于本网络上的广播，只能用作目的地址，发到该地址的数据包不能转发到源地址所在网络之外。</li>
-<li>{net-id,-1}：直接广播到指定的网络上。只能用作目的地址。</li>
-<li>{net-id,subnet-id,-1}：直接广播到指定网络的指定子网络上。只用作目的地址。</li>
-<li>{net-id,-1,-1}：直接广播到指定网络的所有子网络上。只能用作目的地址。</li>
-<li>{127，}：即网络号为127的任意ip地址。都是内部主机回环地址(loopback)，永远都不能出现在主机外部的网络中。</li>
-</ol>
-<h3 id="127-0-0-1和0-0-0-0地址的区别是什么？"><a href="#127-0-0-1和0-0-0-0地址的区别是什么？" class="headerlink" title="127.0.0.1和0.0.0.0地址的区别是什么？"></a>127.0.0.1和0.0.0.0地址的区别是什么？</h3><p>我们先来看下共同点：</p>
-<ol>
-<li>都属于特殊地址。</li>
-<li>都属于A类地址。</li>
-<li>都是IPV4地址。</li>
-</ol>
-<h4 id="0-0-0-0"><a href="#0-0-0-0" class="headerlink" title="0.0.0.0"></a>0.0.0.0</h4><p>IPV4中，0.0.0.0地址被用于表示一个无效的，未知的或者不可用的目标。</p>
-<ul>
-<li>在服务器中，0.0.0.0指的是本机上的所有IPV4地址，如果一个主机有两个IP地址，192.168.1.1 和 10.1.2.1，并且该主机上的一个服务监听的地址是0.0.0.0，那么通过两个ip地址都能够访问该服务。</li>
-<li>在路由中，0.0.0.0表示的是默认路由，即当路由表中没有找到完全匹配的路由的时候所对应的路由。</li>
-</ul>
-<h4 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h4><ul>
-<li>当一台主机还没有被分配一个IP地址的时候，用于表示主机本身。（DHCP分配IP地址的时候）</li>
-<li>用作默认路由，表示”任意IPV4主机”。用来表示目标机器不可用。</li>
-<li>用作服务端，表示本机上的任意IPV4地址。</li>
-</ul>
-<h4 id="127-0-0-1"><a href="#127-0-0-1" class="headerlink" title="127.0.0.1"></a>127.0.0.1</h4><p>127.0.0.1属于{127,}集合中的一个，而所有网络号为127的地址都被称之为回环地址，它们是包含关系，即回环地址包含127.0.0.1。<br>回环地址：所有发往该类地址的数据包都应该被loop back。</p>
-<h4 id="用途-1"><a href="#用途-1" class="headerlink" title="用途"></a>用途</h4><ul>
-<li>回环测试,通过使用ping 127.0.0.1 测试某台机器上的网络设备，操作系统或者TCP/IP实现是否工作正常。</li>
-<li>DDos攻击防御：网站收到DDos攻击之后，将域名A记录到127.0.0.1，即让攻击者自己攻击自己。</li>
-<li>大部分Web容器测试的时候绑定的本机地址。</li>
-</ul>
-<h4 id="localhost"><a href="#localhost" class="headerlink" title="localhost"></a>localhost</h4><p>相比127.0.0.1，localhost具有更多的意义。localhost是个域名，而不是一个ip地址。之所以我们经常把localhost与127.0.0.1认为是同一个是因为我们使用的大多数电脑上都讲localhost指向了127.0.0.1这个地址。<br>在ubuntu系统中，/ets/hosts文件中都会有如下内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   localhost</span><br><span class="line">127.0.1.1   jason-Lenovo-V3000</span><br><span class="line"><span class="meta">#</span><span class="bash"> The following lines are desirable <span class="keyword">for</span> IPv6 capable hosts</span></span><br><span class="line">::1     ip6-localhost ip6-loopback</span><br><span class="line">fe00::0 ip6-localnet</span><br><span class="line">ff00::0 ip6-mcastprefix</span><br><span class="line">ff02::1 ip6-allnodes</span><br><span class="line">ff02::2 ip6-allrouters</span><br></pre></td></tr></table></figure>
-
-<p>上面第一行是几乎每台电脑上都会有的默认配置。<br>但是localhost的意义并不局限于127.0.0.1。</p>
-<p>localhost是一个域名，用于指代this computer或者this host,可以用它来获取运行在本机上的网络服务。<br>在大多数系统中，localhost被指向了IPV4的127.0.0.1和IPV6的::1。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1    localhost</span><br><span class="line">::1          localhost</span><br></pre></td></tr></table></figure>
-
-<p>所以，在使用的时候要注意确认IPV4还是IPV6</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>127.0.0.1 是一个环回地址。并不表示“本机”。0.0.0.0才是真正表示“本网络中的本机”。<br>在实际应用中，一般我们在服务端绑定端口的时候可以选择绑定到0.0.0.0，这样我的服务访问方就可以通过我的多个ip地址访问我的服务。</p>
-<p>比如我有一台服务器，一个外网地址A,一个内网地址B，如果我绑定的端口指定了0.0.0.0，那么通过内网地址或外网地址都可以访问我的应用。但是如果我只绑定了内网地址，那么通过外网地址就不能访问。所以如果绑定0.0.0.0，也有一定安全隐患，对于只需要内网访问的服务，可以只绑定内网地址。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

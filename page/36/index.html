@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">209</span>
+          <span class="site-state-item-count">212</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-count">87</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,357 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">10种常见的软件架构模式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-21 08:45:26" itemprop="dateCreated datePublished" datetime="2018-05-21T08:45:26+08:00">2018-05-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>原文作者：<a target="_blank" rel="noopener" href="https://medium.com/@vijinimallawaarachchi?source=post_header_lockup">Vijini Mallawaarachchi</a><br>原文地址：<a target="_blank" rel="noopener" href="https://medium.com/towards-data-science/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013">10 Common Software Architectural Patterns in a nutshell</a></p>
+<p>有没有想过要设计多大的企业规模系统？在主要的软件开发启动之前，我们必须选择好体系结构，它将为我们提供所需的功能和质量。因此，在将它们应用到具体设计之前，我们应该了解不同的体系结构。</p>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/1.png"></a></p>
+<h3 id="什么是架构模式？"><a href="#什么是架构模式？" class="headerlink" title="什么是架构模式？"></a>什么是架构模式？</h3><p>根据维基百科中的定义：</p>
+<blockquote>
+<p>架构模式是一个通用的、可重用的解决方案，用于在给定上下文中的软件体系结构中经常出现的问题。架构模式与软件设计模式类似，但具有更广泛的范围。</p>
+</blockquote>
+<p>在本文中，将简要地解释以下10种常见的体系架构模式，以及它们的用法、优缺点。</p>
+<ol>
+<li>Layer 分层模式</li>
+<li>CS 客户端-服务器模式</li>
+<li>MS 主从设备模式</li>
+<li>Filter 管道-过滤器模式</li>
+<li>Broker 代理模式</li>
+<li>P2P 点对点模式</li>
+<li>Bus 事件总线模式</li>
+<li>MVC 模型-视图-控制器模式</li>
+<li>Blockboard 黑板模式</li>
+<li>Expression 解释器模式</li>
+</ol>
+<h3 id="一-Layer-分层模式"><a href="#一-Layer-分层模式" class="headerlink" title="一. Layer 分层模式"></a>一. Layer 分层模式</h3><p>这种模式也称为多层体系架构模式。它可以用来构造可以分解为子任务组的程序，每个子任务都处于一个特定的抽象级别。每个层都为下一个提供更高层次服务。</p>
+<p>一般信息系统中最常见的是如下所列的4层。</p>
+<ul>
+<li>表示层(也称为UI层)</li>
+<li>应用层(也称为服务层)</li>
+<li>业务逻辑层(也称为领域层)</li>
+<li>数据访问层(也称为持久化层)</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>一般的桌面应用程序</li>
+<li>电子商务Web应用程序</li>
+</ul>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/2.png"></a></p>
+<h3 id="二-CS-客户端-服务器模式"><a href="#二-CS-客户端-服务器模式" class="headerlink" title="二. CS 客户端-服务器模式"></a>二. CS 客户端-服务器模式</h3><p>这种模式由两部分组成：一个服务器和多个客户端。服务器组件将为多个客户端组件提供服务。客户端从服务器请求服务，服务器为这些客户端提供相关服务。此外，服务器持续侦听客户机请求。</p>
+<p>使用场景：</p>
+<ul>
+<li>电子邮件，文件共享和银行等在线应用程序<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/3.png"></a></li>
+</ul>
+<h3 id="三-MS-主从设备模式"><a href="#三-MS-主从设备模式" class="headerlink" title="三. MS 主从设备模式"></a>三. MS 主从设备模式</h3><p>这种模式由两方组成,主设备和从设备。主设备组件在相同的从设备组件中分配工作，并计算最终结果，这些结果是从设备返回的结果。</p>
+<p>使用场景：</p>
+<ul>
+<li>在数据库复制中，主数据库被认为是权威的来源，并且要与之同步</li>
+<li>在计算机系统中与总线连接的外围设备(主和从驱动器)<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/4.png"></a></li>
+</ul>
+<h3 id="四-管道-过滤器模式"><a href="#四-管道-过滤器模式" class="headerlink" title="四. 管道-过滤器模式"></a>四. 管道-过滤器模式</h3><p>此模式可用于构造、生成和处理数据流的系统。每个处理步骤都封装在一个过滤器组件内。要处理的数据是通过管道传递的。这些管道可以用于缓冲或用于同步。</p>
+<p>使用场景：</p>
+<ul>
+<li>编译器。连续的过滤器执行词法分析、解析、语义分析和代码生成</li>
+<li>生物信息学的工作流<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/5.png"></a></li>
+</ul>
+<h3 id="五-代理模式"><a href="#五-代理模式" class="headerlink" title="五. 代理模式"></a>五. 代理模式</h3><p>此模式用于构造具有解耦组件的分布式系统。这些组件可以通过远程服务调用彼此交互。代理组件负责组件之间的通信协调。</p>
+<p>服务器将其功能(服务和特征)发布给代理。客户端从代理请求服务，然后代理将客户端重定向到其注册中心的适当服务。</p>
+<p>使用场景：</p>
+<ul>
+<li>消息代理软件，如Apache ActiveMQ，Apache Kafka，RabbitMQ和JBoss Messaging</li>
+<li>负债均衡 Ngix</li>
+</ul>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/6.png"></a></p>
+<h3 id="六-点对点模式"><a href="#六-点对点模式" class="headerlink" title="六. 点对点模式"></a>六. 点对点模式</h3><p>在这种模式中，单个组件被称为对等点。对等点可以作为客户端，从其他对等点请求服务，作为服务器，为其他对等点提供服务。对等点可以充当客户端或服务器或两者的角色，并且可以随时间动态地更改其角色。</p>
+<p>使用场景：</p>
+<ul>
+<li>像Gnutella和G2这样的文件共享网络</li>
+<li>多媒体协议，如P2PTV和PDTP</li>
+<li>像Spotify这样的专有多媒体应用程序</li>
+</ul>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/7.png"></a></p>
+<h3 id="七-事件总线模式"><a href="#七-事件总线模式" class="headerlink" title="七. 事件总线模式"></a>七. 事件总线模式</h3><p>这种模式主要是处理事件，包括4个主要组件：事件源、事件监听器、通道和事件总线。消息源将消息发布到事件总线上的特定通道上。侦听器订阅特定的通道。侦听器会被通知消息，这些消息被发布到它们之前订阅的一个通道上。</p>
+<p>使用场景：</p>
+<ul>
+<li>安卓开发</li>
+<li>通知服务</li>
+</ul>
+<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/8.png"></a></p>
+<h3 id="八-MVC-模型-视图-控制器模式"><a href="#八-MVC-模型-视图-控制器模式" class="headerlink" title="八. MVC 模型-视图-控制器模式"></a>八. MVC 模型-视图-控制器模式</h3><p>这种模式，也称为MVC模式，把一个交互式应用程序划分为3个部分，</p>
+<ul>
+<li>模型：包含核心功能和数据</li>
+<li>视图：将信息显示给用户(可以定义多个视图)</li>
+<li>控制器：处理用户输入的信息<br>这样做是为了将信息的内部表示与信息的呈现方式分离开来，并接受用户的请求。它分离了组件，并允许有效的代码重用。</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>在主要编程语言中互联网应用程序的体系架构</li>
+<li>像Django和Rails这样的Web框架<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/9.png"></a></li>
+</ul>
+<h3 id="九-黑板模式"><a href="#九-黑板模式" class="headerlink" title="九. 黑板模式"></a>九. 黑板模式</h3><p>这种模式对于没有确定解决方案策略的问题是有用的。黑板模式由3个主要组成部分组成。</p>
+<ul>
+<li>黑板——包含来自解决方案空间的对象的结构化全局内存</li>
+<li>知识源——专门的模块和它们自己的表示</li>
+<li>控制组件——选择、配置和执行模块<br>所有的组件都可以访问黑板。组件可以生成添加到黑板上的新数据对象。组件在黑板上查找特定类型的数据，并通过与现有知识源的模式匹配来查找这些数据。</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>语音识别</li>
+<li>车辆识别和跟踪</li>
+<li>蛋白质结构识别</li>
+<li>声纳信号的解释<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/10.png"></a></li>
+</ul>
+<h3 id="十-解释器模式"><a href="#十-解释器模式" class="headerlink" title="十. 解释器模式"></a>十. 解释器模式</h3><p>这个模式用于设计一个解释用专用语言编写的程序的组件。它主要指定如何评估程序的行数，即以特定的语言编写的句子或表达式。其基本思想是为每种语言的符号都有一个分类。</p>
+<p>使用场景：</p>
+<ul>
+<li>数据库查询语言，比如SQL</li>
+<li>用于描述通信协议的语言<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/11.png"></a></li>
+</ul>
+<h3 id="体系架构模式的比较"><a href="#体系架构模式的比较" class="headerlink" title="体系架构模式的比较"></a>体系架构模式的比较</h3><p>下面给出的表格总结了每种体系架构模式的优缺点。</p>
+<p>名称—优点—缺点<br>1.分层模式:<br>    - 一个较低的层可以被不同的层所使用。层使标准化更容易，因为我们可以清楚地定义级别。可以在层内进行更改，而不会影响其他层。<br>    - 不是普遍适用的。在某些情况下，某些层可能会被跳过。<br>2.客户端-服务器模式:<br>    - 很好地建立一组服务，用户可以请求他们的服务。<br>    - 请求通常在服务器上的单独线程中处理。由于不同的客户端具有不同的表示，进程间通信会导致额外开销。<br>3.主从设备模式:<br>    - 准确性——将服务的执行委托给不同的从设备，具有不同的实现。<br>    - 从设备是孤立的：没有共享的状态。主-从通信中的延迟可能是一个问题，例如在实时系统中。这种模式只能应用于可以分解的问题。<br>4.管道-过滤器模式:<br>    - 展示并发处理。当输入和输出由流组成时，过滤器在接收数据时开始计算。轻松添加过滤器，系统可以轻松扩展。过滤器可重复使用。可以通过重新组合一组给定的过滤器来构建不同的管道。<br>    - 效率受到最慢的过滤过程的限制。从一个过滤器移动到另一个过滤器时的数据转换开销。<br>5.代理模式:<br>    - 允许动态更改、添加、删除和重新定位对象，这使开发人员的发布变得透明。<br>    - 要求对服务描述进行标准化。<br>6.点对点模式:<br>    - 支持分散式计算。对任何给定节点的故障处理具有强大的健壮性。在资源和计算能力方面具有很高的可扩展性。<br>    - 服务质量没有保证，因为节点是自愿合作的。安全是很难得到保证的。性能取决于节点的数量。<br>7.事件总线模式:<br>    - 新的发布者、订阅者和连接可以很容易地添加。对高度分布式的应用程序有效。<br>    - 可伸缩性可能是一个问题，因为所有消息都是通过同一事件总线进行的。<br>8.模型-视图-控制器模式:<br>    - 可以轻松地拥有同一个模型的多个视图，这些视图可以在运行时连接和断开。<br>    - 增加复杂性。可能导致许多不必要的用户操作更新。<br>9.黑板模式:<br>    - 很容易添加新的应用程序。扩展数据空间的结构很简单。<br>    - 修改数据空间的结构非常困难，因为所有应用程序都受到了影响。可能需要同步和访问控制。<br>10.解释器模式:<br>    - 高度动态的行为是可行的。对终端用户编程性提供好处。提高灵活性，因为替换一个解释程序很容易。<br>    - 由于解释语言通常比编译后的语言慢，因此性能可能是一个问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/" class="post-title-link" itemprop="url">首个区块链小程序上线首日即叫停</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-10 08:44:44" itemprop="dateCreated datePublished" datetime="2018-05-10T08:44:44+08:00">2018-05-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这款区块链小程序“小协议”，用户只需输入协议的标题和内容，可以选择是否加密存储协议内容，支付一定的服务费（费用和字数正相关），生成协议，甲方将协议微信转发乙方，乙方同意之后，这份协议就会被写入以太坊网络。</p>
+<p><img src="/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/1.png"></p>
+<p>在使用小协议时，不需要用户购买以太坊进行支付，直接微信支付人民币，小协议会在后台用以太坊帮写入用户所需要的数据。全部过程都在微信里完成。</p>
+<p>据了解，小协议会读取甲方和乙方的微信ID，这是固定的身份标识，背后通常绑定了很多个人核心信息，例如手机号、银行卡、指纹等等，安全性较高，易验证。这解决了电子合同的身份验证问题。</p>
+<p>会话秘钥是指甲方创建协议和乙方确认协议时，根据当时的时间戳，在微信系统内生成的一次记录值，这秘钥是可变的，只和本次会话挂钩。这解决了签订时间的问题。</p>
+<p>另外，小协议的显现载体是通过图片为载体来显现合同内容的，因此解决了显现载体的问题。</p>
+<p>但是，一份有法律效应的协议，除了不可篡改且能验明身份，还需要得到现有法律的支持，不然出了纠纷，法院也无法解决问题，这个协议就变得没有意义。这也许是此次“小协议”暂停服务的重要原因之一。国内对电子协议是有专门立法的，但是在具体执行上，存在一些不认可的领域，尤其是涉及到大额交易时。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/05/04/Credits-%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/04/Credits-%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">Credits 共识算法分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-04 20:00:17" itemprop="dateCreated datePublished" datetime="2018-05-04T20:00:17+08:00">2018-05-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Credits 白皮书：</p>
+<p><a target="_blank" rel="noopener" href="https://www.credits.com/Content/Docs/TechnicalWhitePaperCREDITSEng.pdf">https://www.credits.com/Content/Docs/TechnicalWhitePaperCREDITSEng.pdf</a></p>
+<h3 id="网络节点"><a href="#网络节点" class="headerlink" title="网络节点"></a>网络节点</h3><p>节点的类型：</p>
+<ol>
+<li>公共节点（CN）是参加交易验证的节点，具有最小的信任因子。它也是可信节点和当前处理的候选人。</li>
+<li>可信节点（TN）是参加交易验证的节点，具有最大值信任因子（1），它是当前处理和普通节点的候选人。在投票和选举的数学计算期间，该节点不是可信的。数学计算取决于节点的数量和网络的复杂性。</li>
+<li>网络主节点（MN）是参与验证的节点。负责将交易添加到账本中。在投票和选举的数学计算期间，该节点不是可信的。</li>
+</ol>
+<p>系统使用可信因子 - 从0到1的绝对分数值，以（可信节点数的数量+1）表示网络中节点的总数。该可信节点的最大数量不能超过网络节点的50％。</p>
+<h3 id="网络主节点的概念"><a href="#网络主节点的概念" class="headerlink" title="网络主节点的概念"></a>网络主节点的概念</h3><p>所有网络节点都是分布式的，没有任何一个具有优先权。网络节点被定义为将处理存储事务队列，构建一个新的交易块并将其放入账本中的节点。</p>
+<p>CREDITS平台通过最新的节点账本和容量证明的校验以证明节点的账本是最新的。<br>基于最新的账本，节点通过计算一个 hash 运算来使得自己变成网络主节点。之后全网广播，结构中包含了一个时间戳和一个基于最新账本的计算值，其他网络节点接到结果后开始验证并通过。此验证过程原则上为 BFT。验证通过后全网认定了唯一的网络主节点。</p>
+<p>添加之后，初始消息被分成若干块，每块由16个词组成。每个消息都经过64 ~ 80 次迭代，在每次迭代中，2个次被转换，其余的词定义转换函数。每个块的结果都被hash 计算得到摘要。</p>
+<h3 id="网络节点设备"><a href="#网络节点设备" class="headerlink" title="网络节点设备"></a>网络节点设备</h3><p>建议使用物质激励来维护网络中最优性能的服务器和高互联网带宽。作为物质补偿，主网络节点的所有者将获得报酬，即CREDITS Token。其余的部分（½）赠予参与BFT共识的可信节点。百分比可以是改变的，通过网络的联邦投票决定费率激励系统。</p>
+<h3 id="构建共识"><a href="#构建共识" class="headerlink" title="构建共识"></a>构建共识</h3><p>如上所述，主网络节点由所有节点选择。主要任务是：获取候选状态的事务以推动所有节点追加账本。</p>
+<p>整个过程可以分为以下几个阶段：</p>
+<ol>
+<li>搜索网络主节点;</li>
+<li>构建可信节点;</li>
+<li>接收交易清单并建立一份候选人清单;</li>
+<li>处理候选人名单，节点投票（可信节点和普通节点有不同的权重因子;</li>
+<li>移除候选人未经证实的交易;</li>
+<li>构建一个已经被确认的交易清单，加入账本;</li>
+<li>使用包含的块的时间戳和散列码将交易添加到账本中;</li>
+<li>将块发送到所有网络节点。收到时，它被添加到所有节点的注册表中。</li>
+</ol>
+<h3 id="交易没有被包含在注册表中"><a href="#交易没有被包含在注册表中" class="headerlink" title="交易没有被包含在注册表中"></a>交易没有被包含在注册表中</h3><p>未包含在就绪交易列表中的交易标记为已拒绝。这样的交易立即显示给交易的发起人。</p>
+<p>不包含在账本中的交易仍保留在候选人的集合中并存储在网络节点上。服务器同时也在收取新交易，然后搜索过程重新开始。这种连续循环操作可以在保持高度可靠性的同时快速进行交易的稳定性。</p>
+<p>—笔者认为上述过程对交易的排序是不严谨的。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -437,339 +788,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/" class="post-title-link" itemprop="url">算法图解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-12 09:42:23" itemprop="dateCreated datePublished" datetime="2018-04-12T09:42:23+08:00">2018-04-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这是我见过的最 nice 的算法图解。</p>
-<p><a target="_blank" rel="noopener" href="https://idea-instructions.com/">https://idea-instructions.com/</a></p>
-<p><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/quick-sort.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/public-key.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/merge-sort.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/graph-scan.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/euler-path.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/bogo-sort.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/binary-search.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/avl-tree.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Algorand算法特性总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-09 11:56:41" itemprop="dateCreated datePublished" datetime="2018-04-09T11:56:41+08:00">2018-04-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.algorand.com/">here is algorand网址链接</a></p>
-<h4 id="PoW的安全性"><a href="#PoW的安全性" class="headerlink" title="PoW的安全性"></a>PoW的安全性</h4><p>基于PoW的区块链假定矿工拥有生成下一个区块所需的大部分计算能力。但是，工作证明已将权力集中在少数采矿池中。在比特币中，实际上只有三个这样的矿池控制区块链。对于任何实体而言，这种权力集中对于渴望分权的系统是不可接受的，并且很可能是非常危险的。</p>
-<h4 id="Bonded-PoS的安全性"><a href="#Bonded-PoS的安全性" class="headerlink" title="Bonded PoS的安全性"></a>Bonded PoS的安全性</h4><p>在基于Bonded PoS的区块链中，每个用户都可能将自己的部分资金置于危险境地。那些这样做的人有权根据他们的赌注选择一个新的区块。原则上，如果他们发现行为不端，他们可能会失去他们的赌注，如果他们主张通过行为失误赚更多的钱，这可能不是很有威慑力。但是，一个普通用户只能负担得起的一小部分资金。因此，这个系统可能会成为富有的不诚实的人的牺牲品，这些个人通过大量的资金来控制区块链。</p>
-<h4 id="DPoS的安全性"><a href="#DPoS的安全性" class="headerlink" title="DPoS的安全性"></a>DPoS的安全性</h4><p>在基于DPoS的区块链中，生成区块的权力在很长的时间间隔内被提供给一小部分公认的用户群。这种方法可能比工作量证明的成本更低，但无可否认的是相当集中！在这里，安全依赖于这个小组中大多数人的诚实，但任何一小部分用户都是攻击者的明显目标。</p>
-<h4 id="安全在Algorand"><a href="#安全在Algorand" class="headerlink" title="安全在Algorand"></a>安全在Algorand</h4><p>如果系统中的大部分资金由诚实用户所有，Algorand将保证安全工作。请注意，我们并不是谈论一些特殊用户拥有的大部分资金，而是所有用户拥有的资金。此外，Algorand的用户不需要将任何一小部分资金投入赌注。用户的钱始终留在她的手中，随时准备用尽自己的希望。</p>
-<h4 id="高效且可扩展"><a href="#高效且可扩展" class="headerlink" title="高效且可扩展"></a>高效且可扩展</h4><p>Algorand因为它在两个阶段产生一个新的块，每一个都完美地缩放。<br>阶段1：随机选择一个用户并提出一个新的区块。<br>阶段2：随机选择一小部分用户来验证并同意该区块。</p>
-<h4 id="Algorand不能被审查"><a href="#Algorand不能被审查" class="headerlink" title="Algorand不能被审查"></a>Algorand不能被审查</h4><p>两阶段中，用户按照他们在系统中的金额成比例地选择。它可能不包含在由不诚实用户提出的区块中，但只要其提议者是诚实的，它就会进入新的区块。因此，进入Algorand区块链所需的交易费用也非常低。这允许在平等条件下处理宏观和微观支付。</p>
-<h4 id="灵活性是成功的关键。"><a href="#灵活性是成功的关键。" class="headerlink" title="灵活性是成功的关键。"></a>灵活性是成功的关键。</h4><p>Algorand通过其标志性的建议和约定机制产生一个新的区块。在很高的层次上，Algorand秘密并即时召集一小群用户，他们的加密和安全选择能够公平地代表所有用户的社区（由他们在系统中的持股量加权）。这个代表性的委员会就新的区块达成协议，但事实上，它可以用来就其他问题达成一致。例如，改变议定书或修改货币政策。</p>
-<p>我们应该认识到，在任何复杂的系统中改变都是必要的。传统的加密货币是静态的，任何“改变方向”都需要一个硬分叉，从而导致社区分裂。从长远来看，分散会削弱社区和任何货币的效用。</p>
-<p>传统的加密货币没有内置的安全机制来达成协议。因此，关于变革的辩论是非常结构化的，无论达成任何形式的协议，都必须在链条外达成。因此，人们总是怀疑任何结论的正确性。</p>
-<p>相比之下，Algorand使社区和协议得以发展。Algorand以其有效和安全的拜占庭协议为中心。经过辩论后，在区块链上发布了一项拟议更改，并使用Algorand的共识协议，社群投票接受或拒绝该提案。如果获得批准，建议的更改将立即生效。</p>
-<p>在Algorand，这种协议并不是通过智能合同来实施的。相反，它直接内置于协议的核心。</p>
-<p>相关文章链接：</p>
-<p><a href="https://willzhuang.github.io/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">可验证随机函数VRF之Algorand共识算法</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">可验证随机函数VRF之Algorand共识算法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-03-31 13:54:31" itemprop="dateCreated datePublished" datetime="2018-03-31T13:54:31+08:00">2018-03-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>2018年2月，图灵奖得主、MIT教授Sivio Micali募集400万美元开发Algorand区块链协议一事受到了国内外媒体的普遍关注。在MITMicali教授和MIT媒体实验室数字货币计划负责人Neha Narula合开课程《共享公共账本》(Shared Public Ledger)课程。这门课主要就是讲解Algorand。Algorand的目标是建立一个低能耗、高速度、民主化、可拓展性好而且几乎不会出现分叉的分布式账本。Algorand没有引入激励机制或发行数字加密货币。</p>
-<p>论文发表In Proceedings of the 26th ACM Symposium on Operating Systems Principles (SOSP), Shanghai, China, October 2017.：</p>
-<ul>
-<li><a href="nickolaihttps://people.csail.mit.edu/nickolai/papers/gilad-algorand.pdf">Algorand: Scaling Byzantine Agreements for Cryptocurrencies</a></li>
-</ul>
-<p>Algorand由algorithm(算法)和random(随机)两个词合成，顾名思义，就是基于随机算法的公共账本协议(public ledger)。Algorand针对比特币区块链系统的几个核心缺陷进行了改进。</p>
-<h3 id="1-Algorand的目标是："><a href="#1-Algorand的目标是：" class="headerlink" title="1. Algorand的目标是："></a>1. Algorand的目标是：</h3><ol>
-<li>能耗低，不管系统中有多用户，大约每1500名用户中只有1名会被系统挑中执行长达几秒钟的计算。</li>
-<li>民主化，不会出现类似比特币区块链系统的“矿工”群体。</li>
-<li>出现分叉的概率低于一兆分之一。假设Algorand中平均每分钟产生一个区块(后文会给出有关测试数据)，这个概率意味着平均每190万年出现一次分叉。</li>
-<li>可拓展性好。</li>
-</ol>
-<h3 id="2-Algorand算法假设"><a href="#2-Algorand算法假设" class="headerlink" title="2. Algorand算法假设"></a>2. Algorand算法假设</h3><ol>
-<li>网络中诚实节点的数目始终占优。</li>
-<li>节点可以自由地随时加入网络，而不需要申请。网络中每个节点通过一个公钥地址(同时也是钱包地址)表示，对于新加入的节点地址，只有被网络中其他节点转账成功(即钱包余额大于0)后，才可以参与到网络中的区块共识。</li>
-<li>攻击者也是动态变化的(诚实节点随时可能变为攻击者)。</li>
-</ol>
-<h3 id="3-用户和交易特征"><a href="#3-用户和交易特征" class="headerlink" title="3. 用户和交易特征"></a>3. 用户和交易特征</h3><p>Algorand是一个公有链系统。用户(或者节点)加入Algorand不需要事先申请，可以随时加入。Algorand对用户数量也没有任何限制。每个用户持有多个公钥。每个公钥均是一个电子签名机制的一部分，也就是有一个与之对应的私钥。每个公钥对应着一定数量的货币。每笔交易实际上是一个电子签名，该电子签名将一定数量的货币从某一个公钥转移给另一个公钥，并用前一个公钥对应的私钥进行加密。不难看出，Algorand的这些设计，与比特币是一样的。</p>
-<p>Algorand要求系统中2/3的货币由诚实用户掌握。诚实用户的含义是：其行为遵守有关指引(主要指拜赞庭共识协议，见下文)，并且能完美地发送和接收消息。诚实用户以外的是恶意用户，恶意用户的行为可以任意偏离有关指引。</p>
-<p>对恶意用户，Algorand假设他们由一个“敌对者”(adversary)控制。“敌对者”能发起强大攻击，包括：</p>
-<ol>
-<li>“敌对者”可以在任何时候瞬间地腐化任何他选中的用户，使其成为恶意用户(哪怕该用户之前是诚实用户)。</li>
-<li>“敌对者”完全控制并且完美协调所有恶意用户。可以理解为，恶意用户的行为(包括发送和接收消息)完全由“敌对者”代理。</li>
-<li>“敌对者”控制所有信息发送，但必须满足一点：诚实用户发出的消息能在一定时间内(该时间只与信息的存储大小有关)抵达95%的诚实用户。</li>
-<li>“敌对者”几乎不可能伪造诚实用户的电子签名或者干涉诚实用户之间的通讯。</li>
-</ol>
-<p>目前，Algorand是一个单纯的分布式账本协议，没有引入激励机制，没有发行类似比特币的数字加密货币。Algorand中交易所用的货币是外生给定的(可以是任何法定货币或数字加密货币)，交易只影响货币在不同用户之间的分配。而在比特币区块链系统中，“矿工”构建了被公共账本接受的区块后，就会得到系统给予的一定数量的比特币作为奖励。</p>
-<h3 id="4-网络通讯"><a href="#4-网络通讯" class="headerlink" title="4. 网络通讯"></a>4. 网络通讯</h3><p>与比特币区块链系统一样，Algorand假设用户之间的通讯采取“点对点传言”模式(peer-to-peer gossip)：当某一用户传播一条消息后，第一次收到这条消息的用户随机并且独立地选择他的一些“邻居”，并将消息传给“邻居”们。当没有用户是第一次收到这条消息时，这条消息的传播就终止了。</p>
-<p>Algorand对网络通讯的要求是：对任意大于95%的可及性参数(reachability)ρ和消息的存储大小参数μ，总存在一个时间参数λ(λ只与ρ和μ有关)，使得一个诚实用户发出的存储大小为μ的消息，在经过λ长时间后，至少被超过ρ的诚实用户接收。</p>
-<h3 id="5-密码抽签（cryptographic-sortition）"><a href="#5-密码抽签（cryptographic-sortition）" class="headerlink" title="5. 密码抽签（cryptographic sortition）"></a>5. 密码抽签（cryptographic sortition）</h3><p>密码抽签是Algorand的关键创新，也是其得名的由来，其要点如下：</p>
-<p>首先，Algorand创建并不断更新一个独立参数，称为“种子”。“种子”参数不仅不可能被“敌对者”预测，也不能被其操纵。</p>
-<p>其次，在BA每次循环中，Algorand基于当前 “种子”参数构建并公布一个随机算法(也被称为可验证的随机函数—verifiable random functions，见下文)。该随机算法中的一个关键参数是用户的私钥，这个私钥只有用户本人才知道。</p>
-<p>接着，每个用户使用自己的私钥运行系统公布的随机算法，得到自己的凭证(credential)。凭证值满足一定条件的用户就是这一轮的verifiers。verifiers组装一个新区块并连同自己的凭证一起对外发出。其中，在第一个子步骤中凭证值最小的那个verifier的地位比较特殊，称为leader。</p>
-<p>最后，所有verifiers基于leader组装的新区块运行拜赞庭协议BA。在BA的每次循环中的每一个子步骤中，被选中的verifier都是不同的。这样能有效防止验证权力集中在某些用户手中，避免“敌对者”通过腐化这些用户来攻击区块链。</p>
-<h3 id="6-共识机制"><a href="#6-共识机制" class="headerlink" title="6. 共识机制"></a>6. 共识机制</h3><p>Algorand中，verifier用户(仅指被系统随机挑中作为verifier的用户)通过一个BFT协议(由Micali教授开发，称为BA)对新区块达成共识。BA执行起来非常快。大致言之，BA每次循环有3个子步骤，在每次循环后均有1/3以上的概率能达成共识。一旦verifier对某一个新区块达成共识，超过一半的“验证者”再用自己的私钥对该区块进行电子签名，相当于认证，该区块就开始在Algorand网络中传播。</p>
-<p>BA的一个重要特征是：在点对点网络通讯下，BA的参与者可更换—player-replaceable。也就是，BA每次循环的每一个子步骤均可由全新的、独立随机选择的参与者来执行。在这种情况下，BA仍能正确、有效地达成共识。假设有上百万的用户，BA每次循环的每一个子步骤的参与者可以完全不一样，而且每一批参与者都无法确定下一批参与者是谁，从而无法串谋。</p>
-<h3 id="7-可能的攻击："><a href="#7-可能的攻击：" class="headerlink" title="7. 可能的攻击："></a>7. 可能的攻击：</h3><ol>
-<li><p>尽管可以通过对上一个区块的哈希计算来确定构建下一个区块的leader节点和verifier节点，但是由于哈希函数自身的性质，攻击节点只需要在区块中添加一些微小的改动就可以很大影响下一个区块的leader节点的选择，从而破坏leader／verifier的随机性。为保证完全随机，在区块中引入block quantity，Qr(r为第r个块)，一个区块的Qr值只有在当前区块的leader在整个网络中被揭晓时才能最终确认，从而使攻击者无法事先攻击。</p>
-</li>
-<li><p>即使leader／verifier的选择是完全随机的，攻击者也有可能在leader／verifier被揭晓的同时，马上攻击这些节点，从而控制leader/verifier。为解决这个问题，采用的方案是设计多个潜在的leader，并且每个潜在leader都独立完成区块的构建，然后每个潜在leader都将自己的认证信息，构建的区块一起发送到网络中，通过共识算法选定真正的leader。由于在真正leader的身份在被揭晓之前，网络已经完成了区块数据的广播，即使攻击者攻陷了真正的leader也无法改变区块的数据。</p>
-</li>
-<li><p>算法中，区块生成都需要经过若干步骤，如果在算法执行过程中verifier节点被攻击，比如网络被断开，可能造成算法无法持续执行下去，从而造成整个区块无法确认，整个网络被停滞。而且，也无法要求每个节点都7x24在线，始终为整个网络进行服务。因此设计算法支持player-replaceable，从而使任何节点都可以随时被其他节点接管。</p>
-</li>
-</ol>
-<h3 id="8-具体算法"><a href="#8-具体算法" class="headerlink" title="8. 具体算法"></a>8. 具体算法</h3><h4 id="8-1-选出verifier和leader"><a href="#8-1-选出verifier和leader" class="headerlink" title="8.1. 选出verifier和leader"></a>8.1. 选出verifier和leader</h4><ol>
-<li>系统创建并不断更新一个独立参数，称为“种子”,记为Q ^{r-1} 。第r轮的种子的参数是256位长度的字符串，入参是第r-k轮结束后活跃用户的公钥集合，记为PK^{r-k}。k被称为回溯参数或安全参数，比如=1，表示上一轮结束后的用户集合。上面2个参数属于公共知识。</li>
-<li>基于当前 “种子”构建并公布一个随机算法，称为可验证的随机函数(verifiable random functions)。该随机算法中的一个关键参数是用户的私钥，这个私钥只有用户本人才知道。</li>
-<li>每个用户使用自己的私钥对“种子”进行签名，用函数SIGi来表示，用它作为参数，运行系统公布的随机算法，用函数H()来表示，得到自己的凭证(credential)= H(SIGi(r,1,Q^{r-1}))(函数SIGi有多个输入参数时，表示将这些参数简单串联后再进行电子签名)。<br> 3.1. 凭证是一个近乎随机的、由0和1组成的长度为256的字符串，并且不同用户的凭证几乎不可能相同；<br> 3.2. 由凭证构建的2进制小数0.H(SIGi(r,1,Q^{r-1}))，也就是将凭证字符串写到小数点后在0和1之间均匀分布。</li>
-<li>凭证值满足一定条件的用户就是这一轮的验证者verifiers。<br> 4.1. 条件是：对0和1之间的一个数，0.H(SIGi(r,1,Q^{r-1}))≤p发生的概率为p，称所有满足此条件的用户为verifiers。<br> 4.2. 有1-10^{-18}的概率保证在所有verifiers中，至少有一个是诚实的。</li>
-<li>verifiers组装一个新区块并连同自己的凭证一起对外发出。第r轮第s步(s&gt;1)的verifier的产生程序与上文类似。其中，在第一个子步骤中凭证值最小(按字典方面排序)的那个verifier的地位比较特殊，称为leader。</li>
-<li>所有verifiers基于leader组装的新区块运行拜占庭协议BA。</li>
-<li>在BA的每次循环中的每一个子步骤中，被选中的“验证者”都是不同的。这样能有效防止验证权力集中在某些用户手中，避免“敌对者”通过腐化这些用户来攻击区块链。</li>
-</ol>
-<h4 id="8-2-种子seed的更新"><a href="#8-2-种子seed的更新" class="headerlink" title="8.2. 种子seed的更新"></a>8.2. 种子seed的更新</h4><p>用Br表示第轮结束后，拜占庭协议BA输出的区块。</p>
-<p>“种子”的更新过程是：<br>Q^r =H(SIGlr(Q^{r-1}，r)), 如果B^r不是空区块。<br>Q^r =H(Q^{r-1}，r）, 如果B^r是空区块。</p>
-<p>如果Algorand在第r轮受到了“敌对者”攻击，B^r可能是空的。</p>
-<h4 id="8-3-Algorand的BFT实现，即BA"><a href="#8-3-Algorand的BFT实现，即BA" class="headerlink" title="8.3. Algorand的BFT实现，即BA"></a>8.3. Algorand的BFT实现，即BA</h4><p>拜占庭协议BA相当于一个两阶段的投票机制。</p>
-<ul>
-<li>第一阶段，verifiers对其收到的候选区块(为控制通讯成本，实际上用的是候选区块的哈希摘要)运行分级共识协议(graded consensus), 选出verifiers共识最多的候选区块。</li>
-<li>第二阶段，verifiers对第一阶段选出的候选区块，运行二元拜占庭协议(binary Byzantine Agreement)，即要么接受它，要么接受空区块。需要强调的，在每一阶段中的每一个子步骤，Algorand可能使用完全不同的verifiers。</li>
-</ul>
-<p>以下为叙述方便，假设：</p>
-<ul>
-<li>系统处在第r轮；</li>
-<li>每一个子步骤都选出n名verifiers，其中恶意verifiers不超过t，并且n≥3t+1(也就是诚实“验证者”占比在2/3以上)。另外，引入计数函数 #si(v)表示在第s步“验证者” i 收到的消息v的次数(来自同一发送人的只能算1次)。<h4 id="3-1-第一阶段：分级共识协议"><a href="#3-1-第一阶段：分级共识协议" class="headerlink" title="3.1. 第一阶段：分级共识协议"></a>3.1. 第一阶段：分级共识协议</h4>运行密码抽签程序，选出“领导者” lr 和这一步的“验证者”verifiers。用vi表示“验证者”i收到的并且他认识是来自“领导者”lr的候选区块。</li>
-</ul>
-<p>vir不一定等于“领导者”lr构建的候选区块：</p>
-<ul>
-<li>“验证者” i辨认 “领导者” 的方法是从他收到的所有“验证者”凭证中找出按字典排序最小者。但因为网络通讯原因，“领导者”lr发出的信息可能没有到达“验证者”i处。</li>
-<li>“领导者”lr正好被“敌对者”腐化，对不同“验证者”发出不同的候选区块。</li>
-<li>“验证者”i本身可能是恶意的。</li>
-</ul>
-<ol>
-<li> “验证者”i将收到的vi广播给其他用户。广播正确的vi代表他告诉其他验证者他同意该vi。</li>
-<li>当且仅当“验证者”i在步骤2中收到消息x的次数超过了2t+1次（即 #2i(x)≥2t+1），他将消息x发给其他用户。“验证者”i按以下规则输出(vi,gi)：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">如果存在x使得#3i(x)≥2t+1，则, </span><br><span class="line">vi&#x3D;x, gi&#x3D;2；&#x2F;&#x2F;2轮都投票成功 如果x存在使得#3i(x)≥t+1，则, </span><br><span class="line">vi&#x3D;x, gi&#x3D;1；&#x2F;&#x2F;只有1轮投票成功 否则, </span><br><span class="line">vi&#x3D;Ø, gi&#x3D;1，其中Ø代表空区块。</span><br></pre></td></tr></table></figure>
- 含义是：</li>
-</ol>
-<ul>
-<li>如果存在诚实“验证者”i，使得,gi=2，那么对任意其他“验证者”j，必有gj≥1,vj=vi。此时所有诚实“验证者”输出的候选区块是一样的。当然，如果一开始的“验证者”收到的候选区块都是v，那么最后一批“验证者”输出的也将都是v。</li>
-<li>对所有的诚实“验证者”i，gi≤1，并且他们输出的候选区块不一定相同。<h4 id="3-2-第二阶段：二元拜占庭协议"><a href="#3-2-第二阶段：二元拜占庭协议" class="headerlink" title="3.2. 第二阶段：二元拜占庭协议"></a>3.2. 第二阶段：二元拜占庭协议</h4>基于分级共识协议的输出{(vi,gi):i=1,2,K……n}对每个诚实“验证者”赋值：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果gi&#x3D;2，那么bi&#x3D;0；</span><br><span class="line">其他情况，bi&#x3D;1。</span><br></pre></td></tr></table></figure>
-  这些bi就是二元拜占庭协议的输入。</li>
-</ul>
-<ol>
-<li>第一步“验证者”i发出bi。<ul>
-<li>如果#1i(0)≥2t+1，那么“验证者”i设定bi=0，输出outi=0，并停止执行协议（也可以认为他以后将一直发出bi=0）；</li>
-<li>如果#1i(1)≥2t+1，那么“验证者”i设定bi=1；否则，“验证者”i设定bi=0。</li>
-</ul>
-</li>
-<li>第二步“验证者”i发出bi。<ul>
-<li>如果#2i(1)≥2t+1，那么“验证者”i设定bi=1，输出outi=1，并停止执行协议（也可以认为他以后将一直发出bi=1）；</li>
-<li>如果#2i(0)≥2t+1，那么“验证者”i设定bi=0；否则，“验证者”i设定bi=1。</li>
-</ul>
-</li>
-<li>第三步“验证者”i发出bi和SIGi(Qr-1,rj)。<ul>
-<li>如果#3i(0)≥2t+1，那么“验证者”i设定bi=0；</li>
-<li>如果#3i(1)≥2t+1，那么“验证者”i设定bi=1；</li>
-<li>否则，用Si表示所有给“验证者”i发送消息的其他“验证者”集合。</li>
-</ul>
-</li>
-</ol>
-<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><ul>
-<li>algorand已经成功实施了1000个虚机节点，模拟了500,000用户数量。</li>
-<li>algorand的TPS性能是比特币的125倍，按照论文中给出的数据，每小时可以共识的交易是750M字节每小时，计算一下(按照每笔交易长度100字节计算)：750 1024 1024/60/60/100=2184.5 TPS，考虑到实际环境的运行，估计可以达到1000TPS左右。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
