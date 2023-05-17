@@ -23,15 +23,15 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="QuestionHow can I finish (or complete) an order? I already run Capture an Order -&gt; Create a Fulfillment -&gt; Create a Shipment successfully, but the order status is “pending” in DB. AnswerYou can">
+<meta name="description" content="QuestionHow can I finish (or complete) an order? I already run Capture an Order -&gt; Create a Fulfillment -&gt; Create a Shipment successfully, but the order status is “pending” in DB. (in Ubuntu &#x2F; m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2.How to complete an order in medusa">
 <meta property="og:url" content="https://willzhuang.github.io/2022/04/26/2.How%20to%20complete%20an%20order%20in%20medusa/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
-<meta property="og:description" content="QuestionHow can I finish (or complete) an order? I already run Capture an Order -&gt; Create a Fulfillment -&gt; Create a Shipment successfully, but the order status is “pending” in DB. AnswerYou can">
+<meta property="og:description" content="QuestionHow can I finish (or complete) an order? I already run Capture an Order -&gt; Create a Fulfillment -&gt; Create a Shipment successfully, but the order status is “pending” in DB. (in Ubuntu &#x2F; m">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-04-26T13:34:00.000Z">
-<meta property="article:modified_time" content="2022-04-26T13:44:47.348Z">
+<meta property="article:modified_time" content="2023-05-11T07:37:17.089Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="eCommerce">
 <meta name="twitter:card" content="summary">
@@ -200,14 +200,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-count">214</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">89</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -271,10 +271,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-04-26 21:34:00 / Modified: 21:44:47" itemprop="dateCreated datePublished" datetime="2022-04-26T21:34:00+08:00">2022-04-26</time>
+      <time title="Created: 2022-04-26 21:34:00" itemprop="dateCreated datePublished" datetime="2022-04-26T21:34:00+08:00">2022-04-26</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-05-11 15:37:17" itemprop="dateModified" datetime="2023-05-11T15:37:17+08:00">2023-05-11</time>
+      </span>
 
   
 </div>
@@ -286,10 +292,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p>How can I finish (or complete) an order? I already run Capture an Order -&gt; Create a Fulfillment -&gt; Create a Shipment successfully, but the order status is “pending” in DB.</p>
+        <h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p>How can I finish (or complete) an order? I already run Capture an Order -&gt; Create a Fulfillment -&gt; Create a Shipment successfully, but the order status is “pending” in DB. (in Ubuntu / medusa version <a target="_blank" rel="noopener" href="https://github.com/medusajs/medusa/releases/tag/v1.7.12">v1.7.12</a>)</p>
 <h3 id="Answer"><a href="#Answer" class="headerlink" title="Answer"></a>Answer</h3><p>You can create a simple subscriber, that listens for order completion events:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderSubscriber</span> </span>&#123;</span><br><span class="line">  constructor(&#123; orderService, eventBusService &#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.orderService_ = orderService;</span><br><span class="line">    eventBusService.subscribe(<span class="string">&quot;order.placed&quot;</span>, <span class="keyword">this</span>.handleOrderPlaced);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleOrderPlaced = async (data) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> await <span class="keyword">this</span>.orderService_.update(data.id, &#123; status: <span class="string">&quot;completed&quot;</span> &#125;)</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export <span class="keyword">default</span> OrderSubscriber;</span><br></pre></td></tr></table></figure>
 
+
+
+<p>![](2.How to complete an order in medusa/1.png)</p>
 
     </div>
 
