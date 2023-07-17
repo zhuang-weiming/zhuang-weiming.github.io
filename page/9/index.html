@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,105 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/03/10/CS251_Final_Exam_2021-stanford.edu-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/10/CS251_Final_Exam_2021-stanford.edu-2/" class="post-title-link" itemprop="url">CS251_Final_Exam_2021-stanford.edu-1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-10 19:16:00" itemprop="dateCreated datePublished" datetime="2022-03-10T19:16:00+08:00">2022-03-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-03-31 20:17:13" itemprop="dateModified" datetime="2022-03-31T20:17:13+08:00">2022-03-31</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="Problem-1-18-points-Questions-from-all-over"><a href="#Problem-1-18-points-Questions-from-all-over" class="headerlink" title="Problem 1. [18 points]: Questions from all over."></a>Problem 1. [18 points]: Questions from all over.</h4><p><strong>A) Briefly explain why a Rollup system stores all transaction data on chain? What would go wrong if transaction data were discarded and not stored anywhere?</strong></p>
+<p>answer - The main goal of Rollup is to increase transaction speed (faster finality), and transaction throughput (high transactions per second), without sacrificing decentralization or security. </p>
+<p>Some Rollup solutions are <a target="_blank" rel="noopener" href="https://ethereum.org/en/developers/docs/scaling/optimistic-rollups/">optimistic rollups</a>, <a target="_blank" rel="noopener" href="https://ethereum.org/en/developers/docs/scaling/zk-rollups/">zero-knowledge rollups</a> or <a target="_blank" rel="noopener" href="https://ethereum.org/en/developers/docs/scaling/state-channels/">state channels</a>. Transactions are rolled up into a single transaction to Mainnet Ethereum, reducing gas fees for users making Ethereum more inclusive and accessible for people everywhere. Rollups perform transaction execution outside layer 1 and then the data is posted to layer 1 where consensus is reached. As transaction data is included in layer 1 blocks, this allows rollups to be secured by native Ethereum security. That is why Rollup system stores all transaction data. </p>
+<p>So If Rollup system has only one single data storage and its transaction data were discarded, the transaction data before rollup will lose and can not get back. Usually, Rollup system is a blockchain and data saved in decentralized nodes, so original transaction data will not lose when one of blockchain nodes is down or broken.</p>
+<p><strong>B) Consider the following Solidity code:</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>; </span><br><span class="line">contract ERC20 is IERC20 &#123;</span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> uint256) private _balances; </span><br><span class="line">  event Transfer(address indexed <span class="keyword">from</span>, address indexed to, uint256 value); </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_transfer</span>(<span class="params">address sender, address recipient, uint256 amount</span>) </span>&#123;</span><br><span class="line">    emit Transfer(sender, recipient, amount); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Suppose this code is deployed in two contracts: a contract at address X and a contract at address Y . Which of the following can read the state of _balances in contract X? Circle the correct answer(s). </p>
+<ul>
+<li>A  Code in the _transfer() function in contract ERC20 at address X </li>
+<li>B  Code in the _transfer() function in contract ERC20 at address Y </li>
+<li>C  An enduser using etherscan.io</li>
+</ul>
+<p>answer C is correct.</p>
+<p><strong>C) Continuing with part (B),</strong> </p>
+<p>which of the following can read the log entry Transfer emitted when the function _transfer() is called? Circle the correct answer(s). </p>
+<ul>
+<li>A  Code in the function getBalance() defined in contract ERC20 at address X </li>
+<li>B  Code in the function getBalance() defined in contract ERC20 at address Y </li>
+<li>C  An enduser using etherscan.io</li>
+</ul>
+<p>answer C is correct.</p>
+<p><strong>D) Two Ethereum transactions, tx1 and tx2, are submitted to the network at the same time.</strong> Transaction tx1 has maxPriorityFee set to y and transaction tx2 has maxPriorityFee set to 2y. Will tx2 necessarily be executed on chain before tx1? Justify your answer. You can assume that maxFee for both tx1 and tx2 is greater than baseFee + maxPriorityFee.</p>
+<p>answer - Assume that maxFee (tx1 and tx2) is greater than baseFee + maxPriorityFee, tx1 and tx2 will mine by miner both,  they will execute in the same block, that is the most possibility, because usually miner nodes are working for tx order base on gasFee from high to low. But still has other possibilities - 1) send tx1 in node 1, send tx2 in node2, the network of node 1 is bad, and all txs in txpool of node 1 maybe blocked , so the speed and status of network of node is very important for transaction success; 2) the other transactions’ maxPriorityFee, if they all very high than 2y, the block is full and cannot take tx2 in, then tx1 and tx2 will not execute, and their executed order will depends on the next block. Or they all very high than y, the block is full and cannot take tx1 in, but the block take tx2 in, so tx1 will not execute, tx2 will execute.</p>
+<p>Catch up high Miner extractable value (MEV) may cause a miner to take priority of a lower fee transaction because it benefits them in some way, it is good for DeFi and application boom, but bad for UX, blockchain network congestion, even make blockchain block order re-organization and consensus instability.</p>
+<p><strong>E) Alice wants to buy a car from dealer Bob.</strong> She sends 1 BTC to Bob’s Bitcoin address. Bob waits for a transaction where (i) the input is from Alice’s address, and (ii) one of the outputs is a UTXO bound to Bob’s address with a value of 1 BTC. As soon as Bob sees this transaction on the Bitcoin blockchain, he gives Alice the keys, and she drives away. Is this safe? Could Alice get the car for free? If so, explain why. If not, explain what Bob should do to ensure that he gets paid. </p>
+<p>answer - In bitcoin with PoW consensus protocol, the tx finality need to wait 6 blocks. so Bob should to wait 6 blocks after the block of tx.</p>
+<p><strong>F) Alice owns a brand new Tesla Model Y.</strong> Can she currently use her car as collateral for a loan in the Compound system? (without selling the car) If yes, explain how. If no, explain why not.</p>
+<p>answer - no, physical car cannot come into digital Compound system yet, because the car maybe bad, maybe broken, maybe stole from somewhere illegally, the car loan needs many kinds of service to confirm its value and price. Compound now only provide cryptocurrencies as collateral for a loan.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -572,124 +671,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/" class="post-title-link" itemprop="url">CBDC-II-共性的需求</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-12-13 10:53:00" itemprop="dateCreated datePublished" datetime="2021-12-13T10:53:00+08:00">2021-12-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-12-15 15:38:38" itemprop="dateModified" datetime="2021-12-15T15:38:38+08:00">2021-12-15</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Central Bank Digital Currency === Digital Fiat Currency === Digital base money === Central Bank E-money. “a widely accessible digital form of fiat money that could be legal tender”(IMF defines). </p>
-<p><strong>Money</strong> is a recognized medium of exchange for goods and services. <strong>Money supply</strong> depicts a form of money known as MB or M0.  <strong>Commercial bank money</strong>  is a form of money that is a claim on financial institutions that can be used to purchase goods and services. <strong>Commercial money supply</strong> depicts this form of money as M1-M3. <strong>Central bank digital currency (CBDC)</strong> would represent a stake on the issuing governments M0 money supply in a digital form.</p>
-<p>Three functions of money:</p>
-<ol>
-<li>A unit of account </li>
-<li>Medium of exchange </li>
-<li>Store of value </li>
-</ol>
-<p>那么CBDC与上述money相比较，有何不同</p>
-<ol>
-<li>同样，CBDC would need to have a 1:1 ratio with the current M0 money supply and maintain the current value of fiat money. </li>
-<li>同样，CBDC是交换媒介，它需要被广泛接受，并且保护消费者，减少纳税人的成本。</li>
-</ol>
-<p>综上，得到<strong>CBDC design (five) features</strong>：</p>
-<p><img src="/2021/12/13/CBDC-II-%E5%85%B1%E6%80%A7%E7%9A%84%E9%9C%80%E6%B1%82/1.png" alt="CBDC-II-共性的需求"></p>
-<ol>
-<li>*<em>7</em>24服务可用**。那么CBDC是应该面相全社会呢？还是仅仅面相金融机构呢？理想答案是全社会每一个人和机构。要根据技术和商业的进步，逐步实施。</li>
-<li><strong>匿名性</strong>。首先要看央行对于隐私性的担忧；其次还取决于人们在多大程度上希望减少逃税、洗钱和资助恐怖主义等非法金融交易；最终将成为用户对隐私的偏好与试图降低与财务诚信相关的风险之间的权衡。<ol>
-<li>商业银行管理自身的用户的账户和交易，不可以见到其他商业银行的用户账户和无关交易</li>
-<li>多家央行相互间可以看见货币发行的总额 ( 经济体量小的国家的喜好？)</li>
-</ol>
-</li>
-<li><strong>转账机制</strong>。使用中间人，例如中央银行或其他第三方，将被视为集中转移机制。点对点方式将被视为一种去中心化的传输机制，因为它发生在两方之间，不需要中央调解器。区块链为上述两种机制都提供了可能性的道路。</li>
-<li><strong>利息</strong>。理想的CBDC应该是记息。</li>
-<li><strong>发行上限</strong>。对任何个人可以持有或在账户之间转移的 CBDC 数量实施限制或上限，可能有助于阻止与此类资金相关的不良影响。而且在ATM机提取现金的数量也是有上限的。QE同理。</li>
-<li>===========================&gt;以下为扩展内容&lt;===========================</li>
-<li><strong>审计</strong>。交易可追溯。</li>
-<li><strong>控制</strong>。冻结某账户。</li>
-<li><strong>公链扩展</strong>。</li>
-<li><strong>中央银行实施监督国内账户以及跨境交易</strong>。</li>
-</ol>
-<p>Optional features：</p>
-<ol>
-<li><p>无手机网络的情况下，理想的CBDC应该仍然可以交易。手机未开机的情况下，CBDC无法交易。手表等其他电子设备同理。</p>
-</li>
-<li><p>反洗钱 / 反资助恐怖主义 / 逃税。在涉嫌违法情况下的交易，被自动终止，无法交易，需要人工介入判断后，再行交易。</p>
-</li>
-<li><p>KYC。资金运行板块/类别，如ESG。</p>
-</li>
-<li><p>跨系统交易能力。如区块链跨链以支撑cross board payment。</p>
-</li>
-<li><p>有效时间限制。如消费券。</p>
-</li>
-</ol>
-<p>Wholesale CBDC的多数业务交易涉及资金和资产的流动，<strong>通过区块链，任何资产的交易，无论是股票、债券还是衍生品，都可以被记录下来，从而允许对分类账进行原子性的记录</strong>。这个过程将资金的全部和最终结算与资产的移动联系起来。</p>
-<p>Retail CBDC的两种token存储形式：1）Token存储在本地，DLT Token可以增强这种模型的匿名性(零知识证明，quorum项目的隐私交易通道等技术)，交易不需要第三方，但是如果用户丢失了token，将无法找回；2）Token存储在DLT账本，类似于目前银行的账本。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

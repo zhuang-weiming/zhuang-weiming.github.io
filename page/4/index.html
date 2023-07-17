@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,118 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/" class="post-title-link" itemprop="url">FMR-波动率</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-11-21 15:21:00" itemprop="dateCreated datePublished" datetime="2022-11-21T15:21:00+08:00">2022-11-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-02-23 11:19:23" itemprop="dateModified" datetime="2023-02-23T11:19:23+08:00">2023-02-23</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>金融资产价格包括股票，期货，期权，目前本人在思考加密货币的价格是否可以套用经典的金融风险模型，学习笔记汇报如下，<u>由于比较书写数学公式不便，本文只记录了关键说明和程序代码</u>。</p>
+<h3 id="1-EWMA"><a href="#1-EWMA" class="headerlink" title="1. EWMA"></a>1. EWMA</h3><p>指数移动加权平均 - Exponentially  Weighted Moving Average, EWMA.</p>
+<p>EWMA波动率迭代告诉我们，当前一天的波动率是前一天波动率的函数，这也提供了一种用过去波动率预测未来波动率的方法。这种方法，不需要保存过去所有的数值，而且计算量较小，因此在实际中广泛使用。</p>
+<p>The ewm() function is used to provide exponential weighted functions. 指数加权功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># Creating the series. Using the range() function, we create a series and set the index to shot.</span></span><br><span class="line">my_series=pd.Series(<span class="built_in">range</span>(<span class="number">1</span>,<span class="number">20</span>,<span class="number">5</span>), index=[x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">&#x27;shot&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Printing the series</span></span><br><span class="line">print(my_series)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using Series.ewm(). We calculate the exponential weight of elements in the series using the ewm() function and set the com and adjust parameters.</span></span><br><span class="line">print(my_series.ewm(com=<span class="number">0.5</span>, adjust=<span class="literal">True</span>).mean())</span><br></pre></td></tr></table></figure>
+
+<p>其中，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Series.ewm(self, com=<span class="literal">None</span>, span=<span class="literal">None</span>, halflife=<span class="literal">None</span>, alpha=<span class="literal">None</span>, min_periods=<span class="number">0</span>, adjust=<span class="literal">True</span>, ignore_na=<span class="literal">False</span>, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong><code>com</code></strong>: This represents the decay in terms of the center of mass, α=1/(1+com), for com≥0. 根据Center of Mass质心指定衰减。</p>
+</li>
+<li><p><strong><code>span</code></strong>: This represents the decay in terms of the span, α=2/(span+1), for span≥1. 根据跨度范围（例如，天数）指定衰减。</p>
+</li>
+<li><p><strong><code>halflife</code></strong>: This represents the decay in terms of the half-life, α=1−exp(log(0.5)/halflife), for halflife&gt;0. 根据半衰期指定衰减。</p>
+</li>
+<li><p><strong><code>alpha</code></strong>: This indicates smoothing factor α, 0&lt;α≤1. 衰减系数。</p>
+</li>
+<li><p><strong><code>min_periods</code></strong>: This represents the minimum number of observations needed to have a value in the window. The default value is <code>0</code>. </p>
+</li>
+<li><p><strong><code>adjust</code></strong>: This is divided by the decaying adjustment factor into the initial periods to consider the imbalance in the relative weightings (looking at the EWMA as a moving average). 计算权重的方式。</p>
+</li>
+<li><p><strong><code>ignore_na</code></strong>: This specifies that the missing values should be ignored when calculating weights. The default is <code>False</code>. 如何对待空值。</p>
+</li>
+<li><p><strong><code>axis</code></strong>: The default value is 0. It specifies the axis on which the function is to be performed. If the value is 0, the operation is performed across the rows. Otherwise, the operation is performed across the columns. 数轴。</p>
+</li>
+</ul>
+<h3 id="2-自回归条件异方差模型ARCH"><a href="#2-自回归条件异方差模型ARCH" class="headerlink" title="2. 自回归条件异方差模型ARCH"></a>2. 自回归条件异方差模型ARCH</h3><p>EWMA与实际情况有不符合的地方，例如，股票收益的波动率是随着时间而变化的。异方差（heteroscedasticity）是指一系列的随机变量值的方差不同。这个模型以自回归方式，通过刻画随时间变异的条件方差，成功解决了时间序列的波动性问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas_datareader</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt </span><br><span class="line"><span class="keyword">from</span> arch <span class="keyword">import</span> arch_model</span><br><span class="line"><span class="comment"># sp500 price</span></span><br><span class="line">sp500 = pandas_datareader.data.DataReader([<span class="string">&#x27;sp500&#x27;</span>], data_source=<span class="string">&#x27;fred&#x27;</span>, start=<span class="string">&#x27;12-28-2009&#x27;</span>, end=<span class="string">&#x27;12-28-2020&#x27;</span>)</span><br><span class="line"><span class="comment"># daily log return</span></span><br><span class="line">log_return_daily = np.log(sp500 / sp500.shift(<span class="number">1</span>))</span><br><span class="line">log_return_daily.dropna(inplace=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># ARCH(1) model</span></span><br><span class="line">arch=arch_model(y=log_return_daily,mean=<span class="string">&#x27;Constant&#x27;</span>,lags=<span class="number">0</span>,vol=<span class="string">&#x27;ARCH&#x27;</span>,p=<span class="number">1</span>,o=<span class="number">0</span>,q=<span class="number">0</span>,dist=<span class="string">&#x27;normal&#x27;</span>)</span><br><span class="line">archmodel=arch.fit()</span><br><span class="line">archmodel.summary()</span><br><span class="line">archmodel.plot()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-广义自回归条件异方差模型GARCH"><a href="#3-广义自回归条件异方差模型GARCH" class="headerlink" title="3. 广义自回归条件异方差模型GARCH"></a>3. 广义自回归条件异方差模型GARCH</h3><p>GARCH是对ARCH建模的一种重要推广。其后，又有诸如NGARCH，IGARCH，EGARCH等一系列针对不同应用等衍生模型相继出现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GARCH(1,1) model</span></span><br><span class="line">garch=arch_model(y=log_return_daily,mean=<span class="string">&#x27;Constant&#x27;</span>,lags=<span class="number">0</span>,vol=<span class="string">&#x27;GARCH&#x27;</span>,p=<span class="number">1</span>,o=<span class="number">0</span>,q=<span class="number">1</span>,dist=<span class="string">&#x27;normal&#x27;</span>)</span><br><span class="line">garchmodel=garch.fit()</span><br><span class="line">garchmodel.summary()</span><br><span class="line">garchmodel.plot()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-模型比较"><a href="#4-模型比较" class="headerlink" title="4.模型比较"></a>4.模型比较</h3><p>对于EWMA模型，利用了通常用的0.94，即 JP Morgan 的RiskMetrics采用的设定。所以，下图中，EWMA中的 λ 通常为 0.94。当GARCH(1, 1)模型的参数 β=0 时，即为ARCH(1, 1)模型。而当 ω=0，α=1-λ，β=λ 时，GARCH(1, 1)模型变换成为EWMA模型。</p>
+<p><img src="/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png"></p>
+<h3 id="5-隐含波动率"><a href="#5-隐含波动率" class="headerlink" title="5.隐含波动率"></a>5.隐含波动率</h3><p>请参考相关阅读中的金融分享管理 - 视频 <a target="_blank" rel="noopener" href="https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176%E3%80%82">https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176。</a></p>
+<p><strong>疑问：市场波动率模型以布朗运动位基础，这真的符合市场的实际情况吗？特别是长期投资？如乔布斯，国家资本主义，等等。</strong></p>
+<p>相关阅读：</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -739,74 +851,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/09/14/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%BF%85%E5%A4%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/14/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%BF%85%E5%A4%87/" class="post-title-link" itemprop="url">科学上网必备</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2022-09-14 18:04:00 / Modified: 18:09:03" itemprop="dateCreated datePublished" datetime="2022-09-14T18:04:00+08:00">2022-09-14</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://duyaoss.com/">https://duyaoss.com/</a></p>
-<p><a target="_blank" rel="noopener" href="https://naixisubs.com/downloadConfig/ShadowRocketImportService.aspx?t=ssn&amp;urk=fc68d3f6-b308-4076-a55c-89cc20287e78">https://naixisubs.com/downloadConfig/ShadowRocketImportService.aspx?t=ssn&amp;urk=fc68d3f6-b308-4076-a55c-89cc20287e78</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
