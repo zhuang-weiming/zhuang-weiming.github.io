@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">218</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-count">91</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/20/Ethereum%20Light%20clients/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/12/20/Ethereum%20Light%20clients/" class="post-title-link" itemprop="url">Ethereum Light clients</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-20 20:05:04" itemprop="dateCreated datePublished" datetime="2019-12-20T20:05:04+08:00">2019-12-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>go-ethereum 在 2019 年 7 月推出了 v1.9.x 版本。</p>
+<p>Geth v1.9.0为轻型客户端提供了一种新模式，称为超轻型客户端 <code>ultra light client</code>。</p>
+<p>此模式旨在将自己定位在受信任服务器和轻型服务器之间的安全范围中，用来自大多数受信任服务器的数字签名代替PoW验证。借助来自独立实体的足够签名，可以为非关键DApp实现远远超过足够的安全性。就是说，超轻量客户端模式并不是真正针对您的普通节点，而是希望将Geth嵌入到自己的流程中的项目。</p>
+<p>轻客户端不下载和验证任何块头，而是使用硬编码检查点（hard coded checkpoint）作为起点。这个检查点包含了全部的必要的信息，从而验证之前的区块的正确性。所以从安全角度而言，没有任何的损失。</p>
+<p>但是硬编码检查点（hard coded checkpoint）也有缺点：</p>
+<ul>
+<li>由于检查点被硬编码到发行版二进制文件中，因此较旧的发行版将始终从较旧的块开始同步。几个月就可以了，但是最终变得很烦人。当然，您可以更新Geth来获取一个新的检查点，也可以获取所有的变更，但是很少有人希望这样做。</li>
+<li>由于这些检查点已嵌入到代码中，因此如果您想在自己的专用网络中支持它们，那将很不幸，需要修改Geth，或通过配置文件配置检查点，并在每次更新检查点时分发一个新文件。可行，但长期而言并不可行。</li>
+</ul>
+<p><code>Geth v1.9.x</code> 附带了对链上检查点oracle的支持。超轻型客户端 <code>ultra light client</code> 可以不依赖于硬编码的检查点，而可以联系远程轻服务器，并要求它们返回存储在链上智能合约中的更新的检查点。最好的部分是，超轻型客户端 <code>ultra light client</code> 可以通过密码证明返回的数据已由所需数量的批准验证者签名！</p>
+<p>等等，超轻型客户端 <code>ultra light client</code> 如何知道谁被授权签署链上检查站？对于开箱即用的受支持网络，Geth附带硬编码的检查点oracle地址和授权签署者的列表；对于专用网络，可以通过配置文件指定oracle详细信息。</p>
+<p>尽管新旧检查点机制看起来很相似（两者都需要Geth或配置文件中的硬编码数据），但新检查点oracle只需要配置一次，然后可以任意长时间使用以发布新的检查点。</p>
+<p><code>checkpoint-admin</code> —<code>Geth v1.9.x</code> 附带的针对 <code>checkpoint oracle contract</code> 的管理工具。</p>
+<p><code>checkpoint-admin</code> 可用于查询已部署合同的状态。<code>--rpc</code> 需要指向一个light node，或者一个开启 <code>--lightserv</code> 特性的 full node。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> checkpoint-admin --rpc ~/.ethereum/rinkeby/geth.ipc status</span></span><br><span class="line">Oracle =&gt; 0xebe8eFA441B9302A0d7eaECc277c09d20D684540</span><br><span class="line"></span><br><span class="line">Admin 1 =&gt; 0xD9C9Cd5f6779558b6e0eD4e6Acf6b1947E7fA1F3</span><br><span class="line">Admin 2 =&gt; 0x78d1aD571A1A09D60D9BBf25894b44e4C8859595</span><br><span class="line">Admin 3 =&gt; 0x286834935f4A8Cfb4FF4C77D5770C2775aE2b0E7</span><br><span class="line">Admin 4 =&gt; 0xb86e2B0Ab5A4B1373e40c51A7C712c70Ba2f9f8E</span><br><span class="line"></span><br><span class="line">Checkpoint (published at #4638418) 140 =&gt; 0x488c2eba92d31baeccfb6968fad5c21a3df93181b43b4cf253b4d572b64172ef</span><br></pre></td></tr></table></figure>
+
+<p>该命令也可以用户部署一个oracle，用以更新checkpoint，并publish该checkpoint到区块链网络中。</p>
+<p>将来，<code>checkpoint-admin</code> 也可以离线工作，并有 clef 钱包签名。</p>
+<p>参考文档==&gt; <a target="_blank" rel="noopener" href="https://blog.ethereum.org/2019/07/10/geth-v1-9-0/">Geth v1.9.0 Six months distilled</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -559,134 +648,6 @@
 <ul>
 <li>Parity 1.10.0</li>
 <li>Ubuntu 16.4 LTS, VPS instance with SSD backed storage</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/04/leader-and-leadership/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/12/04/leader-and-leadership/" class="post-title-link" itemprop="url">leader-and-leadership</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-12-04 09:30:04" itemprop="dateCreated datePublished" datetime="2019-12-04T09:30:04+08:00">2019-12-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>leader: 率领和引导他人实现组织目标的过程例如，头雁。</p>
-<ul>
-<li>领导风格-西方提倡模式，Coach型，激发型；东方固有模式，家长式，命令型</li>
-<li>(领导中的)导是指什么？引导（指引目标），辅导，教导，督导（检查、督促），疏导（解决矛盾、怨言、冲突）</li>
-<li>领导对象-追随者</li>
-</ul>
-<p>leadership</p>
-<ul>
-<li>硬权力，岗位的职级，权力是起始点和载体</li>
-<li>软权力，品格德行、能力知识、修养才华。当品格德行出现问题时，公信力会出现丧失，说的正确的内容也会被人质疑</li>
-</ul>
-<p>领导发展趋势</p>
-<ul>
-<li>简约化、制度化、柔性化(发现追随者的内心，亲近)、隐形化(成功之后，也成自然的状态)</li>
-</ul>
-<p>领导职能</p>
-<ul>
-<li>出主意</li>
-<li>用干部</li>
-</ul>
-<p>出主意</p>
-<ul>
-<li><p>战略思维。长远的、全局的、高层次的重大问题的筹划和思考。全球-全国-上海-金融-保险。</p>
-<p>通观全局，抓枢纽，把重点</p>
-<p>着眼大局，认清大局，服务大局</p>
-<p>科学预见，立足长远，把握大势</p>
-</li>
-<li><p>创新思维、辩证思维（两点论、重点论、系统论-重大问题要放一放）、韧性、公心</p>
-</li>
-<li><p>及时决断、敢于担当（通过价值标准，拜托布里丹选择）</p>
-</li>
-<li><p>决策的三圈理论（价值圈、能力圈、认同圈）</p>
-</li>
-</ul>
-<p>用干部</p>
-<ul>
-<li><p>授权，多干就是少干、少干才能多干。领导就是服务（环境、平台、制度、支持）</p>
-</li>
-<li><p>优化团队结构（角色：实干、推动、协调、凝聚、监督、外交、智多、完美主义）</p>
-</li>
-<li><p>领导激励（满足合理需求、制度设计、物质与精神相结合）</p>
-</li>
-</ul>
-<p>沟通（语言、听、身体）</p>
-<ul>
-<li>上行，事前请示、事后沟通；目标传递、将目标变成领导的目标</li>
-<li>下行，开放、鼓励、公平。不着急说，先听听看</li>
-<li>平行，多支持，不埋怨</li>
-</ul>
-<p>认识自我</p>
-<ul>
-<li>知己，知命、知长、知短</li>
-<li>性格特点、正职副职、信任</li>
-<li>不断学习，依靠学习走向未来。70%从实践中学习，20%向同行同事学习，10%从书本中学习。“学哲学，用哲学是我们党的好传统“，“工作上常常干糊涂事、吃糊涂亏、占糊涂便宜”—《学哲学、用哲学》</li>
-<li>学历史（国史、党史），学专业知识，学习文学艺术</li>
-<li>情绪管理。时间管理28原则，锻炼放松、质朴生活</li>
-<li>改变认知。从学习经典中来，从自省（日三省身）&amp;觉知（自我的旁观者，keep focus，做事慢半拍）中来</li>
 </ul>
 
       
