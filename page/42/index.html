@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,137 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/" class="post-title-link" itemprop="url">以太坊编程_I</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-24 21:21:09" itemprop="dateCreated datePublished" datetime="2018-02-24T21:21:09+08:00">2018-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>目录</strong></p>
+<ol>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">迈出第一步</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">与合约进行交互</a></p>
+</li>
+<li><p><a href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/">现实世界中的构架和工具</a></p>
+</li>
+</ol>
+<p><strong>第一步</strong></p>
+<p>假设你已经有一些计算机编程方面的基础知识，并知道区块链数据结构是怎样的。如果不具备，请先了解<a target="_blank" rel="noopener" href="http://ethfans.org//">ethfans</a>的内容再回来看这篇博客。</p>
+<p><strong>以太坊</strong></p>
+<p>以太坊是一个开源的，分布式的，基于区块链技术的公共平台，无需审查及第三方干扰即可运行应用程序。</p>
+<p><strong>智能合约</strong></p>
+<p>智能合约仅仅是电脑程序。我们基于智能合约创建以太坊应用。虽然这个概念现在随着以太坊大红大紫，但是它实际上是由Nick Szabo于1996年提出。</p>
+<p><strong>EVM 以太坊虚拟机</strong></p>
+<p>EVM 是以太坊智能合约的沙盒运行时,是一个完全独立的环境。这意味着每个在EVM中运行的智能合约无法连接网络，无法调用文件系统和其他进程。</p>
+<p><strong>Gas</strong></p>
+<p>鉴于以太坊是一个分布式平台，所以必须有一种方式来限定智能合约的可用资源，否则整个网络的算力瘫痪都可能会被耗尽。Gas 通过为EVM中的每个指令确定执行成本来解决问题。重要的是，网络中的每笔交易都有一个“Gas预算”。如果预算的Gas用完了，交易将以失败告终，但是这笔交易仍然会被加载到区块链中。</p>
+<p><strong>Ether（ETH）</strong></p>
+<p>这是以太坊的加密数字货币。Gas／Ether的兑换价格用来衡量一个操作将花费多少ETH。执行交易所需支付的费用通过Gas用量与Gas价格相乘得出（计算所得的费用将使用ETH支付）。你可以将交易的Gas价格设置为任何值。但是，如果你设置的Gas价格太低的话，没有人会执行你的代码。</p>
+<p><strong>账户</strong></p>
+<p>每个账户都是由一个地址标识的。同一地址空间由两种账户共享。一种是由公私钥对控制的外部账户，该账户通常由用户持有，用来存储ETH。另一种是合约账户，合约账户下存储着智能合约的代码。重要的是，只有外部账户才能启动交易。</p>
+<p><strong>交易</strong></p>
+<p>交易是从一个账户发送到另一个账户的消息。消息内容可以是转移ETH。如果目的账户是合约账户，其智能合约代码将被执行。有关智能合约代码执行的每一笔交易将在网络中的所有节点上执行。所有的智能合约代码运行以及交易执行都将被记录在以太坊区块链上。</p>
+<p><strong>Solidity</strong></p>
+<p>Solidity 是一种面向合约的高级语言，其语法与JavaScript相似。Solidity是静态类型的，支持继承，库以及复杂的用户定义类型。编译后就是节点运行的EVM程序集。</p>
+<p><strong>WEB3</strong><br>先通过简单的将ETH从一个账户发送到另一个账户开始与以太坊互动。因为刚开始，我们可能会弄的一团糟，所以不想用真正的ETH来做这个实验，经过搜索，发现了testrpc，这是一个用于测试和开发的以太坊客户端，是由npm管理的。让我们安装这个客户端并开始使用它：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g ethereumjs-testrpc</span><br><span class="line">testrpc</span><br></pre></td></tr></table></figure>
+
+<p>你会注意到testrpc已经产生了10个地址，这些地址都拥有虚拟的ETH可供测试无需担心。有一点是testrpc的状态并不稳定，每次关闭后，节点和账户状态将被清除。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/JavaScript-API">Web3.js</a> 是一个实现了以太坊 JSON RPC 的JavaScript库。我们将使用Web3.js与以太坊节点（在这个例子中是testrpc）进行交互。安装只需运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g web3@0.20.1</span><br></pre></td></tr></table></figure>
+
+<p>顺便提一句，在这个例子中，安装 Web3 0.20.x 版本而不是公测1.0.0版本。首先，需要将本地testrpc测试节点连接到Web3.js,为了做到这一点，我们要求Web3 使用localhost provider。让我们打开一个节点控制台并输入以下命令：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Web3 = <span class="built_in">require</span>(<span class="string">&#x27;web3&#x27;</span>)</span><br><span class="line">provider = <span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&quot;http://localhost:8545&quot;</span>)</span><br><span class="line">web3 = <span class="keyword">new</span> Web3(provider)</span><br></pre></td></tr></table></figure>
+
+<p>我们正在使用默认的testrpc端口（8545），如果你设置了另一个端口，记得更改provider的URL。当你获得web3 实例后，首先运行以下命令以获得你的以太坊节点中的账户列表及其各自余额：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">account</span> =&gt;</span> &#123;</span><br><span class="line">balance = web3.eth.getBalance(account);</span><br><span class="line"><span class="built_in">console</span>.log(balance);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>你可能注意到了，输出不全是数字列表，这是因为Web3使用大数对象来处理数字值，而JavaScript无法正确处理大数类型。可以通过这个<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/JavaScript-API#a-note-on-big-numbers-in-web3js">链接</a>了解更多。</p>
+<p>同时，这些余额不是用ETH表示的，实际上它们的单位都是基本单位wei。1ETH是10¹⁸ wei。</p>
+<p>回到刚刚的话题，让我们试着在两个账户之间发送ETH。指需输入web3.eth.accounts并选择其中的两个，你可以使用sendTransaction方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">to = web3.eth.accounts[<span class="number">1</span>]</span><br><span class="line">transaction = &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">value</span>: <span class="number">100000</span> &#125;</span><br><span class="line">transactionHash = web3.eth.sendTransaction(transaction)</span><br></pre></td></tr></table></figure>
+
+<p>命令输出的是交易哈希，你也可以通过以下命令获得交易信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.getTransaction(transactionHash)</span><br></pre></td></tr></table></figure>
+
+<p>你可能还想检查你使用的账户的余额是否已经更改。你可以使用下面的命令来验证：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">account</span> =&gt;</span> &#123;</span><br><span class="line">balance = web3.eth.getBalance(account);</span><br><span class="line"><span class="built_in">console</span>.log(balance);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我使用HTML和jQuery以及一点Bootstrap搭建了一个简单的UI使得它更美观一点。你可以在<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/1-interacting-with-the-blockchain">repo</a>中看看它。这就是所说的DApp即分布式应用。也就是说，一个部分后端代码运行在分布式点对点网络上的应用程序；在这个例子中，分布式点对点网络是指以太坊网络。</p>
+<p><img src="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/1.jpeg"></p>
+<p><em>上图是用以测试ETH交易的DApp的UI</em></p>
+<p>你将找到UI的index.html文件以及与以太坊交互的app.js文件，这基本上就是我们前面所描述的用一些jQuery回调来填充UI。可以复制repo并运行起来试一下。</p>
+<p>谢谢你阅读这篇博客，如果你有任何问题，意见或者建议欢迎告诉我！如果你喜欢这篇博客，请继续关注本指南的第二部分，我将重点介绍智能合约！</p>
+<p>谢谢<a target="_blank" rel="noopener" href="https://medium.com/@maraoz?source=post_page">Manuel Araoz</a></p>
+<blockquote>
+<p>原文链接: <a target="_blank" rel="noopener" href="https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-1-783cc7796094">https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-1-783cc7796094</a></p>
+<p>作者: Facu Spagnuolo</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -610,241 +741,6 @@
 <p>例：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f sci.log.D20120224.T000000 | grep -v getCommonCodeList | grep -v getRuleDetails | grep -v getExceptionList | grep zhuangwm | grep <span class="string">&quot;Invoking api Method:&quot;</span></span><br></pre></td></tr></table></figure>
 <p>tail —用于输出文件的最后10行信息的内容。-f  是指当文件长度增长的时候，输出文件增长的部分。<br>sci.log.D20120224.T000000 —被搜索的文件名称。<br>|  —是指管道，用于将前面的输出作为输入到后面的命令中<br>grep -v getCommonCodeList —是查找文件里符合条件的字符串。 -v 是指反转查找，用于排除所列出来的文字对象</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2011/11/15/one-year-later/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2011/11/15/one-year-later/" class="post-title-link" itemprop="url">one year later</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2011-11-15 11:01:03" itemprop="dateCreated datePublished" datetime="2011-11-15T11:01:03+08:00">2011-11-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>==============================================================</p>
-<p>Gosh darnit, I miss you guys!</p>
-<p>Congrats to everyone with all of the great things that are going on in each of your lives!  I hope things just continue to progress more and more! Happy Birthday to you, Keith!</p>
-<p>I’m glad that I’ve had a chance to see Erika and Belen, but since I’ve started a new position where I’m traveling ALL of the time, I’m hoping to be in a city near each of you soon!  </p>
-<p>Much love to G5!</p>
-<p>Regards,</p>
-<p>Regina D. Holley Information Security Advisor and Global ISA Program Lead</p>
-<p>  ITD - Security Operations Management</p>
-<p>  972.561.6790 [TL:  861.6790]</p>
-<p>  <a href="mailto:&#104;&#111;&#x6c;&#x6c;&#x65;&#121;&#114;&#64;&#117;&#x73;&#x2e;&#x69;&#98;&#x6d;&#x2e;&#99;&#111;&#x6d;">&#104;&#111;&#x6c;&#x6c;&#x65;&#121;&#114;&#64;&#117;&#x73;&#x2e;&#x69;&#98;&#x6d;&#x2e;&#99;&#111;&#x6d;</a></p>
-<p>  “Do not follow the path. Go where there is no path to begin the trail.”</p>
-<p>-Ashanti proverb</p>
-<p>===============================================================</p>
-<p>From: Erika V Quezada/Mexico/IBM@IBMMX</p>
-<p>To: Keith M Bantle/Fairfax/IBM@IBMUS</p>
-<p>Cc: Srinivas Manem/India/IBM@IBMIN, Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>Date: 10/27/2011 01:34 AM</p>
-<p>Subject: Re: One year later….</p>
-<p>FELIZ CUMPLEAÑOS KEITH!!!</p>
-<p>My best wishes to you!  Pls put a picture of Wilson next to your shots.  And drink one wooden boat shot for us =)  Have a great birthday!!</p>
-<p>I will be in NYC from friday to wednesday morning for vacation, aren’t you planning to be there for Halloween?  </p>
-<p>Srini, are you part of the Acapulco mexican team? If yes you should visit us,  Is the biggest project in Mexico!!</p>
-<p>Today, I was chatting with Tina by Facebook and she ask me to say hello to everybody, she is now an expert surffer and still miss all of us.</p>
-<p>Kisses!</p>
-<p>Saludos,</p>
-<p>Erika V. Quezada Ruiz</p>
-<p>Sales Manager</p>
-<p>Public Sector</p>
-<p>IBM de México</p>
-<p>Tel. (55) 52703701</p>
-<p>Cel. 04455 54551278</p>
-<p>===============================================================</p>
-<p>From: Keith M Bantle/Fairfax/IBM@IBMUS</p>
-<p>To: Srinivas Manem/India/IBM@IBMIN</p>
-<p>Cc: Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>Date: 26/10/2011 11:57</p>
-<p>Subject: Re: One year later….</p>
-<p>Yes, all such wonderful memories for all of us!  I still cannot even imagine a better team!</p>
-<p>ps- and for the record, I will be using my little wooden boat ‘shooter’ for my birthday shots this evening!</p>
-<p>Keith Bantle</p>
-<p>IBM Global Business Services</p>
-<p>AIS - Application Innovation Services</p>
-<p>4401 Belle Oaks Drive, Ashley Center</p>
-<p>Charleston, SC 29405</p>
-<p>Mobile: 843.860.9174</p>
-<p>Fax: 845.432.0121</p>
-<p><a href="mailto:&#107;&#98;&#97;&#110;&#116;&#x6c;&#101;&#64;&#117;&#x73;&#x2e;&#x69;&#98;&#x6d;&#x2e;&#99;&#x6f;&#x6d;">&#107;&#98;&#97;&#110;&#116;&#x6c;&#101;&#64;&#117;&#x73;&#x2e;&#x69;&#98;&#x6d;&#x2e;&#99;&#x6f;&#x6d;</a></p>
-<p>===============================================================</p>
-<p>From: Srinivas Manem/India/IBM@IBMIN</p>
-<p>To: Belen Martin Lopez/Spain/IBM@IBMES@IBMGB, Keith M Bantle/Fairfax/IBM@IBMUS, Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB, Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>Date: 10/26/2011 12:44 PM</p>
-<p>Subject: Re: One year later….</p>
-<p>Hi Keith,</p>
-<p>Wish you a very happy Birthday..!! Have a great time</p>
-<p>It’s already been an year.. The memories are still very fresh in my mind. I really miss all those great days. Last year, this week we were rushing to complete projects &amp; finalizing our presentations.. </p>
-<p>Playing golf, eating fufu, early morning monkey search, playing darts, wonderful excursions on the weekends &amp; wonderful team work to complete the projects.. We had so much of fun in just one month time.. </p>
-<p>Truly, ours is the BEST TEAM ever..  Wish we’d meet again some day!!</p>
-<p>Freddie:  Congratulations on your new house.. :)  Please share some pictures.. </p>
-<p>Thanks &amp; Regards, </p>
-<p>Srini </p>
-<p>Srinivas Manem,</p>
-<p>Release Management, Acapulco,</p>
-<p>Global Telecom CoC </p>
-<p>IBM Global Business Services </p>
-<p>Mobile  +91 99497 03030 </p>
-<p>Email   <a href="mailto:&#83;&#114;&#x69;&#110;&#105;&#x76;&#97;&#115;&#x2e;&#77;&#97;&#110;&#101;&#109;&#64;&#105;&#110;&#x2e;&#105;&#x62;&#x6d;&#x2e;&#99;&#111;&#109;">&#83;&#114;&#x69;&#110;&#105;&#x76;&#97;&#115;&#x2e;&#77;&#97;&#110;&#101;&#109;&#64;&#105;&#110;&#x2e;&#105;&#x62;&#x6d;&#x2e;&#99;&#111;&#109;</a> </p>
-<p>===============================================================</p>
-<p>From: Belen Martin Lopez/Spain/IBM@IBMES</p>
-<p>To: Wei Ming Zhuang/China/IBM@IBMCN@IBMAU@IBMGB</p>
-<p>Cc: Anouk Bikkel/Netherlands/IBM@IBMNL, Erika V Quezada/Mexico/IBM@IBMMX, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Keith M Bantle/Fairfax/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA, Srinivas Manem/India/IBM@IBMIN</p>
-<p>Date: 10/26/2011 02:07 PM</p>
-<p>Subject: Re: One year later….</p>
-<p>I almost forgot,</p>
-<p>Happy Birthday Keith!!</p>
-<p>Have a great day! Wilson and I miss you!</p>
-<p>Saludos/Regards</p>
-<p>Belén Martín López</p>
-<p>Senior Managing Consultant</p>
-<p>Phone: +34 660 413 703 </p>
-<p>email: <a href="mailto:&#x62;&#101;&#x6c;&#101;&#110;&#x2e;&#109;&#97;&#x72;&#x74;&#x69;&#x6e;&#x40;&#x65;&#x73;&#x2e;&#x69;&#98;&#109;&#46;&#x63;&#111;&#x6d;">&#x62;&#101;&#x6c;&#101;&#110;&#x2e;&#109;&#97;&#x72;&#x74;&#x69;&#x6e;&#x40;&#x65;&#x73;&#x2e;&#x69;&#98;&#109;&#46;&#x63;&#111;&#x6d;</a> </p>
-<p>IBM Global Services España, S.A.</p>
-<p>Mar Adriático, 2, 28830 San Fernando de Henares (Madrid)</p>
-<p>Registro Mercantil de Madrid, Folio 49; Tomo 6430; Hoja M-104.742</p>
-<p>CIF A80-599459 </p>
-<p>===============================================================</p>
-<p>Wei Ming Zhuang/China/IBM@IBMCN</p>
-<p>26/10/2011 10:36 </p>
-<p> To</p>
-<p> Keith M Bantle/Fairfax/IBM@IBMUS@IBMAU, Regina D Holley/Dallas/IBM@IBMUS</p>
-<p> cc</p>
-<p> Roy Hebert/CanWest/IBM@IBMCA, Erika V Quezada/Mexico/IBM@IBMMX@IBMUS, Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Srinivas Manem/India/IBM@IBMIN</p>
-<p> Subject</p>
-<p> Re: One year later….</p>
-<p>Hi,</p>
-<p>I often talk about our G5 experience with friends and others, I do not know why, a lot of things become more clear with the flow at time.</p>
-<p>Last week Regina was the most close to me (about 4 hours fly from Dalian to Hong Kong, Taipei). But I am still so happy to know this, just like one guy in island after air crash shouts at the near boat. </p>
-<p>Miss all of you. Must be let me if anyone come to Beijing or Dalian. Must!</p>
-<p>Have a good working day !</p>
-<p>==============================================</p>
-<p>庄伟铭/Wei Ming, E-mail: <a href="mailto:&#x7a;&#104;&#117;&#97;&#x6e;&#103;&#x77;&#109;&#x40;&#x63;&#x6e;&#x2e;&#x69;&#98;&#x6d;&#46;&#x63;&#111;&#x6d;">&#x7a;&#104;&#117;&#97;&#x6e;&#103;&#x77;&#109;&#x40;&#x63;&#x6e;&#x2e;&#x69;&#98;&#x6d;&#46;&#x63;&#111;&#x6d;</a></p>
-<p>TEL:0411-88151143 Tie-Line:61143 </p>
-<p>IBM Dalian Global Delivery Center, GBS/GCG</p>
-<p>==============================================</p>
-<p>From: Keith M Bantle/Fairfax/IBM@IBMUS</p>
-<p>To: Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>Cc: Erika V Quezada/Mexico/IBM@IBMMX@IBMUS, Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN</p>
-<p>Date: 2011-10-26 02:23</p>
-<p>Subject: Re: One year later….</p>
-<p>Hello, ¡Hola , Hallo, Ello,  Ahoj, 您好,??????, and Top O’ the Mornin’ to Ya (that one is for you, Roy, and I hope the others are correct),</p>
-<p>I think we need a G5 summit!  It really is very hard to believe it’s been a year already!  I have been thinking of all of you, especially as the month of October has been passing by, remembering what we were doing ‘that week’.  </p>
-<p>It certainly does appear that the girls have been much better about staying in touch and Belen has even come to visit already!  Hopefully she and Carlos enjoyed their stay in Charleston (Savannah and Asheville too), which was still too short.  I must admit that I was tempted to surprise her one day by pounding ‘fufu’ and putting a ball of pizza dough in some tomato soup, although she may have actually preferred that over the real thing.  </p>
-<p>Roy, I was disappointed to see the Sabres schedule does not include Calgary this season, but hopefully next year and I promise I will be there.  No excuses!  Bring on the wings and Canadian beer!!</p>
-<p>Freddie, congrats on your new house!!  I forgot to tell you about our 3 day Dave Matthews concert in NYC last month- it was awesome!</p>
-<p>Erika, thanks for rounding all of us up and glad to hear you are enjoying life!  I miss all of the different candy!</p>
-<p>Anouk, hopefully you are doing well and keep us posted on your baby’s arrival!  We’ll have to figure out his or her Ghanaian name and we can always have some of that awful clove porridge I made the mistake of eating early one morning exported to you…</p>
-<p>GoG and AB- it was great speaking with both of you earlier today!!</p>
-<p>Srini, I hope you’ve continued playing golf… you must be preparing for the PGA already!</p>
-<p>Martin, I’m sure you are as glad as I am that the NHL season is underway- hope you have been playing as often as you can!</p>
-<p>Herbie, I wonder if you and Anouk have played darts and been able to replicate your double dart achievements?!</p>
-<p>Will, every time I see ‘Firefly Sweet Tea Vodka’, I remember you drinking that whole bottle at once!</p>
-<p>Hope everyone is doing well and look forward to catching up soon!</p>
-<p>Keith</p>
-<p>ps- if anyone needs about a lb. or so of shea butter, I still have 98.2% of the container remaining… Belen can attest to that!</p>
-<p>Keith Bantle</p>
-<p>IBM Global Business Services</p>
-<p>AIS - Application Innovation Services</p>
-<p>4401 Belle Oaks Drive, Ashley Center</p>
-<p>Charleston, SC 29405</p>
-<p>Mobile: 843.860.9174</p>
-<p>Fax: 845.432.0121</p>
-<p><a href="mailto:&#x6b;&#x62;&#97;&#x6e;&#116;&#108;&#x65;&#x40;&#x75;&#x73;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#111;&#109;">&#x6b;&#x62;&#97;&#x6e;&#116;&#108;&#x65;&#x40;&#x75;&#x73;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#111;&#109;</a></p>
-<p>===============================================================</p>
-<p>From: Roy Hebert/CanWest/IBM@IBMCA</p>
-<p>To: Erika V Quezada/Mexico/IBM@IBMMX@IBMUS</p>
-<p>Cc: Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS, Keith M Bantle/Fairfax/IBM@IBMUS, Martin Jesko/Slovakia/IBM@IBMSK, Regina D Holley/Dallas/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN</p>
-<p>Date: 10/25/2011 11:23 AM</p>
-<p>Subject: Re: One year later….</p>
-<p>I know … have been thinking about our 1 year anniversary all month!    </p>
-<p>By the way, the girls seem to be ruling in the reunion category … Freddie travelled to Mexico to visit Ms. Erica, and Regina and Erica have connected …. Regina I think you and Friddie met up in London?  I think Belen has met with at least one of you as well?</p>
-<p>Le girls rule, as usual.   </p>
-<p>Keith … was looking forward to hosting you for a Sabres game vs the Flames this year … but your beloved team doesn’t come to Calgary this season.  </p>
-<p>With fondest memories of my best team ever!!   </p>
-<p>Roy Hebert</p>
-<p>Alberta Territory Manager, IBM</p>
-<p>Office 403 539 3145</p>
-<p><a href="mailto:&#114;&#104;&#x65;&#x62;&#101;&#x72;&#x74;&#x40;&#x63;&#97;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#x6f;&#109;">&#114;&#104;&#x65;&#x62;&#101;&#x72;&#x74;&#x40;&#x63;&#97;&#46;&#105;&#98;&#x6d;&#46;&#x63;&#x6f;&#109;</a></p>
-<p>===============================================================</p>
-<p>From: Erika V Quezada/Mexico/IBM@IBMMX</p>
-<p>To: Anouk Bikkel/Netherlands/IBM@IBMNL, Belen Martin Lopez/Spain/IBM@IBMES, Martin Jesko/Slovakia/IBM@IBMSK, Keith M Bantle/Fairfax/IBM@IBMUS, Srinivas Manem/India/IBM@IBMIN, Wei Ming Zhuang/China/IBM@IBMCN, Regina D Holley/Dallas/IBM@IBMUS, Roy Hebert/CanWest/IBM@IBMCA, Frederique Tenthoff/UK/IBM@IBMGB, Herbie Pearthree/Raleigh/IBM@IBMUS</p>
-<p>Date: 10/25/2011 08:43 AM</p>
-<p>Subject: One year later….</p>
-<p>Hellooo Superb Team!!!</p>
-<p>How are u one year later??  Hope everything is good with all of you….  To me, it has been a year of many changes either in my personal and professional life.  But I am very happy enjoying my life,  Still remember each particular moment we shared in Ghana and the things I learned of all of u that marked my life.</p>
-<p>I already met with Regina and Freddie … and I really hope to meet with all of u anytime.</p>
-<p>Big kiss and huge hug!</p>
-<p>Miss u all!!</p>
-<p>Remember:   we are The Best Team Ever!!!</p>
-<p>Erika Q</p>
-<p>Erika V. Quezada Ruiz</p>
-<p>Sales Manager</p>
-<p>Public Sector</p>
-<p>IBM de México</p>
-<p>Tel. (55) 52703701</p>
-<p>Cel. 04455 54551278</p>
-<p>=============================================================</p>
 
       
     </div>
