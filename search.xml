@@ -8645,7 +8645,8 @@
 
 
 <p>The request will return a user object with the details of the new user:</p>
-<p>![Create User Result](Open source ecommerce platform for multi-vendor marketplaces/1.png)Notice how there’s a <code>store_id</code> field now. If you try to create a couple of users, you’ll see that the <code>store_id</code> will be different each time.</p>
+<p>![Create User Result](Open source ecommerce platform for multi-vendor marketplaces/1.png)</p>
+<p>Notice how there’s a <code>store_id</code> field now. If you try to create a couple of users, you’ll see that the <code>store_id</code> will be different each time.</p>
 <h3 id="Customize-the-Products-Entity"><a href="#Customize-the-Products-Entity" class="headerlink" title="Customize the Products Entity"></a>Customize the Products Entity</h3><p>Similar to how you just customized the <code>User</code> entity, you need to customize the <code>Product</code> entity to also hold the <code>store_id</code> with the relationship as well. You’ll then customize the <code>ProductService</code> as well as other classes to make sure that, when a product is created, the store ID of the user creating it is attached to it. You’ll also make sure that when the list of products is fetched, only the products that belong to the current user’s store are returned.</p>
 <p><strong>Create a Product Entity</strong></p>
 <p>Create the file <code>src/modules/product/entities/product.entity.ts</code> with the following content:</p>
