@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">218</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,96 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/12/26/DID-veramo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/12/26/DID-veramo/" class="post-title-link" itemprop="url">DID-veramo</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-26 16:22:00" itemprop="dateCreated datePublished" datetime="2022-12-26T16:22:00+08:00">2022-12-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-12-27 09:27:44" itemprop="dateModified" datetime="2022-12-27T09:27:44+08:00">2022-12-27</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Veramo 中的功能是通过插件系统添加到代理中的。</p>
+<h3 id="Plugins-Architecture"><a href="#Plugins-Architecture" class="headerlink" title="Plugins Architecture"></a><a target="_blank" rel="noopener" href="https://veramo.io/docs/veramo_agent/plugins">Plugins Architecture</a></h3><p><img src="/2022/12/26/DID-veramo/1.jpeg"></p>
+<h3 id="DID-Methods"><a href="#DID-Methods" class="headerlink" title="DID Methods"></a>DID Methods</h3><p><img src="/2022/12/26/DID-veramo/2.jpeg" alt="DIDs and DID documents are recorded on a Verifiable Data Registry; DIDs resolve   to DID documents; DIDs refer to DID subjects; a DID controller controls a DID document; DID URLs contains a DID; DID URLs dereferenced to DID document fragments or external resources; DID resolver implements resolve function; DID URL dereferencer implements dereferencing function; DID method operates a   Verfiable Data Registry; DID resolver and DID URL dereferencer instruct a DID method."></p>
+<h3 id="Core-Supported-DID-Methods"><a href="#Core-Supported-DID-Methods" class="headerlink" title="Core Supported DID Methods"></a>Core Supported DID Methods</h3><p>Veramo 核心插件支持以下 did 方法。</p>
+<h3 id="did-ethr"><a href="#did-ethr" class="headerlink" title="did:ethr"></a><code>did:ethr</code></h3><p><code>did:ethr:0xc530503a148babcaca68565cfa576d6f43427a2d</code></p>
+<p>Ethr-DID 为以太坊地址提供了一种可扩展的身份识别方法，使任何以太坊地址都能够收集链上和链下数据。因为 Ethr-DID 允许任何以太坊密钥对成为身份，所以它比基于智能合约的身份方法更具可扩展性和隐私保护性。</p>
+<p>这种特殊的 DID 方法依赖于 ethr-did-registry。 ethr-did-registry 是一个智能合约，可以促进链下（和链上）身份验证的公钥解析。 它还有助于密钥轮换、委托分配和撤销以允许第 3 方签名者，以及设置和撤销链下属性数据。 这些交互和事件被聚合使用以使用 ethr-did-resolver 构建 DID 文档。</p>
+<h3 id="did-web"><a href="#did-web" class="headerlink" title="did:web"></a><code>did:web</code></h3><p><code>did:web:veramo-agent.herokuapp.com</code></p>
+<p>Web-DID 利用域名系统，允许 Web 来源的所有者将其转换为 DID。创建 Web-DID 就像创建 DID 文档并将其托管在众所周知的 URL 下一样简单。 每次解析 DID 时，DID 文档都必须通过 HTTPS GET 可用。 这意味着创建一个 DID，不需要区块链，但它有一定的权衡。 Web-DID 的安全性通过实施 TLS 植根于现有的互联网 PKI。 Web-DID 可以直接托管在网络域的众所周知的 URL 下，例如 <a target="_blank" rel="noopener" href="http://www.example.com/.well-known/did.json%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%89%98%E7%AE%A1%E5%9C%A8%E7%89%B9%E5%AE%9A%E7%9A%84%E5%AD%90%E8%B7%AF%E5%BE%84%E4%B8%8B%E3%80%82%E4%BD%BF%E7%94%A8%E5%AD%90%E8%B7%AF%E5%BE%84%E5%85%81%E8%AE%B8%E5%9C%A8%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C%E5%9F%9F%E4%B8%8B%E6%89%98%E7%AE%A1%E5%A4%9A%E4%B8%AA">www.example.com/.well-known/did.json，也可以托管在特定的子路径下。使用子路径允许在一个网络域下托管多个</a> DID。此方法还可用于允许 Web 应用程序为其用户创建 Web-DID，例如 <a target="_blank" rel="noopener" href="http://www.example.com/users/username/.well-known/did.json%E3%80%82">www.example.com/users/username/.well-known/did.json。</a></p>
+<p>虽然 Web-DID 是一种非常有用的技术，可以将 Web2 连接到 Web3，并且特别允许公司非常轻松地创建他们的 DID，但它在安全和隐私方面存在一些缺点（例如，跟踪）。</p>
+<h3 id="did-key"><a href="#did-key" class="headerlink" title="did:key"></a><code>did:key</code></h3><p>did: key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH</p>
+<p>Key-DID 代表了一种非常轻量级的自我证明 DID 方法，它不需要任何外部实用程序，例如区块链。Key-DID 是通过生成加密密钥对（例如，Curve25519）创建的。使用 Curve25519 将自动向 DID 文档添加两个条目，可用于 EdDSA（即 Ed25519）和 ECDH/加密（即，使用 X25519）。Key-DID 始终解析为相同的 DID 文档，并且由于它是不可变的，所以添加服务端点和其他密钥是不可能的。</p>
+<h3 id="Message-Handlers"><a href="#Message-Handlers" class="headerlink" title="Message Handlers"></a>Message Handlers</h3><p>创建代理实例时，您指定要使用的消息处理程序以及调用它们的顺序。例如，如果您的应用程序从 QR 码捕获可验证凭证，其中数据被编码为 JWT，您将在代理设置中按顺序指定 <strong>url</strong>、<strong>did-comm</strong>、<strong>did-jwt</strong> 和 <strong>credential-w3c</strong> 处理程序。</p>
+<h3 id="url"><a href="#url" class="headerlink" title="url"></a><code>url</code></h3><p>UrlMessageHandler 解析来自 URL 的消息，通常来自查询字符串。进一步的解析可能在 JWT 和/或 DIDComm 处理程序中执行。该处理程序支持获取缩短的 URL 重定向。</p>
+<h3 id="did-comm"><a href="#did-comm" class="headerlink" title="did-comm"></a><code>did-comm</code></h3><p>DIDCommMessageHandler 使用收件人的私钥解密传入的消息。 解密的消息将传递给后续的消息处理程序。</p>
+<p><img src="/2022/12/26/DID-veramo/3.jpeg"></p>
+<h3 id="did-jwt"><a href="#did-jwt" class="headerlink" title="did-jwt"></a><code>did-jwt</code></h3><p>JWT MessageHandler 解码 JWT 并创建消息对象。</p>
+<p><img src="/2022/12/26/DID-veramo/4.jpeg"></p>
+<h3 id="credential-w3c"><a href="#credential-w3c" class="headerlink" title="credential-w3c"></a><code>credential-w3c</code></h3><p>W3CMessageHandler 检查可验证凭证和可验证演示的消息有效负载，并相应地格式化消息对象。</p>
+<p><img src="/2022/12/26/DID-veramo/5.jpeg"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -625,102 +715,6 @@
 <li>Specify parameters，在制定参数的步骤，输入描述文字，目前只支持英文，并输入初始图片。就可以开始Preview了。</li>
 </ol>
 <p>非常的简单哦～。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/09/19/golang-fsm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/19/golang-fsm/" class="post-title-link" itemprop="url">startup-product-20220917</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-09-19 09:40:00" itemprop="dateCreated datePublished" datetime="2022-09-19T09:40:00+08:00">2022-09-19</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-09-29 09:08:19" itemprop="dateModified" datetime="2022-09-29T09:08:19+08:00">2022-09-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://github.com/looplab/fsm">http://github.com/looplab/fsm</a></p>
-<p>定义状态机的时候有三部分组成：状态机的初始状态，状态机的事</p>
-<p>件（包括了多个源事件和一个目的事件），状态机的事件回调。整体来说，回</p>
-<p>调可以分为四组8个回调，按执行顺序依次为：</p>
-<p>1，事件开始之前</p>
-<p>​    A，before_xxx，特定的状态之前</p>
-<p>​    B，before_event所有状态之前</p>
-<p>2，离开老状态</p>
-<p>​    A，leave_xxx 离开特定状态</p>
-<p>​    B，leave_state 离开所有状态</p>
-<p>3，进入新状态</p>
-<p>​    A，enter_xxx,进入特定状态</p>
-<p>​    B，enter_state 进入所有状态</p>
-<p>4，事件执行完毕之后</p>
-<p>​    A，after_xxx 进入特定状态之后</p>
-<p>​    B，after_event 进入所有状态</p>
-<p>状态机实现的函数接口有：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">AvailableTransitions</span><span class="params">()</span> []<span class="title">string</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Can</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Cannot</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Current</span><span class="params">()</span> <span class="title">string</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Event</span><span class="params">(event <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Is</span><span class="params">(state s/ring)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Metadata</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">SetMetadata</span><span class="params">(key <span class="keyword">string</span>, dataValue <span class="keyword">interface</span>&#123;&#125;)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">SetState</span><span class="params">(state <span class="keyword">string</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Transition</span><span class="params">()</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Can</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line">  _, ok := f.transitions[eKey&#123;event, f.current&#125;]</span><br><span class="line">  <span class="keyword">return</span> ok &amp;&amp; (f.transition == <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行事件流转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Event</span><span class="params">(event <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span>&#123;</span><br><span class="line">    e := &amp;Event&#123;f, event, f.current, dst, <span class="literal">nil</span>, args, <span class="literal">false</span>, <span class="literal">false</span>&#125;</span><br><span class="line">    err := f.beforeEventCallbacks(e)</span><br><span class="line">   f.transition = <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">     f.enterStateCallbacks(e)</span><br><span class="line">     f.afterEventCallbacks(e)</span><br><span class="line">    &#125;</span><br><span class="line">   f.leaveStateCallbacks(e)</span><br><span class="line">   err = f.doTransition()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">enterStateCallbacks</span><span class="params">(e *Event)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> fn, ok := f.callbacks[cKey&#123;f.current, callbackEnterState&#125;]; ok &#123;</span><br><span class="line">        fn(e)</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> fn, ok := f.callbacks[cKey&#123;<span class="string">&quot;&quot;</span>, callbackEnterState&#125;]; ok &#123;</span><br><span class="line">       fn(e)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Transition</span><span class="params">()</span> <span class="title">error</span></span>&#123;</span><br><span class="line">     <span class="keyword">return</span> f.doTransition()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">doTransition</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> f.transitionerObj.transition(f)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
