@@ -5,7 +5,7 @@
     <url>/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<p>原文作者：<a href="https://medium.com/@vijinimallawaarachchi?source=post_header_lockup">Vijini Mallawaarachchi</a><br>原文地址：<a href="https://medium.com/towards-data-science/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013">10 Common Software Architectural Patterns in a nutshell</a></p>
 <p>有没有想过要设计多大的企业规模系统？在主要的软件开发启动之前，我们必须选择好体系结构，它将为我们提供所需的功能和质量。因此，在将它们应用到具体设计之前，我们应该了解不同的体系结构。</p>
-<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/1.png"></a></p>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/1.png"></p>
 <h3 id="什么是架构模式？"><a href="#什么是架构模式？" class="headerlink" title="什么是架构模式？"></a>什么是架构模式？</h3><p>根据维基百科中的定义：</p>
 <blockquote>
 <p>架构模式是一个通用的、可重用的解决方案，用于在给定上下文中的软件体系结构中经常出现的问题。架构模式与软件设计模式类似，但具有更广泛的范围。</p>
@@ -36,23 +36,23 @@
 <li>一般的桌面应用程序</li>
 <li>电子商务Web应用程序</li>
 </ul>
-<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/2.png"></a></p>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/2.png"></p>
 <h3 id="二-CS-客户端-服务器模式"><a href="#二-CS-客户端-服务器模式" class="headerlink" title="二. CS 客户端-服务器模式"></a>二. CS 客户端-服务器模式</h3><p>这种模式由两部分组成：一个服务器和多个客户端。服务器组件将为多个客户端组件提供服务。客户端从服务器请求服务，服务器为这些客户端提供相关服务。此外，服务器持续侦听客户机请求。</p>
 <p>使用场景：</p>
 <ul>
-<li>电子邮件，文件共享和银行等在线应用程序<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/3.png"></a></li>
+<li>电子邮件，文件共享和银行等在线应用程序<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/3.png"></li>
 </ul>
 <h3 id="三-MS-主从设备模式"><a href="#三-MS-主从设备模式" class="headerlink" title="三. MS 主从设备模式"></a>三. MS 主从设备模式</h3><p>这种模式由两方组成,主设备和从设备。主设备组件在相同的从设备组件中分配工作，并计算最终结果，这些结果是从设备返回的结果。</p>
 <p>使用场景：</p>
 <ul>
 <li>在数据库复制中，主数据库被认为是权威的来源，并且要与之同步</li>
-<li>在计算机系统中与总线连接的外围设备(主和从驱动器)<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/4.png"></a></li>
+<li>在计算机系统中与总线连接的外围设备(主和从驱动器)<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/4.png"></li>
 </ul>
 <h3 id="四-管道-过滤器模式"><a href="#四-管道-过滤器模式" class="headerlink" title="四. 管道-过滤器模式"></a>四. 管道-过滤器模式</h3><p>此模式可用于构造、生成和处理数据流的系统。每个处理步骤都封装在一个过滤器组件内。要处理的数据是通过管道传递的。这些管道可以用于缓冲或用于同步。</p>
 <p>使用场景：</p>
 <ul>
 <li>编译器。连续的过滤器执行词法分析、解析、语义分析和代码生成</li>
-<li>生物信息学的工作流<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/5.png"></a></li>
+<li>生物信息学的工作流<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/5.png"></li>
 </ul>
 <h3 id="五-代理模式"><a href="#五-代理模式" class="headerlink" title="五. 代理模式"></a>五. 代理模式</h3><p>此模式用于构造具有解耦组件的分布式系统。这些组件可以通过远程服务调用彼此交互。代理组件负责组件之间的通信协调。</p>
 <p>服务器将其功能(服务和特征)发布给代理。客户端从代理请求服务，然后代理将客户端重定向到其注册中心的适当服务。</p>
@@ -61,7 +61,7 @@
 <li>消息代理软件，如Apache ActiveMQ，Apache Kafka，RabbitMQ和JBoss Messaging</li>
 <li>负债均衡 Ngix</li>
 </ul>
-<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/6.png"></a></p>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/6.png"></p>
 <h3 id="六-点对点模式"><a href="#六-点对点模式" class="headerlink" title="六. 点对点模式"></a>六. 点对点模式</h3><p>在这种模式中，单个组件被称为对等点。对等点可以作为客户端，从其他对等点请求服务，作为服务器，为其他对等点提供服务。对等点可以充当客户端或服务器或两者的角色，并且可以随时间动态地更改其角色。</p>
 <p>使用场景：</p>
 <ul>
@@ -69,14 +69,14 @@
 <li>多媒体协议，如P2PTV和PDTP</li>
 <li>像Spotify这样的专有多媒体应用程序</li>
 </ul>
-<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/7.png"></a></p>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/7.png"></p>
 <h3 id="七-事件总线模式"><a href="#七-事件总线模式" class="headerlink" title="七. 事件总线模式"></a>七. 事件总线模式</h3><p>这种模式主要是处理事件，包括4个主要组件：事件源、事件监听器、通道和事件总线。消息源将消息发布到事件总线上的特定通道上。侦听器订阅特定的通道。侦听器会被通知消息，这些消息被发布到它们之前订阅的一个通道上。</p>
 <p>使用场景：</p>
 <ul>
 <li>安卓开发</li>
 <li>通知服务</li>
 </ul>
-<p><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/8.png"></a></p>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/8.png"></p>
 <h3 id="八-MVC-模型-视图-控制器模式"><a href="#八-MVC-模型-视图-控制器模式" class="headerlink" title="八. MVC 模型-视图-控制器模式"></a>八. MVC 模型-视图-控制器模式</h3><p>这种模式，也称为MVC模式，把一个交互式应用程序划分为3个部分，</p>
 <ul>
 <li>模型：包含核心功能和数据</li>
@@ -86,7 +86,7 @@
 <p>使用场景：</p>
 <ul>
 <li>在主要编程语言中互联网应用程序的体系架构</li>
-<li>像Django和Rails这样的Web框架<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/9.png"></a></li>
+<li>像Django和Rails这样的Web框架<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/9.png"></li>
 </ul>
 <h3 id="九-黑板模式"><a href="#九-黑板模式" class="headerlink" title="九. 黑板模式"></a>九. 黑板模式</h3><p>这种模式对于没有确定解决方案策略的问题是有用的。黑板模式由3个主要组成部分组成。</p>
 <ul>
@@ -99,13 +99,13 @@
 <li>语音识别</li>
 <li>车辆识别和跟踪</li>
 <li>蛋白质结构识别</li>
-<li>声纳信号的解释<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/10.png"></a></li>
+<li>声纳信号的解释<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/10.png"></li>
 </ul>
 <h3 id="十-解释器模式"><a href="#十-解释器模式" class="headerlink" title="十. 解释器模式"></a>十. 解释器模式</h3><p>这个模式用于设计一个解释用专用语言编写的程序的组件。它主要指定如何评估程序的行数，即以特定的语言编写的句子或表达式。其基本思想是为每种语言的符号都有一个分类。</p>
 <p>使用场景：</p>
 <ul>
 <li>数据库查询语言，比如SQL</li>
-<li>用于描述通信协议的语言<br><a href="10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/11.png"></a></li>
+<li>用于描述通信协议的语言<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/11.png"></li>
 </ul>
 <h3 id="体系架构模式的比较"><a href="#体系架构模式的比较" class="headerlink" title="体系架构模式的比较"></a>体系架构模式的比较</h3><p>下面给出的表格总结了每种体系架构模式的优缺点。</p>
 <p>名称—优点—缺点<br>1.分层模式:<br>    - 一个较低的层可以被不同的层所使用。层使标准化更容易，因为我们可以清楚地定义级别。可以在层内进行更改，而不会影响其他层。<br>    - 不是普遍适用的。在某些情况下，某些层可能会被跳过。<br>2.客户端-服务器模式:<br>    - 很好地建立一组服务，用户可以请求他们的服务。<br>    - 请求通常在服务器上的单独线程中处理。由于不同的客户端具有不同的表示，进程间通信会导致额外开销。<br>3.主从设备模式:<br>    - 准确性——将服务的执行委托给不同的从设备，具有不同的实现。<br>    - 从设备是孤立的：没有共享的状态。主-从通信中的延迟可能是一个问题，例如在实时系统中。这种模式只能应用于可以分解的问题。<br>4.管道-过滤器模式:<br>    - 展示并发处理。当输入和输出由流组成时，过滤器在接收数据时开始计算。轻松添加过滤器，系统可以轻松扩展。过滤器可重复使用。可以通过重新组合一组给定的过滤器来构建不同的管道。<br>    - 效率受到最慢的过滤过程的限制。从一个过滤器移动到另一个过滤器时的数据转换开销。<br>5.代理模式:<br>    - 允许动态更改、添加、删除和重新定位对象，这使开发人员的发布变得透明。<br>    - 要求对服务描述进行标准化。<br>6.点对点模式:<br>    - 支持分散式计算。对任何给定节点的故障处理具有强大的健壮性。在资源和计算能力方面具有很高的可扩展性。<br>    - 服务质量没有保证，因为节点是自愿合作的。安全是很难得到保证的。性能取决于节点的数量。<br>7.事件总线模式:<br>    - 新的发布者、订阅者和连接可以很容易地添加。对高度分布式的应用程序有效。<br>    - 可伸缩性可能是一个问题，因为所有消息都是通过同一事件总线进行的。<br>8.模型-视图-控制器模式:<br>    - 可以轻松地拥有同一个模型的多个视图，这些视图可以在运行时连接和断开。<br>    - 增加复杂性。可能导致许多不必要的用户操作更新。<br>9.黑板模式:<br>    - 很容易添加新的应用程序。扩展数据空间的结构很简单。<br>    - 修改数据空间的结构非常困难，因为所有应用程序都受到了影响。可能需要同步和访问控制。<br>10.解释器模式:<br>    - 高度动态的行为是可行的。对终端用户编程性提供好处。提高灵活性，因为替换一个解释程序很容易。<br>    - 由于解释语言通常比编译后的语言慢，因此性能可能是一个问题。</p>
@@ -9490,7 +9490,7 @@
     <content><![CDATA[<p>AI-Generated Content，字面意思是AI生产内容。AI写诗、AI作曲、AI绘画、AI换脸……甚至有创始人认为，游戏中导入图片生成模型的“捏脸系统”都是AIGC。</p>
 <p><a href="https://jina.ai/product/disco-art/">https://jina.ai/product/disco-art/</a> 是较为直接的一个体验。</p>
 <p>下图为其主页的静态展示：</p>
-<p><img src="/2022/10/27/AIGC-%E7%BB%98%E7%94%BB%E5%88%9D%E4%BD%93%E9%AA%8C/1.png" alt="image-20221027115214033"></p>
+<p><img src="/2022/10/27/AIGC-%E7%BB%98%E7%94%BB%E5%88%9D%E4%BD%93%E9%AA%8C/1.png"></p>
 <h3 id="在线体验"><a href="#在线体验" class="headerlink" title="在线体验"></a>在线体验</h3><p><a href="https://colab.research.google.com/github/jina-ai/discoart/blob/main/discoart.ipynb">https://colab.research.google.com/github/jina-ai/discoart/blob/main/discoart.ipynb</a></p>
 <ol>
 <li>按照python notebook的步骤，逐步启动。</li>
@@ -10337,6 +10337,136 @@
 ]]></content>
       <tags>
         <tag>CBDC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PBFT性能到底如何</title>
+    <url>/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/</url>
+    <content><![CDATA[<h4 id="1-PBFT-https-github-com-yeasy-blockchain-guide-blob-master-evaluation-hyperledger-md"><a href="#1-PBFT-https-github-com-yeasy-blockchain-guide-blob-master-evaluation-hyperledger-md" class="headerlink" title="1. PBFT  https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md"></a>1. PBFT  <a href="https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md">https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md</a></h4><h3 id="Hyperledger-Fabric-v0-6-PBFT-性能评测"><a href="#Hyperledger-Fabric-v0-6-PBFT-性能评测" class="headerlink" title="Hyperledger Fabric v0.6 - PBFT 性能评测"></a>Hyperledger Fabric v0.6 - PBFT 性能评测</h3><h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>操作系统</th>
+<th>内核版本</th>
+<th>CPU(GHz)</th>
+<th>内存(GB)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物理机</td>
+<td>Ubuntu 14.04.1</td>
+<td>3.16.0-71-generic</td>
+<td>4x2.0</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p>每个集群启动后等待 10s 以上，待状态稳定。</p>
+<p>仅测试单客户端、单服务端的连接性能情况。</p>
+<h3 id="评测指标"><a href="#评测指标" class="headerlink" title="评测指标"></a>评测指标</h3><p>一般评测系统性能指标包括吞吐量（throughput）和延迟（latency）。对于区块链平台系统来说，实际交易延迟包括客户端到系统延迟（往往经过互联网），再加上系统处理反馈延迟（跟不同 consensus 算法关系很大，跟集群之间互联系统关系也很大）。</p>
+<p>本次测试仅给出大家最为关注的交易吞吐量（tps）。</p>
+<h4 id="query-交易"><a href="#query-交易" class="headerlink" title="query 交易"></a>query 交易</h4><h5 id="pbft-classic"><a href="#pbft-classic" class="headerlink" title="pbft:classic"></a>pbft:classic</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2000</td>
+<td>193.05</td>
+</tr>
+</tbody></table>
+<h5 id="pbft-batch"><a href="#pbft-batch" class="headerlink" title="pbft:batch"></a>pbft:batch</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>batch size</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>2000</td>
+<td>193.99</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>2000</td>
+<td>192.49</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>8</td>
+<td>2000</td>
+<td>192.68</td>
+</tr>
+</tbody></table>
+<h4 id="invoke-交易"><a href="#invoke-交易" class="headerlink" title="invoke 交易"></a>invoke 交易</h4><h5 id="pbft-classic-1"><a href="#pbft-classic-1" class="headerlink" title="pbft:classic"></a>pbft:classic</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2000</td>
+<td>141.34</td>
+</tr>
+</tbody></table>
+<h5 id="pbft-batch-1"><a href="#pbft-batch-1" class="headerlink" title="pbft:batch"></a>pbft:batch</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>batch size</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>2000</td>
+<td>214.36</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>2000</td>
+<td>227.53</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>8</td>
+<td>2000</td>
+<td>237.81</td>
+</tr>
+</tbody></table>
+<h3 id="PBFT结论"><a href="#PBFT结论" class="headerlink" title="PBFT结论"></a>PBFT结论</h3><p>PBFT单客户端连接情况下，TPS 基本在 190 ~ 300 范围内。</p>
+<p>============================================</p>
+<h4 id="2-tendermint-https-www-inf-usi-ch-faculty-pedone-Paper-2021-srds2021a-pdf"><a href="#2-tendermint-https-www-inf-usi-ch-faculty-pedone-Paper-2021-srds2021a-pdf" class="headerlink" title="2.tendermint https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf"></a>2.tendermint <a href="https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf">https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf</a></h4><p>我们使用 Tendermint 版本 0.33.8 和 Go 版本 1.15，使用默认配置。 内存池最多可存储5000笔交易，最大字节大小为1GB，块大小为20MB。 这些默认限制足以应付未完成交易的最大数量。两个都连接的最大发送和接收速率为 5000 KB/s，控制gossip通信的时间间隔是 100 毫秒。<br>我们在地理分布式环境中进行了实验，验证器节点均匀分布在各大洲的 16 个 AWS 区域中。另一个 AWS 实例托管 1 个以种子模式运行的非验证器节点和所有客户端。<br>我们将所有客户端托管在单个 AWS 服务器中，以将所有测量集中在一个位置。客户端在闭环中均匀地向验证器提交 1KB 交易。<br><img src="/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/1.png"><br>图中比较了 Tendermint 在 16、32、64 和 128 个验证者规模下的性能。 我们并不期望通过增加验证器的数量来提高性能，因为消息复杂性和共识成本随着进程数量的增加而增加。 本次比较中使用了 128 个验证器的参考工作负载，在实验中的验证器之间均匀分配 1536 个客户端。 采用了第 VII-B 节中考虑的相同实验设置。图中，在相同的工作负载下，当我们将验证器数量增加一倍时，吞吐量会适度下降。</p>
+<h3 id="Tendermint结论"><a href="#Tendermint结论" class="headerlink" title="Tendermint结论"></a>Tendermint结论</h3><p>Tendermint 的 TPS 基本在 400 ~ 600 范围内。交易延时在2～4秒。</p>
+]]></content>
+      <tags>
+        <tag>共识算法</tag>
       </tags>
   </entry>
 </search>

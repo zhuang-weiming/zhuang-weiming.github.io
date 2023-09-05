@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="1. PBFT  https:&#x2F;&#x2F;github.com&#x2F;yeasy&#x2F;blockchain_guide&#x2F;blob&#x2F;master&#x2F;evaluation&#x2F;hyperledger.mdHyperledger Fabric v0.6 - PBFT 性能评测环境配置   类型 操作系统 内核版本 CPU(GHz) 内存(GB)    物理机 Ubuntu 14.04.1 3.16.0-71-generic 4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PBFT性能到底如何">
+<meta property="og:url" content="https://willzhuang.github.io/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="1. PBFT  https:&#x2F;&#x2F;github.com&#x2F;yeasy&#x2F;blockchain_guide&#x2F;blob&#x2F;master&#x2F;evaluation&#x2F;hyperledger.mdHyperledger Fabric v0.6 - PBFT 性能评测环境配置   类型 操作系统 内核版本 CPU(GHz) 内存(GB)    物理机 Ubuntu 14.04.1 3.16.0-71-generic 4">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://willzhuang.github.io/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/1.png">
+<meta property="article:published_time" content="2023-09-05T07:50:00.000Z">
+<meta property="article:modified_time" content="2023-09-05T08:17:21.605Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="共识算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://willzhuang.github.io/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/1.png">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>PBFT性能到底如何 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-PBFT-https-github-com-yeasy-blockchain-guide-blob-master-evaluation-hyperledger-md"><span class="nav-number">1.</span> <span class="nav-text">1. PBFT  https:&#x2F;&#x2F;github.com&#x2F;yeasy&#x2F;blockchain_guide&#x2F;blob&#x2F;master&#x2F;evaluation&#x2F;hyperledger.md</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hyperledger-Fabric-v0-6-PBFT-%E6%80%A7%E8%83%BD%E8%AF%84%E6%B5%8B"><span class="nav-number"></span> <span class="nav-text">Hyperledger Fabric v0.6 - PBFT 性能评测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number"></span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%84%E6%B5%8B%E6%8C%87%E6%A0%87"><span class="nav-number"></span> <span class="nav-text">评测指标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#query-%E4%BA%A4%E6%98%93"><span class="nav-number">1.</span> <span class="nav-text">query 交易</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pbft-classic"><span class="nav-number">1.1.</span> <span class="nav-text">pbft:classic</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pbft-batch"><span class="nav-number">1.2.</span> <span class="nav-text">pbft:batch</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#invoke-%E4%BA%A4%E6%98%93"><span class="nav-number">2.</span> <span class="nav-text">invoke 交易</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pbft-classic-1"><span class="nav-number">2.1.</span> <span class="nav-text">pbft:classic</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pbft-batch-1"><span class="nav-number">2.2.</span> <span class="nav-text">pbft:batch</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PBFT%E7%BB%93%E8%AE%BA"><span class="nav-number"></span> <span class="nav-text">PBFT结论</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-tendermint-https-www-inf-usi-ch-faculty-pedone-Paper-2021-srds2021a-pdf"><span class="nav-number">1.</span> <span class="nav-text">2.tendermint https:&#x2F;&#x2F;www.inf.usi.ch&#x2F;faculty&#x2F;pedone&#x2F;Paper&#x2F;2021&#x2F;srds2021a.pdf</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tendermint%E7%BB%93%E8%AE%BA"><span class="nav-number"></span> <span class="nav-text">Tendermint结论</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PBFT性能到底如何
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-05 15:50:00 / Modified: 16:17:21" itemprop="dateCreated datePublished" datetime="2023-09-05T15:50:00+08:00">2023-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="1-PBFT-https-github-com-yeasy-blockchain-guide-blob-master-evaluation-hyperledger-md"><a href="#1-PBFT-https-github-com-yeasy-blockchain-guide-blob-master-evaluation-hyperledger-md" class="headerlink" title="1. PBFT  https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md"></a>1. PBFT  <a target="_blank" rel="noopener" href="https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md">https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md</a></h4><h3 id="Hyperledger-Fabric-v0-6-PBFT-性能评测"><a href="#Hyperledger-Fabric-v0-6-PBFT-性能评测" class="headerlink" title="Hyperledger Fabric v0.6 - PBFT 性能评测"></a>Hyperledger Fabric v0.6 - PBFT 性能评测</h3><h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>操作系统</th>
+<th>内核版本</th>
+<th>CPU(GHz)</th>
+<th>内存(GB)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物理机</td>
+<td>Ubuntu 14.04.1</td>
+<td>3.16.0-71-generic</td>
+<td>4x2.0</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p>每个集群启动后等待 10s 以上，待状态稳定。</p>
+<p>仅测试单客户端、单服务端的连接性能情况。</p>
+<h3 id="评测指标"><a href="#评测指标" class="headerlink" title="评测指标"></a>评测指标</h3><p>一般评测系统性能指标包括吞吐量（throughput）和延迟（latency）。对于区块链平台系统来说，实际交易延迟包括客户端到系统延迟（往往经过互联网），再加上系统处理反馈延迟（跟不同 consensus 算法关系很大，跟集群之间互联系统关系也很大）。</p>
+<p>本次测试仅给出大家最为关注的交易吞吐量（tps）。</p>
+<h4 id="query-交易"><a href="#query-交易" class="headerlink" title="query 交易"></a>query 交易</h4><h5 id="pbft-classic"><a href="#pbft-classic" class="headerlink" title="pbft:classic"></a>pbft:classic</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2000</td>
+<td>193.05</td>
+</tr>
+</tbody></table>
+<h5 id="pbft-batch"><a href="#pbft-batch" class="headerlink" title="pbft:batch"></a>pbft:batch</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>batch size</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>2000</td>
+<td>193.99</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>2000</td>
+<td>192.49</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>8</td>
+<td>2000</td>
+<td>192.68</td>
+</tr>
+</tbody></table>
+<h4 id="invoke-交易"><a href="#invoke-交易" class="headerlink" title="invoke 交易"></a>invoke 交易</h4><h5 id="pbft-classic-1"><a href="#pbft-classic-1" class="headerlink" title="pbft:classic"></a>pbft:classic</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2000</td>
+<td>141.34</td>
+</tr>
+</tbody></table>
+<h5 id="pbft-batch-1"><a href="#pbft-batch-1" class="headerlink" title="pbft:batch"></a>pbft:batch</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>batch size</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>2000</td>
+<td>214.36</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>2000</td>
+<td>227.53</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>8</td>
+<td>2000</td>
+<td>237.81</td>
+</tr>
+</tbody></table>
+<h3 id="PBFT结论"><a href="#PBFT结论" class="headerlink" title="PBFT结论"></a>PBFT结论</h3><p>PBFT单客户端连接情况下，TPS 基本在 190 ~ 300 范围内。</p>
+<p>============================================</p>
+<h4 id="2-tendermint-https-www-inf-usi-ch-faculty-pedone-Paper-2021-srds2021a-pdf"><a href="#2-tendermint-https-www-inf-usi-ch-faculty-pedone-Paper-2021-srds2021a-pdf" class="headerlink" title="2.tendermint https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf"></a>2.tendermint <a target="_blank" rel="noopener" href="https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf">https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf</a></h4><p>我们使用 Tendermint 版本 0.33.8 和 Go 版本 1.15，使用默认配置。 内存池最多可存储5000笔交易，最大字节大小为1GB，块大小为20MB。 这些默认限制足以应付未完成交易的最大数量。两个都连接的最大发送和接收速率为 5000 KB/s，控制gossip通信的时间间隔是 100 毫秒。<br>我们在地理分布式环境中进行了实验，验证器节点均匀分布在各大洲的 16 个 AWS 区域中。另一个 AWS 实例托管 1 个以种子模式运行的非验证器节点和所有客户端。<br>我们将所有客户端托管在单个 AWS 服务器中，以将所有测量集中在一个位置。客户端在闭环中均匀地向验证器提交 1KB 交易。<br><img src="/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/1.png"><br>图中比较了 Tendermint 在 16、32、64 和 128 个验证者规模下的性能。 我们并不期望通过增加验证器的数量来提高性能，因为消息复杂性和共识成本随着进程数量的增加而增加。 本次比较中使用了 128 个验证器的参考工作负载，在实验中的验证器之间均匀分配 1536 个客户端。 采用了第 VII-B 节中考虑的相同实验设置。图中，在相同的工作负载下，当我们将验证器数量增加一倍时，吞吐量会适度下降。</p>
+<h3 id="Tendermint结论"><a href="#Tendermint结论" class="headerlink" title="Tendermint结论"></a>Tendermint结论</h3><p>Tendermint 的 TPS 基本在 400 ~ 600 范围内。交易延时在2～4秒。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/" title="PBFT性能到底如何">https://willzhuang.github.io/2023/09/05/PBFT性能到底如何/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" rel="tag"># 共识算法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/07/MAS-CBDC-Technical-Whitepaper/" rel="prev" title="MAS-CBDC-Technical-Whitepaper">
+                  <i class="fa fa-chevron-left"></i> MAS-CBDC-Technical-Whitepaper
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '92838e9b460abdff85f546ce3002935e',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
