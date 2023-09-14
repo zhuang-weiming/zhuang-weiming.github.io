@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-count">222</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,166 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/09/14/BloombergGPT%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/14/BloombergGPT%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/" class="post-title-link" itemprop="url">BloombergGPT论文解读</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-14 16:31:00 / Modified: 16:49:11" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h3><p>BloombergGPT是布隆伯格2023年3月30日公开在arXiv的一篇文章——<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.17564">BloombergGPT: A Large Language Model for Finance</a>中涉及到的语言模型，也是金融领域第一个公开发表文章的大语言模型（以下简称“LLM”）。</p>
+<h3 id="2-要点"><a href="#2-要点" class="headerlink" title="2. 要点"></a>2. 要点</h3><ul>
+<li>BloombergGPT是Bloomberg训练出来的金融大语言模型（LLM for Finance）</li>
+<li>模型参数量为500亿，使用了包含3630亿token的金融领域数据集以及3450亿token的通用数据集</li>
+<li>隐藏层维度为7680，多头的头数为40</li>
+<li>模型采用Unigram tokenizer，AdamW优化器</li>
+<li>模型在64个AWS的p4d.24xlarge实例上训练了53天，其中每个p4d.24xlarge实例包含了8块40GB的A100GPU</li>
+<li>对BloombergGPT的评估包含了两部分：金融领域评估与通用领域评估</li>
+<li>评估对比的其他大语言模型有GPT-NeoX、OPT、BLOOM、GPT-3</li>
+<li>在金融领域任务上，BloombergGPT综合表现最好；在通用任务上，BloombergGPT的综合得分同样优于相同参数量级的其他模型，并且在某些任务上的得分要高于参数量更大的模型</li>
+<li>BloombergGPT模型在金融领域取得好效果的同时，并没有以牺牲模型通用能力为代价</li>
+<li>对模型定性评估的结果表明，BloombergGPT可以提高工作效率</li>
+<li>出于安全性的考虑，BloogbergGPT模型不会被公开，但是模型训练和评估的相关经验和思考会被分享出来</li>
+<li>作者认为，对模型效果提升促进最大的三个因素（按影响从高到低排序）分别为精心清洗的数据集、合理的tokenizer、流行的模型结构</li>
+</ul>
+<p>文章的主要贡献在以下几点：</p>
+<ul>
+<li>混合数据集训练方法不仅可以在特定任务上表现出色，也可以在一般NLP基准测试上表现良好</li>
+<li>不同于常见的网络爬取数据，本文的数据包含了巨量的可信来源的精心清洗的数据</li>
+<li>不仅包含了模型在基准测试集上的评估结果，也包含了在Bloomberg内部任务上的评估结果</li>
+<li>在超过7000亿个token的语料库中的5690亿个token上训练出一个500亿参数的LLM</li>
+<li>使用Unigram模型而非常用的基于贪心合并的子词标记器进行tokenize，方便在推理时进行更智能的标记化</li>
+<li>借鉴BLOOM的训练大模型方法，同时也将自己自己在训练BloombergGPT中的经验分享</li>
+</ul>
+<h3 id="3-数据集"><a href="#3-数据集" class="headerlink" title="3.数据集"></a>3.数据集</h3><p><strong>BloombergGPT是一个有500亿参数、基于BLOOM模型的LLM</strong>，过程中采用了一种兼具通用能力和特定领域的方法。<br>作者首先<strong>构建了FinPile</strong>——一个包含了新闻、档案、网络爬取的新闻稿件、英文财经文档等英文金融文档的金融领域数据集，同时也采用了通用的数据集。</p>
+<h4 id="金融领域数据集"><a href="#金融领域数据集" class="headerlink" title="金融领域数据集"></a>金融领域数据集</h4><p>**金融领域数据集共包含了3630亿个token，占总数据集token量的54.2%**，具体由以下几个部分构成：</p>
+<ul>
+<li>金融领域相关网页，2980亿token，占比42.01%</li>
+<li>金融领域知名新闻源，380亿token，占比5.31%</li>
+<li>公司财报，140亿token，占比2.04%</li>
+<li>金融相关公司的出版物，90亿token，占比1.21%</li>
+<li>bloomberg，50亿token，占比0.7%<br>因为包含一部分收费和私有数据，所以这份数据集不会被公开，但是文章中公开了模型训练方法。</li>
+</ul>
+<h4 id="通用数据集"><a href="#通用数据集" class="headerlink" title="通用数据集"></a>通用数据集</h4><p>**通用数据集共包含了3450亿个token，占总数据集token量的48.73%**，具体分为如下几个部分：</p>
+<ul>
+<li>The Pile数据集，1840亿token，占比25.9%</li>
+<li>C4数据集，1380亿token，占比19.48%</li>
+<li>Wikipedia数据集，240亿token，占比3.35%</li>
+</ul>
+<p>数据集使用<strong>Unigram tokenizer</strong>对原始文本进行tokenize。具体处理时，作者这了<strong>两点改进</strong>（具体内容可参考原论文《2.3Tokenization》）：</p>
+<ul>
+<li>在pretokenization这一步，将数字视为单个token，并且允许词组的存在，以提高信息密度减少句子长度</li>
+<li>使用分治的思想优化Unigram tokenizer在大数据集上的实现，并对最终<strong>词表大小控制在13万</strong>这个数量级上</li>
+</ul>
+<h3 id="4-模型"><a href="#4-模型" class="headerlink" title="4.模型"></a>4.模型</h3><h4 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h4><p>模型<strong>基于BLOOM模型的自回归结构</strong>，具体<strong>包含了70层transformer decoder</strong>。<br>另外一些细节如下（详见《3.1 Architecture》）：</p>
+<ul>
+<li>前馈层（FFN）中的非线性函数采用GELU</li>
+<li>位置编码采用ALiBi编码</li>
+<li>模型在第一层多了一个layer normalization</li>
+</ul>
+<h4 id="模型尺度"><a href="#模型尺度" class="headerlink" title="模型尺度"></a>模型尺度</h4><p>这一部分，作者先有了算力预算（<strong>40G内存A100共130万GPU小时</strong>），并且给中间checkpoint存储留出了约25%的时间预算。<br><strong>根据Chinchilla scaling laws，计算出模型的参数和需要的数据量大小——模型参数为500亿，token数据量为11000+亿</strong>。<br>考虑到金融领域token数量要占总token数量的50%以上，而且目前的数据暂时无法再进行扩充，最终<strong>模型参数量选择为500亿，token数据量为7000+亿</strong>。<br>另一方面，隐藏层维度D也可以根据decoder的层数计算出来，这里经过计算<strong>隐藏层维度为7680</strong>，多头的<strong>头数为40</strong>。</p>
+<h4 id="训练配置"><a href="#训练配置" class="headerlink" title="训练配置"></a>训练配置</h4><p>这一部分原始论文写的比较详细，具体见《3.3 Training Configuration》，这里简单摘要如下：</p>
+<ul>
+<li>作者在<strong>每篇文档的最后添加了特殊标记&lt;|endoftext|&gt;，模型训练时选取的句子长度为2048token</strong></li>
+<li>训练时采用的优化方法是<strong>AdamW，beta1、beta2、weight decay取值分别为0.9、0.95、0.1</strong>，初始学习率为6e-5，采用cosine衰减、线性warmup方式</li>
+<li>模型参数随机初始化为<strong>均值0、标准差0.006588的正态分布</strong>，并对MLP的第二层和注意力层输出进行缩放</li>
+<li>关于训练的不稳定性，文章中没有描述训练BloombergGPT时采用的方法，只是介绍了相关进展</li>
+<li>关于计算使用到的硬件，使用了<strong>64个AWS的p4d.24xlarge实例，每个p4d.24xlarge实例包含了8块40GB的A100GPU</strong><h4 id="大规模优化采用的方法"><a href="#大规模优化采用的方法" class="headerlink" title="大规模优化采用的方法"></a>大规模优化采用的方法</h4>这一部分中，作者描述了具体优化时采用的方法：ZeRO优化、MiCS、Activation Checkpointing、混合精度训练（Mixed Precision Training）、内核融合（fused kernels）。<br>具体见《3.4 Large-scale Optimization》<br>经过上述优化，上述硬件的<strong>平均算力水平达到了102TFLOPs</strong>，<strong>训练一步需要32.5秒</strong>。<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。</li>
+</ul>
+<p><strong>具体训练过程如下</strong>：</p>
+<ul>
+<li>初始训练的batch size大小为1024，warm-up过程持续了7200步，随后作者将batch size修改为2048。</li>
+<li>115,500步之后，验证集上的损失不再下降，然后作者将学习率缩小为原始的2/3；</li>
+<li>129,900步之后，学习率缩小为之前的1/2，同时增加dropout</li>
+<li>137,100步之后，学习率再次缩小为之前的1/2</li>
+<li>最终，训练在146,000步结束。作者选取139,200这一步的模型最为最终使用的模型<br>这里推荐阅读原始文章3.3节与3.4节中关于训练方法的描述，对于大模型训练有一定的参考意义。<h3 id="5-评估"><a href="#5-评估" class="headerlink" title="5.评估"></a>5.评估</h3>文章中对BloombergGPT的<strong>评估分成了两部分</strong>：<strong>金融领域任务与通用任务</strong>。这样做的目的也比较直观，就是<strong>验证在特定领域预训练后的模型能够在特定领域表现好，同时在通用领域的表现也不会差太多</strong>这一观点。<br>同时，文章<strong>对比了BloombergGPT、GPT-NeoX、OPT、BLOOM、GPT-3在不同任务上的表现</strong>。注意，这里<strong>因为GPT-3模型无法获取，故仅在部分通用任务上进行了评测</strong>。<br>作者对每一个模型均独立进行了评测，并且在每一个任务中使用相同的标准prompt、相同的样例、不使用任务描述和任何CoT prompt，以保证评测结果的公平性。<br>对于有多个答案的任务，文章中采用了**基于似然的分类方法（likelihood-based classification）进行评估；对于其他任务，文章采用贪心解码（greedy decoding）的方式进行评估。<h4 id="holdout-loss"><a href="#holdout-loss" class="headerlink" title="holdout loss"></a>holdout loss</h4>作者首先在FinPile数据集预留的部分样本上对各个模型进行了bits per byte的评估。<br>bits per byte指标是评估语言模型的一种常见指标<strong>，类似于perplexity，取值越小，模型越好。具体计算方法可见</strong><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/a/261789">How to compute bits per character (BPC)?</a></li>
+</ul>
+<p><strong>BloombergGPT在金融语料上的bits per byte均好于其他模型，并且在财报（Filings）这个类别上表现尤其突出</strong>。这个结果也符合预期。否则可能就没有后面任务对比的必要了。<br>文章又将金融领域任务分成了<strong>外部任务和Bloomberg内部任务</strong>。在每个任务上，作者除了评估模型在任务上的表现，还评估了同一任务下不同模型生成结果之间两两比较的胜率（WR）。</p>
+<h4 id="外部任务"><a href="#外部任务" class="headerlink" title="外部任务"></a>外部任务</h4><p>外部任务主要如下：</p>
+<ul>
+<li>ConvFinQA，标普500收益报告问答推理</li>
+<li>FiQA SA，金融新闻和微博客标题基于方面的情感三分类（正负中）</li>
+<li>FPB，金融新闻句子级别情感三分类（正负中）</li>
+<li>Headline，新闻标题在预定义标签下的二分类</li>
+<li>NER，信用风险评估数据的命名实体识别</li>
+</ul>
+<p><strong>BloombergGPT在上述5个任务中的4个都取得了最好效果，在另外一个取得了第二名；并且在模型两两结果对比的胜率最高，同时在ConvFinQA这个任务上遥遥领先。</strong></p>
+<h4 id="Bloomberg内部任务之情感分析"><a href="#Bloomberg内部任务之情感分析" class="headerlink" title="Bloomberg内部任务之情感分析"></a>Bloomberg内部任务之情感分析</h4><p>这个任务中的情感分析均为基于方面的情感三分类（aspect-specific sentiment），数据集的内容通过任务名称就可以略知一二。<br><strong>BloombergGPT在上述4个数据集上的表现均大幅领先于其他模型</strong>。</p>
+<h4 id="探索性任务：NER"><a href="#探索性任务：NER" class="headerlink" title="探索性任务：NER"></a>探索性任务：NER</h4><p>注意，这里的<strong>NER只涉及到ORG、PER、LOC这三类实体</strong>。<br>同时探索性任务<strong>NER+NED是指识别出实体后再将实体链接到上市公司的股票简称</strong>。比如“AAPL announced that they will stop using Intel chips in future products.” 这句话<strong>NER的结果是“AAPL, Intel”</strong>，<strong>NER+NED的结果是 “AAPL, INTC”</strong>。<br>这两类任务涉及到的数据集包括了<strong>7个数据集</strong>，分别为BN（Bloomberg BN wire上内容）、BFW（Bloomberg First Word上的内容）、Filings（财报内容）、Headlines（Bloomberg news内容）、Premium（Bloogberg收录 的第三方新闻内容）、Transcripts（公司新闻发布会的文字记录）、Social Media。<br>最终，<strong>NER任务下，BloombergGPT仅在Headlines这一个数据集上得分最高；但在NER+NED任务下，BloombergGPT在除了Social Media任务的其他任务上均得分第一</strong>。</p>
+<h4 id="通用任务"><a href="#通用任务" class="headerlink" title="通用任务"></a>通用任务</h4><p>文章在通用任务上做了相当多的对比，这里<strong>仅对任务类型和结果做简要描述，详细内容见文章中的5.4~5.7节</strong>。<br>作者在<strong>BIG-bench Hard</strong>（BIG-bench的一个子集，仅包含目前模型表现无法超过人类的任务）、<strong>常识测试</strong>（不提供任何背景知识，仅可以训练时使用的数据）、<strong>阅读理解</strong>、<strong>语言学</strong>（消歧、语法识别、蕴含判别等）等任务上进行了测试。<br><strong>在BIG-bench Hard任务上，BloombergGPT得分低于参数量更大的PaLM和BLOOM，但是与参数规模类似的GPT-NeoX或OPT66B相比，BloombergGPT的性能更接近BLOOM</strong>，这说明开发金融专用的大语言模型并没有明显牺牲其通用能力。<br><strong>在常识测试任务中，BloombergGPT在1个任务上取得了第一名，在其余3个任务上取得了第二名（这里未考虑GPT-3）</strong>。<br><strong>在阅读理解任务上，GPT-3在所有任务上排名第一，BloombergGPT在5/6个任务上排名第二</strong>，且得分远高于BLOOM模型。<br><strong>在语言学任务上，GPT-3在综合排名第一，BloombergGPT综合排名第二</strong>，且综合得分高于BLOOM模型。</p>
+<h3 id="评测总结"><a href="#评测总结" class="headerlink" title="评测总结"></a>评测总结</h3><p><strong>在金融领域任务上，BloombergGPT综合表现最好</strong>；<br><strong>在通用任务上，BloombergGPT的综合得分优于相同参数量级的其他模型，并且在某些任务上的得分要高于参数量更大的模型</strong>。<br>这都说明，开发金融专用的大语言模型在金融领域取得好效果的同时，并没有以牺牲模型通用能力为代价。<br>这一结论也可以给我们一个启示，<strong>在其他特定领域，我们也可以开发专用的大语言模型</strong>。</p>
+<h3 id="定性评估"><a href="#定性评估" class="headerlink" title="定性评估"></a>定性评估</h3><p>作者在文章的第6章还展示了对BloombergGPT定性评估的例子，以展示模型在专业领域带来的促进作用。<br>这些列子包括：</p>
+<ul>
+<li>BQL（Bloomberg查询语言）生成，即使用自然语言完成Bloomberg数据库查询，类似NL2SQL</li>
+<li>新闻标题提示，辅助记者生成新闻短标题</li>
+<li>金融问答<h3 id="6-道德伦理、限制与研究意义"><a href="#6-道德伦理、限制与研究意义" class="headerlink" title="6.道德伦理、限制与研究意义"></a>6.道德伦理、限制与研究意义</h3>这一章没有太多值得写的，主要就是强调了目前大语言模型可能会生成有害的、有偏见的内容，并且可能存在prompt注入导致信息泄露的风险，Bloomberg在使用大语言模型前后都会做好风控，保证生成内容的准确性。<br>同时，<strong>BloogbergGPT模型不会被公开，但是模型训练和评估的相关经验和思考会被分享出来</strong>。<h3 id="7-总结与展望"><a href="#7-总结与展望" class="headerlink" title="7.总结与展望"></a>7.总结与展望</h3>文章提出了BloombergGPT——一个金融领域顶级的LLM，并且在训练特定领域大语言模型做出了如下贡献：</li>
+<li><strong>使用领域数据和通用数据的训练方式可以让模型在这两个方面得到平衡的结果</strong></li>
+<li>模型参数量参考了Chinchilla scaling laws</li>
+<li>公布了相关训练细节<br>下一步，作者们会在以下方向继续研究：</li>
+<li>金融领域的fine-tuning</li>
+<li>使用更无害和更无偏见的语言</li>
+<li>研究tokenization方法对模型结果的影响<br>最后，作者把模型取得目前效果归结于以下三个因素（按影响从高到低排序）：</li>
+<li><strong>精心清洗的内部数据集</strong></li>
+<li><strong>tokenizer的选择</strong></li>
+<li><strong>流行的模型结构</strong></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -631,121 +791,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="https-goerli-etherscan-io-token-0x931551EC0bB82bEbB81Bce7152a24c8F01e78e17"><a href="#https-goerli-etherscan-io-token-0x931551EC0bB82bEbB81Bce7152a24c8F01e78e17" class="headerlink" title="https://goerli.etherscan.io/token/0x931551EC0bB82bEbB81Bce7152a24c8F01e78e17"></a><a target="_blank" rel="noopener" href="https://goerli.etherscan.io/token/0x931551EC0bB82bEbB81Bce7152a24c8F01e78e17">https://goerli.etherscan.io/token/0x931551EC0bB82bEbB81Bce7152a24c8F01e78e17</a></h3><p><img src="/2023/07/31/%E6%B8%A3%E6%89%93%E8%B4%B8%E6%98%93%E9%87%91%E8%9E%8DABS-Token/1.jpg" alt="1"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/07/24/Neural-Networks-and-Software-Reliablity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/07/24/Neural-Networks-and-Software-Reliablity/" class="post-title-link" itemprop="url">Neural-Networks-and-Software-Reliablity</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-07-24 12:27:00" itemprop="dateCreated datePublished" datetime="2023-07-24T12:27:00+08:00">2023-07-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 13:58:37" itemprop="dateModified" datetime="2023-09-14T13:58:37+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h3><p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/1.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/2.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/3.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/4.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/5.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/6.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/7.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/8.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/9.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/10.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/11.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/12.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/13.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/14.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/15.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/16.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/17.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/18.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/19.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/20.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/21.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/22.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/23.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/24.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/25.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/25.1.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/26.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/27.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/28.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/29.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/30.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/31.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/32.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/33.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/34.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/35.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/36.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/37.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/38.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/39.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/40.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/41.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/42.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/43.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/44.png"></p>
 
       
     </div>

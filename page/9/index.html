@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-count">222</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,83 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/04/26/2.How%20to%20complete%20an%20order%20in%20medusa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/26/2.How%20to%20complete%20an%20order%20in%20medusa/" class="post-title-link" itemprop="url">2.How to complete an order in medusa</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-26 21:34:00" itemprop="dateCreated datePublished" datetime="2022-04-26T21:34:00+08:00">2022-04-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-05-11 15:37:17" itemprop="dateModified" datetime="2023-05-11T15:37:17+08:00">2023-05-11</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p>How can I finish (or complete) an order? I already run Capture an Order -&gt; Create a Fulfillment -&gt; Create a Shipment successfully, but the order status is “pending” in DB. (in Ubuntu / medusa version <a target="_blank" rel="noopener" href="https://github.com/medusajs/medusa/releases/tag/v1.7.12">v1.7.12</a>)</p>
+<h3 id="Answer"><a href="#Answer" class="headerlink" title="Answer"></a>Answer</h3><p>You can create a simple subscriber, that listens for order completion events:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderSubscriber</span> </span>&#123;</span><br><span class="line">  constructor(&#123; orderService, eventBusService &#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.orderService_ = orderService;</span><br><span class="line">    eventBusService.subscribe(<span class="string">&quot;order.placed&quot;</span>, <span class="keyword">this</span>.handleOrderPlaced);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleOrderPlaced = async (data) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> await <span class="keyword">this</span>.orderService_.update(data.id, &#123; status: <span class="string">&quot;completed&quot;</span> &#125;)</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export <span class="keyword">default</span> OrderSubscriber;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>![](2.How to complete an order in medusa/1.png)</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -823,115 +900,6 @@
 <li>connect with metamask as below. by the way, the para when you add a network for firefly , please refer the info at <code>~/.firefly/stacks/oh/blockchain/genesis.json</code>, here you can cat genesis block info.</li>
 </ol>
 <p><img src="/2022/03/31/%E4%BD%93%E9%AA%8Cfirefly/4.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/03/11/CS251_Final_Exam_2021-stanford.edu-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/11/CS251_Final_Exam_2021-stanford.edu-1/" class="post-title-link" itemprop="url">CS251_Final_Exam_2021-stanford.edu-2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-11 18:54:00" itemprop="dateCreated datePublished" datetime="2022-03-11T18:54:00+08:00">2022-03-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-03-31 20:17:13" itemprop="dateModified" datetime="2022-03-31T20:17:13+08:00">2022-03-31</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="Problem-2-20-points-Byzantine-broadcast"><a href="#Problem-2-20-points-Byzantine-broadcast" class="headerlink" title="Problem 2. [20 points]: Byzantine broadcast."></a>Problem 2. [20 points]: Byzantine broadcast.</h4><p>Consider n parties, where n ≥ 3, and where one of the parties is designated as a sender. The sender has a bit b ∈ {0, 1}. A broadcast protocol is a protocol where the parties send messages to one another, and eventually every party outputs a bit bi , for i = 1, . . . , n, or outputs nothing. </p>
-<ul>
-<li><p>We say that the protocol has consistency if for every two honest parties, if one party outputs b and the other outputs b’ , then b = b’ . </p>
-</li>
-<li><p>We say that the protocol has validity if when the sender is honest, the output of all honest parties is equal to the sender’s input bit b. </p>
-</li>
-<li><p>We say that the protocol has totality if whenever some honest party outputs a bit, then eventually all honest parties output a bit. </p>
-</li>
-</ul>
-<p>A reliable broadcast protocol (RBC) is a broadcast protocol that satisfies all three properties. Let us assume that there is a public key infrastructure (PKI), meaning that every party has a secret signing key, and every party knows the correct public signature verification key for every other party. </p>
-<p>In a synchronous network, consider the following broadcast protocol: </p>
-<ul>
-<li><p>step 0: The sender sends its input bit b (along with its signature) to all other parties. The sender then outputs its bit b and terminates. </p>
-</li>
-<li><p>step 1: Every non-sender party i echoes what it heard from the sender to all the other non-sender parties (with i’s signature added). If the party heard nothing from the sender, it does nothing in this step. Similarly, the party does nothing in this step if the sender’s message is malformed: for example, if the sender’s signature is invalid, or the message is not a single bit. </p>
-</li>
-<li><p>step 2: Every non-sender party collects all the messages it received (up to n−1 messages, with at most one from the sender in step 0 and at most one from each non-sender party in step 1). If some two of the received messages contain a valid signature by the sender, but for opposite bits (i.e., in one signed message the bit is 0 and in the other signed message the bit is 1) then the sender is dishonest and the party outputs 0 and terminates. Otherwise, all the properly signed bits from the sender are the same, and the party outputs that bit. If the non-sender received no messages, it outputs nothing. </p>
-</li>
-</ul>
-<p>For each of the following questions, describe an attack or explain why there is no attack. </p>
-<p><strong>A) If there is at most one dishonest party, does the protocol have consistency?</strong></p>
-<p>answer - a dishonest party have options as below in step 1 &amp; 2 to cheat a honest part:</p>
-<ol>
-<li><p>don’t answer / response;</p>
-</li>
-<li><p>broke sender’s signature but cannot make a fake/wrong bit b, because broken signature cannot verify correct.</p>
-</li>
-<li><p>broke node’s signature itself. </p>
-</li>
-</ol>
-<p>If the sender is a dishonest party, in step 0, dishonest part can send b to some parties, and send a different b’ to other parties. Then it <strong>don’t have consistency</strong>. If the sender is a honest part, the dishonest party don’t  response, so other nodes can’t accumulate “all the properly signed bits from the sender are the same, and the party outputs that bit”, then other nodes have no response. Then it still <strong>don’t have consistency</strong>.</p>
-<p><strong>B) If there is at most one dishonest party, does the protocol have validity?</strong></p>
-<p>answer - dishonest party don’t response any message , and make other nodes cannot reach “all the properly signed bits from the sender are the same, and the party outputs that bit.”  So this protocol don’t have validity.</p>
-<p><strong>C) If there are at most two dishonest parties, show that the protocol does not have consistency.</strong></p>
-<p>answer - As answer A)</p>
-<p><strong>D) If there are at most two dishonest parties, does the protocol have validity?</strong></p>
-<p>answer - two dishonest parties can send out the same dishonest message or they don’t response, and make other nodes cannot reach “all the properly signed bits from the sender are the same, and the party outputs that bit.”  So this protocol don’t have validity.  </p>
-<p><strong>E) Does the protocol have totality (for any number of dishonest parties)?</strong></p>
-<p>answer - It assume that this protocol run in a reliable broadcast protocol (RBC). But the dishonest party can send a (or some) correct response to one (or some other) party, but don’t response any message to one (or some other) party in step 1. Dishonest party also can do the same in step 0. So these honest party cannot have the same result. Then this protocol don’t have totality.</p>
 
       
     </div>

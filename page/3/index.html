@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-count">222</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,94 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/04/03/Software-2.0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/03/Software-2.0/" class="post-title-link" itemprop="url">Software-2.0</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-03 16:27:00" itemprop="dateCreated datePublished" datetime="2023-04-03T16:27:00+08:00">2023-04-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-04-04 17:10:06" itemprop="dateModified" datetime="2023-04-04T17:10:06+08:00">2023-04-04</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>2017年6月，大神 Andrej Karpathy 刚从现在如日中天的 OpenAI 离职加入了 Tesla，跟着Elon Musk干自动驾驶。半年后的2017年11月13日，Andrej 写了一篇文章「Software 2.0」，提出了一个新的软件范式，一个以神经网络为主体、其他代码为辅助的 Software 2.0。具体文章见 <a target="_blank" rel="noopener" href="https://karpathy.medium.com/software-2-0-a64152b37c35">https://karpathy.medium.com/software-2-0-a64152b37c35</a></p>
+<h3 id="2017-Software-1-0-vs-Software-2-0"><a href="#2017-Software-1-0-vs-Software-2-0" class="headerlink" title="2017: Software 1.0 vs Software 2.0"></a>2017: Software 1.0 vs Software 2.0</h3><ol>
+<li>Software 1.0 中的规则（也就是我们常说的业务逻辑）是设计好的，由程序员把设计好的业务规则，通过一种编程语言写给机器执行。可以是Python或者Java、C++等；Software 2.0 的核心是一个神经网络、是无法被人理解的一种代码。</li>
+<li>Software 1.0 是程序员写代码；Software 2.0 是程序员搞训练、调整训练数据集等。开发范式发生了非常大的变化。</li>
+</ol>
+<p><img src="/2023/04/03/Software-2.0/1.png"></p>
+<h3 id="2021-进一步"><a href="#2021-进一步" class="headerlink" title="2021: 进一步"></a>2021: 进一步</h3><p>『The Rise of Software 2.0』<a target="_blank" rel="noopener" href="https://pub.towardsai.net/the-rise-of-software-2-0-you-dont-want-to-be-left-behind-cbaa75f6d19">https://pub.towardsai.net/the-rise-of-software-2-0-you-dont-want-to-be-left-behind-cbaa75f6d19</a> ，加上更多的AI 产品已经可以看到了，Software 2.0 的轮廓逐渐清晰了，尤其作者提到的中间态 Data Products，就是我们目前看到的大多数产品的形态。</p>
+<p><img src="/2023/04/03/Software-2.0/2.png"></p>
+<h3 id="2023-ChatGPT"><a href="#2023-ChatGPT" class="headerlink" title="2023: ChatGPT"></a>2023: ChatGPT</h3><p>2023年，chatGPT 持续火爆，尤其是 GPT 4.0 的 plugin 机制，让 GPT 插上了翅膀，无所不能的画面呈现在我们眼前。6年后，Software 2.0 是这样子，但跟之前Andrej 说的还是有一些不同：</p>
+<ol>
+<li>软件的核心是神经网络，但 LLM 这个怪兽让我们大多数开发者没有机会去训练模型，而是通过 Prompt 自然语言，充其量做一些 Embedings，fine-tuning 都是奢侈的</li>
+<li>还是因为LLM大模型的存在，『The Rise of Software 2.0』中提到的Software 2.0 的高研发投入不存在了，大家都是围绕着LLM 基础大模型做。但反过来想，大家的护城河在哪里呢？</li>
+</ol>
+<p>还有吗？也许有。Microsoft 最近开放出一个 <a target="_blank" rel="noopener" href="https://github.com/microsoft/semantic-kernel">Semantic Kernel</a> 的开发框架，把基于大语言模型开发抽象成了几个模块：Kernel、Planner、Skills、Memory和Connectors，这简直就是当年写Web 程序的时候提出了一个 MVC 框架一样，方便大家快速基于LLM 大语言模型构建自己的应用，简直就是LLM时代的 Spring。</p>
+<p><img src="/2023/04/03/Software-2.0/3.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/microsoft/semantic-kernel">https://github.com/microsoft/semantic-kernel</a></p>
+<p><a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/semantic-kernel/">https://devblogs.microsoft.com/semantic-kernel/</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/semantic-kernel/">https://learn.microsoft.com/en-us/semantic-kernel/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -567,99 +655,6 @@
 <p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/5.jpg"></p>
 <p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/6.jpg"></p>
 <p><img src="/2023/02/21/%E5%85%B3%E4%BA%8EchatGPT%E7%9A%84%E8%AE%A4%E8%AF%86/7.jpg"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/02/20/%E9%87%8F%E5%AD%90%E5%AE%89%E5%85%A8%E5%AF%86%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/20/%E9%87%8F%E5%AD%90%E5%AE%89%E5%85%A8%E5%AF%86%E7%A0%81/" class="post-title-link" itemprop="url">量子安全密码</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-20 14:49:00" itemprop="dateCreated datePublished" datetime="2023-02-20T14:49:00+08:00">2023-02-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-02-21 10:02:47" itemprop="dateModified" datetime="2023-02-21T10:02:47+08:00">2023-02-21</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在抗量子密码方向，目前The National Institute of Standards and Technology (NIST)已经进入到<a target="_blank" rel="noopener" href="https://csrc.nist.gov/Projects/Post-Quantum-Cryptography">第三轮密码学评测/筛选</a>。</p>
-<h3 id="Open-Quantum-Safe"><a href="#Open-Quantum-Safe" class="headerlink" title="Open Quantum Safe"></a>Open Quantum Safe</h3><p>关于NIST评测的抗量子密码实验的算法都开源于此项目，<a target="_blank" rel="noopener" href="https://openquantumsafe.org/">Open Quantum Safe</a> framework it may be easier to use liboqs ==&gt; <a target="_blank" rel="noopener" href="https://github.com/open-quantum-safe/liboqs%E3%80%82%E5%8F%A6%E5%A4%96%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%8A%A0%E5%AE%9E%E7%94%A8%E7%9A%84%E6%8A%97%E9%87%8F%E5%AD%90%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E9%9B%86%E5%90%88">https://github.com/open-quantum-safe/liboqs。另外一个更加实用的抗量子密码算法集合</a> ==&gt; <a target="_blank" rel="noopener" href="https://github.com/PQClean/PQClean/%E3%80%82">https://github.com/PQClean/PQClean/。</a></p>
-<p>他们之中，都有关于 Kyber 和 Dilithium 算法实现，可以直接使用。</p>
-<h3 id="Kyber-对称加密算法和非对称加密算法"><a href="#Kyber-对称加密算法和非对称加密算法" class="headerlink" title="Kyber-对称加密算法和非对称加密算法"></a>Kyber-对称加密算法和非对称加密算法</h3><p>该项目由实验室量子方向研究员提供，其开源版本如下：</p>
-<ul>
-<li>C 语言版本 <a target="_blank" rel="noopener" href="https://github.com/pq-crystals/kyber%EF%BC%8C">https://github.com/pq-crystals/kyber，</a> 此版本为官方版本。</li>
-<li>Go 语言版本 <a target="_blank" rel="noopener" href="https://github.com/symbolicsoft/kyber-k2so%EF%BC%8C%E8%AF%A5%E7%89%88%E6%9C%AC%E4%B8%8E%E4%B8%8B%E9%9D%A2%E7%9A%84node.js%E7%89%88%E6%9C%AC%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95%E6%98%AF%E4%B8%80%E8%87%B4%E7%9A%84%EF%BC%8C%E8%AE%BA%E6%96%87%E5%A6%82%E4%B8%8B%E3%80%82">https://github.com/symbolicsoft/kyber-k2so，该版本与下面的node.js版本的实现算法是一致的，论文如下。</a></li>
-<li>javascript/node.js 语言版本 <a target="_blank" rel="noopener" href="https://github.com/antontutoveanu/crystals-kyber-javascript%EF%BC%8C%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%9A%84%E8%AE%BA%E6%96%87">https://github.com/antontutoveanu/crystals-kyber-javascript，具体实现方法的论文</a> ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2021/356.pdf%E3%80%82">https://eprint.iacr.org/2021/356.pdf。</a></li>
-</ul>
-<p>​    Kyber 包含了<strong>对称加密算法和非对称加密算法</strong>，Kyber 算法的介绍内容 ==&gt; <a target="_blank" rel="noopener" href="https://pq-crystals.org/kyber/software.shtml%E3%80%82">https://pq-crystals.org/kyber/software.shtml。</a></p>
-<p>​    一句话概括其算法 ==&gt; Kyber IND-CCA2-secure key encapsulation mechanism (KEM), whose security is based on the hardness of solving the learning-with-errors (LWE) problem over module lattices. </p>
-<p>​    使用方法：</p>
-<ul>
-<li>在所谓的混合模式下使用 Kyber 并结合已建立的“前量子”安全性； 例如结合椭圆曲线 Diffie-Hellman。</li>
-<li>建议使用 Kyber-768 参数集，根据保守的分析，该参数集可针对所有已知的经典攻击和量子攻击实现超过 128 位的安全性。</li>
-</ul>
-<h3 id="Dilithium-数字签名算法"><a href="#Dilithium-数字签名算法" class="headerlink" title="Dilithium-数字签名算法"></a>Dilithium-数字签名算法</h3><ul>
-<li>C 语言版本 <a target="_blank" rel="noopener" href="https://github.com/pq-crystals/dilithium/%E3%80%82">https://github.com/pq-crystals/dilithium/。</a></li>
-<li>rust 语言版本 <a target="_blank" rel="noopener" href="https://github.com/Argyle-Software/dilithium%E3%80%82">https://github.com/Argyle-Software/dilithium。</a></li>
-<li>Java 语言版本 <a target="_blank" rel="noopener" href="https://github.com/mthiim/dilithium-java">https://github.com/mthiim/dilithium-java</a></li>
-</ul>
-<p>​    算法介绍 ==&gt; <a target="_blank" rel="noopener" href="https://www.pq-crystals.org/dilithium/%E3%80%82">https://www.pq-crystals.org/dilithium/。</a></p>
-<p>​    具体实现的论文 ==&gt; <a target="_blank" rel="noopener" href="https://www.pq-crystals.org/dilithium/resources.shtml%EF%BC%8C%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E4%B8%BA">https://www.pq-crystals.org/dilithium/resources.shtml，目前最新版本为</a> CRYSTALS-Dilithium – Algorithm Specifications and Supporting Documentation (Version 3.1)</p>
 
       
     </div>
