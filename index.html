@@ -266,7 +266,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-09-14 16:31:00 / Modified: 17:05:01" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
+      <time title="Created: 2023-09-14 16:31:00 / Modified: 17:06:30" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
     </span>
 
   
@@ -310,8 +310,9 @@
 <li>金融领域知名新闻源，380亿token，占比5.31%</li>
 <li>公司财报，140亿token，占比2.04%</li>
 <li>金融相关公司的出版物，90亿token，占比1.21%</li>
-<li>bloomberg，50亿token，占比0.7%<br>因为包含一部分收费和私有数据，所以这份数据集不会被公开，但是文章中公开了模型训练方法。</li>
+<li>bloomberg，50亿token，占比0.7%</li>
 </ul>
+<p>因为包含一部分收费和私有数据，所以这份数据集不会被公开，但是文章中公开了模型训练方法。</p>
 <h4 id="通用数据集"><a href="#通用数据集" class="headerlink" title="通用数据集"></a>通用数据集</h4><p>**通用数据集共包含了3450亿个token，占总数据集token量的48.73%**，具体分为如下几个部分：</p>
 <ul>
 <li>The Pile数据集，1840亿token，占比25.9%</li>
@@ -336,16 +337,19 @@
 <li>训练时采用的优化方法是<strong>AdamW，beta1、beta2、weight decay取值分别为0.9、0.95、0.1</strong>，初始学习率为6e-5，采用cosine衰减、线性warmup方式</li>
 <li>模型参数随机初始化为<strong>均值0、标准差0.006588的正态分布</strong>，并对MLP的第二层和注意力层输出进行缩放</li>
 <li>关于训练的不稳定性，文章中没有描述训练BloombergGPT时采用的方法，只是介绍了相关进展</li>
-<li>关于计算使用到的硬件，使用了<strong>64个AWS的p4d.24xlarge实例，每个p4d.24xlarge实例包含了8块40GB的A100GPU</strong><h4 id="大规模优化采用的方法"><a href="#大规模优化采用的方法" class="headerlink" title="大规模优化采用的方法"></a>大规模优化采用的方法</h4>这一部分中，作者描述了具体优化时采用的方法：ZeRO优化、MiCS、Activation Checkpointing、混合精度训练（Mixed Precision Training）、内核融合（fused kernels）。<br>具体见《3.4 Large-scale Optimization》<br>经过上述优化，上述硬件的<strong>平均算力水平达到了102TFLOPs</strong>，<strong>训练一步需要32.5秒</strong>。<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。</li>
+<li>关于计算使用到的硬件，使用了<strong>64个AWS的p4d.24xlarge实例，每个p4d.24xlarge实例包含了8块40GB的A100GPU</strong></li>
 </ul>
+<h4 id="大规模优化采用的方法"><a href="#大规模优化采用的方法" class="headerlink" title="大规模优化采用的方法"></a>大规模优化采用的方法</h4><p>这一部分中，作者描述了具体优化时采用的方法：ZeRO优化、MiCS、Activation Checkpointing、混合精度训练（Mixed Precision Training）、内核融合（fused kernels）。<br>具体见《3.4 Large-scale Optimization》<br>经过上述优化，上述硬件的<strong>平均算力水平达到了102TFLOPs</strong>，<strong>训练一步需要32.5秒</strong>。</p>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。</p>
 <p><strong>具体训练过程如下</strong>：</p>
 <ul>
 <li>初始训练的batch size大小为1024，warm-up过程持续了7200步，随后作者将batch size修改为2048。</li>
 <li>115,500步之后，验证集上的损失不再下降，然后作者将学习率缩小为原始的2/3；</li>
 <li>129,900步之后，学习率缩小为之前的1/2，同时增加dropout</li>
 <li>137,100步之后，学习率再次缩小为之前的1/2</li>
-<li>最终，训练在146,000步结束。作者选取139,200这一步的模型最为最终使用的模型<br>这里推荐阅读原始文章3.3节与3.4节中关于训练方法的描述，对于大模型训练有一定的参考意义。</li>
+<li>最终，训练在146,000步结束。作者选取139,200这一步的模型最为最终使用的模型</li>
 </ul>
+<p>这里推荐阅读原始文章3.3节与3.4节中关于训练方法的描述，对于大模型训练有一定的参考意义。</p>
 <h3 id="5-评估"><a href="#5-评估" class="headerlink" title="5.评估"></a>5.评估</h3><p>文章中对BloombergGPT的<strong>评估分成了两部分</strong>：<strong>金融领域任务与通用任务</strong>。这样做的目的也比较直观，就是<strong>验证在特定领域预训练后的模型能够在特定领域表现好，同时在通用领域的表现也不会差太多</strong>这一观点。<br>同时，文章<strong>对比了BloombergGPT、GPT-NeoX、OPT、BLOOM、GPT-3在不同任务上的表现</strong>。注意，这里<strong>因为GPT-3模型无法获取，故仅在部分通用任务上进行了评测</strong>。<br>作者对每一个模型均独立进行了评测，并且在每一个任务中使用相同的标准prompt、相同的样例、不使用任务描述和任何CoT prompt，以保证评测结果的公平性。<br>对于有多个答案的任务，文章中采用了**基于似然的分类方法（likelihood-based classification）进行评估；对于其他任务，文章采用贪心解码（greedy decoding）的方式进行评估。</p>
 <h4 id="holdout-loss"><a href="#holdout-loss" class="headerlink" title="holdout loss"></a>holdout loss</h4><p>作者首先在FinPile数据集预留的部分样本上对各个模型进行了bits per byte的评估。<br>bits per byte指标是评估语言模型的一种常见指标<strong>，类似于perplexity，取值越小，模型越好。具体计算方法可见</strong><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/a/261789">How to compute bits per character (BPC)?</a><br><strong>BloombergGPT在金融语料上的bits per byte均好于其他模型，并且在财报（Filings）这个类别上表现尤其突出</strong>。这个结果也符合预期。否则可能就没有后面任务对比的必要了。<br>文章又将金融领域任务分成了<strong>外部任务和Bloomberg内部任务</strong>。在每个任务上，作者除了评估模型在任务上的表现，还评估了同一任务下不同模型生成结果之间两两比较的胜率（WR）。</p>
 <h4 id="外部任务"><a href="#外部任务" class="headerlink" title="外部任务"></a>外部任务</h4><p>外部任务主要如下：</p>
@@ -372,10 +376,16 @@
 <ul>
 <li><strong>使用领域数据和通用数据的训练方式可以让模型在这两个方面得到平衡的结果</strong></li>
 <li>模型参数量参考了Chinchilla scaling laws</li>
-<li>公布了相关训练细节<br>下一步，作者们会在以下方向继续研究：</li>
+<li>公布了相关训练细节</li>
+</ul>
+<p>下一步，作者们会在以下方向继续研究：</p>
+<ul>
 <li>金融领域的fine-tuning</li>
 <li>使用更无害和更无偏见的语言</li>
-<li>研究tokenization方法对模型结果的影响<br>最后，作者把模型取得目前效果归结于以下三个因素（按影响从高到低排序）：</li>
+<li>研究tokenization方法对模型结果的影响</li>
+</ul>
+<p>最后，作者把模型取得目前效果归结于以下三个因素（按影响从高到低排序）：</p>
+<ul>
 <li><strong>精心清洗的内部数据集</strong></li>
 <li><strong>tokenizer的选择</strong></li>
 <li><strong>流行的模型结构</strong></li>
