@@ -31,9 +31,9 @@
 <meta property="og:description" content="2018年2月，图灵奖得主、MIT教授Sivio Micali募集400万美元开发Algorand区块链协议一事受到了国内外媒体的普遍关注。在MITMicali教授和MIT媒体实验室数字货币计划负责人Neha Narula合开课程《共享公共账本》(Shared Public Ledger)课程。这门课主要就是讲解Algorand。Algorand的目标是建立一个低能耗、高速度、民主化、可拓展性好而">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2018-03-31T05:54:31.000Z">
-<meta property="article:modified_time" content="2020-11-02T10:16:50.000Z">
+<meta property="article:modified_time" content="2023-09-14T06:06:49.462Z">
 <meta property="article:author" content="Weiming Zhuang">
-<meta property="article:tag" content="VRF">
+<meta property="article:tag" content="共识算法">
 <meta name="twitter:card" content="summary">
 
 
@@ -200,14 +200,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">220</span>
+          <span class="site-state-item-count">221</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -279,7 +279,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+        <time title="Modified: 2023-09-14 14:06:49" itemprop="dateModified" datetime="2023-09-14T14:06:49+08:00">2023-09-14</time>
       </span>
 
   
@@ -356,7 +356,7 @@
 <p>以下为叙述方便，假设：</p>
 <ul>
 <li>系统处在第r轮；</li>
-<li>每一个子步骤都选出n名verifiers，其中恶意verifiers不超过t，并且n≥3t+1(也就是诚实“验证者”占比在2/3以上)。另外，引入计数函数 #si(v)表示在第s步“验证者” i 收到的消息v的次数(来自同一发送人的只能算1次)。<h4 id="3-1-第一阶段：分级共识协议"><a href="#3-1-第一阶段：分级共识协议" class="headerlink" title="3.1. 第一阶段：分级共识协议"></a>3.1. 第一阶段：分级共识协议</h4>运行密码抽签程序，选出“领导者” lr 和这一步的“验证者”verifiers。用vi表示“验证者”i收到的并且他认识是来自“领导者”lr的候选区块。</li>
+<li>每一个子步骤都选出n名verifiers，其中恶意verifiers不超过t，并且n≥3t+1(也就是诚实“验证者”占比在2/3以上)。另外，引入计数函数 si(v)表示在第s步“验证者” i 收到的消息v的次数(来自同一发送人的只能算1次)。<h4 id="3-1-第一阶段：分级共识协议"><a href="#3-1-第一阶段：分级共识协议" class="headerlink" title="3.1. 第一阶段：分级共识协议"></a>3.1. 第一阶段：分级共识协议</h4>运行密码抽签程序，选出“领导者” lr 和这一步的“验证者”verifiers。用vi表示“验证者”i收到的并且他认识是来自“领导者”lr的候选区块。</li>
 </ul>
 <p>vir不一定等于“领导者”lr构建的候选区块：</p>
 <ul>
@@ -366,7 +366,7 @@
 </ul>
 <ol>
 <li> “验证者”i将收到的vi广播给其他用户。广播正确的vi代表他告诉其他验证者他同意该vi。</li>
-<li>当且仅当“验证者”i在步骤2中收到消息x的次数超过了2t+1次（即 #2i(x)≥2t+1），他将消息x发给其他用户。“验证者”i按以下规则输出(vi,gi)：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">如果存在x使得#3i(x)≥2t+1，则, </span><br><span class="line">vi&#x3D;x, gi&#x3D;2；&#x2F;&#x2F;2轮都投票成功 如果x存在使得#3i(x)≥t+1，则, </span><br><span class="line">vi&#x3D;x, gi&#x3D;1；&#x2F;&#x2F;只有1轮投票成功 否则, </span><br><span class="line">vi&#x3D;Ø, gi&#x3D;1，其中Ø代表空区块。</span><br></pre></td></tr></table></figure>
+<li>当且仅当“验证者”i在步骤2中收到消息x的次数超过了2t+1次（即 2i(x)≥2t+1），他将消息x发给其他用户。“验证者”i按以下规则输出(vi,gi)：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">如果存在x使得#3i(x)≥2t+1，则, </span><br><span class="line">vi&#x3D;x, gi&#x3D;2；&#x2F;&#x2F;2轮都投票成功 如果x存在使得#3i(x)≥t+1，则, </span><br><span class="line">vi&#x3D;x, gi&#x3D;1；&#x2F;&#x2F;只有1轮投票成功 否则, </span><br><span class="line">vi&#x3D;Ø, gi&#x3D;1，其中Ø代表空区块。</span><br></pre></td></tr></table></figure>
  含义是：</li>
 </ol>
 <ul>
@@ -422,7 +422,7 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/VRF/" rel="tag"># VRF</a>
+              <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" rel="tag"># 共识算法</a>
           </div>
 
         
