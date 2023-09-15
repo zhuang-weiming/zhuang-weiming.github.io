@@ -201,7 +201,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -266,7 +266,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-09-14 16:31:00 / Modified: 17:06:30" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
+      <time title="Created: 2023-09-14 16:31:00 / Modified: 17:13:31" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
     </span>
 
   
@@ -340,8 +340,7 @@
 <li>关于计算使用到的硬件，使用了<strong>64个AWS的p4d.24xlarge实例，每个p4d.24xlarge实例包含了8块40GB的A100GPU</strong></li>
 </ul>
 <h4 id="大规模优化采用的方法"><a href="#大规模优化采用的方法" class="headerlink" title="大规模优化采用的方法"></a>大规模优化采用的方法</h4><p>这一部分中，作者描述了具体优化时采用的方法：ZeRO优化、MiCS、Activation Checkpointing、混合精度训练（Mixed Precision Training）、内核融合（fused kernels）。<br>具体见《3.4 Large-scale Optimization》<br>经过上述优化，上述硬件的<strong>平均算力水平达到了102TFLOPs</strong>，<strong>训练一步需要32.5秒</strong>。</p>
-<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。</p>
-<p><strong>具体训练过程如下</strong>：</p>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。<br><strong>具体训练过程如下</strong>：</p>
 <ul>
 <li>初始训练的batch size大小为1024，warm-up过程持续了7200步，随后作者将batch size修改为2048。</li>
 <li>115,500步之后，验证集上的损失不再下降，然后作者将学习率缩小为原始的2/3；</li>

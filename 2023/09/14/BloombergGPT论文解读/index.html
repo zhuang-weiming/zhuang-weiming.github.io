@@ -31,7 +31,7 @@
 <meta property="og:description" content="1. 背景BloombergGPT是布隆伯格2023年3月30日公开在arXiv的一篇文章——BloombergGPT: A Large Language Model for Finance中涉及到的语言模型，也是金融领域第一个公开发表文章的大语言模型（以下简称“LLM”）。 2. 要点 BloombergGPT是Bloomberg训练出来的金融大语言模型（LLM for Finance） 模型参">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-09-14T08:31:00.000Z">
-<meta property="article:modified_time" content="2023-09-14T09:06:30.605Z">
+<meta property="article:modified_time" content="2023-09-14T09:13:31.077Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
@@ -207,7 +207,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -273,7 +273,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-09-14 16:31:00 / Modified: 17:06:30" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
+      <time title="Created: 2023-09-14 16:31:00 / Modified: 17:13:31" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
     </span>
 
   
@@ -347,8 +347,7 @@
 <li>关于计算使用到的硬件，使用了<strong>64个AWS的p4d.24xlarge实例，每个p4d.24xlarge实例包含了8块40GB的A100GPU</strong></li>
 </ul>
 <h4 id="大规模优化采用的方法"><a href="#大规模优化采用的方法" class="headerlink" title="大规模优化采用的方法"></a>大规模优化采用的方法</h4><p>这一部分中，作者描述了具体优化时采用的方法：ZeRO优化、MiCS、Activation Checkpointing、混合精度训练（Mixed Precision Training）、内核融合（fused kernels）。<br>具体见《3.4 Large-scale Optimization》<br>经过上述优化，上述硬件的<strong>平均算力水平达到了102TFLOPs</strong>，<strong>训练一步需要32.5秒</strong>。</p>
-<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。</p>
-<p><strong>具体训练过程如下</strong>：</p>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。<br><strong>具体训练过程如下</strong>：</p>
 <ul>
 <li>初始训练的batch size大小为1024，warm-up过程持续了7200步，随后作者将batch size修改为2048。</li>
 <li>115,500步之后，验证集上的损失不再下降，然后作者将学习率缩小为原始的2/3；</li>
