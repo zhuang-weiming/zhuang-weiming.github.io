@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">223</span>
+          <span class="site-state-item-count">224</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,82 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-3/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-3</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-18 14:52:31" itemprop="dateCreated datePublished" datetime="2020-05-18T14:52:31+08:00">2020-05-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="burrow-natives-Dump-Solidity-interface-contracts-for-Burrow-native-contracts"><a href="#burrow-natives-Dump-Solidity-interface-contracts-for-Burrow-native-contracts" class="headerlink" title="./burrow natives , Dump Solidity interface contracts for Burrow native contracts."></a>./burrow natives , Dump Solidity interface contracts for Burrow native contracts.</h3><p>抽出Burrow内置的solidity接口合约。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow natives       </span><br><span class="line">pragma solidity &gt;=<span class="number">0.4</span><span class="number">.24</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* acmstate.ReaderWriter for managing Secure Native authorizations.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>This interface describes the functions exposed by the native permissions layer in burrow.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>These functions can be accessed as if this contract were deployed at a special address (0x0A758FEB535243577C1A79AE55BED8CA03E226EC).</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>This special address is defined as the last 20 bytes of the sha3 hash of the the contract name.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>To instantiate the contract use:</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>Permissions permissions = Permissions(address(uint256(keccak256(&quot;Permissions&quot;))));</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">interface Permissions &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Adds a role to an account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether role was added</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Removes a role from an account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether role was removed</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">removeRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Indicates whether an account has a role</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether account has role</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Sets the permission flags for an account. Makes them explicitly set (on or off).</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the base permissions flags to set for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Set whether to set or unset the permissions flags at the account level</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was set as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setBase</span>(<span class="params">address _account, uint64 _permission, bool _set</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Unsets the permissions flags for an account. Causes permissions being unset to fall through to global permissions.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags to unset for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was unset as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">unsetBase</span>(<span class="params">address _account, uint64 _permission</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Indicates whether an account has a subset of permissions set</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags (mask) to check whether enabled against base permissions for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether account has the passed permissions flags set</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasBase</span>(<span class="params">address _account, uint64 _permission</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Sets the global (default) permissions flags for the entire chain</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags to set</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Set whether to set (or unset) the permissions flags</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was set as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setGlobal</span>(<span class="params">uint64 _permission, bool _set</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="burrow-dump-Dump-chain-state-to-backup"><a href="#burrow-dump-Dump-chain-state-to-backup" class="headerlink" title="./burrow dump , Dump chain state to backup"></a>./burrow dump , Dump chain state to backup</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow dump local backup_dump</span><br><span class="line">Sourcing config <span class="keyword">from</span> first <span class="keyword">of</span>: defaults</span><br><span class="line">Sourcing config <span class="keyword">from</span> defaults</span><br><span class="line">Sourcing config <span class="keyword">from</span> first <span class="keyword">of</span>: genesis file at genesis.json</span><br><span class="line">Sourcing config <span class="keyword">from</span> genesis file at genesis.json</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping accounts&quot;</span>&#125;</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping names&quot;</span>&#125;</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping events&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="burrow-restore-Restore-new-chain-from-backup"><a href="#burrow-restore-Restore-new-chain-from-backup" class="headerlink" title="./burrow restore, Restore new chain from backup"></a>./burrow restore, Restore new chain from backup</h3><p>从backup文件恢复区块链</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -656,121 +732,6 @@
 </ol>
 <p><img src="/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/1.png"></p>
 <p><img src="/2020/04/16/%E5%B0%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9Fseaweedfs/2.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/" class="post-title-link" itemprop="url">体验Chainlink</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-04-14 09:08:01" itemprop="dateCreated datePublished" datetime="2020-04-14T09:08:01+08:00">2020-04-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 14:08:07" itemprop="dateModified" datetime="2023-09-14T14:08:07+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Chainlink是一个去中心化的预言机，但是你同样可以在私有环境中使用Chainlink，让它成为一个为私有链或联盟链服务的中心化的预言机系统。只要你的私有链环境支持完整的EVM环境，就可以利用Chainlink的开源实现，为自己的系统搭建一个具有广泛适配能力的预言机系统。</p>
-<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="私有链-联盟链（需支持EVM，开放WebSocket端口）"><a href="#私有链-联盟链（需支持EVM，开放WebSocket端口）" class="headerlink" title="私有链/联盟链（需支持EVM，开放WebSocket端口）"></a>私有链/联盟链（需支持EVM，开放WebSocket端口）</h4><p>由于目前Chainlink的合约系统都是在以太坊网络上的虚拟环境中运行的，所以需要您的私有链/联盟链支持EVM环境以及Solidity合约编程语言。</p>
-<h3 id="用于部署合约的账户，账户需持有足够数量的Native-Token（原生代币）"><a href="#用于部署合约的账户，账户需持有足够数量的Native-Token（原生代币）" class="headerlink" title="用于部署合约的账户，账户需持有足够数量的Native Token（原生代币）"></a>用于部署合约的账户，账户需持有足够数量的Native Token（原生代币）</h3><p>一般来说，向区块链提交事务，不管是创建合约还是普通转账，都需要事务发起账户提供一定的手续费，所以需要一个持有原生代币的账户，用于部署合约和节点提交事务。如果您的私有链提交事务不需要手续费，那仅需要一个账户就可以。（具体请根据您的私有链的配置操作）</p>
-<h4 id="一台服务器用于部署Chainlink节点"><a href="#一台服务器用于部署Chainlink节点" class="headerlink" title="一台服务器用于部署Chainlink节点"></a>一台服务器用于部署Chainlink节点</h4><p>Chainlink节点相当于区块链在真实世界中的代理，它可以接收链上的数据请求，并获取到链上所需要的数据，通过事务提交给链上。所以需要一台服务器来建立Chainlink节点服务，服务器配置不需要很高，但是需要和私有链环境保持良好的网络通讯。</p>
-<p>之前的Chainlink节点版本默认使用Sqlite作为存储数据库，但是随着功能越来越完善，性能要求也越来越高，从0.8.0版本起，Chainlink节点要求必须使用postgres作为存储数据库，所以我们需要搭建一个postgres数据库。这个数据库可以和节点位于同一台服务器上，也可以位于不同的服务器上。您也可以同时搭建两个数据库作为备份。</p>
-<h3 id="可选-准备truffle-suite和npm或WebIDE-Remix等开发部署工具"><a href="#可选-准备truffle-suite和npm或WebIDE-Remix等开发部署工具" class="headerlink" title="(可选)准备truffle suite和npm或WebIDE Remix等开发部署工具"></a>(可选)准备truffle suite和npm或WebIDE Remix等开发部署工具</h3><p>您可以选择Chainlink提供的truffle box来编写和部署测试合约</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle unbox smartcontractkit&#x2F;box</span><br></pre></td></tr></table></figure>
-
-<p>也可以在已有的项目中添加Chainlink开发库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">truffle init</span><br><span class="line">npm install @chainlink&#x2F;contracts --save</span><br></pre></td></tr></table></figure>
-
-<p>同样的，您也可以使用可视化的Web IDE Remix来进行开发，使用起来更加方便，也无需配置本地开发环境。在使用Remix时，可以搭配MetaMask来进行转账和事务操作。</p>
-<p><a target="_blank" rel="noopener" href="https://remix.ethereum.org/">https://remix.ethereum.org</a></p>
-<p><a target="_blank" rel="noopener" href="https://metamask.io/">https://metamask.io</a></p>
-<h3 id="实施步骤"><a href="#实施步骤" class="headerlink" title="实施步骤"></a>实施步骤</h3><h3 id="0-搭建-EVM-私链"><a href="#0-搭建-EVM-私链" class="headerlink" title="0.搭建 EVM 私链"></a>0.搭建 EVM 私链</h3><h3 id="1-部署Link-Token-合约"><a href="#1-部署Link-Token-合约" class="headerlink" title="1.部署Link Token 合约"></a>1.部署Link Token 合约</h3><p><a target="_blank" rel="noopener" href="https://github.com/smartcontractkit/chainlink/blob/develop/evm-contracts/src/v0.4/LinkToken.sol">LinkToken.sol</a></p>
-<p>所有Chainlink的功能实现和数据流转都是围绕LINK token来实现的。<code>这里的remix中默认是https url，如果访问vmware中的linux server，建议在remix中使用 http url</code></p>
-<p><img src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/1.png" alt="img"></p>
-<h3 id="2-部署Chainlink节点"><a href="#2-部署Chainlink节点" class="headerlink" title="2.部署Chainlink节点"></a>2.部署Chainlink节点</h3><h4 id="2-1-安装docker、postgres-（建议postgres也在docker中安装）"><a href="#2-1-安装docker、postgres-（建议postgres也在docker中安装）" class="headerlink" title="2.1 安装docker、postgres （建议postgres也在docker中安装）"></a>2.1 安装docker、postgres （建议postgres也在docker中安装）</h4><h4 id="2-2-创建环境变量配置文件"><a href="#2-2-创建环境变量配置文件" class="headerlink" title="2.2 创建环境变量配置文件"></a>2.2 创建环境变量配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.chainlink</span><br><span class="line">cd ~/.chainlink</span><br><span class="line">vim .env</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ROOT=/chainlink</span><br><span class="line">LOG_LEVEL=debug</span><br><span class="line">ETH_CHAIN_ID=1337</span><br><span class="line">MIN_OUTGOING_CONFIRMATIONS=0</span><br><span class="line">MIN_INCOMING_CONFIRMATIONS=0</span><br><span class="line">LINK_CONTRACT_ADDRESS=0x9E05B78ea853a4B093694645561c4BFc953A6f62</span><br><span class="line">CHAINLINK_TLS_PORT=0</span><br><span class="line">SECURE_COOKIES=false</span><br><span class="line">ALLOW_ORIGINS=*</span><br><span class="line">ETH_URL=ws://localhost:8546</span><br><span class="line">DATABASE_URL=postgresql://postgres:123456@localhost:5432/chainlink?sslmode=disable</span><br><span class="line">DATABASE_TIMEOUT=0</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>ETH_URL</code>是私有链的RPC接口，必须是WebSocket接口，可以是<code>ws</code>也可以是<code>wss</code>。</p>
-<p><code>LINK_CONTRACT_ADDRESS</code> 是刚刚部署的Link token 地址。</p>
-<h4 id="2-3-通过docker启动"><a href="#2-3-通过docker启动" class="headerlink" title="2.3 通过docker启动"></a>2.3 通过docker启动</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.chainlink</span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动postgres</span></span><br><span class="line">docker run --name postgres_chainlink -e POSTGRES_PASSWORD=123456 -v /home/will/documents/chainlink:/var/lib/postgresql/data -p 5432:5432 -d postgres:11.5-alpine </span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动chainlink节点</span></span><br><span class="line">docker run --net host  -p 6688:6688 -v ~/.chainlink:/chainlink -it --env-file=.env smartcontract/chainlink:0.7.8 local n</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>--net host</code> 是为了让通过docker启动的Chainlink节点可以访问到宿主记得网络，否则上面配置文件中的localhost都是不可访问的。也可以通过其他更加安全的docker网络配置完成同样功能。</p>
-<p><code>0.7.8</code>是Chainlink的release版本号，不写的话默认是latest。</p>
-<h4 id="2-4-记录节点管理密码"><a href="#2-4-记录节点管理密码" class="headerlink" title="2.4 记录节点管理密码"></a>2.4 记录节点管理密码</h4><p>首次启动成功后，首先会要求输入一个密码，这个密码是Chainlink节点账户的私钥密码，可以用来控制Chainlink节点账户，必须牢记，否则节点账户所持有的资金无法取出。</p>
-<p>然后会要求输入一对用户名和密码，这是Chainlink管理界面的的用户名和密码，在通过 http: //chainlink_ip:6688 访问管理端界面时会要求输入这对用户名和密码。</p>
-<p><img src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/2.png" alt="img"></p>
-<h4 id="2-5-创建Job"><a href="#2-5-创建Job" class="headerlink" title="2.5 创建Job"></a>2.5 创建Job</h4><p><a target="_blank" rel="noopener" href="https://docs.chain.link/docs/fulfilling-requests#section-add-jobs-to-the-node">https://docs.chain.link/docs/fulfilling-requests#section-add-jobs-to-the-node</a></p>
-<p>创建不同数据类型的 Job</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;initiators&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;runlog&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;httpget&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;jsonparse&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;ethbytes32&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;ethtx&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-6-向Chainlink节点-ACCOUNT-ADDRESS-转入一定数量的Native-token用于提交事务"><a href="#2-6-向Chainlink节点-ACCOUNT-ADDRESS-转入一定数量的Native-token用于提交事务" class="headerlink" title="2.6 向Chainlink节点(ACCOUNT_ADDRESS)转入一定数量的Native token用于提交事务"></a>2.6 向Chainlink节点(ACCOUNT_ADDRESS)转入一定数量的Native token用于提交事务</h4><p>比如：如果是以太坊公网，需要转入ETH，以作为交易的gas费用。</p>
-<p>节点地址可以在管理页面的configure页面下找到，账户资金仅用于提交transaction。</p>
-<h3 id="3-部署oracle-contract"><a href="#3-部署oracle-contract" class="headerlink" title="3.部署oracle contract"></a>3.部署oracle contract</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity <span class="number">0.4</span><span class="number">.24</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;https://github.com/smartcontractkit/chainlink/evm-contracts/src/v0.4/Oracle.sol&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>调用合约中的setFulfillPermission方法，传递参数为<code>(ACCOUNT_ADDRESS,true)</code>，ACCOUNT_ADDRESS是ChainLink Operator。</p>
-<h3 id="4-编写部署用户合约"><a href="#4-编写部署用户合约" class="headerlink" title="4.编写部署用户合约"></a>4.编写部署用户合约</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity <span class="number">0.4</span><span class="number">.24</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;https://github.com/smartcontractkit/chainlink/evm-contracts/src/v0.4/ChainlinkClient.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contract GetTemperature is ChainlinkClient &#123;</span><br><span class="line">  LinkTokenInterface internal LinkToken;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">  <span class="comment">//string constant url = &quot;https://www.random.org/integers/?num=1&amp;min=1&amp;max=6&amp;col=1&amp;base=10&amp;format=plain&amp;rnd=new&quot;;</span></span><br><span class="line">  string constant url = <span class="string">&quot;https://api.seniverse.com/v3/weather/now.json?key=S9g8Ize9pNyUZ_BOP&amp;location=shanghai&amp;language=zh-Hans&amp;unit=c&quot;</span>;</span><br><span class="line">  address constant oracleAddress = <span class="number">0xa6126AD8B8307C6e1b668F486BEA155e814FA22d</span>;</span><br><span class="line">  bytes32 constant JobId = <span class="string">&quot;d91130d49daf46aaa591bcbce6d59b72&quot;</span>;</span><br><span class="line">  address constant linkAddress = <span class="number">0x9E05B78ea853a4B093694645561c4BFc953A6f62</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span>) <span class="title">public</span> &#123;</span><br><span class="line">    setChainlinkToken(linkAddress);</span><br><span class="line">    setChainlinkOracle(oracleAddress);</span><br><span class="line">    LinkToken = LinkTokenInterface(linkAddress);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  string public temperature;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params"></span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 发起Chainlink请求</span></span><br><span class="line">    requestTemperature(JobId);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">requestTemperature</span>(<span class="params">bytes32 _jobId</span>) <span class="title">public</span> <span class="title">returns</span> (<span class="params">bytes32 requestId</span>) </span>&#123;</span><br><span class="line">      </span><br><span class="line">    Chainlink.Request memory req = buildChainlinkRequest(_jobId, <span class="built_in">this</span>, <span class="built_in">this</span>.fulfillTemperature.selector);</span><br><span class="line"></span><br><span class="line">    req.add(<span class="string">&quot;get&quot;</span>, url);</span><br><span class="line">    req.add(<span class="string">&quot;path&quot;</span>, <span class="string">&quot;results.0.now.temperature&quot;</span>);</span><br><span class="line"></span><br><span class="line">    requestId = sendChainlinkRequest(req, <span class="number">1</span> * LINK);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> requestId;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">fulfillTemperature</span>(<span class="params">bytes32 _requestId, bytes32 _temp</span>)</span></span><br><span class="line"><span class="function">    <span class="title">public</span> <span class="title">recordChainlinkFulfillment</span>(<span class="params">_requestId</span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    temperature = bytes32ToString(_temp);</span><br><span class="line">    <span class="comment">//data = _temp;</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bytes32ToString</span>(<span class="params">bytes32 x</span>) <span class="title">private</span> <span class="title">pure</span> <span class="title">returns</span> (<span class="params">string</span>) </span>&#123;</span><br><span class="line">    bytes memory bytesString = <span class="keyword">new</span> bytes(<span class="number">32</span>);</span><br><span class="line">    uint charCount = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (uint j = <span class="number">0</span>; j &lt; <span class="number">32</span>; j++) &#123;</span><br><span class="line">        byte char = byte(bytes32(uint(x) * <span class="number">2</span> ** (<span class="number">8</span> * j)));</span><br><span class="line">        <span class="keyword">if</span> (char != <span class="number">0</span>) &#123;</span><br><span class="line">            bytesString[charCount] = char;</span><br><span class="line">            charCount++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    bytes memory bytesStringTrimmed = <span class="keyword">new</span> bytes(charCount);</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; charCount; j++) &#123;</span><br><span class="line">        bytesStringTrimmed[j] = bytesString[j];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> string(bytesStringTrimmed);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中 linkAddress、OracleAddress、JobId 需要根据上面的配置结果填写，或作为参数在调用时传入。</p>
-<p>向部署好的用户合约地址转入Link token，用户在发起请求是支付给节点的费用。上述部署的Link Token为18位精度，建议使用 transfer 方法转移 Link token 2000,000000000000000000</p>
-<p>发起请求获取数据，使用getData方法获取天气数据。</p>
-<p><img src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/3.png" alt="image"></p>
 
       
     </div>
