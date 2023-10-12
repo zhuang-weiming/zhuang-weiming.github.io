@@ -264,10 +264,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-10-11 14:56:00 / Modified: 17:34:14" itemprop="dateCreated datePublished" datetime="2023-10-11T14:56:00+08:00">2023-10-11</time>
+      <time title="Created: 2023-10-11 14:56:00" itemprop="dateCreated datePublished" datetime="2023-10-11T14:56:00+08:00">2023-10-11</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-10-12 10:38:35" itemprop="dateModified" datetime="2023-10-12T10:38:35+08:00">2023-10-12</time>
+      </span>
 
   
 </div>
@@ -280,9 +286,13 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>人工智能生成的图像每天都变得越来越流行。 但我们如何才能更好地识别它们，尤其是当它们看起来如此逼真时？</p>
-<h3 id="1-SynthID"><a href="#1-SynthID" class="headerlink" title="1. SynthID"></a>1. SynthID</h3><p><a target="_blank" rel="noopener" href="https://www.deepmind.com/synthid">https://www.deepmind.com/synthid</a><br><a target="_blank" rel="noopener" href="https://www.deepmind.com/blog/identifying-ai-generated-images-with-synthid">https://www.deepmind.com/blog/identifying-ai-generated-images-with-synthid</a><br>SynthID 正在使用 <a target="_blank" rel="noopener" href="https://imagen.research.google/">Imagen</a> 向 <a target="_blank" rel="noopener" href="https://cloud.google.com/vertex-ai">Vertex AI</a> 客户发布，<a target="_blank" rel="noopener" href="https://imagen.research.google/">Imagen</a> 是GCP最新的文本到图像模型之一，使用输入文本创建逼真的图像。<br>通过这个工具，用户可以将难以察觉的数字水印嵌入到人工智能生成的图像中，并识别 Imagen 是否用于生成图像，甚至是图像的一部分。<br>SynthID 由 Google DeepMind 开发，并与 Google Research 合作完善。SynthID 并不能万无一失地抵御极端图像处理，但它确实提供了一种有前途的技术方法，使人们和组织能够负责任地使用人工智能生成的内容。该工具还可以与音频、视频和文本等图像之外的其他人工智能模型和模式一起发展。<br>传统水印不足以识别人工智能生成的图像，因为它们通常像图像上的图章一样应用，并且很容易被编辑掉。例如，可以使用基本编辑技术剪掉图像角落中发现的离散水印。<br>在图像处理的不可察觉性和鲁棒性之间找到适当的平衡是很困难的。高度可见的水印通常作为带有名称或徽标的图层添加在图像顶部，也给创意或商业目的带来了审美挑战。同样，一些以前开发的难以察觉的水印可能会通过简单的编辑技术（例如调整大小）丢失。<br>SynthID 不会影响图像质量，并且即使在添加滤镜、更改颜色以及使用各种有损压缩方案（最常用于 JPEG）进行保存等修改之后，水印仍可被检测到。<br>SynthID 使用两种深度学习模型（用于水印和识别），这两种模型已在不同的图像集上一起进行训练。 组合模型针对一系列目标进行了优化，包括正确识别带水印的内容以及通过在视觉上将水印与原始内容对齐来提高不可察觉性。<br>SynthID 允许 Vertex AI 客户负责任地创建 AI 生成的图像并自信地识别它们。 虽然这项技术并不完美，但我们的内部测试表明它对于许多常见的图像处理来说是准确的。</p>
+<h3 id="1-SynthID"><a href="#1-SynthID" class="headerlink" title="1. SynthID"></a>1. SynthID</h3><p>产品介绍 - <a target="_blank" rel="noopener" href="https://www.deepmind.com/synthid">https://www.deepmind.com/synthid</a><br>产品博客 - <a target="_blank" rel="noopener" href="https://www.deepmind.com/blog/identifying-ai-generated-images-with-synthid">https://www.deepmind.com/blog/identifying-ai-generated-images-with-synthid</a><br>SynthID 正在使用 <a target="_blank" rel="noopener" href="https://imagen.research.google/">Imagen</a> 向 <a target="_blank" rel="noopener" href="https://cloud.google.com/vertex-ai">Vertex AI</a> 客户发布，<a target="_blank" rel="noopener" href="https://imagen.research.google/">Imagen</a> 是GCP最新的文本到图像模型之一，使用输入文本创建逼真的图像。<br>通过这个工具，用户可以将难以察觉的数字水印嵌入到人工智能生成的图像中，并识别 Imagen 是否用于生成图像，甚至是图像的一部分。<br>SynthID 由 Google DeepMind 开发，并与 Google Research 合作完善。SynthID 并不能万无一失地抵御极端图像处理，但它确实提供了一种有前途的技术方法，使人们和组织能够负责任地使用人工智能生成的内容。该工具还可以与音频、视频和文本等图像之外的其他人工智能模型和模式一起发展。<br>传统水印不足以识别人工智能生成的图像，因为它们通常像图像上的图章一样应用，并且很容易被编辑掉。例如，可以使用基本编辑技术剪掉图像角落中发现的离散水印。<br>在图像处理的不可察觉性和鲁棒性之间找到适当的平衡是很困难的。高度可见的水印通常作为带有名称或徽标的图层添加在图像顶部，也给创意或商业目的带来了审美挑战。同样，一些以前开发的难以察觉的水印可能会通过简单的编辑技术（例如调整大小）丢失。<br>SynthID 不会影响图像质量，并且即使在添加滤镜、更改颜色以及使用各种有损压缩方案（最常用于 JPEG）进行保存等修改之后，水印仍可被检测到。<br>SynthID 使用两种深度学习模型（用于水印和识别），这两种模型已在不同的图像集上一起进行训练。 组合模型针对一系列目标进行了优化，包括正确识别带水印的内容以及通过在视觉上将水印与原始内容对齐来提高不可察觉性。<br>SynthID 允许 Vertex AI 客户负责任地创建 AI 生成的图像并自信地识别它们。 虽然这项技术并不完美，但我们的内部测试表明它对于许多常见的图像处理来说是准确的。</p>
 <ul>
-<li>SynthID的组合方法：<br>水印：SynthID 可以为 Imagen 生成的合成图像添加难以察觉的水印。‍<br>识别：通过扫描图像中的数字水印，SynthID 可以评估 Imagen 创建图像的可能性。<h3 id="2-Stable-Signature"><a href="#2-Stable-Signature" class="headerlink" title="2. Stable Signature"></a>2. Stable Signature</h3><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/stable_signature">https://github.com/facebookresearch/stable_signature</a><br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.15435">https://arxiv.org/abs/2303.15435</a><br>Official implementation of the paper “The Stable Signature Rooting Watermarks in Latent Diffusion Models”<br>以下是该 paper 的3个步骤：<br><img src="/2023/10/11/%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E6%B0%B4%E5%8D%B0%E5%92%8C%E8%AF%86%E5%88%ABAI%E7%94%9F%E6%88%90%E7%9A%84%E5%9B%BE%E5%83%8F/1.png"><br>实现的能力和 SynthID 项目的描述是一样一样的。<h3 id="思考问题："><a href="#思考问题：" class="headerlink" title="思考问题："></a>思考问题：</h3>如果 hacker 通过拷贝屏幕的方式复制图片，如何能够防止，杜绝，或者得到惩罚呢？</li>
+<li>SynthID的组合方法：<br>水印：SynthID 可以为 Imagen 生成的合成图像添加难以察觉的水印。‍<br>识别：通过扫描图像中的数字水印，SynthID 可以评估 Imagen 创建图像的可能性。<br>但是该软件没有开源，也没有具体实现原理的介绍。其原理可能与 Stable Signature 一致，请继续阅读下文。<h3 id="2-Stable-Signature"><a href="#2-Stable-Signature" class="headerlink" title="2. Stable Signature"></a>2. Stable Signature</h3>开源代码 - <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/stable_signature">https://github.com/facebookresearch/stable_signature</a><br>项目论文 - <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.15435">https://arxiv.org/abs/2303.15435</a><br>Official implementation of the paper “The Stable Signature Rooting Watermarks in Latent Diffusion Models”<br>实现的能力和 SynthID 项目的描述是一样一样的。<br>具体实现方法大体有下面<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.15435">3个步骤（取于论文）</a>：<br><img src="/2023/10/11/%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E6%B0%B4%E5%8D%B0%E5%92%8C%E8%AF%86%E5%88%ABAI%E7%94%9F%E6%88%90%E7%9A%84%E5%9B%BE%E5%83%8F/1.png"><h3 id="思考问题："><a href="#思考问题：" class="headerlink" title="思考问题："></a>思考问题：</h3></li>
+<li>如果 hacker 通过拷贝屏幕的方式复制图片，如何能够防止，杜绝，或者得到惩罚呢？</li>
+<li>经过加密的图片，质量会发生些微的损失。如 Stable Signature 论文所讲，根据经验，在不影响图像质量的情况下，显着降低位精度是很困难的：在纯化过程中开始出现伪影。如何保护图片质量，也是进一步的问题。</li>
+<li>实验和方法的成本很高，尽管比其他计算机视觉领域要低几个数量级。 我们粗略估计用于运行所有实验的总 GPU 天数为 2000，即 ≈ 50000 GPU 小时。 这相当于 10 吨二氧化碳当量的总排放量。</li>
+<li>如此方法，引申至3D模型，动画，视频，是否可以重用，目前看还需要思考。</li>
 </ul>
 
       
