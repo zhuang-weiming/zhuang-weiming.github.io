@@ -10941,7 +10941,7 @@
 <p>额外吐槽一下，Iden3有些细节做的确实不太好，比如circom教程中，按照文档复制粘贴过来的基础电路竟然跑不通：<a href="https://github.com/iden3/snarkjs/issues/252">https://github.com/iden3/snarkjs/issues/252</a></p>
 <h2 id="问题4-对go-rapidsnarkjs环境相关问题？"><a href="#问题4-对go-rapidsnarkjs环境相关问题？" class="headerlink" title="问题4: 对go-rapidsnarkjs环境相关问题？"></a>问题4: 对go-rapidsnarkjs环境相关问题？</h2><p>因为使用了c库，因此底层环境要选择正确。需要参考操作系统和cpu架构是否支持（在<a href="https://github.com/iden3/go-rapidsnark/tree/main/prover%EF%BC%89%E3%80%82">https://github.com/iden3/go-rapidsnark/tree/main/prover）。</a></p>
 <p>在开发过程中，笔者采用macos 12 + m1，没有遇到任何问题。但在部署时，部署到centos7服务器时，遇到了问题，需要选择合适的gcc版本。用centos自带的4.8无法完成编译；但用最新的10+版本又无法安装所要求的glibc 2.18。所以在朋友的帮助下，最终搞定了环境。最后选择的gcc是v7。</p>
-<h2 id="问题4-见证计算经常报验证失败，如何debug？最常遇到了什么样的bug？"><a href="#问题4-见证计算经常报验证失败，如何debug？最常遇到了什么样的bug？" class="headerlink" title="问题4: 见证计算经常报验证失败，如何debug？最常遇到了什么样的bug？"></a>问题4: 见证计算经常报验证失败，如何debug？最常遇到了什么样的bug？</h2><p>计算见证时，除了计算各种信号，还会检查信号约束是否满足条件。如果遇到bug，怎么解决呢？</p>
+<h2 id="问题5-见证计算经常报验证失败，如何debug？最常遇到了什么样的bug？"><a href="#问题5-见证计算经常报验证失败，如何debug？最常遇到了什么样的bug？" class="headerlink" title="问题5: 见证计算经常报验证失败，如何debug？最常遇到了什么样的bug？"></a>问题5: 见证计算经常报验证失败，如何debug？最常遇到了什么样的bug？</h2><p>计算见证时，除了计算各种信号，还会检查信号约束是否满足条件。如果遇到bug，怎么解决呢？</p>
 <p>这种错误源于电路输入中某个字段不正确。为了找出这个字段，笔者的做法很简单，首先，项目中要打印出用go-circuits构建的zk 输入；然后，zk电路中可以在关键节点中用log语句打印输入的值；然后把这个输入拷贝到input.ajson中，手动运行电路，然后看看是哪里报错。基本就可以推断出代码中是哪一步错误了，然后继续对代码中关键部分打日志、调查。很快就能找到错误原因。</p>
 <p>以笔者的经验，遇到过genesis state和id不一致，也就是stateTransition的这一步，原因来讲，我自己遇到的有两种：</p>
 <p>1）编码错误，树根传错了（我曾经传了两个claimtree + roots of roots tree计算树根），导致genesisState计算错误，自然和id对不上；<br>2）postgresql中有脏数据。涉及的db操作太多，当时又没做分布式事务，也没有用最终一致性，经常有一半的状态，导致树根计算不正确。</p>
