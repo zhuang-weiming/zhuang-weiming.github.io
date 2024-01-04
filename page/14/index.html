@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">226</span>
+          <span class="site-state-item-count">228</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,437 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/08/12/MP-SPDZ%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/12/MP-SPDZ%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="post-title-link" itemprop="url">MP-SPDZ使用体验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-12 10:51:04" itemprop="dateCreated datePublished" datetime="2021-08-12T10:51:04+08:00">2021-08-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-30 15:41:46" itemprop="dateModified" datetime="2021-09-30T15:41:46+08:00">2021-09-30</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/data61/MP-SPDZ">data61/MP-SPDZ: Versatile framework for multi-party computation (github.com)</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>1）在ubuntu环境中，安装依赖包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install automake build-essential git libboost-dev libboost-thread-dev libntl-dev libsodium-dev libssl-dev libtool m4 python3 texinfo yasm</span><br></pre></td></tr></table></figure>
+
+<p>2）使用git下载项目源码，注意不是二进制的release文件。</p>
+<p>3）在项目目录中，编译代码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j 8 tldr</span><br></pre></td></tr></table></figure>
+
+<p>4）试用并执行 <a target="_blank" rel="noopener" href="https://github.com/data61/MP-SPDZ/blob/master/Programs/Source/tutorial.mpc">the tutorial</a> 教程，他是一个双方的、对恶意安全的教程。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  MP-SPDZ git:(master) ./compile.py tutorial</span><br><span class="line">Default bit length: 64</span><br><span class="line">Default security parameter: 40</span><br><span class="line">Compiling file /home/zhuang/Downloads/MP-SPDZ/Programs/Source/tutorial.mpc</span><br><span class="line">WARNING: Order of memory instructions not preserved, errors possible</span><br><span class="line">Writing to /home/zhuang/Downloads/MP-SPDZ/Programs/Schedules/tutorial.sch</span><br><span class="line">Writing to /home/zhuang/Downloads/MP-SPDZ/Programs/Bytecode/tutorial-0.bc</span><br><span class="line">Program requires:</span><br><span class="line">           4 integer inputs from player 0</span><br><span class="line">           4 integer inputs from player 1</span><br><span class="line">        5420 integer bits</span><br><span class="line">        2474 integer triples</span><br><span class="line">         238 virtual machine rounds</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/08/09/%E9%83%A8%E7%BD%B2fabric%E4%BA%8Ek8s%E4%B9%8B%E4%B8%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/09/%E9%83%A8%E7%BD%B2fabric%E4%BA%8Ek8s%E4%B9%8B%E4%B8%8A/" class="post-title-link" itemprop="url">部署fabric于k8s之上</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-09 14:09:04" itemprop="dateCreated datePublished" datetime="2021-08-09T14:09:04+08:00">2021-08-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-09-14 14:14:32" itemprop="dateModified" datetime="2023-09-14T14:14:32+08:00">2023-09-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="hyperledger-fabric-2-2-kubernetes"><a href="#hyperledger-fabric-2-2-kubernetes" class="headerlink" title="hyperledger fabric 2.2 kubernetes"></a>hyperledger fabric 2.2 kubernetes</h3><h3 id="一、本地开发环境依赖"><a href="#一、本地开发环境依赖" class="headerlink" title="一、本地开发环境依赖"></a>一、本地开发环境依赖</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Minikube 安装 v1.20.0</span></span><br><span class="line">curl -Lo minikube https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.20.0/minikube-darwin-amd64</span><br><span class="line">chmod +x minikube</span><br><span class="line">sudo mv minikube /usr/local/bin/</span><br><span class="line"><span class="meta">#</span><span class="bash"> Minikube start</span></span><br><span class="line">minikube start --image-mirror-country cn \</span><br><span class="line">    --iso-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.20.0.iso \</span><br><span class="line">    --registry-mirror=https://xxxxx.mirror.aliyuncs.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><input checked disabled type="checkbox"> 安装 kubectl 工具</li>
+<li><input checked disabled type="checkbox"> 安装 git</li>
+<li><input checked disabled type="checkbox"> 安装 docker</li>
+<li><input checked disabled type="checkbox"> 安装 hyperledger 相关命令列工具</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 执行以下指令下载 Hyperledger 命令列工具</span></span><br><span class="line">curl -sSL http://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.2.0 1.5.0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line">curl -sSL https://bit.ly/2ysbOFE | bash -s</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设定环境变数至下载下来的 bin 目录下</span></span><br><span class="line">export PATH=&lt;path to download location&gt;/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>以上脚本会在本地下载k8s部署需要的容器和可执行文件，云上的话需要准备的镜像如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">centos:latest</span><br><span class="line">hyperledger/fabric-orderer:2.2</span><br><span class="line">hyperledger/fabric-peer:2.2.0</span><br><span class="line">hyperledger/fabric-tools:2.2.0</span><br></pre></td></tr></table></figure>
+<p>用于测试的chaincode镜像，marbles是hyperledger官方给的一个sample，但是源码没有打镜像，这里其他人打的一个镜像，我们只是用来测试部署是否成功，之后会用我们开发的存证chaincode镜像替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paragones&#x2F;chaincode-marbles:1.0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建一个名为 hyperledger 的 namespace</span></span><br><span class="line">kubectl create namespace hyperledger</span><br><span class="line"><span class="meta">#</span><span class="bash"> 切换至 hyperledger namespace </span></span><br><span class="line">kubectl config set-context --current --namespace=hyperledger</span><br></pre></td></tr></table></figure>
+<h3 id="二、系统架构规划"><a href="#二、系统架构规划" class="headerlink" title="二、系统架构规划"></a>二、系统架构规划</h3><h4 id="2-1-节点规划"><a href="#2-1-节点规划" class="headerlink" title="2.1 节点规划"></a>2.1 节点规划</h4><p>下图为本范例的部署架构，所有hyperledger 所需节点皆部署于 k8s 中的 hyperledger namespace 当中。架构中包含的节点如下</p>
+<ul>
+<li>orderer0 : 排序节点0，用于排序区块</li>
+<li>orderer1 : 排序节点1，用于排序区块</li>
+<li>orderer2 : 排序节点2，用于排序区块</li>
+<li>peer0-org1 : 组织1的Peer节点，用于区块的实际运算、背书以及记帐。</li>
+<li>cli-org1-peer : 用于操纵组织1的Peer节点</li>
+<li>peer0-org2 : 组织2的Peer节点，用于区块的实际运算、背书以及记帐。</li>
+<li>cli-org2-peer : 用于操纵组织2的Peer节点  </li>
+</ul>
+<p><img src="/2021/08/09/%E9%83%A8%E7%BD%B2fabric%E4%BA%8Ek8s%E4%B9%8B%E4%B8%8A/1.jpg"></p>
+<h4 id="2-2-存储存放规划"><a href="#2-2-存储存放规划" class="headerlink" title="2.2 存储存放规划"></a>2.2 存储存放规划</h4><table>
+<thead>
+<tr>
+<th>节点</th>
+<th>挂载路径</th>
+<th>路径说明</th>
+<th>PVC</th>
+<th>PV hostPath</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>orderer0</td>
+<td>/var/hyperledger/orderer/</td>
+<td>存放凭证</td>
+<td>orderer0-pvc</td>
+<td>./fabric/orderer0</td>
+</tr>
+<tr>
+<td>orderer0</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>orderer0-persist-pvc</td>
+<td>./fabric/orderer0persist</td>
+</tr>
+<tr>
+<td>orderer1</td>
+<td>/var/hyperledger/orderer/</td>
+<td>存放凭证</td>
+<td>orderer1-pvc</td>
+<td>./fabric/orderer1</td>
+</tr>
+<tr>
+<td>orderer1</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>orderer1-persist-pvc</td>
+<td>./fabric/orderer1persist</td>
+</tr>
+<tr>
+<td>orderer2</td>
+<td>/var/hyperledger/orderer/</td>
+<td>存放凭证</td>
+<td>orderer2-pvc</td>
+<td>./fabric/orderer2</td>
+</tr>
+<tr>
+<td>orderer2</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>orderer2-persist-pvc</td>
+<td>./fabric/orderer2persist</td>
+</tr>
+<tr>
+<td>Org1-Peer</td>
+<td>/etc/hyperledger/fabric/</td>
+<td>存放凭证</td>
+<td>peer0-org1-pvc</td>
+<td>./fabric/peer0org1</td>
+</tr>
+<tr>
+<td>Org1-Peer</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>peer0-org1-persist-pvc</td>
+<td>./fabric/peer0org1persist</td>
+</tr>
+<tr>
+<td>Org1-Peer-CLI</td>
+<td>/opt/gopath/src/github.com/ hyperledger/fabric/peer/crypto/</td>
+<td>存放凭证</td>
+<td>peer0-org1-pvc</td>
+<td>./fabric/peer0org1</td>
+</tr>
+<tr>
+<td>Org2-Peer</td>
+<td>/etc/hyperledger/fabric/</td>
+<td>存放凭证</td>
+<td>peer0-org2-pvc</td>
+<td>./fabric/peer0org2</td>
+</tr>
+<tr>
+<td>Org2-Peer</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>peer0-org2-persist-pvc</td>
+<td>./fabric/peer0org2persist</td>
+</tr>
+<tr>
+<td>Org2-Peer-CLI</td>
+<td>/opt/gopath/src/github.com/ hyperledger/fabric/peer/crypto/</td>
+<td>存放凭证</td>
+<td>peer0-org1-pvc</td>
+<td>./fabric/peer0org2</td>
+</tr>
+</tbody></table>
+<h3 id="三、准备凭证"><a href="#三、准备凭证" class="headerlink" title="三、准备凭证"></a>三、准备凭证</h3><p>Hyperledger Fabric 于节点沟通时必须依赖凭证进行沟通，因此必须先签发凭证。在凭证的签发过程中可以使用两种方式签发凭证</p>
+<ul>
+<li>cryptogen 命令<br>cryptogen 为 Hyperledger Fabric 生成凭证的命令列工具，于 crypto-config.yaml 定义 Orderer 以及各组织的Peer的数量。</li>
+<li>fabric-ca 服务<br>Fabric CA 是一个为 Hyperledger Fabric 签发凭证的工具，通常每个组织会有自己的 Fabric CA，通過fabric-ca client 获得凭证后，就可以用这些凭证访问Peer。</li>
+</ul>
+<p>在此范例中将以 cryptogen 命令列生成各节点所需凭证，以下为签发凭证的指令。可以查看 git repo 中的 crypto-config.yaml 为<strong>签发凭证设定文件</strong>，crypto-config则为<strong>签发结果</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cryptogen generate --config=crypto-config.yaml --output ./crypto-config</span><br></pre></td></tr></table></figure>
+
+<p>（notice：练习中，需要再次生成新的凭证设定文件时，需要将./crypto-config文件夹删除后，再行运行上述命令。否则凭证设定文件不会被更新覆盖！)</p>
+<h3 id="四、准备创世区块"><a href="#四、准备创世区块" class="headerlink" title="四、准备创世区块"></a>四、准备创世区块</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsOrdererGenesis -channelID devchan -outputBlock ./channel-artifacts/genesis.block</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、产生Channel-所需档案"><a href="#五、产生Channel-所需档案" class="headerlink" title="五、产生Channel 所需档案"></a>五、产生Channel 所需档案</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 产生Channel 所需档案</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID &quot;mychannel&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 产生 Org1 使用的 channel 设定文件</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/org1Anchors.tx  -channelID &quot;mychannel&quot; -asOrg org1MSP</span><br><span class="line"><span class="meta">#</span><span class="bash"> 产生 Org2 使用的 channel 设定文件</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/org2Anchors.tx  -channelID &quot;mychannel&quot; -asOrg org2MSP</span><br></pre></td></tr></table></figure>
+
+<h3 id="六、同步档案至PV中"><a href="#六、同步档案至PV中" class="headerlink" title="六、同步档案至PV中"></a>六、同步档案至PV中</h3><p>在前述三、四、五章节中我们已经准备了以下内容</p>
+<ul>
+<li>各节点所需凭证</li>
+<li>创世区块</li>
+<li>Channel 设定档</li>
+</ul>
+<p>由于 Hyperledger 之 container 必须先将以上档案放置至正确位置后 container 才能正常启动。但本次安装不使用NFS 预先将档案填入，而是先启临时的 container 同步档案。<br>在本步骤我们将启动两个用于填充档案的 container</p>
+<table>
+<thead>
+<tr>
+<th>container 名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>orderer-bastion</td>
+<td>填充 orderer0-pvc,orderer1-pvc,orderer2-pvc 所需要的文档</td>
+</tr>
+<tr>
+<td>peer-bastion</td>
+<td>填充 peer0-org1-pvc,peer0-org2-pvc 所需要的文档</td>
+</tr>
+</tbody></table>
+<p>以下为同步文档的步骤</p>
+<p><strong>6.1 启动临时 container</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f /deploy-hyperledger-fabric-on-k8s/file-populate-bastion/</span><br></pre></td></tr></table></figure>
+<p>这个指令将会产生 pv/pvc/orderer-bastion/peer-bastion 这些资源</p>
+<p><strong>6.2 同步 Orderer 所需文档</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 登录进入 orderer-bastion</span></span><br><span class="line">kubectl exec -it $&#123;orderer-bastion-pod-name&#125; bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装 git 并 <span class="built_in">clone</span> deploy-hyperledger-fabric-on-k8s repo</span></span><br><span class="line">yum install git -y </span><br><span class="line">git clone https://github.com/willzhuang/deploy-hyperledger-fabric-on-k8s.git</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer0 创世区块</span></span><br><span class="line">cp deploy-hyperledger-fabric-on-k8s/channel-artifacts/genesis.block /orderer0-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer0 凭证</span></span><br><span class="line">cp -r deploy-hyperledger-fabric-on-k8s/crypto-config/ordererOrganizations/consortium/orderers/orderer0/* /orderer0-pvc/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer1 创世区块</span></span><br><span class="line">cp deploy-hyperledger-fabric-on-k8s/channel-artifacts/genesis.block /orderer1-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer1 凭证</span></span><br><span class="line">cp -r deploy-hyperledger-fabric-on-k8s/crypto-config/ordererOrganizations/consortium/orderers/orderer1/* /orderer1-pvc/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer2 创世区块</span></span><br><span class="line">cp deploy-hyperledger-fabric-on-k8s/channel-artifacts/genesis.block /orderer2-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer2 凭证</span></span><br><span class="line">cp -r deploy-hyperledger-fabric-on-k8s/crypto-config/ordererOrganizations/consortium/orderers/orderer2/* /orderer2-pvc/</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.3 同步 Peer 所需要的文档</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 登录进入 peer-bastion</span></span><br><span class="line">kubectl exec -it $&#123;peer-bastion-pod-name&#125; bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装 git 並 <span class="built_in">clone</span> deploy-hyperledger-fabric-on-k8s repo</span></span><br><span class="line">yum install git -y </span><br><span class="line">git clone https://github.com/willzhuang/deploy-hyperledger-fabric-on-k8s.git</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org1 peer0 所需之凭证</span></span><br><span class="line">cp -r /deploy-hyperledger-fabric-on-k8s/crypto-config/peerOrganizations/org1/peers/peer0-org1/* peer0-org1-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org1 peer0 cli 所需之凭证</span></span><br><span class="line">cp -r /deploy-hyperledger-fabric-on-k8s/crypto-config/* /peer0-org1-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org1 peer0 所需之 channel设定文档</span></span><br><span class="line">cp /deploy-hyperledger-fabric-on-k8s/channel-artifacts/* peer0-org1-pvc/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org2 peer0 所需之凭证</span></span><br><span class="line">cp -r /deploy-hyperledger-fabric-on-k8s/crypto-config/peerOrganizations/org2/peers/peer0-org2/* peer0-org2-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org2 peer0 cli 所需之凭证</span></span><br><span class="line">cp -r /deploy-hyperledger-fabric-on-k8s/crypto-config/* /peer0-org2-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org2 peer0 所需之 channel设定文档</span></span><br><span class="line">cp /deploy-hyperledger-fabric-on-k8s/channel-artifacts/* peer0-org2-pvc/</span><br></pre></td></tr></table></figure>
+
+<h3 id="七、启动-Orderer"><a href="#七、启动-Orderer" class="headerlink" title="七、启动 Orderer"></a>七、启动 Orderer</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 orderer cluster</span></span><br><span class="line">kubectl create -f /deploy-hyperledger-fabric-on-k8s/orderer/</span><br></pre></td></tr></table></figure>
+<p>內含 orderer0,orderer1,orderer2 所需的 deployment 与 service 资源</p>
+<h3 id="八、启动-Peer"><a href="#八、启动-Peer" class="headerlink" title="八、启动 Peer"></a>八、启动 Peer</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 org1 peer0 </span></span><br><span class="line">kubectl create -f /deploy-hyperledger-fabric-on-k8s/org1/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 內含 org1 peer0/cli 所需的 deployment,configmap,service 资源</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动 org2 peer0 </span></span><br><span class="line">kubectl create -f /deploy-hyperledger-fabric-on-k8s/org2/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 內含 org2 peer0/cli 所需的 deployment,configmap,service 资源</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="九、创建channel"><a href="#九、创建channel" class="headerlink" title="九、创建channel"></a>九、创建channel</h3><p><strong>9.1 将 org1 peer0 加入 channel</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 登录进入 cli pod </span></span><br><span class="line">kubectl exec -it $&#123;org1-peer0-cli-pod-name&#125; sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 产生 channel 区块</span></span><br><span class="line">peer channel create -o orderer0:7050 -c mychannel -f ./scripts/channel-artifacts/channel.tx --tls true --cafile $ORDERER_CA</span><br></pre></td></tr></table></figure>
+
+<p>运行成功后，log信息如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel create -o orderer0:7050 -c mychannel -f ./scripts/channel-artifacts/channel.tx -</span><br><span class="line">-tls true --cafile $ORDERER_CA</span><br><span class="line">2021-08-10 05:41:03.212 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:03.242 UTC [cli.common] readBlock -&gt; INFO 002 Expect block, but got status: &amp;&#123;NOT_FOUND&#125;</span><br><span class="line">2021-08-10 05:41:03.246 UTC [channelCmd] InitCmdFactory -&gt; INFO 003 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:03.447 UTC [cli.common] readBlock -&gt; INFO 004 Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:03.450 UTC [channelCmd] InitCmdFactory -&gt; INFO 005 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:03.651 UTC [cli.common] readBlock -&gt; INFO 006 Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:03.654 UTC [channelCmd] InitCmdFactory -&gt; INFO 007 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:03.857 UTC [cli.common] readBlock -&gt; INFO 008 Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:03.866 UTC [channelCmd] InitCmdFactory -&gt; INFO 009 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:04.068 UTC [cli.common] readBlock -&gt; INFO 00a Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:04.070 UTC [channelCmd] InitCmdFactory -&gt; INFO 00b Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:04.273 UTC [cli.common] readBlock -&gt; INFO 00c Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:04.277 UTC [channelCmd] InitCmdFactory -&gt; INFO 00d Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:04.480 UTC [cli.common] readBlock -&gt; INFO 00e Received block: 0</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 加入 channel</span></span><br><span class="line">peer channel join -b mychannel.block</span><br></pre></td></tr></table></figure>
+
+<p>运行成功后，log信息如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel join -b mychannel.block</span><br><span class="line">2021-08-10 05:48:59.716 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:48:59.736 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看是否在 channel 当中</span></span><br><span class="line">peer channel list</span><br></pre></td></tr></table></figure>
+<p><strong>9.2 將 org2 peer0 加入 channel</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 登录进入 cli pod </span><br><span class="line">kubectl exec -it pod $&#123;org2-peer0-cli-pod-name&#125; sh</span><br><span class="line"></span><br><span class="line"># 取得 channel 区块</span><br><span class="line">peer channel fetch 0 mychannel.block -c mychannel -o orderer0:7050 --tls --cafile $ORDERER_CA</span><br><span class="line"></span><br><span class="line"># 加入 channel</span><br><span class="line">peer channel join -b mychannel.block</span><br><span class="line"></span><br><span class="line"># 查看是否在 channel 当中</span><br><span class="line">peer channel list</span><br></pre></td></tr></table></figure>
+
+
+<p>运行成功后，log信息如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel fetch 0 mychannel.block -c mychannel -o orderer0:7050 --tls --cafile $ORDERER_CA</span><br><span class="line">2021-08-10 06:05:04.550 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 06:05:04.553 UTC [cli.common] readBlock -&gt; INFO 002 Received block: 0</span><br><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel join -b mychannel.block</span><br><span class="line">2021-08-10 06:05:16.493 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 06:05:16.513 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel list</span><br><span class="line">2021-08-10 06:05:24.222 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">Channels peers has joined: </span><br><span class="line">mychannel</span><br></pre></td></tr></table></figure>
+
+<h3 id="十、Fabric节点上安装外的Chaincode"><a href="#十、Fabric节点上安装外的Chaincode" class="headerlink" title="十、Fabric节点上安装外的Chaincode"></a>十、Fabric节点上安装外的Chaincode</h3><p><strong>10.1 安装chaincode</strong><br>‘marbles’ 链码作为范例</p>
+<p>打包org1</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入github的chaincode/packaging</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将connection.json 打包成为 code.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar cfz code.tar.gz connection.json</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">再將code.tar.gz metadata.json包成marbles-org1.tgz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar cfz marbles-org1.tgz code.tar.gz metadata.json</span></span><br></pre></td></tr></table></figure>
+<p>将org1 tar文档安装到peer cli pod中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 将marbles-org1.tgz放入peer pod</span><br><span class="line">kubectl cp marbles-org1.tgz hyperledger&#x2F;$&#123;cli-org1-name&#125;:&#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer</span><br><span class="line"></span><br><span class="line"># 登录进入$&#123;cli-org1-name&#125; pod</span><br><span class="line">kubectl exec -it $&#123;cli-org1-name&#125; -- &#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line"># 在peer-cli上安装chaincode</span><br><span class="line">$ peer lifecycle chaincode install marbles-org1.tgz</span><br><span class="line"></span><br><span class="line"># 查询链码，识别字符串</span><br><span class="line">$ peer lifecycle chaincode queryinstalled</span><br></pre></td></tr></table></figure>
+<p>打包org2，如打包or1一样的步骤，请修改connection.json中的address</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;address&quot;: &quot;chaincode-marbles-org2.hyperledger:7052&quot;</span><br></pre></td></tr></table></figure>
+
+<p>依照下列打包步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ rm -f code.tar.gz</span><br><span class="line">$ tar cfz code.tar.gz connection.json</span><br><span class="line">$ tar cfz marbles-org2.tgz code.tar.gz metadata.json</span><br><span class="line">$ peer lifecycle chaincode install marbles-org2.tgz</span><br><span class="line"></span><br><span class="line"># 查询链码，识别字符串</span><br><span class="line">$ peer lifecycle chaincode queryinstalled</span><br></pre></td></tr></table></figure>
+
+<p>至此，已完成外部链码设置。</p>
+<hr>
+<p><strong>10.2 部署”智能合约”</strong></p>
+<p>制作golang的alpine镜像文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t chaincode&#x2F;marbles:1.0 .</span><br><span class="line"></span><br><span class="line"># 将文件推送至dockerhub</span><br><span class="line">$ docker login</span><br><span class="line">$ docker push chaincode&#x2F;marbles:1.0</span><br></pre></td></tr></table></figure>
+
+<p>进入github中 chaincode\k8s ，找到org1-chaincode-deployment.yaml和org2-chaincode-deployment.yaml中的CHAINCODE_CCID</p>
+<p>将yaml文件中的CHAINCODE_CCID更换成为对应的 chaincode 识别码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 部署 chaincode 到aks上</span><br><span class="line">$ kubectl create -f chaincode&#x2F;k8s</span><br></pre></td></tr></table></figure>
+<p>完成部署。</p>
+<hr>
+<p><strong>10.3审核链码的安装</strong></p>
+<p>请在peer-cli-org1/peer-cli-org2 这2个pod中允许链码的安装，记得修改CHAINCODE_CCID<br>※peer-cli-org1 及 peer-cli-org2的CHAINCODE_CCID 需要对应到各自的chaincode识别码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ peer lifecycle chaincode approveformyorg --channelID mychannel --name marbles --version 1.0 --init-required --package-id marbles:e001937433673b11673d660d142c722fc372905db87f88d2448eee42c9c63064 --sequence 1 -o orderer0:7050 --tls --cafile $ORDERER_CA --signature-policy &quot;AND (&#39;org1MSP.peer&#39;,&#39;org2MSP.peer&#39;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>检查所有org允许状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name marbles --version 1.0 --init-require</span><br><span class="line">d --sequence 1 -o -orderer0:7050 --tls --cafile $ORDERER_CA --signature-policy &quot;AND (&#39;org1MSP.peer&#39;,&#39;org2MSP.peer&#39;)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>至此，2个peer-cli都审核完毕。</p>
+<p>之后提交到channel 中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">peer lifecycle chaincode commit -o orderer0:7050 --channelID mychannel --name marbles --version 1.0 --sequence 1 --init-required --tls true --cafile $ORDERER_CA --peerAddresses peer0-org1:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org1&#x2F;peers&#x2F;peer0-org1&#x2F;tls&#x2F;ca.crt --peerAddresses peer0-org2:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org2&#x2F;peers&#x2F;peer0-org2&#x2F;tls&#x2F;ca.crt --signature-policy &quot;AND (&#39;org1MSP.peer&#39;,&#39;org2MSP.peer&#39;)&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>10.4测试</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 查询安装的链码</span><br><span class="line">peer lifecycle chaincode queryinstalled</span><br><span class="line"># 查询审核通过的链码</span><br><span class="line">peer lifecycle chaincode queryapproved --channelID mychannel --name marbles</span><br><span class="line"># 查询提交完成的链码</span><br><span class="line">peer lifecycle chaincode querycommitted --channelID mychannel --name marbles</span><br><span class="line"># 塞弹珠(第一次)</span><br><span class="line">peer chaincode invoke -o orderer0:7050 --isInit --tls true --cafile $ORDERER_CA -C mychannel -n marbles \</span><br><span class="line">--peerAddresses peer0-org1:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org1&#x2F;peers&#x2F;peer0-org1&#x2F;tls&#x2F;ca.crt  \</span><br><span class="line">--peerAddresses peer0-org2:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org2&#x2F;peers&#x2F;peer0-org2&#x2F;tls&#x2F;ca.crt  \</span><br><span class="line">-c &#39;&#123;&quot;Args&quot;:[&quot;initMarble&quot;,&quot;marble1&quot;,&quot;blue&quot;,&quot;35&quot;,&quot;tom&quot;]&#125;&#39; --waitForEvent</span><br><span class="line"># 塞弹珠</span><br><span class="line">peer chaincode invoke -o orderer0:7050 --tls true --cafile $ORDERER_CA -C mychannel -n marbles \</span><br><span class="line">--peerAddresses peer0-org1:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org1&#x2F;peers&#x2F;peer0-org1&#x2F;tls&#x2F;ca.crt \</span><br><span class="line">--peerAddresses peer0-org2:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org2&#x2F;peers&#x2F;peer0-org2&#x2F;tls&#x2F;ca.crt \</span><br><span class="line">-c &#39;&#123;&quot;Args&quot;:[&quot;initMarble&quot;,&quot;marble5&quot;,&quot;red&quot;,&quot;50&quot;,&quot;tom&quot;]&#125;&#39; --waitForEvent</span><br><span class="line"># 查询弹珠</span><br><span class="line">peer chaincode query -C mychannel -n marbles -c &#39;&#123;&quot;Args&quot;:[&quot;readMarble&quot;,&quot;marble5&quot;]&#125;&#39;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="开发Client-Application"><a href="#开发Client-Application" class="headerlink" title="开发Client Application"></a>开发Client Application</h3><p>目前hyperledger不对外，请使用kubectl port-forward的方式连进去。<br>指令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl port-forward $&#123;pord-id&#125; 7050:7050</span><br></pre></td></tr></table></figure>
+
+<p>参考 <a target="_blank" rel="noopener" href="https://github.com/hyperledger/fabric-samples/tree/master/asset-transfer-basic">fabric-samples</a> 中typescript所撰写的范例 ※另有java， go 语言的范例!!</p>
+<p>以下为typerscript 范例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">async function main() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        const ccpPath &#x3D; path.resolve(__dirname, &#39;..&#39;, &#39;connection.json&#39;);</span><br><span class="line"></span><br><span class="line">        const fileExists &#x3D; fs.existsSync(ccpPath);</span><br><span class="line">        if (!fileExists) &#123;</span><br><span class="line">            throw new Error(&#39;no such file or directory: $&#123;ccpPath&#125;&#39;);</span><br><span class="line">        &#125;</span><br><span class="line">        const contents &#x3D; fs.readFileSync(ccpPath, &#39;utf8&#39;);</span><br><span class="line">        console.log(contents);</span><br><span class="line"></span><br><span class="line">        const connectionProfile &#x3D; JSON.parse(contents);</span><br><span class="line">        const gateway &#x3D; new Gateway();</span><br><span class="line">        const wallet &#x3D; await buildWallet(walletPath);</span><br><span class="line"></span><br><span class="line">        const identity: X509Identity &#x3D; &#123;</span><br><span class="line">            credentials: &#123;</span><br><span class="line">                &#x2F;&#x2F;crypto-config\peerOrganizations\org1\users\Admin@org1\msp\signcerts\Admin@org1-cert.pem</span><br><span class="line">                certificate: &#39;-----BEGIN CERTIFICATE-----\nMIICBjCCAaygAwIBAgIRAKeXh5QGRlhFCf31amakNiowCgYIKoZIzj0EAwIwWzEL</span><br><span class="line">                &#x2F;&#x2F;crypto-config\peerOrganizations\org1\users\Admin@org1\msp\keystore</span><br><span class="line">                privateKey: &#39;-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg9tkGBGl8aIWYbN&#x2F;i\nqKjl5dK3D3qXx6ltn3YrlH4NFPehRANCAATMJIf0mY3FQDysZOevzbsBwqttfVuW\nwoIFV9Z0TwBEXXAQ0HPd9u77zV4my0onty3rJnWKF2kuhIn5PUzz61zk\n-----END PRIVATE KEY-----\n&#39;,</span><br><span class="line">            &#125;,</span><br><span class="line">            mspId: org1UserId,</span><br><span class="line">            type: &#39;X.509&#39;,</span><br><span class="line">        &#125;;</span><br><span class="line">        await wallet.put(org1UserId, identity);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        const gatewayOpts: GatewayOptions &#x3D; &#123;</span><br><span class="line">            wallet,</span><br><span class="line">            identity: org1UserId,</span><br><span class="line">            discovery: &#123; enabled: false, asLocalhost: false &#125;, &#x2F;&#x2F; using asLocalhost as this gateway is using a fabric network deployed locally</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        await gateway.connect(connectionProfile, gatewayOpts);</span><br><span class="line"></span><br><span class="line">        const network &#x3D; await gateway.getNetwork(&#39;mychannel&#39;);</span><br><span class="line"></span><br><span class="line">        const contract &#x3D; network.getContract(&#39;marbles&#39;);</span><br><span class="line">        let result &#x3D; await contract.evaluateTransaction(&#39;readMarble&#39;, &#39;marble2&#39;);</span><br><span class="line">        console.log(&#96;*** Result: $&#123;prettyJSONString(result.toString())&#125;&#96;);</span><br><span class="line">    &#125; catch (error) &#123;</span><br><span class="line">        console.error(&#96;******** FAILED to run the application: $&#123;error&#125;&#96;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main();</span><br></pre></td></tr></table></figure>
+
+
+<p>上述为app.ts，此app.ts会读取connection.json档，此档用于定义peer url以及peer的tls凭证路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;name&quot;: &quot;Network&quot;,</span><br><span class="line">	&quot;version&quot;: &quot;1.1&quot;,</span><br><span class="line">	&quot;channels&quot;: &#123;</span><br><span class="line">		&quot;mychannel&quot;: &#123;</span><br><span class="line">			&quot;peers&quot;: [</span><br><span class="line">				&quot;peer0-org1&quot;,</span><br><span class="line">				&quot;peer0-org2&quot;</span><br><span class="line">			]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;organizations&quot;: &#123;</span><br><span class="line">		&quot;Org1&quot;: &#123;</span><br><span class="line">			&quot;mspid&quot;: &quot;org1MSP&quot;,</span><br><span class="line">			&quot;peers&quot;: [</span><br><span class="line">				&quot;peer0-org1&quot;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;Org2&quot;: &#123;</span><br><span class="line">			&quot;mspid&quot;: &quot;org2MSP&quot;,</span><br><span class="line">			&quot;peers&quot;: [</span><br><span class="line">				&quot;peer0-org2&quot;</span><br><span class="line">			]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;peers&quot;: &#123;</span><br><span class="line">		&quot;peer0-org1&quot;: &#123;</span><br><span class="line">			&quot;url&quot;: &quot;grpcs:&#x2F;&#x2F;peer0-org1:7051&quot;,</span><br><span class="line">			&quot;grpcOptions&quot;: &#123;</span><br><span class="line">				&quot;ssl-target-name-override&quot;: &quot;peer0-org1&quot;</span><br><span class="line">			&#125;,</span><br><span class="line">			&quot;tlsCACerts&quot;: &#123;</span><br><span class="line">				&quot;path&quot;: &quot;crypto-config\peerOrganizations\org1\tlsca\tlsca.org1-cert.pem&quot;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;peer0-org2&quot;: &#123;</span><br><span class="line">			&quot;url&quot;: &quot;grpcs:&#x2F;&#x2F;peer0-org2:7051&quot;,</span><br><span class="line">			&quot;grpcOptions&quot;: &#123;</span><br><span class="line">				&quot;ssl-target-name-override&quot;: &quot;peer0-org2&quot;</span><br><span class="line">			&#125;,</span><br><span class="line">			&quot;tlsCACerts&quot;: &#123;</span><br><span class="line">				&quot;path&quot;: &quot;crypto-config\peerOrganizations\org2\tlsca\tlsca.org2-cert.pem&quot;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>application连到peer的时候必须要有tls 凭证去验证peer service是否安全及正确。</li>
+<li>当交易的时候需要提供该使用者(user or admin)的交易凭证(x509 cert +private key)</li>
+</ul>
+<blockquote>
+<p>路径对应如下：<br><strong>tls CA Cert：</strong> crypto-config\peerOrganizations\org1\tlsca\tlsca.org1-cert.pem<br><strong>X509 certificate：</strong> crypto-config\peerOrganizations\org1\users\Admin@org1\msp\signcerts\Admin@org1-cert.pem<br><strong>X509 privateKey：</strong> crypto-config\peerOrganizations\org1\users\Admin@org1\msp\keystore\priv_sk<br>[color=#d85887]</p>
+</blockquote>
+<p>成功收到资料如图<br><img src="/2021/08/09/%E9%83%A8%E7%BD%B2fabric%E4%BA%8Ek8s%E4%B9%8B%E4%B8%8A/2.png"></p>
+<hr>
+<h3 id="附录、参考连结"><a href="#附录、参考连结" class="headerlink" title="附录、参考连结"></a>附录、参考连结</h3><ol>
+<li>Hyperledger 参考链接</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/release-2.2/whatis.html#">Hyperledger 官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hyperledger/fabric-samples/tree/v2.1.1">Hyperledger Git Repository</a></li>
+<li><a target="_blank" rel="noopener" href="https://hyperledgercn.github.io/hyperledgerDocs/">Hyperledger 中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.lijiaocn.com/%E9%A1%B9%E7%9B%AE/2018/04/26/hyperledger-fabric-deploy.html">Hyperledger 手动部署全纪录</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/swlh/how-to-implement-hyperledger-fabric-external-chaincodes-within-a-kubernetes-cluster-fd01d7544523">部署Hyperledger2.2 于 Kubenetes</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vanitas92/fabric-external-chaincodes/tree/v2.2.0">部署Hyperledger2.2 于 Kubenetes 代码</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/134024f823a0">凭证说明</a></li>
+</ul>
+<ol start="2">
+<li>Kubenetes 参考链接</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/">k8s 佈署用指令參考</a></li>
+</ul>
+<ol start="3">
+<li>NFS 架构参考链接</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.skywebster.com/how-to-setup-nfs-server-on-centos-7-rhel-7/">NFS 架构参考</a></li>
+</ul>
+<ol start="4">
+<li><p>部署 fabric 和 CA 与 Kubenetes 之上</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/hyperledger-fabric-k8s">Deploy Hyperledger Fabric network on Kubernetes</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -484,253 +915,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/05/06/circom%E8%AF%95%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/06/circom%E8%AF%95%E7%94%A8/" class="post-title-link" itemprop="url">circom试用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-06 11:41:04 / Modified: 16:14:56" itemprop="dateCreated datePublished" datetime="2021-05-06T11:41:04+08:00">2021-05-06</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>参考链接 ==&gt; <a target="_blank" rel="noopener" href="https://docs.circom.io/">https://docs.circom.io/</a></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g circom</span><br><span class="line">npm install -g snarkjs</span><br></pre></td></tr></table></figure>
-
-<h2 id="构建电路"><a href="#构建电路" class="headerlink" title="构建电路"></a>构建电路</h2><h3 id="1-创建circuit-circom文件"><a href="#1-创建circuit-circom文件" class="headerlink" title="1.创建circuit.circom文件"></a>1.创建circuit.circom文件</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">template Multiplier() &#123;</span><br><span class="line">   signal private input a;</span><br><span class="line">   signal private input b;</span><br><span class="line">   signal output c;</span><br><span class="line">   c &lt;== a*b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">component main = Multiplier();</span><br></pre></td></tr></table></figure>
-
-<p>​    此电路的目的是让我们向某人证明我们能够因式分解整数c。具体来说，使用此电路，我们将能够证明我们知道两个数字（a和b）相乘得到c，而不会显示a和b。这个电路有2个 private 输入信号，名为 <code>a</code> 和 <code>b</code> ，还有一个输出 <code>c</code>。输入和输出使用<code>&lt;==</code>运算符进行关联。在circom中，&lt;==运算符做两件事。 首先是连接信号。 第二个是施加约束。在本例中，我们使用<code>&lt;==</code>将<code>c</code>连接到<code>a</code>和<code>b</code>，同时将<code>c</code>约束为<code>a * b</code>的值，即电路做的事情是让强制信号 <code>c</code> 为 <code>a*b</code> 的值。在声明 <code>Multiplier</code> 模板之后, 我们使用名为<code>main</code>的组件实例化它。注意：编译电路时，必须始终有一个名为<code>main</code>的组件。</p>
-<h3 id="2-编译电路"><a href="#2-编译电路" class="headerlink" title="2.编译电路"></a>2.编译电路</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">circom circuit.circom --r1cs --wasm --sym</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>--r1cs</code>: 生成 <code>circuit.r1cs</code> ( r1cs 电路的二进制格式约束系统)</li>
-<li><code>--wasm</code>: 生成 <code>circuit.wasm</code> ( wasm 代码用来生成见证 witness 稍后再介绍)</li>
-<li><code>--sym</code>: 生成 <code>circuit.sym</code> (以注释方式调试和打印约束系统所需的符号文件）</li>
-</ul>
-<p>r1cs是将代数电路转换为zk-snark的第一步。</p>
-<h2 id="构建零知识证明"><a href="#构建零知识证明" class="headerlink" title="构建零知识证明"></a>构建零知识证明</h2><p>​    使用<code>snarkjs</code> 来生成和验证 zk-SNARK 证明。我们将证明能够分解数字33。也就是说，将证明我们知道两个整数a和b，以便将它们相乘时得出33。</p>
-<h3 id="1-查看电路有关的信息"><a href="#1-查看电路有关的信息" class="headerlink" title="1.查看电路有关的信息"></a>1.查看电路有关的信息</h3><p>​    使用 snarkJS，您可以获得电路的一般统计数据并打印约束。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs info -r circuit.r1cs </span><br><span class="line">[INFO]  snarkJS: Curve: bn-128</span><br><span class="line">[INFO]  snarkJS: # of Wires: 4</span><br><span class="line">[INFO]  snarkJS: # of Constraints: 1</span><br><span class="line">[INFO]  snarkJS: # of Private Inputs: 2</span><br><span class="line">[INFO]  snarkJS: # of Public Inputs: 0</span><br><span class="line">[INFO]  snarkJS: # of Labels: 4</span><br><span class="line">[INFO]  snarkJS: # of Outputs: 1</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs print -r circuit.r1cs -s circuit.sym</span><br><span class="line">[INFO]  snarkJS: [ 21888242871839275222246405745257275088548364400416034343698204186575808495616main.a ] * [ main.b ] - [ 21888242871839275222246405745257275088548364400416034343698204186575808495616main.c ] = 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-setup"><a href="#2-setup" class="headerlink" title="2.setup"></a>2.setup</h3><p>2.1 设置的生成分为两个阶段：第一步是创建一些称为tau的幂的值。此处，我们将保留一个“ powers of tau”文件。 运行以下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs powersoftau new bn128 12 pot12_0000.ptau -v</span><br><span class="line">[DEBUG] snarkJS: Calculating First Challenge Hash</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG2</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: alphaTauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: betaTauG1</span><br><span class="line">[DEBUG] snarkJS: Blank Contribution Hash:</span><br><span class="line">		786a02f7 42015903 c6c6fd85 2552d272</span><br><span class="line">		912f4740 e1584761 8a86e217 f71f5419</span><br><span class="line">		d25e1031 afee5853 13896444 934eb04b</span><br><span class="line">		903a685b 1448b755 d56f701a fe9be2ce</span><br><span class="line">[INFO]  snarkJS: First Contribution Hash:</span><br><span class="line">		9e63a5f6 2b96538d aaed2372 481920d1</span><br><span class="line">		a40b9195 9ea38ef9 f5f6a303 3b886516</span><br><span class="line">		0710d067 c09d0961 5f928ea5 17bcdf49</span><br><span class="line">		ad75abd2 c8340b40 0e3b18e9 68b4ffef</span><br><span class="line">➜  circom snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name=&quot;First contribution&quot; -v</span><br><span class="line">Enter a random text. (Entropy): zhuangweiming</span><br><span class="line">[DEBUG] snarkJS: Calculating First Challenge Hash</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG2</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: alphaTauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: betaTauG1</span><br><span class="line">[DEBUG] snarkJS: processing: tauG1: 0/8191</span><br><span class="line">[DEBUG] snarkJS: processing: tauG2: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: alphaTauG1: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: betaTauG1: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: betaTauG2: 0/1</span><br><span class="line">[INFO]  snarkJS: Contribution Response Hash imported: </span><br><span class="line">		e15fa0f4 126ae14d 0e724ffa ee1adaba</span><br><span class="line">		1f9f44fb a963db61 e0eda605 4a172efa</span><br><span class="line">		124d177b 3a565656 1f1a3a23 6dea3366</span><br><span class="line">		3b21ec32 8a26d7b2 ac98ff89 2b1962ae</span><br><span class="line">[INFO]  snarkJS: Next Challenge Hash: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br></pre></td></tr></table></figure>
-
-<p>​    系统将提示您输入一些随机文本，这些文本将用作熵的来源。输入文本后，命令将输出一个名为pot12_001.ptau的脚本。设置的第一部分是通用的，对任何电路都有用，因此您可以将其保存以在以后的项目中重复使用。</p>
-<p>​    要获得zk-SNARK证明的证明和验证密钥，必须生成设置。此步骤需要生成一些需要消除的随机值。 消除过程至关重要：如果暴露了这些价值，则整个方案的安全性将受到损害。想要构建设置，我们使用多方计算（MPC）仪式，该仪式允许多个独立方共同构建参数。使用MPC，一个参与者删除其贡献的秘密副本就足够了，以确保整个方案的安全。<br>​    可信设置的构建分为两个阶段：对任何电路均有效的常规MPC仪式（称为<code>powers of tau ceremony</code>），以及为每个特定电路构造的第二阶段（阶段2）。任何人都可以通过其随机性参与MPC仪式，通常，在获取最终参数之前，将应用一个<strong>随机信标</strong>。</p>
-<p>2.2 下一步，称为设置的阶段2，运行命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v</span><br></pre></td></tr></table></figure>
-
-<p>​    以上命令运行完成后，pot12_final.ptau文件被生成。该计算在笔记本电脑上大概花费了3分钟时间。</p>
-<p>​    第二阶段的产生与我们使用tau的能力相似。将生成一个<code>.zkey</code>文件，其中将包含证明和验证密钥以及所有第二阶段贡献。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// Start a new zkey and make a contribution</span><br><span class="line">➜  circom snarkjs zkey new circuit.r1cs pot12_final.ptau circuit_0000.zkey</span><br><span class="line">[INFO]  snarkJS: Reading r1cs</span><br><span class="line">[INFO]  snarkJS: Reading tauG1</span><br><span class="line">[INFO]  snarkJS: Reading tauG2</span><br><span class="line">[INFO]  snarkJS: Reading alphatauG1</span><br><span class="line">[INFO]  snarkJS: Reading betatauG1</span><br><span class="line">[INFO]  snarkJS: Circuit hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line"></span><br><span class="line">➜  circom snarkjs zkey contribute circuit_0000.zkey circuit_final.zkey --name=&quot;1st Contributor Name&quot; -v</span><br><span class="line">Enter a random text. (Entropy): zhuangweiming</span><br><span class="line">[DEBUG] snarkJS: Applying key: L Section: 0/2</span><br><span class="line">[DEBUG] snarkJS: Applying key: H Section: 0/4</span><br><span class="line">[INFO]  snarkJS: Circuit Hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: Contribution Hash: </span><br><span class="line">		7987d679 5c914cb3 4138e57a ceee7ae4</span><br><span class="line">		8974b323 585bb48f 056fdd8f ea858cd3</span><br><span class="line">		a625d63e d8394b9c 974912e4 801aff06</span><br><span class="line">		0064f25a 677e727a a289252d 397b8d04</span><br></pre></td></tr></table></figure>
-
-<p>​    和上述步骤一样，系统将提示您输入一些随机文本以提供熵的来源。输出将是一个名为circuit_final.zkey的文件，我们将使用该文件导出验证密钥(verification key)。</p>
-<p>​    现在，来自circuit_final.zkey的验证密钥导出到文件Verification_key.json中。verification key:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="attr">&quot;protocol&quot;</span>: <span class="string">&quot;groth16&quot;</span>,</span><br><span class="line"> <span class="attr">&quot;curve&quot;</span>: <span class="string">&quot;bn128&quot;</span>,</span><br><span class="line"> <span class="attr">&quot;nPublic&quot;</span>: <span class="number">1</span>,</span><br><span class="line"> <span class="attr">&quot;vk_alpha_1&quot;</span>: [</span><br><span class="line">  <span class="string">&quot;15175462370442750548879662426586324604498073737772476635702014058846911119264&quot;</span>,</span><br><span class="line">  <span class="string">&quot;11126336670194938919608091368599342163660484801811140235738809534621680589277&quot;</span>,</span><br><span class="line">  <span class="string">&quot;1&quot;</span></span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_beta_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;5251596196706483766793357074374737595900200707659808196530067991530054260554&quot;</span>,</span><br><span class="line">   <span class="string">&quot;2264756861473257353315497004278362201201416308719887395373581359048933031269&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;10552939216865106848464515813683167112323139053174380454808956637789377680967&quot;</span>,</span><br><span class="line">   <span class="string">&quot;2701413932452289802745906093844601151278714195849736706988417564960748034273&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_gamma_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;10857046999023057135944570762232829481370756359578518086990519993285655852781&quot;</span>,</span><br><span class="line">   <span class="string">&quot;11559732032986387107991004021392285783925812861821192530917403151452391805634&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;8495653923123431417604973247489272438418190587263600148770280649306958101930&quot;</span>,</span><br><span class="line">   <span class="string">&quot;4082367875863433681332203403145435568316851327593401208105741076214120093531&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_delta_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;8590425680399084984710617722188581478119753421410764960451677916514215428082&quot;</span>,</span><br><span class="line">   <span class="string">&quot;15713152249579034550437632242139020796726126371657275384984401462748083625785&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;4862154669589263828958978916321240414342527577427918353789686327852433696883&quot;</span>,</span><br><span class="line">   <span class="string">&quot;9569117504828540945921139710836305890297695048604628362102771433345477012098&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_alphabeta_12&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   [</span><br><span class="line">    <span class="string">&quot;1121360319902761693820363426996646168569211552394580075970634177898785008311&quot;</span>,</span><br><span class="line">    <span class="string">&quot;14249756278025620543130105348741511241747839379662316431830590326729096142975&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;16423439174084021024919681708878615489972548829583206833909869670703901853110&quot;</span>,</span><br><span class="line">    <span class="string">&quot;9329143387573491748526724433415355164900218750592620992570237269470665264202&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;19623272010929083665872244835381945771016147820964222485760645671773298080071&quot;</span>,</span><br><span class="line">    <span class="string">&quot;9896773903597386179712166971836923631098313509393860803813715414524549373292&quot;</span></span><br><span class="line">   ]</span><br><span class="line">  ],[</span><br><span class="line">   [</span><br><span class="line">    <span class="string">&quot;18313799470766842592075662760908626166323669476646669856687182611043590126171&quot;</span>,</span><br><span class="line">    <span class="string">&quot;7532895603020793142335129648471958187885524608608576812436682807569433790546&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;20059629119556696413695556916087392540474931269939016250934117162067722623426&quot;</span>,</span><br><span class="line">    <span class="string">&quot;11285185652573117971807135387812020477130047554451136821582438888864777467010&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;18429091017205122590573696082242994893262627891230351210235517202888391625680&quot;</span>,</span><br><span class="line">    <span class="string">&quot;7734180768772801433386131669021273948517355047659921136453462913759461451288&quot;</span></span><br><span class="line">   ]</span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;IC&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;17305572679177982597803616153716539127293296363987765110136569516232291230411&quot;</span>,</span><br><span class="line">   <span class="string">&quot;7425872175786571904106950706682618227429476545503095908552111445555350791878&quot;</span>,</span><br><span class="line">   <span class="string">&quot;1&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;16125521217907931491019162042616560858833563034453402251972608389495277275869&quot;</span>,</span><br><span class="line">   <span class="string">&quot;20962607216912168718282504555696865046978428189883507401556888923455626427056&quot;</span>,</span><br><span class="line">   <span class="string">&quot;1&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    可以验证.ptau或.zkey文件的计算是否正确：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs powersoftau verify pot12_final.ptau</span><br><span class="line">[INFO]  snarkJS: Powers Of tau file OK!</span><br><span class="line">[INFO]  snarkJS: Next challenge hash: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br><span class="line">[INFO]  snarkJS: -----------------------------------------------------</span><br><span class="line">[INFO]  snarkJS: Contribution #1: First contribution</span><br><span class="line">[INFO]  snarkJS: Next Challenge: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br><span class="line">[INFO]  snarkJS: Response Hash:</span><br><span class="line">		e15fa0f4 126ae14d 0e724ffa ee1adaba</span><br><span class="line">		1f9f44fb a963db61 e0eda605 4a172efa</span><br><span class="line">		124d177b 3a565656 1f1a3a23 6dea3366</span><br><span class="line">		3b21ec32 8a26d7b2 ac98ff89 2b1962ae</span><br><span class="line">[INFO]  snarkJS: Response Hash:</span><br><span class="line">		9e63a5f6 2b96538d aaed2372 481920d1</span><br><span class="line">		a40b9195 9ea38ef9 f5f6a303 3b886516</span><br><span class="line">		0710d067 c09d0961 5f928ea5 17bcdf49</span><br><span class="line">		ad75abd2 c8340b40 0e3b18e9 68b4ffef</span><br><span class="line">[INFO]  snarkJS: -----------------------------------------------------</span><br><span class="line">[INFO]  snarkJS: Powers of Tau Ok!</span><br><span class="line">➜  circom snarkjs zkey verify circuit.r1cs pot12_final.ptau circuit_final.zkey</span><br><span class="line">[INFO]  snarkJS: Reading r1cs</span><br><span class="line">[INFO]  snarkJS: Reading tauG1</span><br><span class="line">[INFO]  snarkJS: Reading tauG2</span><br><span class="line">[INFO]  snarkJS: Reading alphatauG1</span><br><span class="line">[INFO]  snarkJS: Reading betatauG1</span><br><span class="line">[INFO]  snarkJS: Circuit hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: Circuit Hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: -------------------------</span><br><span class="line">[INFO]  snarkJS: contribution #1 1st Contributor Name:</span><br><span class="line">		7987d679 5c914cb3 4138e57a ceee7ae4</span><br><span class="line">		8974b323 585bb48f 056fdd8f ea858cd3</span><br><span class="line">		a625d63e d8394b9c 974912e4 801aff06</span><br><span class="line">		0064f25a 677e727a a289252d 397b8d04</span><br><span class="line">[INFO]  snarkJS: -------------------------</span><br><span class="line">[INFO]  snarkJS: ZKey Ok!</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-计算witness"><a href="#3-计算witness" class="headerlink" title="3.计算witness"></a>3.计算witness</h3><p>​    在创建任何证明之前，我们需要计算与电路的所有约束匹配的电路的所有信号。为此，我们将使用由circom生成的Wasm模块来帮助完成此工作。我们只需要提供一个包含输入的文件，模块将执行电路并计算所有中间信号和输出。输入，中间信号和输出的集合称为见证人(witness)。</p>
-<p>​    本次的范例中，我们想证明我们能够分解数字33。因此，指定a=3, b=11。创建一个文件，命名为 <code>input.json</code> </p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;a&quot;</span>: <span class="number">3</span>, <span class="attr">&quot;b&quot;</span>: <span class="number">11</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    下面开始就算 witness，生成 <code>witness</code> 文件， 命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs wtns calculate circuit.wasm input.json witness.wtns</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-创建证明"><a href="#4-创建证明" class="headerlink" title="4.创建证明"></a>4.创建证明</h3><p>​    这个命令默认会使用 <code> prooving_key.json</code> 和 <code>witness.json</code> 文件去生成 <code>proof.json</code> 和 <code>public.json</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json</span><br></pre></td></tr></table></figure>
-
-<p><code>proof.json</code> 文件包含了实际的证明。而 <code>public.json</code> 文件将仅包含公共的输入（当前的例子没有）和输出（当前的例子是 33）。</p>
-<h3 id="5-验证证明"><a href="#5-验证证明" class="headerlink" title="5.验证证明"></a>5.验证证明</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs groth16 verify verification_key.json public.json proof.json</span><br><span class="line">[INFO]  snarkJS: OK!</span><br></pre></td></tr></table></figure>
-
-<p>​    此命令使用我们之前导出的verify_key.json文件，proof.json和public.json来检查证明是否有效。如果证明有效，则命令输出OK。一个有效的证明不仅证明我们知道满足电路要求的一组信号，而且证明我们使用的公共输入和输出与public.json文件中描述的匹配。</p>
-<p>​    <strong>实际上，在此阶段，将把<code>proof.json</code>和<code>public.json</code>文件都交给验证者。</strong>但是，出于教程的目的，我们还将扮演验证者的角色。借助证明以及公共输入和输出，我们现在可以向验证者证明我们知道一个或多个满足电路约束的私有信号，而无需透露有关那些私有信号的任何信息。从验证者的角度来看，她可以验证我们是否知道见证中包含的一组私有信号，而无需访问它。这是zk-proof背后魔术的核心！</p>
-<h3 id="6-智能合约验证证明"><a href="#6-智能合约验证证明" class="headerlink" title="6.智能合约验证证明"></a>6.智能合约验证证明</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs zkey export solidityverifier circuit_final.zkey verifier.sol</span><br></pre></td></tr></table></figure>
-
-<p>​    上述命令使用验证密钥<code>circuit_final.zkey</code>并在名为<code>verifier.sol</code>的文件中输出合约代码。可以看到该代码包含两个协定：Pairing和Verifier。只需要部署Verifier合约。</p>
-<p>​    生成智能合约调用的参数，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs zkesc public.json proof.json</span><br><span class="line">[&quot;0x29b83d63472e4f47b092fd4ced43a566697f0575186964c7cc3deec2c5c1b0bd&quot;, &quot;0x2eb116882d2bacdbeece8a2adf2ab6d0f4420b60e82b4b66ddb18cc26ab2bae2&quot;],[[&quot;0x170d208ad3a8bf4358c207706bce9e87cbad11037f642d1ab06f65a5ebf10eb4&quot;, &quot;0x0dc07edd498cc16c5174c2a5a2aeed86c2f5689ed25486e8981768d7c7ceae13&quot;],[&quot;0x1c52e6144e980ae72e5c5679c979c70e0da4a519fc087dda3b96bbea09179b20&quot;, &quot;0x2849fdea744fa924ae19eb15917dac4543c0fa3b888293dfcd365c6251f25223&quot;]],[&quot;0x01918c12515eb00b823f0e2a63ef53e15792b4b4fd331b595ffc670e929d6b99&quot;, &quot;0x2246e9bb88119c6f8f1c04735beeee038ddc6e66572cb44f1c926575db80be9a&quot;],[&quot;0x0000000000000000000000000000000000000000000000000000000000000021&quot;]</span><br></pre></td></tr></table></figure>
-
-<p>​    验证者具有一个称为<code>verifyProof</code>的函数，当且仅当证明和输入有效时，该函数才返回<code>TRUE</code>。</p>
-<p><img src="/2021/05/06/circom%E8%AF%95%E7%94%A8/1.png"></p>
-<p>​    如果仅更改参数中的任何位，则可以检查结果返回 false 。</p>
-<h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p>​    我们已经表明可以生成证明我们知道两个因子a和b使得<code>a*b=33</code>的证明。但这不能证明我们知道如何分解数字33，因为我们可以选择a = 1和b = 33，通常对于任何整数n，选择输入a=1，b=n。在此，我们需要修改电路，以便不可能将数字1分配给任何输入。为此，我们将使用0是唯一没有反数的事实。</p>
-<p>​    这里的技巧是使用0不可求倒数的属性，约束不接受 1 作为任何一个输入，即<code>(a-1)</code> 不可求倒数的方式来约束电路。</p>
-<p>​    如果 a 是 1 则 <code>(a-1)*inv = 1</code> 是不可能成立的，通过 <code>1/(a-1)</code> 来计算 inv 。</p>
-<p>修正电路：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">template Multiplier() &#123;</span><br><span class="line">   signal private input a;</span><br><span class="line">   signal private input b;</span><br><span class="line">   signal output c;</span><br><span class="line">   signal inva;</span><br><span class="line">   signal invb;</span><br><span class="line"></span><br><span class="line">   inva &lt;-- <span class="number">1</span>/(a-<span class="number">1</span>);</span><br><span class="line">   (a-<span class="number">1</span>)*inva === <span class="number">1</span>;</span><br><span class="line">   invb &lt;-- <span class="number">1</span>/(b-<span class="number">1</span>);</span><br><span class="line">   (b-<span class="number">1</span>)*invb === <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">   c &lt;== a*b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">component main = Multiplier();</span><br></pre></td></tr></table></figure>
-
-<p>​    您可能已经注意到，我们引入了两个新的运算符 : <code>&lt;--</code> 和 <code>===</code> 。<code>&lt;--</code> 和 <code>--&gt;</code> 操作符运算符只为信号分配一个值，而不创建任何约束。<code>===</code> 操作符添加约束而不分配值。如前所述，<code>&lt;==</code> 为信号分配一个值并添加一个约束。这意味着它只是 <code>&lt;--</code>和 <code>===</code> 的组合。但是，由于并非总是希望在同一步骤中同时完成这两个步骤，因此circom 的灵活性使我们可以将这一步分为两步。</p>
-<p>​    事实证明，电路仍然存在一个细微的问题：由于运算是在有限域（Z_r）上进行的，因此我们需要确保乘法不会溢出。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>​    <a target="_blank" rel="noopener" href="https://github.com/iden3/circomlib">circomlib</a> 写好了一些基本的电路，如：binaritzations、comparators, eddsa, hashes, merkle trees 等等。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/" class="post-title-link" itemprop="url">椭圆曲线密码</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-04-29 14:50:04 / Modified: 19:45:51" itemprop="dateCreated datePublished" datetime="2021-04-29T14:50:04+08:00">2021-04-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>​    椭圆曲线和很多学习完基础代数之后见过的方程差不多。y在等号的左边，而x在等号的右边。椭圆曲线有如下的形式：<br>$$<br>y^2 = x^3+ax+b<br>$$<br>​    你肯定接触过其他类似的方程。比如，在基础代数课上就学过线性函数：<br>$$<br>y=mx+b<br>$$<br>​    你可能还记得m叫作斜率，b叫作截距。你也能画出线性函数图像。类似地，你可能也熟悉二次函数和它的图像：<br>$$<br>y=ax^2+bx+c<br>$$<br>​    在学习代数时，你还接触过更高阶的函数比如三次函数及其图像。<br>$$<br>y=ax^3+bx^2+cx+d<br>$$<br>​    椭圆曲线和他们没有太大的区别。椭圆曲线和三次函数不同的地方在于等号左边是y的平方，这使得函数图像沿x轴对称：<br>$$<br>y^2 = x^3 + ax + b<br>$$<br><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/1.png"></p>
-<p>​    因为椭圆曲线的等号左边是y的平方，所以它也不像三次函数那样陡峭。此外，椭圆曲线可能是不想接的，如下图：</p>
-<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/2.png"></p>
-<p>​    比如，比特币使用的椭圆曲线被称为secp256k1，使用下面的方程：<br>$$<br>y^2=x^3+7<br>$$</p>
-<h3 id="椭圆曲线的加法"><a href="#椭圆曲线的加法" class="headerlink" title="椭圆曲线的加法"></a>椭圆曲线的加法</h3><p>过曲线上的两点A、B画一条直线，找到直线与椭圆曲线的交点，交点关于x轴对称位置的点，定义为A+B，即为加法。如下图所示：A + B = C</p>
-<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/3.png"></p>
-<p>​    椭圆曲线因其点加法运算(point addition)而被广泛使用。</p>
-<h3 id="椭圆曲线的二倍运算"><a href="#椭圆曲线的二倍运算" class="headerlink" title="椭圆曲线的二倍运算"></a>椭圆曲线的二倍运算</h3><p>​    上述方法无法解释A + A，即两点重合的情况，因此在这种情况下，将椭圆曲线在A点的切线，与椭圆曲线的交点，交点关于x轴对称位置的点，定义为A + A，即2A，即为二倍运算。</p>
-<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/4.png"></p>
-<h3 id="同余运算"><a href="#同余运算" class="headerlink" title="同余运算"></a>同余运算</h3><p>​    同余就是有相同的余数，两个整数 a、 b，若它们除以正整数 m所得的余数相等，则称 a，b对于模m同余。<br>$$<br>a≡b (mod m)<br>$$</p>
-<h3 id="有限域"><a href="#有限域" class="headerlink" title="有限域"></a>有限域</h3><p>​    椭圆曲线是连续的，并不适合用于加密，所以必须把椭圆曲线变成离散的点，要把椭圆曲线定义在有限域上。而椭圆曲线密码所使用的椭圆曲线是定义在有限域内，有限域最常见的例子是有限域GF(p)，指给定某质数p，由0,1,2…,p-1共p个元素组成的整数集合中加法、二倍运算。例如GF(233)就是：<br>$$<br>y^2=(x^3+7) (mod 223)<br>$$<br>详见上一篇帖子。</p>
-<h3 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a>乘法逆元</h3><p>在模7乘法中：</p>
-<ul>
-<li>1的逆元为1 (1*1)%7=1</li>
-<li>2的逆元为4 (2*4)%7=1</li>
-<li>3的逆元为5 (3*5)%7=1</li>
-<li>4的逆元为2 (4*2)%7=1</li>
-<li>5的逆元为3 (5*3)%7=1</li>
-<li>6的逆元为6 (6*6)%7=1</li>
-</ul>
-<h3 id="数学解释"><a href="#数学解释" class="headerlink" title="数学解释"></a>数学解释</h3><p>​    并不是所有的椭圆曲线都适合加密，上述是一类可以用来加密的椭圆曲线，也是最为简单的一类。</p>
-<p>针对曲线Ep(a,b)表示为：<br>$$<br>y^2=x^3+ax+b(mod p), x,y \in [0,p],p为质数<br>$$<br>​    该曲线关于x轴对称。选择两个满足下列条件的小于p(p为素数)的非负整数a、b，要求满足以下条件：<br>$$<br>4a^3+27b^2≠0(mod p),a和b是小于p的非负整数<br>$$<br>1、有限域的负元</p>
-<p>​    P(x,y)的负元是(x,-ymodp)=(x,p-y)</p>
-<p>2、有限域的加法，P+Q</p>
-<p>​    P(x1,y1)，Q(x2,y2)和R(x3,y3)三点，其中R是PQ直线与曲线的交点的关于x轴的对称点，即 R=P+Q，有如下关系：<br>$$<br>x_3≡k^2-x_1-x_2(modp),y_3≡k(x_1-x_3)-y_1(modp)<br>$$<br>3、斜率计算</p>
-<p>​    若P=Q，即计算P点切线，则<br>$$<br>k=(3x_2+a) \div (2y_1)<br>$$<br>​    若P≠Q，则<br>$$<br>k=(y_2-y_1) \div (x_2-x_1)<br>$$</p>
-<h3 id="椭圆曲线加解密算法原理"><a href="#椭圆曲线加解密算法原理" class="headerlink" title="椭圆曲线加解密算法原理"></a>椭圆曲线加解密算法原理</h3><p>​    设私钥、公钥分别为d、Q，即Q = dG，其中G为基点，椭圆曲线上的已知G和dG，求d是非常困难的，也就是说已知公钥和基点，想要算出私钥是非常困难的。<em>其中基点是椭圆曲线上选择的一个点，这个点能够保证满足dG=∞的最小正整数n足够大，也就是阶足够大。1&lt;私钥&lt;n，大于n的私钥必能在[1,n)中找到对应的私钥b使得aG=bG，换句话说也就是有足够多的私钥。</em><br><strong>公钥加密：</strong>选择随机数r，将消息M生成密文C，该密文是一个点对，C = {rG, M+rQ}，其中Q为公钥。<br><strong>私钥解密</strong>：M + rQ - d(rG) = M + r(dG) - d(rG) = M，其中d、Q分别为私钥、公钥。</p>
-<h3 id="椭圆曲线签名算法原理"><a href="#椭圆曲线签名算法原理" class="headerlink" title="椭圆曲线签名算法原理"></a>椭圆曲线签名算法原理</h3><p>​    椭圆曲线签名算法(ECDSA)。设私钥、公钥分别为d、Q，即Q = dG，其中G为基点。</p>
-<p>私钥签名：</p>
-<ul>
-<li>选择随机数r，计算点rG(x, y)。</li>
-<li>根据随机数r、消息M的哈希h、私钥d，计算s = (h + dx)/r。　　</li>
-<li>将消息M、和签名{rG, s}发给接收方。</li>
-</ul>
-<p>公钥验证签名：　　</p>
-<ul>
-<li>接收方收到消息M、以及签名{rG=(x,y), s}。　　</li>
-<li>根据消息求哈希h。　　</li>
-<li>使用发送方公钥Q计算：hG/s + xQ/s，并与rG比较，如相等即验签成功。<br>原理：hG/s + xQ/s = hG/s + x(dG)/s = (h+xd)G/s = r(h+xd)G / (h+dx) = rG</li>
-</ul>
-<h3 id="签名过程"><a href="#签名过程" class="headerlink" title="签名过程"></a>签名过程</h3><p>​    假设要签名的消息是一个字符串：“Hello World!”。DSA签名的第一个步骤是对待签名的消息生成一个消息摘要，不同的签名算法使用不同的消息摘要算法，而ECDSA256使用SHA256生成256比特的摘要。</p>
-<p>​    摘要生成结束后，应用签名算法对摘要进行签名：</p>
-<ul>
-<li>产生一个随机数k</li>
-<li>利用随机数k，计算出两个大数r和s。将r和s拼在一起就构成了对消息摘要的签名。<br>这里需要注意的是，因为随机数k的存在，对于同一条消息，使用同一个算法，产生的签名是不一样的。从函数的角度来理解，签名函数对同样的输入会产生不同的输出。因为函数内部会将随机值混入签名的过程。</li>
-</ul>
-<h3 id="验证过程"><a href="#验证过程" class="headerlink" title="验证过程"></a>验证过程</h3><p>​    关于验证过程，这里不讨论它的算法细节。从宏观上看，消息的接收方从签名中分离出r和s，然后利用公开的密钥信息和s计算出r。如果计算出的r和接收到的r值相同，则表示验证成功，否则，表示验证失败。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -766,7 +950,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
