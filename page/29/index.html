@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">228</span>
+          <span class="site-state-item-count">229</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,92 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/12/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">以太坊磁盘空间</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-04 18:18:04" itemprop="dateCreated datePublished" datetime="2019-12-04T18:18:04+08:00">2019-12-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-09-14 14:10:20" itemprop="dateModified" datetime="2023-09-14T14:10:20+08:00">2023-09-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>refer link==&gt; <a target="_blank" rel="noopener" href="https://ethereum.stackexchange.com/questions/143/what-are-the-ethereum-disk-space-needs">https://ethereum.stackexchange.com/questions/143/what-are-the-ethereum-disk-space-needs</a></p>
+<p>Update on Dec 9th, 2018 / Block ~ 6_850_000</p>
+<h3 id="Geth-Go"><a href="#Geth-Go" class="headerlink" title="Geth (Go)"></a>Geth (Go)</h3><p><em>Last Update: May 14th, 2018 / Block ~ 5_600_000</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Client / Mode         | Block <span class="built_in">Number</span>   | Disk Space</span><br><span class="line">======================|================|===========</span><br><span class="line">geth light            | <span class="number">5_600_000</span>      | <span class="number">363</span>M</span><br><span class="line">geth fast full        | <span class="number">5_600_000</span>      | <span class="number">142</span>G</span><br><span class="line">geth full full        | <span class="number">4_980_000</span> [<span class="number">1</span>]  | <span class="number">239</span>G + [<span class="number">1</span>]</span><br><span class="line">geth full archive     | <span class="number">4_980_000</span> [<span class="number">2</span>]  | <span class="number">671</span>G</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Geth 1.8.3</li>
+<li>Ubuntu 16.4 LTS, VPS instance with SSD backed storage</li>
+</ul>
+<h3 id="Parity-Rust"><a href="#Parity-Rust" class="headerlink" title="Parity (Rust)"></a>Parity (Rust)</h3><p><em>Last Update: May 14th, 2018 / Block ~ 5_600_000</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Client / Mode         | Block <span class="built_in">Number</span>   | Disk Space</span><br><span class="line">======================|================|===========</span><br><span class="line">parity light          | <span class="number">5_600_000</span>      |  <span class="number">89</span>M</span><br><span class="line">parity warp fast      | <span class="number">5_600_000</span>      |  <span class="number">82</span>G</span><br><span class="line">parity full fast      | <span class="number">5_600_000</span>      |  <span class="number">78</span>G</span><br><span class="line">parity full archive   | <span class="number">5_600_000</span>      | <span class="number">1.1</span>T</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Parity 1.10.0</li>
+<li>Ubuntu 16.4 LTS, VPS instance with SSD backed storage</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -623,96 +709,6 @@
 <p><strong>在增加效益方面</strong>，可以简化分销协商流程。以协商复杂的再保险行业为例，区块链可以为协商撮合过程极大增效。对定价而言，一次承保、长期跟踪、避免反复，保单跟随被保险人将因区块链技术成为现实。在保单管理方面，及时跟踪保单限制条件，保险交易、质押、互换、再保险等均可通过跟踪保单条款规定，提高效率避免事后核查低效。</p>
 <h3 id="区块链的未来"><a href="#区块链的未来" class="headerlink" title="区块链的未来"></a>区块链的未来</h3><p>纵观区块链技术的发展与演变进程可以发现，当今世界正处于区块链的<strong>应用爆发期</strong>。区块链协议和通用标准正在被广泛制定，监管机构在鼓励区块链产业良性发展的同时也在不断确保其合规性。区块链的应用开始在金融以外的行业大量涌现，区块链生态开始孕育独角兽企业。未来，区块链将在众多行业得到应用，新的业务模式会在<strong>高级分析、物联网和基于区块链的智能合约</strong>的交叉领域中产生。 </p>
 <p><img src="/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/3.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/10/29/%E8%81%94%E7%9B%9F%E9%93%BE%E7%A0%94%E5%8F%91%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83-2019-10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/29/%E8%81%94%E7%9B%9F%E9%93%BE%E7%A0%94%E5%8F%91%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83-2019-10/" class="post-title-link" itemprop="url">联盟链研发以来的思考-2019-10</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-10-29 10:21:04" itemprop="dateCreated datePublished" datetime="2019-10-29T10:21:04+08:00">2019-10-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="区块链的核心价值："><a href="#区块链的核心价值：" class="headerlink" title="区块链的核心价值："></a>区块链的核心价值：</h3><ol>
-<li>提升多中心协作效率</li>
-<li>减轻中介持有信息不透明造成的摩擦</li>
-</ol>
-<p>中国的研究热点集中在联盟链上，同时监管技术也非常重要。目前联盟链的协议比较成熟，大致分为类EVM链和Hyperledger fabric。笔者从目前fabric的路线图和社区人员来看，认为类EVM更加有生命力。</p>
-<h4 id="联盟链的4个关键技术"><a href="#联盟链的4个关键技术" class="headerlink" title="联盟链的4个关键技术"></a>联盟链的4个关键技术</h4><ol>
-<li>软硬件协同</li>
-<li>安全交易隐私。其中SGX严重依赖Intel芯片，Security Zone以来Arm芯片，而服务器芯片大量采用Intel技术，所以基于cpu的可信计算环境实际上是Intel的宣传而已，在国内搞安全要求领域不建议使用。软件密码学实现交易可验证但是不可见，如同态加密，MPC。其中MPC由于通信次数多，独立于区块链的共识机制之外，可以独立运作，所以实际上MPC不需要和区块链结合，目前多方（两方以上）的MPC仍然属于研究阶段。同态加密+零知识证明目前逐渐成熟，如以太坊EIP1724，Zokrates，一账通的3D零知识证明都属本方向，笔者也认为此方向比较适用于区块链</li>
-<li>高可用性。如动态成员准入，节点失效后的快速恢复机制，网络持续工作中实现节点升级，节点/共识/存储/通信簿等全方位监控与报警等</li>
-<li>高可扩展。1）合约语言；2）存储支持多组织可信存储；3）语言机；4）跨链</li>
-</ol>
-<h3 id="两点思考："><a href="#两点思考：" class="headerlink" title="两点思考："></a>两点思考：</h3><ol>
-<li>BaaS(Blockchain as a Service) </li>
-</ol>
-<p>例如某文章中，xxx BaaS平台称，该平台目前已支撑了超过500亿元资产的真实性问题 。从这个阐述看，区块链的用户是信任xxx BaaS平台的，并且整条链都是部署与xxx BaaS平台的，那么问题是，既然一方或者多方都信任xxx平台，为什么还需要区块链呢？数据和流程都放置于xxx 的中心化的系统和数据库中，是不是同样的计算架构呢？</p>
-<ol start="2">
-<li>链上资产和实物资产的对应关系</li>
-</ol>
-<p>同样是也是对溯源的思考。经常会看到食品溯源的区块链案例，什么数据不可篡改，什么数据真实可靠。问题是，怎么能够证明手里面的视频和链上的数据是对应的呢？目前还没有看到靠谱的案例。</p>
-<p>笔者也在不断的思考以上两个问题。</p>
 
       
     </div>

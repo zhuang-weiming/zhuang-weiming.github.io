@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">228</span>
+          <span class="site-state-item-count">229</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,123 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/03/21/zkSNARKs%E4%B8%8Ezcash/" class="post-title-link" itemprop="url">zkSNARKs与zcash</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-03-21 14:09:22" itemprop="dateCreated datePublished" datetime="2018-03-21T14:09:22+08:00">2018-03-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="什么是zk-SNARKs？"><a href="#什么是zk-SNARKs？" class="headerlink" title="什么是zk-SNARKs？"></a>什么是zk-SNARKs？</h3><p>Zcash是zk-SNARKs的第一个广泛应用，它是一种零知识密码学的新形式。Zcash的隐私保证源于可以屏蔽交易，但仍可通过zk-SNARK证明在网络共识规则下验证为有效。</p>
+<p>缩写zk-SNARK代表“Zero-Knowledge Succinct Non-Interactive Argument of Knowledge 零知识简明非交互式知识”，并且指向的证明构造可以证明拥有某些信息，例如，一个密钥，不泄露该信息的情况下，也不在证明者和验证者之间进行任何交互。</p>
+<p>“零知识”证明允许一方（证明方 prover）向另一方（验证方 verifier）证明声明的内容是真实的，不泄露超出声明本身有效性的任何信息。例如，考虑使用随机数的散列，证明者可以说服验证者确实存在具有该散列值的数字，而不透露数字的内容是什么。</p>
+<p>在零知识“知识证明”中，证明者可以说服验证者不仅知道该数字存在，而且他们实际上知道这样一个数字，且不透露关于数字的任何信息。</p>
+<p>可以在几毫秒内验证“简洁”的零知识证明，即使对于非常大的程序的声明内容，验证长度也只有几百字节。在最初零知识协议中，证明者和验证者必须多次来回通信，但在“非交互式”结构中，证明者发送“证明”给验证者，“证明”由单个消息组成。目前，唯一已知的生成非交互式的，足够短的，以发布到区块链的零知识证明方法具有“初始设置阶段 initial setup phase”，此阶段生成在证明者和验证者之间共享的公共参考字符串。我们将这个公共参考字符串称为系统的公共参数。</p>
+<p>如果有人能够获得用于生成这些参数的随机性秘密，他们将能够创建对验证者看起来有效的错误证明。对于Zcash来说，这意味着恶意方可能会制造假币。为了防止此情况，Zcash设计了由多方程序产生公众参数。要详细了解参数生成程序并查看为防止随机性问题而采取的预防措施（例如，计算机正在生成公共参数），请访问<a target="_blank" rel="noopener" href="https://z.cash/technology/paramgen.html">Paramgen页面</a>。要了解有关参数生成协议背后的数学的更多信息，请阅读<a target="_blank" rel="noopener" href="https://z.cash/blog/generating-zcash-parameters.html">博客文章</a>或<a target="_blank" rel="noopener" href="https://github.com/zcash/mpc/blob/master/whitepaper.pdf">有关该主题的白皮书</a>。</p>
+<h3 id="ZK-SNARKS如何在ZCASH中构建"><a href="#ZK-SNARKS如何在ZCASH中构建" class="headerlink" title="ZK-SNARKS如何在ZCASH中构建"></a>ZK-SNARKS如何在ZCASH中构建</h3><p>为了在Zcash中拥有零知识隐私，根据网络共识规则确定交易有效的函数必须返回交易是否有效，而不泄露其执行计算的任何信息。这是通过对zk-SNARKs中的一些网络共识规则进行编码完成的。在很高的层面上，zk-SNARKs首先将你想要证明的东西转化为关于知道某些代数方程解的等价形式。 </p>
+<p>在下面的章节中，将简要介绍如何将用于确定有效交易的规则转换为方程，然后可以在候选解决方案上对方程进行评估，而不会向验证方程的当事方透露任何敏感信息。</p>
+<p>计算 → 算术电路 → R1CS → QAP → zk-SNARK</p>
+<p>将交易有效性函数转化为数学表示，第一步是将逻辑步骤分解为最小可能的操作，从而创建一个“算术电路”。 类似于一个布尔逻辑电路，其中一个程序被编译成离散的单个步骤，如AND，OR，NOT，当一个程序转换为一个算术电路时，它被分解为单个步骤，包括加法，减法， 乘法和除法（在特殊情况下，我们将避免使用除法）。</p>
+<p>下面是计算表达式（a + b）*（b * c）的算术电路的例子：</p>
+<p><img src="/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png"></p>
+<p>看着这样一个电路，我们可以将输入值a，b，c看作在输出线上从左到右的“行进”。我们的下一步是建立的一级约束系统 (Rank 1 Constraint System)，即R1CS，以检查这些值是否“行进正确”。在上图中，R1CS将确认，b和c进入的乘法门的值是 b*c。</p>
+<p>在这个R1CS表示中，验证者必须检查许多约束条件 - 几乎每条线路都有一个约束条件。 （由于技术原因，事实证明，我们只能对乘法门引出的线路有所限制。）在2012年<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2012/215.pdf">关于该主题的论文</a>中，Gennaro，Gentry，Parno和Raykova提出了一种很好的方法来“将所有这些约束集中成一个” 。该方法使用称为二次算术程序（QAP）的电路表示。需要检查的单个约束在多项式之间而不是数字之间。多项式可能相当大，因为当多项式之间的身份不成立时，它将无法保持多数点。因此，您只需检查两个多项式是否在一个随机选择的点上匹配，以便以高概率正确验证证明。</p>
+<p>如果证明者事先知道验证者选择检查哪一点，则他们可能能够制造无效的多项式，但仍然满足当时的身份。使用zk-SNARKs，复杂的数学技术（如同态加密和椭圆曲线配对）可用于“盲人式”评估多项式 - 即不知道哪个点正在评估。上面描述的公共参数用于确定将检查哪个点，且以加密形式，以便证明者和验证者都不知道公共参数是什么。</p>
+<p>到目前为止的描述主要涉及如何获得“SNARKs”中的S和N - 如何获得短暂的，非交互式的单一消息证明 - 但尚未解决允许 “zk”（零知识）部分证明者维护其秘密投入的机密性。事实证明，在这个阶段，通过使证明者使用仍然满足所需身份的原始多项式的“随机偏移”，可以容易地添加“zk”部分。</p>
+<p>有关Zcash中关于zk-SNARKs背后关键概念的深入解释，请参阅后面的博客文章。</p>
+<p>Zcash使用 <a target="_blank" rel="noopener" href="https://github.com/scipr-lab/libsnark">libsnark</a> 分支，这是一个用于zk-SNARKs的C++库。 您可以检查代码并了解更多关于在 <a target="_blank" rel="noopener" href="https://github.com/zcash/libsnark">github</a> 上的实现。要深入了解 Zcash zk-SNARKs 的协议，请参阅 <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2013/279.pdf">Pinocchio协议</a> 的本文。</p>
+<h3 id="ZK-SNARKS如何应用于创建屏蔽交易"><a href="#ZK-SNARKS如何应用于创建屏蔽交易" class="headerlink" title="ZK-SNARKS如何应用于创建屏蔽交易"></a>ZK-SNARKS如何应用于创建屏蔽交易</h3><p>在比特币中，通过链接发件人地址，收件人地址以及公共区块链上的输入和输出值来验证交易。 Zcash使用zk-SNARKs来证明有效交易的条件得到了满足，但没有透露任何有关地址或值的重要信息。 屏蔽交易的发件人构建了一个证据，以高概率显示：</p>
+<blockquote>
+<p>输入总和 等于 每个屏蔽转换的输出总和。</p>
+<p>发件人证明他们拥有输入的私钥，赋予他们花费的权力。</p>
+<p>输入的私钥与整个交易的签名链接起来，链接是加密的，则，交易不会被不知道这些私钥的人修改。</p>
+</blockquote>
+<p>另外，屏蔽交易必须满足下面描述的其他条件：</p>
+<p>比特币跟踪(未花费的交易输出)UTXO，以确定哪些交易是可用的。 在Zcash中，UTXO的屏蔽等同物称为“承诺”，花费承诺包含暴露出“花费人”。 Zcash节点保留已经创建的所有承诺的清单以及所有已经暴露的花费人。承诺和无效值存储为散列值，以避免公开关于承诺的任何信息，或者哪些无效值与哪些承诺相关。</p>
+<p>对于由屏蔽付款创建的每个新钞票，将公布一个承诺，其中包含以下内容的散列：</p>
+<ul>
+<li>钞票发送的地址</li>
+<li>发送的金额</li>
+<li>本钞票所特有的数字“rho”（稍后用于派生花费人）和一个随机数。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Commitment &#x3D; HASH(recipient address, amount, rho, r)</span><br></pre></td></tr></table></figure>
+
+<p>当屏蔽交易被花费时，发件人使用他们的支出密钥来公布一个花费者，该花费者是来自尚未用过的现有承诺的唯一编号（“rho”）的hash，并提供零知识证明，证明他们有权花费它。 该散列必须不在花费清单中，花费清单在区块链的每个节点中保存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nullifier &#x3D; HASH(spending key, rho)</span><br></pre></td></tr></table></figure>
+<p>屏蔽交易的零知识证明证实，除了上面列出的条件外，以下认定也是正确的：</p>
+<blockquote>
+<p>对于每个输入，都存在明确的承诺。</p>
+<p>花费者和钞票承诺计算正确。</p>
+<p>输出钞票的花费者与任何其他钞票的花费者发生绝不会发生冲突。</p>
+</blockquote>
+<p>除了用于控制地址的支出密钥之外，Zcash还使用一组证明和验证密钥来创建和检查证明。这些密钥在上面讨论的公共参数程序中生成，并在Zcash网络中的所有参与者之间共享。对于每个屏蔽交易，发件人使用他们的证明密钥来生成他们的输入有效的证据。矿工通过使用验证密钥检查证明者的计算来检查被保护的交易遵循共识规则。Zcash证明生成的设计方式要求证明者事先做更多的工作，但它简化了验证，因此主要的计算工作被转移到交易的创建者（这就是为什么创建屏蔽Zcash事务可能会占用到40秒，同时验证事务有效仅需要几毫秒）。</p>
+<p>Zcash的屏蔽交易的隐私依赖于标准的，经过验证的密码学（散列函数和流密码），但它增加了zk-SNARKs，与承诺和花费机制一起使用，允许屏蔽交易的发送者和接收者证明加密交易是有效的。其他为加密货币提供隐私的方法依赖于模糊交易之间的链接，但事实上Zcash交易可以存储在完全加密的区块链中，为加密货币应用程序开辟了新的可能性。加密交易使得各方可以享受公共区块链的好处，同时保护他们的隐私。计划的未来升级将允许用户根据自己的判断有选择地披露有关被屏蔽交易的信息。查看Zcash博客文章的近期未来，了解<a target="_blank" rel="noopener" href="https://z.cash/blog/the-near-future-of-zcash.html">Zcash的未来计划</a>。</p>
+<p>有关如何在Zcash中构建屏蔽事务的更深入解释，请参阅我们的博客文章，了解屏蔽地址之间的事务如何工作。有关当前Zcash协议的完整详细信息，请参阅我们的<a target="_blank" rel="noopener" href="https://github.com/zcash/zips/blob/master/protocol/protocol.pdf">协议规范</a>。</p>
+<h3 id="ZK-SNARKS的未来应用"><a href="#ZK-SNARKS的未来应用" class="headerlink" title="ZK-SNARKS的未来应用"></a>ZK-SNARKS的未来应用</h3><p>在Zcash中创建屏蔽交易只是zk-SNARKs许多可能应用中的一个例子。从理论上讲，您可以使用zk-SNARK来验证任何关系，而不会泄露输入或泄露信息。对复杂函数生成证明的计算量仍然过大，许多程序还不适用，但Zcash团队正在推动优化zk-SNARKs的界限，并且已经以更高效的实施方式开创了新局面。</p>
+<p>就目前而言，Zcash的zk-SNARKs实现可以作为企业用例的<a target="_blank" rel="noopener" href="https://z.cash/blog/zsl.html">零知识安全层</a>添加到任何现有的分布式分类帐解决方案中。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -608,118 +725,6 @@
 <p><a target="_blank" rel="noopener" href="http://doc.oschina.net/grpc?t=60133">http://doc.oschina.net/grpc?t=60133</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/grpc/grpc-go">https://github.com/grpc/grpc-go</a></p>
 <p><a target="_blank" rel="noopener" href="https://grpc.io/">https://grpc.io/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/03/07/Golang-ProtoBuf%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/03/07/Golang-ProtoBuf%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Golang ProtoBuf笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-03-07 19:16:30" itemprop="dateCreated datePublished" datetime="2018-03-07T19:16:30+08:00">2018-03-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-09-29 09:07:46" itemprop="dateModified" datetime="2022-09-29T09:07:46+08:00">2022-09-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="什么是protobuf"><a href="#什么是protobuf" class="headerlink" title="什么是protobuf"></a>什么是protobuf</h3><blockquote>
-<p>protobuf(Google Protocol Buffers) 是一套完整的 IDL（接口描述语言），出自Google，基于 C++ 进行的实现，开发人员可以根据 ProtoBuf 的语言规范生成多种编程语言（Golang、Python、Java 等）的接口代码，本篇只讲述 Golang 的基础操作。ProtoBuf 所生成的二进制文件在存储效率上比 XML 高 3<del>10 倍，并且处理性能高 1</del>2 个数量级，这也是选择 ProtoBuf 作为序列化方案的一个重要因素之一。</p>
-</blockquote>
-<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h3><p><a target="_blank" rel="noopener" href="https://github.com/google/protobuf">https://github.com/golang/protobuf</a></p>
-<h3 id="安装protobuf"><a href="#安装protobuf" class="headerlink" title="安装protobuf"></a>安装protobuf</h3><ol>
-<li>直接安装</li>
-</ol>
-<p>从 <a target="_blank" rel="noopener" href="https://github.com/google/protobuf/releases">https://github.com/google/protobuf/releases</a> 下载最新版本。例如 Mac 机器下载 osx 版本</p>
-<p>Mac 中默认的 go root 地址为 ++/usr/local/go++，将解压缩出来的 protoc 可执行文件 copy 到  /usr/local/go/bin 下。</p>
-<p>执行 </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ protoc --version</span><br><span class="line"><span class="comment"># 如果正常打印 libprotoc 的版本信息就表明 protoc 安装成功</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Will:bin zhuangweiming$ protoc --version</span><br><span class="line">libprotoc 3.5.1</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>编译安装</p>
-<ol>
-<li>从 <a target="_blank" rel="noopener" href="https://github.com/google/protobuf/releases">https://github.com/google/protobuf/releases</a> 下载最新版本，++protobuf-all-3.5.1.tar.gz++。</li>
-<li>解压缩，在终端执行：tar zxvf protobuf-all-3.5.1.tar.gz</li>
-<li>进入文件目录，在终端执行：cd protobuf-3.5.1/</li>
-<li>执行配置，在终端执行：./configure</li>
-<li>编译，在终端执行：make</li>
-<li>检测编译，在终端执行：make check</li>
-<li>安装 protoc，在终端执行：make install</li>
-</ol>
-</li>
-</ol>
-<p>执行 </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Will:bin zhuangweiming$ protoc --version</span><br><span class="line">libprotoc 3.5.1</span><br></pre></td></tr></table></figure>
-<p>显示 libprotoc 3.5.1 则为成功。</p>
-<h3 id="安装-ProtoBuf-相关的-golang-依赖库。获取-goprotobuf-提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能。"><a href="#安装-ProtoBuf-相关的-golang-依赖库。获取-goprotobuf-提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能。" class="headerlink" title="安装 ProtoBuf 相关的 golang 依赖库。获取 goprotobuf 提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能。"></a>安装 ProtoBuf 相关的 golang 依赖库。获取 goprotobuf 提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能。</h3><p>$ go get -u github.com/golang/protobuf/{protoc-gen-go,proto}</p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>1.创建 protocDemo golang工程<br><img src="/2018/03/07/Golang-ProtoBuf%E7%AC%94%E8%AE%B0/1.png"></p>
-<p>2.在 example 包中编写 person.proto</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">syntax &#x3D; &quot;proto3&quot;;</span><br><span class="line">package example;</span><br><span class="line"></span><br><span class="line">message person &#123;    &#x2F;&#x2F;  aa 会生成 Aa 命名的结构体</span><br><span class="line">    int32 id &#x3D; 1;</span><br><span class="line">    string name &#x3D; 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message all_person &#123;    &#x2F;&#x2F;  aa_bb 会生成 AaBb 的驼峰命名的结构体</span><br><span class="line">    repeated person Per &#x3D; 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3.进入 Demo 工程的 example 目录，使用 protoc 编译 person.proto</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ protoc --go_out=. person.proto</span><br><span class="line"><span class="comment"># 就会生成 person.pb.go 文件</span></span><br></pre></td></tr></table></figure>
-<p>4.在 golang 工程中使用 protobuf 进行序列化与反序列化</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/golang/protobuf/proto&quot;</span></span><br><span class="line">	<span class="string">&quot;protocDemo/example&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 为 AllPerson 填充数据</span></span><br><span class="line">	p1 := example.Person&#123;</span><br><span class="line">		Id:*proto.Int32(<span class="number">1</span>),</span><br><span class="line">		Name:*proto.String(<span class="string">&quot;xieyanke&quot;</span>),</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	p2 := example.Person&#123;</span><br><span class="line">		Id:<span class="number">2</span>,</span><br><span class="line">		Name:<span class="string">&quot;gopher&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	all_p := example.AllPerson&#123;</span><br><span class="line">		Per:[]*example.Person&#123;&amp;p1, &amp;p2&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 对数据进行序列化</span></span><br><span class="line">	data, err := proto.Marshal(&amp;all_p)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;Mashal data error:&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">println</span>(data)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 对已经序列化的数据进行反序列化</span></span><br><span class="line">	<span class="keyword">var</span> target example.AllPerson</span><br><span class="line">	err = proto.Unmarshal(data, &amp;target)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span>&#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;UnMashal data error:&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">println</span>(target.Per[<span class="number">0</span>].Name) <span class="comment">// 打印第一个 person Name 的值进行反序列化验证</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>console 输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[26&#x2F;32]0xc4200140e0</span><br><span class="line">xieyanke</span><br></pre></td></tr></table></figure>
-
-<p>参考链接：<br><a target="_blank" rel="noopener" href="https://github.com/google/protobuf">https://github.com/google/protobuf</a></p>
 
       
     </div>
