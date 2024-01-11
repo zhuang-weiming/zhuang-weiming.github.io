@@ -11000,7 +11000,7 @@
   <entry>
     <title>Flutter和React-Native项目如何被原生App所重用</title>
     <url>/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/</url>
-    <content><![CDATA[<p>继续讨论 <a href="https://github.com/0xPolygonID/polygonid-flutter-sdk%EF%BC%8C%E5%85%B6%E4%B8%AD%E4%BD%BF%E7%94%A8%E4%BA%86c-polygonid">https://github.com/0xPolygonID/polygonid-flutter-sdk，其中使用了c-polygonid</a> / witnesscalc / rapidsnark / babyjubjub 这4个外部lib库，有c，golang，rust等编译后得到的 .a 文件。</p>
+    <content><![CDATA[<p>继续讨论 <a href="https://github.com/0xPolygonID/polygonid-flutter-sdk">https://github.com/0xPolygonID/polygonid-flutter-sdk</a> ，其中使用了c-polygonid / witnesscalc / rapidsnark / babyjubjub 这4个外部lib库，有c，golang，rust等编译后得到的 .a 文件。那么Flutter开发的部分内容，如手机DB存储等如何重用呢？</p>
 <h3 id="Flutter-开发的代码，通过如下方式可以被原生App重用"><a href="#Flutter-开发的代码，通过如下方式可以被原生App重用" class="headerlink" title="Flutter 开发的代码，通过如下方式可以被原生App重用"></a>Flutter 开发的代码，通过如下方式可以被原生App重用</h3><p>打包多个静态原生库成为一个xcframework库：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xcodebuild -create-xcframework -library &lt;path/to/lib1&gt; -headers &lt;header directory for lib1&gt; -library &lt;path/to/lib2&gt; -headers &lt;header directory for lib2&gt; -output &lt;path/to/output.xcframework&gt;</span><br></pre></td></tr></table></figure>
 <p>但是，一个.xcframework 文件在每一个平台中，如macOS，iOS中，只能含有一个静态库。所以可以如下。<br>第一步，<a href="https://www.unix.com/man-page/OSX/1/lipo/">https://www.unix.com/man-page/OSX/1/lipo/</a></p>
