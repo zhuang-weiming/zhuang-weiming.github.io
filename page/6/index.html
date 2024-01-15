@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">230</span>
+          <span class="site-state-item-count">231</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,99 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/02/20/%E9%87%8F%E5%AD%90%E5%AE%89%E5%85%A8%E5%AF%86%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/02/20/%E9%87%8F%E5%AD%90%E5%AE%89%E5%85%A8%E5%AF%86%E7%A0%81/" class="post-title-link" itemprop="url">量子安全密码</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-02-20 14:49:00" itemprop="dateCreated datePublished" datetime="2023-02-20T14:49:00+08:00">2023-02-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-02-21 10:02:47" itemprop="dateModified" datetime="2023-02-21T10:02:47+08:00">2023-02-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在抗量子密码方向，目前The National Institute of Standards and Technology (NIST)已经进入到<a target="_blank" rel="noopener" href="https://csrc.nist.gov/Projects/Post-Quantum-Cryptography">第三轮密码学评测/筛选</a>。</p>
+<h3 id="Open-Quantum-Safe"><a href="#Open-Quantum-Safe" class="headerlink" title="Open Quantum Safe"></a>Open Quantum Safe</h3><p>关于NIST评测的抗量子密码实验的算法都开源于此项目，<a target="_blank" rel="noopener" href="https://openquantumsafe.org/">Open Quantum Safe</a> framework it may be easier to use liboqs ==&gt; <a target="_blank" rel="noopener" href="https://github.com/open-quantum-safe/liboqs%E3%80%82%E5%8F%A6%E5%A4%96%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%8A%A0%E5%AE%9E%E7%94%A8%E7%9A%84%E6%8A%97%E9%87%8F%E5%AD%90%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E9%9B%86%E5%90%88">https://github.com/open-quantum-safe/liboqs。另外一个更加实用的抗量子密码算法集合</a> ==&gt; <a target="_blank" rel="noopener" href="https://github.com/PQClean/PQClean/%E3%80%82">https://github.com/PQClean/PQClean/。</a></p>
+<p>他们之中，都有关于 Kyber 和 Dilithium 算法实现，可以直接使用。</p>
+<h3 id="Kyber-对称加密算法和非对称加密算法"><a href="#Kyber-对称加密算法和非对称加密算法" class="headerlink" title="Kyber-对称加密算法和非对称加密算法"></a>Kyber-对称加密算法和非对称加密算法</h3><p>该项目由实验室量子方向研究员提供，其开源版本如下：</p>
+<ul>
+<li>C 语言版本 <a target="_blank" rel="noopener" href="https://github.com/pq-crystals/kyber%EF%BC%8C">https://github.com/pq-crystals/kyber，</a> 此版本为官方版本。</li>
+<li>Go 语言版本 <a target="_blank" rel="noopener" href="https://github.com/symbolicsoft/kyber-k2so%EF%BC%8C%E8%AF%A5%E7%89%88%E6%9C%AC%E4%B8%8E%E4%B8%8B%E9%9D%A2%E7%9A%84node.js%E7%89%88%E6%9C%AC%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95%E6%98%AF%E4%B8%80%E8%87%B4%E7%9A%84%EF%BC%8C%E8%AE%BA%E6%96%87%E5%A6%82%E4%B8%8B%E3%80%82">https://github.com/symbolicsoft/kyber-k2so，该版本与下面的node.js版本的实现算法是一致的，论文如下。</a></li>
+<li>javascript/node.js 语言版本 <a target="_blank" rel="noopener" href="https://github.com/antontutoveanu/crystals-kyber-javascript%EF%BC%8C%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%9A%84%E8%AE%BA%E6%96%87">https://github.com/antontutoveanu/crystals-kyber-javascript，具体实现方法的论文</a> ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2021/356.pdf%E3%80%82">https://eprint.iacr.org/2021/356.pdf。</a></li>
+</ul>
+<p>​    Kyber 包含了<strong>对称加密算法和非对称加密算法</strong>，Kyber 算法的介绍内容 ==&gt; <a target="_blank" rel="noopener" href="https://pq-crystals.org/kyber/software.shtml%E3%80%82">https://pq-crystals.org/kyber/software.shtml。</a></p>
+<p>​    一句话概括其算法 ==&gt; Kyber IND-CCA2-secure key encapsulation mechanism (KEM), whose security is based on the hardness of solving the learning-with-errors (LWE) problem over module lattices. </p>
+<p>​    使用方法：</p>
+<ul>
+<li>在所谓的混合模式下使用 Kyber 并结合已建立的“前量子”安全性； 例如结合椭圆曲线 Diffie-Hellman。</li>
+<li>建议使用 Kyber-768 参数集，根据保守的分析，该参数集可针对所有已知的经典攻击和量子攻击实现超过 128 位的安全性。</li>
+</ul>
+<h3 id="Dilithium-数字签名算法"><a href="#Dilithium-数字签名算法" class="headerlink" title="Dilithium-数字签名算法"></a>Dilithium-数字签名算法</h3><ul>
+<li>C 语言版本 <a target="_blank" rel="noopener" href="https://github.com/pq-crystals/dilithium/%E3%80%82">https://github.com/pq-crystals/dilithium/。</a></li>
+<li>rust 语言版本 <a target="_blank" rel="noopener" href="https://github.com/Argyle-Software/dilithium%E3%80%82">https://github.com/Argyle-Software/dilithium。</a></li>
+<li>Java 语言版本 <a target="_blank" rel="noopener" href="https://github.com/mthiim/dilithium-java">https://github.com/mthiim/dilithium-java</a></li>
+</ul>
+<p>​    算法介绍 ==&gt; <a target="_blank" rel="noopener" href="https://www.pq-crystals.org/dilithium/%E3%80%82">https://www.pq-crystals.org/dilithium/。</a></p>
+<p>​    具体实现的论文 ==&gt; <a target="_blank" rel="noopener" href="https://www.pq-crystals.org/dilithium/resources.shtml%EF%BC%8C%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E4%B8%BA">https://www.pq-crystals.org/dilithium/resources.shtml，目前最新版本为</a> CRYSTALS-Dilithium – Algorithm Specifications and Supporting Documentation (Version 3.1)</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -579,142 +672,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/11/25/FMR-%E5%B8%82%E5%9C%BA%E9%A3%8E%E9%99%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/25/FMR-%E5%B8%82%E5%9C%BA%E9%A3%8E%E9%99%A9/" class="post-title-link" itemprop="url">FMR-市场风险</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-11-25 15:21:00" itemprop="dateCreated datePublished" datetime="2022-11-25T15:21:00+08:00">2022-11-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 13:54:12" itemprop="dateModified" datetime="2023-09-14T13:54:12+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>按照风险的驱动因素，金融风险可以分为市场风险market risk，信用风险credit risk，操作风险operational risk，流动性风险liquidity risk。</p>
-<p>最常见的市场风险包括利率风险，汇率风险，通货膨胀风险，证券价格风险，波动率风险等。</p>
-<p>市场风险分析方法：</p>
-<ol>
-<li><p>缺口分析法 gap analysis，即资产负债缺口分析法。当利率发生变化时，资产和负债之间产生“缺口”，通过比较缺口的大小，可以得到利率变化时市场价值变动的程度，亦即产生的<strong>利率风险</strong>的大小。GAP（缺口）= RSA（利率敏感性资产）- RSL（利率敏感性负债）</p>
-</li>
-<li><p>久期分析法 duration analysis，即持续期分析法或者期限弹性分析法。其通过对各时间段段缺口赋予相应权重，得到加权缺口，然后对这些加权缺口求和，以此估算<strong>利率</strong>变动对市场价值的影响。</p>
-</li>
-</ol>
-<p>相对于缺口分析只是考虑净收入的变化，久期分析则考察资产或者负债的价值，是一种更为准确的利率风险计量方法。</p>
-<ol start="3">
-<li>场景分析法 scenario analysis，又称假设分析法 what-if analysis。通过设定不同的情景，分析在每一种情景下的收益或者亏损，从而对<strong>整个投资组合的未来风险情况进行评估</strong>，做出最佳决策。</li>
-<li>投资组合理论 portfolio theory，是一种衡量<strong>市场风险</strong>的方法。</li>
-<li>希腊字母估计市场风险。</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>希腊字母</th>
-<th>符号</th>
-<th>风险评估</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Delta</td>
-<td>Δ</td>
-<td>标的资产价格变化引起金融衍生品价格变化</td>
-</tr>
-<tr>
-<td>Gamma</td>
-<td>Γ</td>
-<td>标的资产价格变化引起Delta变化</td>
-</tr>
-<tr>
-<td>Theta</td>
-<td>Θ</td>
-<td>时间引起衍生品价格变化</td>
-</tr>
-<tr>
-<td>Vega</td>
-<td>Λ</td>
-<td>市场波动率变化引起金融衍生品价格变化</td>
-</tr>
-<tr>
-<td>Rho</td>
-<td>ρ</td>
-<td>利率变化引起金融衍生品价格变化</td>
-</tr>
-</tbody></table>
-<ol start="6">
-<li><p>风险价值 Value at Risk - VaR，也叫在险价值。作为经典的市场风险度量，可以用来评估资产的风险，帮助金融机构合理分散或者规避风险。摩根大通J.P.Morgan Chase开源了RiskMetrics系统，很快被金融机构采用，<strong>广泛地用来计算包括市场风险、信用风险以及操作风险等在内的金融风险</strong>。</p>
-<p>6.1 参数法计算风险价值 parametric approach，一般假设未来收益满足正态分布，这是因为如股票收益率等风险因子一般都可以用正态分布近似，而资产组合通常也可以用风险因子等线性组合来表示，并且正态分布的任意线性组合仍然为正态分布，因此资产祝贺的预期收益分布仍然为正态分布。</p>
-<p>在市场上，价格低标准差通常变化较大，价格本身对于标准差来说，变化并不大。所以，<strong>参数法的关键是要计算出分布的标准差σ</strong>，正因为如此，参数法又时也被称为方差协方差方法。该原理容易理解，计算量也较小。</p>
-</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> pandas_datareader</span><br><span class="line"><span class="keyword">import</span> scipy.stats <span class="keyword">as</span> stats</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits <span class="keyword">import</span> mplot3d</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> cm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设投资组合包含以下公司</span></span><br><span class="line">tickers = [<span class="string">&#x27;GOOGL&#x27;</span>,<span class="string">&#x27;FB&#x27;</span>,<span class="string">&#x27;AAPL&#x27;</span>,<span class="string">&#x27;NFLX&#x27;</span>,<span class="string">&#x27;AMZN&#x27;</span>]</span><br><span class="line">ticker_num = <span class="built_in">len</span>(tickers)</span><br><span class="line">price_data = []</span><br><span class="line"><span class="keyword">for</span> ticker <span class="keyword">in</span> <span class="built_in">range</span>(ticker_num):</span><br><span class="line">    <span class="comment"># 获取股票的历史数据</span></span><br><span class="line">    prices = pandas_datareader.DataReader(tickers[ticker], start=<span class="string">&#x27;2015-11-30&#x27;</span>, end = <span class="string">&#x27;2020-11-30&#x27;</span>, data_source=<span class="string">&#x27;yahoo&#x27;</span>)   </span><br><span class="line">    price_data.append(prices[[<span class="string">&#x27;Adj Close&#x27;</span>]])</span><br><span class="line">    df_stocks = pd.concat(price_data, axis=<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># stock log returns计算“日对数回报率”</span></span><br><span class="line">logreturns = np.log(df_stocks/df_stocks.shift(<span class="number">1</span>))[<span class="number">1</span>:]  </span><br><span class="line">logreturns.columns = tickers </span><br><span class="line">logreturns.head() </span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设它们的对数回报率满足正态分布，下面代码计算并展示股票的回报率分布</span></span><br><span class="line"><span class="comment"># plot log return distribution for GOOGL</span></span><br><span class="line">plt.style.use(<span class="string">&#x27;ggplot&#x27;</span>)</span><br><span class="line">mu, std = stats.norm.fit(logreturns[<span class="string">&#x27;GOOGL&#x27;</span>])</span><br><span class="line">x = np.linspace(mu<span class="number">-5</span>*std, mu+<span class="number">5</span>*std, <span class="number">500</span>)</span><br><span class="line">logreturns[<span class="string">&#x27;GOOGL&#x27;</span>].hist(bins=<span class="number">60</span>, density=<span class="literal">True</span>, histtype=<span class="string">&quot;stepfilled&quot;</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line">x = np.linspace(mu - <span class="number">3</span>*std, mu+<span class="number">3</span>*std, <span class="number">500</span>)</span><br><span class="line">plt.plot(x, stats.norm.pdf(x, mu, std))</span><br><span class="line">plt.title(<span class="string">&quot;Log return distribution for GOOGL&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;Return&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;Density&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot log return distribution</span></span><br><span class="line">rows = <span class="number">2</span></span><br><span class="line">cols = <span class="number">2</span></span><br><span class="line">fig, axs = plt.subplots(rows, cols, figsize=(<span class="number">12</span>,<span class="number">6</span>))</span><br><span class="line">ticker_n = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(rows):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(cols):</span><br><span class="line">        mu, std = stats.norm.fit(logreturns[tickers[ticker_n]])</span><br><span class="line">        x = np.linspace(mu<span class="number">-5</span>*std, mu+<span class="number">5</span>*std, <span class="number">500</span>)</span><br><span class="line">        axs[i,j].hist(logreturns[tickers[ticker_n]], bins=<span class="number">60</span>, density=<span class="literal">True</span>, histtype=<span class="string">&quot;stepfilled&quot;</span>, alpha=<span class="number">0.5</span>)</span><br><span class="line">        axs[i,j].plot(x, stats.norm.pdf(x, mu, std))</span><br><span class="line">        axs[i,j].set_title(<span class="string">&quot;Log return distribution for &quot;</span>+tickers[ticker_n])</span><br><span class="line">        axs[i,j].set_xlabel(<span class="string">&quot;Return&quot;</span>)</span><br><span class="line">        axs[i,j].set_ylabel(<span class="string">&quot;Density&quot;</span>)</span><br><span class="line">        ticker_n = ticker_n + <span class="number">1</span></span><br><span class="line">plt.tight_layout()</span><br></pre></td></tr></table></figure>
-
-<p>​    6.2 历史法计算风险价值 historical approach，这是一种全值估计方法 full revaluation，具体是指利用风险因子的历史数据，计算过去某段时期收益的频度分布，并以此来模拟风险因子的未来收益分布，然后根据置信水平，确定相应的最大可能损失。</p>
-<p>​    6.3 蒙特卡洛法计算风险价值 Monte Carlo simulation，这也是风险价值计算中最常应用的模型之一。首先通过分析历史数据建立风险因子的随机过程模型，然后反复模拟风险因子变量的随机过程，每一次模拟都可以得到风险因子的一个未来变化的情景，以及投资组合在持有期期末的一个可能价值。通过大量的模拟，投资组合价值的模拟分布将最终收敛于该组合的真实分布，根据该分布，可以计算风险价值。</p>
-<p><img src="/2022/11/25/FMR-%E5%B8%82%E5%9C%BA%E9%A3%8E%E9%99%A9/1.png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> pandas_datareader</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设投资组合包含以下公司</span></span><br><span class="line">tickers = [<span class="string">&#x27;GOOGL&#x27;</span>,<span class="string">&#x27;FB&#x27;</span>,<span class="string">&#x27;AAPL&#x27;</span>,<span class="string">&#x27;NFLX&#x27;</span>,<span class="string">&#x27;AMZN&#x27;</span>]</span><br><span class="line">ticker_num = <span class="built_in">len</span>(tickers)</span><br><span class="line">price_data = []</span><br><span class="line"><span class="keyword">for</span> ticker <span class="keyword">in</span> <span class="built_in">range</span>(ticker_num):   </span><br><span class="line">    prices = pandas_datareader.DataReader(tickers[ticker], start=<span class="string">&#x27;2015-11-30&#x27;</span>, end = <span class="string">&#x27;2020-11-30&#x27;</span>, data_source=<span class="string">&#x27;yahoo&#x27;</span>)   </span><br><span class="line">    price_data.append(prices[[<span class="string">&#x27;Adj Close&#x27;</span>]])</span><br><span class="line">    df_stocks = pd.concat(price_data, axis=<span class="number">1</span>)</span><br><span class="line">df_stocks.columns = tickers</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后计算股票的累积回报率</span></span><br><span class="line"><span class="comment"># cumulative returns</span></span><br><span class="line">stock_return = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(ticker_num):  </span><br><span class="line">    return_tmp = np.log(df_stocks[[tickers[i]]]/df_stocks[[tickers[i]]].shift(<span class="number">1</span>))[<span class="number">1</span>:]  </span><br><span class="line">    return_tmp = (return_tmp+<span class="number">1</span>).cumprod()</span><br><span class="line">    stock_return.append(return_tmp[[tickers[i]]])</span><br><span class="line">    return_all = pd.concat(stock_return,axis=<span class="number">1</span>)</span><br><span class="line">return_all.head()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用曲线更直观地展示所有股票的回报率</span></span><br><span class="line"><span class="comment"># plot cumulative returns of all stocks</span></span><br><span class="line">plt.style.use(<span class="string">&#x27;ggplot&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i, col <span class="keyword">in</span> <span class="built_in">enumerate</span>(return_all.columns):</span><br><span class="line">    return_all[col].plot()</span><br><span class="line">plt.title(<span class="string">&#x27;Cumulative returns&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Date&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Return&#x27;</span>)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>)</span><br><span class="line">plt.legend(return_all.columns)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定投资组合中各个股票的比重，并且在持有期内保持不变。进而计算得到整个投资组合的预期回报和股价</span></span><br><span class="line"><span class="comment"># lastest return and price values</span></span><br><span class="line">latest_return = return_all.iloc[<span class="number">-1</span>,:]</span><br><span class="line">latest_price = df_stocks.iloc[<span class="number">-1</span>,:]</span><br><span class="line">sigma = latest_return.std()</span><br><span class="line"><span class="comment"># weights for stocks in the portfolio</span></span><br><span class="line">stock_weight = [<span class="number">0.2</span>, <span class="number">0.3</span>, <span class="number">0.1</span>, <span class="number">0.15</span>, <span class="number">0.25</span>] </span><br><span class="line"><span class="comment"># calculate expected return</span></span><br><span class="line">expected_return = latest_return.dot(stock_weight)</span><br><span class="line">print(<span class="string">&#x27;The weighted expected portfolio return: %.2f&#x27;</span> % expected_return)</span><br><span class="line"><span class="comment"># calculate weighted price</span></span><br><span class="line">price = latest_price.dot(stock_weight)</span><br><span class="line">print(<span class="string">&#x27;The weighted price of the portfolio: %.0f&#x27;</span> % price)</span><br><span class="line"></span><br><span class="line"><span class="comment">#假设该投资组合的回报率符合正态分布，以一天中的每一分钟作为步长，即分为1440个节点，利用蒙特卡洛模拟随机产生500个回报率数值。</span></span><br><span class="line"><span class="comment"># monte carlo simulation</span></span><br><span class="line">MC_num = <span class="number">500</span></span><br><span class="line">confidence_level = <span class="number">0.95</span></span><br><span class="line">time_step = <span class="number">1440</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(MC_num):  </span><br><span class="line">  daily_returns = np.random.normal(expected_return/time_step, sigma/np.sqrt(time_step), time_step)</span><br><span class="line">  plt.plot(daily_returns)</span><br><span class="line">plt.axhline(np.percentile(daily_returns,(<span class="number">1.0</span>-confidence_level)*<span class="number">100</span>), color=<span class="string">&#x27;r&#x27;</span>, linestyle=<span class="string">&#x27;dashed&#x27;</span>)</span><br><span class="line">plt.axhline(np.percentile(daily_returns,confidence_level*<span class="number">100</span>), color=<span class="string">&#x27;g&#x27;</span>, linestyle=<span class="string">&#x27;dashed&#x27;</span>)</span><br><span class="line">plt.axhline(np.mean(daily_returns), color=<span class="string">&#x27;b&#x27;</span>, linestyle=<span class="string">&#x27;solid&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Time&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Return&#x27;</span>)</span><br><span class="line"><span class="comment"># 可视化，红线处为风险价值</span></span><br><span class="line"><span class="comment"># plot return distribution</span></span><br><span class="line">sns.distplot(daily_returns, kde=<span class="literal">True</span>, color=<span class="string">&#x27;lightblue&#x27;</span>)</span><br><span class="line">plt.axvline(np.percentile(daily_returns,(<span class="number">1.0</span>-confidence_level)*<span class="number">100</span>), color=<span class="string">&#x27;red&#x27;</span>, linestyle=<span class="string">&#x27;dashed&#x27;</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.title(<span class="string">&quot;Return distribution&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Return&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Frequency&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设初始投资金额为100万美元，得到VaR值为 33185</span></span><br><span class="line">initial_investment  = <span class="number">1000000</span></span><br><span class="line">VaR = initial_investment*np.percentile(daily_returns,(<span class="number">1.0</span>-confidence_level)*<span class="number">100</span>)</span><br><span class="line">print(<span class="string">&#x27;The value at risk is %.0f&#x27;</span> % VaR)</span><br></pre></td></tr></table></figure>
-
-<p>若为了获得更多的场景，更多的模拟，这里的计算量会迅速上升，从而导致整体的运算速度较慢。</p>
-<p>关联阅读 - <a href="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/">FMR-波动率</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

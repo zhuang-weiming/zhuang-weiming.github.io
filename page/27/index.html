@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">230</span>
+          <span class="site-state-item-count">231</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">智能合约-CURD的详细分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-01-15 15:44:02" itemprop="dateCreated datePublished" datetime="2020-01-15T15:44:02+08:00">2020-01-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity &gt;=<span class="number">0.6</span><span class="number">.0</span> &lt;<span class="number">0.7</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line">contract UserCrud &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 业务主数据结构</span></span><br><span class="line">  struct UserStruct &#123;</span><br><span class="line">    bytes32 userEmail;</span><br><span class="line">    uint userAge;</span><br><span class="line">    uint index;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 将业务主数据存储在 mapping 中，用户地址是用户数据的索引</span></span><br><span class="line">  <span class="comment">// address(key) ---&gt; UserStruct</span></span><br><span class="line">  <span class="comment">// 0x1 ---&gt; userEmail:alice@co.com, userAge:22</span></span><br><span class="line">  <span class="comment">// 0x2 ---&gt; userEmail:bob@home.com, userAge:44</span></span><br><span class="line">  <span class="comment">// 以上为 userStructs 中的存储内容</span></span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> UserStruct) private userStructs;</span><br><span class="line">  <span class="comment">// 用户地址被收集进入一个数组 userIndex</span></span><br><span class="line">  address[] private userIndex;</span><br><span class="line">  <span class="comment">// 反馈新用户</span></span><br><span class="line">  event LogNewUser   (address indexed userAddress, uint index, bytes32 userEmail, uint userAge);</span><br><span class="line">  <span class="comment">// 反馈用户更新</span></span><br><span class="line">  event LogUpdateUser(address indexed userAddress, uint index, bytes32 userEmail, uint userAge);</span><br><span class="line">  <span class="comment">// 反馈用户删除</span></span><br><span class="line">  event LogDeleteUser(address indexed userAddress, uint index);</span><br><span class="line">  <span class="comment">// 判断入参的用户是否有与记录中的用户重合，即用户是否已经存在</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">isUser</span>(<span class="params">address userAddress</span>)</span></span><br><span class="line"><span class="function">    <span class="title">public</span></span></span><br><span class="line"><span class="function">    <span class="title">view</span></span></span><br><span class="line"><span class="function">    <span class="title">returns</span>(<span class="params">bool isIndeed</span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(userIndex.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> (userIndex[userStructs[userAddress].index] == userAddress);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 插入新的用户主数据</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">insertUser</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    address userAddress, </span></span></span><br><span class="line"><span class="function"><span class="params">    bytes32 userEmail, </span></span></span><br><span class="line"><span class="function"><span class="params">    uint    userAge</span>) </span></span><br><span class="line"><span class="function">    <span class="title">public</span></span></span><br><span class="line"><span class="function">    <span class="title">returns</span>(<span class="params">uint index</span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">isUser(userAddress)</span>)</span> &#123;revert(<span class="string">&quot;this user already exist.&quot;</span>);&#125;</span><br><span class="line">    userStructs[userAddress].userEmail = userEmail;</span><br><span class="line">    userStructs[userAddress].userAge   = userAge;</span><br><span class="line">    userIndex.push(userAddress);</span><br><span class="line">    userStructs[userAddress].index     = userIndex.length-<span class="number">1</span>;</span><br><span class="line">    emit LogNewUser(</span><br><span class="line">        userAddress, </span><br><span class="line">        userStructs[userAddress].index, </span><br><span class="line">        userEmail, </span><br><span class="line">        userAge);</span><br><span class="line">    <span class="keyword">return</span> userIndex.length-<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 删除旧的用户主数据</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">deleteUser</span>(<span class="params">address userAddress</span>) </span></span><br><span class="line"><span class="function">    <span class="title">public</span></span></span><br><span class="line"><span class="function">    <span class="title">returns</span>(<span class="params">uint index</span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">!isUser(userAddress)</span>)</span> &#123;revert(<span class="string">&quot;only other user can deleteUser.&quot;</span>);&#125;</span><br><span class="line">    uint rowToDelete = userStructs[userAddress].index;</span><br><span class="line">    address keyToMove = userIndex[userIndex.length-<span class="number">1</span>];</span><br><span class="line">    userIndex[rowToDelete] = keyToMove;</span><br><span class="line">    userStructs[keyToMove].index = rowToDelete;</span><br><span class="line">    userIndex.pop();</span><br><span class="line">    emit LogDeleteUser(</span><br><span class="line">        userAddress, </span><br><span class="line">        rowToDelete);</span><br><span class="line">    emit LogUpdateUser(</span><br><span class="line">        keyToMove,</span><br><span class="line">        rowToDelete,</span><br><span class="line">        userStructs[keyToMove].userEmail,</span><br><span class="line">        userStructs[keyToMove].userAge);</span><br><span class="line">    <span class="keyword">return</span> rowToDelete;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 获取用户主数据</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getUser</span>(<span class="params">address userAddress</span>)</span></span><br><span class="line"><span class="function">    <span class="title">public</span> </span></span><br><span class="line"><span class="function">    <span class="title">view</span></span></span><br><span class="line"><span class="function">    <span class="title">returns</span>(<span class="params">bytes32 userEmail, uint userAge, uint index</span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">!isUser(userAddress)</span>)</span> &#123;revert(<span class="string">&quot;only exist user can be run by getUser.&quot;</span>);&#125;</span><br><span class="line">    <span class="keyword">return</span>(</span><br><span class="line">      userStructs[userAddress].userEmail, </span><br><span class="line">      userStructs[userAddress].userAge, </span><br><span class="line">      userStructs[userAddress].index);</span><br><span class="line">  &#125; </span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">updateUserEmail</span>(<span class="params">address userAddress, bytes32 userEmail</span>) </span></span><br><span class="line"><span class="function">    <span class="title">public</span></span></span><br><span class="line"><span class="function">    <span class="title">returns</span>(<span class="params">bool success</span>) </span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">!isUser(userAddress)</span>)</span> &#123;revert(<span class="string">&quot;only exist user can updateUserEmail.&quot;</span>);&#125;</span><br><span class="line">    userStructs[userAddress].userEmail = userEmail;</span><br><span class="line">    emit LogUpdateUser(</span><br><span class="line">      userAddress, </span><br><span class="line">      userStructs[userAddress].index,</span><br><span class="line">      userEmail, </span><br><span class="line">      userStructs[userAddress].userAge);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">updateUserAge</span>(<span class="params">address userAddress, uint userAge</span>) </span></span><br><span class="line"><span class="function">    <span class="title">public</span></span></span><br><span class="line"><span class="function">    <span class="title">returns</span>(<span class="params">bool success</span>) </span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">!isUser(userAddress)</span>)</span>  &#123;revert(<span class="string">&quot;only exist user can updateUserAge.&quot;</span>);&#125;</span><br><span class="line">    userStructs[userAddress].userAge = userAge;</span><br><span class="line">    emit LogUpdateUser(</span><br><span class="line">      userAddress, </span><br><span class="line">      userStructs[userAddress].index,</span><br><span class="line">      userStructs[userAddress].userEmail, </span><br><span class="line">      userAge);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getUserCount</span>(<span class="params"></span>) </span></span><br><span class="line"><span class="function">    <span class="title">public</span></span></span><br><span class="line"><span class="function">    <span class="title">view</span></span></span><br><span class="line"><span class="function">    <span class="title">returns</span>(<span class="params">uint count</span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> userIndex.length;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getUserAtIndex</span>(<span class="params">uint index</span>)</span></span><br><span class="line"><span class="function">    <span class="title">public</span></span></span><br><span class="line"><span class="function">    <span class="title">view</span></span></span><br><span class="line"><span class="function">    <span class="title">returns</span>(<span class="params">address userAddress</span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> userIndex[index];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>remix 调试如下图：</p>
+<p><img src="/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/1.png"></p>
+<p>将上述模型进一步提炼为<a target="_blank" rel="noopener" href="https://github.com/rob-Hitchens/UnorderedKeySet">库文件</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity <span class="number">0.5</span><span class="number">.1</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> UnorderedKeySet v0.93</span></span><br><span class="line"><span class="comment">Library for managing CRUD operations in dynamic key sets.</span></span><br><span class="line"><span class="comment">https://github.com/rob-Hitchens/UnorderedKeySet</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">library UnorderedKeySetLib &#123;</span><br><span class="line">    </span><br><span class="line">    struct <span class="built_in">Set</span> &#123;</span><br><span class="line">        mapping(<span class="function"><span class="params">bytes32</span> =&gt;</span> uint) keyPointers;</span><br><span class="line">        bytes32[] keyList;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">insert</span>(<span class="params"><span class="built_in">Set</span> storage self, bytes32 key</span>) <span class="title">internal</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(key != <span class="number">0x0</span>, <span class="string">&quot;UnorderedKeySet(100) - Key cannot be 0x0&quot;</span>);</span><br><span class="line">        <span class="built_in">require</span>(!exists(self, key), <span class="string">&quot;UnorderedKeySet(101) - Key already exists in the set.&quot;</span>);</span><br><span class="line">        self.keyPointers[key] = self.keyList.push(key)-<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">remove</span>(<span class="params"><span class="built_in">Set</span> storage self, bytes32 key</span>) <span class="title">internal</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(exists(self, key), <span class="string">&quot;UnorderedKeySet(102) - Key does not exist in the set.&quot;</span>);</span><br><span class="line">        bytes32 keyToMove = self.keyList[count(self)-<span class="number">1</span>];</span><br><span class="line">        uint rowToReplace = self.keyPointers[key];</span><br><span class="line">        self.keyPointers[keyToMove] = rowToReplace;</span><br><span class="line">        self.keyList[rowToReplace] = keyToMove;</span><br><span class="line">        <span class="keyword">delete</span> self.keyPointers[key];</span><br><span class="line">        self.keyList.length--;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"><span class="built_in">Set</span> storage self</span>) <span class="title">internal</span> <span class="title">view</span> <span class="title">returns</span>(<span class="params">uint</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span>(self.keyList.length);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">exists</span>(<span class="params"><span class="built_in">Set</span> storage self, bytes32 key</span>) <span class="title">internal</span> <span class="title">view</span> <span class="title">returns</span>(<span class="params">bool</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(self.keyList.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> self.keyList[self.keyPointers[key]] == key;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">keyAtIndex</span>(<span class="params"><span class="built_in">Set</span> storage self, uint index</span>) <span class="title">internal</span> <span class="title">view</span> <span class="title">returns</span>(<span class="params">bytes32</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> self.keyList[index];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">nukeSet</span>(<span class="params"><span class="built_in">Set</span> storage self</span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        <span class="keyword">delete</span> self.keyList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 合约只需要维护keyList即可</span></span><br><span class="line">contract UnorderedKeySet &#123;</span><br><span class="line">    </span><br><span class="line">    using UnorderedKeySetLib <span class="keyword">for</span> UnorderedKeySetLib.Set;</span><br><span class="line">    UnorderedKeySetLib.Set set;</span><br><span class="line">    </span><br><span class="line">    event LogUpdate(address sender, string action, bytes32 key);</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">exists</span>(<span class="params">bytes32 key</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span>(<span class="params">bool</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> set.exists(key);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">insert</span>(<span class="params">bytes32 key</span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        set.insert(key);</span><br><span class="line">        emit LogUpdate(msg.sender, <span class="string">&quot;insert&quot;</span>, key);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">remove</span>(<span class="params">bytes32 key</span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        set.remove(key);</span><br><span class="line">        emit LogUpdate(msg.sender, <span class="string">&quot;remove&quot;</span>, key);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span>(<span class="params">uint</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> set.count();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">keyAtIndex</span>(<span class="params">uint index</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span>(<span class="params">bytes32</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> set.keyAtIndex(index);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">nukeSet</span>(<span class="params"></span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        set.nukeSet();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外 rob-Hitchens 使用 solidity 写了一个红黑树，地址如下：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/rob-Hitchens/OrderStatisticsTree">https://github.com/rob-Hitchens/OrderStatisticsTree</a></p>
+<p>有向图：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/rob-Hitchens/GraphLib">https://github.com/rob-Hitchens/GraphLib</a></p>
+<p>关联文档：</p>
+<ol>
+<li><a href="https://willzhuang.github.io/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">智能合约-CURD的详细分析</a></li>
+<li><a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E8%87%AA%E6%AF%81%E6%A8%A1%E5%BC%8F/">智能合约-自毁模式</a></li>
+<li><a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E6%A8%A1%E5%BC%8F/">智能合约-工厂合约模式</a></li>
+<li><a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">智能合约-名字登录模式</a></li>
+<li><a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -602,84 +691,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/25/2020-%E5%BC%80%E6%BA%90%E5%87%A0%E4%B9%8E%E6%98%AF%E8%BA%B2%E4%B8%8D%E6%8E%89%E7%9A%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/12/25/2020-%E5%BC%80%E6%BA%90%E5%87%A0%E4%B9%8E%E6%98%AF%E8%BA%B2%E4%B8%8D%E6%8E%89%E7%9A%84/" class="post-title-link" itemprop="url">2020-开源几乎是躲不掉的</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-12-25 16:07:04" itemprop="dateCreated datePublished" datetime="2019-12-25T16:07:04+08:00">2019-12-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 14:09:46" itemprop="dateModified" datetime="2023-09-14T14:09:46+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>开源是社会化协作的基础。随着软件越来越昂贵、风险越来越大，单靠一个企业内的合作已经不够了，需要全球供应链、全球生产链来共同生产软件、维护软件、交付软件。开源也是社会化生产的需要。经过20年的发展，开源已经今非昔比。20年前，开源是一种软件的开发和交付方式；2020年，开源已经演进发展为一种生态竞争的模式。</p>
-<p>开源的生产交付模式已发展成熟。2019年，70%的财富50强企业为GitHub（代码托管网站）贡献了开源代码。开源已经形成了两种模式：基金会主导模式（Linux模式）和企业主导模式（Android模式）。码农数量激增，因为码农是数字社会先进生产力的代表。</p>
-<p>总而言之，开源几乎是躲不掉的，99%的组织已经在其 IT系统中使用了开源软件。2019年，中国的代码贡献量上升了48%。在中国，过去，开源的核心是国际项目本土化，现在，国内开源的焦点是本土项目国际化。重要的是，要将风险管控前置来治理开源。</p>
-<p>参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MzU0NjMwNQ==&mid=2650775179&idx=1&sn=9c0483223a5c674a264435c8f45257df&chksm=be9e57a589e9deb3f90df0ab8526f0e4062683f5fcd11cfec84d7eae6c4986fcbf9ee03e15be&scene=126&sessionid=1577256432&key=aabc9a1c91021d5f7917a04ec6b8a4b16b612a92d2797e429cd211a1c52943194c7d248eca5ed75c624114d27f3b94a512ab92469db5ca533044c56dd3192800bf2a7b6a43b04847b86e42ef35a10c47&ascene=1&uin=MjY4NjE1NTk4MQ==&devicetype=Windows+10&version=6207024c&lang=zh_CN&exportkey=ARF/JA5tAVySowpRILavDPY=&pass_ticket=pyDLgWgT7dW4krwK/YeeWa+Zq9eUjSTfG+PZRWENNIf8Qe283i2Kg/7NQsGHRUeG">何宝宏：预见2020，拐点已至丨风向Talks</a></p>
-<p><a target="_blank" rel="noopener" href="https://spdx.org/licenses/">https://spdx.org/licenses/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
