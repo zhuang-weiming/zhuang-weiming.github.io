@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">231</span>
+          <span class="site-state-item-count">232</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -232,6 +232,117 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-11 17:33:01" itemprop="dateCreated datePublished" datetime="2020-05-11T17:33:01+08:00">2020-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>文档链接=&gt;<a target="_blank" rel="noopener" href="https://hyperledger.github.io/burrow/">https://hyperledger.github.io/burrow/</a></p>
+<p>github链接=&gt;<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/">https://github.com/hyperledger/burrow/</a></p>
+<p>Burrow是一个权限控制较为严格、以太坊EVM和WASM虚拟机支持、运行于Tendermint共识之上的区块链客户端。其主要由Monax贡献，并由Monax 和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%8B%B1%E7%89%B9%E5%B0%94">英特尔</a>赞助。</p>
+<p>其强调的设计理念包括：</p>
+<ol>
+<li>防篡改的Merkle状态—Tamper-resistant merkle state</li>
+<li>PoS支持</li>
+<li>链上治理原生支持</li>
+<li>以太坊账户一览</li>
+<li>可以根据每个帐户设置代码执行权限</li>
+<li>事件流支持</li>
+<li>智能合约事件弹出至SQL表记录</li>
+<li>GRPC和Protobuf支持</li>
+<li>Javascript SDK支持，客户端库可以生成代码来访问合约，生成的代码是静态的Typescript对象</li>
+<li>Keys服务，提供代理签名服务器</li>
+<li>Web3 RPC，兼容Ethereum主网的开发工具，如 Truffle、 Metamask、Remix</li>
+</ol>
+<p><strong>Burrow应用于多个区块链生产项目</strong>。</p>
+<h3 id="初始化Burrow节点"><a href="#初始化Burrow节点" class="headerlink" title="初始化Burrow节点"></a>初始化Burrow节点</h3><p>从<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/%E4%B8%8B%E8%BD%BD%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%EF%BC%8C%E6%9C%AC%E6%96%87%E4%BB%A5">https://github.com/hyperledger/burrow/下载可执行文件，本文以</a> ubuntu 环境为例。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./burrow spec -f2 -p2 | ./burrow configure --curve-type secp256k1 -s- --pool --separate-genesis-doc=genesis.json</span><br></pre></td></tr></table></figure>
+
+<p><code>./burrow spec</code> 建立一个GenesisSpec作为GenesisDoc和configure命令的模板，f2是指2个full-accounts，p2是指2个participant-accounts。</p>
+<p><code>--curve-type secp256k1</code> 是指定加密曲线的类型。</p>
+<p><code>./burrow configure -s-</code> 通过使用GenesisDoc或GenesisSpec，创建密钥并创建配置文档。<code>--pool </code> 为名为burrowNNN.toml的所有共识节点（validators）编写配置文件。<code>--separate-genesis-doc</code> 将genesis文档投送至 JSON或者TOML文件。</p>
+<ul>
+<li><p>validator-accounts 共识的参与者，需要抵押一部分资金</p>
+</li>
+<li><p>root-accounts 根账户</p>
+</li>
+<li><p>developer-accounts 开发者，功能很多和全节点很像</p>
+</li>
+<li><p>participant-accounts 参与者</p>
+</li>
+<li><p>full-accounts 全功能</p>
+</li>
+</ul>
+<h3 id="启动Burrow节点"><a href="#启动Burrow节点" class="headerlink" title="启动Burrow节点"></a>启动Burrow节点</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow start --config=burrow000.toml &amp;</span><br><span class="line">./burrow start --config=burrow001.toml &amp;</span><br><span class="line">./burrow start --config=burrow002.toml &amp;</span><br><span class="line">./burrow start --config=burrow003.toml &amp;</span><br><span class="line">[5] 12458</span><br><span class="line">[6] 12459</span><br><span class="line">[7] 12460</span><br><span class="line">[8] 12464</span><br></pre></td></tr></table></figure>
+
+<h3 id="网页端访问RPC服务"><a href="#网页端访问RPC服务" class="headerlink" title="网页端访问RPC服务"></a>网页端访问RPC服务</h3><p><a target="_blank" rel="noopener" href="http://127.0.0.1:26759/">http://127.0.0.1:26759/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Available endpoints:</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account_stats</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;accounts</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;chain_id</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;consensus</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;genesis</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;network</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;network&#x2F;registry</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;validators</span><br><span class="line"></span><br><span class="line">Endpoints that require arguments:</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;account_human?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;block?height&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;blocks?minHeight&#x3D;_&amp;maxHeight&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;dump_storage?address&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;name?name&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;names?regex&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;status?block_time_within&#x3D;_&amp;block_seen_time_within&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;storage?address&#x3D;_&amp;key&#x3D;_</span><br><span class="line">&#x2F;&#x2F;127.0.0.1:26759&#x2F;unconfirmed_txs?maxTxs&#x3D;_</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -658,133 +769,6 @@
 <p>从winscp端登录：</p>
 <p><img src="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/2.png"></p>
 <p>最后，按照 <a target="_blank" rel="noopener" href="https://kuboard.cn/install/install-k8s.html#%E9%85%8D%E7%BD%AE%E8%A6%81%E6%B1%82">kuboard -&gt; 安装 -&gt; 安装 kubernetes</a> 手册完成kubernetes安装。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" class="post-title-link" itemprop="url">关于golang服务重启</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-03-30 09:11:01" itemprop="dateCreated datePublished" datetime="2020-03-30T09:11:01+08:00">2020-03-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-09-29 09:07:53" itemprop="dateModified" datetime="2022-09-29T09:07:53+08:00">2022-09-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>我相信每个人都会想，每次更新完代码，更新完配置文件后，就直接这么 <code>ctrl+c</code> 真的没问题吗，<code>ctrl+c</code>到底做了些什么事情呢？</p>
-<p>本文我们讨论 <code>ctrl+c</code> 背后的<strong>信号</strong>以及如何<strong>优雅的重启服务</strong>，以及对 <code>HTTP</code> 服务进行热更新。</p>
-<h3 id="ctrl-c"><a href="#ctrl-c" class="headerlink" title="ctrl + c"></a>ctrl + c</h3><p>在终端执行特定的组合键可以使系统发送特定的信号给此进程，完成一系列的动作</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>信号</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ctrl + c</td>
-<td>SIGINT</td>
-<td>强制进程结束</td>
-</tr>
-<tr>
-<td>ctrl + z</td>
-<td>SIGTSTP</td>
-<td>任务中断，进程挂起</td>
-</tr>
-<tr>
-<td>ctrl + \</td>
-<td>SIGQUIT</td>
-<td>进程结束 和 <code>dump core</code></td>
-</tr>
-<tr>
-<td>ctrl + d</td>
-<td></td>
-<td>EOF</td>
-</tr>
-<tr>
-<td>常用于重启、重新加载进程</td>
-<td>SIGHUP</td>
-<td>若程序中没有捕捉该信号，当收到该信号时，进程就会退出</td>
-</tr>
-<tr>
-<td></td>
-<td>SIGPIPE</td>
-<td>在进程往一个已经关闭的管道写数据时会产生</td>
-</tr>
-</tbody></table>
-<p>因此在我们执行<code>ctrl + c</code>关闭服务端时，<strong>会强制进程结束，导致正在访问的用户等出现问题</strong>。</p>
-<p>常见的 <code>kill -9 pid</code> 会发送 <code>SIGKILL</code> 信号给进程，也是类似的结果。</p>
-<h3 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h3><p>本段中出现<strong>信号</strong>是什么呢？</p>
-<p>信号是 <code>Unix</code> 、类 <code>Unix</code> 以及其他 <code>POSIX</code> 兼容的操作系统中进程间通讯的一种有限制的方式。</p>
-<p>它是一种异步的通知机制，用来提醒进程一个事件（硬件异常、程序执行异常、外部发出信号）已经发生。当一个信号发送给一个进程，操作系统中断了进程正常的控制流程。此时，任何非原子操作都将被中断。如果进程定义了信号的处理函数，那么它将被执行，否则就执行默认的处理函数。</p>
-<h4 id="所有信号"><a href="#所有信号" class="headerlink" title="所有信号"></a>所有信号</h4><p>从go语言 go root SDK中 <code>zerrors_linux_amd64.go</code> 来看，关于信号有如下常量：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">SIGABRT   </span><br><span class="line">SIGALRM   </span><br><span class="line">SIGBUS    </span><br><span class="line">SIGCHLD   </span><br><span class="line">SIGCLD    </span><br><span class="line">SIGCONT   </span><br><span class="line">SIGFPE    </span><br><span class="line">SIGHUP    </span><br><span class="line">SIGILL    </span><br><span class="line">SIGINT    </span><br><span class="line">SIGIO     </span><br><span class="line">SIGIOT    </span><br><span class="line">SIGKILL   </span><br><span class="line">SIGPIPE   </span><br><span class="line">SIGPOLL   </span><br><span class="line">SIGPROF   </span><br><span class="line">SIGPWR    </span><br><span class="line">SIGQUIT   </span><br><span class="line">SIGSEGV   </span><br><span class="line">SIGSTKFLT </span><br><span class="line">SIGSTOP   </span><br><span class="line">SIGSYS    </span><br><span class="line">SIGTERM   </span><br><span class="line">SIGTRAP   </span><br><span class="line">SIGTSTP   </span><br><span class="line">SIGTTIN   </span><br><span class="line">SIGTTOU   </span><br><span class="line">SIGUNUSED </span><br><span class="line">SIGURG    </span><br><span class="line">SIGUSR1   </span><br><span class="line">SIGUSR2   </span><br><span class="line">SIGVTALRM </span><br><span class="line">SIGWINCH  </span><br><span class="line">SIGXCPU   </span><br><span class="line">SIGXFSZ   </span><br></pre></td></tr></table></figure>
-
-<h3 id="怎样算优雅"><a href="#怎样算优雅" class="headerlink" title="怎样算优雅"></a>怎样算优雅</h3><h4 id="优雅地退出"><a href="#优雅地退出" class="headerlink" title="优雅地退出"></a>优雅地退出</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TrapSignal catches the SIGTERM/SIGINT/SIGKILL and executes cb function. </span></span><br><span class="line"><span class="comment">// After that it exits with code 0.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TrapSignal</span><span class="params">(cb <span class="keyword">func</span>()</span>)</span> &#123;</span><br><span class="line">	c := <span class="built_in">make</span>(<span class="keyword">chan</span> os.Signal, <span class="number">1</span>)</span><br><span class="line">	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> sig := <span class="keyword">range</span> c &#123;</span><br><span class="line">			fmt.Sprintf(<span class="string">&quot;captured %v, exiting...&quot;</span>, sig)</span><br><span class="line">			<span class="keyword">if</span> cb != <span class="literal">nil</span> &#123;</span><br><span class="line">				cb()</span><br><span class="line">			&#125;</span><br><span class="line">			os.Exit(<span class="number">0</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在接收退出信号<code>SIGTERM/SIGINT/SIGKILL</code>之后，系统退出<code>os.Exit(0)</code>之前，执行cb() callback函数。具体执行方法建议如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Cmd</span><span class="params">(ctx *cli.Context)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// program of business logic</span></span><br><span class="line">    start()</span><br><span class="line">    </span><br><span class="line">    TrapSignal(logger, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// program of business exit here</span></span><br><span class="line">		stop()</span><br><span class="line">	&#125;)</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="gin退出"><a href="#gin退出" class="headerlink" title="gin退出"></a>gin退出</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	engine := gin.Default()</span><br><span class="line">	engine.GET(<span class="string">&quot;/ping&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;</span><br><span class="line">			<span class="string">&quot;message&quot;</span>: <span class="string">&quot;pong&quot;</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	TrapSignal(<span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;before exit.&quot;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	engine.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
