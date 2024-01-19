@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">232</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,143 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/07/26/JSON-WEB-TOKEN-%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/26/JSON-WEB-TOKEN-%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">JSON WEB TOKEN 介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-26 08:56:12" itemprop="dateCreated datePublished" datetime="2018-07-26T08:56:12+08:00">2018-07-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案。</p>
+<h4 id="一、跨域认证的问题"><a href="#一、跨域认证的问题" class="headerlink" title="一、跨域认证的问题"></a>一、跨域认证的问题</h4><p>互联网服务离不开用户认证。一般流程是下面这样。</p>
+<blockquote>
+<ol>
+<li>用户向服务器发送用户名和密码。</li>
+<li>服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
+<li>服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
+<li>用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
+<li>服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
+</ol>
+</blockquote>
+<p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p>
+<p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
+<p>一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p>
+<p>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</p>
+<h4 id="二、JWT-的原理"><a href="#二、JWT-的原理" class="headerlink" title="二、JWT 的原理"></a>二、JWT 的原理</h4><p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;姓名&quot;</span>: <span class="string">&quot;张三&quot;</span>,</span><br><span class="line">  <span class="string">&quot;角色&quot;</span>: <span class="string">&quot;管理员&quot;</span>,</span><br><span class="line">  <span class="string">&quot;到期时间&quot;</span>: <span class="string">&quot;2018年7月1日0点0分&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。</p>
+<p>服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p>
+<h4 id="三、JWT-的数据结构"><a href="#三、JWT-的数据结构" class="headerlink" title="三、JWT 的数据结构"></a>三、JWT 的数据结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span><br></pre></td></tr></table></figure>
+<p>它是一个很长的字符串，中间用点（.）分隔成三个部分。注意，JWT 内部是没有换行的，这里只是为了便于展示，将它写成了几行。</p>
+<p>JWT 的三个部分依次如下:</p>
+<ul>
+<li>Header（头部）</li>
+<li>Payload（负载）</li>
+<li>Signature（签名）</li>
+</ul>
+<p>写成一行，就是下面的样子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Header.Payload.Signature</span><br></pre></td></tr></table></figure>
+<p>下面依次介绍这三个部分。</p>
+<h5 id="3-1-Header"><a href="#3-1-Header" class="headerlink" title="3.1 Header"></a>3.1 Header</h5><p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;alg&quot;</span>: <span class="string">&quot;HS256&quot;</span>,</span><br><span class="line">  <span class="string">&quot;typ&quot;</span>: <span class="string">&quot;JWT&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，alg属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；typ属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。</p>
+<p>最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p>
+<h5 id="3-2-Payload"><a href="#3-2-Payload" class="headerlink" title="3.2 Payload"></a>3.2 Payload</h5><p>Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p>
+<ul>
+<li>iss (issuer)：签发人</li>
+<li>exp (expiration time)：过期时间</li>
+<li>sub (subject)：主题</li>
+<li>aud (audience)：受众</li>
+<li>nbf (Not Before)：生效时间</li>
+<li>iat (Issued At)：签发时间</li>
+<li>jti (JWT ID)：编号</li>
+</ul>
+<p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;sub&quot;</span>: <span class="string">&quot;1234567890&quot;</span>,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;John Doe&quot;</span>,</span><br><span class="line">  <span class="string">&quot;admin&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。<br>这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p>
+<h5 id="3-3-Signature"><a href="#3-3-Signature" class="headerlink" title="3.3 Signature"></a>3.3 Signature</h5><p>Signature 部分是对前两部分的签名，防止数据篡改。</p>
+<p>首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + <span class="string">&quot;.&quot;</span> +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+<p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用”点”（.）分隔，就可以返回给用户。</p>
+<h5 id="3-4-Base64URL"><a href="#3-4-Base64URL" class="headerlink" title="3.4 Base64URL"></a>3.4 Base64URL</h5><p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。</p>
+<p>JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符+、/和=，在 URL 里面有特殊含义，所以要被替换掉：=被省略、+替换成-，/替换成_ 。这就是 Base64URL 算法。</p>
+<h4 id="四、JWT-的使用方式"><a href="#四、JWT-的使用方式" class="headerlink" title="四、JWT 的使用方式"></a>四、JWT 的使用方式</h4><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
+<p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+
+<p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
+<h4 id="五、JWT-的几个特点"><a href="#五、JWT-的几个特点" class="headerlink" title="五、JWT 的几个特点"></a>五、JWT 的几个特点</h4><ol>
+<li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</li>
+<li>JWT 不加密的情况下，不能将秘密数据写入 JWT。</li>
+<li>JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。</li>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。</li>
+<li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
+<li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</li>
+</ol>
+<p>参考链接： <a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -550,101 +687,6 @@
 <h4 id="Definitions-of-each-abbreviation-in-the-diagram-are"><a href="#Definitions-of-each-abbreviation-in-the-diagram-are" class="headerlink" title="Definitions of each abbreviation in the diagram are;"></a>Definitions of each abbreviation in the diagram are;</h4><p>m: Request message object<br>c: Client ID<br>t: Timestamp<br>v: View ID<br>n: Sequence ID<br>i: Peer(Node) ID<br>r: Result of the request’s operation</p>
 <h4 id="Why-count-gt-2"><a href="#Why-count-gt-2" class="headerlink" title="Why count &gt;= 2 ?"></a>Why count &gt;= 2 ?</h4><p>In the diagram, the peer change its state to prepared or committed when the count value, which is the number of verified messages from other peers, is larger than 2. Actually, the condition is count &gt;= 2*f where f is the maximum number of faulty peers, which the network can tolerate. In this case, f is just 1, so the condition is count &gt;= 2.</p>
 <h4 id="What-is-the-reply-message"><a href="#What-is-the-reply-message" class="headerlink" title="What is the reply message?"></a>What is the reply message?</h4><p>Every node replies the result of the request’s operation to the client individually. The client will collect these reply messages and if f + 1 valid reply messages are arrived, the client will accept the result. In this sample implementation, there is no client. So, every node including the primary will return its reply message to the primary.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" class="post-title-link" itemprop="url">golang 随机数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-25 10:39:42" itemprop="dateCreated datePublished" datetime="2018-06-25T10:39:42+08:00">2018-06-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-09-29 09:08:16" itemprop="dateModified" datetime="2022-09-29T09:08:16+08:00">2022-09-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>随机数主要分为以下三类：</p>
-<ul>
-<li>弱伪随机数</li>
-<li>强伪随机数</li>
-<li>真随机数</li>
-</ul>
-<p>随机数的分类是根据随机数的性质进行的分类。随机数的性质分为以下三类：</p>
-<ul>
-<li>随机性一不存在统计学偏差，是完全杂乱的数列</li>
-<li>不可预测性一不能从过去的数列推测出”下一个出现的数</li>
-<li>不可重现性一除非将数列本身保存下来，否则不能重现相同的数列</li>
-</ul>
-<p>密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。<br><img src="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/1.png"></p>
-<h4 id="GoLang-中的伪随机数"><a href="#GoLang-中的伪随机数" class="headerlink" title="GoLang 中的伪随机数"></a>GoLang 中的伪随机数</h4><p>在 GoLang 中，我们可以通过 math/rand 包里的方法来生成一个伪随机数：</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(rand.Int())   <span class="comment">// =&gt; 134020434</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>你会发现运行的结果一直是 134020434，怎样才能显示不同的结果，需要了解一下“随机种子”的概念。</p>
-<h4 id="随机种子"><a href="#随机种子" class="headerlink" title="随机种子"></a>随机种子</h4><p>伪随机数，是使用一个确定性的算法计算出来的似乎是随机的数序，因此伪随机数实际上并不随机。</p>
-<p>那么自然，在计算伪随机数时假如使用的开始值不变的话，那么算法计算出的伪随机数的数序自然也是不变的咯。</p>
-<p>这个“开始值”，就被称为随机种子。</p>
-<p>可以通过 rand.Seed 方法设置随机种子，如果不设置，则默认值显示为 1，为了保证每次伪随机数生成器工作时使用的是不同的种子，通常的做法是采用当前时间作为种子。</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    rand.Seed(<span class="keyword">int64</span>(time.Now().Unix()))</span><br><span class="line">    fmt.Println(rand.Intn(<span class="number">100</span>))     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="真随机数"><a href="#真随机数" class="headerlink" title="真随机数"></a>真随机数</h4><p>如果我们的应用对安全性要求比较高，需要使用真随机数的话，那么可以使用 crypto/rand 包中的方法。</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;crypto/rand&quot;</span></span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/big&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    result, _ := rand.Int(rand.Reader, big.NewInt(<span class="number">100</span>))</span><br><span class="line">    fmt.Println(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>

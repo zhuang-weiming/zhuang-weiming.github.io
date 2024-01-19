@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">232</span>
+          <span class="site-state-item-count">233</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +232,78 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/01/20/FSM-in-solidity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/01/20/FSM-in-solidity/" class="post-title-link" itemprop="url">FSM-in-solidity</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-01-20 17:13:02" itemprop="dateCreated datePublished" datetime="2020-01-20T17:13:02+08:00">2020-01-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考链接 ==&gt; <a target="_blank" rel="noopener" href="https://github.com/blockapps/blockapps-sol">https://github.com/blockapps/blockapps-sol</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">contract FSM &#123;</span><br><span class="line"></span><br><span class="line">    struct Transition &#123;</span><br><span class="line">        uint state;</span><br><span class="line">        uint evt;</span><br><span class="line">        uint newState;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// expose the transitions to the outside world</span></span><br><span class="line">    Transition[] public transitions;</span><br><span class="line"></span><br><span class="line">    mapping (<span class="function"><span class="params">uint</span> =&gt;</span> uint) stateMachine;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">FSM</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handleEvent</span>(<span class="params">uint _state, uint _event</span>) <span class="title">returns</span> (<span class="params">uint</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stateMachine[calculateKey(_state,_event)];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addTransition</span>(<span class="params">uint _state, uint _event, uint _newState</span>) </span>&#123;</span><br><span class="line">        stateMachine[calculateKey(_state, _event)] = _newState;</span><br><span class="line">        transitions.push(Transition(_state, _event, _newState));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">calculateKey</span>(<span class="params">uint _state, uint _event</span>) <span class="title">returns</span> (<span class="params">uint</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (_state * <span class="number">1000</span>) + _event;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -577,85 +649,6 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/Zokrates/ZoKrates">ZoKrates</a>工具包中，具体的零知识证明算法使用了<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260.pdf">Groth 16</a>。实现协议时也可以使用<a target="_blank" rel="noopener" href="https://github.com/zkcrypto/bellman">Bellman</a>工具包,或者将算法替换为<a target="_blank" rel="noopener" href="https://github.com/dalek-cryptography/bulletproofs">Bulletproofs</a>或者是<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/099">Sonic</a>算法，以实现更好的性能，以及去除对可信初始化的依赖。</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/AztecProtocol/AZTEC">AZTEC协议</a> 实现了基于ERC20资产的交易值隐私。易于同态加密和零知识证明算法。目前已经在MakerDAO的 DAI token 中上线使用。同时，在<a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1108.md">EIP1108</a>中予以完成。</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/27/Ethereum%E7%9A%84Whisper%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/12/27/Ethereum%E7%9A%84Whisper%E9%80%9A%E4%BF%A1%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">Ethereum的Whisper通信介绍</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-12-27 13:51:04" itemprop="dateCreated datePublished" datetime="2019-12-27T13:51:04+08:00">2019-12-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-15 14:32:12" itemprop="dateModified" datetime="2023-09-15T14:32:12+08:00">2023-09-15</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Whisper是Ethereum P2P协议的一部分，可以让消息在同一个区块链内的用户之间传递。</p>
-<ul>
-<li>Whisper的<a target="_blank" rel="noopener" href="https://github.com/ethereum/wiki/wiki/Whisper">使用场景==&gt; link</a></li>
-<li>Whisper的<a target="_blank" rel="noopener" href="https://github.com/ethereum/go-ethereum/wiki/Whisper-Overview">介绍==&gt; link</a></li>
-<li>Whisper的<a target="_blank" rel="noopener" href="https://web3js.readthedocs.io/en/v1.2.4/web3-shh.html">web3接口==&gt; link</a></li>
-</ul>
-<p>Whisper是独立于区块链之外的协议，智能合约不能够使用。</p>
-<p>开启Whisper协议， <code>geth -shh</code> </p>
-<p>节点默认不会回复消息。所以必须直连到接收人，否者消息将无法发送。</p>
 
       
     </div>
