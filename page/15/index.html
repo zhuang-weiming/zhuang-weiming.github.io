@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">234</span>
+          <span class="site-state-item-count">235</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">59</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,145 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/09/30/node%E7%BC%96%E5%86%99%E7%9A%84PKI%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/30/node%E7%BC%96%E5%86%99%E7%9A%84PKI%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">node编写的PKI工具</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-30 15:11:04" itemprop="dateCreated datePublished" datetime="2021-09-30T15:11:04+08:00">2021-09-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-09-14 14:00:01" itemprop="dateModified" datetime="2023-09-14T14:00:01+08:00">2023-09-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="nodepki"><a href="#nodepki" class="headerlink" title="nodepki"></a>nodepki</h2><p>aditosoftware/nodepki: NodePKI is a simple NodeJS based PKI manager for small corporate environments. (github.com)](<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/nodepki">https://github.com/WillZhuang/nodepki</a>) NodePKI 是一个简单的基于 NodeJS 的 PKI 管理器，适用于小型企业环境。</p>
+<h3 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h3><ul>
+<li>Linux OS</li>
+<li>NodeJS</li>
+<li>NPM</li>
+<li>OpenSSL</li>
+</ul>
+<h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/aditosoftware/nodepki.git</span><br><span class="line">cd nodepki</span><br><span class="line">npm install  </span><br></pre></td></tr></table></figure>
+
+<h3 id="Configure-NodePKI"><a href="#Configure-NodePKI" class="headerlink" title="Configure NodePKI"></a>Configure NodePKI</h3><p>配置文件的例子有 <code>config.yml.default</code>，将其内容copy至 <code>NodePKI/data/config/config.yml</code>。修改 <code>config.yml</code> 根据你的配置。<code>config.yml</code> 中的密码将用于创建PKI。</p>
+<h3 id="Start-API-server"><a href="#Start-API-server" class="headerlink" title="Start API server"></a>Start API server</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
+
+<p>启动后，CA 文件将在 <code>data/mypki</code> 文件夹内创建。</p>
+<h3 id="用户登录接口-API-user-login"><a href="#用户登录接口-API-user-login" class="headerlink" title="用户登录接口 API user login"></a>用户登录接口 API user login</h3><h4 id="Add-new-user"><a href="#Add-new-user" class="headerlink" title="Add new user"></a>Add new user</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node nodepkictl useradd --username user1 --password user1password</span><br></pre></td></tr></table></figure>
+
+<h4 id="Remove-user"><a href="#Remove-user" class="headerlink" title="Remove user"></a>Remove user</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node nodepkictl userdel --username user1</span><br></pre></td></tr></table></figure>
+
+<h4 id="List-all-issued-certificates"><a href="#List-all-issued-certificates" class="headerlink" title="List all issued certificates"></a>List all issued certificates</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Content-type: application/json&quot; -d &#x27;&#123; &quot;data&quot;: &#123; &quot;state&quot;:&quot;all&quot; &#125;, &quot;auth&quot;: &#123; &quot;username&quot;:&quot;thomas&quot;, &quot;password&quot;:&quot;test&quot; &#125; &#125;&#x27; http://localhost:8080/api/v1/certificates/list</span><br></pre></td></tr></table></figure>
+
+<h4 id="Request-certificate-from-CSR"><a href="#Request-certificate-from-CSR" class="headerlink" title="Request certificate from CSR"></a>Request certificate from CSR</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Content-type: application/json&quot; -d &#x27;&#123; &quot;data&quot;: &#123; &quot;applicant&quot;:&quot;Thomas&quot;, &quot;csr&quot;:&quot;---CERTIFICATE SIGNING REQUEST---&quot;, &quot;lifetime&quot;:365, &quot;type&quot;:&quot;server&quot; &#125;, &quot;auth&quot;: &#123; &quot;username&quot;:&quot;thomas&quot;, &quot;password&quot;:&quot;test&quot; &#125; &#125;&#x27; http://localhost:8080/api/v1/certificate/request</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用-nodepki-client-管理你的-PKI"><a href="#利用-nodepki-client-管理你的-PKI" class="headerlink" title="利用 nodepki-client 管理你的 PKI"></a>利用 <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/nodepki-client">nodepki-client</a> 管理你的 PKI</h2><p>NodePKI 服务器的简单命令行客户端。</p>
+<h3 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h3><ul>
+<li>NodeJS</li>
+<li>NPM</li>
+<li>OpenSSL</li>
+</ul>
+<h3 id="Setup-1"><a href="#Setup-1" class="headerlink" title="Setup"></a>Setup</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;ThomasLeister&#x2F;nodepki-client.git</span><br><span class="line">cd nodepki-client</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configure"><a href="#Configure" class="headerlink" title="Configure"></a>Configure</h3><p>Copy config.default.yml to config/config.yml and set the settings according to your environment.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">node client help            </span><br><span class="line">[07:34:26] Reading config file data/config/config.yml ...</span><br><span class="line">Usage: client &lt;subcommand&gt; [options]</span><br><span class="line"></span><br><span class="line">命令：</span><br><span class="line">  request    Request a new certificate with or without .csr file</span><br><span class="line">  list       List issued certificates</span><br><span class="line">  get        Get issued certificate by serial number</span><br><span class="line">  revoke     Revoke certificate via cert file</span><br><span class="line">  getcacert  Get CA certificate</span><br><span class="line"></span><br><span class="line">选项：</span><br><span class="line">  -h, --help  显示帮助信息                                                [布尔]</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建证书-与私钥"><a href="#创建证书-与私钥" class="headerlink" title="创建证书(与私钥)"></a>创建证书(与私钥)</h3><p>Create new key + certificate from scratch and store both in out/ directory. Lifetime: 7 days.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --lifetime 7 --out out/</span><br></pre></td></tr></table></figure>
+
+<p>Create new key + certificate from scratch, add intermediate cert to cert and store in out/ directory</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --out out/ --fullchain</span><br></pre></td></tr></table></figure>
+
+<p>Lifetime defaults to <em>cert_lifetime_default</em> setting in config.yml</p>
+<p>Create a new client certificate:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client request --type client --out out/</span><br></pre></td></tr></table></figure>
+
+<p>获取发布的证书</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client list --state all</span><br></pre></td></tr></table></figure>
+
+<p>可用的状态 Valid states:</p>
+<ul>
+<li>all</li>
+<li>valid</li>
+<li>expired</li>
+<li>revoked</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client list --state valid</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取证书-Get-certificate-by-serial-number"><a href="#获取证书-Get-certificate-by-serial-number" class="headerlink" title="获取证书 Get certificate by serial number"></a>获取证书 Get certificate by serial number</h3><p>… and store certificate to out/cert.pem</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client get --serialnumber 324786EA --out out/cert.pem</span><br></pre></td></tr></table></figure>
+
+<h3 id="Revoke-issued-certificate"><a href="#Revoke-issued-certificate" class="headerlink" title="Revoke issued certificate"></a>Revoke issued certificate</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client revoke --cert cert.pem</span><br></pre></td></tr></table></figure>
+
+<h3 id="Get-CA-certificates"><a href="#Get-CA-certificates" class="headerlink" title="Get CA certificates"></a>Get CA certificates</h3><p>Get root certificate:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca root</span><br></pre></td></tr></table></figure>
+
+<p>Write root certificate to file:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca root --out out/root.cert.pem</span><br></pre></td></tr></table></figure>
+
+<p>Get intermediate certificate:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca intermediate</span><br></pre></td></tr></table></figure>
+
+<p>Get intermediate certificate + root certificate (=cert chain) and write to file:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node client getcacert --ca intermediate --chain --out out/ca-chain.cert.pem</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -842,104 +981,6 @@
 <li>Solidity 合约 –&gt; Zolidity 合约 –&gt; zappify –&gt; zApp</li>
 </ul>
 <p>此转译器的主要目标是使开发人员能够快速为 zApps 起草框架。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/" class="post-title-link" itemprop="url">海量信息查重-simhash</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-27 16:21:04" itemprop="dateCreated datePublished" datetime="2021-05-27T16:21:04+08:00">2021-05-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-09 14:10:07" itemprop="dateModified" datetime="2021-08-09T14:10:07+08:00">2021-08-09</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>​    造成网页近重复的可能原因主要包括：镜像网站；内容复制；嵌入广告；计数改变；少量修改<br>​    传统比较两个文本相似性的方法，大多是将文本分词之后，转化为特征向量距离的度量，比如常见的欧氏距离、海明距离或者余弦角度等等。两两比较固然能很好地适应，但这种方法的一个最大的缺点就是，无法将其扩展到海量数据。例如，试想像Google那种收录了数以几十亿互联网信息的大型搜索引擎，每天都会通过爬虫的方式为自己的索引库新增的数百万网页，如果待收录每一条数据都去和网页库里面的每条记录算一下余弦角度，其计算量是相当恐怖的。<br>​    考虑采用为每一个web文档通过hash的方式生成一个指纹（fingerprint）。但是，传统的加密式hash，比如md5，其设计的目的是为了让整个分布尽可能地均匀，输入内容哪怕只有轻微变化，hash就会发生很大地变化。我们理想当中的哈希函数，需要对几乎相同的输入内容，产生相同或者相近的hashcode，换句话说，hashcode的相似程度要能直接反映输入内容的相似程度。很明显，前面所说的md5等传统hash无法满足我们的需求。<br>​    <a target="_blank" rel="noopener" href="http://jacoxu.com/%e5%85%b3%e4%ba%8esimhash%e7%ae%97%e6%b3%95%e5%8e%9f%e7%90%86/">simhash</a>是locality sensitive hash（局部敏感哈希）的一种，它产生的hash签名在一定程度上可以表征原内容的相似度。最早由Moses Charikar在《similarity estimation techniques from rounding algorithms》一文中提出。Google就是基于此算法实现网页文件查重的。假设有以下三段文本：<br>​    <strong>the cat sat on the mat</strong><br>​    <strong>the cat sat on a mat</strong><br>​    <strong>we all scream for ice cream</strong><br>使用传统hash可能会产生如下的结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">irb(main):006:0&gt; p1 = ‘the cat sat on the mat’</span><br><span class="line">irb(main):005:0&gt; p2 = ‘the cat sat on a mat’</span><br><span class="line">irb(main):007:0&gt; p3 = ‘we all scream for ice cream’</span><br><span class="line">irb(main):007:0&gt; p1.hash</span><br><span class="line">=&gt; 415542861</span><br><span class="line">irb(main):007:0&gt; p2.hash</span><br><span class="line">=&gt; 668720516</span><br><span class="line">irb(main):007:0&gt; p3.hash</span><br><span class="line">=&gt; 767429688</span><br></pre></td></tr></table></figure>
-
-<p>使用simhash会应该产生类似如下的结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">irb(main):003:0&gt; p1.simhash</span><br><span class="line">=&gt; 851459198</span><br><span class="line">00110010110000000011110001111110</span><br><span class="line">irb(main):004:0&gt; p2.simhash</span><br><span class="line">=&gt; 847263864</span><br><span class="line">00110010100000000011100001111000</span><br><span class="line">irb(main):002:0&gt; p3.simhash</span><br><span class="line">=&gt; 984968088</span><br><span class="line">00111010101101010110101110011000</span><br></pre></td></tr></table></figure>
-
-<p>​    海明距离的定义，为两个二进制串中不同位的数量。上述三个文本的simhash结果，其两两之间的海明距离为(p1,p2)=4，(p1,p3)=16以及(p2,p3)=12。事实上，这正好符合文本之间的相似度，p1和p2间的相似度要远大于与p3的。距离越小，则相似度越大。一般大文本去重，大小&lt;=3的即可判断为重复。<br>​    如何实现这种hash算法呢？simhash算法分为5个步骤：1、分词、2、hash、3、加权、4、合并、5、降维</p>
-<ol>
-<li>分词：</li>
-</ol>
-<p>选择适合自己的分词库进行分词即可。<br>如“欢迎来到随迹”-&gt;（分词后）“欢迎”、“来到”、“随迹”</p>
-<ol start="2">
-<li>hash：</li>
-</ol>
-<p>对每个词计算其hash值，hash值为二进制数01组成的n-bit签名。<br>设“欢迎“（100101）、“来到”（101011）、“随迹”（101011）</p>
-<ol start="3">
-<li>加权：</li>
-</ol>
-<p>对于给定的文本，权值即为分词后对应词出现的数量。给所有特征向量进行加权，即W = Hash * weight；这里我们假设三个词权值分别为4、5、9；<br>根据计算规则遇到1则hash值和权值正相乘，遇到0则hash值和权值负相乘<br>例如给“欢迎”的hash值“100101”加权得 到：W(欢迎) = 1001014 = 4 -4 -4 4 -4 4，给“来到”的hash值“101011”加权得到：W(来到)=1010115 = 5 -5 5 -5 5 5，剩下的按此规则计算</p>
-<ol start="4">
-<li>合并：</li>
-</ol>
-<p>将上述各个特征向量的加权结果累加，变成只有一个序列串。拿前两个特征向量举例，例如“欢迎”的“4 -4 -4 4 -4 4”和“来到”的“5 -5 5 -5 5 5”进行累加，得到“4+5 -4+-5 -4+5 4+-5 -4+5 4+5”，得到“9 -9 1 -1 1”。</p>
-<ol start="5">
-<li>降维：</li>
-</ol>
-<p>对于n-bit签名的累加结果，如果大于0则置1，否则置0，从而得到该语句的simhash值，最后我们便可以根据不同语句simhash的海 明距离来判断它们的相似度。例如把上面计算出来的“9 -9 1 -1 1 9”降维（某位大于0记为1，小于0记为0），得到的01串为：“1 0 1 0 1 1”，从而形成它们的simhash签名。</p>
-<p><img src="/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash%5C1.png"></p>
 
       
     </div>
