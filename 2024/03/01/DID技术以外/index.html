@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="History and EvolutionFederated Identity (2005 OpenID ~ 2010 OpenID Connect ~ 2015 DIF sovrin), like Sign In with Github&#x2F;Google&#x2F;Facebook.Decentralised identity (2015 ~ 2020 W3C eIDAS ~ ) What DID Enabl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DID技术以外">
+<meta property="og:url" content="https://willzhuang.github.io/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="History and EvolutionFederated Identity (2005 OpenID ~ 2010 OpenID Connect ~ 2015 DIF sovrin), like Sign In with Github&#x2F;Google&#x2F;Facebook.Decentralised identity (2015 ~ 2020 W3C eIDAS ~ ) What DID Enabl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://willzhuang.github.io/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/1.jpg">
+<meta property="og:image" content="https://willzhuang.github.io/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/2.jpg">
+<meta property="article:published_time" content="2024-03-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-06T09:23:13.267Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="DID">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://willzhuang.github.io/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/1.jpg">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>DID技术以外 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#History-and-Evolution"><span class="nav-number">1.</span> <span class="nav-text">History and Evolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-DID-Enables"><span class="nav-number">2.</span> <span class="nav-text">What DID Enables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Recent-Regulatory-Developments"><span class="nav-number">3.</span> <span class="nav-text">Recent Regulatory Developments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EU-Digital-Identity-Wallet"><span class="nav-number">4.</span> <span class="nav-text">EU Digital Identity Wallet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regulatory-Frameworks"><span class="nav-number">5.</span> <span class="nav-text">Regulatory Frameworks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relevant-Standards"><span class="nav-number">6.</span> <span class="nav-text">Relevant Standards</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">236</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DID技术以外
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-03-01 16:00:00" itemprop="dateCreated datePublished" datetime="2024-03-01T16:00:00+08:00">2024-03-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-03-06 17:23:13" itemprop="dateModified" datetime="2024-03-06T17:23:13+08:00">2024-03-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="History-and-Evolution"><a href="#History-and-Evolution" class="headerlink" title="History and Evolution"></a>History and Evolution</h3><p>Federated Identity (2005 <a target="_blank" rel="noopener" href="https://openid.net/">OpenID</a> ~ 2010 <a target="_blank" rel="noopener" href="https://openid.net/developers/how-connect-works/">OpenID Connect</a> ~ 2015 <a target="_blank" rel="noopener" href="https://identity.foundation/">DIF</a> <a target="_blank" rel="noopener" href="https://sovrin.org/">sovrin</a>), like Sign In with Github/Google/Facebook.<br>Decentralised identity (2015 ~ 2020 <a target="_blank" rel="noopener" href="https://www.w3.org/TR/did-core/">W3C</a> <a target="_blank" rel="noopener" href="https://digital-strategy.ec.europa.eu/en/policies/discover-eidas">eIDAS</a> ~ )</p>
+<h3 id="What-DID-Enables"><a href="#What-DID-Enables" class="headerlink" title="What DID Enables"></a>What DID Enables</h3><p>Portability<br>Control<br>Authenticity<br>Security<br>Composability<br>Interoperability<br>Privacy</p>
+<h3 id="Recent-Regulatory-Developments"><a href="#Recent-Regulatory-Developments" class="headerlink" title="Recent Regulatory Developments"></a>Recent Regulatory Developments</h3><ul>
+<li>European Commission - welcome final agreement on EU Digital Identity Wallet.</li>
+<li>King of Bhutan - receives first National Digital Identity.</li>
+<li>18 states of USA - live or piloting Mobile Driving Licenses, 17 more in legislative process.</li>
+<li>British Columbia and Ontario launch Digital ID wallets for citizens.</li>
+</ul>
+<h3 id="EU-Digital-Identity-Wallet"><a href="#EU-Digital-Identity-Wallet" class="headerlink" title="EU Digital Identity Wallet"></a>EU Digital Identity Wallet</h3><p><img src="/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/1.jpg"><a target="_blank" rel="noopener" href="https://kyc-world.com/eu-digital-identity-wallet-on-the-road-to-implementation/">https://kyc-world.com/eu-digital-identity-wallet-on-the-road-to-implementation/</a></p>
+<p><img src="/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/2.jpg"><br><a target="_blank" rel="noopener" href="https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en">https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en</a></p>
+<h3 id="Regulatory-Frameworks"><a href="#Regulatory-Frameworks" class="headerlink" title="Regulatory Frameworks"></a>Regulatory Frameworks</h3><ol>
+<li>Electronic ID - <a target="_blank" rel="noopener" href="https://digital-strategy.ec.europa.eu/en/policies/discover-eidas">eIDAS</a></li>
+<li>Trust Frameworks - British, Canada, Australia, New Zealand, Sweden</li>
+<li>Privacy Regulations - EU GDPR, California consumer privacy, 香港个人资料隐私专员公署</li>
+</ol>
+<h3 id="Relevant-Standards"><a href="#Relevant-Standards" class="headerlink" title="Relevant Standards"></a>Relevant Standards</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://identity.foundation/">DIF</a> - DIDComm</li>
+<li><a target="_blank" rel="noopener" href="https://www.hyperledger.org/projects/aries">Hyperledger - Aries</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/did-core/">W3C</a> - DID, VC</li>
+<li><a target="_blank" rel="noopener" href="https://www.iso.org/standard/69084.html">ISO - MDL</a></li>
+<li>IETF - <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/">SD-JWT VC</a>, <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/">SD-JWT</a> </li>
+<li> <a target="_blank" rel="noopener" href="https://openid.net/">OpenID</a> - <a target="_blank" rel="noopener" href="https://openid.net/sg/openid4vc/libraries/">OIDC 4 VCI, OIDC 4 VP</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/" title="DID技术以外">https://willzhuang.github.io/2024/03/01/DID技术以外/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/DID/" rel="tag"># DID</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/" rel="prev" title="如何使用polygonID">
+                  <i class="fa fa-chevron-left"></i> 如何使用polygonID
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/06/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5%E5%88%86%E7%B1%BB/" rel="next" title="量化交易策略分类">
+                  量化交易策略分类 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '089a787f9e6243e2799d63eaf1f5219e',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
