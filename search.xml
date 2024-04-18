@@ -10651,7 +10651,7 @@
   <entry>
     <title>iden3和polygonID原理应用和实战</title>
     <url>/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/</url>
-    <content><![CDATA[<p>学习笔记 ==&gt; <a href="https://www.youtube.com/watch?v=4ENECj3Jw24&amp;t=1s">https://www.youtube.com/watch?v=4ENECj3Jw24&amp;t=1s</a></p>
+    <content><![CDATA[<p>学习笔记 ==&gt; <a href="https://www.youtube.com/watch?v=4ENECj3Jw24&amp;t=1s">https://www.youtube.com/watch?v=4ENECj3Jw24&amp;t=1s</a><br>原本协议连接 ==&gt; <a href="https://docs.iden3.io/protocol/spec/">https://docs.iden3.io/protocol/spec/</a></p>
 <h1 id="Round0-简介"><a href="#Round0-简介" class="headerlink" title="Round0: 简介"></a>Round0: 简介</h1><p>本文将由浅入深地解读Iden3项目，希望读者读完后，完全理解 iden3的原理和did的精髓，并能够上手使用Iden3开发项目。为什么要做一次Iden3的介绍？笔者很早就研究过did协议，也做过一些粗浅的开发，但是这次使用iden3开发了一整套应用，期间被迫把几乎所有文档和代码都反复研读了几遍。过程虽然痛苦，但对did的理解变得深刻了许多。因此，向各位做一次分享汇报，同时也作为自己的学习笔记。由于脑子一直不太好使，难免有理解的不到位的地方，还希望各位多多交流。</p>
 <h1 id="Round1-应用"><a href="#Round1-应用" class="headerlink" title="Round1: 应用"></a>Round1: 应用</h1><h2 id="背景：什么是DID"><a href="#背景：什么是DID" class="headerlink" title="背景：什么是DID"></a>背景：什么是DID</h2><p>Iden3是一套Did协议的实现，允许使用者使用其提供的sdk构建did应用，并满足w3c did标准的基本语义，包括可验证声明、选择性披露等。如果您不熟悉did协议，可以参考w3c did协议，Dapp Learning也做过相关的讲解，可以参考。如果您没有时间阅读did的知识，就目前而言，您只需要记住如下几个要点：</p>
 <ul>
@@ -10686,8 +10686,8 @@
 <p>所以，产生约束数目的差异就很好解释了。secp256k1中，模p和zksnark自带的p是不一样的，那么只能自己在电路里生成模操作。<strong>但是babyjubjub的p，刚好和zksnark的p相同（它们都等于alt_bn128曲线的群阶），这就允许zksnark在处理bjj的求模操作时不必再去做取模操作，取模会在计算见证时自动完成</strong>。这就好比你写solidity验签时，利用以太坊的预编译合约做验签名，肯定比用纯solidity实现验签要高效。如果我们查看babyjjubjub的代码，也可以印证这一点，它做的是扭曲爱德华曲线的点加法，但是无需任何求模：<br><a href="https://github.com/iden3/circomlib/blob/master/circuits/eddsa.circom">https://github.com/iden3/circomlib/blob/master/circuits/eddsa.circom</a><br>抛开这些内容，我们只需要知道，<strong>BabyJubJub是众多明星项目心仪的曲线，对zk十分友好，也兼具安全性和效率即可</strong>。如果想详细阅读相关资料，推荐阅读如下几篇材料：</p>
 <p><a href="https://z.cash/technology/jubjub/">https://z.cash/technology/jubjub/</a><br><a href="https://eips.ethereum.org/EIPS/eip-2494#specificationhttps://github.com/iden3/iden3-docs/blob/master/source/docs/Baby-Jubjub.pdf">https://eips.ethereum.org/EIPS/eip-2494#specificationhttps://github.com/iden3/iden3-docs/blob/master/source/docs/Baby-Jubjub.pdf</a></p>
 <h3 id="对Zk友好的哈希"><a href="#对Zk友好的哈希" class="headerlink" title="对Zk友好的哈希"></a>对Zk友好的哈希</h3><p>在zksnark中，经常用到的哈希包括Poseidon Hash，Pederson Hash，MiMc Hash。它们都很常见，也出现在iden3的circomlib中，不过Poseidon Hash是Iden3项目主打的哈希方案。介绍它们的算法细节有点超出本文的内容了，也超出了我的能力。只粗浅的谈几点原理，权当茶余饭后的谈资：</p>
-<h3 id="Pederson"><a href="#Pederson" class="headerlink" title="Pederson"></a>Pederson</h3><p>把域上的两个元素作为输入，结合椭圆曲线上的若干生成元，进行标量乘，得到的新曲线点的横坐标，这就是哈希的结果。换言之，记得公式公钥E = dG吧，Pederson Hash可看成这个公式的高配版。它的特点是同态性和隐私性。<br>对于我们开发者而言，除了了解它的输入输出和大致原理，还需要知道一点：circomlib的实现中，曲线采用了Baby Jub Jub，即省去了取模的约束。<br>设 G 和 H 是椭圆曲线上的两个生成点，而 x 和 y 是要哈希的两个不同的输入值。Pedersen 哈希的表达式可以表示为：Hash(x,y)=xG+yH<br>在这里，xG 和 yH 表示椭圆曲线上的标量乘法操作，结果 Hash(x,y) 是曲线上的另一个点，作为哈希值。特别地，其pederson hash还依赖了Babyjub，就避免了生成求模相关的约束。</p>
-<h3 id="PoseidonHash"><a href="#PoseidonHash" class="headerlink" title="PoseidonHash"></a>PoseidonHash</h3><p>Poseidon Hash很容易和Pederson Hash搞混，尽管原理完全不同。它也是一种对zk友好的哈希算法，并被Iden3中广泛的使用。提出于2020年。根据<a href="https://eprint.iacr.org/2019/458.pdf">论文</a>和一些文章，它的约束数目要比Pederson Hash要节省8倍之多，对于PLONK还有据说40倍的提高。首先它基于海绵函数构造，在这个构造中，消息被分解为若干份，第一份消息和最左侧白色的状态的r部分进行异或， 所得结果和剩余的c部分一起进入函数f，生成新的状态，如此一轮一轮的操作，直到生成出结果。<br>而Poseidon Hash中，特别的设置了三个函数用于每一轮的操作。</p>
+<h3 id="Pederson"><a href="#Pederson" class="headerlink" title="Pederson"></a>Pederson</h3><p>把域上的两个元素作为输入，结合椭圆曲线上的若干生成元，进行标量乘，得到的新曲线点的横坐标，这就是哈希的结果。换言之，记得公式公钥E = dG吧，Pederson Hash可看成这个公式的高配版。它的特点是同态性和隐私性。<br>对于我们开发者而言，除了了解它的输入输出和大致原理，还需要知道一点：circomlib的实现中，曲线采用了Baby Jub Jub，即省去了取模的约束。<br>设 G 和 H 是椭圆曲线上的两个生成点，而 x 和 y 是要哈希的两个不同的输入值。Pedersen 哈希的表达式可以表示为：Hash(x,y)=xG+yH<br>在这里，xG 和 yH 表示椭圆曲线上的标量乘法操作，结果 Hash(x,y) 是曲线上的另一个点，作为哈希值。特别地，其Pederson hash还依赖了Baby Jub Jub，就避免了生成求模相关的约束。</p>
+<h3 id="PoseidonHash"><a href="#PoseidonHash" class="headerlink" title="PoseidonHash"></a>PoseidonHash</h3><p>Poseidon Hash很容易和Pederson Hash搞混，尽管原理完全不同。它也是一种对ZK友好的哈希算法，并被Iden3中广泛的使用。提出于2020年。根据<a href="https://eprint.iacr.org/2019/458.pdf">论文</a>和一些文章，它的约束数目要比Pederson Hash要节省8倍之多，对于PLONK还有据说40倍的提高。首先它基于海绵函数构造，在这个构造中，消息被分解为若干份，第一份消息和最左侧白色的状态的r部分进行异或， 所得结果和剩余的c部分一起进入函数f，生成新的状态，如此一轮一轮的操作，直到生成出结果。<br>而Poseidon Hash中，特别的设置了三个函数用于每一轮的操作。</p>
 <ol>
 <li><strong>初始化（Initialisation）</strong>：选择一组初始参数（如有限域、初始状态等）。</li>
 <li><strong>多轮置换（Permutation）</strong>：使用特定的非线性函数（通常是“S-Box”，如乘方或立方）以及线性混合层对输入进行多次置换和混合。</li>
@@ -11147,6 +11147,30 @@
 ]]></content>
       <tags>
         <tag>DID</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>韩国央行数字货币</title>
+    <url>/2024/04/18/%E9%9F%A9%E5%9B%BD%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/</url>
+    <content><![CDATA[<p>Cos-CBDC: Design and Implementation of CBDC on Cosmos Blockchain:<br><a href="https://www.ieice.org/publications/proceedings/bin/pdf_link.php?fname=p303-han.pdf&amp;iconf=APNOMS&amp;year=2021&amp;vol=67&amp;number=TS8-4&amp;lang=E">https://www.ieice.org/publications/proceedings/bin/pdf_link.php?fname=p303-han.pdf&amp;iconf=APNOMS&amp;year=2021&amp;vol=67&amp;number=TS8-4&amp;lang=E</a></p>
+<ul>
+<li>Cos-CBDC, a CBDC system based on Cosmos blockchain. The transaction capacity of Cos-CBDC can be up to <strong>15,000 TPS</strong> depending on the block size and the number of validators in the BFT-based consensus algorithm.</li>
+<li>R3 Corda and Hyperledger Fabric as the blockchain platforms for CBDC, these platforms are not suitable for implementing cross border payments. COSMOS IBC allow different types of blockchains to trade tokens and data with each other.</li>
+<li>cos-CBDC propose multi signature (Multisig) and Multi-party computation (MPC). E.g. Central Bank, Commercial Bank, Customer, these 3 parties  generate a Group Key with MPC. This Group Key.</li>
+</ul>
+<p>The Bank of Korea’s CBDC research:<br><a href="https://www.bis.org/publ/bppdf/bispap123_m.pdf">https://www.bis.org/publ/bppdf/bispap123_m.pdf</a></p>
+<ul>
+<li>there is no immediate need to issue CBDC in Korea. Therefore, the BOK is actively engaging in research and preparations so that if a decision is made in the future regarding the introduction of CBDC, it can be issued without any delay.</li>
+<li>Key considerations in the BOK’s CBDC research<ul>
+<li>The decline in the use of cash.</li>
+<li>Big tech’s market dominance and concentration of personal information.</li>
+<li>The proliferation of global stablecoins.</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>CBDC</tag>
       </tags>
   </entry>
 </search>
