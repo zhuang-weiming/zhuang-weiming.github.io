@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-count">238</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,101 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" class="post-title-link" itemprop="url">golang 随机数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-25 10:39:42" itemprop="dateCreated datePublished" datetime="2018-06-25T10:39:42+08:00">2018-06-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-09-29 09:08:16" itemprop="dateModified" datetime="2022-09-29T09:08:16+08:00">2022-09-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>随机数主要分为以下三类：</p>
+<ul>
+<li>弱伪随机数</li>
+<li>强伪随机数</li>
+<li>真随机数</li>
+</ul>
+<p>随机数的分类是根据随机数的性质进行的分类。随机数的性质分为以下三类：</p>
+<ul>
+<li>随机性一不存在统计学偏差，是完全杂乱的数列</li>
+<li>不可预测性一不能从过去的数列推测出”下一个出现的数</li>
+<li>不可重现性一除非将数列本身保存下来，否则不能重现相同的数列</li>
+</ul>
+<p>密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。<br><img src="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/1.png"></p>
+<h4 id="GoLang-中的伪随机数"><a href="#GoLang-中的伪随机数" class="headerlink" title="GoLang 中的伪随机数"></a>GoLang 中的伪随机数</h4><p>在 GoLang 中，我们可以通过 math/rand 包里的方法来生成一个伪随机数：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(rand.Int())   <span class="comment">// =&gt; 134020434</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你会发现运行的结果一直是 134020434，怎样才能显示不同的结果，需要了解一下“随机种子”的概念。</p>
+<h4 id="随机种子"><a href="#随机种子" class="headerlink" title="随机种子"></a>随机种子</h4><p>伪随机数，是使用一个确定性的算法计算出来的似乎是随机的数序，因此伪随机数实际上并不随机。</p>
+<p>那么自然，在计算伪随机数时假如使用的开始值不变的话，那么算法计算出的伪随机数的数序自然也是不变的咯。</p>
+<p>这个“开始值”，就被称为随机种子。</p>
+<p>可以通过 rand.Seed 方法设置随机种子，如果不设置，则默认值显示为 1，为了保证每次伪随机数生成器工作时使用的是不同的种子，通常的做法是采用当前时间作为种子。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    rand.Seed(<span class="keyword">int64</span>(time.Now().Unix()))</span><br><span class="line">    fmt.Println(rand.Intn(<span class="number">100</span>))     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="真随机数"><a href="#真随机数" class="headerlink" title="真随机数"></a>真随机数</h4><p>如果我们的应用对安全性要求比较高，需要使用真随机数的话，那么可以使用 crypto/rand 包中的方法。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;crypto/rand&quot;</span></span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/big&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    result, _ := rand.Int(rand.Reader, big.NewInt(<span class="number">100</span>))</span><br><span class="line">    fmt.Println(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -641,78 +736,6 @@
 </li>
 </ul>
 <h4 id="More-Projects-companies-working-on-blockchain-and-identity"><a href="#More-Projects-companies-working-on-blockchain-and-identity" class="headerlink" title="More Projects/companies working on blockchain and identity"></a>More Projects/companies working on blockchain and identity</h4><p><a target="_blank" rel="noopener" href="https://github.com/peacekeeper/blockchain-identity">More Projects/companies working on blockchain and identity. </a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/" class="post-title-link" itemprop="url">PBFT协议为什么要求N>3f+1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-05-25 17:00:31" itemprop="dateCreated datePublished" datetime="2018-05-25T17:00:31+08:00">2018-05-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-08-28 09:21:17" itemprop="dateModified" datetime="2022-08-28T09:21:17+08:00">2022-08-28</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>最坏的情况是：f个节点是有问题的，由于到达顺序的问题，有可能f个有问题的节点比正常的f个节点先返回消息，又要保证收到的正常的节点比有问题的节点多，所以需要满足N-f-f&gt;f =&gt; N&gt;3f，所以至少3f+1个节点。</p>
-<p>为什么至少要2f个prepare (包括自己的pre-prepare共2f+1)。这是因为之前论证的，如果有f个fault 节点，那么节点总数至少是N=3f+1。简单说一下论证过程，假设总数N个节点，f个fault节点，那么必须接收到N-f个消息应答，才能够判断出结果(因为fault节点可能不发送应答)。N-f个应答中有f个可能是假的(fault节点发出的)，那么真实的是N-f-f，要求真实的应答大于假的应答，即N-f-f &gt; f ==&gt; N &gt; 3f。所以: N_min = 3f+1 所以在prepare和commit两个阶段必须收到2f+1(包括自己) 的应答消息，才能证明有f+1非fault节点发送了应答。(注意前提是非fault对于相同的消息，会产生相同的消息应答)那么这里也有个问题：就是接收2f+1个消息的时，判断是否一致，是否需要对比数据的的签名。我的看法是，如果2f+1个v，n都相同，d(m)只需要f+1相同就可以了。否则就共识失败了。</p>
 
       
     </div>
