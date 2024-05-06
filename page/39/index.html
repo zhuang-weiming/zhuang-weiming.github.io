@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">240</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,286 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/08/09/OpenPGP-Armor-%E7%BC%96%E7%A0%81%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">OpenPGP Armor 编码介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-08-09 17:31:43" itemprop="dateCreated datePublished" datetime="2018-08-09T17:31:43+08:00">2018-08-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-09-29 09:07:34" itemprop="dateModified" datetime="2022-09-29T09:07:34+08:00">2022-09-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="OpenPGP-Armor"><a href="#OpenPGP-Armor" class="headerlink" title="OpenPGP Armor"></a>OpenPGP Armor</h3><p>OpenPGP是使用最广泛的电子邮件加密标准。它由Internet工程任务组（IETF）的OpenPGP工作组定义为RFC 4880中的建议标准.OpenPGP最初源自由Phil Zimmermann创建的PGP软件。</p>
+<p>虽然OpenPGP的主要目的是端到端加密电子邮件通信，但它也用于加密消息传递和其他用例，如密码管理器。</p>
+<p>OpenPGP的加密消息，签名证书和密钥的基本描述是八位的字节流。为了通过不能保障安全的网络通道传输OpenPGP的二进制八位字节，需要编码为可打印的二进制字符。OpenPGP提供将原始8位二进制八位字节流转换为可打印ASCII字符流，称为Radix-64编码或ASCII Armor。</p>
+<p>ASCII Armor是OpenPGP的可选功能。当OpenPGP将数据编码为ASCII Armor时，它会在Radix-64编码数据中放置特定的Header。OpenPGP可以使用ASCII Armor来保护原始二进制数据。OpenPGP通过使用Header告知用户在ASCII Armor中编码了什么类型的数据。</p>
+<h3 id="ASCII-Armor的数据结构如下："><a href="#ASCII-Armor的数据结构如下：" class="headerlink" title="ASCII Armor的数据结构如下："></a>ASCII Armor的数据结构如下：</h3><ul>
+<li>Armor标题行，匹配数据类型</li>
+<li>Armor Headers</li>
+<li>A Blank（零长度或仅包含空格） Line</li>
+<li>The ASCII-Armored data</li>
+<li>An Armor Checksum</li>
+<li>The Armor Tail，取决于护甲标题线</li>
+</ul>
+<h3 id="具体示例："><a href="#具体示例：" class="headerlink" title="具体示例："></a>具体示例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PGP MESSAGE-----</span><br><span class="line"></span><br><span class="line">Version: OpenPrivacy 0.99</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">yDgBO22WxBHv7O8X7O&#x2F;jygAEzol56iUKiXmV+XmpCtmpqQUKiQrFqclFqUDBovzSvBSFjNSiVHsuAA&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">&#x3D;njUN</span><br><span class="line"></span><br><span class="line">-----END PGP MESSAGE-----</span><br></pre></td></tr></table></figure>
+
+<h3 id="golang-org-x-crypto-openpgp-armor-代码分析："><a href="#golang-org-x-crypto-openpgp-armor-代码分析：" class="headerlink" title="golang.org/x/crypto/openpgp/armor 代码分析："></a><a href="golang.org/x/crypto/openpgp/armor">golang.org/x/crypto/openpgp/armor</a> 代码分析：</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Encode 返回一个 WriteCloser，它将对 写入的数据进行编码</span></span><br><span class="line"><span class="comment">// Encode returns a WriteCloser which will encode the data written to it in</span></span><br><span class="line"><span class="comment">// OpenPGP Armor.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Encode</span><span class="params">(out io.Writer, blockType <span class="keyword">string</span>, headers <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>)</span> <span class="params">(w io.WriteCloser, err error)</span></span> &#123;</span><br><span class="line">	bType := []<span class="keyword">byte</span>(blockType)</span><br><span class="line">	err = writeSlices(out, armorStart, bType, armorEndOfLineOut)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> k, v := <span class="keyword">range</span> headers &#123;</span><br><span class="line">		err = writeSlices(out, []<span class="keyword">byte</span>(k), armorHeaderSep, []<span class="keyword">byte</span>(v), newline)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	_, err = out.Write(newline)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	e := &amp;encoding&#123;</span><br><span class="line">		out:       out,</span><br><span class="line">		breaker:   newLineBreaker(out, <span class="number">64</span>),</span><br><span class="line">		crc:       crc24Init,</span><br><span class="line">		blockType: bType,</span><br><span class="line">	&#125;</span><br><span class="line">	e.b64 = base64.NewEncoder(base64.StdEncoding, e.breaker)</span><br><span class="line">	<span class="keyword">return</span> e, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将返回值进一步封装为字符串</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">EncodeArmor</span><span class="params">(blockType <span class="keyword">string</span>, headers <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>, data []<span class="keyword">byte</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	buf := <span class="built_in">new</span>(bytes.Buffer)</span><br><span class="line">	w, err := armor.Encode(buf, blockType, headers)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	_, err = w.Write(data)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	err = w.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Errorf(<span class="string">&quot;could not encode ascii armor: %s&quot;</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> buf.String()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实际使用中将公钥导出为 ASCII Armor 格式</span></span><br><span class="line"><span class="comment">// ExportPubKey returns public keys in ASCII armored format.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">armorPubKeyBytes</span><span class="params">(bz []<span class="keyword">byte</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> armorBytes(bz, blockTypePubKey)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">armorBytes</span><span class="params">(bz []<span class="keyword">byte</span>, blockType <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	header := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;type&quot;</span>:    <span class="string">&quot;Info&quot;</span>,</span><br><span class="line">		<span class="string">&quot;version&quot;</span>: <span class="string">&quot;0.0.0&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> armor.EncodeArmor(blockType, header, bz)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ExportPubKey</span><span class="params">(name <span class="keyword">string</span>)</span> <span class="params">(armor <span class="keyword">string</span>, err error)</span></span> &#123;</span><br><span class="line">	bz := Get(infoKey(name))</span><br><span class="line">	<span class="keyword">if</span> bz == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, fmt.Errorf(<span class="string">&quot;no key to export with name %s&quot;</span>, name)</span><br><span class="line">	&#125;</span><br><span class="line">	info, err := readInfo(bz)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> armorPubKeyBytes(info.GetPubKey().Bytes()), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 CovalentChain 公钥、私钥的导入导出和传输等情况，使用 ASCII Armor 编码格式非常合适。另外，在私钥情况下，通常都需要在加密后，再进行编码处理。</p>
+<p>参考链接：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc4880">https://tools.ietf.org/html/rfc4880</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.openpgp.org/">https://www.openpgp.org/</a></li>
+<li><a href="golang.org/x/crypto/openpgp/armor">golang.org/x/crypto/openpgp/armor</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/07/26/WebAssembly-%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/26/WebAssembly-%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">WebAssembly 介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-26 14:48:32" itemprop="dateCreated datePublished" datetime="2018-07-26T14:48:32+08:00">2018-07-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="解决什么问题？"><a href="#解决什么问题？" class="headerlink" title="解决什么问题？"></a>解决什么问题？</h4><p>JavaScript 从诞生起到现在已经变成最流行的编程语言，这背后正是 Web 的发展所推动的。Web 应用变得更多更复杂，但这也渐渐暴露出了 JavaScript 的问题：</p>
+<ol>
+<li>语法太灵活导致开发大型 Web 项目困难；</li>
+<li>性能不能满足一些场景的需要。</li>
+<li>针对以上两点缺陷，近年来出现了一些 JS 的代替语言，例如：</li>
+</ol>
+<ul>
+<li>微软的 TypeScript 通过为 JS 加入静态类型检查来改进 JS 松散的语法，提升代码健壮性；</li>
+<li>谷歌的 Dart 则是为浏览器引入新的虚拟机去直接运行 Dart 程序以提升性能；</li>
+<li>火狐的 asm.js 则是取 JS 的子集，JS 引擎针对 asm.js 做性能优化。</li>
+</ul>
+<p>以上尝试各有优缺点，其中：</p>
+<ul>
+<li>TypeScript 只是解决了 JS 语法松散的问题，最后还是需要编译成 JS 去运行，对性能没有提升；</li>
+<li>Dart 只能在 Chrome 预览版中运行，无主流浏览器支持，用 Dart 开发的人不多；</li>
+<li>asm.js 语法太简单、有很大限制，开发效率低。</li>
+</ul>
+<p>三大浏览器巨头分别提出了自己的解决方案，互不兼容，这违背了 Web 的宗旨； 是技术的规范统一让 Web 走到了今天，因此形成一套新的规范去解决 JS 所面临的问题迫在眉睫。</p>
+<p>于是 WebAssembly 诞生了，WebAssembly 是一种新的字节码格式，主流浏览器都已经支持 WebAssembly。和 JS 需要解释执行不同的是，WebAssembly 字节码和底层机器码很相似可快速装载运行，因此性能相对于 JS 解释执行大大提升。 也就是说 WebAssembly 并不是一门编程语言，而是一份字节码标准，需要用高级编程语言编译出字节码放到 WebAssembly 虚拟机中才能运行， 浏览器厂商需要做的就是根据 WebAssembly 规范实现虚拟机。</p>
+<h4 id="WebAssembly-原理"><a href="#WebAssembly-原理" class="headerlink" title="WebAssembly 原理"></a>WebAssembly 原理</h4><p>要搞懂 WebAssembly 的原理，需要先搞懂计算机的运行原理。电子计算机都是由电子元件组成，为了方便处理电子元件只存在开闭两种状态，对应着 0 和 1，也就是说计算机只认识 0 和 1，数据和逻辑都需要由 0 和 1 表示，也就是可以直接装载到计算机中运行的机器码。 机器码可读性极差，因此人们通过高级语言 C、C++、Rust、Go 等编写再编译成机器码。</p>
+<p>由于不同的计算机 CPU 架构不同，机器码标准也有所差别，常见的 CPU 架构包括 x86、AMD64、ARM，因此在由高级编程语言编译成可自行代码时需要指定目标架构。</p>
+<p>WebAssembly 字节码是一种抹平了不同 CPU 架构的机器码，WebAssembly 字节码不能直接在任何一种 CPU 架构上运行，但由于非常接近机器码，可以非常快的被翻译为对应架构的机器码，因此 WebAssembly 运行速度和机器码接近，这听上去非常像 Java 字节码。</p>
+<p>相对于 JS，WebAssembly 有如下优点：</p>
+<ol>
+<li>体积小：由于浏览器运行时只加载编译成的字节码，一样的逻辑比用字符串描述的 JS 文件体积要小很多；</li>
+<li>加载快：由于文件体积小，再加上无需解释执行，WebAssembly 能更快的加载并实例化，减少运行前的等待时间；</li>
+<li>兼容性问题少：WebAssembly 是非常底层的字节码规范，制订好后很少变动，就算以后发生变化,也只需在从高级语言编译成字节码过程中做兼容。可能出现兼容性问题的地方在于 JS 和 WebAssembly 桥接的 JS 接口。</li>
+</ol>
+<p>每个高级语言都去实现源码到不同平台的机器码的转换工作是重复的，高级语言只需要生成底层虚拟机(LLVM)认识的中间语言(LLVM IR)，LLVM 能实现：</p>
+<ul>
+<li>LLVM IR 到不同 CPU 架构机器码的生成；</li>
+<li>机器码编译时性能和大小优化。</li>
+</ul>
+<p>除此之外 LLVM 还实现了 LLVM IR 到 WebAssembly 字节码的编译功能，也就是说只要高级语言能转换成 LLVM IR，就能被编译成 WebAssembly 字节码，目前能编译成 WebAssembly 字节码的高级语言有：</p>
+<ul>
+<li>AssemblyScript:语法和 TypeScript 一致，对前端来说学习成本低，为前端编写 WebAssembly <a target="_blank" rel="noopener" href="http://webassembly.org.cn/">最佳选择</a>；</li>
+<li>c\c++:官方推荐的方式;</li>
+<li>Rust:语法复杂、学习成本高，对前端来说可能会不适应;</li>
+<li>Kotlin:语法和 Java、JS 相似，语言学习成本低;</li>
+<li>Golang:语法简单学习成本低。但对 WebAssembly 的支持还处于未正式发布阶段。</li>
+</ul>
+<p>通常负责把高级语言翻译到 LLVM IR 的部分叫做编译器前端，把 LLVM IR 编译成各架构 CPU 对应机器码的部分叫做编译器后端； 现在越来越多的高级编程语言选择 LLVM 作为后端，高级语言只需专注于如何提供开发效率更高的语法同时保持翻译到 LLVM IR 的程序执行性能。</p>
+<h4 id="编写-WebAssembly"><a href="#编写-WebAssembly" class="headerlink" title="编写 WebAssembly"></a>编写 WebAssembly</h4><p>接下来详细介绍如何使用 AssemblyScript 来编写 WebAssembly，实现斐波那契序列的计算。 用 TypeScript 实现斐波那契序列计算的模块 f.ts 如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">x: i32</span>): <span class="title">i32</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x === <span class="number">1</span> || x === <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f(x - <span class="number">1</span>) + f(x - <span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在按照 <a target="_blank" rel="noopener" href="https://github.com/AssemblyScript/assemblyscript#installation">AssemblyScript 提供的安装教程成功安装</a>后， 再通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asc f.ts -o f.wasm</span><br></pre></td></tr></table></figure>
+<p>就能把以上代码编译成可运行的 WebAssembly 模块。</p>
+<p>为了加载并执行编译出的 f.wasm 模块，需要通过 JS 去加载并调用模块上的 f 函数，为此需要以下 JS 代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">&#x27;f.wasm&#x27;</span>) <span class="comment">// 网络加载 f.wasm 文件</span></span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.arrayBuffer()) <span class="comment">// 转成 ArrayBuffer</span></span><br><span class="line">    .then(WebAssembly.instantiate) <span class="comment">// 编译为当前 CPU 架构的机器码 + 实例化</span></span><br><span class="line">    .then(<span class="function"><span class="params">mod</span> =&gt;</span> &#123; <span class="comment">// 调用模块实例上的 f 函数计算</span></span><br><span class="line">    <span class="built_in">console</span>.log(mod.instance.f(<span class="number">50</span>));</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>以上代码中出现了一个新的内置类型 i32，这是 AssemblyScript 在 TypeScript 的基础上内置的类型。AssemblyScript 和 TypeScript 有细微区别，AssemblyScript 是 TypeScript 的子集，为了方便编译成 WebAssembly 在 TypeScript 的基础上加了更严格的类型限制，区别如下：</p>
+<ul>
+<li>比 TypeScript 多了很多更细致的内置类型，以优化性能和内存占用;</li>
+<li>不能使用 any 和 undefined 类型，以及枚举类型；</li>
+<li>可空类型的变量必须是引用类型，而不能是基本数据类型如 string、number、boolean；</li>
+<li>函数中的可选参数必须提供默认值，函数必须有返回类型，无返回值的函数返回类型需要是 void；</li>
+<li>不能使用 JS 环境中的内置函数，只能使用 AssemblyScript 提供的内置函数。</li>
+</ul>
+<p>总体来说 AssemblyScript 比 TypeScript 又多了很多限制，编写起来会觉得局限性很大； 用 AssemblyScript 来写 WebAssembly 经常会出现 tsc 编译通过但运行 WebAssembly 时出错的情况，这很可能就是你没有遵守以上限制导致的；但 AssemblyScript 通过修改 TypeScript 编译器默认配置能在编译阶段找出大多错误。</p>
+<p>AssemblyScript 的实现原理其实也借助了 LLVM，它通过 TypeScript 编译器把 TS 源码解析成 AST，再把 AST 翻译成 IR，再通过 LLVM 编译成 WebAssembly 字节码实现； 上面提到的各种限制都是为了方便把 AST 转换成 LLVM IR。</p>
+<h4 id="为什么选-AssemblyScript-作为-WebAssembly-开发语言"><a href="#为什么选-AssemblyScript-作为-WebAssembly-开发语言" class="headerlink" title="为什么选 AssemblyScript 作为 WebAssembly 开发语言"></a>为什么选 AssemblyScript 作为 WebAssembly 开发语言</h4><p>AssemblyScript 相对于 C、Rust 等其它语言去写 WebAssembly 而言，好处除了对前端来说无额外新语言学习成本外，还有对于不支持 WebAssembly 的浏览器，可以通过 TypeScript 编译器编译成可正常执行的 JS 代码，从而实现从 JS 到 WebAssembly 的平滑迁移。</p>
+<h4 id="接入-Webpack-构建"><a href="#接入-Webpack-构建" class="headerlink" title="接入 Webpack 构建"></a>接入 Webpack 构建</h4><p>任何新的 Web 开发技术都少不了构建流程，为了提供一套流畅的 WebAssembly 开发流程，接下来介绍接入 Webpack 具体步骤。</p>
+<ol>
+<li>安装以下依赖，以便让 TS 源码被 AssemblyScript 编译成 WebAssembly。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;assemblyscript&quot;</span>: <span class="string">&quot;github:AssemblyScript/assemblyscript&quot;</span>,</span><br><span class="line">    <span class="string">&quot;assemblyscript-typescript-loader&quot;</span>: <span class="string">&quot;^1.3.2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;typescript&quot;</span>: <span class="string">&quot;^2.8.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;webpack&quot;</span>: <span class="string">&quot;^3.10.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;webpack-dev-server&quot;</span>: <span class="string">&quot;^2.10.1&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改 webpack.config.js，加入 loader：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.ts$/</span>,</span><br><span class="line">                loader: <span class="string">&#x27;assemblyscript-typescript-loader&#x27;</span>,</span><br><span class="line">                options: &#123;</span><br><span class="line">                    sourceMap: <span class="literal">true</span>,</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改 TypeScript 编译器配置 tsconfig.json，以便让 TypeScript 编译器能支持 AssemblyScript 中引入的内置类型和函数。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;extends&quot;</span>: <span class="string">&quot;../../node_modules/assemblyscript/std/portable.json&quot;</span>,</span><br><span class="line">  <span class="string">&quot;include&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;./**/*.ts&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>配置直接继承自 assemblyscript 内置的配置文件。</li>
+</ol>
+<h4 id="WebAssembly-相关文件格式"><a href="#WebAssembly-相关文件格式" class="headerlink" title="WebAssembly 相关文件格式"></a>WebAssembly 相关文件格式</h4><p>前面提到了 WebAssembly 的二进制文件格式 wasm，这种格式的文件人眼无法阅读，为了阅读 WebAssembly 文件的逻辑，还有一种文本格式叫 wast； 以前面讲到的计算斐波那契序列的模块为例，对应的 wast 文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">func $src&#x2F;asm&#x2F;module&#x2F;f (param f64) (result f64)</span><br><span class="line">(local i32)</span><br><span class="line">  get_local 0</span><br><span class="line">  f64.const 1</span><br><span class="line">  f64.eq</span><br><span class="line">  tee_local 1</span><br><span class="line">  if i32</span><br><span class="line">    get_local 1</span><br><span class="line">  else</span><br><span class="line">    get_local 0</span><br><span class="line">    f64.const 2</span><br><span class="line">    f64.eq</span><br><span class="line">  end</span><br><span class="line">  i32.const 1</span><br><span class="line">  i32.and</span><br><span class="line">  if</span><br><span class="line">    f64.const 1</span><br><span class="line">    return</span><br><span class="line">  end</span><br><span class="line">  get_local 0</span><br><span class="line">  f64.const 1</span><br><span class="line">  f64.sub</span><br><span class="line">  call 0</span><br><span class="line">  get_local 0</span><br><span class="line">  f64.const 2</span><br><span class="line">  f64.sub</span><br><span class="line">  call 0</span><br><span class="line">  f64.add</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>这和汇编语言非常像，里面的 f64 是数据类型，f64.eq f64.sub f64.add 则是 CPU 指令。</p>
+<p>为了把二进制文件格式 wasm 转换成人眼可见的 wast 文本，需要安装 WebAssembly 二进制工具箱WABT， 在 Mac 系统下可通过 brew install WABT 安装，安装成功后可以通过命令 wasm2wast f.wasm 获得 wast；除此之外还可以通过 wast2wasm f.wast -o f.wasm 逆向转换回去。</p>
+<h4 id="WebAssembly-相关工具"><a href="#WebAssembly-相关工具" class="headerlink" title="WebAssembly 相关工具"></a>WebAssembly 相关工具</h4><p>除了前面提到的 WebAssembly 二进制工具箱，WebAssembly 社区还有以下常用工具：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://kripken.github.io/emscripten-site/">Emscripten</a>: 能把 C、C++代码转换成 wasm、asm.js；</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/WebAssembly/binaryen">Binaryen</a>: 提供更简洁的 IR，把 IR 转换成 wasm，并且提供 wasm 的编译时优化、wasm 虚拟机，wasm 压缩等功能，前面提到的 AssemblyScript 就是基于它。</li>
+</ul>
+<h4 id="WebAssembly-JS-API"><a href="#WebAssembly-JS-API" class="headerlink" title="WebAssembly JS API"></a>WebAssembly JS API</h4><p>目前 WebAssembly 只能通过 JS 去加载和执行，但未来在浏览器中可以通过像加载 JS 那样 <script src="f.wasm"></script> 去加载和执行 WebAssembly，下面来详细介绍如何用 JS 调 WebAssembly。</p>
+<p>JS 调 WebAssembly 分为 3 大步：加载字节码 &gt; 编译字节码 &gt; 实例化，获取到 WebAssembly 实例后就可以通过 JS 去调用了，以上 3 步具体的操作是：</p>
+<ol>
+<li>对于浏览器可以通过网络请求去加载字节码，对于 Nodejs 可以通过 fs 模块读取字节码文件；</li>
+<li>在获取到字节码后都需要转换成 ArrayBuffer 后才能被编译，通过 WebAssembly 通过的 JS API <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile">WebAssembly.compile</a> 编译后会通过 Promise resolve 一个 WebAssembly.Module，这个 module 是不能直接被调用的需要；</li>
+<li>在获取到 module 后需要通过 WebAssembly.Instance API 去实例化 module，获取到 Instance 后就可以像使用 JS 模块一个调用了。<br>其中的第 2、3 步可以合并一步完成，前面提到的 WebAssembly.instantiate 就做了这两个事情。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WebAssembly.instantiate(bytes).then(<span class="function"><span class="params">mod</span>=&gt;</span>&#123;</span><br><span class="line">  mod.instance.f(<span class="number">50</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="直接执行-wasm-二进制文件"><a href="#直接执行-wasm-二进制文件" class="headerlink" title="直接执行 wasm 二进制文件"></a>直接执行 wasm 二进制文件</h4><p>前面提到的 Binaryen 提供了在命令行中直接执行 wasm 二进制文件的工具，在 Mac 系统下通过 brew install binaryen 安装成功后，通过 wasm-shell f.wasm 文件即可直接运行。</p>
+<h4 id="在-Node-js-中运行"><a href="#在-Node-js-中运行" class="headerlink" title="在 Node.js 中运行"></a>在 Node.js 中运行</h4><p>目前 V8 JS 引擎已经添加了对 WebAssembly 的支持，Chrome 和 Node.js 都采用了 V8 作为引擎，因此 WebAssembly 也可以运行在 Node.js 环境中；</p>
+<p>V8 JS 引擎在运行 WebAssembly 时，WebAssembly 和 JS 是在同一个虚拟机中执行，而不是 WebAssembly 在一个单独的虚拟机中运行，这样方便实现 JS 和 WebAssembly 之间的相互调用。</p>
+<p>要让上面的例子在 Node.js 中运行，可以使用以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toUint8Array</span>(<span class="params">buf</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> u = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(buf.length);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; buf.length; ++i) &#123;</span><br><span class="line">        u[i] = buf[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> u;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadWebAssembly</span>(<span class="params">filename, imports</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 读取 wasm 文件，并转换成 byte 数组</span></span><br><span class="line">    <span class="keyword">const</span> buffer = toUint8Array(fs.readFileSync(filename));</span><br><span class="line">    <span class="comment">// 编译 wasm 字节码到机器码</span></span><br><span class="line">    <span class="keyword">return</span> WebAssembly.compile(buffer)</span><br><span class="line">        .then(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 实例化模块</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> WebAssembly.Instance(<span class="built_in">module</span>, imports)</span><br><span class="line">        &#125;)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">loadWebAssembly(<span class="string">&#x27;../temp/assembly/module.wasm&#x27;</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">instance</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 调用 f 函数计算</span></span><br><span class="line">        <span class="built_in">console</span>.log(instance.exports.f(<span class="number">10</span>))</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在 Nodejs 环境中运行 WebAssembly 的意义其实不大，原因在于 Nodejs 支持运行原生模块，而原生模块的性能比 WebAssembly 要好。 如果你是通过 C、Rust 去编写 WebAssembly，你可以直接编译成 Nodejs 可以调用的原生模块。</p>
+<h4 id="WebAssembly-实际应用"><a href="#WebAssembly-实际应用" class="headerlink" title="WebAssembly 实际应用"></a>WebAssembly 实际应用</h4><p>从上面的内容可见 WebAssembly 主要是为了解决 JS 的性能瓶颈，也就是说 WebAssembly 适合用于需要大量计算的场景，例如：</p>
+<ol>
+<li>在浏览器中处理音视频，<a target="_blank" rel="noopener" href="https://github.com/Bilibili/flv.js/">flv.js</a> 用 WebAssembly 重写后性能会有很大提升；</li>
+<li>React 的 dom diff 中涉及到大量计算，用 WebAssembly 重写 React 核心模块能提升性能。Safari 浏览器使用的 JS 引擎 JavaScriptCore 也已经支持 WebAssembly，RN 应用性能也能提升；<br>突破大型 3D 网页游戏性能瓶颈，<a target="_blank" rel="noopener" href="https://feday.fequan.com/2017/WebAssembly%E5%9C%A8%E7%99%BD%E9%B9%AD%E5%BC%95%E6%93%8E%E7%9A%84%E5%AE%9E%E8%B7%B5.pdf">白鹭引擎已经开始探索用 WebAssembly</a>。</li>
+</ol>
+<h4 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h4><ul>
+<li><a target="_blank" rel="noopener" href="http://webassembly.org.cn/">WebAssembly中文</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/WebAssembly/Using_the_JavaScript_API">使用 WebAssembly JavaScript API</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ewasm/design">Ethereum flavored WebAssembly (eWASM) Design</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ewasm/evm2wasm">Transcompiles EVM code to eWASM</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -537,160 +817,6 @@
 <p>每加入一个新的节点都需要与某一个可靠的第三方节点进行身份验证。</p>
 <p>2）纯分布式的身份认证</p>
 <p>每加入一个新的节点都需要获得当前网络中所有可靠节点的认证，这种方法采用了随机密钥分发验证的公钥体制的认证方式，需要获得网络中大多数节点的认证才能加入该网络。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">简评三个基于VRF的共识算法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-07-14 09:34:29" itemprop="dateCreated datePublished" datetime="2018-07-14T09:34:29+08:00">2018-07-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-11-17 15:04:39" itemprop="dateModified" datetime="2023-11-17T15:04:39+08:00">2023-11-17</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[转]<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2b9fa8633df1">https://www.jianshu.com/p/2b9fa8633df1</a></p>
-<p>Algorand、Dfinity和Ouroboros Praos三个共识算法（Dfinity虽然是项目名，这里用来称呼其共识算法也应无不妥）近期较受关注，而且都是基于VRF(Verifiable Random Function) 设计，可以对照学习。Algorand的版本很多，以下单指 1607.01341v9，暂称其为Algorand’（笔者手中另有Algorand的最新版本，其中已对下文提及的几处问题完成了修正，可与本文参看）。</p>
-<h3 id="一、VRF的共性"><a href="#一、VRF的共性" class="headerlink" title="一、VRF的共性"></a>一、VRF的共性</h3><p>VRF的意义很好理解——用以完成出块人（群）的随机选择。为此，VRF的返回值应尽力难以预测。先看Algorand’和Dfinity的套路是怎么做的：大体上是先将前一个随机数（最初的随机数却是协议给定的）和某种代表高度、轮次的变量进行组合，用某种私钥对之进行签名（或者是先签名再组合），最后哈希一下得出最新的随机数。这样产生的随机数旁人很容易验证其合乎算法，”V”就这样得到了；而哈希返回值又是随机分布的，“R”也因此得到保证。在此过程中，为降低操纵结果的可能性，有两个注意事项：A) 签名算法应当具有唯一性，也就是用同一把私钥对同样的信息进行签名，只有一个合法签名可以通过验证——普通的非对称加解密算法一般不具备这个属性，如SM2。如果用的签名算法没有这种uniqueness属性，那在生成新随机数的时候就存在通过反复多次尝试签名以挑出最有利者的余地，会降低安全性。B) 避免在生成新随机数时将当前块的数据作为随机性来源之一，比如引用本块交易列表的merkle root值等等，因为这样做会给出块人尝试变更打包交易顺序、尝试打包不同交易以产生最有利的新随机数的余地。在设计和检视新的共识算法时，以上两个注意事项是要特别留意的。</p>
-<p>考察一下VRF的返回结果应该如何运用。目前所见用法中，VRF的返回结果可以用来公开完成节点或节点群体的选择，也可以私密地完成选择。以Dfinity为例，它是利用mod操作来唯一、公开地确定一个Group。Algorand、Ouroboros Praos是私密选择的范例，大致套路是对VRF的最新返回值，配上轮次等变量后用私钥进行签名并哈希，如果哈希值小于某个阈值，节点就可以私密地知道自己被选中。这种方法很可能在网络节点数较多时的表现会更稳定，否则幸运儿个数上下波动会较大，进而影响协议表现，包括空块和分叉。</p>
-<h3 id="二、简评强同步假设版本的Algorand"><a href="#二、简评强同步假设版本的Algorand" class="headerlink" title="二、简评强同步假设版本的Algorand"></a>二、简评强同步假设版本的Algorand</h3><p>私密选择提供了较强的抗击定点攻击的能力，但由于幸运儿的总数对于任何一个幸运儿都是不能预知的，也因此给后续共识算法的设计和区块链的优化带来了困难。Algorand‘采用了很强的同步网络假设（同步网络假设下的共识算法当然容易做一些），要求预先知道网络消息传播时间的上限：在固定时间内完成对固定比例的用户的网络传播。比如要知道，1KB消息，在1秒钟内完成全网95%的传播，而1MB消息需要1.5分钟完成全网95%的传播。但这个传输上限应该如何选择？ 通过一段时间的统计结果再乘以一个系数这种经验统计？只能说“感觉上可以”，但如果要严谨和安全，Algorand‘算法应该补充证明即使在遭遇DDOS或互联网拥堵的情况下消息传播严重超限后算法仍然能够保证安全——然而这个证明是缺失的。作为对照，Ouroboros Praos公开承认之前在同步网络假设下设计的Ouroboros协议在异步网络条件下会出错，所以才又做了Ouroboros Praos；新版本的Algorand承认在弱同步网络时会在不同的块上达成共识（后续网络恢复强同步时分叉可以得到解决）云云，这些都可资参考。</p>
-<p>即使我们暂且认可Algorand’算法可以通过设定一个很大的传播时间上限来回应上述问题，但随之而来的是此时可以看出此算法缺乏一个非常好的特性：Responsiveness。这个特性指的是：若一个协议被设计为在一个较大的传播时间上限DELTA下工作，但若实际传播时间是较小的delta，则协议的实际推进步调将只和delta有关，这种协议被称为Responsive的。具有Responsive特性的共识算法再配以同步网络假设会非常理想——出于安全，上限可以设置很大，然而协议执行速度只和当时网络条件有关。Algorand’并不具有这种特性。平均而言，Algorand’完成共识所需的消息传送次数是11轮，每轮如果要确保安全，完成共识的时间就会很长，单个分区的吞吐量就不会太高。当然，架构设计涉及很多取舍，最终评价一个算法好还是不好还是要回到初心——准备拿来实现的目标是什么。上述分析只是尝试客观地指出Algorand’算法的几个少为人知的固有特征，供读者自行评估。</p>
-<h3 id="三、简评Dfinity的可扩展性问题"><a href="#三、简评Dfinity的可扩展性问题" class="headerlink" title="三、简评Dfinity的可扩展性问题"></a>三、简评Dfinity的可扩展性问题</h3><p>私密选择并且立即上任的做法，也给系统分片带来了极大挑战。Dfinity是明确要做分片(Sharding)的，所以必须直面挑战。可扩展性问题非常复杂，完整解决这个问题需要通盘考虑网络、存储、计算三方面的可扩展性——时下大多数区块链3.0项目只注意到计算的分片和可扩展性，忽略了其余二者，从而不可能真正实现理想的扩展。由于公链节点网络带宽的制约，计算合约所需的数据通常很难迅速地从一个节点拷贝到另一节点，所以就算用VRF实现了飘忽来去的出块节点选择，存储节点是没法同样飘逸如风的。明显的选择有那么几个：全部节点存储全部数据，不同节点静态地分配用来存储不同分区。前者的可扩展性很差，对于后者而言，如果出块节点漂浮不定且出块节点还需要完成合约运算，就意味着基于P2P网络来回远程访问存储，性能多半急剧下降；动态决定的出块节点只完成排序共识，计算能力和存储捆绑，通过静态分区提供可扩展性，可能是合理的应对。然而，最可恨的就是“然而”二字——即使如此，系统还存在一处对存储和网络构成压力的所在：最终用户提交的待打包交易。普通公链（先不考虑EOS那种）的带宽有限，如果用户提交的待打包交易必须粗放型地全网泛滥传播，那现有网络带宽可以提供多少TPS？如果出块节点是静态分区或者至少提前一段时间公开知晓，事情尚有回旋余地；如果出块节点是如此飘忽不定，而且直到最后一刻也只有这些节点自己知道，那无论是用户还是出块节点候选人看起来最直接的应对之道就是全网泛滥传播全部待打包交易、保存全部待打包交易，这样带宽和存储仍然成为系统瓶颈。</p>
-<p>所以这里碰到的，本质上还是安全、可扩展性、去中心化的不可能三角。</p>
-<h3 id="四、简评Ouroboros-Praos"><a href="#四、简评Ouroboros-Praos" class="headerlink" title="四、简评Ouroboros Praos"></a>四、简评Ouroboros Praos</h3><p>BM怼 Ouroboros的文字已经流传广泛。BM的话当然有些明显是不对的，比如Ouroboros的DPOS是指”Dynamic [stake distribution] POS”而不是BM的Delegate POS，但其关于Pareto分布的评论则值得玩味。如果我们仔细浏览后出的Ouroboros Praos，可以发现协议的安全假设和安全证明完全没有考虑经济博弈因素，因此洋洋洒洒的证明很可能会不得要领而错过真正需要防护的方向——毕竟一直以来POS/DPOS这些协议的血管里面流淌的就是基于经济博弈和人性进行设计的血液。最明显的例子是在forward secure signature的实现方法上，协议目前的设计是要求每个好的节点自觉主动地安全删除用过的私钥，而完全没有考虑近乎零的私钥保存成本如何面对bribe attack的诱惑，然而这却是值得考虑的。除了形式化证明之外，Ouroboros Praos本身并没有太多值得关注的协议特征，总体上就是用VRF抽签结合POS算法并针对某些安全假设进行了形式化证明，其做事的态度是非常值得赞赏的。</p>
-<h3 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h3><p>这几个算法本身颇有创意，也很值得学习。与此同时，在看过以太坊CASPER目前披露的分区技术后，笔者的体会是：区块链3.0的竞争才刚刚开始，从以太坊团队的技术路线看，他们的技术考量和选择要比很多宣称要超越以太坊的团队来得深刻和全面。如果当真要超越以太坊，还是应该先从理解以太坊开始。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" class="post-title-link" itemprop="url">pbft图解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-25 10:46:16" itemprop="dateCreated datePublished" datetime="2018-06-25T10:46:16+08:00">2018-06-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-08-28 09:21:13" itemprop="dateModified" datetime="2022-08-28T09:21:13+08:00">2022-08-28</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/bigpicturelabs/consensusPBFT">https://github.com/bigpicturelabs/consensusPBFT</a><br><img src="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg"></p>
-<h4 id="Definitions-of-each-abbreviation-in-the-diagram-are"><a href="#Definitions-of-each-abbreviation-in-the-diagram-are" class="headerlink" title="Definitions of each abbreviation in the diagram are;"></a>Definitions of each abbreviation in the diagram are;</h4><p>m: Request message object<br>c: Client ID<br>t: Timestamp<br>v: View ID<br>n: Sequence ID<br>i: Peer(Node) ID<br>r: Result of the request’s operation</p>
-<h4 id="Why-count-gt-2"><a href="#Why-count-gt-2" class="headerlink" title="Why count &gt;= 2 ?"></a>Why count &gt;= 2 ?</h4><p>In the diagram, the peer change its state to prepared or committed when the count value, which is the number of verified messages from other peers, is larger than 2. Actually, the condition is count &gt;= 2*f where f is the maximum number of faulty peers, which the network can tolerate. In this case, f is just 1, so the condition is count &gt;= 2.</p>
-<h4 id="What-is-the-reply-message"><a href="#What-is-the-reply-message" class="headerlink" title="What is the reply message?"></a>What is the reply message?</h4><p>Every node replies the result of the request’s operation to the client individually. The client will collect these reply messages and if f + 1 valid reply messages are arrived, the client will accept the result. In this sample implementation, there is no client. So, every node including the primary will return its reply message to the primary.</p>
 
       
     </div>

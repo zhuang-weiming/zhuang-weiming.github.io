@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">240</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,178 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/02/14/%E5%85%B3%E4%BA%8EChatGPT%E5%AD%A6%E4%B9%A0%E7%94%9F%E6%88%90%E5%BC%8FAI%E7%9A%84%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/02/14/%E5%85%B3%E4%BA%8EChatGPT%E5%AD%A6%E4%B9%A0%E7%94%9F%E6%88%90%E5%BC%8FAI%E7%9A%84%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">关于ChatGPT学习生成式AI的原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-02-14 14:41:00 / Modified: 15:18:31" itemprop="dateCreated datePublished" datetime="2023-02-14T14:41:00+08:00">2023-02-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="生成式AI的创新之处"><a href="#生成式AI的创新之处" class="headerlink" title="生成式AI的创新之处"></a>生成式AI的创新之处</h3><p>近期以ChatGPT为代表的“生成式AI”（Generative AI）技术得到了广泛关注。**和传统的对话机器人（Chatbot）不同，OpenAI的ChatGPT确实有独特的技术创新，在人工智能的发展史上会是一个里程碑，甚至有可能和2016年谷歌的AIphaGo相提并论。目前的趋势显示，ChatGPT的应用前景比AlphaGo更广泛，更有潜力在推动这股AI技术潮流的发展方面发挥重要作用。</p>
+<p><img src="/2023/02/14/%E5%85%B3%E4%BA%8EChatGPT%E5%AD%A6%E4%B9%A0%E7%94%9F%E6%88%90%E5%BC%8FAI%E7%9A%84%E5%8E%9F%E7%90%86/1.png"></p>
+<h3 id="首先来学习对话机器人的工作机理"><a href="#首先来学习对话机器人的工作机理" class="headerlink" title="首先来学习对话机器人的工作机理"></a>首先来学习对话机器人的工作机理</h3><p>首先用户需要通过文字或语音向对话机器人输入一段信息，紧接着机器人会识别并理解这段信息，判断由该信息开启的对话任务，并给出相应的回复内容。最早期的对话机器人更像一个基于数据库或者知识库的查询系统，根据用户输入的信息查询到对应的答复。可以说这些答案基于不同的索引（index），已经事先存入对话机器人的数据库或者知识库，就跟搜索引擎使用的算法很类似。当对话机器人收到用户输入的信息以后，主要工作是处理信息中的关键词来生成最匹配的索引，再基于一定规则找到最匹配的答复。后来发展的对话机器人也可以利用训练数据，通过机器学习来产生答复，比如2014年的深度学习模型Seq2Seq被成功地用到了对话机器人上面。这些机器学习模型最喜欢的训练数据就是事先采集和标注好的在相同场景下（比如智能客服）的对话记录。</p>
+<h4 id="1-早期最有影响力的生成式AI技术是2014年发明的生成式对抗网络（Generative-Adversarial-Networks）"><a href="#1-早期最有影响力的生成式AI技术是2014年发明的生成式对抗网络（Generative-Adversarial-Networks）" class="headerlink" title="1.早期最有影响力的生成式AI技术是2014年发明的生成式对抗网络（Generative Adversarial Networks）"></a>1.早期最有影响力的生成式AI技术是2014年发明的生成式对抗网络（Generative Adversarial Networks）</h4><p><strong>其本质是一种深度学习模型，原理上有两个神经网络相互对立，一个生成器和一个判别器。</strong>生成器或生成网络负责生成类似于源数据的新数据或内容，判别器或判别网络负责评价源数据和生成数据之间的区别并向生成器提供反馈。生成式对抗网络被成功用于计算机视觉技术，比如图像的生成和合成，但是在对话机器人技术上的成功应用并不多。</p>
+<h4 id="2-ChatGPT的核心是2017年出现的新生成式AI技术Transformer和随后产生的基于Transformer的大规模预训练技术，并引入了一些新的强化学习算法"><a href="#2-ChatGPT的核心是2017年出现的新生成式AI技术Transformer和随后产生的基于Transformer的大规模预训练技术，并引入了一些新的强化学习算法" class="headerlink" title="2.ChatGPT的核心是2017年出现的新生成式AI技术Transformer和随后产生的基于Transformer的大规模预训练技术，并引入了一些新的强化学习算法"></a>2.ChatGPT的核心是2017年出现的新生成式AI技术Transformer和随后产生的基于Transformer的大规模预训练技术，并引入了一些新的强化学习算法</h4><p><strong>其中的核心技术Transformer是2017年谷歌发明的，它来源于2017年谷歌的一篇<a href="https://willzhuang.github.io/2023/01/16/Transformer%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/">科研论文《Attention Is All Your Need》</a>。</strong>原本这篇论文聚焦的是自然语言处理领域，但由于其出色的解释性和计算性能，Transformer开始被广泛使用在AI各个领域和不同数据类型，成为最近几年最流行的AI算法模型。</p>
+<h4 id="3-Transformer的另一个巨大贡献是产生了预训练语言模型，比如GPT、BERT和ERNIE等"><a href="#3-Transformer的另一个巨大贡献是产生了预训练语言模型，比如GPT、BERT和ERNIE等" class="headerlink" title="3.Transformer的另一个巨大贡献是产生了预训练语言模型，比如GPT、BERT和ERNIE等"></a>3.Transformer的另一个巨大贡献是产生了预训练语言模型，比如GPT、BERT和ERNIE等</h4><p>这些预训练语言模型用到的对语言的编码器和解码器，都是由一个个的Transformer组件拼接在一起形成的。比如，预训练语言模型BERT 所做的就是从大规模上亿的无标注文本语料中，随机抠掉一部分单词，形成类似完形填空的题型，不断学习空格处到底该填写什么。BERT的训练是从大量无标注数据中学习复杂的上下文联系。BERT和GPT（Generative Pre-Training）最主要的区别在于，BERT仅仅使用编码器部分进行模型训练，GPT仅仅使用解码器部分，所以GPT更适用于生成文本。</p>
+<p><strong>总的来说，预训练的第一步是在大规模无标注数据（如网上文本）上进行模型预训练，学习通用的语言模式；第二步在给定自然语言处理任务的小规模有标注数据上进行模型微调，快速提升模型完成这些任务的能力，最终形成可部署应用的模型**</strong>。**预训练模型已经在大规模语料上训练好了参数，用户在用的时候只需要在这个基础上训练更新参数。用户可以在神经网络加的最后的一层上进行分类或者更多的语言推理任务（比如对话等）。预训练技术成功激活了深度神经网络对大规模无标注数据的自监督学习能力，而Transformer和基于它的GPT、BERT、ERNIE等模型奠定了自然语言处理领域大模型的基础，证明了通过大规模语料的预训练技术，能够大幅度提升各类文本阅读理解的效果，开启了自然语言处理的新时代。</p>
+<p>从Transformer提出到“大规模预训练模型”GPT和BERT的诞生，再到GPT-2的迭代，以及到GPT-3和ChatGPT的出现，标志着OpenAI成为营利性公司。<strong>ChatGPT可以说是OpenAI公司利用最新生成式AI技术（Transformer）和最新大规模预训练模型（GPT-3.5）在对话机器人上的成功应用。</strong>GPT-3的模型所采用的数据量多达上万亿，主要使用的是公共爬虫数据集和有着超过万亿单词的人类语言数据集，对应的模型参数量也达到1,750亿。另外，ChatGPT还采用了新的强化学习算法RLHF（Reinforcement Learning from Human Feedback，从人类反馈中强化学习）来对模型进行训练，具体是让一些外包人员不断从模型的输出结果中筛选，判断哪些句子是好的，哪些是低质量的，这样就可以训练得到一个强化学习中的奖励（reward）模型。</p>
+<p><strong>ChatGPT属于现象级应用，大家都可以有直观感受，未来这类应用的体验提升和更新速度只会更快，理解其背后的技术有助于我们把握这个趋势。</strong>从大量用户在网上分享的反馈来看，与同类对话机器人相比，ChatGPT具有几个明显的优点：</p>
+<ul>
+<li><p><strong>更有“对话”的感觉：</strong>ChatGPT在语言组织的逻辑性和系统性方面有了显著提高，感觉像是一个助理，甚至是老师在回答问题。</p>
+</li>
+<li><p><strong>回答理性又全面：</strong>不像网上搜索问题那样，很可能碰到一些固执的回答者，只站在一个角度回答问题，ChatGPT能做到多角度全方位回答。</p>
+</li>
+<li><p><strong>可以理解上下文：</strong>例如，在提出一个问题之后，可以用“就刚才的回答中，你指的xx到底是什么意思？”等形式，进行追问。</p>
+</li>
+<li><p><strong>会根据用户的反馈，持续优化模型：</strong>ChatGPT答案的质量、完整性每天都有一定提高。这是新的强化学习算法和几十名外包人员每天筛选答案的贡献。</p>
+</li>
+<li><p><strong>可以协助创作内容，甚至对计算机代码进行指导：</strong>注意，ChatGPT并不是简单地从某个模版中选择内容，而是根据实时计算的结果提供答案。你给的信息越精准，回复就越有针对性。</p>
+</li>
+</ul>
+<h3 id="ChatGPT还不能做什么"><a href="#ChatGPT还不能做什么" class="headerlink" title="ChatGPT还不能做什么"></a>ChatGPT还不能做什么</h3><p><strong>ChatGPT提供的答案只能被认为是不保证100%可靠的建议。</strong>因为ChatGPT是基于大规模预训练这样的无监督学习，我们无法分辨预训练信息的来源和真实性。ChatGPT给出答案的精确度取决于预训练样本规模（目前预训练样本只限2021年之前的数据）和样本本身的准确度。所以很明显，ChatGPT并没有连接一个稳妥可靠的知识库，这也说明目前这个版本无法完全替代搜索引擎，而更适用于一些务虚的任务，比如写小说、写诗歌、搞辩论。<strong>我们认为给ChatGPT连接一个高质量的知识库会极大提高ChatGPT的准确性。一个可以考虑的方向是，让ChatGPT能够持续更新知识、查询知识，从而带领搜索引擎和互联网的发展。目前看来，至少ChatGPT可以做到将搜索引擎上的信息润色、组织成最适合人阅读的形式，直接反馈给用户。</strong></p>
+<h3 id="预见未来"><a href="#预见未来" class="headerlink" title="预见未来"></a>预见未来</h3><p><strong>直接应用生成式AI（Generative AI ）的场景是人机互动的文本、图像、语音、视频，也可以生成软件代码、音乐、虚拟世界的三维模型等，在消费领域可以用来做艺术创作、游戏开发、人员陪护等，它为商业领域里也带来很多数字化创新的机会。</strong></p>
+<p>企业级解决方案的创新是用户界面的变化，采用自然语言进行交互。无论是交易型应用还是分析型应用，基于AI采用自然语言进行互动的方式早有所探索，例如企业级商业智能可以采用持续的自然语言问答进行数据查询，并自动生成自然语言回答或者直观的图表；利用生成式AI可以进一步提升用户界面生成效率和质量。</p>
+<p>聊天机器人在很多业务场景下并不能完全替代人工，这种方式不仅存在AI准确性的问题，而且在用户体验上缺乏沟通的温度，然而，AI具有超越人脑的信息处理能力，可以提供辅助人员互动的智慧，支持人与人之间有温度的沟通。不仅具有前文所述的行动计划推荐能力，而且能够实时分析销售人员的行为和话术，提出有针对性的辅导、改进建议，提升销售成功率，生成式AI进一步提升了此类智能化辅助程度。</p>
+<p>可以预见，企业数字化应用可能会有以下变化：</p>
+<ol>
+<li><strong>实现业务流程的全自动导航，</strong>例如，根据用户反馈，通过生成式AI自动改进产品设计，这将改变传统的产品开发相关企业软件（例如PLM、CAD）的应用流程。</li>
+<li><strong>2B软件架构简化，强调前端开发，进一步实现“数字技术民主化”，降低工作中对数据、信息和知识的访问门槛，用户能够更好地使用数字化技术和AI。</strong>传统企业软件架构是应用软件访问集中的数据库，需要用代码来连接用户请求和数据，而未来数据和算法都是服务，利用生成式AI产生代码的过程将极为简化，企业软件将完全聚焦于业务运营和用户体验的持续创新。</li>
+<li>下一步，如果AI还具备了，推理，推演，演绎的能力，例如回答：明天我要去见哪个客户会更有助于达成我这个月的销售指标？用什么手段能降低5%的费用而不影响员工满意度？那么AI将会觉有更加深远的影响。</li>
+</ol>
+<p><strong>生成式AI还将改变企业软件行业的商业生态——AI算法和工程等技术平台的开源社区蓬勃发展，利用开源技术开发基础模型越来越普遍。然而，体现企业差异化能力的是喂给AI的原料，所以数据资源的价值将更为凸显，具有独特know-how和来源的数据将成为AI背后的能力。</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/01/16/Transformer%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/16/Transformer%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Transformer论文学习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-16 16:03:00" itemprop="dateCreated datePublished" datetime="2023-01-16T16:03:00+08:00">2023-01-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-02-14 14:40:54" itemprop="dateModified" datetime="2023-02-14T14:40:54+08:00">2023-02-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><p>Transformer论文逐段精读 ==&gt; Youtube <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nzqlFIcCSWQ%EF%BC%8CBilibili">https://www.youtube.com/watch?v=nzqlFIcCSWQ，Bilibili</a> <a target="_blank" rel="noopener" href="http://b23.tv/7fUGUv2">http://b23.tv/7fUGUv2</a></p>
+</li>
+<li><p>论文位置 “Attention Is All You Need” ==&gt; <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.03762.pdf">https://arxiv.org/pdf/1706.03762.pdf</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -527,198 +699,6 @@
 
 <p>若为了获得更多的场景，更多的模拟，这里的计算量会迅速上升，从而导致整体的运算速度较慢。</p>
 <p>关联阅读 - <a href="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/">FMR-波动率</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/" class="post-title-link" itemprop="url">FMR-波动率</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-11-21 15:21:00" itemprop="dateCreated datePublished" datetime="2022-11-21T15:21:00+08:00">2022-11-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 13:54:23" itemprop="dateModified" datetime="2023-09-14T13:54:23+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>金融资产价格包括股票，期货，期权，目前本人在思考加密货币的价格是否可以套用经典的金融风险模型，学习笔记汇报如下，<u>由于比较书写数学公式不便，本文只记录了关键说明和程序代码</u>。</p>
-<h3 id="1-EWMA"><a href="#1-EWMA" class="headerlink" title="1. EWMA"></a>1. EWMA</h3><p>指数移动加权平均 - Exponentially  Weighted Moving Average, EWMA.</p>
-<p>EWMA波动率迭代告诉我们，当前一天的波动率是前一天波动率的函数，这也提供了一种用过去波动率预测未来波动率的方法。这种方法，不需要保存过去所有的数值，而且计算量较小，因此在实际中广泛使用。</p>
-<p>The ewm() function is used to provide exponential weighted functions. 指数加权功能。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># Creating the series. Using the range() function, we create a series and set the index to shot.</span></span><br><span class="line">my_series=pd.Series(<span class="built_in">range</span>(<span class="number">1</span>,<span class="number">20</span>,<span class="number">5</span>), index=[x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">&#x27;shot&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Printing the series</span></span><br><span class="line">print(my_series)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using Series.ewm(). We calculate the exponential weight of elements in the series using the ewm() function and set the com and adjust parameters.</span></span><br><span class="line">print(my_series.ewm(com=<span class="number">0.5</span>, adjust=<span class="literal">True</span>).mean())</span><br></pre></td></tr></table></figure>
-
-<p>其中，</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Series.ewm(self, com=<span class="literal">None</span>, span=<span class="literal">None</span>, halflife=<span class="literal">None</span>, alpha=<span class="literal">None</span>, min_periods=<span class="number">0</span>, adjust=<span class="literal">True</span>, ignore_na=<span class="literal">False</span>, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong><code>com</code></strong>: This represents the decay in terms of the center of mass, α=1/(1+com), for com≥0. 根据Center of Mass质心指定衰减。</p>
-</li>
-<li><p><strong><code>span</code></strong>: This represents the decay in terms of the span, α=2/(span+1), for span≥1. 根据跨度范围（例如，天数）指定衰减。</p>
-</li>
-<li><p><strong><code>halflife</code></strong>: This represents the decay in terms of the half-life, α=1−exp(log(0.5)/halflife), for halflife&gt;0. 根据半衰期指定衰减。</p>
-</li>
-<li><p><strong><code>alpha</code></strong>: This indicates smoothing factor α, 0&lt;α≤1. 衰减系数。</p>
-</li>
-<li><p><strong><code>min_periods</code></strong>: This represents the minimum number of observations needed to have a value in the window. The default value is <code>0</code>. </p>
-</li>
-<li><p><strong><code>adjust</code></strong>: This is divided by the decaying adjustment factor into the initial periods to consider the imbalance in the relative weightings (looking at the EWMA as a moving average). 计算权重的方式。</p>
-</li>
-<li><p><strong><code>ignore_na</code></strong>: This specifies that the missing values should be ignored when calculating weights. The default is <code>False</code>. 如何对待空值。</p>
-</li>
-<li><p><strong><code>axis</code></strong>: The default value is 0. It specifies the axis on which the function is to be performed. If the value is 0, the operation is performed across the rows. Otherwise, the operation is performed across the columns. 数轴。</p>
-</li>
-</ul>
-<h3 id="2-自回归条件异方差模型ARCH"><a href="#2-自回归条件异方差模型ARCH" class="headerlink" title="2. 自回归条件异方差模型ARCH"></a>2. 自回归条件异方差模型ARCH</h3><p>EWMA与实际情况有不符合的地方，例如，股票收益的波动率是随着时间而变化的。异方差（heteroscedasticity）是指一系列的随机变量值的方差不同。这个模型以自回归方式，通过刻画随时间变异的条件方差，成功解决了时间序列的波动性问题。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas_datareader</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt </span><br><span class="line"><span class="keyword">from</span> arch <span class="keyword">import</span> arch_model</span><br><span class="line"><span class="comment"># sp500 price</span></span><br><span class="line">sp500 = pandas_datareader.data.DataReader([<span class="string">&#x27;sp500&#x27;</span>], data_source=<span class="string">&#x27;fred&#x27;</span>, start=<span class="string">&#x27;12-28-2009&#x27;</span>, end=<span class="string">&#x27;12-28-2020&#x27;</span>)</span><br><span class="line"><span class="comment"># daily log return</span></span><br><span class="line">log_return_daily = np.log(sp500 / sp500.shift(<span class="number">1</span>))</span><br><span class="line">log_return_daily.dropna(inplace=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># ARCH(1) model</span></span><br><span class="line">arch=arch_model(y=log_return_daily,mean=<span class="string">&#x27;Constant&#x27;</span>,lags=<span class="number">0</span>,vol=<span class="string">&#x27;ARCH&#x27;</span>,p=<span class="number">1</span>,o=<span class="number">0</span>,q=<span class="number">0</span>,dist=<span class="string">&#x27;normal&#x27;</span>)</span><br><span class="line">archmodel=arch.fit()</span><br><span class="line">archmodel.summary()</span><br><span class="line">archmodel.plot()</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="3-广义自回归条件异方差模型GARCH"><a href="#3-广义自回归条件异方差模型GARCH" class="headerlink" title="3. 广义自回归条件异方差模型GARCH"></a>3. 广义自回归条件异方差模型GARCH</h3><p>GARCH是对ARCH建模的一种重要推广。其后，又有诸如NGARCH，IGARCH，EGARCH等一系列针对不同应用等衍生模型相继出现。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GARCH(1,1) model</span></span><br><span class="line">garch=arch_model(y=log_return_daily,mean=<span class="string">&#x27;Constant&#x27;</span>,lags=<span class="number">0</span>,vol=<span class="string">&#x27;GARCH&#x27;</span>,p=<span class="number">1</span>,o=<span class="number">0</span>,q=<span class="number">1</span>,dist=<span class="string">&#x27;normal&#x27;</span>)</span><br><span class="line">garchmodel=garch.fit()</span><br><span class="line">garchmodel.summary()</span><br><span class="line">garchmodel.plot()</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="4-模型比较"><a href="#4-模型比较" class="headerlink" title="4.模型比较"></a>4.模型比较</h3><p>对于EWMA模型，利用了通常用的0.94，即 JP Morgan 的RiskMetrics采用的设定。所以，下图中，EWMA中的 λ 通常为 0.94。当GARCH(1, 1)模型的参数 β=0 时，即为ARCH(1, 1)模型。而当 ω=0，α=1-λ，β=λ 时，GARCH(1, 1)模型变换成为EWMA模型。</p>
-<p><img src="/2022/11/21/FMR-%E6%B3%A2%E5%8A%A8%E7%8E%87/1.png"></p>
-<h3 id="5-隐含波动率"><a href="#5-隐含波动率" class="headerlink" title="5.隐含波动率"></a>5.隐含波动率</h3><p>请参考相关阅读中的金融分享管理 - 视频 <a target="_blank" rel="noopener" href="https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176%E3%80%82">https://space.bilibili.com/513194466/channel/seriesdetail?sid=650176。</a></p>
-<p><strong>疑问：市场波动率模型以布朗运动位基础，这真的符合市场的实际情况吗？特别是长期投资？如乔布斯，国家资本主义，等等。</strong></p>
-<p>相关阅读：</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/10/27/AIGC-%E7%BB%98%E7%94%BB%E5%88%9D%E4%BD%93%E9%AA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/10/27/AIGC-%E7%BB%98%E7%94%BB%E5%88%9D%E4%BD%93%E9%AA%8C/" class="post-title-link" itemprop="url">AIGC-绘画初体验</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-27 11:48:00" itemprop="dateCreated datePublished" datetime="2022-10-27T11:48:00+08:00">2022-10-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-05 15:29:58" itemprop="dateModified" datetime="2023-09-05T15:29:58+08:00">2023-09-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>AI-Generated Content，字面意思是AI生产内容。AI写诗、AI作曲、AI绘画、AI换脸……甚至有创始人认为，游戏中导入图片生成模型的“捏脸系统”都是AIGC。</p>
-<p><a target="_blank" rel="noopener" href="https://jina.ai/product/disco-art/">https://jina.ai/product/disco-art/</a> 是较为直接的一个体验。</p>
-<p>下图为其主页的静态展示：</p>
-<p><img src="/2022/10/27/AIGC-%E7%BB%98%E7%94%BB%E5%88%9D%E4%BD%93%E9%AA%8C/1.png"></p>
-<h3 id="在线体验"><a href="#在线体验" class="headerlink" title="在线体验"></a>在线体验</h3><p><a target="_blank" rel="noopener" href="https://colab.research.google.com/github/jina-ai/discoart/blob/main/discoart.ipynb">https://colab.research.google.com/github/jina-ai/discoart/blob/main/discoart.ipynb</a></p>
-<ol>
-<li>按照python notebook的步骤，逐步启动。</li>
-<li>Specify parameters，在制定参数的步骤，输入描述文字，目前只支持英文，并输入初始图片。就可以开始Preview了。</li>
-</ol>
-<p>非常的简单哦～。</p>
 
       
     </div>
