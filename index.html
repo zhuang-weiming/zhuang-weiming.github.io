@@ -245,6 +245,342 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/05/16/%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/05/16/%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">对比DID中的隐私算法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-16 17:35:00" itemprop="dateCreated datePublished" datetime="2024-05-16T17:35:00+08:00">2024-05-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-05-17 10:45:20" itemprop="dateModified" datetime="2024-05-17T10:45:20+08:00">2024-05-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="SD-JWT"><a href="#SD-JWT" class="headerlink" title="SD-JWT:"></a>SD-JWT:</h3><p><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/">https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/</a><br><a target="_blank" rel="noopener" href="https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt">https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt</a></p>
+<h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现:"></a>算法实现:</h4><ol>
+<li>数据封装:<ul>
+<li>数据被封装在JWT中，包含需要选择性披露的声明（claims）。</li>
+<li>每个声明都可以独立加密或哈希处理。</li>
+</ul>
+</li>
+<li>Merkle树结构:<ul>
+<li>为所有声明构建一个Merkle树，每个叶子节点代表一个哈希后的声明。</li>
+<li>通过哈希值的组合，形成父节点，直到生成一个根哈希值（root hash）。</li>
+</ul>
+</li>
+<li>签名:<ul>
+<li>使用私钥对整个JWT（包括Merkle树的根哈希值）进行签名。</li>
+<li>签名确保数据的完整性和真实性。</li>
+</ul>
+</li>
+<li>选择性披露:<ul>
+<li>用户可以选择性地披露特定的声明，并提供相应的Merkle证明（包含所需的兄弟节点哈希）。</li>
+<li>验证者使用Merkle证明验证特定声明是否属于原始数据。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>JWT</li>
+<li>Merkle树</li>
+<li>数字签名<h3 id="BBS-Signature"><a href="#BBS-Signature" class="headerlink" title="BBS Signature:"></a>BBS Signature:</h3><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf">https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf</a> , Dan Boneh, Xavier Boyen, Hovav Shacham 2004<br><a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/bbs-signature">https://github.com/decentralized-identity/bbs-signature</a><br><a target="_blank" rel="noopener" href="https://github.com/microsoft/bbs-node-reference">https://github.com/microsoft/bbs-node-reference</a><h4 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现:"></a>算法实现:</h4></li>
+</ul>
+<ol>
+<li>签名生成:<ul>
+<li>生成密钥对（私钥和公钥）。</li>
+<li>使用私钥对消息进行签名，生成一个签名值。</li>
+</ul>
+</li>
+<li>选择性披露:<ul>
+<li>允许用户选择性披露部分数据，并生成零知识证明（ZKP），证明所披露的数据是原始数据的一部分。</li>
+</ul>
+</li>
+<li>验证:<ul>
+<li>验证者使用公钥和零知识证明，验证所披露的数据的真实性和完整性。</li>
+<li>确保签名和数据未被篡改。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>零知识证明</li>
+<li>数字签名</li>
+<li>椭圆曲线密码学<h3 id="BBS-Signature-1"><a href="#BBS-Signature-1" class="headerlink" title="BBS+ Signature:"></a>BBS+ Signature:</h3><a target="_blank" rel="noopener" href="https://github.com/mattrglobal/bbs-signatures">https://github.com/mattrglobal/bbs-signatures</a><br><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2008/136.pdf">https://eprint.iacr.org/2008/136.pdf</a> , Man Ho Au, Willy Susilo , and Yi Mu 2008<br><a href="%E5%85%B3%E4%BA%8EBBS-Signature/slides-114-cfrg-bbs-signature-scheme-pdf-00.pdf">Org BBS+ Signature algorithm PPT</a>: <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/meeting/114/materials/slides-114-cfrg-bbs-signature-scheme-pdf-00">https://datatracker.ietf.org/meeting/114/materials/slides-114-cfrg-bbs-signature-scheme-pdf-00</a><h4 id="算法实现-2"><a href="#算法实现-2" class="headerlink" title="算法实现:"></a>算法实现:</h4></li>
+</ul>
+<ol>
+<li>优化签名生成:<ul>
+<li>基于BBS签名算法，增加了对复杂电路和多项声明的支持。</li>
+<li>使用私钥对多个声明进行签名，生成一个增强的签名值。</li>
+</ul>
+</li>
+<li>增强的选择性披露:<ul>
+<li>允许用户更高效地选择性披露部分数据，并生成更高效的零知识证明。</li>
+<li>增强了对复杂数据结构和大规模应用的支持。</li>
+</ul>
+</li>
+<li>高效验证:<ul>
+<li>验证者使用公钥和优化后的零知识证明，验证所披露的数据的真实性和完整性。</li>
+<li>验证过程经过优化，提高了性能和效率。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>优化的零知识证明</li>
+<li>数字签名</li>
+<li>高效验证算法<h3 id="PolygonID"><a href="#PolygonID" class="headerlink" title="PolygonID:"></a>PolygonID:</h3><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/issuer-node">https://github.com/0xPolygonID/issuer-node</a><h4 id="zkSNARK"><a href="#zkSNARK" class="headerlink" title="zkSNARK"></a>zkSNARK</h4><a target="_blank" rel="noopener" href="https://github.com/iden3/snarkjs">https://github.com/iden3/snarkjs</a> (Groth16, PLONK, FFLONK)<br>Groth16 <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">On the Size of Pairing-based Non-interactive Arguments</a> , Jens Groth, EUROCRYPT 2016<h4 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤:"></a>主要步骤:</h4></li>
+</ul>
+<ol>
+<li>设置（Setup）:<ul>
+<li>生成一组公共参数（公共参考字符串CRS），包括两个部分：证明密钥（proving key）和验证密钥（verifying key）。公共参数由一个复杂的数学过程生成，通常基于椭圆曲线和配对。</li>
+<li>这个过程涉及一个可信的第三方，确保公共参数的安全生成。</li>
+</ul>
+</li>
+<li>证明生成（Proving）:<ul>
+<li>证明者使用具体的输入（满足某个电路或逻辑条件）和证明密钥生成一个简洁的证明（Proof）。</li>
+<li>该证明由少量的群元素组成，可以非常高效地传输和存储。</li>
+</ul>
+</li>
+<li>验证（Verification）:<ul>
+<li>验证者使用验证密钥验证证明的有效性，确保输入满足声明的逻辑条件。</li>
+<li>通过检查一个简单的数学等式，只需检查少量计算，验证过程快速且高效。</li>
+</ul>
+</li>
+</ol>
+<p>SD-JWT（Self-issued, Decentralized JWT）、BBS+ Signature（BlsBBSIG-based Signature）和 PolygonID 是与去中心化身份（DID）相关的不同技术或概念。为了比较它们在DID应用中的适用性，我们可以考虑几个关键维度，如安全性、隐私性、易用性、互操作性和可扩展性。以下是对这些技术的比较，以及它们在DID应用中的评级：</p>
+<table>
+<thead>
+<tr>
+<th>特点</th>
+<th>SD-JWT</th>
+<th>BBS</th>
+<th>BBS+</th>
+<th>PolygonID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>基本概念</strong></td>
+<td>基于JWT的选择性披露和加密技术，用于去中心化身份管理</td>
+<td>基于BLS签名的短群签名方案</td>
+<td>BBS的改进版，提供更强的隐私性和安全性</td>
+<td>基于Polygon网络的去中心化身份解决方案。零知识简洁非交互性知识论证，基于数学证明</td>
+</tr>
+<tr>
+<td><strong>选择性披露</strong></td>
+<td>支持，使用Merkle树和加密技术</td>
+<td>支持，通过零知识证明实现</td>
+<td>更高效和灵活的选择性披露</td>
+<td>支持，使用zk-SNARKs技术实现</td>
+</tr>
+<tr>
+<td><strong>零知识证明</strong></td>
+<td>基本支持，通过Merkle树结构和证明</td>
+<td>支持，通过零知识证明协议</td>
+<td><strong>增强支持</strong>，优化了零知识证明性能</td>
+<td><strong>强大支持</strong>，通过zk-SNARKs实现</td>
+</tr>
+<tr>
+<td><strong>隐私保护</strong></td>
+<td>高，允许选择性披露特定声明而不泄露完整数据</td>
+<td>高，通过选择性披露和零知识证明保护隐私</td>
+<td>更高，通过优化的选择性披露和零知识证明实现</td>
+<td><strong>极高</strong>，通过zk-SNARKs和去中心化验证实现</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>中等，受Merkle树结构影响</td>
+<td>高效，适用于大规模验证</td>
+<td>优异，优化了签名和验证过程</td>
+<td>优秀，但证明生成计算量大，验证效率高</td>
+</tr>
+<tr>
+<td><strong>互操作性</strong></td>
+<td>高，与现有的JWT标准兼容</td>
+<td>需要更多集成工作，适用于专用系统</td>
+<td>类似BBS，但更优化</td>
+<td>高，与以太坊和其他EVM兼容区块链互操作</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>可验证凭证、教育认证等</td>
+<td>DID系统中的隐私保护凭证、去中心化身份验证</td>
+<td>高级DID系统、隐私保护凭证、复杂零知识证明环境</td>
+<td>高度隐私保护应用，如身份验证、金融交易，如DeFi、NFT、DID管理等</td>
+</tr>
+<tr>
+<td><strong>落地项目</strong></td>
+<td><a target="_blank" rel="noopener" href="https://trinsic.id/">Trinsic</a>, <strong><a target="_blank" rel="noopener" href="https://github.com/eu-digital-identity-wallet">European Digital Identity</a></strong></td>
+<td></td>
+<td>Hyperledger Indy, Hyperledger Aries</td>
+<td><a target="_blank" rel="noopener" href="https://www.polygonid.com/">PolygonID</a>, <a target="_blank" rel="noopener" href="https://github.com/iden3/snarkjs">snarkjs</a>, <a target="_blank" rel="noopener" href="https://github.com/iden3/rapidsnark">rapidsnark</a></td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>高，基于哈希函数和加密技术</td>
+<td>高，基于BLS签名，提供了良好的安全性</td>
+<td>更高，基于优化的配对密码学和零知识证明，提供了抗密钥泄露的安全性</td>
+<td>极高，基于复杂数学证明，难以破解</td>
+</tr>
+<tr>
+<td><strong>抗量子性</strong></td>
+<td>一般，当前加密技术未明确抗量子</td>
+<td>低，对量子计算较为脆弱</td>
+<td>低，与BBS相似，对量子计算较为脆弱</td>
+<td>低，大多数现有的zk-SNARKs对量子计算不具备抗性</td>
+</tr>
+<tr>
+<td><strong>易用性</strong></td>
+<td>高，易于实现和集成</td>
+<td>中等，需要深入的密码学知识</td>
+<td>中等，需要理解优化的密码学原理</td>
+<td>中等，需掌握复杂数学和密码学知识，开发和验证较为复杂，PolygonID 简化了使用的复杂性</td>
+</tr>
+<tr>
+<td><strong>可扩展性</strong></td>
+<td>中等，受限于Merkle树的复杂度和数据大小</td>
+<td>高，可扩展到大规模验证环境</td>
+<td>高，优化后适用于大规模应用和验证</td>
+<td>高，验证效率高，但证明生成需大量计算资源，Polygon 网络设计可用于处理高交易量</td>
+</tr>
+</tbody></table>
+<h3 id="Groth16-PLONK-和-FFLONK-在PolygonID中的应用"><a href="#Groth16-PLONK-和-FFLONK-在PolygonID中的应用" class="headerlink" title="Groth16, PLONK 和 FFLONK 在PolygonID中的应用"></a>Groth16, PLONK 和 FFLONK 在PolygonID中的应用</h3><table>
+<thead>
+<tr>
+<th>特点</th>
+<th><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">Groth16</a></th>
+<th><a target="_blank" rel="noopener" href="https://github.com/AztecProtocol/barretenberg">PLONK</a><br><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">paper</a></th>
+<th><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2021/1167.pdf">FFLONK</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>发明年</strong></td>
+<td>2016</td>
+<td>2019</td>
+<td>2021</td>
+</tr>
+<tr>
+<td><strong>基本概念</strong></td>
+<td>基于零知识简洁非交互性知识论证，主要用于隐私保护</td>
+<td>高效零知识证明系统，适用于去中心化应用</td>
+<td>进一步优化的PLONK，专注于提高性能和验证效率</td>
+</tr>
+<tr>
+<td><strong>证明生成时间</strong></td>
+<td>较长，适合复杂证明</td>
+<td>快速，适用于高频次证明生成</td>
+<td><strong>更快速，优化后的证明生成时间</strong></td>
+</tr>
+<tr>
+<td><strong>验证时间</strong></td>
+<td>快速，但略慢于PLONK</td>
+<td>快速，验证时间较短</td>
+<td>更快速，优化后的验证时间</td>
+</tr>
+<tr>
+<td><strong>计算资源需求</strong></td>
+<td>较高，可能需要更多计算资源</td>
+<td>中等，适合大多数硬件环境</td>
+<td>低，优化后的算法减少计算资源需求</td>
+</tr>
+<tr>
+<td><strong>证明大小</strong></td>
+<td>较大，增加存储成本</td>
+<td>较小，适合链上存储，减少存储成本</td>
+<td>最小，<strong>极大减少存储需求</strong></td>
+</tr>
+<tr>
+<td><strong>可信设置</strong></td>
+<td>每个电路需要单独的可信设置</td>
+<td>一次可信设置，可重复使用</td>
+<td>一次可信设置，可重复使用</td>
+</tr>
+<tr>
+<td><strong>灵活性</strong></td>
+<td>较低，需要为特定电路优化</td>
+<td>高，支持复杂电路和应用</td>
+<td>高，适用于多种应用场景</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>高，基于配对和复杂数学难题</td>
+<td>高，基于多项式数学难题</td>
+<td>更高，基于优化的数学基础</td>
+</tr>
+<tr>
+<td><strong>用户体验</strong></td>
+<td>设置复杂且生成时间较长，用户体验较差</td>
+<td>简化设置过程和快速验证，提供良好用户体验</td>
+<td>优化的性能和简化的设置过程，<strong>用户体验最佳</strong></td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>适用于特定需求明确且不需频繁更新的场景</td>
+<td>适用于高频交互和高性能需求的应用</td>
+<td>适用于各种高效、高频次的零知识证明应用场景</td>
+</tr>
+<tr>
+<td><strong>在PolygonID中的应用</strong></td>
+<td>适用于复杂隐私保护和金融交易场景</td>
+<td>适用于实时身份验证和高频交易</td>
+<td>适用于高效、高频次的身份验证和隐私保护场景</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/05/11/Pseudonymization%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,10 +604,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-05-11 15:00:00 / Modified: 15:02:02" itemprop="dateCreated datePublished" datetime="2024-05-11T15:00:00+08:00">2024-05-11</time>
+      <time title="Created: 2024-05-11 15:00:00" itemprop="dateCreated datePublished" datetime="2024-05-11T15:00:00+08:00">2024-05-11</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-05-14 15:37:58" itemprop="dateModified" datetime="2024-05-14T15:37:58+08:00">2024-05-14</time>
+      </span>
 
   
 </div>
@@ -333,93 +675,6 @@
 <li>密钥管理应该安全，避免泄露。</li>
 <li>使用合适的随机数生成器来生成 IV 或 nonce。</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/05/06/%E5%85%B3%E4%BA%8EBBS-Signature/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/05/06/%E5%85%B3%E4%BA%8EBBS-Signature/" class="post-title-link" itemprop="url">关于BBS-Signature</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-05-06 20:46:00" itemprop="dateCreated datePublished" datetime="2024-05-06T20:46:00+08:00">2024-05-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-05-11 11:01:31" itemprop="dateModified" datetime="2024-05-11T11:01:31+08:00">2024-05-11</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="What-is-BBS"><a href="#What-is-BBS" class="headerlink" title="What is BBS+"></a>What is BBS+</h3><p><a target="_blank" rel="noopener" href="https://identity.foundation/bbs-signature/draft-irtf-cfrg-bbs-signatures.html">https://identity.foundation/bbs-signature/draft-irtf-cfrg-bbs-signatures.html</a><br>This document describes the BBS Signature scheme, a secure, multi-message digital signature protocol, supporting proving knowledge of a signature while selectively disclosing any subset of the signed messages. Concretely, the scheme allows for signing multiple messages whilst producing a single, constant size, digital signature. Additionally, the possessor of a BBS signatures is able to create zero-knowledge, proofs-of-knowledge of a signature, while selectively disclosing subsets of the signed messages. Being zero-knowledge, the BBS proofs do not reveal any information about the undisclosed messages or the signature it self, while at the same time, guarantying the authenticity and integrity of the disclosed messages. This is NOT a production-ready document.</p>
-<p>A digital signature scheme is a fundamental cryptographic primitive that is used to provide data integrity and verifiable authenticity in various protocols. The core premise of digital signature technology is built upon asymmetric cryptography where-by the possessor of a private key is able to sign a message, where anyone in possession of the corresponding public key matching that of the private key is able to verify the signature.<br>Beyond the core properties of a digital signature scheme, the BBS signatures and proofs provide multiple additional unique properties. Three key ones are:</p>
-<p><strong>Selective Disclosure</strong> - The scheme allows a Signer to sign multiple messages and produce a single -constant size- output signature. A Prover then possessing the messages and the signature can generate a proof whereby they can choose which messages to disclose, while revealing no-information about the undisclosed messages. The proof itself guarantees the integrity and authenticity of the disclosed messages (e.g. that they were originally signed by the Signer).</p>
-<p><strong>Unlinkable Proofs</strong> - The proofs generated by the scheme are zero-knowledge, proofs-of-knowledge of the signature, meaning a verifying party in receipt of a proof is unable to determine which signature was used to generate the proof, removing a common source of correlation. In general, each BBS proof is indistinguishable from random even if generated from the same signature.</p>
-<p><strong>Proof of Possession</strong> - The proofs generated by the scheme prove to a Verifier that the party who generated the proof (Prover) was in possession of a signature without revealing it. The scheme also supports binding a presentation header to the generated proof. The presentation header can include arbitrary information such as a cryptographic nonce, an audience/domain identifier and or time based validity information.</p>
-<p>Below is a basic diagram describing the main entities involved in the scheme.</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"> (1) sign                                      (3) ProofGen</span><br><span class="line">   +-----                                         +-----</span><br><span class="line">   |    |                                         |    |</span><br><span class="line">   |    |                                         |    |</span><br><span class="line">   |   \ /                                        |   \ /</span><br><span class="line">+----------+                                   +-----------+</span><br><span class="line">|          |                                   |           |</span><br><span class="line">|          |                                   |           |</span><br><span class="line">|          |                                   |           |</span><br><span class="line">|  Signer  |---(2)* Send signature + msgs-----&gt;|  Holder/  |</span><br><span class="line">|          |                                   |  Prover   |</span><br><span class="line">|          |                                   |           |</span><br><span class="line">|          |                                   |           |</span><br><span class="line">+----------+                                   +-----------+</span><br><span class="line">                                                     |</span><br><span class="line">                                                     |</span><br><span class="line">                                                     |</span><br><span class="line">                                    (4)* Send proof + disclosed msgs</span><br><span class="line">                                                     |</span><br><span class="line">                                                     |</span><br><span class="line">                                                    \ /</span><br><span class="line">                                               +-----------+</span><br><span class="line">                                               |           |</span><br><span class="line">                                               |           |</span><br><span class="line">                                               |           |</span><br><span class="line">                                               | Verifier  |</span><br><span class="line">                                               |           |</span><br><span class="line">                                               |           |</span><br><span class="line">                                               |           |</span><br><span class="line">                                               +-----------+</span><br><span class="line">                                                  |   / \</span><br><span class="line">                                                  |    |</span><br><span class="line">                                                  |    |</span><br><span class="line">                                                  +-----</span><br><span class="line">                                             (5) ProofVerify</span><br></pre></td></tr></table></figure>
-<p>Note that the BBS Signatures scheme is based on the discrete logarithm problem. This means that it is not “post-quantum secure”. However, the privacy and hiding properties of BBS proofs are resilient even against an attacker utilizing a Cryptographically Relevant Quantum Computer</p>
-<h3 id="Show-me-the-codes"><a href="#Show-me-the-codes" class="headerlink" title="Show me the codes"></a>Show me the codes</h3><p><a target="_blank" rel="noopener" href="https://github.com/microsoft/bbs-node-reference">https://github.com/microsoft/bbs-node-reference</a><br>the current implementation matches the <em>21 December 2023</em> version of the specification, matching the <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/draft-irtf-cfrg-bbs-signatures/05/">draft-irtf-cfrg-bbs-signatures-05</a> version submitted to the CFRG. This is NOT a production-ready implementation; testing is minimal and no effort is made to optimize and protect against specialized attacks (e.g., side-channel resistance).</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bbs_1 = <span class="built_in">require</span>(<span class="string">&quot;../src/bbs&quot;</span>);  </span><br><span class="line"><span class="keyword">const</span> crypto = __importStar(<span class="built_in">require</span>(<span class="string">&quot;crypto&quot;</span>));  </span><br><span class="line"><span class="keyword">const</span> utils = __importStar(<span class="built_in">require</span>(<span class="string">&quot;../src/utils&quot;</span>));  </span><br><span class="line"><span class="keyword">const</span> ciphersuite_1 = <span class="built_in">require</span>(<span class="string">&quot;../src/ciphersuite&quot;</span>);  </span><br><span class="line"><span class="keyword">const</span> ciphersuites = [ciphersuite_1.BLS12_381_SHAKE_256_Ciphersuite, ciphersuite_1.BLS12_381_SHA256_Ciphersuite];  </span><br><span class="line">ciphersuites.forEach(<span class="function"><span class="params">cs</span> =&gt;</span> &#123;  </span><br><span class="line">    test(<span class="string">&quot;End-to-end test: &quot;</span> + cs.ciphersuite_id, <span class="keyword">async</span> () =&gt; &#123;  </span><br><span class="line">        <span class="comment">// create the bbs instance  </span></span><br><span class="line">        <span class="keyword">const</span> bbs = <span class="keyword">new</span> bbs_1.BBS(cs);  </span><br><span class="line">        <span class="comment">// generate random issuer keys  </span></span><br><span class="line">        <span class="keyword">const</span> SK = bbs.KeyGen(crypto.randomBytes(<span class="number">32</span>));  </span><br><span class="line">        <span class="keyword">const</span> PK = bbs.SkToPk(SK);  </span><br><span class="line">        <span class="comment">// create the generators, equal to issuer.  </span></span><br><span class="line">        <span class="keyword">const</span> length = <span class="number">5</span>;  </span><br><span class="line">        <span class="keyword">const</span> generators = <span class="keyword">await</span> bbs.create_generators(length);  </span><br><span class="line">        <span class="comment">// create random messages for test.  </span></span><br><span class="line">        <span class="keyword">let</span> msg = <span class="built_in">Array</span>(length).fill(<span class="literal">null</span>).map(<span class="function"><span class="params">v</span> =&gt;</span> bbs.MapMessageToScalarAsHash(crypto.randomBytes(<span class="number">20</span>)));  </span><br><span class="line">        <span class="comment">// create the signature.  </span></span><br><span class="line">        <span class="keyword">const</span> header = Buffer.from(<span class="string">&quot;HEADER&quot;</span>, <span class="string">&quot;utf-8&quot;</span>);  </span><br><span class="line">        <span class="keyword">const</span> signature = bbs.Sign(SK, PK, header, msg, generators);  </span><br><span class="line">        <span class="comment">// validate the signature, should be true.  </span></span><br><span class="line">        bbs.Verify(PK, signature, header, msg, generators);  </span><br><span class="line">        <span class="comment">// randomly disclose each message.  </span></span><br><span class="line">        <span class="keyword">const</span> disclosed_indexes = <span class="built_in">Array</span>(length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">v, i, a</span>) =&gt;</span> i).filter(<span class="function"><span class="params">v</span> =&gt;</span> &#123; <span class="keyword">return</span> <span class="built_in">Math</span>.random() &gt; <span class="number">0.5</span>; &#125;); <span class="comment">// random coin flip for each message  </span></span><br><span class="line">        <span class="keyword">const</span> ph = Buffer.from(<span class="string">&quot;PRESENTATION HEADER&quot;</span>, <span class="string">&quot;utf-8&quot;</span>);  </span><br><span class="line">        <span class="keyword">const</span> proof = bbs.ProofGen(PK, signature, header, ph, msg, generators, disclosed_indexes);  </span><br><span class="line">        <span class="keyword">const</span> disclosed_msg = utils.filterDisclosedMessages(msg, disclosed_indexes);  </span><br><span class="line">        <span class="comment">// validate the proof, should be true.  </span></span><br><span class="line">        bbs.ProofVerify(PK, proof, header, ph, disclosed_msg, generators, disclosed_indexes);  </span><br><span class="line">    &#125;);  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="BBS-签名的零知识证明算法"><a href="#BBS-签名的零知识证明算法" class="headerlink" title="BBS+签名的零知识证明算法"></a>BBS+签名的零知识证明算法</h3><p>BBS+签名算法的流程可以分为三个主要部分：系统初始化、密钥生成、签名和验证。<br>BBS+ 与 Zero Knowledge Proof 的结合是其算法的最大特点之一。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">proof = ProofGen(PK, signature, header, ph, messages, disclosed_indexes)</span><br><span class="line"></span><br><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">- PK (REQUIRED), an octet string <span class="keyword">of</span> the form outputted by the SkToPk operation.</span><br><span class="line">- signature (REQUIRED), an octet string <span class="keyword">of</span> the form outputted by the Sign operation.</span><br><span class="line">- header (OPTIONAL), an octet string containing context and application specific information. If not supplied, it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line">- ph (OPTIONAL), an octet string containing the presentation header. If not supplied, it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line">- messages (OPTIONAL), a vector <span class="keyword">of</span> octet strings. If not supplied, it defaults to the empty array (<span class="string">&quot;()&quot;</span>).</span><br><span class="line">- disclosed_indexes (OPTIONAL), vector <span class="keyword">of</span> unsigned integers <span class="keyword">in</span> ascending order. Indexes <span class="keyword">of</span> disclosed messages. If not supplied, it defaults to the empty array (<span class="string">&quot;()&quot;</span>).</span><br><span class="line"></span><br><span class="line">Parameters:</span><br><span class="line"></span><br><span class="line">- api_id, the octet string ciphersuite_id || <span class="string">&quot;H2G_HM2S_&quot;</span>, where ciphersuite_id is defined by the ciphersuite and <span class="string">&quot;H2G_HM2S_&quot;</span>is an ASCII string comprised <span class="keyword">of</span> <span class="number">9</span> bytes.</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">- proof, an octet string; or INVALID.</span><br><span class="line"></span><br><span class="line">Procedure:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> message_scalars = messages_to_scalars(messages, api_id)</span><br><span class="line"><span class="number">2.</span> generators = create_generators(length(messages)+<span class="number">1</span>, api_id)</span><br><span class="line"><span class="number">3.</span> proof = CoreProofGen(PK, signature, generators, header, ph,</span><br><span class="line">                             message_scalars, disclosed_indexes, api_id)</span><br><span class="line"><span class="number">4.</span> <span class="keyword">if</span> proof is INVALID, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">5.</span> <span class="keyword">return</span> proof</span><br><span class="line"></span><br><span class="line">&lt;=============================CoreProofGen===================================&gt;</span><br><span class="line"></span><br><span class="line">proof = CoreProofGen(PK, signature, generators, header, ph, messages,</span><br><span class="line">                                              disclosed_indexes, api_id)</span><br><span class="line"></span><br><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">- PK (REQUIRED), an octet string <span class="keyword">of</span> the form outputted by the SkToPk operation.</span><br><span class="line">- signature (REQUIRED), an octet string <span class="keyword">of</span> the form outputted by the Sign operation.</span><br><span class="line">- generators (REQUIRED), vector <span class="keyword">of</span> pseudo-random points <span class="keyword">in</span> G1.</span><br><span class="line">- header (OPTIONAL), an octet string containing context and application specific information. If not supplied, it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line">- ph (OPTIONAL), an octet string containing the presentation header. If not supplied, it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line">- messages (OPTIONAL), a vector <span class="keyword">of</span> scalars representing the messages. If not supplied, it defaults to the empty array (<span class="string">&quot;()&quot;</span>).</span><br><span class="line">- disclosed_indexes (OPTIONAL), vector <span class="keyword">of</span> non-negative integers <span class="keyword">in</span> ascending order. Indexes <span class="keyword">of</span> disclosed messages. If not supplied, it defaults to the empty array (<span class="string">&quot;()&quot;</span>).</span><br><span class="line">- api_id (OPTIONAL), an octet string. If not supplied it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">- proof, an octet string; or INVALID.</span><br><span class="line"></span><br><span class="line">Deserialization:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>  signature_result = octets_to_signature(signature)</span><br><span class="line"><span class="number">2.</span>  <span class="keyword">if</span> signature_result is INVALID, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">3.</span>  (A, e) = signature_result</span><br><span class="line"><span class="number">4.</span>  L = length(messages)</span><br><span class="line"><span class="number">5.</span>  R = length(disclosed_indexes)</span><br><span class="line"><span class="number">6.</span>  <span class="keyword">if</span> R &gt; L, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">7.</span>  U = L - R</span><br><span class="line"><span class="number">8.</span>  <span class="keyword">for</span> i <span class="keyword">in</span> disclosed_indexes, <span class="keyword">if</span> i &lt; <span class="number">0</span> or i &gt; L - <span class="number">1</span>, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">9.</span>  undisclosed_indexes = (<span class="number">0</span>, <span class="number">1</span>, ..., L - <span class="number">1</span>) \ disclosed_indexes</span><br><span class="line"><span class="number">10.</span> (i1, ..., iR) = disclosed_indexes</span><br><span class="line"><span class="number">11.</span> (j1, ..., jU) = undisclosed_indexes</span><br><span class="line"><span class="number">12.</span> disclosed_messages = (messages[i1], ..., messages[iR])</span><br><span class="line"><span class="number">13.</span> undisclosed_messages = (messages[j1], ..., messages[jU])</span><br><span class="line"></span><br><span class="line">Procedure:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> random_scalars = calculate_random_scalars(<span class="number">5</span>+U)</span><br><span class="line"><span class="number">2.</span> init_res = ProofInit(PK,</span><br><span class="line">                        signature_result,</span><br><span class="line">                        generators,</span><br><span class="line">                        random_scalars,</span><br><span class="line">                        header,</span><br><span class="line">                        messages,</span><br><span class="line">                        undisclosed_indexes,</span><br><span class="line">                        api_id)</span><br><span class="line"><span class="number">3.</span> <span class="keyword">if</span> init_res is INVALID, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">4.</span> challenge = ProofChallengeCalculate(init_res, disclosed_indexes,</span><br><span class="line">                                                 disclosed_messages, ph)</span><br><span class="line"><span class="number">5.</span> <span class="keyword">if</span> challenge is INVALID, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">6.</span> proof = ProofFinalize(init_res, challenge, e, random_scalars,</span><br><span class="line">                                                   undisclosed_messages)</span><br><span class="line"><span class="number">7.</span> <span class="keyword">return</span> proof</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">result = ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes)</span><br><span class="line"></span><br><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">- PK (REQUIRED), an octet string <span class="keyword">of</span> the form outputted by the SkToPk operation.</span><br><span class="line">- proof (REQUIRED), an octet string <span class="keyword">of</span> the form outputted by the ProofGen operation.</span><br><span class="line">- header (OPTIONAL), an optional octet string containing context and application specific information. If not supplied, it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line">- ph (OPTIONAL), an octet string containing the presentation header. If not supplied, it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line">- disclosed_messages (OPTIONAL), a vector <span class="keyword">of</span> octet strings. If not supplied, it defaults to the empty array (<span class="string">&quot;()&quot;</span>).</span><br><span class="line">- disclosed_indexes (OPTIONAL), vector <span class="keyword">of</span> unsigned integers <span class="keyword">in</span> ascending order. Indexes <span class="keyword">of</span> disclosed messages. If not supplied, it defaults to the empty array (<span class="string">&quot;()&quot;</span>).</span><br><span class="line"></span><br><span class="line">Parameters:</span><br><span class="line"></span><br><span class="line">- api_id, the octet string ciphersuite_id || <span class="string">&quot;H2G_HM2S_&quot;</span>, where</span><br><span class="line">          ciphersuite_id is defined by the ciphersuite and <span class="string">&quot;H2G_HM2S_&quot;</span>is</span><br><span class="line">          an ASCII string comprised <span class="keyword">of</span> <span class="number">9</span> bytes.</span><br><span class="line">- (octet_point_length, octet_scalar_length), defined by the ciphersuite.</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">- result, either VALID or INVALID.</span><br><span class="line"></span><br><span class="line">Deserialization:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> proof_len_floor = <span class="number">2</span> * octet_point_length + <span class="number">3</span> * octet_scalar_length</span><br><span class="line"><span class="number">2.</span> <span class="keyword">if</span> length(proof) &lt; proof_len_floor, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">3.</span> U = floor((length(proof) - proof_len_floor) / octet_scalar_length)</span><br><span class="line"><span class="number">4.</span> R = length(disclosed_indexes)</span><br><span class="line"></span><br><span class="line">Procedure:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> message_scalars = messages_to_scalars(disclosed_messages, api_id)</span><br><span class="line"><span class="number">2.</span> generators = create_generators(U + R + <span class="number">1</span>, api_id)</span><br><span class="line"><span class="number">3.</span> result = CoreProofVerify(PK, proof, generators, header, ph,</span><br><span class="line">                             message_scalars, disclosed_indexes, api_id)</span><br><span class="line"><span class="number">4.</span> <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">&lt;============================CoreProofVerify=============================&gt;</span><br><span class="line"></span><br><span class="line">result = CoreProofVerify(PK, proof, generators, header, ph,</span><br><span class="line">                          disclosed_messages, disclosed_indexes, api_id)</span><br><span class="line"></span><br><span class="line">Inputs:</span><br><span class="line"></span><br><span class="line">- PK (REQUIRED), an octet string <span class="keyword">of</span> the form outputted by the SkToPk operation.</span><br><span class="line">- proof (REQUIRED), an octet string <span class="keyword">of</span> the form outputted by the ProofGen operation.</span><br><span class="line">- generators (REQUIRED), vector <span class="keyword">of</span> pseudo-random points <span class="keyword">in</span> G1.</span><br><span class="line">- header (OPTIONAL), an optional octet string containing context and application specific information. If not supplied, it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line">- ph (OPTIONAL), an octet string containing the presentation header. If not supplied, it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line">- disclosed_messages (OPTIONAL), a vector <span class="keyword">of</span> scalars representing the messages. If not supplied, it defaults to the empty array (<span class="string">&quot;()&quot;</span>).</span><br><span class="line">- disclosed_indexes (OPTIONAL), vector <span class="keyword">of</span> non-negative integers <span class="keyword">in</span> ascending order. Indexes <span class="keyword">of</span> disclosed messages. If not supplied, it defaults to the empty array (<span class="string">&quot;()&quot;</span>).</span><br><span class="line">- api_id (OPTIONAL), an octet string. If not supplied it defaults to the empty octet string (<span class="string">&quot;&quot;</span>).</span><br><span class="line"></span><br><span class="line">Parameters:</span><br><span class="line"></span><br><span class="line">- P1, fixed point <span class="keyword">of</span> G1, defined by the ciphersuite.</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">- result, either VALID or INVALID.</span><br><span class="line"></span><br><span class="line">Deserialization:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> proof_result = octets_to_proof(proof)</span><br><span class="line"><span class="number">2.</span> <span class="keyword">if</span> proof_result is INVALID, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">3.</span> (Abar, Bbar, D, e^, r1^, r3^, commitments, cp) = proof_result</span><br><span class="line"><span class="number">4.</span> W = octets_to_pubkey(PK)</span><br><span class="line"><span class="number">5.</span> <span class="keyword">if</span> W is INVALID, <span class="keyword">return</span> INVALID</span><br><span class="line"></span><br><span class="line">Procedure:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> init_res = ProofVerifyInit(PK, proof_result, generators, header,</span><br><span class="line">                                    messages, disclosed_indexes, api_id)</span><br><span class="line"><span class="number">2.</span> <span class="keyword">if</span> init_res is INVALID, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">3.</span> challenge = ProofChallengeCalculate(init_res, disclosed_indexes,</span><br><span class="line">                                                   messages, ph, api_id)</span><br><span class="line"><span class="number">4.</span> <span class="keyword">if</span> challenge is INVALID, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">5.</span> <span class="keyword">if</span> cp != challenge, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">6.</span> <span class="keyword">if</span> e(Abar, W) * e(Bbar, -BP2) != Identity_GT, <span class="keyword">return</span> INVALID</span><br><span class="line"><span class="number">7.</span> <span class="keyword">return</span> VALID</span><br></pre></td></tr></table></figure>
-
-<p><a href="%E5%85%B3%E4%BA%8EBBS-Signature/slides-114-cfrg-bbs-signature-scheme-pdf-00.pdf">Org BBS+ Signature algorithm PPT:</a><br><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/meeting/114/materials/slides-114-cfrg-bbs-signature-scheme-pdf-00">https://datatracker.ietf.org/meeting/114/materials/slides-114-cfrg-bbs-signature-scheme-pdf-00</a> ==&gt; </p>
 
       
     </div>

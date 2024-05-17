@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="SD-JWT:https:&#x2F;&#x2F;datatracker.ietf.org&#x2F;doc&#x2F;draft-ietf-oauth-selective-disclosure-jwt&#x2F;https:&#x2F;&#x2F;github.com&#x2F;eu-digital-identity-wallet&#x2F;eudi-lib-jvm-sdjwt-kt 算法实现: 数据封装: 数据被封装在JWT中，包含需要选择性披露的声明（claims）。 每个声明都">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对比DID中的隐私算法">
+<meta property="og:url" content="https://willzhuang.github.io/2024/05/16/%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="SD-JWT:https:&#x2F;&#x2F;datatracker.ietf.org&#x2F;doc&#x2F;draft-ietf-oauth-selective-disclosure-jwt&#x2F;https:&#x2F;&#x2F;github.com&#x2F;eu-digital-identity-wallet&#x2F;eudi-lib-jvm-sdjwt-kt 算法实现: 数据封装: 数据被封装在JWT中，包含需要选择性披露的声明（claims）。 每个声明都">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-16T09:35:00.000Z">
+<meta property="article:modified_time" content="2024-05-17T02:45:20.873Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="DID">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="密码学">
+<meta property="article:tag" content="加密">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2024/05/16/%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>对比DID中的隐私算法 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SD-JWT"><span class="nav-number">1.</span> <span class="nav-text">SD-JWT:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.</span> <span class="nav-text">算法实现:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BBS-Signature"><span class="nav-number">2.</span> <span class="nav-text">BBS Signature:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-1"><span class="nav-number">2.1.</span> <span class="nav-text">算法实现:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BBS-Signature-1"><span class="nav-number">3.</span> <span class="nav-text">BBS+ Signature:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-2"><span class="nav-number">3.1.</span> <span class="nav-text">算法实现:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PolygonID"><span class="nav-number">4.</span> <span class="nav-text">PolygonID:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zkSNARK"><span class="nav-number">4.1.</span> <span class="nav-text">zkSNARK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.2.</span> <span class="nav-text">主要步骤:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Groth16-PLONK-%E5%92%8C-FFLONK-%E5%9C%A8PolygonID%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">Groth16, PLONK 和 FFLONK 在PolygonID中的应用</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">241</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/05/16/%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          对比DID中的隐私算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-16 17:35:00" itemprop="dateCreated datePublished" datetime="2024-05-16T17:35:00+08:00">2024-05-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-05-17 10:45:20" itemprop="dateModified" datetime="2024-05-17T10:45:20+08:00">2024-05-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="SD-JWT"><a href="#SD-JWT" class="headerlink" title="SD-JWT:"></a>SD-JWT:</h3><p><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/">https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/</a><br><a target="_blank" rel="noopener" href="https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt">https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt</a></p>
+<h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现:"></a>算法实现:</h4><ol>
+<li>数据封装:<ul>
+<li>数据被封装在JWT中，包含需要选择性披露的声明（claims）。</li>
+<li>每个声明都可以独立加密或哈希处理。</li>
+</ul>
+</li>
+<li>Merkle树结构:<ul>
+<li>为所有声明构建一个Merkle树，每个叶子节点代表一个哈希后的声明。</li>
+<li>通过哈希值的组合，形成父节点，直到生成一个根哈希值（root hash）。</li>
+</ul>
+</li>
+<li>签名:<ul>
+<li>使用私钥对整个JWT（包括Merkle树的根哈希值）进行签名。</li>
+<li>签名确保数据的完整性和真实性。</li>
+</ul>
+</li>
+<li>选择性披露:<ul>
+<li>用户可以选择性地披露特定的声明，并提供相应的Merkle证明（包含所需的兄弟节点哈希）。</li>
+<li>验证者使用Merkle证明验证特定声明是否属于原始数据。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>JWT</li>
+<li>Merkle树</li>
+<li>数字签名<h3 id="BBS-Signature"><a href="#BBS-Signature" class="headerlink" title="BBS Signature:"></a>BBS Signature:</h3><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf">https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf</a> , Dan Boneh, Xavier Boyen, Hovav Shacham 2004<br><a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/bbs-signature">https://github.com/decentralized-identity/bbs-signature</a><br><a target="_blank" rel="noopener" href="https://github.com/microsoft/bbs-node-reference">https://github.com/microsoft/bbs-node-reference</a><h4 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现:"></a>算法实现:</h4></li>
+</ul>
+<ol>
+<li>签名生成:<ul>
+<li>生成密钥对（私钥和公钥）。</li>
+<li>使用私钥对消息进行签名，生成一个签名值。</li>
+</ul>
+</li>
+<li>选择性披露:<ul>
+<li>允许用户选择性披露部分数据，并生成零知识证明（ZKP），证明所披露的数据是原始数据的一部分。</li>
+</ul>
+</li>
+<li>验证:<ul>
+<li>验证者使用公钥和零知识证明，验证所披露的数据的真实性和完整性。</li>
+<li>确保签名和数据未被篡改。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>零知识证明</li>
+<li>数字签名</li>
+<li>椭圆曲线密码学<h3 id="BBS-Signature-1"><a href="#BBS-Signature-1" class="headerlink" title="BBS+ Signature:"></a>BBS+ Signature:</h3><a target="_blank" rel="noopener" href="https://github.com/mattrglobal/bbs-signatures">https://github.com/mattrglobal/bbs-signatures</a><br><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2008/136.pdf">https://eprint.iacr.org/2008/136.pdf</a> , Man Ho Au, Willy Susilo , and Yi Mu 2008<br><a href="%E5%85%B3%E4%BA%8EBBS-Signature/slides-114-cfrg-bbs-signature-scheme-pdf-00.pdf">Org BBS+ Signature algorithm PPT</a>: <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/meeting/114/materials/slides-114-cfrg-bbs-signature-scheme-pdf-00">https://datatracker.ietf.org/meeting/114/materials/slides-114-cfrg-bbs-signature-scheme-pdf-00</a><h4 id="算法实现-2"><a href="#算法实现-2" class="headerlink" title="算法实现:"></a>算法实现:</h4></li>
+</ul>
+<ol>
+<li>优化签名生成:<ul>
+<li>基于BBS签名算法，增加了对复杂电路和多项声明的支持。</li>
+<li>使用私钥对多个声明进行签名，生成一个增强的签名值。</li>
+</ul>
+</li>
+<li>增强的选择性披露:<ul>
+<li>允许用户更高效地选择性披露部分数据，并生成更高效的零知识证明。</li>
+<li>增强了对复杂数据结构和大规模应用的支持。</li>
+</ul>
+</li>
+<li>高效验证:<ul>
+<li>验证者使用公钥和优化后的零知识证明，验证所披露的数据的真实性和完整性。</li>
+<li>验证过程经过优化，提高了性能和效率。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>优化的零知识证明</li>
+<li>数字签名</li>
+<li>高效验证算法<h3 id="PolygonID"><a href="#PolygonID" class="headerlink" title="PolygonID:"></a>PolygonID:</h3><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/issuer-node">https://github.com/0xPolygonID/issuer-node</a><h4 id="zkSNARK"><a href="#zkSNARK" class="headerlink" title="zkSNARK"></a>zkSNARK</h4><a target="_blank" rel="noopener" href="https://github.com/iden3/snarkjs">https://github.com/iden3/snarkjs</a> (Groth16, PLONK, FFLONK)<br>Groth16 <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">On the Size of Pairing-based Non-interactive Arguments</a> , Jens Groth, EUROCRYPT 2016<h4 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤:"></a>主要步骤:</h4></li>
+</ul>
+<ol>
+<li>设置（Setup）:<ul>
+<li>生成一组公共参数（公共参考字符串CRS），包括两个部分：证明密钥（proving key）和验证密钥（verifying key）。公共参数由一个复杂的数学过程生成，通常基于椭圆曲线和配对。</li>
+<li>这个过程涉及一个可信的第三方，确保公共参数的安全生成。</li>
+</ul>
+</li>
+<li>证明生成（Proving）:<ul>
+<li>证明者使用具体的输入（满足某个电路或逻辑条件）和证明密钥生成一个简洁的证明（Proof）。</li>
+<li>该证明由少量的群元素组成，可以非常高效地传输和存储。</li>
+</ul>
+</li>
+<li>验证（Verification）:<ul>
+<li>验证者使用验证密钥验证证明的有效性，确保输入满足声明的逻辑条件。</li>
+<li>通过检查一个简单的数学等式，只需检查少量计算，验证过程快速且高效。</li>
+</ul>
+</li>
+</ol>
+<p>SD-JWT（Self-issued, Decentralized JWT）、BBS+ Signature（BlsBBSIG-based Signature）和 PolygonID 是与去中心化身份（DID）相关的不同技术或概念。为了比较它们在DID应用中的适用性，我们可以考虑几个关键维度，如安全性、隐私性、易用性、互操作性和可扩展性。以下是对这些技术的比较，以及它们在DID应用中的评级：</p>
+<table>
+<thead>
+<tr>
+<th>特点</th>
+<th>SD-JWT</th>
+<th>BBS</th>
+<th>BBS+</th>
+<th>PolygonID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>基本概念</strong></td>
+<td>基于JWT的选择性披露和加密技术，用于去中心化身份管理</td>
+<td>基于BLS签名的短群签名方案</td>
+<td>BBS的改进版，提供更强的隐私性和安全性</td>
+<td>基于Polygon网络的去中心化身份解决方案。零知识简洁非交互性知识论证，基于数学证明</td>
+</tr>
+<tr>
+<td><strong>选择性披露</strong></td>
+<td>支持，使用Merkle树和加密技术</td>
+<td>支持，通过零知识证明实现</td>
+<td>更高效和灵活的选择性披露</td>
+<td>支持，使用zk-SNARKs技术实现</td>
+</tr>
+<tr>
+<td><strong>零知识证明</strong></td>
+<td>基本支持，通过Merkle树结构和证明</td>
+<td>支持，通过零知识证明协议</td>
+<td><strong>增强支持</strong>，优化了零知识证明性能</td>
+<td><strong>强大支持</strong>，通过zk-SNARKs实现</td>
+</tr>
+<tr>
+<td><strong>隐私保护</strong></td>
+<td>高，允许选择性披露特定声明而不泄露完整数据</td>
+<td>高，通过选择性披露和零知识证明保护隐私</td>
+<td>更高，通过优化的选择性披露和零知识证明实现</td>
+<td><strong>极高</strong>，通过zk-SNARKs和去中心化验证实现</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>中等，受Merkle树结构影响</td>
+<td>高效，适用于大规模验证</td>
+<td>优异，优化了签名和验证过程</td>
+<td>优秀，但证明生成计算量大，验证效率高</td>
+</tr>
+<tr>
+<td><strong>互操作性</strong></td>
+<td>高，与现有的JWT标准兼容</td>
+<td>需要更多集成工作，适用于专用系统</td>
+<td>类似BBS，但更优化</td>
+<td>高，与以太坊和其他EVM兼容区块链互操作</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>可验证凭证、教育认证等</td>
+<td>DID系统中的隐私保护凭证、去中心化身份验证</td>
+<td>高级DID系统、隐私保护凭证、复杂零知识证明环境</td>
+<td>高度隐私保护应用，如身份验证、金融交易，如DeFi、NFT、DID管理等</td>
+</tr>
+<tr>
+<td><strong>落地项目</strong></td>
+<td><a target="_blank" rel="noopener" href="https://trinsic.id/">Trinsic</a>, <strong><a target="_blank" rel="noopener" href="https://github.com/eu-digital-identity-wallet">European Digital Identity</a></strong></td>
+<td></td>
+<td>Hyperledger Indy, Hyperledger Aries</td>
+<td><a target="_blank" rel="noopener" href="https://www.polygonid.com/">PolygonID</a>, <a target="_blank" rel="noopener" href="https://github.com/iden3/snarkjs">snarkjs</a>, <a target="_blank" rel="noopener" href="https://github.com/iden3/rapidsnark">rapidsnark</a></td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>高，基于哈希函数和加密技术</td>
+<td>高，基于BLS签名，提供了良好的安全性</td>
+<td>更高，基于优化的配对密码学和零知识证明，提供了抗密钥泄露的安全性</td>
+<td>极高，基于复杂数学证明，难以破解</td>
+</tr>
+<tr>
+<td><strong>抗量子性</strong></td>
+<td>一般，当前加密技术未明确抗量子</td>
+<td>低，对量子计算较为脆弱</td>
+<td>低，与BBS相似，对量子计算较为脆弱</td>
+<td>低，大多数现有的zk-SNARKs对量子计算不具备抗性</td>
+</tr>
+<tr>
+<td><strong>易用性</strong></td>
+<td>高，易于实现和集成</td>
+<td>中等，需要深入的密码学知识</td>
+<td>中等，需要理解优化的密码学原理</td>
+<td>中等，需掌握复杂数学和密码学知识，开发和验证较为复杂，PolygonID 简化了使用的复杂性</td>
+</tr>
+<tr>
+<td><strong>可扩展性</strong></td>
+<td>中等，受限于Merkle树的复杂度和数据大小</td>
+<td>高，可扩展到大规模验证环境</td>
+<td>高，优化后适用于大规模应用和验证</td>
+<td>高，验证效率高，但证明生成需大量计算资源，Polygon 网络设计可用于处理高交易量</td>
+</tr>
+</tbody></table>
+<h3 id="Groth16-PLONK-和-FFLONK-在PolygonID中的应用"><a href="#Groth16-PLONK-和-FFLONK-在PolygonID中的应用" class="headerlink" title="Groth16, PLONK 和 FFLONK 在PolygonID中的应用"></a>Groth16, PLONK 和 FFLONK 在PolygonID中的应用</h3><table>
+<thead>
+<tr>
+<th>特点</th>
+<th><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">Groth16</a></th>
+<th><a target="_blank" rel="noopener" href="https://github.com/AztecProtocol/barretenberg">PLONK</a><br><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">paper</a></th>
+<th><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2021/1167.pdf">FFLONK</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>发明年</strong></td>
+<td>2016</td>
+<td>2019</td>
+<td>2021</td>
+</tr>
+<tr>
+<td><strong>基本概念</strong></td>
+<td>基于零知识简洁非交互性知识论证，主要用于隐私保护</td>
+<td>高效零知识证明系统，适用于去中心化应用</td>
+<td>进一步优化的PLONK，专注于提高性能和验证效率</td>
+</tr>
+<tr>
+<td><strong>证明生成时间</strong></td>
+<td>较长，适合复杂证明</td>
+<td>快速，适用于高频次证明生成</td>
+<td><strong>更快速，优化后的证明生成时间</strong></td>
+</tr>
+<tr>
+<td><strong>验证时间</strong></td>
+<td>快速，但略慢于PLONK</td>
+<td>快速，验证时间较短</td>
+<td>更快速，优化后的验证时间</td>
+</tr>
+<tr>
+<td><strong>计算资源需求</strong></td>
+<td>较高，可能需要更多计算资源</td>
+<td>中等，适合大多数硬件环境</td>
+<td>低，优化后的算法减少计算资源需求</td>
+</tr>
+<tr>
+<td><strong>证明大小</strong></td>
+<td>较大，增加存储成本</td>
+<td>较小，适合链上存储，减少存储成本</td>
+<td>最小，<strong>极大减少存储需求</strong></td>
+</tr>
+<tr>
+<td><strong>可信设置</strong></td>
+<td>每个电路需要单独的可信设置</td>
+<td>一次可信设置，可重复使用</td>
+<td>一次可信设置，可重复使用</td>
+</tr>
+<tr>
+<td><strong>灵活性</strong></td>
+<td>较低，需要为特定电路优化</td>
+<td>高，支持复杂电路和应用</td>
+<td>高，适用于多种应用场景</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>高，基于配对和复杂数学难题</td>
+<td>高，基于多项式数学难题</td>
+<td>更高，基于优化的数学基础</td>
+</tr>
+<tr>
+<td><strong>用户体验</strong></td>
+<td>设置复杂且生成时间较长，用户体验较差</td>
+<td>简化设置过程和快速验证，提供良好用户体验</td>
+<td>优化的性能和简化的设置过程，<strong>用户体验最佳</strong></td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>适用于特定需求明确且不需频繁更新的场景</td>
+<td>适用于高频交互和高性能需求的应用</td>
+<td>适用于各种高效、高频次的零知识证明应用场景</td>
+</tr>
+<tr>
+<td><strong>在PolygonID中的应用</strong></td>
+<td>适用于复杂隐私保护和金融交易场景</td>
+<td>适用于实时身份验证和高频交易</td>
+<td>适用于高效、高频次的身份验证和隐私保护场景</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2024/05/16/%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/" title="对比DID中的隐私算法">https://willzhuang.github.io/2024/05/16/对比DID中的隐私算法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/DID/" rel="tag"># DID</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"># 密码学</a>
+              <a href="/tags/%E5%8A%A0%E5%AF%86/" rel="tag"># 加密</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/11/Pseudonymization%E7%AE%97%E6%B3%95/" rel="prev" title="Pseudonymization算法">
+                  <i class="fa fa-chevron-left"></i> Pseudonymization算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'de8d2ef2e5a9d4266b8a862e228cf42c',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
