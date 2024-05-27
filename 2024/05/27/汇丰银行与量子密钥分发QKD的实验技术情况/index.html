@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="2023&#x2F;07&#x2F;05，汇丰发布：https:&#x2F;&#x2F;www.hsbc.com&#x2F;-&#x2F;files&#x2F;hsbc&#x2F;media&#x2F;media-release&#x2F;2023&#x2F;230705-hsbc-qkd-press-release.pdf 汇丰银行与量子密钥分发QKD的实验技术情况技术细节和实施情况：汇丰银行（HSBC）积极参与量子密钥分发（QKD）技术的试验，以增强其金融交易的安全性，并保护其免受未来量子计算机带来的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="汇丰银行与量子密钥分发QKD的实验技术情况">
+<meta property="og:url" content="https://willzhuang.github.io/2024/05/27/%E6%B1%87%E4%B8%B0%E9%93%B6%E8%A1%8C%E4%B8%8E%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91QKD%E7%9A%84%E5%AE%9E%E9%AA%8C%E6%8A%80%E6%9C%AF%E6%83%85%E5%86%B5/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="2023&#x2F;07&#x2F;05，汇丰发布：https:&#x2F;&#x2F;www.hsbc.com&#x2F;-&#x2F;files&#x2F;hsbc&#x2F;media&#x2F;media-release&#x2F;2023&#x2F;230705-hsbc-qkd-press-release.pdf 汇丰银行与量子密钥分发QKD的实验技术情况技术细节和实施情况：汇丰银行（HSBC）积极参与量子密钥分发（QKD）技术的试验，以增强其金融交易的安全性，并保护其免受未来量子计算机带来的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-27T01:43:00.000Z">
+<meta property="article:modified_time" content="2024-05-27T01:43:47.570Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="量子">
+<meta property="article:tag" content="密码学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2024/05/27/%E6%B1%87%E4%B8%B0%E9%93%B6%E8%A1%8C%E4%B8%8E%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91QKD%E7%9A%84%E5%AE%9E%E9%AA%8C%E6%8A%80%E6%9C%AF%E6%83%85%E5%86%B5/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>汇丰银行与量子密钥分发QKD的实验技术情况 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%87%E4%B8%B0%E9%93%B6%E8%A1%8C%E4%B8%8E%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91QKD%E7%9A%84%E5%AE%9E%E9%AA%8C%E6%8A%80%E6%9C%AF%E6%83%85%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">汇丰银行与量子密钥分发QKD的实验技术情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82%E5%92%8C%E5%AE%9E%E6%96%BD%E6%83%85%E5%86%B5%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">技术细节和实施情况：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">243</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/05/27/%E6%B1%87%E4%B8%B0%E9%93%B6%E8%A1%8C%E4%B8%8E%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91QKD%E7%9A%84%E5%AE%9E%E9%AA%8C%E6%8A%80%E6%9C%AF%E6%83%85%E5%86%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          汇丰银行与量子密钥分发QKD的实验技术情况
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-05-27 09:43:00 / Modified: 09:43:47" itemprop="dateCreated datePublished" datetime="2024-05-27T09:43:00+08:00">2024-05-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>2023/07/05，汇丰发布：<br><a target="_blank" rel="noopener" href="https://www.hsbc.com/-/files/hsbc/media/media-release/2023/230705-hsbc-qkd-press-release.pdf">https://www.hsbc.com/-/files/hsbc/media/media-release/2023/230705-hsbc-qkd-press-release.pdf</a></p>
+<h3 id="汇丰银行与量子密钥分发QKD的实验技术情况"><a href="#汇丰银行与量子密钥分发QKD的实验技术情况" class="headerlink" title="汇丰银行与量子密钥分发QKD的实验技术情况"></a>汇丰银行与量子密钥分发QKD的实验技术情况</h3><h4 id="技术细节和实施情况："><a href="#技术细节和实施情况：" class="headerlink" title="技术细节和实施情况："></a>技术细节和实施情况：</h4><p>汇丰银行（HSBC）积极参与量子密钥分发（QKD）技术的试验，以增强其金融交易的安全性，并保护其免受未来量子计算机带来的网络威胁。以下是其QKD实施的关键方面：</p>
+<ol>
+<li><strong>合作伙伴和协作：</strong><ul>
+<li>汇丰银行与BT（英国电信）、东芝（Toshiba）和亚马逊网络服务（AWS）等技术提供商合作实施QKD。这些合作旨在为各种金融应用建立安全的量子网络基础设施。</li>
+</ul>
+</li>
+<li><strong>地铁网络试验：</strong><ul>
+<li>汇丰银行成为首家加入BT和东芝安全量子“地铁”网络的银行。该网络旨在为机构间提供无条件安全的交易。试验涉及将汇丰银行位于伦敦金丝雀码头的全球总部与位于伯克郡的数据中心通过63公里的光纤链路连接。</li>
+</ul>
+</li>
+<li><strong>使用案例和应用：</strong><ul>
+<li>汇丰银行的QKD试验的主要使用案例是确保<strong>外汇（FX）交易</strong>的安全。一个显著的试验涉及使用QKD保护从欧元到美元的3000万欧元交易场景中的高度敏感的交易数据。</li>
+<li>汇丰银行还探索了其他应用，如安全视频通信和边缘计算，利用QKD确保这些场景中的数据完整性和安全性。</li>
+</ul>
+</li>
+<li><strong>技术优势：</strong><ul>
+<li>QKD利用量子物理的基本特性生成不受窃听或网络攻击的加密密钥。这意味着任何试图截取或篡改数据的行为都可以立即被检测到，为金融交易提供了显著的网络安全飞跃​。</li>
+</ul>
+</li>
+<li><strong>未来影响：</strong><ul>
+<li>汇丰银行的试验旨在将QKD整合到其最关键的交易工具和金融系统中，确保它们在量子计算技术进步时仍然安全。这种前瞻性的方法展示了汇丰银行在应对潜在网络威胁和制定未来网络安全措施方面的承诺​。<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3>汇丰银行在QKD方面的参与代表了金融网络安全的重大进展，特别是在应对未来量子计算机带来的威胁方面。通过与领先的技术提供商合作并在现实场景中成功进行试验，汇丰银行正在为银行业量子密码学的实施设立标准。<br>（注：以上内容来自于ChatGPT）</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2024/05/27/%E6%B1%87%E4%B8%B0%E9%93%B6%E8%A1%8C%E4%B8%8E%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91QKD%E7%9A%84%E5%AE%9E%E9%AA%8C%E6%8A%80%E6%9C%AF%E6%83%85%E5%86%B5/" title="汇丰银行与量子密钥分发QKD的实验技术情况">https://willzhuang.github.io/2024/05/27/汇丰银行与量子密钥分发QKD的实验技术情况/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E9%87%8F%E5%AD%90/" rel="tag"># 量子</a>
+              <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"># 密码学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/23/%E5%85%B3%E4%BA%8EAI-LLM%E6%B5%8B%E8%AF%84/" rel="prev" title="关于AI-LLM测评">
+                  <i class="fa fa-chevron-left"></i> 关于AI-LLM测评
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '84cde40c24e6242ce1a877e69cb602e3',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
