@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="YOLO（You Only Look Once）是一种用于对象检测的深度学习算法。其基本思想是将对象检测问题转换为回归问题，从而能够在单次前向传播中同时预测多个对象的类别和位置。YOLO通过卷积神经网络（CNN）处理图像，实现高效的实时对象检测。 1. 数学原理1.1 网格划分将输入图像划分为 ( S ✖️ S ) 的网格。每个网格单元负责检测图像中其中心落在该单元中的对象。 1.2 预测边界框每">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YOLO原理概述">
+<meta property="og:url" content="https://willzhuang.github.io/2024/07/02/YOLO%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="YOLO（You Only Look Once）是一种用于对象检测的深度学习算法。其基本思想是将对象检测问题转换为回归问题，从而能够在单次前向传播中同时预测多个对象的类别和位置。YOLO通过卷积神经网络（CNN）处理图像，实现高效的实时对象检测。 1. 数学原理1.1 网格划分将输入图像划分为 ( S ✖️ S ) 的网格。每个网格单元负责检测图像中其中心落在该单元中的对象。 1.2 预测边界框每">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-02T01:35:00.000Z">
+<meta property="article:modified_time" content="2024-07-02T02:15:37.833Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="图片处理">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2024/07/02/YOLO%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>YOLO原理概述 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">1. 数学原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2. 计算机算法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">246</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/07/02/YOLO%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          YOLO原理概述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-07-02 09:35:00 / Modified: 10:15:37" itemprop="dateCreated datePublished" datetime="2024-07-02T09:35:00+08:00">2024-07-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>YOLO（You Only Look Once）是一种用于对象检测的深度学习算法。其基本思想是将对象检测问题转换为回归问题，从而能够在单次前向传播中同时预测多个对象的类别和位置。YOLO通过卷积神经网络（CNN）处理图像，实现高效的实时对象检测。</p>
+<h3 id="1-数学原理"><a href="#1-数学原理" class="headerlink" title="1. 数学原理"></a>1. 数学原理</h3><p>1.1 网格划分<br>将输入图像划分为 ( S ✖️ S ) 的网格。每个网格单元负责检测图像中其中心落在该单元中的对象。</p>
+<p>1.2 预测边界框<br>每个网格单元预测固定数量的边界框（通常为B个）。每个边界框由以下几个参数表示：<br>    •    ( (x, y) )：边界框中心相对于网格单元的位置。<br>    •    ( w, h )：边界框的宽度和高度，相对于整张图像的归一化值。<br>    •    ( C )：边界框中包含对象的置信度，表示为边界框实际包含对象的概率和预测的边界框与实际边界框的重叠度（IoU）的乘积。<br>每个边界框预测值可以表示为一个5维向量：( (x, y, w, h, C) )。</p>
+<p>1.3 预测类概率<br>每个网格单元还预测C个类别的条件概率：( P(Class_i | Object) )。这些概率表示在当前网格单元中存在对象的情况下，各个类别的概率。</p>
+<p>1.4 综合预测<br>最终的预测结果结合了类别概率和边界框置信度，计算每个类别的最终置信度分数：<br> P(Class_i) ✖️ C<br>这给出了在每个边界框中存在特定类别对象的置信度分数。</p>
+<h3 id="2-计算机算法"><a href="#2-计算机算法" class="headerlink" title="2. 计算机算法"></a>2. 计算机算法</h3><p>YOLO的计算机算法实现包括以下几个主要部分：</p>
+<p>2.1 定义输入<br>输入图像被调整为固定大小（如 ( 448 ✖️ 448 )），并归一化到 [0, 1] 范围。</p>
+<p>2.2 归一化输入<br>将输入图像像素值归一化，使得每个像素值在 [0, 1] 之间。<br>具体数学步骤：<br>a) 首先计算矩阵中的平均值（μ）; b) 计算所有元素与平均值的绝对差；c) 通过将上一步结果中的所有值平方，累加，除以值的数量，然后计算平方根，来计算标准差；d）通过减去平均值并除以标准差，将输入进行层归一化。</p>
+<p>2.3 应用卷积<br>使用多个卷积层提取图像特征。每个卷积层应用卷积核，计算特征图。</p>
+<p>2.4 应用最大池化<br>在卷积层之间应用最大池化层（Max Pooling），以减少特征图的尺寸并保留重要特征。<br>在特征图的每个通道上滑动定义的窗口，并在每个位置计算窗口内的最大值。这将生成一个新的下采样特征图，其形状取决于窗口大小和步长。具体步骤如下：<br>%%<br>2.4.1 定义窗口和步长<br>假设我们使用一个  2 ✖️ 2  的窗口，步长为 2。<br>2.4.2 滑动窗口<br>在每个通道上，从左上角开始，按照步长滑动窗口。每次滑动窗口时，计算窗口内的最大值。<br>2.4.3 计算最大值<br>在每个窗口位置，找到该窗口内的最大值。这些最大值组成了下采样后的特征图。 %%</p>
+<p>2.5 非线性激活<br>在每个卷积层之后应用非线性激活函数（如ReLU）以引入非线性，使模型能够表示更复杂的函数。</p>
+<p>2.6 展平<br>将最终的特征图展平成一个一维向量，为全连接层输入做好准备。<br>%%<br>2.6.1 输入特征图<br>假设输入特征图是一个三维张量，形状为 ( (H, W, D) )，其中 ( H ) 是高度，( W ) 是宽度，( D ) 是深度（通道数）。<br>2.6.2 计算展平后向量的长度<br>展平后的向量长度等于输入特征图所有元素的总数，可以通过以下公式计算：<br> \text{Flattened Length} = H \times W \times D<br>2.6.3 按顺序排列所有元素<br>将特征图中的所有元素按行优先（Row-major order）或列优先（Column-major order）的顺序排列成一维向量。通常使用行优先顺序，这意味着先遍历特征图的每一行，再遍历每一列，最后遍历每个通道。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  [</span><br><span class="line">    [1, 2, 3],  [4, 5, 6]</span><br><span class="line">  ],</span><br><span class="line">  [</span><br><span class="line">    [7, 8, 9],  [10, 11, 12]</span><br><span class="line">  ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>按行优先顺序排列后，展平的结果为：<br> [1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12] </p>
+<p>%%</p>
+<p>2.7 投影到输出形状<br>通过全连接层将展平的特征向量投影到输出形状。输出为一个 ( S ✖️ S ✖️ (B ✖️ 5 + C) ) 的张量，其中B是每个网格单元预测的边界框数量，5表示每个边界框的5个参数（ x, y, w, h, C )，C是类别数。</p>
+<p>2.8 组成最终推理<br>通过将边界框参数和类别概率结合起来，组成最终的检测结果。应用非极大值抑制（Non-Maximum Suppression, NMS）来消除冗余边界框，仅保留置信度最高的边界框。</p>
+<p>YOLO工作流程总结<br>    1.    输入图像：将图像调整为固定大小并归一化。<br>    2.    特征提取：通过多个卷积层和最大池化层提取图像特征。<br>    3.    非线性激活：应用非线性激活函数。<br>    4.    展平和全连接：将特征图展平并通过全连接层进行预测。<br>    5.    输出预测：生成边界框和类别概率的预测值。<br>    6.    后处理：应用非极大值抑制，得到最终检测结果。<br>通过这些步骤，YOLO实现了快速且高效的对象检测，在多个应用领域中得到了广泛应用。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2024/07/02/YOLO%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0/" title="YOLO原理概述">https://willzhuang.github.io/2024/07/02/YOLO原理概述/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86/" rel="tag"># 图片处理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/06/21/%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E4%B8%AD%E7%9A%84%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A8%A1%E5%9E%8B%E6%A8%A1%E5%9E%8B/" rel="prev" title="图片处理中的人工智能模型">
+                  <i class="fa fa-chevron-left"></i> 图片处理中的人工智能模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/" rel="next" title="图片特性提取的算法">
+                  图片特性提取的算法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '1fc5f2051f66065cef35b3ce9d96010b',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

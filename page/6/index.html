@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">243</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,449 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/09/14/BloombergGPT%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/14/BloombergGPT%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/" class="post-title-link" itemprop="url">BloombergGPT论文解读</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-14 16:31:00 / Modified: 17:13:31" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h3><p>BloombergGPT是布隆伯格2023年3月30日公开在arXiv的一篇文章——<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.17564">BloombergGPT: A Large Language Model for Finance</a>中涉及到的语言模型，也是金融领域第一个公开发表文章的大语言模型（以下简称“LLM”）。</p>
+<h3 id="2-要点"><a href="#2-要点" class="headerlink" title="2. 要点"></a>2. 要点</h3><ul>
+<li>BloombergGPT是Bloomberg训练出来的金融大语言模型（LLM for Finance）</li>
+<li>模型参数量为500亿，使用了包含3630亿token的金融领域数据集以及3450亿token的通用数据集</li>
+<li>隐藏层维度为7680，多头的头数为40</li>
+<li>模型采用Unigram tokenizer，AdamW优化器</li>
+<li>模型在64个AWS的p4d.24xlarge实例上训练了53天，其中每个p4d.24xlarge实例包含了8块40GB的A100GPU</li>
+<li>对BloombergGPT的评估包含了两部分：金融领域评估与通用领域评估</li>
+<li>评估对比的其他大语言模型有GPT-NeoX、OPT、BLOOM、GPT-3</li>
+<li>在金融领域任务上，BloombergGPT综合表现最好；在通用任务上，BloombergGPT的综合得分同样优于相同参数量级的其他模型，并且在某些任务上的得分要高于参数量更大的模型</li>
+<li>BloombergGPT模型在金融领域取得好效果的同时，并没有以牺牲模型通用能力为代价</li>
+<li>对模型定性评估的结果表明，BloombergGPT可以提高工作效率</li>
+<li>出于安全性的考虑，BloogbergGPT模型不会被公开，但是模型训练和评估的相关经验和思考会被分享出来</li>
+<li>作者认为，对模型效果提升促进最大的三个因素（按影响从高到低排序）分别为精心清洗的数据集、合理的tokenizer、流行的模型结构</li>
+</ul>
+<p>文章的主要贡献在以下几点：</p>
+<ul>
+<li>混合数据集训练方法不仅可以在特定任务上表现出色，也可以在一般NLP基准测试上表现良好</li>
+<li>不同于常见的网络爬取数据，本文的数据包含了巨量的可信来源的精心清洗的数据</li>
+<li>不仅包含了模型在基准测试集上的评估结果，也包含了在Bloomberg内部任务上的评估结果</li>
+<li>在超过7000亿个token的语料库中的5690亿个token上训练出一个500亿参数的LLM</li>
+<li>使用Unigram模型而非常用的基于贪心合并的子词标记器进行tokenize，方便在推理时进行更智能的标记化</li>
+<li>借鉴BLOOM的训练大模型方法，同时也将自己自己在训练BloombergGPT中的经验分享</li>
+</ul>
+<h3 id="3-数据集"><a href="#3-数据集" class="headerlink" title="3.数据集"></a>3.数据集</h3><p><strong>BloombergGPT是一个有500亿参数、基于BLOOM模型的LLM</strong>，过程中采用了一种兼具通用能力和特定领域的方法。<br>作者首先构建了FinPile——一个包含了新闻、档案、网络爬取的新闻稿件、英文财经文档等英文金融文档的金融领域数据集，同时也采用了通用的数据集。</p>
+<h4 id="金融领域数据集"><a href="#金融领域数据集" class="headerlink" title="金融领域数据集"></a>金融领域数据集</h4><p>金融领域数据集共包含了3630亿个token，占总数据集token量的54.2%，具体由以下几个部分构成：</p>
+<ul>
+<li>金融领域相关网页，2980亿token，占比42.01%</li>
+<li>金融领域知名新闻源，380亿token，占比5.31%</li>
+<li>公司财报，140亿token，占比2.04%</li>
+<li>金融相关公司的出版物，90亿token，占比1.21%</li>
+<li>bloomberg，50亿token，占比0.7%</li>
+</ul>
+<p>因为包含一部分收费和私有数据，所以这份数据集不会被公开，但是文章中公开了模型训练方法。</p>
+<h4 id="通用数据集"><a href="#通用数据集" class="headerlink" title="通用数据集"></a>通用数据集</h4><p>**通用数据集共包含了3450亿个token，占总数据集token量的48.73%**，具体分为如下几个部分：</p>
+<ul>
+<li>The Pile数据集，1840亿token，占比25.9%</li>
+<li>C4数据集，1380亿token，占比19.48%</li>
+<li>Wikipedia数据集，240亿token，占比3.35%</li>
+</ul>
+<p>数据集使用Unigram tokenizer对原始文本进行tokenize。具体处理时，作者这了两点改进（具体内容可参考原论文《2.3Tokenization》）：</p>
+<ul>
+<li>在pretokenization这一步，将数字视为单个token，并且允许词组的存在，以提高信息密度减少句子长度</li>
+<li>使用分治的思想优化Unigram tokenizer在大数据集上的实现，并对最终词表大小控制在13万这个数量级上</li>
+</ul>
+<h3 id="4-模型"><a href="#4-模型" class="headerlink" title="4.模型"></a>4.模型</h3><h4 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h4><p>模型基于BLOOM模型的自回归结构，具体包含了70层transformer decoder。<br>另外一些细节如下（详见《3.1 Architecture》）：</p>
+<ul>
+<li>前馈层（FFN）中的非线性函数采用GELU</li>
+<li>位置编码采用ALiBi编码</li>
+<li>模型在第一层多了一个layer normalization</li>
+</ul>
+<h4 id="模型尺度"><a href="#模型尺度" class="headerlink" title="模型尺度"></a>模型尺度</h4><p>这一部分，作者先有了算力预算（<strong>40G内存A100共130万GPU小时</strong>），并且给中间checkpoint存储留出了约25%的时间预算。<br><strong>根据Chinchilla scaling laws，计算出模型的参数和需要的数据量大小——模型参数为500亿，token数据量为11000+亿</strong>。<br>考虑到金融领域token数量要占总token数量的50%以上，而且目前的数据暂时无法再进行扩充，最终<strong>模型参数量选择为500亿，token数据量为7000+亿</strong>。<br>另一方面，隐藏层维度D也可以根据decoder的层数计算出来，这里经过计算<strong>隐藏层维度为7680</strong>，多头的<strong>头数为40</strong>。</p>
+<h4 id="训练配置"><a href="#训练配置" class="headerlink" title="训练配置"></a>训练配置</h4><p>这一部分原始论文写的比较详细，具体见《3.3 Training Configuration》，这里简单摘要如下：</p>
+<ul>
+<li>作者在<strong>每篇文档的最后添加了特殊标记&lt;|endoftext|&gt;，模型训练时选取的句子长度为2048token</strong></li>
+<li>训练时采用的优化方法是<strong>AdamW，beta1、beta2、weight decay取值分别为0.9、0.95、0.1</strong>，初始学习率为6e-5，采用cosine衰减、线性warmup方式</li>
+<li>模型参数随机初始化为<strong>均值0、标准差0.006588的正态分布</strong>，并对MLP的第二层和注意力层输出进行缩放</li>
+<li>关于训练的不稳定性，文章中没有描述训练BloombergGPT时采用的方法，只是介绍了相关进展</li>
+<li>关于计算使用到的硬件，使用了<strong>64个AWS的p4d.24xlarge实例，每个p4d.24xlarge实例包含了8块40GB的A100GPU</strong></li>
+</ul>
+<h4 id="大规模优化采用的方法"><a href="#大规模优化采用的方法" class="headerlink" title="大规模优化采用的方法"></a>大规模优化采用的方法</h4><p>这一部分中，作者描述了具体优化时采用的方法：ZeRO优化、MiCS、Activation Checkpointing、混合精度训练（Mixed Precision Training）、内核融合（fused kernels）。<br>具体见《3.4 Large-scale Optimization》<br>经过上述优化，上述硬件的<strong>平均算力水平达到了102TFLOPs</strong>，<strong>训练一步需要32.5秒</strong>。</p>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。<br><strong>具体训练过程如下</strong>：</p>
+<ul>
+<li>初始训练的batch size大小为1024，warm-up过程持续了7200步，随后作者将batch size修改为2048。</li>
+<li>115,500步之后，验证集上的损失不再下降，然后作者将学习率缩小为原始的2/3；</li>
+<li>129,900步之后，学习率缩小为之前的1/2，同时增加dropout</li>
+<li>137,100步之后，学习率再次缩小为之前的1/2</li>
+<li>最终，训练在146,000步结束。作者选取139,200这一步的模型最为最终使用的模型</li>
+</ul>
+<p>这里推荐阅读原始文章3.3节与3.4节中关于训练方法的描述，对于大模型训练有一定的参考意义。</p>
+<h3 id="5-评估"><a href="#5-评估" class="headerlink" title="5.评估"></a>5.评估</h3><p>文章中对BloombergGPT的<strong>评估分成了两部分</strong>：<strong>金融领域任务与通用任务</strong>。这样做的目的也比较直观，就是<strong>验证在特定领域预训练后的模型能够在特定领域表现好，同时在通用领域的表现也不会差太多</strong>这一观点。<br>同时，文章<strong>对比了BloombergGPT、GPT-NeoX、OPT、BLOOM、GPT-3在不同任务上的表现</strong>。注意，这里<strong>因为GPT-3模型无法获取，故仅在部分通用任务上进行了评测</strong>。<br>作者对每一个模型均独立进行了评测，并且在每一个任务中使用相同的标准prompt、相同的样例、不使用任务描述和任何CoT prompt，以保证评测结果的公平性。<br>对于有多个答案的任务，文章中采用了**基于似然的分类方法（likelihood-based classification）进行评估；对于其他任务，文章采用贪心解码（greedy decoding）的方式进行评估。</p>
+<h4 id="holdout-loss"><a href="#holdout-loss" class="headerlink" title="holdout loss"></a>holdout loss</h4><p>作者首先在FinPile数据集预留的部分样本上对各个模型进行了bits per byte的评估。<br>bits per byte指标是评估语言模型的一种常见指标<strong>，类似于perplexity，取值越小，模型越好。具体计算方法可见</strong><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/a/261789">How to compute bits per character (BPC)?</a><br><strong>BloombergGPT在金融语料上的bits per byte均好于其他模型，并且在财报（Filings）这个类别上表现尤其突出</strong>。这个结果也符合预期。否则可能就没有后面任务对比的必要了。<br>文章又将金融领域任务分成了<strong>外部任务和Bloomberg内部任务</strong>。在每个任务上，作者除了评估模型在任务上的表现，还评估了同一任务下不同模型生成结果之间两两比较的胜率（WR）。</p>
+<h4 id="外部任务"><a href="#外部任务" class="headerlink" title="外部任务"></a>外部任务</h4><p>外部任务主要如下：</p>
+<ul>
+<li>ConvFinQA，标普500收益报告问答推理</li>
+<li>FiQA SA，金融新闻和微博客标题基于方面的情感三分类（正负中）</li>
+<li>FPB，金融新闻句子级别情感三分类（正负中）</li>
+<li>Headline，新闻标题在预定义标签下的二分类</li>
+<li>NER，信用风险评估数据的命名实体识别</li>
+</ul>
+<p><strong>BloombergGPT在上述5个任务中的4个都取得了最好效果，在另外一个取得了第二名；并且在模型两两结果对比的胜率最高，同时在ConvFinQA这个任务上遥遥领先。</strong></p>
+<h4 id="Bloomberg内部任务之情感分析"><a href="#Bloomberg内部任务之情感分析" class="headerlink" title="Bloomberg内部任务之情感分析"></a>Bloomberg内部任务之情感分析</h4><p>这个任务中的情感分析均为基于方面的情感三分类（aspect-specific sentiment），数据集的内容通过任务名称就可以略知一二。<br><strong>BloombergGPT在上述4个数据集上的表现均大幅领先于其他模型</strong>。</p>
+<h4 id="探索性任务：NER"><a href="#探索性任务：NER" class="headerlink" title="探索性任务：NER"></a>探索性任务：NER</h4><p>注意，这里的<strong>NER只涉及到ORG、PER、LOC这三类实体</strong>。<br>同时探索性任务<strong>NER+NED是指识别出实体后再将实体链接到上市公司的股票简称</strong>。比如“AAPL announced that they will stop using Intel chips in future products.” 这句话<strong>NER的结果是“AAPL, Intel”</strong>，<strong>NER+NED的结果是 “AAPL, INTC”</strong>。<br>这两类任务涉及到的数据集包括了<strong>7个数据集</strong>，分别为BN（Bloomberg BN wire上内容）、BFW（Bloomberg First Word上的内容）、Filings（财报内容）、Headlines（Bloomberg news内容）、Premium（Bloogberg收录 的第三方新闻内容）、Transcripts（公司新闻发布会的文字记录）、Social Media。<br>最终，<strong>NER任务下，BloombergGPT仅在Headlines这一个数据集上得分最高；但在NER+NED任务下，BloombergGPT在除了Social Media任务的其他任务上均得分第一</strong>。</p>
+<h4 id="通用任务"><a href="#通用任务" class="headerlink" title="通用任务"></a>通用任务</h4><p>文章在通用任务上做了相当多的对比，这里<strong>仅对任务类型和结果做简要描述，详细内容见文章中的5.4~5.7节</strong>。<br>作者在<strong>BIG-bench Hard</strong>（BIG-bench的一个子集，仅包含目前模型表现无法超过人类的任务）、<strong>常识测试</strong>（不提供任何背景知识，仅可以训练时使用的数据）、<strong>阅读理解</strong>、<strong>语言学</strong>（消歧、语法识别、蕴含判别等）等任务上进行了测试。<br><strong>在BIG-bench Hard任务上，BloombergGPT得分低于参数量更大的PaLM和BLOOM，但是与参数规模类似的GPT-NeoX或OPT66B相比，BloombergGPT的性能更接近BLOOM</strong>，这说明开发金融专用的大语言模型并没有明显牺牲其通用能力。<br><strong>在常识测试任务中，BloombergGPT在1个任务上取得了第一名，在其余3个任务上取得了第二名（这里未考虑GPT-3）</strong>。<br><strong>在阅读理解任务上，GPT-3在所有任务上排名第一，BloombergGPT在5/6个任务上排名第二</strong>，且得分远高于BLOOM模型。<br><strong>在语言学任务上，GPT-3在综合排名第一，BloombergGPT综合排名第二</strong>，且综合得分高于BLOOM模型。</p>
+<h4 id="评测总结"><a href="#评测总结" class="headerlink" title="评测总结"></a>评测总结</h4><p><strong>在金融领域任务上，BloombergGPT综合表现最好</strong>；<br><strong>在通用任务上，BloombergGPT的综合得分优于相同参数量级的其他模型，并且在某些任务上的得分要高于参数量更大的模型</strong>。<br>这都说明，开发金融专用的大语言模型在金融领域取得好效果的同时，并没有以牺牲模型通用能力为代价。<br>这一结论也可以给我们一个启示，<strong>在其他特定领域，我们也可以开发专用的大语言模型</strong>。</p>
+<h4 id="定性评估"><a href="#定性评估" class="headerlink" title="定性评估"></a>定性评估</h4><p>作者在文章的第6章还展示了对BloombergGPT定性评估的例子，以展示模型在专业领域带来的促进作用。<br>这些列子包括：</p>
+<ul>
+<li>BQL（Bloomberg查询语言）生成，即使用自然语言完成Bloomberg数据库查询，类似NL2SQL</li>
+<li>新闻标题提示，辅助记者生成新闻短标题</li>
+<li>金融问答</li>
+</ul>
+<h3 id="6-道德伦理、限制与研究意义"><a href="#6-道德伦理、限制与研究意义" class="headerlink" title="6.道德伦理、限制与研究意义"></a>6.道德伦理、限制与研究意义</h3><p>这一章没有太多值得写的，主要就是强调了目前大语言模型可能会生成有害的、有偏见的内容，并且可能存在prompt注入导致信息泄露的风险，Bloomberg在使用大语言模型前后都会做好风控，保证生成内容的准确性。<br>同时，<strong>BloogbergGPT模型不会被公开，但是模型训练和评估的相关经验和思考会被分享出来</strong>。</p>
+<h3 id="7-总结与展望"><a href="#7-总结与展望" class="headerlink" title="7.总结与展望"></a>7.总结与展望</h3><p>文章提出了BloombergGPT——一个金融领域顶级的LLM，并且在训练特定领域大语言模型做出了如下贡献：</p>
+<ul>
+<li><strong>使用领域数据和通用数据的训练方式可以让模型在这两个方面得到平衡的结果</strong></li>
+<li>模型参数量参考了Chinchilla scaling laws</li>
+<li>公布了相关训练细节</li>
+</ul>
+<p>下一步，作者们会在以下方向继续研究：</p>
+<ul>
+<li>金融领域的fine-tuning</li>
+<li>使用更无害和更无偏见的语言</li>
+<li>研究tokenization方法对模型结果的影响</li>
+</ul>
+<p>最后，作者把模型取得目前效果归结于以下三个因素（按影响从高到低排序）：</p>
+<ul>
+<li><strong>精心清洗的内部数据集</strong></li>
+<li><strong>tokenizer的选择</strong></li>
+<li><strong>流行的模型结构</strong></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/09/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">深度学习推荐模型</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-14 13:49:00 / Modified: 14:25:48" itemprop="dateCreated datePublished" datetime="2023-09-14T13:49:00+08:00">2023-09-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/2023/09/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E6%A8%A1%E5%9E%8B/1.jpg"></p>
+<ol>
+<li><p>改变神经网络的复杂程度: 从最简单的单层神经网络模型 AutoRec ( 自编码器推荐)，到经典的深度神经网络结构 Deep Crossing(深度特征交叉)，其主 要的进化方式在于 增加了深度神经网络的层数和结构复杂度。</p>
+</li>
+<li><p>改变特征交叉方式: 这类模型的主要改变在于丰富了深度学习网络中特征交叉的方式。例如，改变了用户向量和物品向量互操作方式的 NeUralCF( Neural Collaborative Filtering,神经网络协同过滤)，定义了多种特征向量交叉操作的 PNN ( Product-based Neural Network, 基于积操作的神经网络 )模型。</p>
+</li>
+<li><p>组合模型: 这类模型主要是指 Wide&amp;Deep 模型及其后续变种 Deep&amp;Cross,DeepFM等，其思路是通过组合两种不同特点、优势互补的深度学 习网络，提升模型的综合能力。</p>
+</li>
+<li><p>FM 模型的深度学习演化版本: 传统推荐模型 FM 在深度学习时代有了 诸多后续版本，其中包括 NFM ( Neural Factorization Machine, 神经网络因子分解机 )、FNN ( Factorization-machine supported Neural Network, 基于因子分解机支持的神经网络)、AFM(Attention neural Factorization Machine, 注意力因子分解机)等，它们对 FM 的改进方向各不相同。例如，NFM 主要使用神经网络提升 FM 二阶部分的特征交叉能力，AFM 是引入了注意力机制的 FM 模型，FNN 利用 FM 的结果进行网络初始化。</p>
+</li>
+<li><p>注意力机制与推荐模型的结合: 这类模型主要是将“注意力机制”应用于深度学习推荐模型中，主要包括结合了 FM 与注意力机制的 AFM 和引入了注 意力机制的 CTR 预估模型 DIN ( Deep Interest Network, 深度兴趣网络)。</p>
+</li>
+<li><p>序列模型与推荐模型的结合: 这类模型的特点是使用序列模型模拟用户行为或用户兴趣的演化趋势，代表模型是 DIEN( Deep Interest Evolution Network, 深度兴趣进化网络 )。</p>
+</li>
+<li><p>强化学习与推荐模型的结合: 这类模型将强化学习应用于推荐领域，强调模型的在线学习和实时更新，其代表模型是 DRN( Deep Reinforcement Learning Network, 深度强化学习网络 )。</p>
+</li>
+</ol>
+<p>— 摘录于《深度学习推荐模型》</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/" class="post-title-link" itemprop="url">PBFT性能到底如何</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-05 15:50:00 / Modified: 17:20:47" itemprop="dateCreated datePublished" datetime="2023-09-05T15:50:00+08:00">2023-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="1-PBFT-https-github-com-yeasy-blockchain-guide-blob-master-evaluation-hyperledger-md"><a href="#1-PBFT-https-github-com-yeasy-blockchain-guide-blob-master-evaluation-hyperledger-md" class="headerlink" title="1. PBFT  https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md"></a>1. PBFT  <a target="_blank" rel="noopener" href="https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md">https://github.com/yeasy/blockchain_guide/blob/master/evaluation/hyperledger.md</a></h4><h3 id="Hyperledger-Fabric-v0-6-PBFT-性能评测"><a href="#Hyperledger-Fabric-v0-6-PBFT-性能评测" class="headerlink" title="Hyperledger Fabric v0.6 - PBFT 性能评测"></a>Hyperledger Fabric v0.6 - PBFT 性能评测</h3><h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>操作系统</th>
+<th>内核版本</th>
+<th>CPU(GHz)</th>
+<th>内存(GB)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物理机</td>
+<td>Ubuntu 14.04.1</td>
+<td>3.16.0-71-generic</td>
+<td>4x2.0</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p>每个集群启动后等待 10s 以上，待状态稳定。</p>
+<p>仅测试单客户端、单服务端的连接性能情况。</p>
+<h3 id="评测指标"><a href="#评测指标" class="headerlink" title="评测指标"></a>评测指标</h3><p>一般评测系统性能指标包括吞吐量（throughput）和延迟（latency）。对于区块链平台系统来说，实际交易延迟包括客户端到系统延迟（往往经过互联网），再加上系统处理反馈延迟（跟不同 consensus 算法关系很大，跟集群之间互联系统关系也很大）。</p>
+<p>本次测试仅给出大家最为关注的交易吞吐量（tps）。</p>
+<h4 id="query-交易"><a href="#query-交易" class="headerlink" title="query 交易"></a>query 交易</h4><h5 id="pbft-classic"><a href="#pbft-classic" class="headerlink" title="pbft:classic"></a>pbft:classic</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2000</td>
+<td>193.05</td>
+</tr>
+</tbody></table>
+<h5 id="pbft-batch"><a href="#pbft-batch" class="headerlink" title="pbft:batch"></a>pbft:batch</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>batch size</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>2000</td>
+<td>193.99</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>2000</td>
+<td>192.49</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>8</td>
+<td>2000</td>
+<td>192.68</td>
+</tr>
+</tbody></table>
+<h4 id="invoke-交易"><a href="#invoke-交易" class="headerlink" title="invoke 交易"></a>invoke 交易</h4><h5 id="pbft-classic-1"><a href="#pbft-classic-1" class="headerlink" title="pbft:classic"></a>pbft:classic</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2000</td>
+<td>141.34</td>
+</tr>
+</tbody></table>
+<h5 id="pbft-batch-1"><a href="#pbft-batch-1" class="headerlink" title="pbft:batch"></a>pbft:batch</h5><table>
+<thead>
+<tr>
+<th>clients</th>
+<th>VP Nodes</th>
+<th>batch size</th>
+<th>iteration</th>
+<th>tps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>2000</td>
+<td>214.36</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>2000</td>
+<td>227.53</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>8</td>
+<td>2000</td>
+<td>237.81</td>
+</tr>
+</tbody></table>
+<h3 id="PBFT结论"><a href="#PBFT结论" class="headerlink" title="PBFT结论"></a>PBFT结论</h3><p>PBFT单客户端连接情况下，TPS 基本在 190 ~ 300 范围内。</p>
+<p>============================================</p>
+<h4 id="2-tendermint-https-www-inf-usi-ch-faculty-pedone-Paper-2021-srds2021a-pdf"><a href="#2-tendermint-https-www-inf-usi-ch-faculty-pedone-Paper-2021-srds2021a-pdf" class="headerlink" title="2.tendermint https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf"></a>2.tendermint <a target="_blank" rel="noopener" href="https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf">https://www.inf.usi.ch/faculty/pedone/Paper/2021/srds2021a.pdf</a></h4><p>我们使用 Tendermint 版本 0.33.8 和 Go 版本 1.15，使用默认配置。 内存池最多可存储5000笔交易，最大字节大小为1GB，块大小为20MB。 这些默认限制足以应付未完成交易的最大数量。两个都连接的最大发送和接收速率为 5000 KB/s，控制gossip通信的时间间隔是 100 毫秒。<br>我们在地理分布式环境中进行了实验，验证器节点均匀分布在各大洲的 16 个 AWS 区域中。另一个 AWS 实例托管 1 个以种子模式运行的非验证器节点和所有客户端。<br>我们将所有客户端托管在单个 AWS 服务器中，以将所有测量集中在一个位置。客户端在闭环中均匀地向验证器提交 1KB 交易。<br><img src="/2023/09/05/PBFT%E6%80%A7%E8%83%BD%E5%88%B0%E5%BA%95%E5%A6%82%E4%BD%95/1.png"><br>图中比较了 Tendermint 在 16、32、64 和 128 个验证者规模下的性能。 我们并不期望通过增加验证器的数量来提高性能，因为消息复杂性和共识成本随着进程数量的增加而增加。 本次比较中使用了 128 个验证器的参考工作负载，在实验中的验证器之间均匀分配 1536 个客户端。 采用了第 VII-B 节中考虑的相同实验设置。图中，在相同的工作负载下，当我们将验证器数量增加一倍时，吞吐量会适度下降。</p>
+<h3 id="Tendermint结论"><a href="#Tendermint结论" class="headerlink" title="Tendermint结论"></a>Tendermint结论</h3><p>Tendermint 的 TPS 基本在 400 ~ 600 范围内。交易延时在2～4秒。</p>
+<p>根据以上性能数据，可以在设计区块链系统时，预先分析得出系统综合来看，性能瓶颈到底在哪里。如，某些外部的SaaS服务，性能可能会低于上述区块链指标，从而拖累系统的整体性能。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -382,309 +825,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/07/24/Neural-Networks-and-Software-Reliablity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/07/24/Neural-Networks-and-Software-Reliablity/" class="post-title-link" itemprop="url">Neural-Networks-and-Software-Reliablity</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-07-24 12:27:00" itemprop="dateCreated datePublished" datetime="2023-07-24T12:27:00+08:00">2023-07-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 13:58:37" itemprop="dateModified" datetime="2023-09-14T13:58:37+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h3><p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/1.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/2.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/3.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/4.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/5.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/6.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/7.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/8.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/9.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/10.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/11.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/12.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/13.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/14.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/15.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/16.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/17.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/18.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/19.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/20.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/21.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/22.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/23.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/24.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/25.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/25.1.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/26.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/27.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/28.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/29.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/30.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/31.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/32.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/33.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/34.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/35.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/36.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/37.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/38.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/39.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/40.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/41.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/42.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/43.png"></p>
-<p><img src="/2023/07/24/Neural-Networks-and-Software-Reliablity/44.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/07/17/Corda%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/07/17/Corda%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">Corda的共识机制</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-07-17 15:40:00" itemprop="dateCreated datePublished" datetime="2023-07-17T15:40:00+08:00">2023-07-17</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-04-23 09:27:08" itemprop="dateModified" datetime="2024-04-23T09:27:08+08:00">2024-04-23</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="Corda的共识容错能力较弱"><a href="#Corda的共识容错能力较弱" class="headerlink" title="Corda的共识容错能力较弱"></a>Corda的共识容错能力较弱</h3><p>Version 1～5，Corda会分享交易直接相关的前一笔交易信息，可以<strong>防止</strong>的错误包括：</p>
-<ol>
-<li>前一笔交易的签名错误；</li>
-<li>前一笔交易的金额错误；</li>
-</ol>
-<p><strong>不能够</strong>发现的错误包括：</p>
-<ol>
-<li>前一笔交易双方共同伪造交易，用以欺骗第三方；</li>
-<li>间隔多笔的伪造交易，用以欺骗第三方；</li>
-<li>交易的排序由Kafka决定，或者如ABC均提出向D购买某资产，D可以不按照合约逻辑，或者时间顺序，而是按照D在规则外的某种喜好，来完成交易，进而欺骗其他参与方。</li>
-</ol>
-<p>可能发生的效率问题：</p>
-<ol>
-<li>如若某节点在接收到某交易时，想校验其前序交易，不仅仅是前一个交易，而是全部的前序交易，首先是及其困难的，而且随着链的增高，其校验时间也在升高。</li>
-<li>即使增加校验节点，但并不能够解决上述问题。另外，校验节点的可信性，效率等都成为新的系统问题。</li>
-</ol>
-<p>综上，针对需要区块链的共识机制来增强信任的场景，Corda不是一个好的选择。但是，如果在无需算法来建立信任（如工农中建四大行的某种资产交易系统，他们相互之间的欺诈风险非常低），而是需要某种账本系统，来减少对账摩擦的话，Corda可以帮助到企业，完成分别记账的任务。</p>
-<p>参考：如上，多年的困惑，得到Corda的指导和确认，感谢。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/07/05/Terraform/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/07/05/Terraform/" class="post-title-link" itemprop="url">Terraform</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-07-05 17:10:00" itemprop="dateCreated datePublished" datetime="2023-07-05T17:10:00+08:00">2023-07-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-07-07 09:08:04" itemprop="dateModified" datetime="2023-07-07T09:08:04+08:00">2023-07-07</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="Terraform-https-www-terraform-io"><a href="#Terraform-https-www-terraform-io" class="headerlink" title="Terraform - https://www.terraform.io/"></a>Terraform - <a target="_blank" rel="noopener" href="https://www.terraform.io/">https://www.terraform.io/</a></h3><p>Terraform is a provisioning focus tool.</p>
-<p><a target="_blank" rel="noopener" href="https://www.redhat.com/zh/%E4%B8%BB%E9%A2%98/%E8%87%AA%E5%8A%A8%E5%8C%96/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BD%AE%E5%A4%87">provisioning - 置备是创建和设置 IT 基础架构的过程</a>，包括为管理用户和系统对各种资源访问权限所需执行的步骤。置备是部署服务器、应用、网络组件、存储、边缘设备等的早期阶段。</p>
-<p>置备与<a target="_blank" rel="noopener" href="https://www.redhat.com/zh/topics/automation/what-is-configuration-management">配置管理</a> - configuration-management 不同，但它们都属于部署过程中的步骤。一旦置备了系统，下一步就是配置系统，并在一段时间内使其保持一致。</p>
-<h3 id="如何组合使用"><a href="#如何组合使用" class="headerlink" title="如何组合使用"></a>如何组合使用</h3><ul>
-<li><p>Provisioning + Config management = Terraform + <a target="_blank" rel="noopener" href="https://www.ansible.com/">Ansible</a></p>
-</li>
-<li><p>Provisioning + Server Templating = Terraform + <a target="_blank" rel="noopener" href="https://www.packer.io/">packer</a></p>
-</li>
-<li><p>Provisioning + Orchestration Tool = Terraform + <a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/">kubernetes</a>，通常在AWS中会使用<a target="_blank" rel="noopener" href="https://www.w3schools.com/aws/aws_cloudessentials_awseks.php">EKS</a>服务。</p>
-</li>
-</ul>
-<h3 id="Terraform-Architecture"><a href="#Terraform-Architecture" class="headerlink" title="Terraform Architecture"></a>Terraform Architecture</h3><p><img src="/2023/07/05/Terraform/1.png"></p>
-<h3 id="如何编写Terraform的代码？"><a href="#如何编写Terraform的代码？" class="headerlink" title="如何编写Terraform的代码？"></a>如何编写Terraform的代码？</h3><p>根据上图架构中，我们需要参考如下，AWS Provider 的文档，通过其中的代码，provisioning地构建AWS的IT基础设施。</p>
-<p><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs">https://registry.terraform.io/providers/hashicorp/aws/latest/docs</a></p>
-<h3 id="如何执行Terraform？"><a href="#如何执行Terraform？" class="headerlink" title="如何执行Terraform？"></a>如何执行Terraform？</h3><p>all terraform cli docs are here ==&gt; <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/cli">https://developer.hashicorp.com/terraform/tutorials/cli</a></p>
-<h4 id="1-terraform-init"><a href="#1-terraform-init" class="headerlink" title="1.terraform init"></a>1.terraform init</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">➜  02-overview git:(main) pwd</span><br><span class="line">/Users/xxx/Documents/source_code/devops-directive-terraform-course/02-overview</span><br><span class="line">➜  02-overview git:(main) ls</span><br><span class="line">README.md main.tf</span><br><span class="line">➜  02-overview git:(main) terraform -help  </span><br><span class="line">Usage: terraform [global options] &lt;subcommand&gt; [args]</span><br><span class="line"></span><br><span class="line">The available commands for execution are listed below.</span><br><span class="line">The primary workflow commands are given first, followed by</span><br><span class="line">less common or more advanced commands.</span><br><span class="line"></span><br><span class="line">Main commands:</span><br><span class="line">  init          Prepare your working directory for other commands</span><br><span class="line">  validate      Check whether the configuration is valid</span><br><span class="line">  plan          Show changes required by the current configuration</span><br><span class="line">  apply         Create or update infrastructure</span><br><span class="line">  destroy       Destroy previously-created infrastructure</span><br><span class="line"></span><br><span class="line">All other commands:</span><br><span class="line">  console       Try Terraform expressions at an interactive command prompt</span><br><span class="line">  fmt           Reformat your configuration in the standard style</span><br><span class="line">  force-unlock  Release a stuck lock on the current workspace</span><br><span class="line">  get           Install or upgrade remote Terraform modules</span><br><span class="line">  graph         Generate a Graphviz graph of the steps in an operation</span><br><span class="line">  import        Associate existing infrastructure with a Terraform resource</span><br><span class="line">  login         Obtain and save credentials for a remote host</span><br><span class="line">  logout        Remove locally-stored credentials for a remote host</span><br><span class="line">  metadata      Metadata related commands</span><br><span class="line">  output        Show output values from your root module</span><br><span class="line">  providers     Show the providers required for this configuration</span><br><span class="line">  refresh       Update the state to match remote systems</span><br><span class="line">  show          Show the current state or a saved plan</span><br><span class="line">  state         Advanced state management</span><br><span class="line">  taint         Mark a resource instance as not fully functional</span><br><span class="line">  test          Experimental support for module integration testing</span><br><span class="line">  untaint       Remove the &#x27;tainted&#x27; state from a resource instance</span><br><span class="line">  version       Show the current Terraform version</span><br><span class="line">  workspace     Workspace management</span><br><span class="line"></span><br><span class="line">Global options (use these before the subcommand, if any):</span><br><span class="line">  -chdir=DIR    Switch to a different working directory before executing the</span><br><span class="line">                given subcommand.</span><br><span class="line">  -help         Show this help output, or the help for a specified subcommand.</span><br><span class="line">  -version      An alias for the &quot;version&quot; subcommand.</span><br><span class="line">➜  02-overview git:(main) terraform init </span><br><span class="line"></span><br><span class="line">Initializing the backend...</span><br><span class="line"></span><br><span class="line">Initializing provider plugins...</span><br><span class="line">- Finding hashicorp/aws versions matching &quot;~&gt; 3.0&quot;...</span><br><span class="line">- Installing hashicorp/aws v3.76.1...</span><br><span class="line">- Installed hashicorp/aws v3.76.1 (signed by HashiCorp)</span><br><span class="line"></span><br><span class="line">Terraform has created a lock file .terraform.lock.hcl to record the provider</span><br><span class="line">selections it made above. Include this file in your version control repository</span><br><span class="line">so that Terraform can guarantee to make the same selections by default when</span><br><span class="line">you run &quot;terraform init&quot; in the future.</span><br><span class="line"></span><br><span class="line">Terraform has been successfully initialized!</span><br><span class="line"></span><br><span class="line">You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see</span><br><span class="line">any changes that are required for your infrastructure. All Terraform commands</span><br><span class="line">should now work.</span><br><span class="line"></span><br><span class="line">If you ever set or change modules or backend configuration for Terraform,</span><br><span class="line">rerun this command to reinitialize your working directory. If you forget, other</span><br><span class="line">commands will detect it and remind you to do so if necessary.</span><br><span class="line"></span><br><span class="line">➜  02-overview git:(main) tree</span><br><span class="line">.</span><br><span class="line">|____main.tf</span><br><span class="line">|____.terraform</span><br><span class="line">| |____providers</span><br><span class="line">| | |____registry.terraform.io</span><br><span class="line">| | | |____hashicorp</span><br><span class="line">| | | | |____aws</span><br><span class="line">| | | | | |____3.76.1</span><br><span class="line">| | | | | | |____darwin_arm64</span><br><span class="line">| | | | | | | |____terraform-provider-aws_v3.76.1_x5</span><br><span class="line">|____README.md</span><br><span class="line">|____.terraform.lock.hcl</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="2-terraform-plan"><a href="#2-terraform-plan" class="headerlink" title="2.terraform plan"></a>2.terraform plan</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> terraform plan</span></span><br><span class="line">An execution plan has been generated and is shown below.</span><br><span class="line">Resource actions are indicated with the following symbols:</span><br><span class="line">  + create</span><br><span class="line"></span><br><span class="line">Terraform will perform the following actions:</span><br><span class="line"></span><br><span class="line"><span class="meta">  #</span><span class="bash"> aws_instance.example will be created</span></span><br><span class="line">  + resource &quot;aws_instance&quot; &quot;example&quot; &#123;</span><br><span class="line">      + ami                          = &quot;ami-0829e595217a759b9&quot;</span><br><span class="line">      + arn                          = (known after apply)</span><br><span class="line">           + tags                         = &#123;</span><br><span class="line">          + &quot;Name&quot;  = &quot;int32bit-test-ft&quot;</span><br><span class="line">          + &quot;Owner&quot; = &quot;int32bit&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      + vpc_security_group_ids       = (known after apply)</span><br><span class="line">      + ...</span><br><span class="line"></span><br><span class="line">Plan: 1 to add, 0 to change, 0 to destroy.</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-terraform-apply"><a href="#3-terraform-apply" class="headerlink" title="3.terraform apply"></a>3.terraform apply</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> terraform apply</span></span><br><span class="line">Plan: 1 to add, 0 to change, 0 to destroy.</span><br><span class="line"></span><br><span class="line">Do you want to perform these actions?</span><br><span class="line">  Terraform will perform the actions described above.</span><br><span class="line">  Only &#x27;yes&#x27; will be accepted to approve.</span><br><span class="line"></span><br><span class="line">  Enter a value: yes</span><br><span class="line"></span><br><span class="line">aws_instance.example: Creating...</span><br><span class="line">aws_instance.example: Still creating... [10s elapsed]</span><br><span class="line">aws_instance.example: Still creating... [20s elapsed]</span><br><span class="line">aws_instance.example: Creation complete after 20s [id=i-0bb96d24b6e6d37eb]</span><br><span class="line"></span><br><span class="line">Apply complete! Resources: 1 added, 0 changed, 0 destroyed.</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2023/07/05/Terraform/2.png"></p>
-<h4 id="4-terraform-destroy"><a href="#4-terraform-destroy" class="headerlink" title="4.terraform destroy"></a>4.terraform destroy</h4><h4 id="5-adfs"><a href="#5-adfs" class="headerlink" title="5.adfs"></a>5.adfs</h4><p>在实际企业环境中，aws 的使用通常是需要多重身份验证的，所以多数使用 ADFS (multi factor authentication with active directory)。</p>
-<p>其中最常用的工具是 <a target="_blank" rel="noopener" href="https://github.com/venth/aws-adfs%EF%BC%8C%E9%80%9A%E8%BF%87">https://github.com/venth/aws-adfs，通过</a> 证书 / 身份（如SSO）/ 密码 登陆aws，terraform也是如此。</p>
-<h3 id="实际项目结构"><a href="#实际项目结构" class="headerlink" title="实际项目结构"></a>实际项目结构</h3><p><img src="/2023/07/05/Terraform/3.png"></p>
-<p><strong>而且，在复杂的系统部署中，可以针对每一个module的tf中，添加 shell 脚本，如针对compute.tf单独运行的shell脚本，让每一个脚本（手动）执行，即每一terraform部署完成后，确认执行结果。</strong>分步骤地，解耦地完成复杂系统的部署工作，切能够按照企业要求，完成安全，网络，EKS等规则要求。</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>all terraform providers ==&gt; <a target="_blank" rel="noopener" href="https://registry.terraform.io/browse/providers">https://registry.terraform.io/browse/providers</a></p>
-<p>terraform Course ==&gt; <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7xngnjfIlK4&amp;t=8s">https://www.youtube.com/watch?v=7xngnjfIlK4&amp;t=8s</a> </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
