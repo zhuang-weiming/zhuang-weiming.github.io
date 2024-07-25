@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">246</span>
+          <span class="site-state-item-count">247</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">62</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,94 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/20/Geth%E5%AE%9E%E9%99%85%E8%BF%90%E8%A1%8C%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98%E6%83%85%E5%86%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/12/20/Geth%E5%AE%9E%E9%99%85%E8%BF%90%E8%A1%8C%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98%E6%83%85%E5%86%B5/" class="post-title-link" itemprop="url">Geth实际运行占用磁盘情况</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-20 20:01:04" itemprop="dateCreated datePublished" datetime="2019-12-20T20:01:04+08:00">2019-12-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-09-14 13:54:45" itemprop="dateModified" datetime="2023-09-14T13:54:45+08:00">2023-09-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>go-ethereum 在 2019 年 7 月推出了 v1.9.x 版本。1.9.x 在数据方面做了重新整理，大概有以下两个非兼容的改动：</p>
+<ol>
+<li><p>历史的区块链数据(header，body， receipts等)被挪到一个flaten file存储中，因为这部分数据已经是不会更改的了</p>
+</li>
+<li><p>更改了部分数据结构的scheme，例如receipt。原先很多字段不需要存到db，是可以在read之后重新计算出来的。这部分会占据大量的存储空间，在1.9把这些字段删去了。</p>
+</li>
+</ol>
+<p><code>geth</code> 有一个 <code>inspect</code> 命令，统计数据库详细信息。help中的内容是 <code>inspect，Inspect the storage size for each type of data in the database</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">+-----------------+--------------------+------------+</span><br><span class="line">|    DATABASE     |      CATEGORY      |    SIZE    |</span><br><span class="line">+-----------------+--------------------+------------+</span><br><span class="line">| Key-Value store | Headers            | 211.40 KiB |</span><br><span class="line">| Key-Value store | Bodies             | 44.00 B    |</span><br><span class="line">| Key-Value store | Receipts           | 42.00 B    |</span><br><span class="line">| Key-Value store | Difficulties       | 19.07 KiB  |</span><br><span class="line">| Key-Value store | Block number-&gt;hash | 17.24 KiB  |</span><br><span class="line">| Key-Value store | Block hash-&gt;number | 845.67 KiB |</span><br><span class="line">| Key-Value store | Transaction index  | 0.00 B     |</span><br><span class="line">| Key-Value store | Bloombit index     | 0.00 B     |</span><br><span class="line">| Key-Value store | Trie nodes         | 4.79 MiB   |</span><br><span class="line">| Key-Value store | Trie preimages     | 547.13 KiB |</span><br><span class="line">| Key-Value store | Clique snapshots   | 0.00 B     |</span><br><span class="line">| Key-Value store | Singleton metadata | 149.00 B   |</span><br><span class="line">| Ancient store   | Headers            | 5.97 MiB   |</span><br><span class="line">| Ancient store   | Bodies             | 851.64 KiB |</span><br><span class="line">| Ancient store   | Receipts           | 182.32 KiB |</span><br><span class="line">| Ancient store   | Difficulties       | 279.10 KiB |</span><br><span class="line">| Ancient store   | Block number-&gt;hash | 769.77 KiB |</span><br><span class="line">| Light client    | CHT trie nodes     | 0.00 B     |</span><br><span class="line">| Light client    | Bloom trie nodes   | 0.00 B     |</span><br><span class="line">+-----------------+--------------------+------------+</span><br><span class="line">|                         TOTAL        | 14.40 MIB  |</span><br><span class="line">+-----------------+--------------------+------------+</span><br></pre></td></tr></table></figure>
+
+<p>这里的<code>flaten file</code> 存储，其实是把历史数据挪到了 <a href="https://willzhuang.github.io/2019/12/20/Odyssey%E5%AE%9E%E9%99%85%E8%BF%90%E8%A1%8C%E5%8D%A0%E7%94%A8%E7%A3%81%E7%9B%98%E6%83%85%E5%86%B5%E4%BB%8B%E7%BB%8D/"><code>ancient</code></a> 文件夹（在前文亦有size说明），不在用 LeveldDB 存储，而用普通的二进制格式储存数据。</p>
+<p>当从更加老的版本升级到 <code>v1.9.x</code> （或者Geth1.9.x重新启动）时，Geth将自动地升级Blocks和Receipts，从 LevelDB 转移到 <code>ancient</code> 文件夹。也可以通过手动设定 <code>ancient</code> 文件夹位置 <code>--datadir.ancient</code> 。</p>
+<p><code>chaindata</code> 存放了账本数据（cold data），默认的话，<code>ancient</code> 在 <code>chaindata</code> 里面。<code>state</code> 存放了业务数据（hotdata）。</p>
+<ul>
+<li>如果 <code>chaindata</code> 账本数据被删除（或者指定到了错误的位置），节点将变得不可用。这种操作是命令禁止的。</li>
+<li>如果 <code>state</code> 业务数据被删除，Geth将在 <code>chaindata</code> 账本数据的基础上重建其索引，并在顶部快速同步到丢失的状态数据。</li>
+</ul>
+<p>参考文档==&gt; <a target="_blank" rel="noopener" href="https://blog.ethereum.org/2019/07/10/geth-v1-9-0/">Geth v1.9.0 Six months distilled</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -604,84 +692,6 @@
 <li>情绪管理。时间管理28原则，锻炼放松、质朴生活</li>
 <li>改变认知。从学习经典中来，从自省（日三省身）&amp;觉知（自我的旁观者，keep focus，做事慢半拍）中来</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/11/13/%E4%BB%80%E4%B9%88%E6%98%AF%E6%88%90%E5%8A%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/13/%E4%BB%80%E4%B9%88%E6%98%AF%E6%88%90%E5%8A%9F/" class="post-title-link" itemprop="url">什么是成功</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-13 13:22:04" itemprop="dateCreated datePublished" datetime="2019-11-13T13:22:04+08:00">2019-11-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 14:02:35" itemprop="dateModified" datetime="2023-09-14T14:02:35+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>首先声明本人不是什么成功人士，无论是哪一种标准。但是我还是想说说本人对成功标准的看法。</p>
-<p>本人认为亿万财富不是成功，位高权重不是成功，<strong>追求并实现了自身认为的善事即为成功</strong>。什么是善事呢？ “善”的形体，是上面一只“羊”，下面两个“言”，而这只羊的颈上，系着一个绳套。  “羊”的驯良美好的品性之意，所以“善”的本义是“良”、“好”、“驯善”，其后又引申出“友好”、“擅长”、“赞许”、“容易”、“熟悉”等等意思来。本人认为 <strong>善就是予人以帮助的意思。</strong>例如，对一个人指路即是善事，对很多个人资助上学，完成学业就是大善事。和善相对的是恶，恶的释义是需要修正的，坏的行为。本人认为<strong>恶就是予人与破坏的意思</strong>。例如，偷盗等。</p>
-<p>其次，我们需要实现善念才能够成功。如何实现善念呢？我们的理工科、医科、商科等等教育就是我们的工具。</p>
-<p>现在的生活中，工具很多，但是不善的事也是有的。例如，有的App偷偷地手机个人信息，然后并不告诉用户，还售卖这些信息；例如，经过xx大数据分析，本年度的电动牙刷在外形的某部位加装一个金属圈，在上个月的销售中位居榜首。本人过于刻板，认为这样子的“创新”更加接近钻营。过于钻营就容易走向恶，过于追求结果就容易走错方向。</p>
-<p>所以从自己对成功定义的标准出发，我是走在成功路上的。</p>
-<p><img src="/2019/11/13/%E4%BB%80%E4%B9%88%E6%98%AF%E6%88%90%E5%8A%9F/1.png"></p>
-<p>至于说成功后的结果可以是亿万富翁，也可以是人民公仆，更加可以是人民英雄。</p>
-<p>说到最好，如上图，列举了物的规则（唯物主义）、善恶（唯心主义）和成功（辩证唯物主义的方法论），图中将三者对号入座。</p>
 
       
     </div>
