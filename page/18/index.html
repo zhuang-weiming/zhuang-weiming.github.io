@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-count">248</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,87 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/08/12/MP-SPDZ%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/12/MP-SPDZ%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/" class="post-title-link" itemprop="url">MP-SPDZ使用体验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-12 10:51:04" itemprop="dateCreated datePublished" datetime="2021-08-12T10:51:04+08:00">2021-08-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-30 15:41:46" itemprop="dateModified" datetime="2021-09-30T15:41:46+08:00">2021-09-30</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/data61/MP-SPDZ">data61/MP-SPDZ: Versatile framework for multi-party computation (github.com)</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>1）在ubuntu环境中，安装依赖包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install automake build-essential git libboost-dev libboost-thread-dev libntl-dev libsodium-dev libssl-dev libtool m4 python3 texinfo yasm</span><br></pre></td></tr></table></figure>
+
+<p>2）使用git下载项目源码，注意不是二进制的release文件。</p>
+<p>3）在项目目录中，编译代码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j 8 tldr</span><br></pre></td></tr></table></figure>
+
+<p>4）试用并执行 <a target="_blank" rel="noopener" href="https://github.com/data61/MP-SPDZ/blob/master/Programs/Source/tutorial.mpc">the tutorial</a> 教程，他是一个双方的、对恶意安全的教程。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  MP-SPDZ git:(master) ./compile.py tutorial</span><br><span class="line">Default bit length: 64</span><br><span class="line">Default security parameter: 40</span><br><span class="line">Compiling file /home/zhuang/Downloads/MP-SPDZ/Programs/Source/tutorial.mpc</span><br><span class="line">WARNING: Order of memory instructions not preserved, errors possible</span><br><span class="line">Writing to /home/zhuang/Downloads/MP-SPDZ/Programs/Schedules/tutorial.sch</span><br><span class="line">Writing to /home/zhuang/Downloads/MP-SPDZ/Programs/Bytecode/tutorial-0.bc</span><br><span class="line">Program requires:</span><br><span class="line">           4 integer inputs from player 0</span><br><span class="line">           4 integer inputs from player 1</span><br><span class="line">        5420 integer bits</span><br><span class="line">        2474 integer triples</span><br><span class="line">         238 virtual machine rounds</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -820,142 +901,6 @@
     <div class="post-body" itemprop="articleBody">
           <p><a href="Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/%E4%B8%80%E6%96%87%E4%BA%86%E8%A7%A3%E6%9C%80%E7%83%AD%E9%97%A8%E7%9A%84zkSNARK%E6%96%B9%E6%A1%88-Groth16.pdf">Markdown ==&gt; 一文了解最热门的zkSNARK方案-Groth16.pdf</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/WillZhuang.github.io/blob/master/2021/05/12/Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/%E4%B8%80%E6%96%87%E4%BA%86%E8%A7%A3%E6%9C%80%E7%83%AD%E9%97%A8%E7%9A%84zkSNARK%E6%96%B9%E6%A1%88-Groth16.pdf">web ==&gt; 一文了解最热门的zkSNARK方案-Groth16.pdf</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/05/06/circom%E8%AF%95%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/06/circom%E8%AF%95%E7%94%A8/" class="post-title-link" itemprop="url">circom试用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-06 11:41:04 / Modified: 16:14:56" itemprop="dateCreated datePublished" datetime="2021-05-06T11:41:04+08:00">2021-05-06</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>参考链接 ==&gt; <a target="_blank" rel="noopener" href="https://docs.circom.io/">https://docs.circom.io/</a></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g circom</span><br><span class="line">npm install -g snarkjs</span><br></pre></td></tr></table></figure>
-
-<h2 id="构建电路"><a href="#构建电路" class="headerlink" title="构建电路"></a>构建电路</h2><h3 id="1-创建circuit-circom文件"><a href="#1-创建circuit-circom文件" class="headerlink" title="1.创建circuit.circom文件"></a>1.创建circuit.circom文件</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">template Multiplier() &#123;</span><br><span class="line">   signal private input a;</span><br><span class="line">   signal private input b;</span><br><span class="line">   signal output c;</span><br><span class="line">   c &lt;== a*b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">component main = Multiplier();</span><br></pre></td></tr></table></figure>
-
-<p>​    此电路的目的是让我们向某人证明我们能够因式分解整数c。具体来说，使用此电路，我们将能够证明我们知道两个数字（a和b）相乘得到c，而不会显示a和b。这个电路有2个 private 输入信号，名为 <code>a</code> 和 <code>b</code> ，还有一个输出 <code>c</code>。输入和输出使用<code>&lt;==</code>运算符进行关联。在circom中，&lt;==运算符做两件事。 首先是连接信号。 第二个是施加约束。在本例中，我们使用<code>&lt;==</code>将<code>c</code>连接到<code>a</code>和<code>b</code>，同时将<code>c</code>约束为<code>a * b</code>的值，即电路做的事情是让强制信号 <code>c</code> 为 <code>a*b</code> 的值。在声明 <code>Multiplier</code> 模板之后, 我们使用名为<code>main</code>的组件实例化它。注意：编译电路时，必须始终有一个名为<code>main</code>的组件。</p>
-<h3 id="2-编译电路"><a href="#2-编译电路" class="headerlink" title="2.编译电路"></a>2.编译电路</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">circom circuit.circom --r1cs --wasm --sym</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>--r1cs</code>: 生成 <code>circuit.r1cs</code> ( r1cs 电路的二进制格式约束系统)</li>
-<li><code>--wasm</code>: 生成 <code>circuit.wasm</code> ( wasm 代码用来生成见证 witness 稍后再介绍)</li>
-<li><code>--sym</code>: 生成 <code>circuit.sym</code> (以注释方式调试和打印约束系统所需的符号文件）</li>
-</ul>
-<p>r1cs是将代数电路转换为zk-snark的第一步。</p>
-<h2 id="构建零知识证明"><a href="#构建零知识证明" class="headerlink" title="构建零知识证明"></a>构建零知识证明</h2><p>​    使用<code>snarkjs</code> 来生成和验证 zk-SNARK 证明。我们将证明能够分解数字33。也就是说，将证明我们知道两个整数a和b，以便将它们相乘时得出33。</p>
-<h3 id="1-查看电路有关的信息"><a href="#1-查看电路有关的信息" class="headerlink" title="1.查看电路有关的信息"></a>1.查看电路有关的信息</h3><p>​    使用 snarkJS，您可以获得电路的一般统计数据并打印约束。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs info -r circuit.r1cs </span><br><span class="line">[INFO]  snarkJS: Curve: bn-128</span><br><span class="line">[INFO]  snarkJS: # of Wires: 4</span><br><span class="line">[INFO]  snarkJS: # of Constraints: 1</span><br><span class="line">[INFO]  snarkJS: # of Private Inputs: 2</span><br><span class="line">[INFO]  snarkJS: # of Public Inputs: 0</span><br><span class="line">[INFO]  snarkJS: # of Labels: 4</span><br><span class="line">[INFO]  snarkJS: # of Outputs: 1</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs print -r circuit.r1cs -s circuit.sym</span><br><span class="line">[INFO]  snarkJS: [ 21888242871839275222246405745257275088548364400416034343698204186575808495616main.a ] * [ main.b ] - [ 21888242871839275222246405745257275088548364400416034343698204186575808495616main.c ] = 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-setup"><a href="#2-setup" class="headerlink" title="2.setup"></a>2.setup</h3><p>2.1 设置的生成分为两个阶段：第一步是创建一些称为tau的幂的值。此处，我们将保留一个“ powers of tau”文件。 运行以下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs powersoftau new bn128 12 pot12_0000.ptau -v</span><br><span class="line">[DEBUG] snarkJS: Calculating First Challenge Hash</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG2</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: alphaTauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: betaTauG1</span><br><span class="line">[DEBUG] snarkJS: Blank Contribution Hash:</span><br><span class="line">		786a02f7 42015903 c6c6fd85 2552d272</span><br><span class="line">		912f4740 e1584761 8a86e217 f71f5419</span><br><span class="line">		d25e1031 afee5853 13896444 934eb04b</span><br><span class="line">		903a685b 1448b755 d56f701a fe9be2ce</span><br><span class="line">[INFO]  snarkJS: First Contribution Hash:</span><br><span class="line">		9e63a5f6 2b96538d aaed2372 481920d1</span><br><span class="line">		a40b9195 9ea38ef9 f5f6a303 3b886516</span><br><span class="line">		0710d067 c09d0961 5f928ea5 17bcdf49</span><br><span class="line">		ad75abd2 c8340b40 0e3b18e9 68b4ffef</span><br><span class="line">➜  circom snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name=&quot;First contribution&quot; -v</span><br><span class="line">Enter a random text. (Entropy): zhuangweiming</span><br><span class="line">[DEBUG] snarkJS: Calculating First Challenge Hash</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: tauG2</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: alphaTauG1</span><br><span class="line">[DEBUG] snarkJS: Calculate Initial Hash: betaTauG1</span><br><span class="line">[DEBUG] snarkJS: processing: tauG1: 0/8191</span><br><span class="line">[DEBUG] snarkJS: processing: tauG2: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: alphaTauG1: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: betaTauG1: 0/4096</span><br><span class="line">[DEBUG] snarkJS: processing: betaTauG2: 0/1</span><br><span class="line">[INFO]  snarkJS: Contribution Response Hash imported: </span><br><span class="line">		e15fa0f4 126ae14d 0e724ffa ee1adaba</span><br><span class="line">		1f9f44fb a963db61 e0eda605 4a172efa</span><br><span class="line">		124d177b 3a565656 1f1a3a23 6dea3366</span><br><span class="line">		3b21ec32 8a26d7b2 ac98ff89 2b1962ae</span><br><span class="line">[INFO]  snarkJS: Next Challenge Hash: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br></pre></td></tr></table></figure>
-
-<p>​    系统将提示您输入一些随机文本，这些文本将用作熵的来源。输入文本后，命令将输出一个名为pot12_001.ptau的脚本。设置的第一部分是通用的，对任何电路都有用，因此您可以将其保存以在以后的项目中重复使用。</p>
-<p>​    要获得zk-SNARK证明的证明和验证密钥，必须生成设置。此步骤需要生成一些需要消除的随机值。 消除过程至关重要：如果暴露了这些价值，则整个方案的安全性将受到损害。想要构建设置，我们使用多方计算（MPC）仪式，该仪式允许多个独立方共同构建参数。使用MPC，一个参与者删除其贡献的秘密副本就足够了，以确保整个方案的安全。<br>​    可信设置的构建分为两个阶段：对任何电路均有效的常规MPC仪式（称为<code>powers of tau ceremony</code>），以及为每个特定电路构造的第二阶段（阶段2）。任何人都可以通过其随机性参与MPC仪式，通常，在获取最终参数之前，将应用一个<strong>随机信标</strong>。</p>
-<p>2.2 下一步，称为设置的阶段2，运行命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v</span><br></pre></td></tr></table></figure>
-
-<p>​    以上命令运行完成后，pot12_final.ptau文件被生成。该计算在笔记本电脑上大概花费了3分钟时间。</p>
-<p>​    第二阶段的产生与我们使用tau的能力相似。将生成一个<code>.zkey</code>文件，其中将包含证明和验证密钥以及所有第二阶段贡献。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// Start a new zkey and make a contribution</span><br><span class="line">➜  circom snarkjs zkey new circuit.r1cs pot12_final.ptau circuit_0000.zkey</span><br><span class="line">[INFO]  snarkJS: Reading r1cs</span><br><span class="line">[INFO]  snarkJS: Reading tauG1</span><br><span class="line">[INFO]  snarkJS: Reading tauG2</span><br><span class="line">[INFO]  snarkJS: Reading alphatauG1</span><br><span class="line">[INFO]  snarkJS: Reading betatauG1</span><br><span class="line">[INFO]  snarkJS: Circuit hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line"></span><br><span class="line">➜  circom snarkjs zkey contribute circuit_0000.zkey circuit_final.zkey --name=&quot;1st Contributor Name&quot; -v</span><br><span class="line">Enter a random text. (Entropy): zhuangweiming</span><br><span class="line">[DEBUG] snarkJS: Applying key: L Section: 0/2</span><br><span class="line">[DEBUG] snarkJS: Applying key: H Section: 0/4</span><br><span class="line">[INFO]  snarkJS: Circuit Hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: Contribution Hash: </span><br><span class="line">		7987d679 5c914cb3 4138e57a ceee7ae4</span><br><span class="line">		8974b323 585bb48f 056fdd8f ea858cd3</span><br><span class="line">		a625d63e d8394b9c 974912e4 801aff06</span><br><span class="line">		0064f25a 677e727a a289252d 397b8d04</span><br></pre></td></tr></table></figure>
-
-<p>​    和上述步骤一样，系统将提示您输入一些随机文本以提供熵的来源。输出将是一个名为circuit_final.zkey的文件，我们将使用该文件导出验证密钥(verification key)。</p>
-<p>​    现在，来自circuit_final.zkey的验证密钥导出到文件Verification_key.json中。verification key:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="attr">&quot;protocol&quot;</span>: <span class="string">&quot;groth16&quot;</span>,</span><br><span class="line"> <span class="attr">&quot;curve&quot;</span>: <span class="string">&quot;bn128&quot;</span>,</span><br><span class="line"> <span class="attr">&quot;nPublic&quot;</span>: <span class="number">1</span>,</span><br><span class="line"> <span class="attr">&quot;vk_alpha_1&quot;</span>: [</span><br><span class="line">  <span class="string">&quot;15175462370442750548879662426586324604498073737772476635702014058846911119264&quot;</span>,</span><br><span class="line">  <span class="string">&quot;11126336670194938919608091368599342163660484801811140235738809534621680589277&quot;</span>,</span><br><span class="line">  <span class="string">&quot;1&quot;</span></span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_beta_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;5251596196706483766793357074374737595900200707659808196530067991530054260554&quot;</span>,</span><br><span class="line">   <span class="string">&quot;2264756861473257353315497004278362201201416308719887395373581359048933031269&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;10552939216865106848464515813683167112323139053174380454808956637789377680967&quot;</span>,</span><br><span class="line">   <span class="string">&quot;2701413932452289802745906093844601151278714195849736706988417564960748034273&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_gamma_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;10857046999023057135944570762232829481370756359578518086990519993285655852781&quot;</span>,</span><br><span class="line">   <span class="string">&quot;11559732032986387107991004021392285783925812861821192530917403151452391805634&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;8495653923123431417604973247489272438418190587263600148770280649306958101930&quot;</span>,</span><br><span class="line">   <span class="string">&quot;4082367875863433681332203403145435568316851327593401208105741076214120093531&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_delta_2&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;8590425680399084984710617722188581478119753421410764960451677916514215428082&quot;</span>,</span><br><span class="line">   <span class="string">&quot;15713152249579034550437632242139020796726126371657275384984401462748083625785&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;4862154669589263828958978916321240414342527577427918353789686327852433696883&quot;</span>,</span><br><span class="line">   <span class="string">&quot;9569117504828540945921139710836305890297695048604628362102771433345477012098&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;1&quot;</span>,</span><br><span class="line">   <span class="string">&quot;0&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;vk_alphabeta_12&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   [</span><br><span class="line">    <span class="string">&quot;1121360319902761693820363426996646168569211552394580075970634177898785008311&quot;</span>,</span><br><span class="line">    <span class="string">&quot;14249756278025620543130105348741511241747839379662316431830590326729096142975&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;16423439174084021024919681708878615489972548829583206833909869670703901853110&quot;</span>,</span><br><span class="line">    <span class="string">&quot;9329143387573491748526724433415355164900218750592620992570237269470665264202&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;19623272010929083665872244835381945771016147820964222485760645671773298080071&quot;</span>,</span><br><span class="line">    <span class="string">&quot;9896773903597386179712166971836923631098313509393860803813715414524549373292&quot;</span></span><br><span class="line">   ]</span><br><span class="line">  ],[</span><br><span class="line">   [</span><br><span class="line">    <span class="string">&quot;18313799470766842592075662760908626166323669476646669856687182611043590126171&quot;</span>,</span><br><span class="line">    <span class="string">&quot;7532895603020793142335129648471958187885524608608576812436682807569433790546&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;20059629119556696413695556916087392540474931269939016250934117162067722623426&quot;</span>,</span><br><span class="line">    <span class="string">&quot;11285185652573117971807135387812020477130047554451136821582438888864777467010&quot;</span></span><br><span class="line">   ],[</span><br><span class="line">    <span class="string">&quot;18429091017205122590573696082242994893262627891230351210235517202888391625680&quot;</span>,</span><br><span class="line">    <span class="string">&quot;7734180768772801433386131669021273948517355047659921136453462913759461451288&quot;</span></span><br><span class="line">   ]</span><br><span class="line">  ]</span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">&quot;IC&quot;</span>: [</span><br><span class="line">  [</span><br><span class="line">   <span class="string">&quot;17305572679177982597803616153716539127293296363987765110136569516232291230411&quot;</span>,</span><br><span class="line">   <span class="string">&quot;7425872175786571904106950706682618227429476545503095908552111445555350791878&quot;</span>,</span><br><span class="line">   <span class="string">&quot;1&quot;</span></span><br><span class="line">  ],[</span><br><span class="line">   <span class="string">&quot;16125521217907931491019162042616560858833563034453402251972608389495277275869&quot;</span>,</span><br><span class="line">   <span class="string">&quot;20962607216912168718282504555696865046978428189883507401556888923455626427056&quot;</span>,</span><br><span class="line">   <span class="string">&quot;1&quot;</span></span><br><span class="line">  ]</span><br><span class="line"> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    可以验证.ptau或.zkey文件的计算是否正确：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs powersoftau verify pot12_final.ptau</span><br><span class="line">[INFO]  snarkJS: Powers Of tau file OK!</span><br><span class="line">[INFO]  snarkJS: Next challenge hash: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br><span class="line">[INFO]  snarkJS: -----------------------------------------------------</span><br><span class="line">[INFO]  snarkJS: Contribution #1: First contribution</span><br><span class="line">[INFO]  snarkJS: Next Challenge: </span><br><span class="line">		b77a3861 ad4a4cbb abe3e870 69787d8c</span><br><span class="line">		85ab1372 c15bff14 352c15fb 3116c3c8</span><br><span class="line">		81791ae6 3258fbcb 898cad52 c9863e00</span><br><span class="line">		c336b311 f8bfb38e 3cefc2cd 917c86eb</span><br><span class="line">[INFO]  snarkJS: Response Hash:</span><br><span class="line">		e15fa0f4 126ae14d 0e724ffa ee1adaba</span><br><span class="line">		1f9f44fb a963db61 e0eda605 4a172efa</span><br><span class="line">		124d177b 3a565656 1f1a3a23 6dea3366</span><br><span class="line">		3b21ec32 8a26d7b2 ac98ff89 2b1962ae</span><br><span class="line">[INFO]  snarkJS: Response Hash:</span><br><span class="line">		9e63a5f6 2b96538d aaed2372 481920d1</span><br><span class="line">		a40b9195 9ea38ef9 f5f6a303 3b886516</span><br><span class="line">		0710d067 c09d0961 5f928ea5 17bcdf49</span><br><span class="line">		ad75abd2 c8340b40 0e3b18e9 68b4ffef</span><br><span class="line">[INFO]  snarkJS: -----------------------------------------------------</span><br><span class="line">[INFO]  snarkJS: Powers of Tau Ok!</span><br><span class="line">➜  circom snarkjs zkey verify circuit.r1cs pot12_final.ptau circuit_final.zkey</span><br><span class="line">[INFO]  snarkJS: Reading r1cs</span><br><span class="line">[INFO]  snarkJS: Reading tauG1</span><br><span class="line">[INFO]  snarkJS: Reading tauG2</span><br><span class="line">[INFO]  snarkJS: Reading alphatauG1</span><br><span class="line">[INFO]  snarkJS: Reading betatauG1</span><br><span class="line">[INFO]  snarkJS: Circuit hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: Circuit Hash: </span><br><span class="line">		965f5c51 98906eb7 8fc597d1 d7b31bdf</span><br><span class="line">		ad7f0491 d1cc081d 8d236685 489f05be</span><br><span class="line">		b621e87a 1ba57a28 25071ac3 a69a4df1</span><br><span class="line">		1ec4b2c6 aa36b8f2 94e37d17 270ce6bf</span><br><span class="line">[INFO]  snarkJS: -------------------------</span><br><span class="line">[INFO]  snarkJS: contribution #1 1st Contributor Name:</span><br><span class="line">		7987d679 5c914cb3 4138e57a ceee7ae4</span><br><span class="line">		8974b323 585bb48f 056fdd8f ea858cd3</span><br><span class="line">		a625d63e d8394b9c 974912e4 801aff06</span><br><span class="line">		0064f25a 677e727a a289252d 397b8d04</span><br><span class="line">[INFO]  snarkJS: -------------------------</span><br><span class="line">[INFO]  snarkJS: ZKey Ok!</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-计算witness"><a href="#3-计算witness" class="headerlink" title="3.计算witness"></a>3.计算witness</h3><p>​    在创建任何证明之前，我们需要计算与电路的所有约束匹配的电路的所有信号。为此，我们将使用由circom生成的Wasm模块来帮助完成此工作。我们只需要提供一个包含输入的文件，模块将执行电路并计算所有中间信号和输出。输入，中间信号和输出的集合称为见证人(witness)。</p>
-<p>​    本次的范例中，我们想证明我们能够分解数字33。因此，指定a=3, b=11。创建一个文件，命名为 <code>input.json</code> </p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;a&quot;</span>: <span class="number">3</span>, <span class="attr">&quot;b&quot;</span>: <span class="number">11</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    下面开始就算 witness，生成 <code>witness</code> 文件， 命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs wtns calculate circuit.wasm input.json witness.wtns</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-创建证明"><a href="#4-创建证明" class="headerlink" title="4.创建证明"></a>4.创建证明</h3><p>​    这个命令默认会使用 <code> prooving_key.json</code> 和 <code>witness.json</code> 文件去生成 <code>proof.json</code> 和 <code>public.json</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json</span><br></pre></td></tr></table></figure>
-
-<p><code>proof.json</code> 文件包含了实际的证明。而 <code>public.json</code> 文件将仅包含公共的输入（当前的例子没有）和输出（当前的例子是 33）。</p>
-<h3 id="5-验证证明"><a href="#5-验证证明" class="headerlink" title="5.验证证明"></a>5.验证证明</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs groth16 verify verification_key.json public.json proof.json</span><br><span class="line">[INFO]  snarkJS: OK!</span><br></pre></td></tr></table></figure>
-
-<p>​    此命令使用我们之前导出的verify_key.json文件，proof.json和public.json来检查证明是否有效。如果证明有效，则命令输出OK。一个有效的证明不仅证明我们知道满足电路要求的一组信号，而且证明我们使用的公共输入和输出与public.json文件中描述的匹配。</p>
-<p>​    <strong>实际上，在此阶段，将把<code>proof.json</code>和<code>public.json</code>文件都交给验证者。</strong>但是，出于教程的目的，我们还将扮演验证者的角色。借助证明以及公共输入和输出，我们现在可以向验证者证明我们知道一个或多个满足电路约束的私有信号，而无需透露有关那些私有信号的任何信息。从验证者的角度来看，她可以验证我们是否知道见证中包含的一组私有信号，而无需访问它。这是zk-proof背后魔术的核心！</p>
-<h3 id="6-智能合约验证证明"><a href="#6-智能合约验证证明" class="headerlink" title="6.智能合约验证证明"></a>6.智能合约验证证明</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snarkjs zkey export solidityverifier circuit_final.zkey verifier.sol</span><br></pre></td></tr></table></figure>
-
-<p>​    上述命令使用验证密钥<code>circuit_final.zkey</code>并在名为<code>verifier.sol</code>的文件中输出合约代码。可以看到该代码包含两个协定：Pairing和Verifier。只需要部署Verifier合约。</p>
-<p>​    生成智能合约调用的参数，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  circom snarkjs zkesc public.json proof.json</span><br><span class="line">[&quot;0x29b83d63472e4f47b092fd4ced43a566697f0575186964c7cc3deec2c5c1b0bd&quot;, &quot;0x2eb116882d2bacdbeece8a2adf2ab6d0f4420b60e82b4b66ddb18cc26ab2bae2&quot;],[[&quot;0x170d208ad3a8bf4358c207706bce9e87cbad11037f642d1ab06f65a5ebf10eb4&quot;, &quot;0x0dc07edd498cc16c5174c2a5a2aeed86c2f5689ed25486e8981768d7c7ceae13&quot;],[&quot;0x1c52e6144e980ae72e5c5679c979c70e0da4a519fc087dda3b96bbea09179b20&quot;, &quot;0x2849fdea744fa924ae19eb15917dac4543c0fa3b888293dfcd365c6251f25223&quot;]],[&quot;0x01918c12515eb00b823f0e2a63ef53e15792b4b4fd331b595ffc670e929d6b99&quot;, &quot;0x2246e9bb88119c6f8f1c04735beeee038ddc6e66572cb44f1c926575db80be9a&quot;],[&quot;0x0000000000000000000000000000000000000000000000000000000000000021&quot;]</span><br></pre></td></tr></table></figure>
-
-<p>​    验证者具有一个称为<code>verifyProof</code>的函数，当且仅当证明和输入有效时，该函数才返回<code>TRUE</code>。</p>
-<p><img src="/2021/05/06/circom%E8%AF%95%E7%94%A8/1.png"></p>
-<p>​    如果仅更改参数中的任何位，则可以检查结果返回 false 。</p>
-<h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p>​    我们已经表明可以生成证明我们知道两个因子a和b使得<code>a*b=33</code>的证明。但这不能证明我们知道如何分解数字33，因为我们可以选择a = 1和b = 33，通常对于任何整数n，选择输入a=1，b=n。在此，我们需要修改电路，以便不可能将数字1分配给任何输入。为此，我们将使用0是唯一没有反数的事实。</p>
-<p>​    这里的技巧是使用0不可求倒数的属性，约束不接受 1 作为任何一个输入，即<code>(a-1)</code> 不可求倒数的方式来约束电路。</p>
-<p>​    如果 a 是 1 则 <code>(a-1)*inv = 1</code> 是不可能成立的，通过 <code>1/(a-1)</code> 来计算 inv 。</p>
-<p>修正电路：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">template Multiplier() &#123;</span><br><span class="line">   signal private input a;</span><br><span class="line">   signal private input b;</span><br><span class="line">   signal output c;</span><br><span class="line">   signal inva;</span><br><span class="line">   signal invb;</span><br><span class="line"></span><br><span class="line">   inva &lt;-- <span class="number">1</span>/(a-<span class="number">1</span>);</span><br><span class="line">   (a-<span class="number">1</span>)*inva === <span class="number">1</span>;</span><br><span class="line">   invb &lt;-- <span class="number">1</span>/(b-<span class="number">1</span>);</span><br><span class="line">   (b-<span class="number">1</span>)*invb === <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">   c &lt;== a*b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">component main = Multiplier();</span><br></pre></td></tr></table></figure>
-
-<p>​    您可能已经注意到，我们引入了两个新的运算符 : <code>&lt;--</code> 和 <code>===</code> 。<code>&lt;--</code> 和 <code>--&gt;</code> 操作符运算符只为信号分配一个值，而不创建任何约束。<code>===</code> 操作符添加约束而不分配值。如前所述，<code>&lt;==</code> 为信号分配一个值并添加一个约束。这意味着它只是 <code>&lt;--</code>和 <code>===</code> 的组合。但是，由于并非总是希望在同一步骤中同时完成这两个步骤，因此circom 的灵活性使我们可以将这一步分为两步。</p>
-<p>​    事实证明，电路仍然存在一个细微的问题：由于运算是在有限域（Z_r）上进行的，因此我们需要确保乘法不会溢出。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>​    <a target="_blank" rel="noopener" href="https://github.com/iden3/circomlib">circomlib</a> 写好了一些基本的电路，如：binaritzations、comparators, eddsa, hashes, merkle trees 等等。</p>
 
       
     </div>

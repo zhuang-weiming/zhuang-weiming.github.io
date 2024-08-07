@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-count">248</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,102 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/09/19/golang-fsm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/19/golang-fsm/" class="post-title-link" itemprop="url">startup-product-20220917</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-19 09:40:00" itemprop="dateCreated datePublished" datetime="2022-09-19T09:40:00+08:00">2022-09-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-09-29 09:08:19" itemprop="dateModified" datetime="2022-09-29T09:08:19+08:00">2022-09-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="http://github.com/looplab/fsm">http://github.com/looplab/fsm</a></p>
+<p>定义状态机的时候有三部分组成：状态机的初始状态，状态机的事</p>
+<p>件（包括了多个源事件和一个目的事件），状态机的事件回调。整体来说，回</p>
+<p>调可以分为四组8个回调，按执行顺序依次为：</p>
+<p>1，事件开始之前</p>
+<p>​    A，before_xxx，特定的状态之前</p>
+<p>​    B，before_event所有状态之前</p>
+<p>2，离开老状态</p>
+<p>​    A，leave_xxx 离开特定状态</p>
+<p>​    B，leave_state 离开所有状态</p>
+<p>3，进入新状态</p>
+<p>​    A，enter_xxx,进入特定状态</p>
+<p>​    B，enter_state 进入所有状态</p>
+<p>4，事件执行完毕之后</p>
+<p>​    A，after_xxx 进入特定状态之后</p>
+<p>​    B，after_event 进入所有状态</p>
+<p>状态机实现的函数接口有：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">AvailableTransitions</span><span class="params">()</span> []<span class="title">string</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Can</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Cannot</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Current</span><span class="params">()</span> <span class="title">string</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Event</span><span class="params">(event <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Is</span><span class="params">(state s/ring)</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Metadata</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">SetMetadata</span><span class="params">(key <span class="keyword">string</span>, dataValue <span class="keyword">interface</span>&#123;&#125;)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">SetState</span><span class="params">(state <span class="keyword">string</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Transition</span><span class="params">()</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Can</span><span class="params">(event <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br><span class="line">  _, ok := f.transitions[eKey&#123;event, f.current&#125;]</span><br><span class="line">  <span class="keyword">return</span> ok &amp;&amp; (f.transition == <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行事件流转</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Event</span><span class="params">(event <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span></span>&#123;</span><br><span class="line">    e := &amp;Event&#123;f, event, f.current, dst, <span class="literal">nil</span>, args, <span class="literal">false</span>, <span class="literal">false</span>&#125;</span><br><span class="line">    err := f.beforeEventCallbacks(e)</span><br><span class="line">   f.transition = <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">     f.enterStateCallbacks(e)</span><br><span class="line">     f.afterEventCallbacks(e)</span><br><span class="line">    &#125;</span><br><span class="line">   f.leaveStateCallbacks(e)</span><br><span class="line">   err = f.doTransition()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">enterStateCallbacks</span><span class="params">(e *Event)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> fn, ok := f.callbacks[cKey&#123;f.current, callbackEnterState&#125;]; ok &#123;</span><br><span class="line">        fn(e)</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> fn, ok := f.callbacks[cKey&#123;<span class="string">&quot;&quot;</span>, callbackEnterState&#125;]; ok &#123;</span><br><span class="line">       fn(e)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">Transition</span><span class="params">()</span> <span class="title">error</span></span>&#123;</span><br><span class="line">     <span class="keyword">return</span> f.doTransition()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f *FSM)</span> <span class="title">doTransition</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> f.transitionerObj.transition(f)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -724,85 +820,6 @@
 <li>对有人提出，将 <a target="_blank" rel="noopener" href="https://www.paradigm.xyz/2022/07/experiment-narwhal-bullshark-cosmos-stack">Narwhal + EVM</a> 的<a target="_blank" rel="noopener" href="https://github.com/gakonst/narwhal-abci-evm">观点</a>，本人并不认同：因为在 EVM 中，Smart Contract 之间是可以调用的，但是 Narwhal 的 Mempool 无法认知其关联关系，导致共识机制无法正确地对交易进行排序。而 Move 在变成语言层面对智能合约的状态进行隔离，不存在上述 EVM 中的问题。</li>
 </ol>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p>Move 相比 Solidity 的三大优势 - <a target="_blank" rel="noopener" href="https://mirror.xyz/snapfingersdao.eth/0MExjukNkgMfaIl5FiI87DeCfaeONy_ameYULkiAeNA">https://mirror.xyz/snapfingersdao.eth/0MExjukNkgMfaIl5FiI87DeCfaeONy_ameYULkiAeNA</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2022/08/08/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9B%91%E7%AE%A1%E6%80%9D%E8%80%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/08/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9B%91%E7%AE%A1%E6%80%9D%E8%80%83/" class="post-title-link" itemprop="url">区块链监管思考</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-08-08 22:53:00" itemprop="dateCreated datePublished" datetime="2022-08-08T22:53:00+08:00">2022-08-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-09-03 15:27:46" itemprop="dateModified" datetime="2022-09-03T15:27:46+08:00">2022-09-03</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>嵌入式监管？集中式监管？</p>
-<p>解决该问题的核心是需要在协议层进行监管。监管单位在每条链都有节点，可以得到全部交易信息，不需要经过收集、集中、分类、发送到监管单位，而是直接在数据端拿到数据后，可以使用blockchain data lake区块链数据湖来进行大数据分析。</p>
-<p>如上文所讲，Libra 2.0总体监管机制仍落后。关于自动合规并没有任何细节。</p>
-<p>在实践上，ISDA（International swap and derivatives association 国际交换交易商协会）提出的交易和监管框架，其创新之处是将事件处理放进交易系统。这套ISDA监管体系完整、自动化且标准化，《智能合约：重构社会契约》一书对此有详细介绍，ISDA的监管体系比Liba2.0体系要完整得多。</p>
-<p>Liba2.0的监管计划比熊猫模型、ISDA和英国央行的监管计划都要轻量级得多：在熊猫模型中，监管单位直接在账户链(ABC)和交易链(TBC)上进行监管；在SDA模型中，有完整、自动化、标准化的体系；在英国央行合约模型中，监管代码是由监管单位开发和运行。Libra2.0除协议层监管外，其他的监管方式都通过传统机制进行。也就是说协会使用已有的监管系统和机制，而这些机制和数字货币没有<br>关系，只是和金融活动有关系，例如股票交易、资金流转、期货买卖等。这表示目前美国在监管科技还是没有和新型交易科技同步，即美国到今天还没有对应的监管科技系统存在，这会使美国监管Libra2.0出现压力。</p>
-<p>总体监管机制落后的一个主要原因，是对新型监管机制的需求还不明确。直到Libra1.0出现，该需求才变得急迫。Libra 1.0出现之前，基于区块链的监管系统还没有被建立出来。在国际上，多半的监管论文还是集中在大数据和人工智能上面（很少区块链监管论文），并且相关监管科技的实验也非常少，甚至在一些监管科技产业报告中，区块链都没有被列入重要科技名单中。但是Libr1.0出现后，这些机构纷纷改变态度，例如联合国在2019年立刻将区块链列为最重要的金融科技之一。而我们在2018年已经将区块链监管科技列为区块链中国梦之四《区块链的中国梦：RegTech编织全面安全梦》，并且提出“监管性”是新型区块链必要的功能，在新型数字货币市场，交易会是实时的，监管也需要是实时的。实时交易，实时监管，而只有嵌入式监管可以实现实时监管。</p>
-<p>由于大部分的监管机制使用传统方式，Libra 2.0等区块链的出现，会给监管单位带来了巨大的压力。</p>
-<p>目前几类监管的特性与现状—《互链网》page-405</p>
-<p><img src="/2022/08/08/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9B%91%E7%AE%A1%E6%80%9D%E8%80%83/1.png"></p>
 
       
     </div>

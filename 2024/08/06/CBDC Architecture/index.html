@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="https:&#x2F;&#x2F;www.bis.org&#x2F;publ&#x2F;othp82.pdf1.Technical requirements for a CBDC architecture.    Category High-level technical requirements High-priority    Modular Design - Balance layer Allows for the creati">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CBDC Architecture">
+<meta property="og:url" content="https://willzhuang.github.io/2024/08/06/CBDC%20Architecture/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.bis.org&#x2F;publ&#x2F;othp82.pdf1.Technical requirements for a CBDC architecture.    Category High-level technical requirements High-priority    Modular Design - Balance layer Allows for the creati">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-06T14:04:00.000Z">
+<meta property="article:modified_time" content="2024-08-07T04:00:44.347Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="Ethereum">
+<meta property="article:tag" content="CBDC">
+<meta property="article:tag" content="BANK">
+<meta property="article:tag" content="Layer2">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://willzhuang.github.io/2024/08/06/CBDC%20Architecture/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>CBDC Architecture | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">248</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/08/06/CBDC%20Architecture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CBDC Architecture
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-08-06 22:04:00" itemprop="dateCreated datePublished" datetime="2024-08-06T22:04:00+08:00">2024-08-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-08-07 12:00:44" itemprop="dateModified" datetime="2024-08-07T12:00:44+08:00">2024-08-07</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://www.bis.org/publ/othp82.pdf">https://www.bis.org/publ/othp82.pdf</a><br>1.Technical requirements for a CBDC architecture.</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>High-level technical requirements</th>
+<th>High-priority</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Modular Design - Balance layer</td>
+<td>Allows for the creation, possession and destruction of CBDC. 允许创建、拥有和销毁 CBDC。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Modular Design - Balance layer</td>
+<td>Allows for flexible approach, issuing fungible tokens (type 1) and non-fungible tokens (type 2) for specific use cases. 允许采用灵活的方法，为特定用例发行可替代代币（类型 1）和不可替代代币（类型 2）。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Modular Design - Balance layer</td>
+<td>Scalable databases (ledger-keeping infrastructure) to hold resources and on which settlements can be reflected.可扩展的数据库（分类账保存基础设施），用于保存资源并反映结算。</td>
+<td></td>
+</tr>
+<tr>
+<td>Modular Design - Balance layer</td>
+<td>Connectivity between basic type 1 and type 2 tokenisation infrastructure. 基本类型 1 和类型 2 标记化基础设施之间的连接。</td>
+<td></td>
+</tr>
+<tr>
+<td>Modular Design - Settlement layer</td>
+<td>Central banks can use parts of existing payment systems or can create a new platform that works in parallel to the existing system. 中央银行可以使用现有支付系统的部分功能，也可以创建与现有系统并行运行的新平台。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Modular Design - Settlement layer</td>
+<td>API infrastructure allows for consent and payment initiation. API 基础设施允许同意和启动付款。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Modular Design - Settlement layer</td>
+<td>Settlement function is highly scalable in terms of the number of transactions, issuers and recipients. 结算功能在交易数量、发行人和接收人方面具有高度的可扩展性。</td>
+<td></td>
+</tr>
+<tr>
+<td>Modular Design - Settlement layer</td>
+<td>API infrastructure allows for information-sharing (balance and transactions). API 基础设施允许信息共享（余额和交易）。</td>
+<td></td>
+</tr>
+<tr>
+<td>Modular Design - Settlement layer</td>
+<td>Public wallet through an app that consumes the API architecture described above to serve as a backstop in case other solutions are unavailable. 公共钱包通过使用上述 API 架构的应用程序，在其他解决方案不可用时充当后盾。</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Issuance / destruction</td>
+<td>Issuance could be considered by transferring resources through the RTGS to an account held by the central bank for this purpose. 可以考虑通过将资源通过 RTGS 转移到中央银行为此目的持有的账户来进行发行。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Issuance / destruction</td>
+<td>The previous step would allow for the creation of a token in the type 2 case or to increase the balance of the ledger for a type 1 solution. 上一步将允许在类型 2 的情况下创建令牌，或者增加类型 1 解决方案的分类账余额。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Issuance / destruction</td>
+<td>For adequate destruction, tokens in the possession of the central bank are deleted (type 2) or the overall balance is reduced (type 1) solution. 为了充分销毁，删除央行持有的代币（类型2）或者减少整体余额（类型1）的解决方案。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Issuance / destruction</td>
+<td>The second step would imply the settlement of a transaction from the issuance account to the general account of the central bank. 第二步是将交易从发行账户结算到央行一般账户。</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Issuance / destruction</td>
+<td>Both issuance and destruction could work for type 1 and type 2 solutions. 发行和销毁均适用于第 1 类和第 2 类解决方案。</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Transaction settlement</td>
+<td>Centralised in first stage (only the central bank’s signature can validate transactions after checking ownership and no double spending) 第一阶段集中化（只有中央银行的签名才能在检查所有权后验证交易，并且不会出现双重支付）</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Transaction settlement</td>
+<td>Adaptable to allow for more signatures to the ecosystem (validate transactions through distributed consensus of approved signatures) 可适应生态系统中更多的签名（通过已批准签名的分布式共识来验证交易）</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Payment initiation / account information</td>
+<td>API calls to send requests (both information and payment initiation), provided a secure consent mechanism is used. 调用 API 发送请求（信息和付款启动），前提是使用安全的同意机制</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Payment initiation / account information</td>
+<td>Financial service providers broadly defined should be able to operate and provide services to final users. 广义的金融服务提供商应该能够运营并向最终用户提供服务。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Payment initiation / account information</td>
+<td>Uses API architecture to simplify value transfer to other providers and enable access to other financial services. 使用 API 架构简化向其他提供商的价值转移并实现对其他金融服务的访问</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Payment initiation / account information</td>
+<td>Payment service providers can access CBDC balances in any wallet (not only the one provided by the central bank), upon compliance with regulatory frameworks and security and data privacy principles. 在遵守监管框架和安全及数据隐私原则的前提下，支付服务提供商可以在任何钱包（不仅仅是中央银行提供的钱包）中访问 CBDC 余额。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Payment initiation / account information</td>
+<td>Information-sharing protocols and clear message structures to share transactional, aggregated and general information. 信息共享协议和清晰的消息结构，用于共享交易信息、汇总信息和一般信息。</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Payment initiation / account information</td>
+<td>Secure transactional information treatment.安全的交易信息处理。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Payment initiation / account information</td>
+<td>Open architecture to exploit information. 开放式架构以利用信息。</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>Straight through processing of clearing and settlement instructions. 直通式处理清算和结算指令。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>Implementation on a centralised structure. 按集中式结构实施。</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>Can explore the possibility of a decentralised programmability functionality. 可以探索分布式可编程功能的可能性。</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>Programs/systems that take temporary ownership of assets to allow DvP and PvP settlements, with the option of allowing financial intermediaries and qualified entities to potentially hold assets for settlement purposes. 采取临时资产所有权以允许 DvP 和 PvP 结算的程序/系统，可选择允许金融中介机构和合格实体为结算目的持有资产</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>Conditions or rules to support offline payments are defined. 定义支持离线支付的条件或规则</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>Secure enclaves on phones or other secure hardware to develop an offline functionality with the type 2/tokenised layer of the solution. 手机或其他安全硬件上的安全区域可通过解决方案的类型 2/标记化层开发离线功能。</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>Design focused on simplicity for the final user. 设计注重最终用户的简便性</td>
+<td></td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>Seamless onboarding of new users or entities onto the CBDC platform that allows for a smooth and efficient registering process. 将新用户或实体无缝加入 CBDC 平台，实现顺畅、高效的注册流程。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Core functions - Programmability</td>
+<td>System is consistent with projects on cross-border functionality by the BIS Innovation Hub. 该系统与 BIS 创新中心的跨境功能项目一致。</td>
+<td></td>
+</tr>
+<tr>
+<td>Operational - Scalability</td>
+<td>Scalable ledger at the different levels of the system keeping infrastructure that can handle many simultaneous transactions. 系统不同层级的可扩展分类账保持着可以同时处理多笔交易的基础设施。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Operational - Scalability</td>
+<td>Highly scalable settlement infrastructure to fulfil settlement needs within the CBDC record-keeping infrastructure. 高度可扩展的结算基础设施，以满足 CBDC 记录保存基础设施内的结算需求。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Operational - User experience</td>
+<td>Simple onboarding. 简单的注册</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Operational - User experience</td>
+<td>Adaptable to allow for private intermediaries to distribute the CBDC to end users or to enable direct participation of end users with the system (public direct-to-customer access). 可适应私人中介机构将 CBDC 分发给最终用户或允许最终用户直接参与系统（公共直接面向客户的访问）</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Operational - User experience</td>
+<td>Ability to enable P2P transactions and operate with private intermediaries. 能够实现 P2P 交易并与私人中介机构合作</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Operational - Attribute function matrix on certified permissioned institutions</td>
+<td>Matrix is completely controlled by the central bank 监控完全由央行控制</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Operational - Attribute function matrix on certified permissioned institutions</td>
+<td>Possibility for distributed consensus in the decentralised transaction settlement for the type 2 case. 第 2 类案例中去中心化交易结算中实现分布式共识的可能性</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Operational - Attribute function matrix on certified permissioned institutions</td>
+<td>Dynamic, so that the central bank can modify functions or add new ones. 动态的，以便中央银行可以修改功能或添加新的功能。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Operational - Interoperability with traditional settlement system and other CBDCs</td>
+<td>Architecture allows platform to have modules to interact with different CBDC implementation protocols. 架构允许平台拥有模块来与不同的CBDC实现协议进行交互。</td>
+<td></td>
+</tr>
+<tr>
+<td>Operational - Interoperability with traditional settlement system and other CBDCs</td>
+<td>Architecture allows platform to have modules to interact with different payment messages (eg domestic, ISO 20022) 架构允许平台拥有与不同支付信息交互的模块（例如国内、ISO 20022）</td>
+<td></td>
+</tr>
+<tr>
+<td>Operational - Interoperability with traditional settlement system and other CBDCs</td>
+<td>Seamless transfers between commercial bank money and CBDC, and vice versa 商业银行货币与 CBDC 之间的无缝转移，反之亦然</td>
+<td></td>
+</tr>
+<tr>
+<td>Operational - Interoperability with traditional settlement system and other CBDCs</td>
+<td>CBDC participants in existing payment systems could help in this area 现有支付系统中的 CBDC 参与者可以在这方面提供帮助</td>
+<td></td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>100% available, granting flexibility to adapt to variations in the availability of the supporting infrastructure (eg allowing transactions to be processed once the infrastructure is back online). 100％可用，可灵活适应支持基础设施可用性的变化（例如，一旦基础设施恢复在线，即可处理交易）</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>Highest compliance with cyber security standards (eg those of the National Institute of Standards and Technology) 最高程度遵守网络安全标准（例如美国国家标准与技术研究院的标准）</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>Modular protocol for settlement instructions to allow for partial or total encryption with separate keys. 结算指令的模块化协议，允许使用单独的密钥进行部分或全部加密</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>Allows for separate message fields to keep relevant information encrypted only for those who need to see it. 允许使用单独的消息字段来加密相关信息，只对需要查看的人开放</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>Crypto-agile 加密敏捷</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>Encryption of databases 数据库加密</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>Separates personal information from transactional information in databases 将数据库中的个人信息与交易信息分开</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>Distinct levels of data confidentiality. Space for additional data uses, subject to users’ authorisation or sufficient application of privacy preserving techniques. 不同级别的数据保密性。为其他数据使用留出空间，但需获得用户授权或充分应用隐私保护技术。</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Embedded from the beginning of the design</td>
+<td>Geo-redundancy to mitigate the impact of unexpected events 地理冗余可减轻意外事件的影响</td>
+<td></td>
+</tr>
+<tr>
+<td>Cyber resilience - Technological independence</td>
+<td>Technology within the modules is easy to modify, replace or update if the information input and the expected output are not modified 如果信息输入和预期输出没有改变，模块内的技术很容易被修改、替换或更新</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Technological independence</td>
+<td>Inputs and outputs of each module are defined to ensure that changes in the module’s technology would not affect the system (APIs). API endpoints are versioned, with new methods being added as new or overloaded functions 定义每个模块的输入和输出，以确保模块技术的变化不会影响系统（API）。API 端点是版本化的，新方法被添加为新函数或重载函数</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Cyber resilience - Integration</td>
+<td>Some modules can be outsourced to the private sector, under two conditions: (i) the central bank must have access to the source code and associated artifacts needed to build the executable module; and (ii) there needs to be an alternative solution in the market to the private entity provider 一些模块可以外包给私营部门，但有两个条件：（i）中央银行必须能够访问构建可执行模块所需的源代码和相关工件；（ii）市场上需要有私人实体提供商的替代解决方案</td>
+<td></td>
+</tr>
+<tr>
+<td>Cyber resilience - Integration</td>
+<td>Central banks have a perfect view of what is happening within their walls and can intervene and change providers 中央银行对其内部发生的事情了如指掌，并可以进行干预和更换供应商</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Other - Clear path to provide services by third parties</td>
+<td>Clear rules of engagement 明确的服务商规则</td>
+<td></td>
+</tr>
+<tr>
+<td>Other - Clear path to provide services by third parties</td>
+<td>Open architecture for payment initiation 开放式支付架构</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Other - Clear path to provide services by third parties</td>
+<td>Open architecture for information-sharing</td>
+<td></td>
+</tr>
+<tr>
+<td>Other - Clear path to provide services by third parties</td>
+<td>Open API architecture</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Other - Clear path to provide services by third parties</td>
+<td>Open API architecture allows financial third parties to provide services based on CBDC</td>
+<td></td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://willzhuang.github.io/2024/08/06/CBDC%20Architecture/" title="CBDC Architecture">https://willzhuang.github.io/2024/08/06/CBDC Architecture/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Ethereum/" rel="tag"># Ethereum</a>
+              <a href="/tags/CBDC/" rel="tag"># CBDC</a>
+              <a href="/tags/BANK/" rel="tag"># BANK</a>
+              <a href="/tags/Layer2/" rel="tag"># Layer2</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/07/25/What%20should%20be%20the%20roadmap%20of%20Layer%202/" rel="prev" title="What should be the roadmap of Layer 2">
+                  <i class="fa fa-chevron-left"></i> What should be the roadmap of Layer 2
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'c5c16f0b67a4368eecaf8ab431c663e1',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
