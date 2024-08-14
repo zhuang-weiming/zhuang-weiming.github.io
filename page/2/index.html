@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">249</span>
+          <span class="site-state-item-count">250</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/07/02/YOLO%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/07/02/YOLO%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">YOLO原理概述</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-07-02 09:35:00" itemprop="dateCreated datePublished" datetime="2024-07-02T09:35:00+08:00">2024-07-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-07-18 12:00:58" itemprop="dateModified" datetime="2024-07-18T12:00:58+08:00">2024-07-18</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>YOLO（You Only Look Once）是一种用于对象检测的深度学习算法。其基本思想是将对象检测问题转换为回归问题，从而能够在单次前向传播中同时预测多个对象的类别和位置。YOLO通过卷积神经网络（CNN）处理图像，实现高效的实时对象检测。</p>
+<h3 id="1-数学原理"><a href="#1-数学原理" class="headerlink" title="1. 数学原理"></a>1. 数学原理</h3><p>1.1 网格划分<br>将输入图像划分为 ( S ✖️ S ) 的网格。每个网格单元负责检测图像中其中心落在该单元中的对象。</p>
+<p>1.2 预测边界框<br>每个网格单元预测固定数量的边界框（通常为B个）。每个边界框由以下几个参数表示：<br>    •    ( (x, y) )：边界框中心相对于网格单元的位置。<br>    •    ( w, h )：边界框的宽度和高度，相对于整张图像的归一化值。<br>    •    ( C )：边界框中包含对象的置信度，表示为边界框实际包含对象的概率和预测的边界框与实际边界框的重叠度（IoU）的乘积。<br>每个边界框预测值可以表示为一个5维向量：( (x, y, w, h, C) )。</p>
+<p>1.3 预测类概率<br>每个网格单元还预测C个类别的条件概率：( P(Class_i | Object) )。这些概率表示在当前网格单元中存在对象的情况下，各个类别的概率。</p>
+<p>1.4 综合预测<br>最终的预测结果结合了类别概率和边界框置信度，计算每个类别的最终置信度分数：<br> P(Class_i) ✖️ C<br>这给出了在每个边界框中存在特定类别对象的置信度分数。</p>
+<h3 id="2-计算机算法"><a href="#2-计算机算法" class="headerlink" title="2. 计算机算法"></a>2. 计算机算法</h3><p>YOLO的计算机算法实现包括以下几个主要部分：</p>
+<p>2.1 定义输入<br>输入图像被调整为固定大小（如 ( 448 ✖️ 448 )），并归一化到 [0, 1] 范围。</p>
+<p>2.2 归一化输入<br>将输入图像像素值归一化，使得每个像素值在 [0, 1] 之间。<br>具体数学步骤：<br>a) 首先计算矩阵中的平均值（μ）; b) 计算所有元素与平均值的绝对差；c) 通过将上一步结果中的所有值平方，累加，除以值的数量，然后计算平方根，来计算标准差；d）通过减去平均值并除以标准差，将输入进行层归一化。</p>
+<p>2.3 应用卷积<br>使用多个卷积层提取图像特征。每个卷积层应用卷积核，计算特征图。</p>
+<p>2.4 应用最大池化<br>在卷积层之间应用最大池化层（Max Pooling），以减少特征图的尺寸并保留重要特征。<br>在特征图的每个通道上滑动定义的窗口，并在每个位置计算窗口内的最大值。这将生成一个新的下采样特征图，其形状取决于窗口大小和步长。具体步骤如下：<br>%%<br>2.4.1 定义窗口和步长<br>假设我们使用一个  2 ✖️ 2  的窗口，步长为 2。<br>2.4.2 滑动窗口<br>在每个通道上，从左上角开始，按照步长滑动窗口。每次滑动窗口时，计算窗口内的最大值。<br>2.4.3 计算最大值<br>在每个窗口位置，找到该窗口内的最大值。这些最大值组成了下采样后的特征图。 %%</p>
+<p>2.5 非线性激活<br>在每个卷积层之后应用非线性激活函数（如ReLU）以引入非线性，使模型能够表示更复杂的函数。</p>
+<p>2.6 展平<br>将最终的特征图展平成一个一维向量，为全连接层输入做好准备。<br>%%<br>2.6.1 输入特征图<br>假设输入特征图是一个三维张量，形状为 ( (H, W, D) )，其中 ( H ) 是高度，( W ) 是宽度，( D ) 是深度（通道数）。<br>2.6.2 计算展平后向量的长度<br>展平后的向量长度等于输入特征图所有元素的总数，可以通过以下公式计算：<br> \text{Flattened Length} = H \times W \times D<br>2.6.3 按顺序排列所有元素<br>将特征图中的所有元素按行优先（Row-major order）或列优先（Column-major order）的顺序排列成一维向量。通常使用行优先顺序，这意味着先遍历特征图的每一行，再遍历每一列，最后遍历每个通道。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  [</span><br><span class="line">    [1, 2, 3],  [4, 5, 6]</span><br><span class="line">  ],</span><br><span class="line">  [</span><br><span class="line">    [7, 8, 9],  [10, 11, 12]</span><br><span class="line">  ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>按行优先顺序排列后，展平的结果为：<br> [1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12] </p>
+<p>%%</p>
+<p>2.7 投影到输出形状<br>通过全连接层将展平的特征向量投影到输出形状。输出为一个 ( S ✖️ S ✖️ (B ✖️ 5 + C) ) 的张量，其中B是每个网格单元预测的边界框数量，5表示每个边界框的5个参数（ x, y, w, h, C )，C是类别数。</p>
+<p>2.8 组成最终推理<br>通过将边界框参数和类别概率结合起来，组成最终的检测结果。应用非极大值抑制（Non-Maximum Suppression, NMS）来消除冗余边界框，仅保留置信度最高的边界框。</p>
+<p>YOLO工作流程总结<br>    1.    输入图像：将图像调整为固定大小并归一化。<br>    2.    特征提取：通过多个卷积层和最大池化层提取图像特征。<br>    3.    非线性激活：应用非线性激活函数。<br>    4.    展平和全连接：将特征图展平并通过全连接层进行预测。<br>    5.    输出预测：生成边界框和类别概率的预测值。<br>    6.    后处理：应用非极大值抑制，得到最终检测结果。<br>通过这些步骤，YOLO实现了快速且高效的对象检测，在多个应用领域中得到了广泛应用。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -848,126 +937,6 @@
 <td>适用于高效、高频次的身份验证和隐私保护场景</td>
 </tr>
 </tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/05/11/Pseudonymization%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/05/11/Pseudonymization%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">Pseudonymization算法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-05-11 15:00:00" itemprop="dateCreated datePublished" datetime="2024-05-11T15:00:00+08:00">2024-05-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-05-14 15:37:58" itemprop="dateModified" datetime="2024-05-14T15:37:58+08:00">2024-05-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V2UJ9xzbJGs&amp;t=10633s">https://www.youtube.com/watch?v=V2UJ9xzbJGs&amp;t=10633s</a><br><a target="_blank" rel="noopener" href="https://www.bis.org/about/bisih/topics/cbdc/mcbdc_bridge.htm">https://www.bis.org/about/bisih/topics/cbdc/mcbdc_bridge.htm</a><br>BIS Innovation Summit 2024: Navigating rapid innovation (day 1)中，mbridge (showcase)中讲到，其项目的privacy中使用了 Pseudonymization algorithm。下面针对 Pseudonymization 展开详细讲述。</p>
-<h2 id="1-https-github-com-kiprotect-kodex"><a href="#1-https-github-com-kiprotect-kodex" class="headerlink" title="1. https://github.com/kiprotect/kodex"></a>1. <a target="_blank" rel="noopener" href="https://github.com/kiprotect/kodex">https://github.com/kiprotect/kodex</a></h2><p>假名化（Pseudonymization）算法可以分为几个类别，包括可逆和不可逆方法，以及结构保持和格式保持方法。以下是网页中提到的一些关键点：</p>
-<h3 id="假名化技术（PET）"><a href="#假名化技术（PET）" class="headerlink" title="假名化技术（PET）"></a>假名化技术（PET）</h3><ul>
-<li>假名化是一种隐私增强技术，它将数据点中的直接或间接标识符替换为其他“假名”值，从而保护数据所属个体的身份。</li>
-</ul>
-<h3 id="假名化方法分类"><a href="#假名化方法分类" class="headerlink" title="假名化方法分类"></a>假名化方法分类</h3><ul>
-<li><strong>可逆假名化方法</strong>：允许数据去假名化，即利用额外数据（如加密密钥或映射表）从假名恢复到原始标识符。</li>
-<li><strong>不可逆假名化方法</strong>：不允许从假名恢复到原始标识符。</li>
-<li><strong>确定性假名化方法</strong>：对同一个标识符应用时总是创建相同的假名。</li>
-<li><strong>非确定性方法</strong>：即使多次应用到同一个标识符，也会生成随机假名。</li>
-<li><strong>结构保持假名化方法</strong>：保持标识符的特定内部结构。</li>
-<li><strong>格式保持假名化方法</strong>：保持数据的原始格式。</li>
-</ul>
-<h3 id="可逆方法"><a href="#可逆方法" class="headerlink" title="可逆方法"></a>可逆方法</h3><p>Kodex支持基于格式保持加密的可逆假名化方法。使用原始密钥可以解密/去假名化生成的假名。例如，<code>merengue</code>假名化方法可以操作任意二进制数据，并生成二进制假名，此外还可以保持数据的前缀结构。</p>
-<h3 id="结构保持方法"><a href="#结构保持方法" class="headerlink" title="结构保持方法"></a>结构保持方法</h3><p>基于<code>merengue</code>方法，Kodex提供了多种结构保持假名化方法，可以操作如时间戳、IP地址和数字等数据类型。这些方法保持原始数据的格式，并且也可以保持结构信息。</p>
-<h3 id="不可逆方法"><a href="#不可逆方法" class="headerlink" title="不可逆方法"></a>不可逆方法</h3><p>Kodex也支持不可逆假名化方法，特别是基于密钥哈希的消息认证码（HMAC）的假名化，以及无密钥哈希的假名化（强烈不推荐）。例如，以下动作生成基于HMAC的假名：</p>
-<h3 id="假名化方法的配置参数"><a href="#假名化方法的配置参数" class="headerlink" title="假名化方法的配置参数"></a>假名化方法的配置参数</h3><ul>
-<li><code>merengue</code>方法接受一个<code>encode</code>参数，指定结果字节字符串的编码。目前唯一可能的值（也是默认值）是<code>base64</code>。</li>
-<li><code>structured</code>方法接受以下参数：<ul>
-<li><code>preserve-prefixes</code>：如果为_true_，将保留结构化数据值的前缀。例如，使用_date_格式时，具有共同前缀的日期（例如相同的年和月）将映射到也共享相同长度前缀的假名。默认为_false_。</li>
-<li><code>type</code>：指定要假名化的数据类型。必须是<code>ip</code>、<code>date</code>、<code>integer</code>、<code>ipv4</code>或<code>ipv6</code>之一。</li>
-<li><code>type-params</code>：根据所选类型指定额外的类型参数。目前，只有<code>integer</code>类型需要强制的<code>min</code>和<code>max</code>类型参数，以指定其范围。</li>
-<li><code>format</code>：指定要假名化的数据的类型依赖格式（如果适用）。目前，只有<code>date</code>类型支持<code>format</code>参数。</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-https-github-com-aws-samples-pseudonymization-service"><a href="#2-https-github-com-aws-samples-pseudonymization-service" class="headerlink" title="2. https://github.com/aws-samples/pseudonymization-service"></a>2. <a target="_blank" rel="noopener" href="https://github.com/aws-samples/pseudonymization-service">https://github.com/aws-samples/pseudonymization-service</a></h2><p>示例中，pseudonymization-service 是利用 AES+gcm+siv实现的。<br><code>AES/GCM/SIV</code> 是一种基于 AES（高级加密标准）的加密模式，它结合了 Galois/Counter Mode（GCM）和 SIV（Synthetic Initialization Vector）的特性。</p>
-<h3 id="AES-GCM-SIV-的关键特性："><a href="#AES-GCM-SIV-的关键特性：" class="headerlink" title="AES/GCM/SIV 的关键特性："></a>AES/GCM/SIV 的关键特性：</h3><ol>
-<li><strong>AES (Advanced Encryption Standard)</strong>: AES 是一种广泛使用的对称加密算法，它以128位的块大小对数据进行加密。</li>
-<li><strong>GCM (Galois/Counter Mode)</strong>: GCM 是一种认证加密模式，它不仅提供加密，还提供数据完整性校验和重放攻击保护。GCM 使用一个nonce（一次性密码），也称为初始化向量（IV），以及一个附加的认证标签（tag）来确保数据的完整性和真实性。</li>
-<li><strong>SIV (Synthetic Initialization Vector)</strong>: SIV 是一种模式，它允许使用相同的加密密钥对多个消息进行加密，而不需要为每个消息生成新的随机IV。这在某些场景下非常有用，比如当需要加密大量数据或者需要从相同的密钥派生多个IV时。</li>
-</ol>
-<h3 id="EncryptionAESGCMSIV-类："><a href="#EncryptionAESGCMSIV-类：" class="headerlink" title="EncryptionAESGCMSIV 类："></a><code>EncryptionAESGCMSIV</code> 类：</h3><p>在 Java 中，<code>EncryptionAESGCMSIV</code> 类可能是用来实现 AES/GCM/SIV 加密模式的一个类。这个类可能包含以下功能：</p>
-<ul>
-<li><strong>加密数据</strong>：使用 AES/GCM/SIV 算法对输入数据进行加密，并生成密文和认证标签。</li>
-<li><strong>解密数据</strong>：使用相同的加密密钥和正确的认证标签对密文进行解密，恢复原始数据。</li>
-<li><strong>生成和验证认证标签</strong>：在加密过程中生成认证标签，并在解密过程中验证这个标签以确保数据的完整性和真实性。</li>
-</ul>
-<h3 id="使用场景："><a href="#使用场景：" class="headerlink" title="使用场景："></a>使用场景：</h3><p>AES/GCM/SIV 算法适用于需要高安全性和效率的场景，特别是在以下情况：</p>
-<ul>
-<li>数据需要在不安全的通道上传输，比如互联网。</li>
-<li>需要确保数据的完整性和防止篡改。</li>
-<li>需要抵抗重放攻击，即攻击者不能简单地重放之前捕获的加密数据。</li>
-</ul>
-<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><p>使用任何加密算法时，都需要遵循最佳实践，比如：</p>
-<ul>
-<li>使用强密钥。</li>
-<li>密钥管理应该安全，避免泄露。</li>
-<li>使用合适的随机数生成器来生成 IV 或 nonce。</li>
-</ul>
 
       
     </div>

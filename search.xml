@@ -7684,6 +7684,15 @@
 <li>公钥为 (N,g)(N,g)</li>
 <li>私钥为 λ</li>
 </ol>
+<p>参考项目：<br><a href="https://github.com/apple/swift-homomorphic-encryption">https://github.com/apple/swift-homomorphic-encryption</a><br>苹果公司表示，它正在使用同态加密技术进行实时来电者身份验证查询，用以支持来电者识别和垃圾电话拦截服务。这项技术允许苹果通过向服务器发送加密的查询，请求获取电话号码的相关信息，而服务器无需知道或存储电话号码。<br>苹果公司表示，典型的同态加密工作流可能是这样的：</p>
+<ul>
+<li>客户端加密敏感数据，并将结果发送给服务器。</li>
+<li>服务器在不了解任何解密内容的情况下，对收到的密文进行必要的计算，可能还会结合服务器自身的明文输入。</li>
+<li>服务器将计算后的密文响应发送给客户端。</li>
+<li>客户端对收到的响应进行解密。<br>Swift 实现集成了 Brakerski-Fan-Vercauteren（BFV）同态加密方案，这一方案具备抵御量子计算攻击的能力。</li>
+</ul>
+<p><a href="https://github.com/homenc/HElib">https://github.com/homenc/HElib</a><br>IBM 提供的 HElib目前不再进行积极的开发，尽管还有一些未解决的问题，它现在处于“维护模式”，主要的工作是修复安全漏洞。</p>
+<p><a href="https://github.com/microsoft/SEAL">https://github.com/microsoft/SEAL</a><br>至于微软的 SEAL 库，自 2018 年以来也都没有与发布相关的新闻，尽管其 GitHub 代码库偶尔还会有一些更新。</p>
 ]]></content>
       <tags>
         <tag>MPC</tag>
@@ -12249,11 +12258,12 @@
   <entry>
     <title>未来之产业趋势-吴军</title>
     <url>/2024/08/12/%E6%9C%AA%E6%9D%A5%E4%B9%8B%E4%BA%A7%E4%B8%9A%E8%B6%8B%E5%8A%BF-%E5%90%B4%E5%86%9B/</url>
-    <content><![CDATA[<p>关于吴军《脉络》这一本书，关于未来做了一些阐述和预测。</p>
+    <content><![CDATA[<p>关于《脉络》这一本书，吴军和尹烨做了一期视频会议，分享了关于一些未来的预测。</p>
 <ol>
-<li>无论是中国的，还是人类的，其生产远远没有过剩，大片的沙漠，河流，土地，太阳能，风能，等等仍在等待开发。</li>
-<li>给目前高考学生的报考方向 - 1.计算机；2.医疗，医学，药学，健康，护理，生物学；3.金融；4.教育。普通人的话，很看好餐馆儿，护理等就业方向。</li>
-<li>未来看好的经济圈 - 1.英语地域圈；2.东亚中日韩；3.印度。</li>
+<li>无论是中国的，还是人类的，其生产远远没有过剩。大片的沙漠，河流，土地，太阳能，风能，等等都在等待开发。地球即使经历核大战，环境也仍然大幅优于火星，所以移民火星，月球将是是非常遥远的未来。</li>
+<li>未来看好虚拟经济，服务业。如未来的老龄化，思想文化大发展等趋势，相应的原宇宙，区块链/加密货币，AR/VR，AI，医疗，金融/税务，等服务业。</li>
+<li>给目前高考学生的报考方向<br> 1.计算机；<br> 2.医疗，医学，药学，健康，护理，生物学；<br> 3.金融；<br> 4.教育。<br> 普通人的话，还看好餐馆儿，护理等就业方向。</li>
+<li>未来看好的经济圈<br> 1.英语地域圈；<br> 2.东亚中日韩；<br> 3.印度。</li>
 </ol>
 ]]></content>
       <tags>
@@ -12262,6 +12272,24 @@
         <tag>架构</tag>
         <tag>AI</tag>
         <tag>BANK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Eth系节点安装</title>
+    <url>/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h2 id="Ethereum"><a href="#Ethereum" class="headerlink" title="Ethereum"></a>Ethereum</h2><p>安装手册：<a href="https://github.com/eth-educators/eth-docker">https://github.com/eth-educators/eth-docker</a></p>
+<ul>
+<li>32 GiB of RAM - 16 GiB works but can be challenging depending on client mix</li>
+<li>4 CPU cores</li>
+<li>4TB <a href="https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038">“mainstream” SSD</a> - TLC and DRAM.<br>如 GCP 示例：<br><img src="/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/1.png"><br>• <strong>8 vCPU</strong>: This means the virtual machine (VM) has 8 virtual Central Processing Units (vCPUs). A vCPU is a virtualized CPU that the VM uses to run processes. Each vCPU is a share of the physical CPU’s resources allocated to the VM.<br>• <strong>4 cores</strong>: This refers to the number of physical cores backing the virtual CPUs. In this case, the 8 vCPUs are mapped to 4 physical CPU cores. Typically, this implies that each physical core is hyper-threaded, meaning it can handle two threads simultaneously, effectively providing two vCPUs per core.</li>
+</ul>
+<p><img src="/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/2.png"></p>
+<h2 id="Linea"><a href="#Linea" class="headerlink" title="Linea"></a>Linea</h2><p>安装手册：<a href="https://docs.linea.build/developers/guides/run-a-node/use-docker">https://docs.linea.build/developers/guides/run-a-node/use-docker</a></p>
+<h2 id="Polygon"><a href="#Polygon" class="headerlink" title="Polygon"></a>Polygon</h2><p>安装手册：<a href="https://docs.polygon.technology/pos/how-to/full-node/full-node-docker/">https://docs.polygon.technology/pos/how-to/full-node/full-node-docker/</a></p>
+]]></content>
+      <tags>
+        <tag>CBDC</tag>
+        <tag>区块链</tag>
       </tags>
   </entry>
 </search>

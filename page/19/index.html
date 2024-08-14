@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">249</span>
+          <span class="site-state-item-count">250</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,104 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/" class="post-title-link" itemprop="url">海量信息查重-simhash</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-27 16:21:04" itemprop="dateCreated datePublished" datetime="2021-05-27T16:21:04+08:00">2021-05-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-09 14:10:07" itemprop="dateModified" datetime="2021-08-09T14:10:07+08:00">2021-08-09</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>​    造成网页近重复的可能原因主要包括：镜像网站；内容复制；嵌入广告；计数改变；少量修改<br>​    传统比较两个文本相似性的方法，大多是将文本分词之后，转化为特征向量距离的度量，比如常见的欧氏距离、海明距离或者余弦角度等等。两两比较固然能很好地适应，但这种方法的一个最大的缺点就是，无法将其扩展到海量数据。例如，试想像Google那种收录了数以几十亿互联网信息的大型搜索引擎，每天都会通过爬虫的方式为自己的索引库新增的数百万网页，如果待收录每一条数据都去和网页库里面的每条记录算一下余弦角度，其计算量是相当恐怖的。<br>​    考虑采用为每一个web文档通过hash的方式生成一个指纹（fingerprint）。但是，传统的加密式hash，比如md5，其设计的目的是为了让整个分布尽可能地均匀，输入内容哪怕只有轻微变化，hash就会发生很大地变化。我们理想当中的哈希函数，需要对几乎相同的输入内容，产生相同或者相近的hashcode，换句话说，hashcode的相似程度要能直接反映输入内容的相似程度。很明显，前面所说的md5等传统hash无法满足我们的需求。<br>​    <a target="_blank" rel="noopener" href="http://jacoxu.com/%e5%85%b3%e4%ba%8esimhash%e7%ae%97%e6%b3%95%e5%8e%9f%e7%90%86/">simhash</a>是locality sensitive hash（局部敏感哈希）的一种，它产生的hash签名在一定程度上可以表征原内容的相似度。最早由Moses Charikar在《similarity estimation techniques from rounding algorithms》一文中提出。Google就是基于此算法实现网页文件查重的。假设有以下三段文本：<br>​    <strong>the cat sat on the mat</strong><br>​    <strong>the cat sat on a mat</strong><br>​    <strong>we all scream for ice cream</strong><br>使用传统hash可能会产生如下的结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">irb(main):006:0&gt; p1 = ‘the cat sat on the mat’</span><br><span class="line">irb(main):005:0&gt; p2 = ‘the cat sat on a mat’</span><br><span class="line">irb(main):007:0&gt; p3 = ‘we all scream for ice cream’</span><br><span class="line">irb(main):007:0&gt; p1.hash</span><br><span class="line">=&gt; 415542861</span><br><span class="line">irb(main):007:0&gt; p2.hash</span><br><span class="line">=&gt; 668720516</span><br><span class="line">irb(main):007:0&gt; p3.hash</span><br><span class="line">=&gt; 767429688</span><br></pre></td></tr></table></figure>
+
+<p>使用simhash会应该产生类似如下的结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">irb(main):003:0&gt; p1.simhash</span><br><span class="line">=&gt; 851459198</span><br><span class="line">00110010110000000011110001111110</span><br><span class="line">irb(main):004:0&gt; p2.simhash</span><br><span class="line">=&gt; 847263864</span><br><span class="line">00110010100000000011100001111000</span><br><span class="line">irb(main):002:0&gt; p3.simhash</span><br><span class="line">=&gt; 984968088</span><br><span class="line">00111010101101010110101110011000</span><br></pre></td></tr></table></figure>
+
+<p>​    海明距离的定义，为两个二进制串中不同位的数量。上述三个文本的simhash结果，其两两之间的海明距离为(p1,p2)=4，(p1,p3)=16以及(p2,p3)=12。事实上，这正好符合文本之间的相似度，p1和p2间的相似度要远大于与p3的。距离越小，则相似度越大。一般大文本去重，大小&lt;=3的即可判断为重复。<br>​    如何实现这种hash算法呢？simhash算法分为5个步骤：1、分词、2、hash、3、加权、4、合并、5、降维</p>
+<ol>
+<li>分词：</li>
+</ol>
+<p>选择适合自己的分词库进行分词即可。<br>如“欢迎来到随迹”-&gt;（分词后）“欢迎”、“来到”、“随迹”</p>
+<ol start="2">
+<li>hash：</li>
+</ol>
+<p>对每个词计算其hash值，hash值为二进制数01组成的n-bit签名。<br>设“欢迎“（100101）、“来到”（101011）、“随迹”（101011）</p>
+<ol start="3">
+<li>加权：</li>
+</ol>
+<p>对于给定的文本，权值即为分词后对应词出现的数量。给所有特征向量进行加权，即W = Hash * weight；这里我们假设三个词权值分别为4、5、9；<br>根据计算规则遇到1则hash值和权值正相乘，遇到0则hash值和权值负相乘<br>例如给“欢迎”的hash值“100101”加权得 到：W(欢迎) = 1001014 = 4 -4 -4 4 -4 4，给“来到”的hash值“101011”加权得到：W(来到)=1010115 = 5 -5 5 -5 5 5，剩下的按此规则计算</p>
+<ol start="4">
+<li>合并：</li>
+</ol>
+<p>将上述各个特征向量的加权结果累加，变成只有一个序列串。拿前两个特征向量举例，例如“欢迎”的“4 -4 -4 4 -4 4”和“来到”的“5 -5 5 -5 5 5”进行累加，得到“4+5 -4+-5 -4+5 4+-5 -4+5 4+5”，得到“9 -9 1 -1 1”。</p>
+<ol start="5">
+<li>降维：</li>
+</ol>
+<p>对于n-bit签名的累加结果，如果大于0则置1，否则置0，从而得到该语句的simhash值，最后我们便可以根据不同语句simhash的海 明距离来判断它们的相似度。例如把上面计算出来的“9 -9 1 -1 1 9”降维（某位大于0记为1，小于0记为0），得到的01串为：“1 0 1 0 1 1”，从而形成它们的simhash签名。</p>
+<p><img src="/2021/05/27/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash/%E6%B5%B7%E9%87%8F%E4%BF%A1%E6%81%AF%E6%9F%A5%E9%87%8D-simhash%5C1.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -619,114 +717,6 @@
 <p>一个阶数为17的域如下：<br>    F17={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}</p>
 <p>一个阶数为983的域如下：<br>    F983={0,1,2,…，982}</p>
 <p>​    注意，域的阶数总是比最大元素大1。你可能注意到了每次我们给出的域的阶数都是质数。出于很多之后才能解释清楚的原因，域的阶数必须为质数的整数次幕，其中阶数为质数的有限域是我们特别关心的。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2021/04/15/Plonk-5-%E6%9C%AC%E4%BA%BA%E5%AF%B9Plonk%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/15/Plonk-5-%E6%9C%AC%E4%BA%BA%E5%AF%B9Plonk%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Plonk-5-本人对Plonk的理解和总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-15 13:50:04" itemprop="dateCreated datePublished" datetime="2021-04-15T13:50:04+08:00">2021-04-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-04-29 17:34:47" itemprop="dateModified" datetime="2022-04-29T17:34:47+08:00">2022-04-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>论文原文 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">953.pdf (iacr.org)</a>，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge</a></p>
-<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>利用可更新的通用结构化参考字符串的zk-SNARK构造消除了部署zk-SNARKs [GKM +]的主要障碍之一。 Maller等人的重要工作，[MBKM19]提出了Sonic-第一个具有实用性的zk-SNARK，具有完全简洁的验证，可用于带有这种SRS(structured reference string)的通用算术电路。但是，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/601.pdf">支持完全简洁验证的Sonic版本</a>仍然需要相对较高的证明建造费用。 我们提出了一种具有完全简洁验证的通用SNARK结构，并且大大减少了证明方的运行时间（根据电路结构的不同，证明者的运行时间比完全简洁验证程序模式下的[MBKM19]少7.5-20倍）。与[MBKM19]类似，我们依赖于基于Bayer和Groth [BG12]的置换参数。但是，我们专注于“评估亚组而不是单项式系数”； 这样可以简化置换参数和算术化步骤。</p>
-<p>=================以下为本人对 Plonk 的理解和总结=================</p>
-<p>PlonK（以及更早但更复杂的<a target="_blank" rel="noopener" href="https://www.benthamsgaze.org/2019/02/07/introducing-sonic-a-practical-zk-snark-with-a-nearly-trustless-setup/">SONIC</a>、以及最近的<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/1047.pdf">Marlin</a>）带来的是一系列的改进，这些改进可能会总体上大大提高这类证明的可用性及进展。</p>
-<p><strong>第一个改进</strong>：虽然PlonK仍需要一个类似Zcash SNARKs的可信设置过程，但它是一个“通用且可更新”的可信设置。这意味着两件事：首先，不需要为每一个你想证明的程序都设置一个单独的可信设置，而是为整个方案设置一个单独的可信设置，之后你可以将该方案与任何程序一起使用（在进行设置时可选择最大大小）。第二，有一种方法可以让多方参与可信设置，这样只要其中任何一方是诚实的，那这个可信设置就是安全的，而且这种多方过程是完全连续的：首先是第一个人参与，然后是第二个人，然后是第三个……参与者们甚至不需要提前知道，新的参与者可以把自己添加到最后。这使得可信设置很容易拥有大量参与者，从而在实践中确保设置是非常安全的。</p>
-<p><strong>第二个改进</strong>：它所依赖的“奇特密码学”是一个单一的标准化组件，称为“polynomial commitment”（多项式承诺）。PLONK使用基于可信设置和椭圆曲线对的“Kate commitments”（Kate承诺），但也可以用其它方案替换它，例如<a target="_blank" rel="noopener" href="https://vitalik.ca/general/2017/11/22/starks_part_2.html">FRI</a>（这将使<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/1020">PLONK变成一种STARK</a>）或者DARK（基于隐藏顺序组）。这意味着该方案在理论上与证明大小和安全性假设之间的任何（可实现的）权衡兼容。</p>
-<p>下图为Vitalik对PlonK的定位：</p>
-<p><img src="/2021/04/15/Plonk-5-%E6%9C%AC%E4%BA%BA%E5%AF%B9Plonk%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E6%80%BB%E7%BB%93/4.png"></p>
-<p>​    这意味着需要在证明大小与安全性假设之间进行不同权衡的用例，仍然可以为“算术化”共享大部分相同的工具(把一个程序转换成一组多项式方程的过程，然后用多项式承诺来检验)。如果这种方案被广泛采用，那我们可期待在改进共享算术化技术方面的快速进展。</p>
-<h3 id="PlonK的工作原理"><a href="#PlonK的工作原理" class="headerlink" title="PlonK的工作原理"></a>PlonK的工作原理</h3><p>​    PLONK的一个关键组成部分，就像<a target="_blank" rel="noopener" href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649">SNARKs中使用的QAP</a>一样，这是一个转换问题的过程，形式是“给我一个值X，我给你一个特定的程序P，这样当X作为输入进行计算时，给出一些具体的结果Y”，放到问题中：“给我一组满足一组数学方程的值“。程序P可以表示很多东西，例如，问题可能是“给我一个数独的解决方案”，你可以通过将P设置为数独验证器加上一些编码的初始值并将Y设置为1（即“是的，这个解决方案是正确的”）来对其进行编码，一个令人满意的输入X将是数独的有效解决方案。这是通过将P表示为一个带有逻辑门的加法和乘法电路，并将其转换为一个方程组来完成的，其中变量是所有线上的值，每个门有一个方程（例如，乘法为<code>x6 = x4 * x7</code>，加法为<code>x8 = x5 + x9</code>）。</p>
-<p>​    下面是一个求<code>x</code>问题的例子，这样<code>P(x) = x**3 + x + 5 = 35</code> (提示:<code> x = 3</code>):</p>
-<p><img src="/2021/04/15/Plonk-5-%E6%9C%AC%E4%BA%BA%E5%AF%B9Plonk%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E6%80%BB%E7%BB%93/5.png"></p>
-<p>我们按如下方式给门和线贴上标签：</p>
-<p><img src="/2021/04/15/Plonk-5-%E6%9C%AC%E4%BA%BA%E5%AF%B9Plonk%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E6%80%BB%E7%BB%93/6.png"></p>
-<p>​    门和线上，我们有两种类型的约束：<strong>门约束</strong>（连接到相同门之间线的方程，例如<code>a1 * b1 = c1</code>）和复制约束（关于电路中任何位置的不同线相等的声明，例如<code>a0 = a1 = b1 = b2 = a3 </code>或者<code>c0 = a1</code>）。我们需要创建一个结构化的方程组，它最终将减少到一个非常少数量的多项式方程组，来表示这两个方程组。</p>
-<p>在PlonK中，这些方程的设置和形式如下（其中，L = 左，R=右，O=输出，M=乘法，C=常数）：<br>$$<br>({Q_L}_i)a_i + ({Q_R}_i)b_i + ({Q_O}_i)c_i + ({Q_M}_i)a_ib_i + {Q_C}_i = 0<br>$$<br>​    每个<code>Q</code>值都是一个常数，每个方程中的常数（和方程数）对于每个程序都是不同的。每个小写字母值都是一个变量，由用户提供：ai 是第i个门的左输入线，bi是右输入线，ci是第i个门的输出线。</p>
-<p>​    对于加法门，我们设置：<br>$$<br>{Q_L}_i=1, {Q_R}_i=1, {Q_O}_i=-1, {Q_M}_i=0, {Q_C}_i=0<br>$$<br>​    将这些常数插入方程并进行简化，得到<code>ai+bi-oi=0</code>，这正是我们想要的约束条件。</p>
-<p>​    对于乘法门，我们设置：</p>
-<p>$$<br>{Q_L}_i=0, {Q_R}_i=0, {Q_O}_i=-1, {Q_M}_i=1, {Q_C}_i=0<br>$$<br>​    对于将ai设置为某个常数<code>x</code>的常数门，我们设置：<br>$$<br>Q_L=1, Q_R=0, Q_O=1, Q_M=0, Q_C=-x<br>$$<br>​    你可能已注意到线的每一端，以及一组线中的每根线，显然必须具有相同的值（例如x）对应于一个不同的变量；到目前为止，没有什么能强迫一个门的输出与另一个门的输入相同（我们称之为“复制约束”）。Plonk有一种强制复制约束的方法。所以现在我们有一个问题，证明者想要证明他们有一堆Xai, Xbi以及Xci值满足了一堆相同形式的方程。这仍然是一个大问题，但不像“找到这个计算机程序的一个令人满意的输入”，这是一个非常结构化的大问题，我们有数学工具可用于“压缩”它。</p>
-<h4 id="从线性系统到多项式"><a href="#从线性系统到多项式" class="headerlink" title="从线性系统到多项式"></a>从线性系统到多项式</h4><p>​    这里的主要内容是将多项式理解为一种数学工具，用于将大量值封装到单个对象中。通常，我们是以“系数形式”来看待多项式，即如下表达式：<br>$$<br>y = x^3 - 5x^2 + 7x -2<br>$$<br>​    但我们也可用“定值形式”来看待多项式。例如，我们可以认为上面是在坐标<code>（0，1，2，3）</code>处分别定值<code>（-2，1，0，1）</code>的“阶数&lt;4的多项式：</p>
-<p><img src="/2021/04/15/Plonk-5-%E6%9C%AC%E4%BA%BA%E5%AF%B9Plonk%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E6%80%BB%E7%BB%93/7.png"></p>
-<p>​    下一步：许多形式相同的方程组可重新解释为多项式上的一个方程组。例如，假设我们有一个系统：<br>$$<br>2x_1-x_2+3x_3=8 \<br>x_1+4x_2-5x_3=5\<br>8x_1-x_2-x_3=-2<br>$$<br>​    我们用定值形式定义四个多项式：L(x)是在坐标 <code>(0, 1, 2)</code>处定值为<code>（2，1，8）</code>的阶数&lt; 3的多项式，在同样的坐标系下，M(x) 定值为<code> (-1, 4, -1)</code>， R(w)定值为<code>(3, -5, -1) </code>以及O(x)定值为<code>(8, 5, -2)</code>（用这种方法直接定义多项式是可以的，可以使用拉格朗日插值来转换成系数形式）。现在，考虑下面这个等式：<br>$$<br>L(x)*x_1 + M(x)*x_2 + R(x)*x_3 - O(x) = Z(x)H(x)<br>$$<br>​    在这里，<code>Z(x)</code>是<code>(x-0) * (x-1) * (x-2)</code>的简写，它是在定值域<code> (0, 1, 2)</code>上返回零的最小（非零）多项式。这个方程的解 (x1 = 1, x2 = 6, x3 = 4, H(x) = 0)也是原方程组的解，只是原方程组不需要H(x)。还要注意，在这种情况下，H(x)很方便为零，但在更复杂的情况下，H可能需要为非零。</p>
-<p>所以现在我们知道，我们可以在少数数学对象（多项式）中表示一个大的约束集。但在我们上面建立的表示门线约束的方程中，x1, x2, x3变量在每个方程中是不同的。我们可以用同样的方法使变量本身成为多项式而不是常数来处理这个问题。所以我们得到：<br>$$<br>Q_L(x)a(x) + Q_R(x)b(x) + Q_O(x)c(x) + Q_M(x)a(x)b(x) + Q_C(x) = 0<br>$$<br>​    如前所述，每个<code>Q</code>多项式是由正在验证的程序生成的参数，<code>a</code>, <code>b</code>, <code>c</code>多项式是用户提供的输入。</p>
-<h4 id="复制约束-Copy-constraints"><a href="#复制约束-Copy-constraints" class="headerlink" title="复制约束(Copy constraints)"></a>复制约束(Copy constraints)</h4><p>​    现在，让我们回到“连接”线上。到目前为止，我们所拥有的是一组关于不相交值的不相交方程，这些方程独立且易于满足：常数门可通过将值设置为常数来满足，加法和乘法门可通过将所有线设置为零来满足！为了使问题具有实际的挑战性（并实际表示原始电路中编码的问题），我们需要添加一个验证“复制约束”（如<code>a(5) = c(7), c(10) = c(12)</code>等约束）的等式，这需要一些巧妙的技巧。</p>
-<p>​    我们的策略是设计一个“坐标对累加器”，一个多项式<code>p(x)</code> 的工作原理如下：首先，让<code>X(x)</code>和<code>Y(x)</code>两个多项式表示一组点的<code>x</code>和<code>y</code>坐标（例如表示集合<code>((0, -2), (1, 1), (2, 0), (3, 1))</code>, 你可设置X(x) = x以及Y(x) = x^3 - 5x^2 + 7x - 2)。我们的目标是让<code>p(x) </code>代表所有点，直到（但不包括）给定的位置，所以 p(0)从1开始，p(1)只代表第一个点，p(2)是第一个点和第二个点，诸如此类。我们将通过“随机”选择两个常数v1和v2，并使用约束<code>p(0) = 1</code>以及<code>p(x+1) = p(x) * (v1 + X(x) + v2 * Y(x))</code> 构造p(x)<code>，至少在域（0，1，2，3）内。例如，让v1=3和v2=2，我们得到：</code></p>
-<p><img src="/2021/04/15/Plonk-5-%E6%9C%AC%E4%BA%BA%E5%AF%B9Plonk%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E6%80%BB%E7%BB%93/8.png"><br>$$<br>\qquad \qquad  X(x) \qquad 0  \qquad 1   \qquad  2   \qquad  3   \qquad  4 \<br>\qquad \qquad Y(x)  \quad -2   \qquad  1   \qquad  2   \qquad  1  \qquad \<br>v1+X(x)_V^2*Y(x) \quad -1 \qquad 6 \qquad 5 \qquad 8 \qquad \qquad \<br>\qquad \qquad \qquad p(x) \qquad 1 \quad -1 \quad -6 \quad -30 \ -240<br>$$<br>​    注意（除了第一列）每个p(x) 值，等于它左边的值乘以它左上面的值。</p>
-<p>​    我们关心的结果是<code>p(4) = -240</code> 。现在，考虑这样的情况，我们设置X(x) = 2⁄3 x^3 - 4x^2 + 19⁄3 x（即，在坐标<code>（0，1，2，3）</code>处定值为<code>（0，3，2，1）</code>的多项式），而不是X(x) = x。</p>
-<p>​    如果你运行同样的过程，你会发现你也会得到<code>p(4) = -240</code>。</p>
-<p>​    这不是巧合（事实上，如果你随机从一个足够大的域中选择<code>v1</code>和<code>v2</code>，则几乎永远不会巧合地发生）。相反，这是因为 <code>Y(1) = Y(3)</code>，所以如果你“交换”点 (1, 1) 和（3，1）的X坐标，你就不会改变点的集合，并且因为累加器对集合进行编码（因为乘法不关心顺序），所以最后的值将是相同的。</p>
-<p>​    现在，我们可以开始了解我们将用来证明复制约束的基本技术。首先，考虑一个简单的例子，我们只想证明在一组线中的复制约束（例如，我们想证明<code>a（1）=a（3）</code>）。我们将生成两个坐标累加器：一个是X(x) = x 和Y(x) = a(x)，另一个是Y(x) = a(x)，而<code>X’(x)</code>是对每个复制约束中的值的翻转排列（或重新排列）定值的多项式。在<code>a(1) = a(3)</code>的情况下，这意味着排列将开始于0 3 2 1 4…. 第一个累加器将压缩<code> ((0, a(0)), (1, a(1)), (2, a(2)), (3, a(3)), (4, a(4))</code>…，第二个压缩<code>（（0，A（0）），（3，A（1）），（2，A（2）），（1，A（3）），（4，A（4））</code>……只有当<code>a(1) = a(3)</code>时，两者才能给出相同的结果。</p>
-<p>​    为了证明<code>a</code>，<code>b</code>和<code>c</code>之间的约束，我们使用了相同的过程，但是我们将所有三个多项式的点“累加”在一起。我们给a, b, c赋值一些X坐标（例如<code>a</code>为Xa(x) = x 即<code>0...n-1</code>, <code>b</code>为Xb(x) = n+x，即<code>n…2n-1</code>，<code>c </code>为Xc(x) = 2n+x，即<code>2n…3n-1</code>。为了证明在不同线集之间跳跃的复制约束，“替换”X坐标将是所有三个集合上的排列片段。例如，如果我们想用<code>n = 5</code> 证明<code>a（2）=b（4）</code>，那么X’a(x) 将有定值<code>0 1 9 3 4</code>，X’b(x)将有定值<code>5 6 7 8 2</code>（注意2和9翻转，其中9对应于b4线）。 然后，我们将不再像以前那样检查一次过程中的相等性（即检查p(4) = p’(4)），而是检查每侧三次不同运行的乘积：<br>$$<br>p_a(n)*p_b(n)*p_c(n) = p’_a(n)*p’_b(n)*p’_c(n)<br>$$<br>​    两边的三个 p(n)定值的乘积将<code>a</code>、<code>b</code>和<code>c</code>中的所有坐标对累加在一起，因此这允许我们像以前一样进行检查，除此之外，我们现在不仅可检查三组线A、B或C中一组内的位置之间的复制约束，还可以检查一组线与另一组线之间的复制约束（例如，在<code>a(2) = b(4)</code>中）。</p>
-<h4 id="多项式承诺"><a href="#多项式承诺" class="headerlink" title="多项式承诺"></a>多项式承诺</h4><p>​    <a target="_blank" rel="noopener" href="https://pdfs.semanticscholar.org/31eb/add7a0109a584cfbf94b3afaa3c117c78c91.pdf">多项式承诺</a>（polynomial commitment）是一个短对象，其“代表”一个多项式，并允许你验证该多项式的计算，而不需要实际包含多项式中的所有数据。也就是说，如果有人给你一个代表P(x)的承诺c，他们可以给你一个证明，然后说服你对于某个特定的z，P(z) 值是多少。还有一个进一步的数学结果表明，在一个足够大的域上，如果关于在随机z上定值的多项式的某些类型的方程（在z已知之前选择）是真的，那么这些相同的方程对整个多项式也是真的。例如，如果<code>P(z) * Q(z) + R(z) = S(z) + 5</code>，那么我们知道<code>P(x) * Q(x) + R(x) = S(x) + 5</code>通常是极有可能的。使用这样的多项式承诺，我们可以很容易地检查上面所有的多项式方程。作出承诺，使用它们作为输入生成<code>z</code>，证明在z上每个多项式的定值是什么，然后用这些定值来运行方程，而不是原来的多项式。那这些承诺是如何运作的呢？</p>
-<p>​    有两部分：对多项式<code>P(x) -&gt; c</code>的承诺，以及在某个<code>z</code>处对值<code>P(z)</code>的opening。而要作出承诺，有很多技术，一个例子是<a target="_blank" rel="noopener" href="https://vitalik.ca/general/2017/11/22/starks_part_2.html">FRI</a>，另一个是Kate承诺，我将在下面描述。为了证明一个 opening，有一个简单的通用“减除”技巧：为了证明<code>P(z) = a</code>，你要证明<br>$$<br>\frac{P(x)-a}{x-z}<br>$$<br>​    也是一个多项式（使用另一个多项式承诺）。这是因为如果商是一个多项式（即它不是分数），那么<code>x - z</code>是<code>P(x) - a</code>的一个因子，所以<code>(P(x) - a)(z) = 0</code>，所以<code> P(z) = a</code>。用一些多项式试试，<a target="_blank" rel="noopener" href="https://www.wolframalpha.com/input/?i=factor+((x%5E3+++2*x%5E2+++5)+-+293)+/+(x+-+6)">比如P(x) = x^3 + 2*x^2+5 (z=6，a=293)，然后试试 (z = 6, a = 292)，看看它是如何失败的</a>。</p>
-<p>​    另请注意一个一般优化：为了同时证明多个多项式的多个opening，在提交输出后，对多项式和输出的随机线性组合执行减除技巧。</p>
-<p>​    那么，承诺本身是如何运作的呢？幸运的是，Kate 承诺要比FRI简单得多。可信设置过程生成一组椭圆曲线点G, G * s, G * s^2 …. G * s^n，以及G2 * s，其中G 和G2是两个椭圆曲线组的生成器，而s则是一个一旦程序完成就会被遗忘的秘密（注意，这个设置有多个版本，它是安全的，只要至少有一个参与者忘记了他们分享的秘密）。这些点会被公布，并被认为是方案的“证明关键”，任何需要作出多项式承诺的人都需要使用这些点。通过将证明密钥中的前d+1个点中的每一点乘以多项式中的相应系数，并将结果相加，对d次多项式作出承诺。</p>
-<p>​    注意，这提供了在<code>s</code>处的多项式的“定值”，而不知道<code>s</code>。例如，x^3 + 2x^2+5 将由(G * s^3) + 2 * (G * s^2) + 5 * G表示。我们可以用符号<code>[P]</code>来表示用这种方式（即<code>G * P(s)</code>）编码的P。在做减除技巧时，可以使用<a target="_blank" rel="noopener" href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">椭圆曲线对</a>来证明这两个多项式实际上满足关系：检查<code>e([P] - G * a, G2) = e([Q], [x] - G2 * z)</code>是否作为检查<code>P(x) - a = Q(x) * (x - z)</code>的代理。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>​    最后，再讨论一下这个方案，给定一个程序P，将其转换为一个电路，并生成一组如下所示的方程：<br>$$<br>({Q_L}_i)a_i + ({Q_R}_i)b_i + ({Q_O}_i)c_i + ({Q_M}_i)a_ib_i + {Q_C}_i = 0<br>$$<br>​    然后将这组方程转换为一个多项式方程：<br>$$<br>Q_L(x)a(x) + Q_R(x)b(x) + Q_O(x)c(x) + Q_M(x)a(x)b(x) + Q_C(x) = 0<br>$$<br>​    还可以从回路中生成复制约束的列表。从这些复制约束生成表示排列线指数的三个多项式：σa(x), σb(x), σc(x)。要生成证明，需要计算所有线的值，并将其转换为三个多项式：a(x), b(x), c(x)。作为置换检查参数的一部分，还可以计算六个“坐标对累加器”多项式。最后计算辅因子Hi(x)。</p>
-<p>​    多项式之间有一组方程需要检查，可以通过对多项式作出承诺，在某些随机z处打开它们（同时证明这些opening是正确的），并在这些求值结果上运行方程，而不是在原始多项式上运行方程来完成这项工作。证明本身只是一些承诺和opening，可以用几个方程式来检查。</p>
 
       
     </div>
