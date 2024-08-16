@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-count">252</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/" class="post-title-link" itemprop="url">Remix部署以太坊智能合约至远程节点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-13 12:49:39" itemprop="dateCreated datePublished" datetime="2018-02-13T12:49:39+08:00">2018-02-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-09-14 13:56:30" itemprop="dateModified" datetime="2023-09-14T13:56:30+08:00">2023-09-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li> 编写 solidity 代码，选择 Web3 Provider</li>
+</ol>
+<p>![](Remix部署以太坊智能合约至远程节点/remix remote deploy 1.png)</p>
+<ol start="2">
+<li>Yes</li>
+</ol>
+<p>![](Remix部署以太坊智能合约至远程节点/remix remote deploy 2.png)</p>
+<ol start="3">
+<li>节点IP地址</li>
+</ol>
+<p>![](Remix部署以太坊智能合约至远程节点/remix remote deploy 3.png)</p>
+<ol start="4">
+<li>点击 Create，部署代码。查看底部 log 成功与否，这里需要花费几秒钟的时间。成功后 copy 合约地址。</li>
+</ol>
+<p>![](Remix部署以太坊智能合约至远程节点/remix remote deploy 4.png)</p>
+<ol start="5">
+<li>本地查看调试网页。</li>
+</ol>
+<p>![](Remix部署以太坊智能合约至远程节点/remix remote deploy 5.png)</p>
+<p>示例源码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie=edge&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;main.css&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/web3/dist/web3.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h1</span>&gt;</span>Coursetro Instructor<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">h2</span> <span class="attr">id</span>=<span class="string">&quot;instructor&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;loader&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;name&quot;</span> <span class="attr">class</span>=<span class="string">&quot;col-lg-2 control-label&quot;</span>&gt;</span>Instructor Name<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;name&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;name&quot;</span> <span class="attr">class</span>=<span class="string">&quot;col-lg-2 control-label&quot;</span>&gt;</span>Instructor Age<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;age&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;button&quot;</span>&gt;</span>Update Instructor<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://code.jquery.com/jquery-3.2.1.slim.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">	<span class="keyword">if</span> (<span class="keyword">typeof</span> web3 !== <span class="string">&#x27;undefined&#x27;</span>) &#123;</span></span><br><span class="line"><span class="javascript">		web3 = <span class="keyword">new</span> Web3(web3.currentProvider);</span></span><br><span class="line"><span class="javascript">	&#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">		<span class="comment">// set the provider you want from Web3.providers</span></span></span><br><span class="line"><span class="javascript">		web3 = <span class="keyword">new</span> Web3(<span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&quot;http://47.92.53.158:8545&quot;</span>));</span></span><br><span class="line">	&#125;</span><br><span class="line">	web3.eth.defaultAccount = web3.eth.accounts[0];</span><br><span class="line"></span><br><span class="line"><span class="javascript">	<span class="keyword">var</span> CoursetroContract = web3.eth.contract([&#123;<span class="string">&quot;constant&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;inputs&quot;</span>:[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;_fName&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;string&quot;</span>&#125;,&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;_age&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;uint256&quot;</span>&#125;],<span class="string">&quot;name&quot;</span>:<span class="string">&quot;setInstructor&quot;</span>,<span class="string">&quot;outputs&quot;</span>:[],<span class="string">&quot;payable&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;stateMutability&quot;</span>:<span class="string">&quot;nonpayable&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;function&quot;</span>&#125;,&#123;<span class="string">&quot;constant&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;inputs&quot;</span>:[],<span class="string">&quot;name&quot;</span>:<span class="string">&quot;getInstructor&quot;</span>,<span class="string">&quot;outputs&quot;</span>:[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;string&quot;</span>&#125;,&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;uint256&quot;</span>&#125;],<span class="string">&quot;payable&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;stateMutability&quot;</span>:<span class="string">&quot;view&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;function&quot;</span>&#125;,&#123;<span class="string">&quot;anonymous&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;inputs&quot;</span>:[&#123;<span class="string">&quot;indexed&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;name&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;string&quot;</span>&#125;,&#123;<span class="string">&quot;indexed&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;age&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;uint256&quot;</span>&#125;],<span class="string">&quot;name&quot;</span>:<span class="string">&quot;Instructor&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;event&quot;</span>&#125;]);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">	<span class="keyword">var</span> Coursetro = CoursetroContract.at(<span class="string">&#x27;0x6f57ae4ea0bb4a6bc3c153ced8202217d63d5fca&#x27;</span>);</span></span><br><span class="line"><span class="javascript">	<span class="built_in">console</span>.log(Coursetro);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">	<span class="keyword">var</span> instructorEvent = Coursetro.Instructor();</span></span><br><span class="line"><span class="javascript">	instructorEvent.watch(<span class="function"><span class="keyword">function</span>(<span class="params">error, result</span>)</span>&#123;</span></span><br><span class="line">		 if (!error)</span><br><span class="line">				 &#123;</span><br><span class="line"><span class="javascript">						 $(<span class="string">&quot;#loader&quot;</span>).hide();</span></span><br><span class="line"><span class="javascript">						 $(<span class="string">&quot;#instructor&quot;</span>).html(result.args.name + <span class="string">&#x27; (&#x27;</span> + result.args.age + <span class="string">&#x27; years old)&#x27;</span>);</span></span><br><span class="line"><span class="javascript">				 &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">						 $(<span class="string">&quot;#loader&quot;</span>).hide();</span></span><br><span class="line"><span class="javascript">						 <span class="built_in">console</span>.log(error);</span></span><br><span class="line">				 &#125;</span><br><span class="line"> &#125;);</span><br><span class="line"><span class="javascript">	$(<span class="string">&quot;#button&quot;</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">		Coursetro.setInstructor($(<span class="string">&quot;#name&quot;</span>).val(), $(<span class="string">&quot;#age&quot;</span>).val());</span></span><br><span class="line"><span class="javascript">		$(<span class="string">&quot;#loader&quot;</span>).show();</span></span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -726,86 +820,6 @@
 <p>As the working days passed, the eleven of us became as close as family. We leaned on each other for support and wisdom; we celebrated each others’ successes and embraced each others’ challenges. We shared outstanding experiences touring Ghana and learning about its people and the growing economy. We realized how special this program was to us and our clients. Many of us shared stories where our clients first realized we were strangers when we started this assignment; they thought we had been working together for years. I don’t know how our team mates were selected, but I commend whomever it was that put the 11 of us together – it was perfect.</p>
 <p><img src="/2010/11/07/remebering-csc-days/1.jpg"></p>
 <p>As my last post to this blog, I just want to let anybody that is considering joining the IBM Corporate Service Corps know that they absolutely should do it. You will grow in many ways, both personally and professionally. On the professional side, how often do you get the chance to work on a two or three person team where your project deliverables will help shape a growing economy? How often do you get the business opportunity to lead such positively impacting projects? How often do your clients become great friends where they start telling you they’ll miss you 5 days before the project is over? It’s a life-changing experience, do it, and thank IBM while you’re at it.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2010/11/04/ghana-day-29/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/11/04/ghana-day-29/" class="post-title-link" itemprop="url">ghana day 29</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2010-11-04 23:53:10" itemprop="dateCreated datePublished" datetime="2010-11-04T23:53:10+08:00">2010-11-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-11-16 09:59:00" itemprop="dateModified" datetime="2023-11-16T09:59:00+08:00">2023-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>How times flying. I went back to China, but I can not forget what happened on my last working day in Ghana.</p>
-<p>On the last day, the last three team did their final presentations, including Chamber, GTB and NBSSI Team. The final presentation was very successful, we did a great job and we got a great satisfaction from client, and detailed action plan was created. It means we delivered these results to client, they are not only deliverables, but also they will become a big impact in future. I feel an honest and happy pride!</p>
-<p>In the evening, Mr.Hammond and staffs of GTB met Anouk and I in Valley Beach Hotel, they sent us great presents.</p>
-<p><img src="/2010/11/04/ghana-day-29/1.jpg"></p>
-<p><img src="/2010/11/04/ghana-day-29/2.jpg"></p>
-<p><img src="/2010/11/04/ghana-day-29/3.jpg"></p>
-<p><img src="/2010/11/04/ghana-day-29/4.jpg"></p>
-<p>We chatted for long time, the most unforgettable sentence from clients is “Unbelievable, I thought you (Anouk and I) are working together one year at least!”</p>
-<p>Absolutely, our understanding really more than one year already in CSC program Ghana Team V.</p>
-<p>Will<br>Nov.04 2010</p>
 
       
     </div>
