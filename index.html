@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">253</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,88 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/09/03/%E5%85%AC%E6%9C%89%E9%93%BE%E6%8A%80%E6%9C%AF%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E9%A3%8E%E9%99%A9-%E7%BC%93%E8%A7%A3%E6%8E%AA%E6%96%BD-%E5%92%8C%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/03/%E5%85%AC%E6%9C%89%E9%93%BE%E6%8A%80%E6%9C%AF%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E9%A3%8E%E9%99%A9-%E7%BC%93%E8%A7%A3%E6%8E%AA%E6%96%BD-%E5%92%8C%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7/" class="post-title-link" itemprop="url">公有链技术带来的新风险-缓解措施-和不确定性</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-09-03 17:30:00 / Modified: 17:44:44" itemprop="dateCreated datePublished" datetime="2024-09-03T17:30:00+08:00">2024-09-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>根据BIS的文章：<a target="_blank" rel="noopener" href="https://www.bis.org/bcbs/publ/wp44.pdf">https://www.bis.org/bcbs/publ/wp44.pdf</a></p>
+<p>直接说结论：公有链会产生现有风险分类中的风险，主要是<strong>运营风险，其次是流动性风险和市场风险</strong>。银行有管理此类风险的经验，但公有链带来了一些新挑战，可能需要新的或额外的方法来管理风险。减轻这些风险的做法处于不同的发展阶段，一般没有经过压力测试。虽然针对这些风险的技术解决方案尚未成熟，但快速发展可能会产生新的解决方案（和风险），这些解决方案（和风险）可能值得进一步研究。</p>
+<p>Discussion of potential mitigants</p>
+<ul>
+<li>A. Business Continuity Planning Governance risk; technology/attack risk; political, policy, and legal uncertainty </li>
+<li>B. Technology-based control over parties and transactions Legal/compliance risk (money laundering/financing of terrorism) </li>
+<li>C. Permissioning a subset of node infrastructure Legal/compliance risk (money laundering/financing of terrorism); technology/attack risks, consumer protections risk </li>
+<li>D. Technology to address privacy/confidentiality/consumer protection risks Privacy/confidentiality/consumer protection risks </li>
+<li>E. Technology to address liquidity risk Liquidity risk</li>
+</ul>
+<h3 id="Business-continuity-planning"><a href="#Business-continuity-planning" class="headerlink" title="Business continuity planning"></a>Business continuity planning</h3><p>BCP could involve a registry that can be used to recover ownership after disruption, such as an off-chain database. For example, in the event of a hard fork or an attack on the blockchain that creates uncertainty as to the distributed ledger’s accuracy, the off-chain records could be used to identify the rightful owner of the assets or the branch of the fork that should be followed. BCP could also set out all relevant internal processes, including those to ensure that all transactions and participants are traceable, potential lost data can be recovered, and the records on the ownership of the assets can be retrieved within a reasonable timeframe. In addition, BCP could define an alternative blockchain where assets would be created or ported in case of disruption of the primary blockchain (“designation of a contingency chain”).</p>
+<h3 id="Technology-based-control-over-parties-and-transactions"><a href="#Technology-based-control-over-parties-and-transactions" class="headerlink" title="Technology-based control over parties and transactions"></a>Technology-based control over parties and transactions</h3><p>On certain permissionless blockchains, tokens that parties transact in are created or subject to constraints programmed by smart contracts. Those smart contracts determine the tokens’ operational attributes and limitations. Among other things, smart contracts can be used to control and limit access to and ownership of a token and even to reverse transactions that have already been processed. These features, in turn, could be used to mitigate some of the AML/CFT risk associated with permissionless blockchains. Implementation of permissions can take a number of forms: </p>
+<ol>
+<li>Denylisting: when a crypto-asset has deny-listing functionality, the issuer can use the smart contract to bar specified addresses on the blockchain from holding or accessing the asset. A banking organisation might use this functionality to prevent transactions to or from wallets associated with known terrorists, criminals, or states subject to Office of Foreign Assets Control (OFAC) sanctions. The ability to infinitely create new wallets may limit the effectiveness of this mitigant. </li>
+<li>Allowlisting: the inverse of denylisting. The token in question is programmed to be accessed only by approved addresses on the blockchain. Addresses that are not on the allowlist will not be able to receive or send the asset. The issuer can add or remove participants to the allowlist via the smart contract.</li>
+<li>Privacy-preserving identity verification: technologies such as zero-knowledge proofs may allow identity verification while preserving privacy at the transaction level. Such technologies are nascent in both development and application.</li>
+<li>A controller: smart contracts can also be used to empower a designated entity (the controller) to control and limit access to the cryptoasset; block and reverse transactions that are fraudulent; and amend the code that implements the cryptoasset functions to address any deficiencies that may emerge. The controller could be the entity that develops and maintains the business continuity plan (discussed above). The controller would not exercise control over the permissionless network itself, but over the specific tokens of a specific issuance. The controller could use its authority to help mitigate legal/compliance risks, in particular money laundering / financing of terrorism and OFAC sanctions risks, through the use of off-chain due diligence and blockchain-related permissioning technology.<h3 id="Permissioning-node-infrastructure"><a href="#Permissioning-node-infrastructure" class="headerlink" title="Permissioning node infrastructure"></a>Permissioning node infrastructure</h3>Permissioning a subset of nodes might create known validators that are deemed safe for particular users such as banks to interact with. This may help address risks such as legal and compliance risks (including gas fee risks or ML/FT risks), technology/attack risks (including MEV risks), and consumer protection. This would likely come at the cost of slowing down transactions for the parties attempting to avoid paying gas fees to nodes operated by criminals or other sanctioned parties.<h3 id="Technology-to-address-privacy-confidentiality-and-consumer-protection-risks"><a href="#Technology-to-address-privacy-confidentiality-and-consumer-protection-risks" class="headerlink" title="Technology to address privacy, confidentiality and consumer protection risks"></a>Technology to address privacy, confidentiality and consumer protection risks</h3>Technology to address privacy, confidentiality, and consumer protection risks is being developed. Some potential solutions, such as zero-knowledge proofs, may take the form of permissioned chains “one level up” from the primary blockchain. In such a configuration, the primary chain is referred to as a layer 1 chain, while the chain one level up is referred to as a layer 2 chain. Alternatively, a separate blockchain that communicates with the permissionless primary blockchain, called a sidechain, may be employed. In addition to zero knowledge proofs, other methods such as fully homomorphic encryption might be used to protect consumer information.<h3 id="Technology-to-address-liquidity-risk"><a href="#Technology-to-address-liquidity-risk" class="headerlink" title="Technology to address liquidity risk"></a>Technology to address liquidity risk</h3>Low transaction throughput of popular permissionless blockchains can be exacerbated in times of system stress, imposing liquidity risk on tokenised assets. Several variations on layer 1 consensus mechanisms are intended to speed up the clearance of transactions. In addition, many blockchain projects aim to speed up transaction processing on layer 2 chains and sidechains. However, while these solutions aim to off-load transaction volume from layer 1s, they still depend on the base permissionless blockchain for final settlement and therefore only partly compensate for the layer 1’s transaction processing speed. These technologies are all developing rapidly.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -675,83 +757,6 @@
 <p><img src="/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/2.png"></p>
 <h2 id="Linea"><a href="#Linea" class="headerlink" title="Linea"></a>Linea</h2><p>安装手册：<a target="_blank" rel="noopener" href="https://docs.linea.build/developers/guides/run-a-node/use-docker">https://docs.linea.build/developers/guides/run-a-node/use-docker</a></p>
 <h2 id="Polygon"><a href="#Polygon" class="headerlink" title="Polygon"></a>Polygon</h2><p>安装手册：<a target="_blank" rel="noopener" href="https://docs.polygon.technology/pos/how-to/full-node/full-node-docker/">https://docs.polygon.technology/pos/how-to/full-node/full-node-docker/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/08/12/%E6%9C%AA%E6%9D%A5%E4%B9%8B%E4%BA%A7%E4%B8%9A%E8%B6%8B%E5%8A%BF-%E5%90%B4%E5%86%9B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/12/%E6%9C%AA%E6%9D%A5%E4%B9%8B%E4%BA%A7%E4%B8%9A%E8%B6%8B%E5%8A%BF-%E5%90%B4%E5%86%9B/" class="post-title-link" itemprop="url">未来之产业趋势-吴军</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-08-12 09:55:00" itemprop="dateCreated datePublished" datetime="2024-08-12T09:55:00+08:00">2024-08-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-08-13 17:26:30" itemprop="dateModified" datetime="2024-08-13T17:26:30+08:00">2024-08-13</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>关于《脉络》这一本书，吴军和尹烨做了一期视频会议，分享了关于一些未来的预测。</p>
-<ol>
-<li>无论是中国的，还是人类的，其生产远远没有过剩。大片的沙漠，河流，土地，太阳能，风能，等等都在等待开发。地球即使经历核大战，环境也仍然大幅优于火星，所以移民火星，月球将是是非常遥远的未来。</li>
-<li>未来看好虚拟经济，服务业。如未来的老龄化，思想文化大发展等趋势，相应的原宇宙，区块链/加密货币，AR/VR，AI，医疗，金融/税务，等服务业。</li>
-<li>给目前高考学生的报考方向<br> 1.计算机；<br> 2.医疗，医学，药学，健康，护理，生物学；<br> 3.金融；<br> 4.教育。<br> 普通人的话，还看好餐馆儿，护理等就业方向。</li>
-<li>未来看好的经济圈<br> 1.英语地域圈；<br> 2.东亚中日韩；<br> 3.印度。</li>
-</ol>
 
       
     </div>
