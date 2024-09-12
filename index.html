@@ -245,6 +245,177 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether/" class="post-title-link" itemprop="url">比较-隐私交易Nightfall和Zeto和Zether</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-09-12 15:20:00 / Modified: 15:44:38" itemprop="dateCreated datePublished" datetime="2024-09-12T15:20:00+08:00">2024-09-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>以下是 <a target="_blank" rel="noopener" href="https://github.com/EYBlockchain/nightfall_3">Nightfall_3</a>、<a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto">Zeto</a> 和 <a target="_blank" rel="noopener" href="https://github.com/Consensys/anonymous-zether">Zether</a> 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：</p>
+<table>
+<thead>
+<tr>
+<th><strong>属性</strong></th>
+<th><strong>Nightfall_3</strong></th>
+<th><strong>Zeto</strong></th>
+<th><strong>Zether</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>隐私算法</strong></td>
+<td>ZK-SNARKs (零知识简洁非交互式知识论证) Groth16</td>
+<td>ZK-SNARKs (零知识简洁非交互式知识论证) Groth16</td>
+<td>Bullet-Proof，带有 ElGamal 加密和同态加法</td>
+</tr>
+<tr>
+<td><strong>交易隐私性</strong></td>
+<td>极高，交易双方和交易金额高度匿名，nullifier 加密保护</td>
+<td>极高，交易双方和交易金额高度匿名，nullifier 加密保护</td>
+<td>中等，交易金额隐藏，但发送方和接收方信息部分可推断。环签名实现其隐匿身份</td>
+</tr>
+<tr>
+<td><strong>匿名性</strong></td>
+<td>非常高，通过加密 nullifier 和零知识证明确保交易匿名性</td>
+<td>非常高，通过加密 nullifier 和零知识证明确保交易匿名性</td>
+<td>中等，交易金额隐藏，但无法完全隐藏交易者身份。环签名实现其隐匿身份</td>
+</tr>
+<tr>
+<td><strong>账户模型</strong></td>
+<td>UTXO 模型</td>
+<td>UTXO 模型</td>
+<td>Account balance 模型（账户余额模型）</td>
+</tr>
+<tr>
+<td><strong>可审计/抗抵赖</strong></td>
+<td>支持，通过零知识证明来验证交易的有效性，但不暴露详情</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto/blob/main/zkp/circuits/anon_enc_nullifier_non_repudiation.circom">支持，通过零知识证明来验证交易的有效性，但不暴露详情</a></td>
+<td>支持，可验证交易的正确性，但难以审计余额</td>
+</tr>
+<tr>
+<td><strong>公有链支持情况</strong></td>
+<td>支持Ethereum, Optimistic Layer 2, Linea，Polygon等</td>
+<td>支持Ethereum, Optimistic Layer 2, Linea，Polygon等</td>
+<td>支持Ethereum, Optimistic Layer 2, Polygon等。<strong>ZK Rollup目前部署失败</strong></td>
+</tr>
+<tr>
+<td><strong>交易花费</strong></td>
+<td>较低，ZK verify的动作在 offchain之行？</td>
+<td>较高，可能需要更多计算资源来支持加密和匿名</td>
+<td>较高，可能需要更多计算资源来支持加密和匿名</td>
+</tr>
+<tr>
+<td><strong>交易时长</strong></td>
+<td>大约 5-15 秒（取决于以太坊网络拥堵情况）</td>
+<td>交易时间约为 10-20 秒</td>
+<td>交易时间约为 10-20 秒</td>
+</tr>
+<tr>
+<td><strong>交易的限制</strong></td>
+<td>主要适用于 ERC20 和 ERC721 标准代币</td>
+<td>主要适用于 ERC20 和 ERC721 标准代币</td>
+<td>仅支持带有 ElGamal 加密的原生代币交易（ERC20）</td>
+</tr>
+<tr>
+<td><strong>抗双花机制</strong></td>
+<td>nullifier 机制防止双花</td>
+<td>nullifier 加密防止双花</td>
+<td>ElGamal 加密和零知识证明结合防止双花</td>
+</tr>
+<tr>
+<td><strong>智能合约支持</strong></td>
+<td>支持智能合约</td>
+<td>支持智能合约</td>
+<td>支持智能合约，但复杂性可能受限</td>
+</tr>
+<tr>
+<td><strong>限制</strong></td>
+<td>？</td>
+<td>零散在多个UTXO内的余额，需要使用新的交易才能够转移合并到新的UTXO内</td>
+<td>一个Epoch（略微大约两个区块时间）内，同一个账户只能有发生一笔隐私交易</td>
+</tr>
+<tr>
+<td><strong>扩展性</strong></td>
+<td>低</td>
+<td>低</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>审计性</strong></td>
+<td>公开审计支持有限，交易内容隐匿</td>
+<td>公开审计支持有限，但是，监管权限可以获得交易原文内容</td>
+<td>审计支持较弱，难以获得账户余额的详细信息</td>
+</tr>
+<tr>
+<td><strong>社区和开发者支持</strong></td>
+<td>活跃，有强大的企业支持，如 Ernst &amp; Young</td>
+<td>较为活跃，Kaleido</td>
+<td>差。Consensys 支持，但2年内已没有更新</td>
+</tr>
+<tr>
+<td>开源情况</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/EYBlockchain/nightfall_3#CC0-1.0-1-ov-file">CC0-1.0 license</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto#Apache-2.0-1-ov-file">Apache-2.0 license</a></td>
+<td>Apache License 2.0 <a target="_blank" rel="noopener" href="https://github.com/Consensys/anonymous-zether?tab=License-1-ov-file#License-1-ov-file">View license</a></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/09/03/%E5%85%AC%E6%9C%89%E9%93%BE%E6%8A%80%E6%9C%AF%E4%B8%BA%E9%93%B6%E8%A1%8C%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E9%A3%8E%E9%99%A9%E5%92%8C%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -458,232 +629,6 @@
 </ol>
 <p>看到，收费版本最大的优势 - 可以在图标中画线，做进一步的个性化的分析。</p>
 <p>另外，再推荐一下 OPENBB - <a target="_blank" rel="noopener" href="https://www.openbb.co/">https://www.openbb.co/</a> ，目前已经将ChatGPT作为投资研究的一种工具，整合进到OPENBB （ <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Uj_wpLC-Zho">https://www.youtube.com/watch?v=Uj_wpLC-Zho</a> ）。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/08/14/comparison%20between%20the%20privacy%20preserving%20mechanisms%20used%20in%20Hyperledger%20Zeto%20and%20Consensys%20Anonymous%20Zether/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/14/comparison%20between%20the%20privacy%20preserving%20mechanisms%20used%20in%20Hyperledger%20Zeto%20and%20Consensys%20Anonymous%20Zether/" class="post-title-link" itemprop="url">comparison between the privacy preserving mechanisms used in Hyperledger Zeto and Consensys Anonymous Zether</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-08-14 17:53:00" itemprop="dateCreated datePublished" datetime="2024-08-14T17:53:00+08:00">2024-08-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-08-16 16:50:49" itemprop="dateModified" datetime="2024-08-16T16:50:49+08:00">2024-08-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>The comparison between the privacy-preserving mechanisms used in Hyperledger Zeto and ConsenSys’s Anonymous Zether, particularly in the context of CBDCs with privacy transactions and non-repudiation, involves evaluating the underlying cryptographic methods, scalability, and the ability to maintain privacy while providing non-repudiation.</p>
-<h3 id="Overview-of-the-Two-Systems"><a href="#Overview-of-the-Two-Systems" class="headerlink" title="Overview of the Two Systems"></a>Overview of the Two Systems</h3><h4 id="1-Hyperledger-Zeto"><a href="#1-Hyperledger-Zeto" class="headerlink" title="1. Hyperledger Zeto"></a>1. <a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto">Hyperledger Zeto</a></h4><ul>
-<li><strong>Cryptographic Basis:</strong> Zeto primarily utilizes zero-knowledge proofs (ZKPs) and encryption techniques to ensure privacy. The <code>zeto_anon_enc_nullifier.sol</code> contract, for example, focuses on anonymous transactions where transaction details are not directly revealed.</li>
-<li><strong>Privacy Mechanisms:</strong> Zeto relies on ZKPs for both proving the validity of transactions and ensuring that no double-spending occurs without revealing transaction details.</li>
-<li><strong>Non-Repudiation:</strong> Zeto’s design does not inherently include non-repudiation mechanisms as it emphasizes privacy, but non-repudiation can be added using commitment schemes or arbitration protocols.<h4 id="2-ConsenSys-Anonymous-Zether"><a href="#2-ConsenSys-Anonymous-Zether" class="headerlink" title="2. ConsenSys Anonymous Zether"></a>2. <a target="_blank" rel="noopener" href="https://github.com/Consensys/anonymous-zether">ConsenSys Anonymous Zether</a></h4></li>
-<li><strong>Cryptographic Basis:</strong> Zether uses homomorphic encryption, particularly leveraging the ElGamal encryption scheme. Homomorphic properties allow the system to perform operations on encrypted data without revealing it.</li>
-<li><strong>Privacy Mechanisms:</strong> Zether extends the standard ElGamal encryption by integrating zero-knowledge proofs (ZKPs) to verify that transactions are valid (e.g., ensuring sufficient balance) without revealing the actual amounts or parties involved.</li>
-<li><strong>Non-Repudiation:</strong> Similar to Zeto, Zether focuses on privacy. However, non-repudiation in the Zether protocol would require external mechanisms since homomorphic encryption does not inherently provide non-repudiation.</li>
-</ul>
-<h3 id="Comparison-for-CBDC-Use-Case"><a href="#Comparison-for-CBDC-Use-Case" class="headerlink" title="Comparison for CBDC Use Case"></a>Comparison for CBDC Use Case</h3><h4 id="Privacy-Protection"><a href="#Privacy-Protection" class="headerlink" title="Privacy Protection"></a>Privacy Protection</h4><ul>
-<li><strong>Zeto:</strong> Zeto provides strong privacy through the use of ZKPs. It ensures that no transaction details are exposed on-chain, making it very suitable for CBDCs where transaction privacy is a priority.</li>
-<li><strong>Zether:</strong> Zether also provides robust privacy by ensuring that transactions remain confidential through homomorphic encryption and ZKPs. The privacy guarantees are similar to Zeto but rely on different cryptographic foundations.</li>
-</ul>
-<h4 id="Scalability-and-Efficiency"><a href="#Scalability-and-Efficiency" class="headerlink" title="Scalability and Efficiency"></a>Scalability and Efficiency</h4><ul>
-<li><strong>Zeto:</strong> Zeto’s reliance on ZKPs can be computationally intensive, particularly for large-scale transaction volumes typical of CBDCs. However, optimizations in ZKP techniques (e.g., zk-SNARKs) can mitigate this. <strong>多个交易可以并行执行</strong>。</li>
-<li><strong>Zether:</strong> Zether’s use of homomorphic encryption, combined with ZKPs, provides a scalable solution that allows for operations on encrypted data without revealing it. The homomorphic properties can sometimes offer more efficient transactions compared to pure ZKP-based systems. <strong>只能单个交易串行执行，多个交易不可以并行执行</strong>。</li>
-</ul>
-<h4 id="Non-Repudiation"><a href="#Non-Repudiation" class="headerlink" title="Non-Repudiation"></a>Non-Repudiation</h4><ul>
-<li><strong>Zeto:</strong> Non-repudiation would need to be added via additional layers, such as commitment schemes or digital signatures. Zeto’s architecture does not inherently provide non-repudiation, but these mechanisms can be integrated effectively.</li>
-<li><strong>Zether:</strong> Similarly, Zether would require additional mechanisms for non-repudiation. The homomorphic encryption scheme used does not natively support non-repudiation, so solutions like commitment schemes, digital signatures, or arbitration protocols would need to be incorporated.<h3 id="Achieving-Non-Repudiation"><a href="#Achieving-Non-Repudiation" class="headerlink" title="Achieving Non-Repudiation"></a>Achieving Non-Repudiation</h3></li>
-</ul>
-<h4 id="1-Commitment-and-Reveal-Schemes"><a href="#1-Commitment-and-Reveal-Schemes" class="headerlink" title="1. Commitment and Reveal Schemes"></a>1. Commitment and Reveal Schemes</h4><ul>
-<li>Both systems could implement a commitment and reveal scheme where parties commit to transaction details in a hashed form before the transaction. If a dispute arises, the parties can reveal their commitments to an arbiter or smart contract to prove the transaction’s authenticity.<h4 id="2-Digital-Signatures"><a href="#2-Digital-Signatures" class="headerlink" title="2. Digital Signatures"></a>2. Digital Signatures</h4></li>
-<li>Adding digital signatures to both Zeto and Zether transactions can ensure non-repudiation. Each transaction could be signed by the parties involved, creating a verifiable record that the transaction was initiated by the respective parties.<h4 id="3-Trusted-Third-Party-Arbitration"><a href="#3-Trusted-Third-Party-Arbitration" class="headerlink" title="3. Trusted Third-Party Arbitration"></a>3. Trusted Third-Party Arbitration</h4></li>
-<li>Both systems could incorporate a trusted third-party (TTP) or smart contract-based arbitration mechanism. If a dispute arises, the TTP can decrypt and verify the transaction details (under specific conditions) without exposing them publicly.<h4 id="4-Non-Repudiation-Tokens"><a href="#4-Non-Repudiation-Tokens" class="headerlink" title="4. Non-Repudiation Tokens"></a>4. Non-Repudiation Tokens</h4></li>
-<li>Issuing non-repudiation tokens post-transaction can be another approach. These tokens serve as proof that both parties acknowledged the transaction. In case of a dispute, these tokens can be presented as evidence.<h3 id="Conclusion-Which-Is-Better-for-CBDC"><a href="#Conclusion-Which-Is-Better-for-CBDC" class="headerlink" title="Conclusion: Which Is Better for CBDC?"></a>Conclusion: Which Is Better for CBDC?</h3><ul>
-<li><strong>Privacy:</strong> Both Zeto and Zether provide excellent privacy guarantees, making either suitable for a privacy-focused CBDC. However, Zether’s use of homomorphic encryption combined with ZKPs offers a slightly different approach that might be more flexible in certain scenarios.</li>
-<li><strong>Scalability:</strong> Zether might have a slight edge in scalability due to the efficiency of homomorphic encryption, though Zeto’s reliance on advanced ZKPs also makes it a strong contender.</li>
-<li><strong>Non-Repudiation:</strong> Neither system natively supports non-repudiation. However, Zether’s framework might be easier to extend with non-repudiation mechanisms due to its cryptographic flexibility.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Best Solution for CBDC:</strong> If scalability and cryptographic flexibility are priorities alongside privacy, <strong>Zether</strong> might be the better choice for a CBDC. However, for systems that heavily rely on zk-SNARKs and other zero-knowledge techniques, <strong>Zeto</strong> is also a strong candidate. The choice ultimately depends on the specific requirements of the CBDC system, particularly in how it needs to balance privacy, efficiency, and non-repudiation. </p>
-<p>To implement non-repudiation effectively, additional mechanisms like digital signatures, commitment schemes, or trusted arbitration need to be integrated into either system.</p>
-<p>Below is a summary of the comparison between Hyperledger Zeto and ConsenSys Anonymous Zether (ZSC.sol) presented in table format.</p>
-<h3 id="1-Privacy-Protection"><a href="#1-Privacy-Protection" class="headerlink" title="1. Privacy Protection"></a>1. Privacy Protection</h3><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Hyperledger Zeto</th>
-<th>ConsenSys Anonymous Zether</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Cryptographic Basis</strong></td>
-<td>Zero-Knowledge Proofs (ZKPs), Encryption</td>
-<td>Homomorphic Encryption, ZKPs</td>
-</tr>
-<tr>
-<td><strong>Privacy Mechanism</strong></td>
-<td>Ensures no transaction details are exposed on-chain.</td>
-<td>Transactions remain confidential through encryption and ZKPs.</td>
-</tr>
-<tr>
-<td><strong>Strength</strong></td>
-<td>Strong privacy through ZKPs.</td>
-<td>Strong privacy through homomorphic encryption and ZKPs.</td>
-</tr>
-</tbody></table>
-<h3 id="2-Scalability-and-Efficiency"><a href="#2-Scalability-and-Efficiency" class="headerlink" title="2. Scalability and Efficiency"></a>2. Scalability and Efficiency</h3><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Hyperledger Zeto</th>
-<th>ConsenSys Anonymous Zether</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Scalability</strong></td>
-<td>May be computationally intensive due to ZKPs. <strong>多个交易可以并行执行。</strong></td>
-<td>Scalable, allows operations on encrypted data. <strong>只能单个交易串行执行，多个交易不可以并行执行</strong>。</td>
-</tr>
-<tr>
-<td><strong>Efficiency</strong></td>
-<td>Optimized ZKP techniques can mitigate overhead.</td>
-<td>Homomorphic properties offer more efficient transactions.</td>
-</tr>
-</tbody></table>
-<h3 id="3-Non-Repudiation"><a href="#3-Non-Repudiation" class="headerlink" title="3. Non-Repudiation"></a>3. Non-Repudiation</h3><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Hyperledger Zeto</th>
-<th>ConsenSys Anonymous Zether</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Native Non-Repudiation</strong></td>
-<td>Not natively supported.</td>
-<td>Not natively supported.</td>
-</tr>
-<tr>
-<td><strong>Additional Mechanisms</strong></td>
-<td>Commitment schemes, digital signatures, or arbitration protocols can be integrated.</td>
-<td>Similar mechanisms needed (commitment schemes, digital signatures).</td>
-</tr>
-</tbody></table>
-<h3 id="4-Overall-Suitability-for-CBDC"><a href="#4-Overall-Suitability-for-CBDC" class="headerlink" title="4. Overall Suitability for CBDC"></a>4. Overall Suitability for CBDC</h3><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Hyperledger Zeto</th>
-<th>ConsenSys Anonymous Zether</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Privacy</strong></td>
-<td>Excellent, based on ZKPs.</td>
-<td>Excellent, based on homomorphic encryption and ZKPs.</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Good, but potentially more intensive due to ZKPs. <strong>多个交易可以并行执行。</strong></td>
-<td>Slightly better due to homomorphic encryption. <strong>只能单个交易串行执行，多个交易不可以并行执行</strong>。</td>
-</tr>
-<tr>
-<td><strong>Non-Repudiation</strong></td>
-<td>Needs additional layers for non-repudiation.</td>
-<td>Needs similar additional layers.</td>
-</tr>
-<tr>
-<td><strong>Best Fit for CBDC</strong></td>
-<td>Strong candidate, especially if ZKP-based systems are preferred.</td>
-<td>Better choice if scalability and efficiency are critical.</td>
-</tr>
-</tbody></table>
-<h3 id="5-Approaches-for-Non-Repudiation"><a href="#5-Approaches-for-Non-Repudiation" class="headerlink" title="5. Approaches for Non-Repudiation"></a>5. Approaches for Non-Repudiation</h3><table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Hyperledger Zeto</th>
-<th>ConsenSys Anonymous Zether</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Commitment and Reveal</strong></td>
-<td>Can be implemented with cryptographic commitments and arbitration.</td>
-<td>Can be implemented similarly.</td>
-</tr>
-<tr>
-<td><strong>Digital Signatures</strong></td>
-<td>Digital signatures can be added to ensure non-repudiation.</td>
-<td>Same approach can be used.</td>
-</tr>
-<tr>
-<td><strong>Trusted Third-Party</strong></td>
-<td>A TTP or smart contract-based arbitration mechanism can be integrated.</td>
-<td>Similar TTP approach can be integrated.</td>
-</tr>
-<tr>
-<td><strong>Non-Repudiation Tokens</strong></td>
-<td>Issuance of tokens post-transaction for proof of agreement.</td>
-<td>Same method can be applied.</td>
-</tr>
-</tbody></table>
-<p>These tables provide a clear, comparative view of the strengths and potential areas for enhancement in both Hyperledger Zeto and ConsenSys Anonymous Zether, helping in the decision-making process for choosing a privacy-preserving and non-repudiation capable system for a CBDC.</p>
 
       
     </div>
