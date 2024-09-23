@@ -31,7 +31,7 @@
 <meta property="og:description" content="以下是 Nightfall_3、Zeto 和 Zether 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：    属性 Nightfall_3 Zeto Zether    隐私算法 ZK-SNARKs (零知识简洁非交互式知识论证) Groth16 ZK-SNARKs (零知识简洁非交互式知识论证) Groth16 Bullet-Proof，带有 ElGamal 加密和同态加法">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-12T07:20:00.000Z">
-<meta property="article:modified_time" content="2024-09-12T07:46:02.286Z">
+<meta property="article:modified_time" content="2024-09-13T09:17:44.709Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="零知识证明">
 <meta property="article:tag" content="CBDC">
@@ -202,7 +202,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">254</span>
+          <span class="site-state-item-count">255</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -277,10 +277,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-09-12 15:20:00 / Modified: 15:46:02" itemprop="dateCreated datePublished" datetime="2024-09-12T15:20:00+08:00">2024-09-12</time>
+      <time title="Created: 2024-09-12 15:20:00" itemprop="dateCreated datePublished" datetime="2024-09-12T15:20:00+08:00">2024-09-12</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-09-13 17:17:44" itemprop="dateModified" datetime="2024-09-13T17:17:44+08:00">2024-09-13</time>
+      </span>
 
   
 </div>
@@ -336,11 +342,11 @@
 <td><strong>公有链支持情况</strong></td>
 <td>支持Ethereum, Optimistic Layer 2, Linea，Polygon等</td>
 <td>支持Ethereum, Optimistic Layer 2, Linea，Polygon等</td>
-<td>支持Ethereum, Optimistic Layer 2, Polygon等。<strong>ZK Rollup目前部署失败</strong></td>
+<td>支持Ethereum, Optimistic Layer 2, Polygon等。<strong>ZK Rollup Layer2目前部署失败</strong></td>
 </tr>
 <tr>
 <td><strong>交易花费</strong></td>
-<td>较低，ZK verify的动作在 offchain之行？</td>
+<td>较低，ZK verify的动作在 offchain执行</td>
 <td>较高，可能需要更多计算资源来支持加密和匿名</td>
 <td>较高，可能需要更多计算资源来支持加密和匿名</td>
 </tr>
@@ -370,9 +376,9 @@
 </tr>
 <tr>
 <td><strong>限制</strong></td>
-<td>？</td>
-<td>零散在多个UTXO内的余额，需要使用新的交易才能够转移合并到新的UTXO内</td>
-<td>一个Epoch（略微大约两个区块时间）内，同一个账户只能有发生一笔隐私交易</td>
+<td>所有用户都连接1个隐私中间层服务/客户端</td>
+<td>零散在多个UTXO内的余额，需要使用新的交易才能够转移合并到新的UTXO内。<br>所有用户都连接1个隐私中间层服务/客户端</td>
+<td>一个Epoch（大约两个区块时间）内，同一个账户只能有发生一笔隐私交易</td>
 </tr>
 <tr>
 <td><strong>扩展性</strong></td>
@@ -394,6 +400,113 @@
 </tr>
 <tr>
 <td>开源情况</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/EYBlockchain/nightfall_3#CC0-1.0-1-ov-file">CC0-1.0 license</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto#Apache-2.0-1-ov-file">Apache-2.0 license</a></td>
+<td>Apache License 2.0 <a target="_blank" rel="noopener" href="https://github.com/Consensys/anonymous-zether?tab=License-1-ov-file#License-1-ov-file">View license</a></td>
+</tr>
+</tbody></table>
+<p>Here’s the table translated into English:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Nightfall_3</strong></th>
+<th><strong>Zeto</strong></th>
+<th><strong>Zether</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Privacy Algorithm</strong></td>
+<td>ZK-SNARKs (Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge) Groth16</td>
+<td>ZK-SNARKs (Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge) Groth16</td>
+<td>Bullet-Proof with ElGamal encryption and homomorphic addition</td>
+</tr>
+<tr>
+<td><strong>Transaction Privacy</strong></td>
+<td>Very high, both parties and transaction amounts are highly anonymous, nullifier encryption protection</td>
+<td>Very high, both parties and transaction amounts are highly anonymous, nullifier encryption protection</td>
+<td>Medium, transaction amounts are hidden, but sender and receiver information can be partially inferred. Ring signatures provide identity obfuscation</td>
+</tr>
+<tr>
+<td><strong>Anonymity</strong></td>
+<td>Extremely high, transaction anonymity ensured through encrypted nullifiers and zero-knowledge proofs</td>
+<td>Extremely high, transaction anonymity ensured through encrypted nullifiers and zero-knowledge proofs</td>
+<td>Medium, transaction amounts are hidden, but the identity of transactors cannot be fully hidden. Ring signatures provide identity obfuscation</td>
+</tr>
+<tr>
+<td><strong>Account Model</strong></td>
+<td>UTXO model</td>
+<td>UTXO model</td>
+<td>Account balance model</td>
+</tr>
+<tr>
+<td><strong>Auditability/Non-repudiation</strong></td>
+<td>Supported, zero-knowledge proofs validate transactions without revealing details</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto/blob/main/zkp/circuits/anon_enc_nullifier_non_repudiation.circom">Supported, zero-knowledge proofs validate transactions without revealing details</a></td>
+<td>Supported, transaction correctness can be verified but auditing balances is difficult</td>
+</tr>
+<tr>
+<td><strong>Public Chain Support</strong></td>
+<td>Supported on Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
+<td>Supported on Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
+<td>Supported on Ethereum, Optimistic Layer 2, Polygon, etc. <strong>ZK Rollup deployment has failed</strong></td>
+</tr>
+<tr>
+<td><strong>Transaction Cost</strong></td>
+<td>Low, ZK verification happens off-chain</td>
+<td>High, may require more computational resources for encryption and anonymity</td>
+<td>High, may require more computational resources for encryption and anonymity</td>
+</tr>
+<tr>
+<td><strong>Transaction Time</strong></td>
+<td>About 5-15 seconds (depending on Ethereum network congestion)</td>
+<td>Approximately 10-20 seconds</td>
+<td>Approximately 10-20 seconds</td>
+</tr>
+<tr>
+<td><strong>Transaction Limitations</strong></td>
+<td>Mainly applies to ERC20 and ERC721 standard tokens</td>
+<td>Mainly applies to ERC20 and ERC721 standard tokens</td>
+<td>Only supports native token transactions (ERC20) with ElGamal encryption</td>
+</tr>
+<tr>
+<td><strong>Double-spending Prevention</strong></td>
+<td>Nullifier mechanism prevents double spending</td>
+<td>Encrypted nullifier prevents double spending</td>
+<td>ElGamal encryption combined with zero-knowledge proofs prevent double spending</td>
+</tr>
+<tr>
+<td><strong>Smart Contract Support</strong></td>
+<td>Supports smart contracts</td>
+<td>Supports smart contracts</td>
+<td>Supports smart contracts but may be limited in complexity</td>
+</tr>
+<tr>
+<td><strong>Limitations</strong></td>
+<td>All the users are connecting 1 privacy middle-layer service/client.</td>
+<td>Fragmented balance across multiple UTXOs requires new transactions to transfer and consolidate into new UTXOs.<br>All the users are connecting 1 privacy middle-layer service/client.</td>
+<td>Only one private transaction per account can occur within one epoch (approximately two block times)<br>1 user is connecting 1 privacy middle-layer service/client.<br></td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Low</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Auditability</strong></td>
+<td>Limited public auditability, transaction content hidden</td>
+<td>Limited public auditability, but regulatory authority can access original transaction data</td>
+<td>Weaker auditability, difficult to obtain detailed account balance information</td>
+</tr>
+<tr>
+<td><strong>Community and Developer Support</strong></td>
+<td>Active, strong corporate support such as Ernst &amp; Young</td>
+<td>Moderately active, supported by Kaleido</td>
+<td>Weak. Supported by Consensys but no updates in the last two years</td>
+</tr>
+<tr>
+<td><strong>Open Source Status</strong></td>
 <td><a target="_blank" rel="noopener" href="https://github.com/EYBlockchain/nightfall_3#CC0-1.0-1-ov-file">CC0-1.0 license</a></td>
 <td><a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto#Apache-2.0-1-ov-file">Apache-2.0 license</a></td>
 <td>Apache License 2.0 <a target="_blank" rel="noopener" href="https://github.com/Consensys/anonymous-zether?tab=License-1-ov-file#License-1-ov-file">View license</a></td>
@@ -440,6 +553,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2024/09/22/Untitled/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

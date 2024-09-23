@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">254</span>
+          <span class="site-state-item-count">255</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,94 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/07/17/Corda%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/07/17/Corda%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">Corda的共识机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-17 15:40:00" itemprop="dateCreated datePublished" datetime="2023-07-17T15:40:00+08:00">2023-07-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-04-23 09:27:08" itemprop="dateModified" datetime="2024-04-23T09:27:08+08:00">2024-04-23</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Corda的共识容错能力较弱"><a href="#Corda的共识容错能力较弱" class="headerlink" title="Corda的共识容错能力较弱"></a>Corda的共识容错能力较弱</h3><p>Version 1～5，Corda会分享交易直接相关的前一笔交易信息，可以<strong>防止</strong>的错误包括：</p>
+<ol>
+<li>前一笔交易的签名错误；</li>
+<li>前一笔交易的金额错误；</li>
+</ol>
+<p><strong>不能够</strong>发现的错误包括：</p>
+<ol>
+<li>前一笔交易双方共同伪造交易，用以欺骗第三方；</li>
+<li>间隔多笔的伪造交易，用以欺骗第三方；</li>
+<li>交易的排序由Kafka决定，或者如ABC均提出向D购买某资产，D可以不按照合约逻辑，或者时间顺序，而是按照D在规则外的某种喜好，来完成交易，进而欺骗其他参与方。</li>
+</ol>
+<p>可能发生的效率问题：</p>
+<ol>
+<li>如若某节点在接收到某交易时，想校验其前序交易，不仅仅是前一个交易，而是全部的前序交易，首先是及其困难的，而且随着链的增高，其校验时间也在升高。</li>
+<li>即使增加校验节点，但并不能够解决上述问题。另外，校验节点的可信性，效率等都成为新的系统问题。</li>
+</ol>
+<p>综上，针对需要区块链的共识机制来增强信任的场景，Corda不是一个好的选择。但是，如果在无需算法来建立信任（如工农中建四大行的某种资产交易系统，他们相互之间的欺诈风险非常低），而是需要某种账本系统，来减少对账摩擦的话，Corda可以帮助到企业，完成分别记账的任务。</p>
+<p>参考：如上，多年的困惑，得到Corda的指导和确认，感谢。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -638,81 +726,6 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/microsoft/semantic-kernel">https://github.com/microsoft/semantic-kernel</a></p>
 <p><a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/semantic-kernel/">https://devblogs.microsoft.com/semantic-kernel/</a></p>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/semantic-kernel/">https://learn.microsoft.com/en-us/semantic-kernel/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/04/03/%E4%BD%BF%E7%94%A8SonarQube%E6%89%AB%E6%8F%8FBesu%E7%9A%84%E7%BB%93%E6%9E%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/03/%E4%BD%BF%E7%94%A8SonarQube%E6%89%AB%E6%8F%8FBesu%E7%9A%84%E7%BB%93%E6%9E%9C/" class="post-title-link" itemprop="url">使用SonarQube扫描Besu的结果</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-03 16:20:00" itemprop="dateCreated datePublished" datetime="2023-04-03T16:20:00+08:00">2023-04-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 13:58:45" itemprop="dateModified" datetime="2023-09-14T13:58:45+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.sonarsource.com/">SonarQube Community Version 9.9</a> （free version）, no plugin</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/hyperledger/besu">Best version 23.1.2</a></p>
-<p><img src="/2023/04/03/%E4%BD%BF%E7%94%A8SonarQube%E6%89%AB%E6%8F%8FBesu%E7%9A%84%E7%BB%93%E6%9E%9C/1.png"></p>
-<p><img src="/2023/04/03/%E4%BD%BF%E7%94%A8SonarQube%E6%89%AB%E6%8F%8FBesu%E7%9A%84%E7%BB%93%E6%9E%9C/2.png"></p>
-<p>结论：从SonarQube的评级来看，Besu的代码质量<strong>非常差</strong></p>
 
       
     </div>
