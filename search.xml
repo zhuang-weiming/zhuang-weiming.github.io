@@ -2322,7 +2322,7 @@
   <entry>
     <title>Eth系节点安装</title>
     <url>/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[<p>x## Ethereum<br>安装手册：<a href="https://github.com/eth-educators/eth-docker">https://github.com/eth-educators/eth-docker</a></p>
+    <content><![CDATA[<h2 id="Ethereum"><a href="#Ethereum" class="headerlink" title="Ethereum"></a>Ethereum</h2><p>安装手册：<a href="https://github.com/eth-educators/eth-docker">https://github.com/eth-educators/eth-docker</a></p>
 <ul>
 <li>32 GiB of RAM - 16 GiB works but can be challenging depending on client mix</li>
 <li>4 CPU cores</li>
@@ -4629,97 +4629,6 @@
       <tags>
         <tag>共识协议</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2024/09/22/Untitled/</url>
-    <content><![CDATA[<p>FHE, MPC, TEE, and FL Applications Comparison</p>
-<table>
-<thead>
-<tr>
-<th>Technology</th>
-<th>Secure Multi-Party Computation</th>
-<th>Secure Data Sharing &amp; Joint Data Analysis</th>
-<th>Online Auctions &amp; Electronic Voting</th>
-<th>Blockchain Privacy Transactions</th>
-<th>Digital Rights Management</th>
-<th>Authentication</th>
-<th>Medical Data Analysis</th>
-<th>Mobile Payments</th>
-<th>Biometric Authentication</th>
-<th>Distributed Machine Learning</th>
-<th>Cross-Organizational Data Collaboration</th>
-<th>Healthcare Data Analysis</th>
-<th>Personalized Recommendation Systems</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FHE</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>✔️</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>MPC</td>
-<td>✔️</td>
-<td>✔️</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>TEE</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>✔️</td>
-<td>✔️</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>FL</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>✔️</td>
-<td>✔️</td>
-<td>✔️</td>
-<td>✔️</td>
-</tr>
-</tbody></table>
-<p><strong>Key</strong>:</p>
-]]></content>
   </entry>
   <entry>
     <title>Transformer论文学习</title>
@@ -10837,113 +10746,6 @@
 <table>
 <thead>
 <tr>
-<th><strong>属性</strong></th>
-<th><strong>Nightfall_3</strong></th>
-<th><strong>Zeto</strong></th>
-<th><strong>Zether</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>隐私算法</strong></td>
-<td>ZK-SNARKs (零知识简洁非交互式知识论证) Groth16</td>
-<td>ZK-SNARKs (零知识简洁非交互式知识论证) Groth16</td>
-<td>Bullet-Proof，带有 ElGamal 加密和同态加法</td>
-</tr>
-<tr>
-<td><strong>交易隐私性</strong></td>
-<td>极高，交易双方和交易金额高度匿名，nullifier 加密保护</td>
-<td>极高，交易双方和交易金额高度匿名，nullifier 加密保护</td>
-<td>中等，交易金额隐藏，但发送方和接收方信息部分可推断。环签名实现其隐匿身份</td>
-</tr>
-<tr>
-<td><strong>匿名性</strong></td>
-<td>非常高，通过加密 nullifier 和零知识证明确保交易匿名性</td>
-<td>非常高，通过加密 nullifier 和零知识证明确保交易匿名性</td>
-<td>中等，交易金额隐藏，但无法完全隐藏交易者身份。环签名实现其隐匿身份</td>
-</tr>
-<tr>
-<td><strong>账户模型</strong></td>
-<td>UTXO 模型</td>
-<td>UTXO 模型</td>
-<td>Account balance 模型（账户余额模型）</td>
-</tr>
-<tr>
-<td><strong>可审计/抗抵赖</strong></td>
-<td>支持，通过零知识证明来验证交易的有效性，但不暴露详情</td>
-<td><a href="https://github.com/hyperledger-labs/zeto/blob/main/zkp/circuits/anon_enc_nullifier_non_repudiation.circom">支持，通过零知识证明来验证交易的有效性，但不暴露详情</a></td>
-<td>支持，可验证交易的正确性，但难以审计余额</td>
-</tr>
-<tr>
-<td><strong>公有链支持情况</strong></td>
-<td>支持Ethereum, Optimistic Layer 2, Linea，Polygon等</td>
-<td>支持Ethereum, Optimistic Layer 2, Linea，Polygon等</td>
-<td>支持Ethereum, Optimistic Layer 2, Polygon等。<strong>ZK Rollup Layer2目前部署失败</strong></td>
-</tr>
-<tr>
-<td><strong>交易花费</strong></td>
-<td>较低，ZK verify的动作在 offchain执行</td>
-<td>较高，可能需要更多计算资源来支持加密和匿名</td>
-<td>较高，可能需要更多计算资源来支持加密和匿名</td>
-</tr>
-<tr>
-<td><strong>交易时长</strong></td>
-<td>大约 5-15 秒（取决于以太坊网络拥堵情况）</td>
-<td>交易时间约为 10-20 秒</td>
-<td>交易时间约为 10-20 秒</td>
-</tr>
-<tr>
-<td><strong>交易的限制</strong></td>
-<td>主要适用于 ERC20 和 ERC721 标准代币</td>
-<td>主要适用于 ERC20 和 ERC721 标准代币</td>
-<td>仅支持带有 ElGamal 加密的原生代币交易（ERC20）</td>
-</tr>
-<tr>
-<td><strong>抗双花机制</strong></td>
-<td>nullifier 机制防止双花</td>
-<td>nullifier 加密防止双花</td>
-<td>ElGamal 加密和零知识证明结合防止双花</td>
-</tr>
-<tr>
-<td><strong>智能合约支持</strong></td>
-<td>支持智能合约</td>
-<td>支持智能合约</td>
-<td>支持智能合约，但复杂性可能受限</td>
-</tr>
-<tr>
-<td><strong>限制</strong></td>
-<td>所有用户都连接1个隐私中间层服务/客户端</td>
-<td>零散在多个UTXO内的余额，需要使用新的交易才能够转移合并到新的UTXO内。<br>所有用户都连接1个隐私中间层服务/客户端</td>
-<td>一个Epoch（大约两个区块时间）内，同一个账户只能有发生一笔隐私交易</td>
-</tr>
-<tr>
-<td><strong>扩展性</strong></td>
-<td>低</td>
-<td>低</td>
-<td>低</td>
-</tr>
-<tr>
-<td><strong>审计性</strong></td>
-<td>公开审计支持有限，交易内容隐匿</td>
-<td>公开审计支持有限，但是，监管权限可以获得交易原文内容</td>
-<td>审计支持较弱，难以获得账户余额的详细信息</td>
-</tr>
-<tr>
-<td><strong>社区和开发者支持</strong></td>
-<td>活跃，有强大的企业支持，如 Ernst &amp; Young</td>
-<td>较为活跃，Kaleido</td>
-<td>差。Consensys 支持，但2年内已没有更新</td>
-</tr>
-<tr>
-<td>开源情况</td>
-<td><a href="https://github.com/EYBlockchain/nightfall_3#CC0-1.0-1-ov-file">CC0-1.0 license</a></td>
-<td><a href="https://github.com/hyperledger-labs/zeto#Apache-2.0-1-ov-file">Apache-2.0 license</a></td>
-<td>Apache License 2.0 <a href="https://github.com/Consensys/anonymous-zether?tab=License-1-ov-file#License-1-ov-file">View license</a></td>
-</tr>
-</tbody></table>
-<p>Here’s the table translated into English:</p>
-<table>
-<thead>
-<tr>
 <th><strong>Attribute</strong></th>
 <th><strong>Nightfall_3</strong></th>
 <th><strong>Zeto</strong></th>
@@ -10952,99 +10754,93 @@
 </thead>
 <tbody><tr>
 <td><strong>Privacy Algorithm</strong></td>
-<td>ZK-SNARKs (Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge) Groth16</td>
-<td>ZK-SNARKs (Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge) Groth16</td>
+<td>ZK-SNARKS, Groth16, Plonk, Marlin, Nova by Circom</td>
+<td>ZK-SNARKS, Groth16, Plonk, Marlin, Nova by Circom</td>
 <td>Bullet-Proof with ElGamal encryption and homomorphic addition</td>
 </tr>
 <tr>
 <td><strong>Transaction Privacy</strong></td>
-<td>Very high, both parties and transaction amounts are highly anonymous, nullifier encryption protection</td>
-<td>Very high, both parties and transaction amounts are highly anonymous, nullifier encryption protection</td>
-<td>Medium, transaction amounts are hidden, but sender and receiver information can be partially inferred. Ring signatures provide identity obfuscation</td>
+<td>Very high, anonymity, confidentiality, non-traceability</td>
+<td>Very high, anonymity, confidentiality, non-traceability</td>
+<td>Medium, confidentiality, partial anonymity through the usage of anonymity sets (with size limitation) but submit encrypted zero.</td>
 </tr>
 <tr>
 <td><strong>Anonymity</strong></td>
-<td>Extremely high, transaction anonymity ensured through encrypted nullifiers and zero-knowledge proofs</td>
-<td>Extremely high, transaction anonymity ensured through encrypted nullifiers and zero-knowledge proofs</td>
-<td>Medium, transaction amounts are hidden, but the identity of transactors cannot be fully hidden. Ring signatures provide identity obfuscation</td>
+<td>Extremely high, anonymity achieved with hashes and ZKPs.</td>
+<td>Extremely high, anonymity achieved with hashes and ZKPs.</td>
+<td>Medium, the identity of transactors hidden among the anonymity set, but its size can not be bigger than 8.</td>
 </tr>
 <tr>
-<td><strong>Account Model</strong></td>
-<td>UTXO model</td>
-<td>UTXO model</td>
+<td><strong>Transaction Model</strong></td>
+<td>UTXO</td>
+<td>UTXO</td>
 <td>Account balance model</td>
 </tr>
 <tr>
-<td><strong>Auditability/Non-repudiation</strong></td>
-<td>Supported, zero-knowledge proofs validate transactions without revealing details</td>
-<td><a href="https://github.com/hyperledger-labs/zeto/blob/main/zkp/circuits/anon_enc_nullifier_non_repudiation.circom">Supported, zero-knowledge proofs validate transactions without revealing details</a></td>
-<td>Supported, transaction correctness can be verified but auditing balances is difficult</td>
+<td><strong>Non-repudiation</strong></td>
+<td>Not currently supported, transaction submitters can deny.</td>
+<td>Supported, when using the circuit requiring encrypted secrets for the authority.</td>
+<td>Not currently supported, auditing balance requires a special viewing key that involves additional cryptography.</td>
 </tr>
 <tr>
 <td><strong>Public Chain Support</strong></td>
 <td>Supported on Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
-<td>Supported on Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
-<td>Supported on Ethereum, Optimistic Layer 2, Polygon, etc. <strong>ZK Rollup deployment has failed</strong></td>
+<td>Supported on Ethereum, Optimistic Layer 2, Polygon, etc.</td>
+<td>Supported on Ethereum, Optimistic Layer 2, Polygon, etc. ZK Rollup deployment has failed.</td>
 </tr>
 <tr>
 <td><strong>Transaction Cost</strong></td>
-<td>Low, ZK verification happens off-chain</td>
-<td>High, may require more computational resources for encryption and anonymity</td>
-<td>High, may require more computational resources for encryption and anonymity</td>
+<td>Low, ZK verification happens off-chain.</td>
+<td>High, ZK SNARKS verification on-chain with varied cost depending on the usage of encryption and non-traceability.</td>
+<td>High, bulletproof verification on-chain is more costly than ZK SNARKS based proofs.</td>
 </tr>
 <tr>
 <td><strong>Transaction Time</strong></td>
-<td>About 5-15 seconds (depending on Ethereum network congestion)</td>
-<td>Approximately 10-20 seconds</td>
-<td>Approximately 10-20 seconds</td>
+<td>About 5-15 seconds (depending on Ethereum network congestion).</td>
+<td>Approximately 10-20 seconds.</td>
+<td>Approximately 10-20 seconds.</td>
 </tr>
 <tr>
-<td><strong>Transaction Limitations</strong></td>
-<td>Mainly applies to ERC20 and ERC721 standard tokens</td>
-<td>Mainly applies to ERC20 and ERC721 standard tokens</td>
-<td>Only supports native token transactions (ERC20) with ElGamal encryption</td>
+<td><strong>Standard Tokens Support</strong></td>
+<td>Both fungible and non-fungible tokens with ERC20 and ERC721 tokens anchoring.</td>
+<td>Only fungible tokens with ERC20 tokens with ERC721 tokens anchoring.</td>
+<td>Only fungible tokens with ERC20 tokens anchoring.</td>
 </tr>
 <tr>
 <td><strong>Double-spending Prevention</strong></td>
-<td>Nullifier mechanism prevents double spending</td>
-<td>Encrypted nullifier prevents double spending</td>
-<td>ElGamal encryption combined with zero-knowledge proofs prevent double spending</td>
+<td>Nullifier mechanism prevents double spending.</td>
+<td>UTXO or nullifier-based double spend prevention depending on the specific implementation.</td>
+<td>ElGamal encryption combined with zero-knowledge proofs prevent double spending.</td>
 </tr>
 <tr>
-<td><strong>Smart Contract Support</strong></td>
-<td>Supports smart contracts</td>
-<td>Supports smart contracts</td>
-<td>Supports smart contracts but may be limited in complexity</td>
+<td><strong>Programmability</strong></td>
+<td>Limited programmability due to the optimistic transaction design with off-chain ZKP verification.</td>
+<td>Full programmability across multiple UTXOs. Supported by Paladin for programmable privacy.</td>
+<td>Full programmability due to on-chain verifications.</td>
 </tr>
 <tr>
 <td><strong>Limitations</strong></td>
-<td>All the users are connecting 1 privacy middle-layer service/client.</td>
-<td>Fragmented balance across multiple UTXOs requires new transactions to transfer and consolidate into new UTXOs.<br>All the users are connecting 1 privacy middle-layer service/client.</td>
-<td>Only one private transaction per account can occur within one epoch (approximately two block times)<br>1 user is connecting 1 privacy middle-layer service/client.<br></td>
+<td>The optimistic transaction model means a confirmation window of multiple days to transaction finality.</td>
+<td>Fragmented UTXOs require new transactions to transfer multiple UTXOs. No fee custom implementations.</td>
+<td>Only one spending transaction per account can occur within one epoch (approximately two block times). Limited self-custody wallet support.</td>
 </tr>
 <tr>
 <td><strong>Scalability</strong></td>
-<td>Low</td>
-<td>Low</td>
-<td>Low</td>
+<td>Low. Relies on a centralized sequencer/block proposer.</td>
+<td>High, peer-to-peer transactions. Solutions based on UTXOs.</td>
+<td>Low. Limited by the one spending transaction per account per epoch design.</td>
 </tr>
 <tr>
 <td><strong>Auditability</strong></td>
-<td>Limited public auditability, transaction content hidden</td>
-<td>Limited public auditability, but regulatory authority can access original transaction data</td>
-<td>Weaker auditability, difficult to obtain detailed account balance information</td>
+<td>Limited public auditability, transaction content hidden.</td>
+<td>Limited public auditability unless the authority can access original keys through multi-authority approvals.</td>
+<td>Weak auditability, difficult to obtain detailed account balance information, requires additional complex cryptography to implement a viewing key for the auditor.</td>
 </tr>
 <tr>
-<td><strong>Community and Developer Support</strong></td>
-<td>Active, strong corporate support such as Ernst &amp; Young</td>
-<td>Moderately active, supported by Kaleido</td>
-<td>Weak. Supported by Consensys but no updates in the last two years</td>
-</tr>
-<tr>
-<td><strong>Open Source Status</strong></td>
-<td><a href="https://github.com/EYBlockchain/nightfall_3#CC0-1.0-1-ov-file">CC0-1.0 license</a></td>
-<td><a href="https://github.com/hyperledger-labs/zeto#Apache-2.0-1-ov-file">Apache-2.0 license</a></td>
-<td>Apache License 2.0 <a href="https://github.com/Consensys/anonymous-zether?tab=License-1-ov-file#License-1-ov-file">View license</a></td>
+<td><strong>Community Support</strong></td>
+<td>Questionable, abandoned by Polygon for a ZK-based Layer 2. Only supports code from EY. GPL-3.0 license.</td>
+<td>Hosted in LFDT Labs (formerly Hyperledger Labs). Active, supported by Kaleido.</td>
+<td>Weak, supported by Consensys but no updates in the last two years. Apache License 2.0 View license.</td>
 </tr>
 </tbody></table>
 ]]></content>
