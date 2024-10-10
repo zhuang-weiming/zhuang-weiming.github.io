@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="比较项目 SIFT CLIP 模型 OpenCV 和 SSIM    特征类型 局部特征点和描述符（关键点、边缘） 高维特征向量（512维），包含物体、场景、语义、颜色、形状等信息 全局结构相似性（亮度、对比度、结构）   算法特点 尺度不变性、旋转不变性、对光照变化鲁棒 多模态（图像和文本联合训练）、高语义理解、跨模态能力 感知驱动、结构相似性评估   计算复杂度 高，适合离线处理 中等到">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图片特性提取的算法">
-<meta property="og:url" content="https://willzhuang.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="比较项目 SIFT CLIP 模型 OpenCV 和 SSIM    特征类型 局部特征点和描述符（关键点、边缘） 高维特征向量（512维），包含物体、场景、语义、颜色、形状等信息 全局结构相似性（亮度、对比度、结构）   算法特点 尺度不变性、旋转不变性、对光照变化鲁棒 多模态（图像和文本联合训练）、高语义理解、跨模态能力 感知驱动、结构相似性评估   计算复杂度 高，适合离线处理 中等到">
 <meta property="og:locale" content="en_US">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/">
 
 
 <script class="page-configurations">
@@ -252,7 +252,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -497,7 +497,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/" title="图片特性提取的算法">https://willzhuang.github.io/2024/07/18/图片特性提取的算法/</a>
+      <a href="https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/" title="图片特性提取的算法">https://zhuang-weiming.github.io/2024/07/18/图片特性提取的算法/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="我相信每个人都会想，每次更新完代码，更新完配置文件后，就直接这么 ctrl+c 真的没问题吗，ctrl+c到底做了些什么事情呢？ 本文我们讨论 ctrl+c 背后的信号以及如何优雅的重启服务，以及对 HTTP 服务进行热更新。 ctrl + c在终端执行特定的组合键可以使系统发送特定的信号给此进程，完成一系列的动作    命令 信号 含义    ctrl + c SIGINT 强制进程结束   c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于golang服务重启">
-<meta property="og:url" content="https://willzhuang.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="我相信每个人都会想，每次更新完代码，更新完配置文件后，就直接这么 ctrl+c 真的没问题吗，ctrl+c到底做了些什么事情呢？ 本文我们讨论 ctrl+c 背后的信号以及如何优雅的重启服务，以及对 HTTP 服务进行热更新。 ctrl + c在终端执行特定的组合键可以使系统发送特定的信号给此进程，完成一系列的动作    命令 信号 含义    ctrl + c SIGINT 强制进程结束   c">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/">
 
 
 <script class="page-configurations">
@@ -252,7 +252,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -370,7 +370,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" title="关于golang服务重启">https://willzhuang.github.io/2020/03/30/关于golang服务重启/</a>
+      <a href="https://zhuang-weiming.github.io/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" title="关于golang服务重启">https://zhuang-weiming.github.io/2020/03/30/关于golang服务重启/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

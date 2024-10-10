@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="[转]https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;2b9fa8633df1 Algorand、Dfinity和Ouroboros Praos三个共识算法（Dfinity虽然是项目名，这里用来称呼其共识算法也应无不妥）近期较受关注，而且都是基于VRF(Verifiable Random Function) 设计，可以对照学习。Algorand的版本很多，以下单指 1607.01341v9，暂">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简评三个基于VRF的共识算法">
-<meta property="og:url" content="https://willzhuang.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="[转]https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;2b9fa8633df1 Algorand、Dfinity和Ouroboros Praos三个共识算法（Dfinity虽然是项目名，这里用来称呼其共识算法也应无不妥）近期较受关注，而且都是基于VRF(Verifiable Random Function) 设计，可以对照学习。Algorand的版本很多，以下单指 1607.01341v9，暂">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
 
 
 <script class="page-configurations">
@@ -252,7 +252,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -323,7 +323,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" title="简评三个基于VRF的共识算法">https://willzhuang.github.io/2018/07/14/简评三个基于VRF的共识算法/</a>
+      <a href="https://zhuang-weiming.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" title="简评三个基于VRF的共识算法">https://zhuang-weiming.github.io/2018/07/14/简评三个基于VRF的共识算法/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="回到polygonID SDK project，在项目中，理论性的iden3和polygonID算法，在实际代码中，如何连接呢？本文接续上文 iden3和polygonID原理应用和实战，讲述具体代码，如何实现的。 算法1：生成最终的proof从技术角度来看，一个身份包括三棵树：claims tree，revocation tree，roots of roots tree。 代码实现：https:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="polygonID SDK部分代码分析">
-<meta property="og:url" content="https://willzhuang.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="回到polygonID SDK project，在项目中，理论性的iden3和polygonID算法，在实际代码中，如何连接呢？本文接续上文 iden3和polygonID原理应用和实战，讲述具体代码，如何实现的。 算法1：生成最终的proof从技术角度来看，一个身份包括三棵树：claims tree，revocation tree，roots of roots tree。 代码实现：https:">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">
 
 
 <script class="page-configurations">
@@ -252,7 +252,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -290,7 +290,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>回到<a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/polygonid-flutter-sdk">polygonID SDK project</a>，在项目中，<a href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/">理论性的iden3和polygonID算法</a>，在实际代码中，如何连接呢？本文接续上文<a href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/"> iden3和polygonID原理应用和实战</a>，讲述具体代码，如何实现的。</p>
+        <p>回到<a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/polygonid-flutter-sdk">polygonID SDK project</a>，在项目中，<a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/">理论性的iden3和polygonID算法</a>，在实际代码中，如何连接呢？本文接续上文<a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/"> iden3和polygonID原理应用和实战</a>，讲述具体代码，如何实现的。</p>
 <h3 id="算法1：生成最终的proof"><a href="#算法1：生成最终的proof" class="headerlink" title="算法1：生成最终的proof"></a>算法1：生成最终的proof</h3><p>从技术角度来看，一个身份包括三棵树：claims tree，revocation tree，roots of roots tree。</p>
 <h4 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h4><p><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/polygonid-flutter-sdk/blob/a552fc6b2430353b05c0c2ef3c17567704012a90/lib/iden3comm/domain/use_cases/generate_iden3comm_proof_use_case.dart">https://github.com/0xPolygonID/polygonid-flutter-sdk/blob/a552fc6b2430353b05c0c2ef3c17567704012a90/lib/iden3comm/domain/use_cases/generate_iden3comm_proof_use_case.dart</a></p>
 <ol>
@@ -329,7 +329,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/" title="polygonID SDK部分代码分析">https://willzhuang.github.io/2023/11/22/polygonID SDK部分代码分析/</a>
+      <a href="https://zhuang-weiming.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/" title="polygonID SDK部分代码分析">https://zhuang-weiming.github.io/2023/11/22/polygonID SDK部分代码分析/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

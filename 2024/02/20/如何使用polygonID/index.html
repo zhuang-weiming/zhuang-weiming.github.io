@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="继续前序学习的DID产品，关于polygonID的进一步学习，本文介绍如何使用polygonID。前序文章：  iden3和polygonID原理应用和实战 polygonID SDK部分代码分析polygonID Issuer-Node 启动以后，有2台 docker container 服务器运行，1) Issuer Node API; 2) Issuer Node UI。这两个服务都有各自的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何使用polygonID">
-<meta property="og:url" content="https://willzhuang.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="继续前序学习的DID产品，关于polygonID的进一步学习，本文介绍如何使用polygonID。前序文章：  iden3和polygonID原理应用和实战 polygonID SDK部分代码分析polygonID Issuer-Node 启动以后，有2台 docker container 服务器运行，1) Issuer Node API; 2) Issuer Node UI。这两个服务都有各自的">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/">
 
 
 <script class="page-configurations">
@@ -251,7 +251,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -291,8 +291,8 @@
     <div class="post-body" itemprop="articleBody">
         <p>继续前序学习的DID产品，关于polygonID的进一步学习，本文介绍如何使用polygonID。<br>前序文章：</p>
 <ul>
-<li><a href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/">iden3和polygonID原理应用和实战</a></li>
-<li><a href="https://willzhuang.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">polygonID SDK部分代码分析</a><br><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/issuer-node/">polygonID Issuer-Node</a> 启动以后，有2台 docker container 服务器运行，1) Issuer Node API; 2) Issuer Node UI。这两个服务都有各自的 API 给到前端 - 手机App 或者 Web site调用。<br>其中，</li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/">iden3和polygonID原理应用和实战</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">polygonID SDK部分代码分析</a><br><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/issuer-node/">polygonID Issuer-Node</a> 启动以后，有2台 docker container 服务器运行，1) Issuer Node API; 2) Issuer Node UI。这两个服务都有各自的 API 给到前端 - 手机App 或者 Web site调用。<br>其中，</li>
 <li>Issuer Node API是文档中<a target="_blank" rel="noopener" href="https://devs.polygonid.com/docs/issuer-node/issuer-node-api/introduction"> Issuer Node Core API </a>的部分。</li>
 <li>Issuer Node UI API 是文档中<a target="_blank" rel="noopener" href="https://devs.polygonid.com/docs/issuer/issuer-node-ui"> Issuer Node UI </a>的部分。<br>Issuer Node API只是在 Issuer-Node 启动时，调用一次，用来为 Issuer 生成 DID，其后不再被直接调用。前端应用调用API是调用 Issuer Node UI API。关于 Issuer Node UI API 的文档目前是<a target="_blank" rel="noopener" href="https://www.postman.com/dark-star-200015/workspace/public/folder/23322631-5f8ec341-42b9-44e5-ac45-f1ed8966bd4c">在 Postman 中</a>。其中：<ul>
 <li>Credential - VC创建，取得，删除，作废，取得状态。</li>
@@ -321,7 +321,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/" title="如何使用polygonID">https://willzhuang.github.io/2024/02/20/如何使用polygonID/</a>
+      <a href="https://zhuang-weiming.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/" title="如何使用polygonID">https://zhuang-weiming.github.io/2024/02/20/如何使用polygonID/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

@@ -21,27 +21,27 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="区块链技术的兴起，主要原因是存储成本的降低。过去，技术进步降低了很多事物的成本，让许多技术的大规模应用成为可能。例如，过去都是大型计算机集中计算，之后PC机出现，带来了大规模的商用；存储也是一样，过去是集中化存储，现在因为存储成本的降低，每一个记录可以有5,700次存储。区块链技术是继互联网之后的又一突破性数字技术，其实质就是对存储空间的蓄意挥霍。 在现实世界中，我们有多种途径保障事物的真实性和唯">
 <meta property="og:type" content="article">
 <meta property="og:title" content="总结区块链在金融方面的实施经验">
-<meta property="og:url" content="https://willzhuang.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="区块链技术的兴起，主要原因是存储成本的降低。过去，技术进步降低了很多事物的成本，让许多技术的大规模应用成为可能。例如，过去都是大型计算机集中计算，之后PC机出现，带来了大规模的商用；存储也是一样，过去是集中化存储，现在因为存储成本的降低，每一个记录可以有5,700次存储。区块链技术是继互联网之后的又一突破性数字技术，其实质就是对存储空间的蓄意挥霍。 在现实世界中，我们有多种途径保障事物的真实性和唯">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://willzhuang.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/1.png">
-<meta property="og:image" content="https://willzhuang.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/2.png">
-<meta property="og:image" content="https://willzhuang.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/3.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/1.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/2.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/3.png">
 <meta property="article:published_time" content="2019-10-30T01:52:40.000Z">
 <meta property="article:modified_time" content="2020-11-02T10:16:50.000Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="产品设计">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://willzhuang.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/1.png">
+<meta name="twitter:image" content="https://zhuang-weiming.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/1.png">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/">
 
 
 <script class="page-configurations">
@@ -256,7 +256,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -365,7 +365,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/" title="总结区块链在金融方面的实施经验">https://willzhuang.github.io/2019/10/30/区块链在金融方面的实施经验/</a>
+      <a href="https://zhuang-weiming.github.io/2019/10/30/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%87%91%E8%9E%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E5%AE%9E%E6%96%BD%E7%BB%8F%E9%AA%8C/" title="总结区块链在金融方面的实施经验">https://zhuang-weiming.github.io/2019/10/30/区块链在金融方面的实施经验/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

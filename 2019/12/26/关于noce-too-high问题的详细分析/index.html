@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="关于ethereum 中，nonce问题总结： Tx 中 nonce 过低（too low）时，Tx 立即被拒绝 Tx 中 nonce 过高（too high）时，Tx 被放入交易池队列 transaction pool queue 如果 Tx 的 nonce 正好填补了最新的有效的 nonce 和过高的nonce之间的空隙，是的nonce的顺序完整连接时，交易池队列中的交易将被执行 当 Geth">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于nonce-too-high问题的详细分析">
-<meta property="og:url" content="https://willzhuang.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="关于ethereum 中，nonce问题总结： Tx 中 nonce 过低（too low）时，Tx 立即被拒绝 Tx 中 nonce 过高（too high）时，Tx 被放入交易池队列 transaction pool queue 如果 Tx 的 nonce 正好填补了最新的有效的 nonce 和过高的nonce之间的空隙，是的nonce的顺序完整连接时，交易池队列中的交易将被执行 当 Geth">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">
 
 
 <script class="page-configurations">
@@ -252,7 +252,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -356,7 +356,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/" title="关于nonce-too-high问题的详细分析">https://willzhuang.github.io/2019/12/26/关于noce-too-high问题的详细分析/</a>
+      <a href="https://zhuang-weiming.github.io/2019/12/26/%E5%85%B3%E4%BA%8Enoce-too-high%E9%97%AE%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/" title="关于nonce-too-high问题的详细分析">https://zhuang-weiming.github.io/2019/12/26/关于noce-too-high问题的详细分析/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

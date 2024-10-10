@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="​    工厂合约的地址如果经常变化，就必须追踪这些合约。在这种情况下，就可以使用名字登录模式，存储合约名到合约地址的映射mapping，同时提供根据合约名来查找合约地址的功能，甚至还可以追踪版本。 1234567891011121314151617181920212223242526272829303132333435pragma solidity ^0.6.12;contract NameRe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="智能合约-名字登录模式">
-<meta property="og:url" content="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="​    工厂合约的地址如果经常变化，就必须追踪这些合约。在这种情况下，就可以使用名字登录模式，存储合约名到合约地址的映射mapping，同时提供根据合约名来查找合约地址的功能，甚至还可以追踪版本。 1234567891011121314151617181920212223242526272829303132333435pragma solidity ^0.6.12;contract NameRe">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">
 
 
 <script class="page-configurations">
@@ -251,7 +251,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -301,11 +301,11 @@
 <p>通过 <code>getContractDetails(name)</code> 获得合约地址和指定版本的合约。 </p>
 <p>关联文档：</p>
 <ol>
-<li><a href="https://willzhuang.github.io/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">智能合约-CURD的详细分析</a></li>
-<li><a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E8%87%AA%E6%AF%81%E6%A8%A1%E5%BC%8F/">智能合约-自毁模式</a></li>
-<li><a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E6%A8%A1%E5%BC%8F/">智能合约-工厂合约模式</a></li>
-<li><a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">智能合约-名字登录模式</a></li>
-<li><a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">智能合约-CURD的详细分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E8%87%AA%E6%AF%81%E6%A8%A1%E5%BC%8F/">智能合约-自毁模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E6%A8%A1%E5%BC%8F/">智能合约-工厂合约模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">智能合约-名字登录模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a></li>
 </ol>
 
     </div>
@@ -324,7 +324,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/" title="智能合约-名字登录模式">https://willzhuang.github.io/2020/09/18/智能合约-名字登录模式/</a>
+      <a href="https://zhuang-weiming.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/" title="智能合约-名字登录模式">https://zhuang-weiming.github.io/2020/09/18/智能合约-名字登录模式/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

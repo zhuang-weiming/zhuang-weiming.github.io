@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="​    ERC721是比ERC20更复杂的标准，具有多个可选扩展名，并且分为多个合约。 OpenZeppelin合约提供了灵活的组合方式以及自定义有用的扩展。本文讲解以OpenZeppelin合约为目标对象。 构建ERC721代币合同​    我们将使用ERC721来跟踪游戏中的装备条目，每个条目都有各自独特的属性。 每当要奖励给玩家时，便会铸造（mint）并发送给他们。 玩家可以自由保留自己的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ERC721实践">
-<meta property="og:url" content="https://willzhuang.github.io/2020/09/07/ERC721%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2020/09/07/ERC721%E5%AE%9E%E8%B7%B5/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="​    ERC721是比ERC20更复杂的标准，具有多个可选扩展名，并且分为多个合约。 OpenZeppelin合约提供了灵活的组合方式以及自定义有用的扩展。本文讲解以OpenZeppelin合约为目标对象。 构建ERC721代币合同​    我们将使用ERC721来跟踪游戏中的装备条目，每个条目都有各自独特的属性。 每当要奖励给玩家时，便会铸造（mint）并发送给他们。 玩家可以自由保留自己的">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2020/09/07/ERC721%E5%AE%9E%E8%B7%B5/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2020/09/07/ERC721%E5%AE%9E%E8%B7%B5/">
 
 
 <script class="page-configurations">
@@ -252,7 +252,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2020/09/07/ERC721%E5%AE%9E%E8%B7%B5/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/09/07/ERC721%E5%AE%9E%E8%B7%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -315,7 +315,7 @@
 <p>​    有关tokenURI元数据JSON架构的更多信息，请参考==&gt;<a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-721">https://eips.ethereum.org/EIPS/eip-721</a></p>
 <h3 id="ERC721-合约的前置功能"><a href="#ERC721-合约的前置功能" class="headerlink" title="ERC721 合约的前置功能"></a>ERC721 合约的前置功能</h3><p>​    ERC721可用的预设有ERC721PresetMinterPauserAutoId。它已预设为允许Token铸造（创建），停止所有令牌传输（暂停），并允许持有人焚毁（销毁）其Token。合同使用访问控制来控制对铸造和暂停功能的访问。部署合同的帐户将被授予minter 和pauser 角色，以及默认的admin角色。</p>
 <p>​    无需编写任何Solidity代码即可立即部署此合同。它可以原样用于快速原型制作和测试，但也适用于生产环境。</p>
-<p>关联内容 ==&gt; <a href="https://willzhuang.github.io/2019/07/04/ERC20-721Token%E7%9A%84%E5%8F%91%E8%A1%8C-%E5%86%BB%E7%BB%93-%E5%A4%9A%E6%96%B9%E7%AD%BE%E5%90%8D%E5%8A%9F%E8%83%BD">https://willzhuang.github.io/2019/07/04/ERC20-721Token的发行-冻结-多方签名功能</a></p>
+<p>关联内容 ==&gt; <a target="_blank" rel="noopener" href="https://willzhuang.github.io/2019/07/04/ERC20-721Token%E7%9A%84%E5%8F%91%E8%A1%8C-%E5%86%BB%E7%BB%93-%E5%A4%9A%E6%96%B9%E7%AD%BE%E5%90%8D%E5%8A%9F%E8%83%BD">https://willzhuang.github.io/2019/07/04/ERC20-721Token的发行-冻结-多方签名功能</a></p>
 
     </div>
 
@@ -333,7 +333,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2020/09/07/ERC721%E5%AE%9E%E8%B7%B5/" title="ERC721实践">https://willzhuang.github.io/2020/09/07/ERC721实践/</a>
+      <a href="https://zhuang-weiming.github.io/2020/09/07/ERC721%E5%AE%9E%E8%B7%B5/" title="ERC721实践">https://zhuang-weiming.github.io/2020/09/07/ERC721实践/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.

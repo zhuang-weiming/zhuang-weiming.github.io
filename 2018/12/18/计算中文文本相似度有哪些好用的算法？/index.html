@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"willzhuang.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="常用的算法  基于词向量   余弦相似度 曼哈顿距离 欧几里得距离 明式距离（是前两种距离测度的推广）， 在极限情况下的距离是切比雪夫距离   基于字符的编辑距离   simhash 共有字符数   基于概率统计   杰卡德相似系数   基于词嵌入模型   word2vec&#x2F;doc2vec  参考：  漫谈：机器学习中距离和相似性度量方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算中文文本相似度有哪些好用的算法？">
-<meta property="og:url" content="https://willzhuang.github.io/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/index.html">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="常用的算法  基于词向量   余弦相似度 曼哈顿距离 欧几里得距离 明式距离（是前两种距离测度的推广）， 在极限情况下的距离是切比雪夫距离   基于字符的编辑距离   simhash 共有字符数   基于概率统计   杰卡德相似系数   基于词嵌入模型   word2vec&#x2F;doc2vec  参考：  漫谈：机器学习中距离和相似性度量方法">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://willzhuang.github.io/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/">
 
 
 <script class="page-configurations">
@@ -251,7 +251,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://willzhuang.github.io/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -346,7 +346,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://willzhuang.github.io/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/" title="计算中文文本相似度有哪些好用的算法？">https://willzhuang.github.io/2018/12/18/计算中文文本相似度有哪些好用的算法？/</a>
+      <a href="https://zhuang-weiming.github.io/2018/12/18/%E8%AE%A1%E7%AE%97%E4%B8%AD%E6%96%87%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E7%94%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F/" title="计算中文文本相似度有哪些好用的算法？">https://zhuang-weiming.github.io/2018/12/18/计算中文文本相似度有哪些好用的算法？/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
