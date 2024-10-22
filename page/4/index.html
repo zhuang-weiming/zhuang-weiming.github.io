@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">255</span>
+          <span class="site-state-item-count">256</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,359 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/05/16/%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/05/16/%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">对比DID中的隐私算法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-16 17:35:00" itemprop="dateCreated datePublished" datetime="2024-05-16T17:35:00+08:00">2024-05-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-05-17 16:41:59" itemprop="dateModified" datetime="2024-05-17T16:41:59+08:00">2024-05-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="SD-JWT"><a href="#SD-JWT" class="headerlink" title="SD-JWT:"></a>SD-JWT:</h3><p><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/">https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/</a><br><a target="_blank" rel="noopener" href="https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt">https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt</a></p>
+<h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现:"></a>算法实现:</h4><ol>
+<li>数据封装:<ul>
+<li>数据被封装在JWT中，包含需要选择性披露的声明（claims）。</li>
+<li>每个声明都可以独立加密或哈希处理。</li>
+</ul>
+</li>
+<li>Merkle树结构:<ul>
+<li>为所有声明构建一个Merkle树，每个叶子节点代表一个哈希后的声明。</li>
+<li>通过哈希值的组合，形成父节点，直到生成一个根哈希值（root hash）。</li>
+</ul>
+</li>
+<li>签名:<ul>
+<li>使用私钥对整个JWT（包括Merkle树的根哈希值）进行签名。</li>
+<li>签名确保数据的完整性和真实性。</li>
+</ul>
+</li>
+<li>选择性披露:<ul>
+<li>用户可以选择性地披露特定的声明，并提供相应的Merkle证明（包含所需的兄弟节点哈希）。</li>
+<li>验证者使用Merkle证明验证特定声明是否属于原始数据。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>JWT</li>
+<li>Merkle树</li>
+<li>数字签名</li>
+</ul>
+<h3 id="BBS-Signature"><a href="#BBS-Signature" class="headerlink" title="BBS Signature:"></a>BBS Signature:</h3><h4 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现:"></a>算法实现:</h4><ol>
+<li>签名生成:<ul>
+<li>生成密钥对（私钥和公钥）。</li>
+<li>使用私钥对消息进行签名，生成一个签名值。</li>
+</ul>
+</li>
+<li>选择性披露:<ul>
+<li>允许用户选择性披露部分数据，并生成零知识证明（ZKP），证明所披露的数据是原始数据的一部分。</li>
+</ul>
+</li>
+<li>验证:<ul>
+<li>验证者使用公钥和零知识证明，验证所披露的数据的真实性和完整性。</li>
+<li>确保签名和数据未被篡改。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>零知识证明</li>
+<li>数字签名</li>
+<li>椭圆曲线密码学</li>
+</ul>
+<h3 id="BBS-Signature-1"><a href="#BBS-Signature-1" class="headerlink" title="BBS+ Signature:"></a>BBS+ Signature:</h3><p><a target="_blank" rel="noopener" href="https://github.com/mattrglobal/bbs-signatures">https://github.com/mattrglobal/bbs-signatures</a><br><a href="%E5%AF%B9%E6%AF%94DID%E4%B8%AD%E7%9A%84%E9%9A%90%E7%A7%81%E7%AE%97%E6%B3%95/slides-114-cfrg-bbs-signature-scheme-pdf-00.pdf">Org BBS+ Signature algorithm PPT</a>: <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/meeting/114/materials/slides-114-cfrg-bbs-signature-scheme-pdf-00">https://datatracker.ietf.org/meeting/114/materials/slides-114-cfrg-bbs-signature-scheme-pdf-00</a><br><a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/bbs-signature">https://github.com/decentralized-identity/bbs-signature</a><br><a target="_blank" rel="noopener" href="https://github.com/microsoft/bbs-node-reference">https://github.com/microsoft/bbs-node-reference</a></p>
+<h4 id="算法实现-2"><a href="#算法实现-2" class="headerlink" title="算法实现:"></a>算法实现:</h4><ol>
+<li>优化签名生成:<ul>
+<li>基于BBS签名算法，增加了对复杂电路和多项声明的支持。</li>
+<li>使用私钥对多个声明进行签名，生成一个增强的签名值。</li>
+</ul>
+</li>
+<li>增强的选择性披露:<ul>
+<li>允许用户更高效地选择性披露部分数据，并生成更高效的零知识证明。</li>
+<li>增强了对复杂数据结构和大规模应用的支持。</li>
+</ul>
+</li>
+<li>高效验证:<ul>
+<li>验证者使用公钥和优化后的零知识证明，验证所披露的数据的真实性和完整性。</li>
+<li>验证过程经过优化，提高了性能和效率。<br>关键技术:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>优化的零知识证明</li>
+<li>数字签名</li>
+<li>高效验证算法</li>
+</ul>
+<h3 id="PolygonID"><a href="#PolygonID" class="headerlink" title="PolygonID:"></a>PolygonID:</h3><p><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/issuer-node">https://github.com/0xPolygonID/issuer-node</a></p>
+<h4 id="zkSNARK"><a href="#zkSNARK" class="headerlink" title="zkSNARK"></a>zkSNARK</h4><p><a target="_blank" rel="noopener" href="https://github.com/iden3/snarkjs">https://github.com/iden3/snarkjs</a> (Groth16, PLONK, FFLONK三种算法可选)</p>
+<h4 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤:"></a>主要步骤:</h4><ol>
+<li>设置（Setup）:<ul>
+<li>生成一组公共参数（公共参考字符串CRS），包括两个部分：证明密钥（proving key）和验证密钥（verifying key）。公共参数由一个复杂的数学过程生成，通常基于椭圆曲线和配对。</li>
+<li>这个过程涉及一个可信的第三方，确保公共参数的安全生成。</li>
+</ul>
+</li>
+<li>证明生成（Proving）:<ul>
+<li>证明者使用具体的输入（满足某个电路或逻辑条件）和证明密钥生成一个简洁的证明（Proof）。</li>
+<li>该证明由少量的群元素组成，可以非常高效地传输和存储。</li>
+</ul>
+</li>
+<li>验证（Verification）:<ul>
+<li>验证者使用验证密钥验证证明的有效性，确保输入满足声明的逻辑条件。</li>
+<li>通过检查一个简单的数学等式，只需检查少量计算，验证过程快速且高效。</li>
+</ul>
+</li>
+</ol>
+<p>SD-JWT（Self-issued, Decentralized JWT）、BBS+ Signature（BlsBBSIG-based Signature）和 PolygonID 是与去中心化身份（DID）相关的不同技术或概念。为了比较它们在DID应用中的适用性，我们可以考虑几个关键维度，如安全性、隐私性、易用性、互操作性和可扩展性。以下是对这些技术的比较，以及它们在DID应用中的评级：</p>
+<table>
+<thead>
+<tr>
+<th>特点</th>
+<th>SD-JWT</th>
+<th>BBS</th>
+<th>BBS+</th>
+<th>PolygonID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>发明时间</strong></td>
+<td>2022</td>
+<td>2004</td>
+<td>2008</td>
+<td>2012,<br>2016</td>
+</tr>
+<tr>
+<td><strong>标准链接</strong></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/oauth-wg/oauth-selective-disclosure-jwt">oauth-selective-disclosure-jwt</a></td>
+<td><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf">Short Group Signatures</a></td>
+<td><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2008/136.pdf">Constant-Size Dynamic k-TAA</a></td>
+<td><a target="_blank" rel="noopener" href="https://iacr.org/archive/asiacrypt2010/6477343/6477343.pdf">Short Non-Interactive Zero-Knowledge Proofs</a><br><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">On the Size of Pairing-based Non-interactive Arguments</a></td>
+</tr>
+<tr>
+<td><strong>基本概念</strong></td>
+<td>基于JWT的选择性披露和加密技术，用于去中心化身份管理</td>
+<td>基于BLS签名的短群签名方案</td>
+<td>BBS的改进版，提供更强的隐私性和安全性</td>
+<td>基于Polygon网络的去中心化身份解决方案。零知识简洁非交互性知识论证，基于数学证明</td>
+</tr>
+<tr>
+<td><strong>选择性披露</strong></td>
+<td>支持，使用Merkle树和加密技术</td>
+<td>支持，通过零知识证明实现</td>
+<td>更高效和灵活的选择性披露</td>
+<td>支持，使用zk-SNARKs技术实现</td>
+</tr>
+<tr>
+<td><strong>零知识证明</strong></td>
+<td>基本支持，通过Merkle树结构和证明</td>
+<td>支持，通过零知识证明协议</td>
+<td><strong>增强支持</strong>，优化了零知识证明性能</td>
+<td><strong>强大支持</strong>，通过zk-SNARKs实现</td>
+</tr>
+<tr>
+<td><strong>隐私保护</strong></td>
+<td>高，允许选择性披露特定声明而不泄露完整数据</td>
+<td>高，通过选择性披露和零知识证明保护隐私</td>
+<td>更高，优化选择性披露和零知识证明实现，性能高效，应用灵活</td>
+<td><strong>极高</strong>，通过zk-SNARKs和去中心化验证实现</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>中等，受Merkle树结构影响</td>
+<td>高效，适用于大规模验证</td>
+<td>优异，优化了签名和验证过程</td>
+<td>优秀，但证明生成计算量大，验证效率高</td>
+</tr>
+<tr>
+<td><strong>互操作性</strong></td>
+<td>高，与现有的JWT标准兼容</td>
+<td>需要更多集成工作，适用于专用系统</td>
+<td>类似BBS，但更优化</td>
+<td>高，与以太坊和其他EVM兼容区块链互操作</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>可验证凭证、教育认证等</td>
+<td>DID系统中的隐私保护凭证、去中心化身份验证</td>
+<td>高级DID系统、隐私保护凭证、复杂零知识证明环境</td>
+<td>高度隐私保护应用，如身份验证、金融交易，如DeFi、NFT、DID管理等</td>
+</tr>
+<tr>
+<td><strong>落地项目</strong></td>
+<td><a target="_blank" rel="noopener" href="https://trinsic.id/">Trinsic</a>, <strong><a target="_blank" rel="noopener" href="https://github.com/eu-digital-identity-wallet">European Digital Identity</a></strong></td>
+<td></td>
+<td>Hyperledger Indy, Hyperledger Aries</td>
+<td><a target="_blank" rel="noopener" href="https://www.polygonid.com/">PolygonID</a>, <a target="_blank" rel="noopener" href="https://github.com/iden3/snarkjs">snarkjs</a>, <a target="_blank" rel="noopener" href="https://github.com/iden3/rapidsnark">rapidsnark</a></td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>高，基于哈希函数和加密技术</td>
+<td>高，基于BLS签名，提供了良好的安全性</td>
+<td>更高，基于优化的配对密码学和零知识证明，提供了抗密钥泄露的安全性</td>
+<td>极高，基于复杂数学证明，难以破解</td>
+</tr>
+<tr>
+<td><strong>抗量子性</strong></td>
+<td>低，当前加密技术未明确抗量子</td>
+<td>低，对量子计算较为脆弱</td>
+<td>低，与BBS相似，对量子计算较为脆弱</td>
+<td>低，大多数现有的zk-SNARKs对量子计算不具备抗性</td>
+</tr>
+<tr>
+<td><strong>易用性</strong></td>
+<td>高，易于实现和集成</td>
+<td>中等，需要深入的密码学知识</td>
+<td>中等，需要理解优化的密码学原理</td>
+<td>中等，需掌握复杂数学和密码学知识，开发和验证较为复杂，PolygonID 简化了使用的复杂性</td>
+</tr>
+<tr>
+<td><strong>可扩展性</strong></td>
+<td>中等，受限于Merkle树的复杂度和数据大小</td>
+<td>高，可扩展到大规模验证环境。签名的大小相对较大，随着消息块的增加，签名大小也增加。</td>
+<td>高，优化后适用于大规模应用和验证。签名大小显著减小，且长度固定</td>
+<td>高，验证效率高，但证明生成需大量计算资源，Polygon 网络设计可用于处理高交易量</td>
+</tr>
+</tbody></table>
+<h3 id="Groth16-PLONK-和-FFLONK-在PolygonID中的应用"><a href="#Groth16-PLONK-和-FFLONK-在PolygonID中的应用" class="headerlink" title="Groth16, PLONK 和 FFLONK 在PolygonID中的应用"></a>Groth16, PLONK 和 FFLONK 在PolygonID中的应用</h3><table>
+<thead>
+<tr>
+<th>特点</th>
+<th><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">Groth16</a></th>
+<th><a target="_blank" rel="noopener" href="https://github.com/AztecProtocol/barretenberg">PLONK Implementation</a><br><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PLONK paper</a></th>
+<th><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2021/1167.pdf">FFLONK</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>发明年</strong></td>
+<td>2016</td>
+<td>2019</td>
+<td>2021</td>
+</tr>
+<tr>
+<td><strong>基本概念</strong></td>
+<td>基于零知识简洁非交互性知识论证，主要用于隐私保护</td>
+<td>高效零知识证明系统，适用于去中心化应用</td>
+<td>进一步优化的PLONK，专注于提高性能和验证效率</td>
+</tr>
+<tr>
+<td><strong>证明生成时间</strong></td>
+<td>较长，适合复杂证明</td>
+<td>快速，适用于高频次证明生成</td>
+<td><strong>更快速，优化后的证明生成时间</strong></td>
+</tr>
+<tr>
+<td><strong>验证时间</strong></td>
+<td>快速，但略慢于PLONK</td>
+<td>快速，验证时间较短</td>
+<td>更快速，优化后的验证时间</td>
+</tr>
+<tr>
+<td><strong>计算资源需求</strong></td>
+<td>较高，可能需要更多计算资源</td>
+<td>中等，适合大多数硬件环境</td>
+<td>低，优化后的算法减少计算资源需求</td>
+</tr>
+<tr>
+<td><strong>证明大小</strong></td>
+<td>较大，增加存储成本</td>
+<td>较小，适合链上存储，减少存储成本</td>
+<td>最小，<strong>极大减少存储需求</strong></td>
+</tr>
+<tr>
+<td><strong>可信设置</strong></td>
+<td>每个电路需要单独的可信设置</td>
+<td>一次可信设置，可重复使用</td>
+<td>一次可信设置，可重复使用</td>
+</tr>
+<tr>
+<td><strong>灵活性</strong></td>
+<td>较低，需要为特定电路优化</td>
+<td>高，支持复杂电路和应用</td>
+<td>高，适用于多种应用场景</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>高，基于配对和复杂数学难题</td>
+<td>高，基于多项式数学难题</td>
+<td>更高，基于优化的数学基础</td>
+</tr>
+<tr>
+<td><strong>用户体验</strong></td>
+<td>设置复杂且生成时间较长，用户体验较差</td>
+<td>简化设置过程和快速验证，提供良好用户体验</td>
+<td>优化的性能和简化的设置过程，<strong>用户体验最佳</strong></td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>适用于特定需求明确且不需频繁更新的场景</td>
+<td>适用于高频交互和高性能需求的应用</td>
+<td>适用于各种高效、高频次的零知识证明应用场景</td>
+</tr>
+<tr>
+<td><strong>在PolygonID中的应用</strong></td>
+<td>适用于复杂隐私保护和金融交易场景</td>
+<td>适用于实时身份验证和高频交易</td>
+<td>适用于高效、高频次的身份验证和隐私保护场景</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -604,77 +957,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/03/06/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5%E5%88%86%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/06/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5%E5%88%86%E7%B1%BB/" class="post-title-link" itemprop="url">量化交易策略分类</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-03-06 14:23:00 / Modified: 15:15:58" itemprop="dateCreated datePublished" datetime="2024-03-06T14:23:00+08:00">2024-03-06</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>量化交易策略可以分为两大类，具体如下。</p>
-<ol>
-<li>定量策略<br>这类策略主要根据定量分析结果进行交易决策。常见的定量策略有以下几种。<br> (1) 动量策略:通过动量指标判断市场和股票趋势，在趋势形成时买入，在趋势反转时卖出。<br> (2) 价值策略:通过基本面和定量指标判断股票价值，在价值被低估时买人，在价值被高估时卖出。<br> (3) 机器学习策略:利用机器学习算法分析大量数据寻找交易信号，进行机器自动化交易。</li>
-<li>定性策略<br>这类策略主要根据定性分析和交易者主观判断进行交易。常见的定性策略有以下几种。<br> (1) 趋势跟随策略:通过图形分析方法判断市场趋势，跟随上升趋势买人，跟随下跌趋势卖出。<br> (2) 消息驱动策略:根据新闻事件和消息判断股票趋势，在利好消息出现时买人，在利空消息出现时卖出。<br> (3) 经验主义策略:根据交易者的经验和主观判断进行交易决策，难以形式化与定量化。<br>综上，交易策略是交易的指导思想和行动纲领。通过研究市场规律和价格行为，选择适合自己风格与能力的策略，并不断优化和调整，最终实现稳定的投资收益，这是每个交易者和投资者的重要学习课题。选择一种适合自己的交易策略，对交易至关重要。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
