@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">256</span>
+          <span class="site-state-item-count">257</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,99 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/05/23/%E5%85%B3%E4%BA%8EAI-LLM%E6%B5%8B%E8%AF%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/05/23/%E5%85%B3%E4%BA%8EAI-LLM%E6%B5%8B%E8%AF%84/" class="post-title-link" itemprop="url">关于AI-LLM测评</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-23 14:47:00" itemprop="dateCreated datePublished" datetime="2024-05-23T14:47:00+08:00">2024-05-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-05-27 16:30:19" itemprop="dateModified" datetime="2024-05-27T16:30:19+08:00">2024-05-27</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>根据Google Gemini团队的论文 - <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2312.11805">https://arxiv.org/pdf/2312.11805</a> (page 8)来看，测评涵盖了：</p>
+<ol>
+<li><strong>MMLU (Massive Multitask Language Understanding)</strong>: 这是一个综合性的基准测试，用于衡量模型在多任务语言理解方面的能力。它包含了多个子任务，涉及不同的领域和语言，旨在全面评估模型的语言处理能力。</li>
+<li><strong>GSM8K (Grade-school Math 8K)</strong>: 这是一个数学问题解答的数据集，包含了小学级别的数学问题。它用于测试模型解决基础数学问题的能力。</li>
+<li><strong>MATH</strong>: 这个术语可能指的是一个更广泛的数学问题解答数据集，它可能包含了不同难度级别的数学问题，用于评估模型的数学推理和解答能力。</li>
+<li><strong>BIG-Bench-Hard</strong>: 这是BIG-Bench（Broad Institute General Language Benchmark）的一个子集，包含了更难的任务。BIG-Bench是一个用于评估语言模型在广泛任务上性能的基准测试。</li>
+<li><strong>HumanEval</strong>: 这是一个用于评估模型在特定任务上性能的基准测试，通常与人类的表现进行比较。它可能包含了多种类型的任务，如编程任务或自然语言生成任务。</li>
+<li><strong>Natural2Code</strong>: 这是一个评估模型将自然语言转换为代码能力的数据集。它用于测试模型在编程语言理解和代码生成方面的能力。</li>
+<li><strong>DROP (Discrete Reasoning Over Paragraphs)</strong>: 这是一个阅读理解和推理的数据集，要求模型对段落进行推理并解决基于段落内容的问题。</li>
+<li><strong>HellaSwag</strong>: 这是一个用于评估模型在多步推理和情境理解方面能力的基准测试。它包含了多个情境，模型需要根据给定的故事线索选择合适的结局。</li>
+<li><strong>WMT23</strong>: 这是Workshop on Machine Translation（机器翻译研讨会）2023年的缩写，它是一个专注于机器翻译领域的国际会议，通常包含最新的研究成果和技术进展。WMT也组织机器翻译系统的评估和竞争，WMT23可能指的是该年会议中使用的机器翻译基准测试。<br>改论文中，还有更多的测试数据集。</li>
+</ol>
+<p>根据 <a target="_blank" rel="noopener" href="https://gpt4all.io/index.html">https://gpt4all.io/index.html</a> 来看，测评涵盖了：</p>
+<ol>
+<li><strong>BoolQ</strong>: BoolQ（Boolean Questions）是一个数据集，专门用于评估模型理解自然语言中是/否问题的能力。它要求模型不仅要回答问题，还要判断问题是否是布尔类型（即答案为真或假）。</li>
+<li><strong>PIQA</strong>: PIQA（Paraphrased Image Question Answering）是一个图像问答数据集，它要求模型对图像内容进行理解，并回答有关图像的问题，这些问题是以释义或改写的形式提出的。</li>
+<li><strong>HellaSwag</strong>: HellaSwag是一个多步推理和常识问答的数据集，它包含了一系列的情境，模型需要根据给定的故事线索选择合适的结局。这个数据集旨在测试模型的推理能力和对常识的掌握。</li>
+<li><strong>WinoGrande</strong>: WinoGrande是一个大规模的、多样化的、高质量的问答数据集，它包含了大量的问题和答案对，用于评估模型在开放域问答任务上的性能。</li>
+<li><strong>ARC-e</strong>: ARC-e（AI2 Reasoning Challenge - Elementary）是一个评估模型在一系列考试类型问题上的表现的基准测试。它旨在测试模型的知识和推理能力。</li>
+<li><strong>ARC-c</strong>: ARC-c（AI2 Reasoning Challenge - Complex）是ARC-e的进阶版本，包含了更复杂的推理挑战，需要模型具备更高级的推理技巧。</li>
+<li><strong>OBQA</strong>: OBQA（Open-Book Question Answering）是一个问答任务，其中模型在回答问题时可以访问给定的文本或书籍。这个任务测试模型的理解和推理能力，同时考虑到它可以访问额外的信息源。</li>
+</ol>
+<p>由此看来，<a target="_blank" rel="noopener" href="https://www.baichuan-ai.com/home%EF%BC%8C%E7%9B%AE%E5%89%8D%E7%BB%99%E5%87%BA%E7%9A%84%E6%B5%8B%E8%AF%84%E7%BB%93%E6%9E%9C%E6%9D%A5%E7%9C%8B%EF%BC%8C%E8%BF%98%E9%9C%80%E8%A6%81%E7%BB%A7%E7%BB%AD%E5%8A%AA%E5%8A%9B%E3%80%82">https://www.baichuan-ai.com/home，目前给出的测评结果来看，还需要继续努力。</a><br><img src="/2024/05/23/%E5%85%B3%E4%BA%8EAI-LLM%E6%B5%8B%E8%AF%84/1.png"><br>不仅是分数上，而且在测试的范围上，都有相当大的差距存在。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -859,86 +952,6 @@
 <li>您希望允许从不与 Axelar 交互的钱包进行Token转移，例如从中心化交易所提取资金时。<br>如需使用存款地址转移资产，需要使用AxelarJS SDK并发起AxelarAssetTransfer。</li>
 </ul>
 <h3 id="构建跨链代币（Interchain-Token）"><a href="#构建跨链代币（Interchain-Token）" class="headerlink" title="构建跨链代币（Interchain Token）"></a>构建跨链代币（Interchain Token）</h3><p>链间代币是可在多个区块链上使用的 ERC-20 token。借助 Axelar 的链间代币服务 (Interchain Token Service)，可以从头开始创建新的跨链代币，也可以更新以太坊区块链上已存在的Token。如果Token不被 Axelar 支持，将该Token加入链间代币服务 (Interchain Token Service)即可。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/04/18/%E9%9F%A9%E5%9B%BD%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/04/18/%E9%9F%A9%E5%9B%BD%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/" class="post-title-link" itemprop="url">韩国央行数字货币</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-04-18 09:43:00 / Modified: 09:44:52" itemprop="dateCreated datePublished" datetime="2024-04-18T09:43:00+08:00">2024-04-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Cos-CBDC: Design and Implementation of CBDC on Cosmos Blockchain:<br><a target="_blank" rel="noopener" href="https://www.ieice.org/publications/proceedings/bin/pdf_link.php?fname=p303-han.pdf&amp;iconf=APNOMS&amp;year=2021&amp;vol=67&amp;number=TS8-4&amp;lang=E">https://www.ieice.org/publications/proceedings/bin/pdf_link.php?fname=p303-han.pdf&amp;iconf=APNOMS&amp;year=2021&amp;vol=67&amp;number=TS8-4&amp;lang=E</a></p>
-<ul>
-<li>Cos-CBDC, a CBDC system based on Cosmos blockchain. The transaction capacity of Cos-CBDC can be up to <strong>15,000 TPS</strong> depending on the block size and the number of validators in the BFT-based consensus algorithm.</li>
-<li>R3 Corda and Hyperledger Fabric as the blockchain platforms for CBDC, these platforms are not suitable for implementing cross border payments. COSMOS IBC allow different types of blockchains to trade tokens and data with each other.</li>
-<li>cos-CBDC propose multi signature (Multisig) and Multi-party computation (MPC). E.g. Central Bank, Commercial Bank, Customer, these 3 parties  generate a Group Key with MPC. This Group Key.</li>
-</ul>
-<p>The Bank of Korea’s CBDC research:<br><a target="_blank" rel="noopener" href="https://www.bis.org/publ/bppdf/bispap123_m.pdf">https://www.bis.org/publ/bppdf/bispap123_m.pdf</a></p>
-<ul>
-<li>there is no immediate need to issue CBDC in Korea. Therefore, the BOK is actively engaging in research and preparations so that if a decision is made in the future regarding the introduction of CBDC, it can be issued without any delay.</li>
-<li>Key considerations in the BOK’s CBDC research<ul>
-<li>The decline in the use of cash.</li>
-<li>Big tech’s market dominance and concentration of personal information.</li>
-<li>The proliferation of global stablecoins.</li>
-</ul>
-</li>
-</ul>
 
       
     </div>

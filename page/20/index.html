@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">256</span>
+          <span class="site-state-item-count">257</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,356 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2021/08/09/%E9%83%A8%E7%BD%B2fabric%E4%BA%8Ek8s%E4%B9%8B%E4%B8%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/09/%E9%83%A8%E7%BD%B2fabric%E4%BA%8Ek8s%E4%B9%8B%E4%B8%8A/" class="post-title-link" itemprop="url">部署fabric于k8s之上</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-09 14:09:04" itemprop="dateCreated datePublished" datetime="2021-08-09T14:09:04+08:00">2021-08-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-09-14 14:14:32" itemprop="dateModified" datetime="2023-09-14T14:14:32+08:00">2023-09-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="hyperledger-fabric-2-2-kubernetes"><a href="#hyperledger-fabric-2-2-kubernetes" class="headerlink" title="hyperledger fabric 2.2 kubernetes"></a>hyperledger fabric 2.2 kubernetes</h3><h3 id="一、本地开发环境依赖"><a href="#一、本地开发环境依赖" class="headerlink" title="一、本地开发环境依赖"></a>一、本地开发环境依赖</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Minikube 安装 v1.20.0</span></span><br><span class="line">curl -Lo minikube https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.20.0/minikube-darwin-amd64</span><br><span class="line">chmod +x minikube</span><br><span class="line">sudo mv minikube /usr/local/bin/</span><br><span class="line"><span class="meta">#</span><span class="bash"> Minikube start</span></span><br><span class="line">minikube start --image-mirror-country cn \</span><br><span class="line">    --iso-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.20.0.iso \</span><br><span class="line">    --registry-mirror=https://xxxxx.mirror.aliyuncs.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><input checked disabled type="checkbox"> 安装 kubectl 工具</li>
+<li><input checked disabled type="checkbox"> 安装 git</li>
+<li><input checked disabled type="checkbox"> 安装 docker</li>
+<li><input checked disabled type="checkbox"> 安装 hyperledger 相关命令列工具</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 执行以下指令下载 Hyperledger 命令列工具</span></span><br><span class="line">curl -sSL http://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.2.0 1.5.0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line">curl -sSL https://bit.ly/2ysbOFE | bash -s</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设定环境变数至下载下来的 bin 目录下</span></span><br><span class="line">export PATH=&lt;path to download location&gt;/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>以上脚本会在本地下载k8s部署需要的容器和可执行文件，云上的话需要准备的镜像如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">centos:latest</span><br><span class="line">hyperledger/fabric-orderer:2.2</span><br><span class="line">hyperledger/fabric-peer:2.2.0</span><br><span class="line">hyperledger/fabric-tools:2.2.0</span><br></pre></td></tr></table></figure>
+<p>用于测试的chaincode镜像，marbles是hyperledger官方给的一个sample，但是源码没有打镜像，这里其他人打的一个镜像，我们只是用来测试部署是否成功，之后会用我们开发的存证chaincode镜像替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paragones&#x2F;chaincode-marbles:1.0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建一个名为 hyperledger 的 namespace</span></span><br><span class="line">kubectl create namespace hyperledger</span><br><span class="line"><span class="meta">#</span><span class="bash"> 切换至 hyperledger namespace </span></span><br><span class="line">kubectl config set-context --current --namespace=hyperledger</span><br></pre></td></tr></table></figure>
+<h3 id="二、系统架构规划"><a href="#二、系统架构规划" class="headerlink" title="二、系统架构规划"></a>二、系统架构规划</h3><h4 id="2-1-节点规划"><a href="#2-1-节点规划" class="headerlink" title="2.1 节点规划"></a>2.1 节点规划</h4><p>下图为本范例的部署架构，所有hyperledger 所需节点皆部署于 k8s 中的 hyperledger namespace 当中。架构中包含的节点如下</p>
+<ul>
+<li>orderer0 : 排序节点0，用于排序区块</li>
+<li>orderer1 : 排序节点1，用于排序区块</li>
+<li>orderer2 : 排序节点2，用于排序区块</li>
+<li>peer0-org1 : 组织1的Peer节点，用于区块的实际运算、背书以及记帐。</li>
+<li>cli-org1-peer : 用于操纵组织1的Peer节点</li>
+<li>peer0-org2 : 组织2的Peer节点，用于区块的实际运算、背书以及记帐。</li>
+<li>cli-org2-peer : 用于操纵组织2的Peer节点  </li>
+</ul>
+<p><img src="/2021/08/09/%E9%83%A8%E7%BD%B2fabric%E4%BA%8Ek8s%E4%B9%8B%E4%B8%8A/1.jpg"></p>
+<h4 id="2-2-存储存放规划"><a href="#2-2-存储存放规划" class="headerlink" title="2.2 存储存放规划"></a>2.2 存储存放规划</h4><table>
+<thead>
+<tr>
+<th>节点</th>
+<th>挂载路径</th>
+<th>路径说明</th>
+<th>PVC</th>
+<th>PV hostPath</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>orderer0</td>
+<td>/var/hyperledger/orderer/</td>
+<td>存放凭证</td>
+<td>orderer0-pvc</td>
+<td>./fabric/orderer0</td>
+</tr>
+<tr>
+<td>orderer0</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>orderer0-persist-pvc</td>
+<td>./fabric/orderer0persist</td>
+</tr>
+<tr>
+<td>orderer1</td>
+<td>/var/hyperledger/orderer/</td>
+<td>存放凭证</td>
+<td>orderer1-pvc</td>
+<td>./fabric/orderer1</td>
+</tr>
+<tr>
+<td>orderer1</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>orderer1-persist-pvc</td>
+<td>./fabric/orderer1persist</td>
+</tr>
+<tr>
+<td>orderer2</td>
+<td>/var/hyperledger/orderer/</td>
+<td>存放凭证</td>
+<td>orderer2-pvc</td>
+<td>./fabric/orderer2</td>
+</tr>
+<tr>
+<td>orderer2</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>orderer2-persist-pvc</td>
+<td>./fabric/orderer2persist</td>
+</tr>
+<tr>
+<td>Org1-Peer</td>
+<td>/etc/hyperledger/fabric/</td>
+<td>存放凭证</td>
+<td>peer0-org1-pvc</td>
+<td>./fabric/peer0org1</td>
+</tr>
+<tr>
+<td>Org1-Peer</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>peer0-org1-persist-pvc</td>
+<td>./fabric/peer0org1persist</td>
+</tr>
+<tr>
+<td>Org1-Peer-CLI</td>
+<td>/opt/gopath/src/github.com/ hyperledger/fabric/peer/crypto/</td>
+<td>存放凭证</td>
+<td>peer0-org1-pvc</td>
+<td>./fabric/peer0org1</td>
+</tr>
+<tr>
+<td>Org2-Peer</td>
+<td>/etc/hyperledger/fabric/</td>
+<td>存放凭证</td>
+<td>peer0-org2-pvc</td>
+<td>./fabric/peer0org2</td>
+</tr>
+<tr>
+<td>Org2-Peer</td>
+<td>/var/hyperledger/production</td>
+<td>持久化资料</td>
+<td>peer0-org2-persist-pvc</td>
+<td>./fabric/peer0org2persist</td>
+</tr>
+<tr>
+<td>Org2-Peer-CLI</td>
+<td>/opt/gopath/src/github.com/ hyperledger/fabric/peer/crypto/</td>
+<td>存放凭证</td>
+<td>peer0-org1-pvc</td>
+<td>./fabric/peer0org2</td>
+</tr>
+</tbody></table>
+<h3 id="三、准备凭证"><a href="#三、准备凭证" class="headerlink" title="三、准备凭证"></a>三、准备凭证</h3><p>Hyperledger Fabric 于节点沟通时必须依赖凭证进行沟通，因此必须先签发凭证。在凭证的签发过程中可以使用两种方式签发凭证</p>
+<ul>
+<li>cryptogen 命令<br>cryptogen 为 Hyperledger Fabric 生成凭证的命令列工具，于 crypto-config.yaml 定义 Orderer 以及各组织的Peer的数量。</li>
+<li>fabric-ca 服务<br>Fabric CA 是一个为 Hyperledger Fabric 签发凭证的工具，通常每个组织会有自己的 Fabric CA，通過fabric-ca client 获得凭证后，就可以用这些凭证访问Peer。</li>
+</ul>
+<p>在此范例中将以 cryptogen 命令列生成各节点所需凭证，以下为签发凭证的指令。可以查看 git repo 中的 crypto-config.yaml 为<strong>签发凭证设定文件</strong>，crypto-config则为<strong>签发结果</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cryptogen generate --config=crypto-config.yaml --output ./crypto-config</span><br></pre></td></tr></table></figure>
+
+<p>（notice：练习中，需要再次生成新的凭证设定文件时，需要将./crypto-config文件夹删除后，再行运行上述命令。否则凭证设定文件不会被更新覆盖！)</p>
+<h3 id="四、准备创世区块"><a href="#四、准备创世区块" class="headerlink" title="四、准备创世区块"></a>四、准备创世区块</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsOrdererGenesis -channelID devchan -outputBlock ./channel-artifacts/genesis.block</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、产生Channel-所需档案"><a href="#五、产生Channel-所需档案" class="headerlink" title="五、产生Channel 所需档案"></a>五、产生Channel 所需档案</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 产生Channel 所需档案</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID &quot;mychannel&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 产生 Org1 使用的 channel 设定文件</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/org1Anchors.tx  -channelID &quot;mychannel&quot; -asOrg org1MSP</span><br><span class="line"><span class="meta">#</span><span class="bash"> 产生 Org2 使用的 channel 设定文件</span></span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/org2Anchors.tx  -channelID &quot;mychannel&quot; -asOrg org2MSP</span><br></pre></td></tr></table></figure>
+
+<h3 id="六、同步档案至PV中"><a href="#六、同步档案至PV中" class="headerlink" title="六、同步档案至PV中"></a>六、同步档案至PV中</h3><p>在前述三、四、五章节中我们已经准备了以下内容</p>
+<ul>
+<li>各节点所需凭证</li>
+<li>创世区块</li>
+<li>Channel 设定档</li>
+</ul>
+<p>由于 Hyperledger 之 container 必须先将以上档案放置至正确位置后 container 才能正常启动。但本次安装不使用NFS 预先将档案填入，而是先启临时的 container 同步档案。<br>在本步骤我们将启动两个用于填充档案的 container</p>
+<table>
+<thead>
+<tr>
+<th>container 名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>orderer-bastion</td>
+<td>填充 orderer0-pvc,orderer1-pvc,orderer2-pvc 所需要的文档</td>
+</tr>
+<tr>
+<td>peer-bastion</td>
+<td>填充 peer0-org1-pvc,peer0-org2-pvc 所需要的文档</td>
+</tr>
+</tbody></table>
+<p>以下为同步文档的步骤</p>
+<p><strong>6.1 启动临时 container</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f /deploy-hyperledger-fabric-on-k8s/file-populate-bastion/</span><br></pre></td></tr></table></figure>
+<p>这个指令将会产生 pv/pvc/orderer-bastion/peer-bastion 这些资源</p>
+<p><strong>6.2 同步 Orderer 所需文档</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 登录进入 orderer-bastion</span></span><br><span class="line">kubectl exec -it $&#123;orderer-bastion-pod-name&#125; bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装 git 并 <span class="built_in">clone</span> deploy-hyperledger-fabric-on-k8s repo</span></span><br><span class="line">yum install git -y </span><br><span class="line">git clone https://github.com/willzhuang/deploy-hyperledger-fabric-on-k8s.git</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer0 创世区块</span></span><br><span class="line">cp deploy-hyperledger-fabric-on-k8s/channel-artifacts/genesis.block /orderer0-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer0 凭证</span></span><br><span class="line">cp -r deploy-hyperledger-fabric-on-k8s/crypto-config/ordererOrganizations/consortium/orderers/orderer0/* /orderer0-pvc/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer1 创世区块</span></span><br><span class="line">cp deploy-hyperledger-fabric-on-k8s/channel-artifacts/genesis.block /orderer1-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer1 凭证</span></span><br><span class="line">cp -r deploy-hyperledger-fabric-on-k8s/crypto-config/ordererOrganizations/consortium/orderers/orderer1/* /orderer1-pvc/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer2 创世区块</span></span><br><span class="line">cp deploy-hyperledger-fabric-on-k8s/channel-artifacts/genesis.block /orderer2-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 orderer2 凭证</span></span><br><span class="line">cp -r deploy-hyperledger-fabric-on-k8s/crypto-config/ordererOrganizations/consortium/orderers/orderer2/* /orderer2-pvc/</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.3 同步 Peer 所需要的文档</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 登录进入 peer-bastion</span></span><br><span class="line">kubectl exec -it $&#123;peer-bastion-pod-name&#125; bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装 git 並 <span class="built_in">clone</span> deploy-hyperledger-fabric-on-k8s repo</span></span><br><span class="line">yum install git -y </span><br><span class="line">git clone https://github.com/willzhuang/deploy-hyperledger-fabric-on-k8s.git</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org1 peer0 所需之凭证</span></span><br><span class="line">cp -r /deploy-hyperledger-fabric-on-k8s/crypto-config/peerOrganizations/org1/peers/peer0-org1/* peer0-org1-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org1 peer0 cli 所需之凭证</span></span><br><span class="line">cp -r /deploy-hyperledger-fabric-on-k8s/crypto-config/* /peer0-org1-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org1 peer0 所需之 channel设定文档</span></span><br><span class="line">cp /deploy-hyperledger-fabric-on-k8s/channel-artifacts/* peer0-org1-pvc/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org2 peer0 所需之凭证</span></span><br><span class="line">cp -r /deploy-hyperledger-fabric-on-k8s/crypto-config/peerOrganizations/org2/peers/peer0-org2/* peer0-org2-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org2 peer0 cli 所需之凭证</span></span><br><span class="line">cp -r /deploy-hyperledger-fabric-on-k8s/crypto-config/* /peer0-org2-pvc/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同步 org2 peer0 所需之 channel设定文档</span></span><br><span class="line">cp /deploy-hyperledger-fabric-on-k8s/channel-artifacts/* peer0-org2-pvc/</span><br></pre></td></tr></table></figure>
+
+<h3 id="七、启动-Orderer"><a href="#七、启动-Orderer" class="headerlink" title="七、启动 Orderer"></a>七、启动 Orderer</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 orderer cluster</span></span><br><span class="line">kubectl create -f /deploy-hyperledger-fabric-on-k8s/orderer/</span><br></pre></td></tr></table></figure>
+<p>內含 orderer0,orderer1,orderer2 所需的 deployment 与 service 资源</p>
+<h3 id="八、启动-Peer"><a href="#八、启动-Peer" class="headerlink" title="八、启动 Peer"></a>八、启动 Peer</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 org1 peer0 </span></span><br><span class="line">kubectl create -f /deploy-hyperledger-fabric-on-k8s/org1/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 內含 org1 peer0/cli 所需的 deployment,configmap,service 资源</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动 org2 peer0 </span></span><br><span class="line">kubectl create -f /deploy-hyperledger-fabric-on-k8s/org2/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 內含 org2 peer0/cli 所需的 deployment,configmap,service 资源</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="九、创建channel"><a href="#九、创建channel" class="headerlink" title="九、创建channel"></a>九、创建channel</h3><p><strong>9.1 将 org1 peer0 加入 channel</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 登录进入 cli pod </span></span><br><span class="line">kubectl exec -it $&#123;org1-peer0-cli-pod-name&#125; sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 产生 channel 区块</span></span><br><span class="line">peer channel create -o orderer0:7050 -c mychannel -f ./scripts/channel-artifacts/channel.tx --tls true --cafile $ORDERER_CA</span><br></pre></td></tr></table></figure>
+
+<p>运行成功后，log信息如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel create -o orderer0:7050 -c mychannel -f ./scripts/channel-artifacts/channel.tx -</span><br><span class="line">-tls true --cafile $ORDERER_CA</span><br><span class="line">2021-08-10 05:41:03.212 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:03.242 UTC [cli.common] readBlock -&gt; INFO 002 Expect block, but got status: &amp;&#123;NOT_FOUND&#125;</span><br><span class="line">2021-08-10 05:41:03.246 UTC [channelCmd] InitCmdFactory -&gt; INFO 003 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:03.447 UTC [cli.common] readBlock -&gt; INFO 004 Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:03.450 UTC [channelCmd] InitCmdFactory -&gt; INFO 005 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:03.651 UTC [cli.common] readBlock -&gt; INFO 006 Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:03.654 UTC [channelCmd] InitCmdFactory -&gt; INFO 007 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:03.857 UTC [cli.common] readBlock -&gt; INFO 008 Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:03.866 UTC [channelCmd] InitCmdFactory -&gt; INFO 009 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:04.068 UTC [cli.common] readBlock -&gt; INFO 00a Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:04.070 UTC [channelCmd] InitCmdFactory -&gt; INFO 00b Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:04.273 UTC [cli.common] readBlock -&gt; INFO 00c Expect block, but got status: &amp;&#123;SERVICE_UNAVAILABLE&#125;</span><br><span class="line">2021-08-10 05:41:04.277 UTC [channelCmd] InitCmdFactory -&gt; INFO 00d Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:41:04.480 UTC [cli.common] readBlock -&gt; INFO 00e Received block: 0</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 加入 channel</span></span><br><span class="line">peer channel join -b mychannel.block</span><br></pre></td></tr></table></figure>
+
+<p>运行成功后，log信息如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel join -b mychannel.block</span><br><span class="line">2021-08-10 05:48:59.716 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 05:48:59.736 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看是否在 channel 当中</span></span><br><span class="line">peer channel list</span><br></pre></td></tr></table></figure>
+<p><strong>9.2 將 org2 peer0 加入 channel</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 登录进入 cli pod </span><br><span class="line">kubectl exec -it pod $&#123;org2-peer0-cli-pod-name&#125; sh</span><br><span class="line"></span><br><span class="line"># 取得 channel 区块</span><br><span class="line">peer channel fetch 0 mychannel.block -c mychannel -o orderer0:7050 --tls --cafile $ORDERER_CA</span><br><span class="line"></span><br><span class="line"># 加入 channel</span><br><span class="line">peer channel join -b mychannel.block</span><br><span class="line"></span><br><span class="line"># 查看是否在 channel 当中</span><br><span class="line">peer channel list</span><br></pre></td></tr></table></figure>
+
+
+<p>运行成功后，log信息如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel fetch 0 mychannel.block -c mychannel -o orderer0:7050 --tls --cafile $ORDERER_CA</span><br><span class="line">2021-08-10 06:05:04.550 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 06:05:04.553 UTC [cli.common] readBlock -&gt; INFO 002 Received block: 0</span><br><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel join -b mychannel.block</span><br><span class="line">2021-08-10 06:05:16.493 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2021-08-10 06:05:16.513 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer # peer channel list</span><br><span class="line">2021-08-10 06:05:24.222 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">Channels peers has joined: </span><br><span class="line">mychannel</span><br></pre></td></tr></table></figure>
+
+<h3 id="十、Fabric节点上安装外的Chaincode"><a href="#十、Fabric节点上安装外的Chaincode" class="headerlink" title="十、Fabric节点上安装外的Chaincode"></a>十、Fabric节点上安装外的Chaincode</h3><p><strong>10.1 安装chaincode</strong><br>‘marbles’ 链码作为范例</p>
+<p>打包org1</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入github的chaincode/packaging</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将connection.json 打包成为 code.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar cfz code.tar.gz connection.json</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">再將code.tar.gz metadata.json包成marbles-org1.tgz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar cfz marbles-org1.tgz code.tar.gz metadata.json</span></span><br></pre></td></tr></table></figure>
+<p>将org1 tar文档安装到peer cli pod中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 将marbles-org1.tgz放入peer pod</span><br><span class="line">kubectl cp marbles-org1.tgz hyperledger&#x2F;$&#123;cli-org1-name&#125;:&#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer</span><br><span class="line"></span><br><span class="line"># 登录进入$&#123;cli-org1-name&#125; pod</span><br><span class="line">kubectl exec -it $&#123;cli-org1-name&#125; -- &#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line"># 在peer-cli上安装chaincode</span><br><span class="line">$ peer lifecycle chaincode install marbles-org1.tgz</span><br><span class="line"></span><br><span class="line"># 查询链码，识别字符串</span><br><span class="line">$ peer lifecycle chaincode queryinstalled</span><br></pre></td></tr></table></figure>
+<p>打包org2，如打包or1一样的步骤，请修改connection.json中的address</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;address&quot;: &quot;chaincode-marbles-org2.hyperledger:7052&quot;</span><br></pre></td></tr></table></figure>
+
+<p>依照下列打包步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ rm -f code.tar.gz</span><br><span class="line">$ tar cfz code.tar.gz connection.json</span><br><span class="line">$ tar cfz marbles-org2.tgz code.tar.gz metadata.json</span><br><span class="line">$ peer lifecycle chaincode install marbles-org2.tgz</span><br><span class="line"></span><br><span class="line"># 查询链码，识别字符串</span><br><span class="line">$ peer lifecycle chaincode queryinstalled</span><br></pre></td></tr></table></figure>
+
+<p>至此，已完成外部链码设置。</p>
+<hr>
+<p><strong>10.2 部署”智能合约”</strong></p>
+<p>制作golang的alpine镜像文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t chaincode&#x2F;marbles:1.0 .</span><br><span class="line"></span><br><span class="line"># 将文件推送至dockerhub</span><br><span class="line">$ docker login</span><br><span class="line">$ docker push chaincode&#x2F;marbles:1.0</span><br></pre></td></tr></table></figure>
+
+<p>进入github中 chaincode\k8s ，找到org1-chaincode-deployment.yaml和org2-chaincode-deployment.yaml中的CHAINCODE_CCID</p>
+<p>将yaml文件中的CHAINCODE_CCID更换成为对应的 chaincode 识别码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 部署 chaincode 到aks上</span><br><span class="line">$ kubectl create -f chaincode&#x2F;k8s</span><br></pre></td></tr></table></figure>
+<p>完成部署。</p>
+<hr>
+<p><strong>10.3审核链码的安装</strong></p>
+<p>请在peer-cli-org1/peer-cli-org2 这2个pod中允许链码的安装，记得修改CHAINCODE_CCID<br>※peer-cli-org1 及 peer-cli-org2的CHAINCODE_CCID 需要对应到各自的chaincode识别码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ peer lifecycle chaincode approveformyorg --channelID mychannel --name marbles --version 1.0 --init-required --package-id marbles:e001937433673b11673d660d142c722fc372905db87f88d2448eee42c9c63064 --sequence 1 -o orderer0:7050 --tls --cafile $ORDERER_CA --signature-policy &quot;AND (&#39;org1MSP.peer&#39;,&#39;org2MSP.peer&#39;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>检查所有org允许状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name marbles --version 1.0 --init-require</span><br><span class="line">d --sequence 1 -o -orderer0:7050 --tls --cafile $ORDERER_CA --signature-policy &quot;AND (&#39;org1MSP.peer&#39;,&#39;org2MSP.peer&#39;)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>至此，2个peer-cli都审核完毕。</p>
+<p>之后提交到channel 中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">peer lifecycle chaincode commit -o orderer0:7050 --channelID mychannel --name marbles --version 1.0 --sequence 1 --init-required --tls true --cafile $ORDERER_CA --peerAddresses peer0-org1:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org1&#x2F;peers&#x2F;peer0-org1&#x2F;tls&#x2F;ca.crt --peerAddresses peer0-org2:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org2&#x2F;peers&#x2F;peer0-org2&#x2F;tls&#x2F;ca.crt --signature-policy &quot;AND (&#39;org1MSP.peer&#39;,&#39;org2MSP.peer&#39;)&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>10.4测试</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 查询安装的链码</span><br><span class="line">peer lifecycle chaincode queryinstalled</span><br><span class="line"># 查询审核通过的链码</span><br><span class="line">peer lifecycle chaincode queryapproved --channelID mychannel --name marbles</span><br><span class="line"># 查询提交完成的链码</span><br><span class="line">peer lifecycle chaincode querycommitted --channelID mychannel --name marbles</span><br><span class="line"># 塞弹珠(第一次)</span><br><span class="line">peer chaincode invoke -o orderer0:7050 --isInit --tls true --cafile $ORDERER_CA -C mychannel -n marbles \</span><br><span class="line">--peerAddresses peer0-org1:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org1&#x2F;peers&#x2F;peer0-org1&#x2F;tls&#x2F;ca.crt  \</span><br><span class="line">--peerAddresses peer0-org2:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org2&#x2F;peers&#x2F;peer0-org2&#x2F;tls&#x2F;ca.crt  \</span><br><span class="line">-c &#39;&#123;&quot;Args&quot;:[&quot;initMarble&quot;,&quot;marble1&quot;,&quot;blue&quot;,&quot;35&quot;,&quot;tom&quot;]&#125;&#39; --waitForEvent</span><br><span class="line"># 塞弹珠</span><br><span class="line">peer chaincode invoke -o orderer0:7050 --tls true --cafile $ORDERER_CA -C mychannel -n marbles \</span><br><span class="line">--peerAddresses peer0-org1:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org1&#x2F;peers&#x2F;peer0-org1&#x2F;tls&#x2F;ca.crt \</span><br><span class="line">--peerAddresses peer0-org2:7051 --tlsRootCertFiles &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;crypto&#x2F;peerOrganizations&#x2F;org2&#x2F;peers&#x2F;peer0-org2&#x2F;tls&#x2F;ca.crt \</span><br><span class="line">-c &#39;&#123;&quot;Args&quot;:[&quot;initMarble&quot;,&quot;marble5&quot;,&quot;red&quot;,&quot;50&quot;,&quot;tom&quot;]&#125;&#39; --waitForEvent</span><br><span class="line"># 查询弹珠</span><br><span class="line">peer chaincode query -C mychannel -n marbles -c &#39;&#123;&quot;Args&quot;:[&quot;readMarble&quot;,&quot;marble5&quot;]&#125;&#39;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="开发Client-Application"><a href="#开发Client-Application" class="headerlink" title="开发Client Application"></a>开发Client Application</h3><p>目前hyperledger不对外，请使用kubectl port-forward的方式连进去。<br>指令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl port-forward $&#123;pord-id&#125; 7050:7050</span><br></pre></td></tr></table></figure>
+
+<p>参考 <a target="_blank" rel="noopener" href="https://github.com/hyperledger/fabric-samples/tree/master/asset-transfer-basic">fabric-samples</a> 中typescript所撰写的范例 ※另有java， go 语言的范例!!</p>
+<p>以下为typerscript 范例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">async function main() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        const ccpPath &#x3D; path.resolve(__dirname, &#39;..&#39;, &#39;connection.json&#39;);</span><br><span class="line"></span><br><span class="line">        const fileExists &#x3D; fs.existsSync(ccpPath);</span><br><span class="line">        if (!fileExists) &#123;</span><br><span class="line">            throw new Error(&#39;no such file or directory: $&#123;ccpPath&#125;&#39;);</span><br><span class="line">        &#125;</span><br><span class="line">        const contents &#x3D; fs.readFileSync(ccpPath, &#39;utf8&#39;);</span><br><span class="line">        console.log(contents);</span><br><span class="line"></span><br><span class="line">        const connectionProfile &#x3D; JSON.parse(contents);</span><br><span class="line">        const gateway &#x3D; new Gateway();</span><br><span class="line">        const wallet &#x3D; await buildWallet(walletPath);</span><br><span class="line"></span><br><span class="line">        const identity: X509Identity &#x3D; &#123;</span><br><span class="line">            credentials: &#123;</span><br><span class="line">                &#x2F;&#x2F;crypto-config\peerOrganizations\org1\users\Admin@org1\msp\signcerts\Admin@org1-cert.pem</span><br><span class="line">                certificate: &#39;-----BEGIN CERTIFICATE-----\nMIICBjCCAaygAwIBAgIRAKeXh5QGRlhFCf31amakNiowCgYIKoZIzj0EAwIwWzEL</span><br><span class="line">                &#x2F;&#x2F;crypto-config\peerOrganizations\org1\users\Admin@org1\msp\keystore</span><br><span class="line">                privateKey: &#39;-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg9tkGBGl8aIWYbN&#x2F;i\nqKjl5dK3D3qXx6ltn3YrlH4NFPehRANCAATMJIf0mY3FQDysZOevzbsBwqttfVuW\nwoIFV9Z0TwBEXXAQ0HPd9u77zV4my0onty3rJnWKF2kuhIn5PUzz61zk\n-----END PRIVATE KEY-----\n&#39;,</span><br><span class="line">            &#125;,</span><br><span class="line">            mspId: org1UserId,</span><br><span class="line">            type: &#39;X.509&#39;,</span><br><span class="line">        &#125;;</span><br><span class="line">        await wallet.put(org1UserId, identity);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        const gatewayOpts: GatewayOptions &#x3D; &#123;</span><br><span class="line">            wallet,</span><br><span class="line">            identity: org1UserId,</span><br><span class="line">            discovery: &#123; enabled: false, asLocalhost: false &#125;, &#x2F;&#x2F; using asLocalhost as this gateway is using a fabric network deployed locally</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        await gateway.connect(connectionProfile, gatewayOpts);</span><br><span class="line"></span><br><span class="line">        const network &#x3D; await gateway.getNetwork(&#39;mychannel&#39;);</span><br><span class="line"></span><br><span class="line">        const contract &#x3D; network.getContract(&#39;marbles&#39;);</span><br><span class="line">        let result &#x3D; await contract.evaluateTransaction(&#39;readMarble&#39;, &#39;marble2&#39;);</span><br><span class="line">        console.log(&#96;*** Result: $&#123;prettyJSONString(result.toString())&#125;&#96;);</span><br><span class="line">    &#125; catch (error) &#123;</span><br><span class="line">        console.error(&#96;******** FAILED to run the application: $&#123;error&#125;&#96;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main();</span><br></pre></td></tr></table></figure>
+
+
+<p>上述为app.ts，此app.ts会读取connection.json档，此档用于定义peer url以及peer的tls凭证路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;name&quot;: &quot;Network&quot;,</span><br><span class="line">	&quot;version&quot;: &quot;1.1&quot;,</span><br><span class="line">	&quot;channels&quot;: &#123;</span><br><span class="line">		&quot;mychannel&quot;: &#123;</span><br><span class="line">			&quot;peers&quot;: [</span><br><span class="line">				&quot;peer0-org1&quot;,</span><br><span class="line">				&quot;peer0-org2&quot;</span><br><span class="line">			]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;organizations&quot;: &#123;</span><br><span class="line">		&quot;Org1&quot;: &#123;</span><br><span class="line">			&quot;mspid&quot;: &quot;org1MSP&quot;,</span><br><span class="line">			&quot;peers&quot;: [</span><br><span class="line">				&quot;peer0-org1&quot;</span><br><span class="line">			]</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;Org2&quot;: &#123;</span><br><span class="line">			&quot;mspid&quot;: &quot;org2MSP&quot;,</span><br><span class="line">			&quot;peers&quot;: [</span><br><span class="line">				&quot;peer0-org2&quot;</span><br><span class="line">			]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;peers&quot;: &#123;</span><br><span class="line">		&quot;peer0-org1&quot;: &#123;</span><br><span class="line">			&quot;url&quot;: &quot;grpcs:&#x2F;&#x2F;peer0-org1:7051&quot;,</span><br><span class="line">			&quot;grpcOptions&quot;: &#123;</span><br><span class="line">				&quot;ssl-target-name-override&quot;: &quot;peer0-org1&quot;</span><br><span class="line">			&#125;,</span><br><span class="line">			&quot;tlsCACerts&quot;: &#123;</span><br><span class="line">				&quot;path&quot;: &quot;crypto-config\peerOrganizations\org1\tlsca\tlsca.org1-cert.pem&quot;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;peer0-org2&quot;: &#123;</span><br><span class="line">			&quot;url&quot;: &quot;grpcs:&#x2F;&#x2F;peer0-org2:7051&quot;,</span><br><span class="line">			&quot;grpcOptions&quot;: &#123;</span><br><span class="line">				&quot;ssl-target-name-override&quot;: &quot;peer0-org2&quot;</span><br><span class="line">			&#125;,</span><br><span class="line">			&quot;tlsCACerts&quot;: &#123;</span><br><span class="line">				&quot;path&quot;: &quot;crypto-config\peerOrganizations\org2\tlsca\tlsca.org2-cert.pem&quot;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>application连到peer的时候必须要有tls 凭证去验证peer service是否安全及正确。</li>
+<li>当交易的时候需要提供该使用者(user or admin)的交易凭证(x509 cert +private key)</li>
+</ul>
+<blockquote>
+<p>路径对应如下：<br><strong>tls CA Cert：</strong> crypto-config\peerOrganizations\org1\tlsca\tlsca.org1-cert.pem<br><strong>X509 certificate：</strong> crypto-config\peerOrganizations\org1\users\Admin@org1\msp\signcerts\Admin@org1-cert.pem<br><strong>X509 privateKey：</strong> crypto-config\peerOrganizations\org1\users\Admin@org1\msp\keystore\priv_sk<br>[color=#d85887]</p>
+</blockquote>
+<p>成功收到资料如图<br><img src="/2021/08/09/%E9%83%A8%E7%BD%B2fabric%E4%BA%8Ek8s%E4%B9%8B%E4%B8%8A/2.png"></p>
+<hr>
+<h3 id="附录、参考连结"><a href="#附录、参考连结" class="headerlink" title="附录、参考连结"></a>附录、参考连结</h3><ol>
+<li>Hyperledger 参考链接</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/zh_CN/release-2.2/whatis.html#">Hyperledger 官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hyperledger/fabric-samples/tree/v2.1.1">Hyperledger Git Repository</a></li>
+<li><a target="_blank" rel="noopener" href="https://hyperledgercn.github.io/hyperledgerDocs/">Hyperledger 中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.lijiaocn.com/%E9%A1%B9%E7%9B%AE/2018/04/26/hyperledger-fabric-deploy.html">Hyperledger 手动部署全纪录</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/swlh/how-to-implement-hyperledger-fabric-external-chaincodes-within-a-kubernetes-cluster-fd01d7544523">部署Hyperledger2.2 于 Kubenetes</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vanitas92/fabric-external-chaincodes/tree/v2.2.0">部署Hyperledger2.2 于 Kubenetes 代码</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/134024f823a0">凭证说明</a></li>
+</ul>
+<ol start="2">
+<li>Kubenetes 参考链接</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/">k8s 佈署用指令參考</a></li>
+</ul>
+<ol start="3">
+<li>NFS 架构参考链接</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.skywebster.com/how-to-setup-nfs-server-on-centos-7-rhel-7/">NFS 架构参考</a></li>
+</ul>
+<ol start="4">
+<li><p>部署 fabric 和 CA 与 Kubenetes 之上</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/hyperledger-fabric-k8s">Deploy Hyperledger Fabric network on Kubernetes</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -606,117 +956,6 @@
 <p>​    您可能已经注意到，我们引入了两个新的运算符 : <code>&lt;--</code> 和 <code>===</code> 。<code>&lt;--</code> 和 <code>--&gt;</code> 操作符运算符只为信号分配一个值，而不创建任何约束。<code>===</code> 操作符添加约束而不分配值。如前所述，<code>&lt;==</code> 为信号分配一个值并添加一个约束。这意味着它只是 <code>&lt;--</code>和 <code>===</code> 的组合。但是，由于并非总是希望在同一步骤中同时完成这两个步骤，因此circom 的灵活性使我们可以将这一步分为两步。</p>
 <p>​    事实证明，电路仍然存在一个细微的问题：由于运算是在有限域（Z_r）上进行的，因此我们需要确保乘法不会溢出。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>​    <a target="_blank" rel="noopener" href="https://github.com/iden3/circomlib">circomlib</a> 写好了一些基本的电路，如：binaritzations、comparators, eddsa, hashes, merkle trees 等等。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/" class="post-title-link" itemprop="url">椭圆曲线密码</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-04-29 14:50:04 / Modified: 19:45:52" itemprop="dateCreated datePublished" datetime="2021-04-29T14:50:04+08:00">2021-04-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>​    椭圆曲线和很多学习完基础代数之后见过的方程差不多。y在等号的左边，而x在等号的右边。椭圆曲线有如下的形式：<br>$$<br>y^2 = x^3+ax+b<br>$$<br>​    你肯定接触过其他类似的方程。比如，在基础代数课上就学过线性函数：<br>$$<br>y=mx+b<br>$$<br>​    你可能还记得m叫作斜率，b叫作截距。你也能画出线性函数图像。类似地，你可能也熟悉二次函数和它的图像：<br>$$<br>y=ax^2+bx+c<br>$$<br>​    在学习代数时，你还接触过更高阶的函数比如三次函数及其图像。<br>$$<br>y=ax^3+bx^2+cx+d<br>$$<br>​    椭圆曲线和他们没有太大的区别。椭圆曲线和三次函数不同的地方在于等号左边是y的平方，这使得函数图像沿x轴对称：<br>$$<br>y^2 = x^3 + ax + b<br>$$<br><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/1.png"></p>
-<p>​    因为椭圆曲线的等号左边是y的平方，所以它也不像三次函数那样陡峭。此外，椭圆曲线可能是不想接的，如下图：</p>
-<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/2.png"></p>
-<p>​    比如，比特币使用的椭圆曲线被称为secp256k1，使用下面的方程：<br>$$<br>y^2=x^3+7<br>$$</p>
-<h3 id="椭圆曲线的加法"><a href="#椭圆曲线的加法" class="headerlink" title="椭圆曲线的加法"></a>椭圆曲线的加法</h3><p>过曲线上的两点A、B画一条直线，找到直线与椭圆曲线的交点，交点关于x轴对称位置的点，定义为A+B，即为加法。如下图所示：A + B = C</p>
-<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/3.png"></p>
-<p>​    椭圆曲线因其点加法运算(point addition)而被广泛使用。</p>
-<h3 id="椭圆曲线的二倍运算"><a href="#椭圆曲线的二倍运算" class="headerlink" title="椭圆曲线的二倍运算"></a>椭圆曲线的二倍运算</h3><p>​    上述方法无法解释A + A，即两点重合的情况，因此在这种情况下，将椭圆曲线在A点的切线，与椭圆曲线的交点，交点关于x轴对称位置的点，定义为A + A，即2A，即为二倍运算。</p>
-<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/4.png"></p>
-<h3 id="同余运算"><a href="#同余运算" class="headerlink" title="同余运算"></a>同余运算</h3><p>​    同余就是有相同的余数，两个整数 a、 b，若它们除以正整数 m所得的余数相等，则称 a，b对于模m同余。<br>$$<br>a≡b (mod m)<br>$$</p>
-<h3 id="有限域"><a href="#有限域" class="headerlink" title="有限域"></a>有限域</h3><p>​    椭圆曲线是连续的，并不适合用于加密，所以必须把椭圆曲线变成离散的点，要把椭圆曲线定义在有限域上。而椭圆曲线密码所使用的椭圆曲线是定义在有限域内，有限域最常见的例子是有限域GF(p)，指给定某质数p，由0,1,2…,p-1共p个元素组成的整数集合中加法、二倍运算。例如GF(233)就是：<br>$$<br>y^2=(x^3+7) (mod 223)<br>$$<br>详见上一篇帖子。</p>
-<h3 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a>乘法逆元</h3><p>在模7乘法中：</p>
-<ul>
-<li>1的逆元为1 (1*1)%7=1</li>
-<li>2的逆元为4 (2*4)%7=1</li>
-<li>3的逆元为5 (3*5)%7=1</li>
-<li>4的逆元为2 (4*2)%7=1</li>
-<li>5的逆元为3 (5*3)%7=1</li>
-<li>6的逆元为6 (6*6)%7=1</li>
-</ul>
-<h3 id="数学解释"><a href="#数学解释" class="headerlink" title="数学解释"></a>数学解释</h3><p>​    并不是所有的椭圆曲线都适合加密，上述是一类可以用来加密的椭圆曲线，也是最为简单的一类。</p>
-<p>针对曲线Ep(a,b)表示为：<br>$$<br>y^2=x^3+ax+b(mod p), x,y \in [0,p],p为质数<br>$$<br>​    该曲线关于x轴对称。选择两个满足下列条件的小于p(p为素数)的非负整数a、b，要求满足以下条件：<br>$$<br>4a^3+27b^2≠0(mod p),a和b是小于p的非负整数<br>$$<br>1、有限域的负元</p>
-<p>​    P(x,y)的负元是(x,-ymodp)=(x,p-y)</p>
-<p>2、有限域的加法，P+Q</p>
-<p>​    P(x1,y1)，Q(x2,y2)和R(x3,y3)三点，其中R是PQ直线与曲线的交点的关于x轴的对称点，即 R=P+Q，有如下关系：<br>$$<br>x_3≡k^2-x_1-x_2(modp),y_3≡k(x_1-x_3)-y_1(modp)<br>$$<br>3、斜率计算</p>
-<p>​    若P=Q，即计算P点切线，则<br>$$<br>k=(3x_2+a) \div (2y_1)<br>$$<br>​    若P≠Q，则<br>$$<br>k=(y_2-y_1) \div (x_2-x_1)<br>$$</p>
-<h3 id="椭圆曲线加解密算法原理"><a href="#椭圆曲线加解密算法原理" class="headerlink" title="椭圆曲线加解密算法原理"></a>椭圆曲线加解密算法原理</h3><p>​    设私钥、公钥分别为d、Q，即Q = dG，其中G为基点，椭圆曲线上的已知G和dG，求d是非常困难的，也就是说已知公钥和基点，想要算出私钥是非常困难的。<em>其中基点是椭圆曲线上选择的一个点，这个点能够保证满足dG=∞的最小正整数n足够大，也就是阶足够大。1&lt;私钥&lt;n，大于n的私钥必能在[1,n)中找到对应的私钥b使得aG=bG，换句话说也就是有足够多的私钥。</em><br><strong>公钥加密：</strong>选择随机数r，将消息M生成密文C，该密文是一个点对，C = {rG, M+rQ}，其中Q为公钥。<br><strong>私钥解密</strong>：M + rQ - d(rG) = M + r(dG) - d(rG) = M，其中d、Q分别为私钥、公钥。</p>
-<h3 id="椭圆曲线签名算法原理"><a href="#椭圆曲线签名算法原理" class="headerlink" title="椭圆曲线签名算法原理"></a>椭圆曲线签名算法原理</h3><p>​    椭圆曲线签名算法(ECDSA)。设私钥、公钥分别为d、Q，即Q = dG，其中G为基点。</p>
-<p>私钥签名：</p>
-<ul>
-<li>选择随机数r，计算点rG(x, y)。</li>
-<li>根据随机数r、消息M的哈希h、私钥d，计算s = (h + dx)/r。　　</li>
-<li>将消息M、和签名{rG, s}发给接收方。</li>
-</ul>
-<p>公钥验证签名：　　</p>
-<ul>
-<li>接收方收到消息M、以及签名{rG=(x,y), s}。　　</li>
-<li>根据消息求哈希h。　　</li>
-<li>使用发送方公钥Q计算：hG/s + xQ/s，并与rG比较，如相等即验签成功。<br>原理：hG/s + xQ/s = hG/s + x(dG)/s = (h+xd)G/s = r(h+xd)G / (h+dx) = rG</li>
-</ul>
-<h3 id="签名过程"><a href="#签名过程" class="headerlink" title="签名过程"></a>签名过程</h3><p>​    假设要签名的消息是一个字符串：“Hello World!”。DSA签名的第一个步骤是对待签名的消息生成一个消息摘要，不同的签名算法使用不同的消息摘要算法，而ECDSA256使用SHA256生成256比特的摘要。</p>
-<p>​    摘要生成结束后，应用签名算法对摘要进行签名：</p>
-<ul>
-<li>产生一个随机数k</li>
-<li>利用随机数k，计算出两个大数r和s。将r和s拼在一起就构成了对消息摘要的签名。<br>这里需要注意的是，因为随机数k的存在，对于同一条消息，使用同一个算法，产生的签名是不一样的。从函数的角度来理解，签名函数对同样的输入会产生不同的输出。因为函数内部会将随机值混入签名的过程。</li>
-</ul>
-<h3 id="验证过程"><a href="#验证过程" class="headerlink" title="验证过程"></a>验证过程</h3><p>​    关于验证过程，这里不讨论它的算法细节。从宏观上看，消息的接收方从签名中分离出r和s，然后利用公开的密钥信息和s计算出r。如果计算出的r和接收到的r值相同，则表示验证成功，否则，表示验证失败。</p>
 
       
     </div>
