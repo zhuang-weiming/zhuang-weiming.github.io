@@ -12659,4 +12659,37 @@
         <tag>加密</tag>
       </tags>
   </entry>
+  <entry>
+    <title>fhEVM-confidential smart contracts on the EVM using FHE</title>
+    <url>/2024/10/31/fhEVM-confidential%20smart%20contracts%20on%20the%20EVM%20using%20FHE/</url>
+    <content><![CDATA[<h2 id="https-github-com-zama-ai-fhevm"><a href="#https-github-com-zama-ai-fhevm" class="headerlink" title="https://github.com/zama-ai/fhevm"></a><a href="https://github.com/zama-ai/fhevm">https://github.com/zama-ai/fhevm</a></h2><p><strong>fhEVM</strong> is a technology that enables confidential smart contracts on the EVM using fully homomorphic encryption (FHE).</p>
+<ul>
+<li><strong>Solidity integration:</strong> fhEVM contracts are simple solidity contracts that are built using traditional solidity toolchains.</li>
+<li><strong>Simple developer experience:</strong> Developers can use the <code>euint</code> data types to mark which part of their contracts should be private.</li>
+<li><strong>Programmable privacy:</strong> All the logic for access control of encrypted states is defined by developers in their smart contracts.</li>
+<li><strong>High precision encrypted integers :</strong> Up to 256 bits of precision for integers</li>
+<li><strong>Full range of operators :</strong> All typical operators are available: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>&lt;</code>, <code>&gt;</code>, <code>==</code>, …</li>
+<li><strong>Encrypted if-else conditionals :</strong> Check conditions on encrypted states</li>
+<li><strong>On-chain PRNG :</strong> Generate secure randomness without using oracles</li>
+<li><strong>Configurable decryption :</strong> Threshold, centralized or KMS decryption</li>
+<li><strong>Unbounded compute Depth :</strong> Unlimited consecutive FHE operations<br>Even Circle build a confidential ERC20 on fhEVM - <a href="https://github.com/Inco-fhevm/confidential-erc20-framework">https://github.com/Inco-fhevm/confidential-erc20-framework</a> .<br>Let’s deep dive in it:<h2 id="Decrypt-and-reencrypt"><a href="#Decrypt-and-reencrypt" class="headerlink" title="Decrypt and reencrypt"></a>Decrypt and reencrypt</h2>On fhevm blockchain - ZAMA team built, private key is owned by a Key Management Service (KMS). If the plaintext value is needed at some point, there are two ways to obtain it. Both methods are handled by a service called the Gateway.<br>fhevm allow explicit decryption requests for any encrypted type. The values are decrypted with the network private key.<br><img src="/2024/10/31/fhEVM-confidential%20smart%20contracts%20on%20the%20EVM%20using%20FHE/1.png"><br>the detail implementation ==&gt; <a href="https://docs.zama.ai/fhevm/guides/decrypt">https://docs.zama.ai/fhevm/guides/decrypt</a></li>
+</ul>
+<p>Reencryption is performed on the client side by calling the gateway service using the <a href="https://github.com/zama-ai/fhevmjs/">fhevmjs</a> library.</p>
+<p>Zama has another project of FHE on AI — <a href="https://github.com/zama-ai/concrete-ml">https://github.com/zama-ai/concrete-ml</a></p>
+<h2 id="confidential-erc20"><a href="#confidential-erc20" class="headerlink" title="confidential-erc20"></a>confidential-erc20</h2><p><a href="https://www.inco.org/" title="https://www.inco.org/">https://www.inco.org/</a> and <a href="https://www.circle.com/en/circle-research">Circle</a> publish a framework <a href="https://github.com/Inco-fhevm/confidential-erc20-framework">https://github.com/Inco-fhevm/confidential-erc20-framework</a> which is leveraging on <strong>fhEVM</strong>:</p>
+<ul>
+<li>conceals balances.</li>
+<li>transaction amounts.</li>
+<li>optional viewing and transfer rules to meet regulatory obligations or enhance programmatic risk management.</li>
+<li>the counter parties addresses are published on public blockchain.</li>
+<li>the private key is also configured as kms-service.</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>零知识证明</tag>
+        <tag>密码学</tag>
+        <tag>EVM</tag>
+        <tag>加密</tag>
+      </tags>
+  </entry>
 </search>
