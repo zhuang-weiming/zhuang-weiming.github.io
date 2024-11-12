@@ -10740,118 +10740,6 @@
       </tags>
   </entry>
   <entry>
-    <title>比较-隐私交易Nightfall和Zeto和Zether</title>
-    <url>/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether/</url>
-    <content><![CDATA[<p>以下是 <a href="https://github.com/EYBlockchain/nightfall_3">Nightfall_3</a>、<a href="https://github.com/hyperledger-labs/zeto">Zeto</a> 和 <a href="https://github.com/Consensys/anonymous-zether">Zether</a> 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：</p>
-<table>
-<thead>
-<tr>
-<th><strong>Attribute</strong></th>
-<th><strong>Nightfall_3</strong></th>
-<th><strong>Zeto</strong></th>
-<th><strong>Zether</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Privacy Algorithm</strong></td>
-<td>ZK-SNARKS, Groth16, Plonk, Marlin, Nova by Circom</td>
-<td>ZK-SNARKS, Groth16, Plonk, Marlin, Nova by Circom</td>
-<td>Bullet-Proof with ElGamal encryption and homomorphic addition</td>
-</tr>
-<tr>
-<td><strong>Transaction Privacy</strong></td>
-<td>Very high, anonymity, confidentiality, non-traceability</td>
-<td>Very high, anonymity, confidentiality, non-traceability</td>
-<td>Medium, confidentiality, partial anonymity through the usage of anonymity sets (with size limitation) but submit encrypted zero.</td>
-</tr>
-<tr>
-<td><strong>Anonymity</strong></td>
-<td>Extremely high, anonymity achieved with hashes and ZKPs.</td>
-<td>Extremely high, anonymity achieved with hashes and ZKPs.</td>
-<td>Medium, the identity of transactors hidden among the anonymity set, but its size can not be bigger than 8.</td>
-</tr>
-<tr>
-<td><strong>Transaction Model</strong></td>
-<td>UTXO</td>
-<td>UTXO</td>
-<td>Account balance model</td>
-</tr>
-<tr>
-<td><strong>Non-repudiation</strong></td>
-<td>Not currently supported, transaction submitters can deny.</td>
-<td>Supported, when using the circuit requiring encrypted secrets for the authority.</td>
-<td>Not currently supported, auditing balance requires a special viewing key that involves additional cryptography.</td>
-</tr>
-<tr>
-<td><strong>Public Chain Support</strong></td>
-<td>Supported on Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
-<td>Supported on Ethereum, Optimistic Layer 2, Polygon, etc.</td>
-<td>Supported on Ethereum, Optimistic Layer 2, Polygon, etc. ZK Rollup deployment has failed.</td>
-</tr>
-<tr>
-<td><strong>Transaction Cost</strong></td>
-<td>Low, ZK verification happens off-chain.</td>
-<td>High, ZK SNARKS verification on-chain with varied cost depending on the usage of encryption and non-traceability.</td>
-<td>High, bulletproof verification on-chain is more costly than ZK SNARKS based proofs.</td>
-</tr>
-<tr>
-<td><strong>Transaction Time</strong></td>
-<td>About 5-15 seconds (depending on Ethereum network congestion).</td>
-<td>Approximately 10-20 seconds.</td>
-<td>Approximately 10-20 seconds.</td>
-</tr>
-<tr>
-<td><strong>Standard Tokens Support</strong></td>
-<td>Both fungible and non-fungible tokens with ERC20 and ERC721 tokens anchoring.</td>
-<td>Only fungible tokens with ERC20 tokens with ERC721 tokens anchoring.</td>
-<td>Only fungible tokens with ERC20 tokens anchoring.</td>
-</tr>
-<tr>
-<td><strong>Double-spending Prevention</strong></td>
-<td>Nullifier mechanism prevents double spending.</td>
-<td>UTXO or nullifier-based double spend prevention depending on the specific implementation.</td>
-<td>ElGamal encryption combined with zero-knowledge proofs prevent double spending.</td>
-</tr>
-<tr>
-<td><strong>Programmability</strong></td>
-<td>Limited programmability due to the optimistic transaction design with off-chain ZKP verification.</td>
-<td>Full programmability across multiple UTXOs. Supported by Paladin for programmable privacy.</td>
-<td>Full programmability due to on-chain verifications.</td>
-</tr>
-<tr>
-<td><strong>Limitations</strong></td>
-<td>The optimistic transaction model means a confirmation window of multiple days to transaction finality.</td>
-<td>Fragmented UTXOs require new transactions to transfer multiple UTXOs. No fee custom implementations.</td>
-<td>Only one spending transaction per account can occur within one epoch (approximately two block times). Limited self-custody wallet support.</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Low. Relies on a centralized sequencer/block proposer.</td>
-<td>High, peer-to-peer transactions. Solutions based on UTXOs.</td>
-<td>Low. Limited by the one spending transaction per account per epoch design.</td>
-</tr>
-<tr>
-<td><strong>Auditability</strong></td>
-<td>Limited public auditability, transaction content hidden.</td>
-<td>Limited public auditability unless the authority can access original keys through multi-authority approvals.</td>
-<td>Weak auditability, difficult to obtain detailed account balance information, requires additional complex cryptography to implement a viewing key for the auditor.</td>
-</tr>
-<tr>
-<td><strong>Community Support</strong></td>
-<td>Questionable, abandoned by Polygon for a ZK-based Layer 2. Only supports code from EY. GPL-3.0 license.</td>
-<td>Hosted in LFDT Labs (formerly Hyperledger Labs). Active, supported by Kaleido.</td>
-<td>Weak, supported by Consensys but no updates in the last two years. Apache License 2.0 View license.</td>
-</tr>
-</tbody></table>
-]]></content>
-      <tags>
-        <tag>零知识证明</tag>
-        <tag>CBDC</tag>
-        <tag>区块链</tag>
-        <tag>隐私计算</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>用Go实现一个异步网络库</title>
     <url>/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/</url>
     <content><![CDATA[<p>在需要高性能、节省资源的场景下，比如海量的连接、很高的并发，我们发现Go开始变得吃力，不但内存开销大，而且还会有频繁的goroutine调度。GC时间也变得越来越长，甚至还会把系统搞挂。这时，我们就可以考虑用Go构建经典的Reactor网络模型，来应对这种场景。</p>
@@ -12690,6 +12578,149 @@
         <tag>密码学</tag>
         <tag>EVM</tag>
         <tag>加密</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>fhEVM-confidential smart contracts on the EVM using FHE</title>
+    <url>/2024/11/11/%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7%E5%88%B0%E5%BA%95%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/</url>
+    <content><![CDATA[<p>Programmability in the context of Central Bank Digital Currencies (CBDCs) refers to the capacity to embed smart contract-like features directly into the digital currency. This would allow CBDCs to automatically execute rules or conditions when specific criteria are met, enabling more advanced use cases and controls.<br>Here are some practical <strong>business cases</strong> where the programmability of CBDCs could have significant impact:</p>
+<p><strong>1. Supply Chain Finance and Trade Settlement</strong><br>供应链金融和贸易结算<br>In supply chain finance, CBDCs could be programmed to release payments automatically at each stage of production or delivery. For example:<br>• <em>Smart Contracts for Automatic Payment</em>: A CBDC could be programmed to release funds when a shipment reaches a specific location or when an IoT-enabled device confirms the delivery of goods.<br>• <em>International Trade Compliance</em>: By incorporating compliance checks within the CBDC, customs duties and taxes could be deducted automatically, while ensuring adherence to trade regulations, improving speed, and reducing paperwork.</p>
+<p><strong>2. Conditional Government Aid and Welfare Programs</strong><br>有条件的政府援助和福利计划<br>Governments can disburse funds directly through programmable CBDCs with built-in conditions for usage. This use case would:<br>• <em>Ensure Targeted Spending</em>: Welfare payments could be restricted to authorized merchants or for specific categories (e.g., groceries, health services), reducing misuse and ensuring assistance reaches the intended recipients.<br>• <em>Automatic Expiration or Limits</em>: To encourage timely spending, certain stimulus payments could have expiration dates or be programmed to prevent hoarding, boosting economic activity.</p>
+<p><strong>3. Automated Tax Collection for Businesses and Consumers</strong><br>企业和消费者自动征税<br>For businesses, CBDCs can simplify tax compliance through automated deductions:<br>• <em>Real-Time Tax Deduction</em>: Taxes could be deducted in real-time during each transaction, simplifying tax compliance and reducing the administrative burden for small businesses.<br>• <em>VAT and Sales Tax</em>: CBDCs could automatically calculate and remit VAT or sales tax directly to government accounts, reducing errors and ensuring compliance.</p>
+<p><strong>4. Real Estate and Asset Tokenization</strong><br>房地产和资产代币化<br>Programmable CBDCs can streamline large, complex transactions like real estate purchases:<br>• <em>Escrow Mechanisms for Property Sales</em>: CBDCs can serve as programmable escrow funds, where funds are only released when all contractual conditions, like title transfer or inspections, are fulfilled.<br>• <em>Fractional Ownership and Dividends</em>: Asset tokenization (e.g., in real estate) could enable CBDCs to automatically distribute dividends to token holders, representing fractional property ownership.</p>
+<p><strong>5. Cross-Border Trade and Remittances</strong><br>跨境贸易和汇款<br>CBDCs can simplify cross-border payments by integrating automatic conversion and compliance features:<br>• <em>Instant Cross-Currency Settlement</em>: Programmable CBDCs could automatically convert funds to the recipient’s currency, applying relevant fees or exchange rates instantly.<br>• <em>Compliance Checks for AML/KYC</em>: Programmable CBDCs could enforce AML/KYC requirements by automatically flagging suspicious activity, reducing regulatory risk and speeding up international transactions.</p>
+<p><strong>6. Subscription Payments and Recurring Services</strong><br>订阅付款和定期服务<br>CBDCs could automate recurring payments in subscription-based business models:<br>• <em>Automated Subscription Management</em>: CBDCs could be programmed for regular, automated payments (e.g., streaming services, SaaS platforms), simplifying billing and reducing the risk of service disruptions.<br>• <em>Usage-Based Pricing</em>: CBDCs could support “pay-as-you-go” pricing models where charges are automatically applied based on usage, especially useful for cloud services or utilities.</p>
+<p><strong>7. Capital Markets and Wholesale CBDC Use Cases</strong><br>资本市场和批发 CBDC 用例<br>For wholesale CBDCs, programmability opens new avenues in capital markets:<br>• <em>Automated Clearing and Settlement</em>: CBDCs could eliminate the need for intermediaries by automatically executing settlements upon matching transaction records between two parties.<br>• <em>Repo and Derivatives Markets</em>: CBDCs can streamline collateral management by automatically adjusting collateral requirements, executing margin calls, or managing repos in real-time based on market fluctuations.</p>
+<p><strong>8. Reward Programs and Customer Loyalty</strong><br>奖励计划和客户忠诚度<br>Businesses could use programmable CBDCs for customer reward programs:<br>• <em>Automatic Loyalty Points</em>: CBDCs could be programmed to add loyalty points automatically for every purchase, simplifying the customer experience.<br>• <em>Conditional Rewards</em>: Rewards could be programmed to expire or apply only to specific purchases, making it easy to customize loyalty offers for each customer segment.</p>
+<p><strong>9. Carbon Credit and Green Finance</strong><br>碳信用和绿色金融<br>CBDCs could play a role in incentivizing environmentally sustainable behavior:<br>• <em>Carbon Credit Trading</em>: CBDCs could enable automated carbon credit settlements between companies, enforcing green finance commitments.<br>• <em>Green Rewards</em>: Government programs could incentivize green purchases by programming CBDCs to offer discounts or rewards for sustainable activities, such as using public transport or purchasing eco-friendly products.<br>These use cases highlight how CBDC programmability could drive efficiencies, automate compliance, and introduce innovative business models across multiple sectors, benefiting both businesses and consumers.</p>
+<p>Programmable CBDCs offer interesting possibilities for end users to create custom payment solutions and manage <strong>personal</strong> finances in new ways. Here are a few examples:</p>
+<p><strong>1. Personal Budgeting and Spending Controls</strong><br>个人预算和支出控制<br>• <strong>Automated Savings</strong> 自动储蓄: Users could program a portion of their income (e.g., 10%) to automatically transfer to a savings wallet whenever they receive a paycheck, supporting disciplined saving habits.<br>• <strong>Category-Based Spending Limits</strong> 消费归类: End users could set monthly spending caps for specific categories, such as dining out or entertainment, to better manage their budgets and spending behavior.<br>• <strong>Automatic Rounding for Savings</strong> 储蓄和消费预估: Each purchase could be rounded up to the nearest dollar, with the “extra” going to a savings or investment account—similar to popular savings apps.</p>
+<p><strong>2. Shared Wallets for Families or Groups</strong><br>家庭或团体共享钱包<br>• <strong>Family Allowance System</strong>: Parents could set up programmable wallets for children, where funds are released for specific purposes, like school supplies or transportation. Funds could be set to expire if unused within a certain period, encouraging responsible spending.<br>• <strong>Household Expense Management</strong>: Roommates or couples could create a shared wallet programmed to split common expenses like rent, utilities, or groceries automatically, reducing manual tracking and making shared expenses more transparent.</p>
+<p><strong>3. Charitable Donations with Conditions</strong><br>有条件的慈善捐赠<br>• <strong>Conditional Charity Donations</strong>: Users could set up automatic donations to charities that activate only when personal income exceeds a certain threshold, allowing them to give back when they are financially able.<br>• <strong>Transparent Donations</strong>: CBDCs could allow donors to see exactly when and how their funds are used by a charity, increasing transparency and engagement with the causes they support.</p>
+<p><strong>4. Emergency Funds and Auto-Trigger Insurance</strong><br>应急资金和自动触发保险<br>• <strong>Self-Triggered Emergency Payments</strong>: Users could set up a programmable emergency fund to automatically transfer to their main wallet if their balance falls below a certain level.<br>• <strong>Automated Micro-Insurance Payments</strong>: End users could set up small automatic payments for emergency health or travel insurance, activating only when they cross country borders or travel a specified distance.</p>
+<p><strong>5. Conditional Gifting and Allowances</strong><br>有条件的赠与和津贴<br>• <strong>Smart Gifting</strong>: CBDCs could allow users to set up gifts with conditions, such as funds for a child’s education that can only be used for tuition, books, or school supplies.<br>• <strong>Goal-Based Allowances</strong>: Parents could use programmable CBDCs to set up an allowance system that releases funds to their children only after achieving certain goals, like completing homework or chores.</p>
+<p><strong>6. Automated Bill Splitting for Social Activities</strong><br>社交活动账单自动分摊<br>• <strong>Social Wallets</strong>: Friends could create a shared, programmable wallet for social events, where each person contributes, and funds are automatically allocated for event-specific expenses, like concert tickets or group dinners.<br>• <strong>Real-Time Expense Tracking</strong>: Programmed CBDCs could split expenses in real-time as they occur, making group activities financially smoother and removing the need for after-the-fact reimbursements.</p>
+<p><strong>7. Customizable Travel Budgets and Currency Conversion</strong><br>可定制的旅行预算和货币兑换<br>• <strong>Vacation Budgeting</strong>: Travelers could allocate a specific budget for their trip, where funds automatically convert to the local currency and apply spending limits to ensure they stay within their set vacation budget.<br>• <strong>Location-Based Spending</strong>: Users could set geographic restrictions on their CBDC wallets, preventing them from spending funds outside a designated area or country, adding an extra layer of control and security for travel budgets.</p>
+<p><strong>8. Personal Investment Automations</strong><br>个人投资自动化<br>• <strong>Recurring Investments</strong>: End users could program their CBDCs to allocate a small percentage of each paycheck into specific investments or savings accounts, making it easy to automate dollar-cost averaging.<br>• <strong>Goal-Based Investment Triggers</strong>: Users could set up a CBDC wallet to transfer funds to an investment account only if they’ve met other financial goals for the month, like saving or debt repayment targets.</p>
+<p><strong>9. Incentivized Health and Wellness Programs</strong><br>激励健康和保健计划<br>• <strong>Rewards for Healthy Activities</strong>: End users could connect programmable CBDCs to health tracking apps to earn micro-payments for activities such as reaching a daily step goal, gym attendance, or purchasing healthy food.<br>• <strong>Goal-Based Health Savings</strong>: CBDCs could also be used to allocate funds to a “health fund” every time a fitness milestone is reached, rewarding users for making healthy choices.</p>
+<p><strong>10. Flexible Subscription Management</strong><br>灵活的订阅管理<br>• <strong>Trial Periods with Expiry</strong>: End users could set up subscriptions to only renew if they actively confirm, helping avoid unwanted subscription charges.<br>• <strong>Family Subscription Pools</strong>: Users could program CBDCs to fund family-wide subscriptions where family members contribute proportionally, or enable automatic payments only if usage metrics meet certain thresholds.</p>
+]]></content>
+      <tags>
+        <tag>CBDC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>比较-隐私交易Nightfall和Zeto和Zether和ZAMA</title>
+    <url>/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/</url>
+    <content><![CDATA[<p>以下是 <a href="https://github.com/EYBlockchain/nightfall_3">Nightfall_3</a>、<a href="https://github.com/hyperledger-labs/zeto">Zeto</a> 、 <a href="https://github.com/Consensys/anonymous-zether">Zether</a> 和 <a href="https://github.com/zama-ai/fhevm">ZAMA</a> 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Nightfall_3</strong></th>
+<th><strong>Zeto</strong></th>
+<th align="left"><strong>Zether</strong></th>
+<th align="left">kinexys by JPMorgan | ZAMA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Privacy Algorithm</strong></td>
+<td>ZK-SNARKS, Groth16, Plonk, Marlin, Nova by Circom</td>
+<td>ZK-SNARKS, Groth16, Plonk, Marlin, Nova by Circom</td>
+<td align="left">Bullet-Proof with ElGamal encryption and homomorphic addition</td>
+<td align="left">Kinexys used Zama’s open-source fhEVM-native solution to keep balances and transaction amounts encrypted, ensuring confidentiality while maintaining composability through FHE.</td>
+</tr>
+<tr>
+<td><strong>Anonymity</strong></td>
+<td>Extremely high, anonymity achieved with hashes and ZKPs.</td>
+<td>Extremely high, Stealth Addresses.</td>
+<td align="left">Medium, the identity of transactors hidden among the anonymity set.</td>
+<td align="left">Extremely high, Stealth Addresses.</td>
+</tr>
+<tr>
+<td><strong>Transaction Model</strong></td>
+<td>UTXO</td>
+<td>UTXO</td>
+<td align="left">Account Balance State</td>
+<td align="left">Account Balance State</td>
+</tr>
+<tr>
+<td><strong>Non-repudiation</strong></td>
+<td>Not currently supported, transaction submitters can deny.</td>
+<td><strong>Supported</strong>, when using the circuit requiring encrypted secrets for the authority.</td>
+<td align="left">Not currently supported, auditing balance requires a special viewing key that involves additional cryptography.</td>
+<td align="left"><strong>Supported</strong>, FHE ‘s KMS operator would need to provision the auditor with the FHE decryption key to review all transactions. The stealth address service could also specify addresses that are allowed to decrypt transactions.</td>
+</tr>
+<tr>
+<td><strong>Public Chain Support</strong></td>
+<td>Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
+<td>Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Polygon, etc.</td>
+<td align="left">Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Polygon, etc. <strong>ZK Rollup deployment has failed.</strong></td>
+<td align="left">Supported on EVM based blockchains.</td>
+</tr>
+<tr>
+<td><strong>Transaction Cost</strong></td>
+<td><strong>Low</strong>, ZK verification happens off-chain.</td>
+<td>High, ZK SNARKS verification on-chain with varied cost depending on the usage of encryption and non-traceability.</td>
+<td align="left">High, bulletproof verification on-chain is more costly than ZK SNARKS based proofs.</td>
+<td align="left">High.</td>
+</tr>
+<tr>
+<td><strong>Transaction Delay</strong></td>
+<td>1~2 blocks time</td>
+<td>1~2 blocks time</td>
+<td align="left">1~2 blocks time</td>
+<td align="left">1~2 blocks time</td>
+</tr>
+<tr>
+<td><strong>Standard Tokens Support</strong></td>
+<td>Both fungible and non-fungible tokens with ERC20 and ERC721 tokens anchoring.</td>
+<td>Only fungible tokens with ERC20 tokens anchoring.</td>
+<td align="left">Only fungible tokens with ERC20 tokens anchoring.</td>
+<td align="left">Only fungible tokens with ERC20 tokens anchoring.</td>
+</tr>
+<tr>
+<td><strong>Double-spending Prevention</strong></td>
+<td>Nullifier mechanism prevents double spending.</td>
+<td>UTXO or nullifier-based double spend prevention depending on the specific implementation.</td>
+<td align="left">ElGamal encryption combined with zero-knowledge proofs prevent double spending.</td>
+<td align="left">FHE prevent double spending.</td>
+</tr>
+<tr>
+<td><strong>Programmability</strong></td>
+<td>Limited programmability due to the optimistic transaction design with off-chain ZKP verification.</td>
+<td>Full programmability across multiple UTXOs. Supported by Paladin for programmable privacy.</td>
+<td align="left">Full programmability due to on-chain verifications.</td>
+<td align="left">Full with ZAMA framework.</td>
+</tr>
+<tr>
+<td><strong>Limitations</strong></td>
+<td>The optimistic transaction model means a confirmation window of multiple days to transaction finality.</td>
+<td>Fragmented UTXOs require new transactions to transfer multiple UTXOs. No fee custom implementations.</td>
+<td align="left">Only one spending transaction per account can occur within one epoch (approximately two block times). Limited self-custody wallet support.</td>
+<td align="left">ZAMA(FHE) + Stealth Addresses</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Low. Relies on a centralized sequencer/block proposer.</td>
+<td>High, peer-to-peer transactions. Solutions based on UTXOs.</td>
+<td align="left">Low. Limited by the one spending transaction per account per epoch design.</td>
+<td align="left">High. Offchain service - ZAMA(FHE) + Stealth Addresses</td>
+</tr>
+<tr>
+<td><strong>Community Support</strong></td>
+<td>Questionable, abandoned by Polygon for a ZK-based Layer 2. Only supports code from EY. GPL-3.0 license.</td>
+<td>Hosted in LFDT Labs (formerly Hyperledger Labs). Active, supported by Kaleido.</td>
+<td align="left">Weak, supported by Consensys but no updates in the last two years. Apache License 2.0 View license.</td>
+<td align="left"><strong>BSD-3-Clause-Clear</strong> license. To commercially use Zama’s technology you need to be granted Zama’s patent license.</td>
+</tr>
+</tbody></table>
+]]></content>
+      <tags>
+        <tag>零知识证明</tag>
+        <tag>CBDC</tag>
+        <tag>区块链</tag>
+        <tag>隐私计算</tag>
       </tags>
   </entry>
 </search>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Programmability in the context of Central Bank Digital Currencies (CBDCs) refers to the capacity to embed smart contract-like features directly into the digital currency. This would allow CBDCs to aut">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fhEVM-confidential smart contracts on the EVM using FHE">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2024/11/11/%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7%E5%88%B0%E5%BA%95%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="Programmability in the context of Central Bank Digital Currencies (CBDCs) refers to the capacity to embed smart contract-like features directly into the digital currency. This would allow CBDCs to aut">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-11T03:11:00.000Z">
+<meta property="article:modified_time" content="2024-11-12T08:24:49.119Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="CBDC">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2024/11/11/%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7%E5%88%B0%E5%BA%95%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>fhEVM-confidential smart contracts on the EVM using FHE | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">259</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/11/11/%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7%E5%88%B0%E5%BA%95%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          fhEVM-confidential smart contracts on the EVM using FHE
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-11-11 11:11:00" itemprop="dateCreated datePublished" datetime="2024-11-11T11:11:00+08:00">2024-11-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-11-12 16:24:49" itemprop="dateModified" datetime="2024-11-12T16:24:49+08:00">2024-11-12</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Programmability in the context of Central Bank Digital Currencies (CBDCs) refers to the capacity to embed smart contract-like features directly into the digital currency. This would allow CBDCs to automatically execute rules or conditions when specific criteria are met, enabling more advanced use cases and controls.<br>Here are some practical <strong>business cases</strong> where the programmability of CBDCs could have significant impact:</p>
+<p><strong>1. Supply Chain Finance and Trade Settlement</strong><br>供应链金融和贸易结算<br>In supply chain finance, CBDCs could be programmed to release payments automatically at each stage of production or delivery. For example:<br>• <em>Smart Contracts for Automatic Payment</em>: A CBDC could be programmed to release funds when a shipment reaches a specific location or when an IoT-enabled device confirms the delivery of goods.<br>• <em>International Trade Compliance</em>: By incorporating compliance checks within the CBDC, customs duties and taxes could be deducted automatically, while ensuring adherence to trade regulations, improving speed, and reducing paperwork.</p>
+<p><strong>2. Conditional Government Aid and Welfare Programs</strong><br>有条件的政府援助和福利计划<br>Governments can disburse funds directly through programmable CBDCs with built-in conditions for usage. This use case would:<br>• <em>Ensure Targeted Spending</em>: Welfare payments could be restricted to authorized merchants or for specific categories (e.g., groceries, health services), reducing misuse and ensuring assistance reaches the intended recipients.<br>• <em>Automatic Expiration or Limits</em>: To encourage timely spending, certain stimulus payments could have expiration dates or be programmed to prevent hoarding, boosting economic activity.</p>
+<p><strong>3. Automated Tax Collection for Businesses and Consumers</strong><br>企业和消费者自动征税<br>For businesses, CBDCs can simplify tax compliance through automated deductions:<br>• <em>Real-Time Tax Deduction</em>: Taxes could be deducted in real-time during each transaction, simplifying tax compliance and reducing the administrative burden for small businesses.<br>• <em>VAT and Sales Tax</em>: CBDCs could automatically calculate and remit VAT or sales tax directly to government accounts, reducing errors and ensuring compliance.</p>
+<p><strong>4. Real Estate and Asset Tokenization</strong><br>房地产和资产代币化<br>Programmable CBDCs can streamline large, complex transactions like real estate purchases:<br>• <em>Escrow Mechanisms for Property Sales</em>: CBDCs can serve as programmable escrow funds, where funds are only released when all contractual conditions, like title transfer or inspections, are fulfilled.<br>• <em>Fractional Ownership and Dividends</em>: Asset tokenization (e.g., in real estate) could enable CBDCs to automatically distribute dividends to token holders, representing fractional property ownership.</p>
+<p><strong>5. Cross-Border Trade and Remittances</strong><br>跨境贸易和汇款<br>CBDCs can simplify cross-border payments by integrating automatic conversion and compliance features:<br>• <em>Instant Cross-Currency Settlement</em>: Programmable CBDCs could automatically convert funds to the recipient’s currency, applying relevant fees or exchange rates instantly.<br>• <em>Compliance Checks for AML/KYC</em>: Programmable CBDCs could enforce AML/KYC requirements by automatically flagging suspicious activity, reducing regulatory risk and speeding up international transactions.</p>
+<p><strong>6. Subscription Payments and Recurring Services</strong><br>订阅付款和定期服务<br>CBDCs could automate recurring payments in subscription-based business models:<br>• <em>Automated Subscription Management</em>: CBDCs could be programmed for regular, automated payments (e.g., streaming services, SaaS platforms), simplifying billing and reducing the risk of service disruptions.<br>• <em>Usage-Based Pricing</em>: CBDCs could support “pay-as-you-go” pricing models where charges are automatically applied based on usage, especially useful for cloud services or utilities.</p>
+<p><strong>7. Capital Markets and Wholesale CBDC Use Cases</strong><br>资本市场和批发 CBDC 用例<br>For wholesale CBDCs, programmability opens new avenues in capital markets:<br>• <em>Automated Clearing and Settlement</em>: CBDCs could eliminate the need for intermediaries by automatically executing settlements upon matching transaction records between two parties.<br>• <em>Repo and Derivatives Markets</em>: CBDCs can streamline collateral management by automatically adjusting collateral requirements, executing margin calls, or managing repos in real-time based on market fluctuations.</p>
+<p><strong>8. Reward Programs and Customer Loyalty</strong><br>奖励计划和客户忠诚度<br>Businesses could use programmable CBDCs for customer reward programs:<br>• <em>Automatic Loyalty Points</em>: CBDCs could be programmed to add loyalty points automatically for every purchase, simplifying the customer experience.<br>• <em>Conditional Rewards</em>: Rewards could be programmed to expire or apply only to specific purchases, making it easy to customize loyalty offers for each customer segment.</p>
+<p><strong>9. Carbon Credit and Green Finance</strong><br>碳信用和绿色金融<br>CBDCs could play a role in incentivizing environmentally sustainable behavior:<br>• <em>Carbon Credit Trading</em>: CBDCs could enable automated carbon credit settlements between companies, enforcing green finance commitments.<br>• <em>Green Rewards</em>: Government programs could incentivize green purchases by programming CBDCs to offer discounts or rewards for sustainable activities, such as using public transport or purchasing eco-friendly products.<br>These use cases highlight how CBDC programmability could drive efficiencies, automate compliance, and introduce innovative business models across multiple sectors, benefiting both businesses and consumers.</p>
+<p>Programmable CBDCs offer interesting possibilities for end users to create custom payment solutions and manage <strong>personal</strong> finances in new ways. Here are a few examples:</p>
+<p><strong>1. Personal Budgeting and Spending Controls</strong><br>个人预算和支出控制<br>• <strong>Automated Savings</strong> 自动储蓄: Users could program a portion of their income (e.g., 10%) to automatically transfer to a savings wallet whenever they receive a paycheck, supporting disciplined saving habits.<br>• <strong>Category-Based Spending Limits</strong> 消费归类: End users could set monthly spending caps for specific categories, such as dining out or entertainment, to better manage their budgets and spending behavior.<br>• <strong>Automatic Rounding for Savings</strong> 储蓄和消费预估: Each purchase could be rounded up to the nearest dollar, with the “extra” going to a savings or investment account—similar to popular savings apps.</p>
+<p><strong>2. Shared Wallets for Families or Groups</strong><br>家庭或团体共享钱包<br>• <strong>Family Allowance System</strong>: Parents could set up programmable wallets for children, where funds are released for specific purposes, like school supplies or transportation. Funds could be set to expire if unused within a certain period, encouraging responsible spending.<br>• <strong>Household Expense Management</strong>: Roommates or couples could create a shared wallet programmed to split common expenses like rent, utilities, or groceries automatically, reducing manual tracking and making shared expenses more transparent.</p>
+<p><strong>3. Charitable Donations with Conditions</strong><br>有条件的慈善捐赠<br>• <strong>Conditional Charity Donations</strong>: Users could set up automatic donations to charities that activate only when personal income exceeds a certain threshold, allowing them to give back when they are financially able.<br>• <strong>Transparent Donations</strong>: CBDCs could allow donors to see exactly when and how their funds are used by a charity, increasing transparency and engagement with the causes they support.</p>
+<p><strong>4. Emergency Funds and Auto-Trigger Insurance</strong><br>应急资金和自动触发保险<br>• <strong>Self-Triggered Emergency Payments</strong>: Users could set up a programmable emergency fund to automatically transfer to their main wallet if their balance falls below a certain level.<br>• <strong>Automated Micro-Insurance Payments</strong>: End users could set up small automatic payments for emergency health or travel insurance, activating only when they cross country borders or travel a specified distance.</p>
+<p><strong>5. Conditional Gifting and Allowances</strong><br>有条件的赠与和津贴<br>• <strong>Smart Gifting</strong>: CBDCs could allow users to set up gifts with conditions, such as funds for a child’s education that can only be used for tuition, books, or school supplies.<br>• <strong>Goal-Based Allowances</strong>: Parents could use programmable CBDCs to set up an allowance system that releases funds to their children only after achieving certain goals, like completing homework or chores.</p>
+<p><strong>6. Automated Bill Splitting for Social Activities</strong><br>社交活动账单自动分摊<br>• <strong>Social Wallets</strong>: Friends could create a shared, programmable wallet for social events, where each person contributes, and funds are automatically allocated for event-specific expenses, like concert tickets or group dinners.<br>• <strong>Real-Time Expense Tracking</strong>: Programmed CBDCs could split expenses in real-time as they occur, making group activities financially smoother and removing the need for after-the-fact reimbursements.</p>
+<p><strong>7. Customizable Travel Budgets and Currency Conversion</strong><br>可定制的旅行预算和货币兑换<br>• <strong>Vacation Budgeting</strong>: Travelers could allocate a specific budget for their trip, where funds automatically convert to the local currency and apply spending limits to ensure they stay within their set vacation budget.<br>• <strong>Location-Based Spending</strong>: Users could set geographic restrictions on their CBDC wallets, preventing them from spending funds outside a designated area or country, adding an extra layer of control and security for travel budgets.</p>
+<p><strong>8. Personal Investment Automations</strong><br>个人投资自动化<br>• <strong>Recurring Investments</strong>: End users could program their CBDCs to allocate a small percentage of each paycheck into specific investments or savings accounts, making it easy to automate dollar-cost averaging.<br>• <strong>Goal-Based Investment Triggers</strong>: Users could set up a CBDC wallet to transfer funds to an investment account only if they’ve met other financial goals for the month, like saving or debt repayment targets.</p>
+<p><strong>9. Incentivized Health and Wellness Programs</strong><br>激励健康和保健计划<br>• <strong>Rewards for Healthy Activities</strong>: End users could connect programmable CBDCs to health tracking apps to earn micro-payments for activities such as reaching a daily step goal, gym attendance, or purchasing healthy food.<br>• <strong>Goal-Based Health Savings</strong>: CBDCs could also be used to allocate funds to a “health fund” every time a fitness milestone is reached, rewarding users for making healthy choices.</p>
+<p><strong>10. Flexible Subscription Management</strong><br>灵活的订阅管理<br>• <strong>Trial Periods with Expiry</strong>: End users could set up subscriptions to only renew if they actively confirm, helping avoid unwanted subscription charges.<br>• <strong>Family Subscription Pools</strong>: Users could program CBDCs to fund family-wide subscriptions where family members contribute proportionally, or enable automatic payments only if usage metrics meet certain thresholds.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2024/11/11/%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7%E5%88%B0%E5%BA%95%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/" title="fhEVM-confidential smart contracts on the EVM using FHE">https://zhuang-weiming.github.io/2024/11/11/央行数字货币的可编程性到底可以做什么/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/CBDC/" rel="tag"># CBDC</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/31/fhEVM-confidential%20smart%20contracts%20on%20the%20EVM%20using%20FHE/" rel="prev" title="fhEVM-confidential smart contracts on the EVM using FHE">
+                  <i class="fa fa-chevron-left"></i> fhEVM-confidential smart contracts on the EVM using FHE
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'c19a049375aeaa305a57feb1e5c1af8d',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
