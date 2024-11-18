@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">259</span>
+          <span class="site-state-item-count">261</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,335 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/" class="post-title-link" itemprop="url">Headless-Commerce-无头电商与中台随想</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-19 10:35:04" itemprop="dateCreated datePublished" datetime="2019-08-19T10:35:04+08:00">2019-08-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Headless Commerce是一个有趣的名字，它是近一年国外电商行业的时髦术语。国内还不怎么流行这种叫法，但与其对应类似的概念实际上在中国也是漫天飞舞，这就是“API化”和“中台”说法。想到中台的火热，我也随手记下这篇文章，聊聊无头电商和中台。</p>
+<h3 id="什么是无头电商？"><a href="#什么是无头电商？" class="headerlink" title="什么是无头电商？"></a>什么是无头电商？</h3><p>Headleass Commerce可以翻译成<strong>无头电商</strong>，或<strong>断头电商</strong>，核心概念就是将前台展现和后台服务进行解耦的一种架构。后台以API的方式提供服务，前端展现层与后端分离。没有前端表现层（头），剩下的就是无头电商了，剩下的就是一堆API接口。</p>
+<p>写过代码的程序员都很容易理解，这不就是前后端分离，或面向服务架构(SOA)么？为什么这么简单的事情，会成为电商行业的噱头呢？其实，这个事情后面有很多深层次的原因，有商业原因，有电商演进历史，有生态原因，有品牌主新需求等等。</p>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/ar.png"></p>
+<h3 id="为什么会发生这种变化"><a href="#为什么会发生这种变化" class="headerlink" title="为什么会发生这种变化?"></a>为什么会发生这种变化?</h3><p>有几个事情比较重要：</p>
+<ol>
+<li>品牌主建立自有电商的需求</li>
+</ol>
+<ul>
+<li><p>国内外电商平台虽然都已经寡头化，美国有亚马逊，中国有京东淘宝，很多品牌主依旧努力建立自有电商渠道，不断突围。</p>
+</li>
+<li><p>品牌主建立自有平台可以加强自有数据的把控能力，直接与消费者进行互动，保证独有体验。</p>
+</li>
+</ul>
+<ol start="2">
+<li>电商体验的多样化</li>
+</ol>
+<ul>
+<li><p>电商不在是一个简单Web端，电商行业出现很多新触点：语音购物，无人超市，场景购物等，前端变得更加丰富多样</p>
+</li>
+<li><p>底层的基础能力相对稳定，底层可以利用API确保稳定</p>
+</li>
+</ul>
+<ol start="3">
+<li>品牌直接面对消费者（Brand Direct To Consumer)</li>
+</ol>
+<ul>
+<li><p>很多互联网品牌通过创新的电商方式直接面对消费者，消除传统的中间环节（零售商，批发商等）</p>
+</li>
+<li><p>一些私域流量给DTC创造了很多创新机会，最后这些创新场景都需要落地电商平台上。</p>
+</li>
+</ul>
+<ol start="4">
+<li>电商平台的演化</li>
+</ol>
+<ul>
+<li>一体式的电商解决方案：从交易到内容，往往是一家巨型供应商提供，比如Oracle , SAP， WordPress等</li>
+<li>内容和交易能力的一些分离，出现了CMS或DXP的独立功能区域</li>
+<li>无头电商：以API为基础的构建方式，前后端分离，通过API支持更广泛的生态</li>
+</ul>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/types.png"></p>
+<p>这种无头商务平台脱离了通常模板化的系统前端，允许开发人员在任何类型的框架中为产品和服务创建各种接触点。这样，后端开发人员就可以灵活地创建和使用应用程序编程接口（API），以便交付给任何类型的设备，而不仅仅是标准屏幕。</p>
+<h3 id="无头商务与传统商业有什么区别？"><a href="#无头商务与传统商业有什么区别？" class="headerlink" title="无头商务与传统商业有什么区别？"></a>无头商务与传统商业有什么区别？</h3><p>传统平台为客户和业务提供了模板化的体验，缺少自由风格的发挥空间，通过无头商务，可以更好地控制商务平台、客户业务和用户体验。</p>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/diff.png"></p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>无头电商的好处本质上都来源于前后端的解耦，面向服务和API的架构。<strong>后端可以聚焦在沉淀，前后端可以利用API进行交互，以实现更多的应用场景。</strong> </p>
+<ol>
+<li>无头商务是迎接物联网时代（IoT）而创建的对应一些新零售场景，特别是没有任何屏幕的场景，如何通过语音，视频，手势等方式与消费者完成商业互动，其中也包括在户外，汽车等不同场地。</li>
+<li>API 是数据流动的管道<br>无头电商也是未来数据收集，分析，管理的技术架构的基础。传统的单体电商产品，往往不能实现数据的灵活对流。</li>
+<li>快速发布<br>各模块的解耦使得各个模块可以独立升级和发布，各个模块可以采用微服务技术独立发布，只需要保持接口的稳定和兼容。新的功能可以通过增加新的接口，新的场景可以驱动这些新接口的集成。例如，我们需要更换支付服务商，我们只需调用一个新的接口实现者就行，原则上不需要大更改，所有上层应用都不受影响。</li>
+<li>个性化<br>无头电商是模块化和灵活的，各个模块API可以进行灵活的组合，封装，二次开发等。很多个性化的策略可以灵活应用在无头电商的各个环节当中。例如，消费者画像也可以作为标准模块，提供给各个模块使用，最大程度复用沉淀的洞察。</li>
+<li>扩展性和稳定性<br>稳定性，可扩展性和性能对电子商务系统非常重要，因为它们可以直接影响客户的购买行为。如果出现意外的后端故障，如果后端和前端断开连接，后者仍然可用。后端和前端可以独立地进行水平扩展和垂直扩展。</li>
+</ol>
+<h3 id="无头电商和中台"><a href="#无头电商和中台" class="headerlink" title="无头电商和中台"></a>无头电商和中台</h3><p>说到这里，无头电商和中国热火朝天讨论的中台（Platform）的理念非常类似：大中台，小前台； </p>
+<p><strong>大中台：本质上是沉淀能力，利用API提高复用性；小前台：本质上是快速迭代和试错。</strong>这个逻辑其实是和Gartner2015提出的Pace-Layerd 应用战略是一致的，当时Garnter根据系统的变化速度分为 “创新型” ，”差异型”，”稳定型”几种。</p>
+<p>数据中台其实就是保持接口稳定的一个系统，支持快速创新的业务层。</p>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/gar.png"></p>
+<h3 id="中台的一些困惑和随想"><a href="#中台的一些困惑和随想" class="headerlink" title="中台的一些困惑和随想"></a>中台的一些困惑和随想</h3><p>在中国，中台已经流行几年了，仔细想想，中台本质也是一种无头。无头电商是中台概念在一个具体行业的应用。<strong>沉淀</strong>和<strong>复用</strong>是很多公司的不同阶段都会碰到的，中台战略是解决这个问题的某种形式。很多大大小小公司开始组建中台攻坚团队，我与很多朋友都聊过中体的经历，大大小小都会碰到一下一些困惑。例如，一个公司在推进中台战略中，单点登录是唯一成功的案例，其它中台能力的推广都是很难，每个业务线都有自己研发，不喜欢别人轮子。</p>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/dev.png"></p>
+<p><strong>1) 中台和前台的界限无法界定清楚</strong>。中台实现两个能力，一个是沉淀，另外是复用； 二者相辅相成。前台更加面向客户，他们更加容易最快速度创造客户价值和商业价值。</p>
+<p>如何衡量这种花费是否合理？ 一种衡量的方法是：对每个新业务，评估一下中台支持的粒度和程度，如果对于中台的范畴，大家都没有太大歧义，这么这种解耦可能是合理的。如果对于每个新业务，大家都要对范围界定进行激烈讨论，那么大家还是需要一个更加清晰的中台定位。</p>
+<p><strong>2) 中台的成功无法衡量和量化</strong></p>
+<p>那么如何衡量中台的成绩和成功呢？很多时候这个成绩是没有办法衡量的，但是无法量化的东西，是无法改进的。因此，很多中台的战略都是至上而下的组织形态优化。</p>
+<p>具体量化的时候，我们常常有两个思路：a) 中台能力被使用了的范围和深度 ，例如API调用次数，业务使用量，依赖强度等；b) 中台帮助那些业务提升了效率和效益，提升比例等。量化这些指标常常是短期的行为，中台建设也包括一些创新的投资，以及中长期的数据能力沉淀。</p>
+<p><strong>3) 产品经理在中台战略的新挑战</strong></p>
+<p>大多产品经理喜欢参与2C的产品设计，小一部分产品经理深入2B的产品设计。中台涉及很多技术逻辑，涉及到业务底层实现，涉及到公司多个部门的协同共赢，能够胜任这种角色的产品经理，少之又少，大部分都是由研发主管兼任，或者是项目经理类似角色担当。</p>
+<p>中台产品经理比较靠近2B/2D的产品经理，但是更加面向内部多种业务，面向综合效率提升，面向技术架构，也需要很强的商业化的思考。</p>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/2b2c2d.png"></p>
+<p><strong>4)  数据中台越来越重要</strong></p>
+<p>大部分公司都有独立的数据平台团队，但各业务线对数据都有自己的解读。在每一个时刻，数据中台需要有自己清楚的定位，这个定位需要让所有业务都清楚了解。如果定位有任何变化，这种变化需要提前通知到各个业务线。</p>
+<p>现实中，各个业务线都会发展自己的数据应用能力，数据分析能力，这些分析需要定期的沉淀到数据中台。</p>
+<p><strong>5)  中台需要面向开发者，与理解数据逻辑的业务人员的</strong></p>
+<p>中台不是华丽的界面和装修，而是底层的脊梁和砖头。中台的能力，必须由业务团队使用（逻辑上理解），程序员使用（利用API调用）。 </p>
+<p>如果中台直接面向业务的运营，很可能是不成功的。因为，运营很多时候具有快节奏的变化，缺少稳定性，运营平台更像是一种中台的上层应用。另外，运营在使用中台时候，缺少工程师对于API的一些理解，也不利于中台的接口完善和发展。</p>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/frontend.png"></p>
+<p><em>前台团队中有程序员，才能最大程度发挥中台的作用。</em></p>
+<p><strong>6) 中台是需要运营的，面向中台服务的技术运营</strong></p>
+<p>运营可以成为中台和前台的润滑剂，保证前台和中台之间的顺畅。在一些大型的公司，中台能力甚至需要一些主动的推广，确保整个组织能够真正从中台中收益，并且为中台也做贡献。</p>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/ops.png"></p>
+<h3 id="无头电商的技术方案"><a href="#无头电商的技术方案" class="headerlink" title="无头电商的技术方案"></a>无头电商的技术方案</h3><p>说了这么多中台，看起来有些跑题了，回到无头电商的一些技术，其中有些技术很多技术中台都可以采用。</p>
+<p><strong>1）CMS支持无头电商的产品：</strong></p>
+<ul>
+<li>Contentful (非常流行, 基于API的内容管理系统)</li>
+<li>Adobe Experience Manager (企业级别体验管理平台)</li>
+<li>Amplience (企业级别体验管理平台，支持无头电商)</li>
+<li>Acquia (企业级别体验管理平台，支持无头电商)</li>
+<li>Kentico （中型内容管理平台)</li>
+<li>Sitecore (企业级别内容管理平台)</li>
+<li>Prismic (面向API的CMS)</li>
+<li>Gatsby (基于react的PWA 框架)</li>
+<li>Vuestorefront (基于vue.js的PWA 框架)</li>
+<li>Deity (基于react.js的 PWA 框架)</li>
+</ul>
+<p><strong>2）支持无头电商的系统</strong></p>
+<ul>
+<li>CommerceTools﻿</li>
+<li>ElasticPath（用途比较广的电商平台，支持丰富API）</li>
+<li>Moltin（主打API模式的电商平台）</li>
+<li>Magento （2018年5月被Adobe收购，整合在Adobe Commerce Cloud中，支持与Adobe其它软件整合）</li>
+<li>BigCommerce（主打无头电商）</li>
+<li>SAP CX Commerce Cloud （优势在后端 如CRM/ERP等，支持通过API模式与不同的前端整合）</li>
+<li>OroCommerce (B2B的电商平台)</li>
+<li>Spryker</li>
+</ul>
+<p> <strong>3） 无头电商的API标准：</strong></p>
+<ul>
+<li><p><strong>OCAPI (Open Commerce API)：</strong></p>
+<p>  这个标准是Salesforce提供的电商API，渐渐成为电商行业的开放标准，Magento，SiteCore等系统能比较好支持这个协议。Salesforce在对接标准和开放程度上走在行业领先地位，这也是大家看好它的重要原因。</p>
+</li>
+<li><p><strong>JSS(Javascript Services)</strong><br>  SiteCore利用Javascript提供的API能力，SiteCore也越来越开放</p>
+</li>
+</ul>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/sitecore.png"></p>
+<p>  **4） 扩展性的前端技术：  **</p>
+<ul>
+<li>JAMStack<br>  这是一个非常有趣的架构，企图颠覆传统三层架构：静态元素放在CDN上，动态数据利用Service/API进行交互。JAMstack将复杂问题分解为动态和静态部分。</li>
+</ul>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/jam.png"></p>
+<ul>
+<li><p>PWA（Progressive Web Apps)</p>
+<p>  把网页开发成像本地应用一样的技术，可以媲美原生用户体验，包括离线可用，后台推送等功能。类似微信的小程序技术，只不过PWA是浏览器里的小程序。PWA梦想很美好，现实很残酷。PWA的技术也在被各种平台内的技术所代替。</p>
+</li>
+<li><p>GraphQL</p>
+<p>一种面向API的理想主义查询语言；传统API需要严格规定参数和格式，GraphQL提供了一些API的查询和归一化能力，使得API开发更加方便和具有扩展性。它比REST更加灵活。一些都是接口，一切都是可描述的。</p>
+</li>
+</ul>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/graphql.png"></p>
+<h3 id="无头电商的缺点"><a href="#无头电商的缺点" class="headerlink" title="无头电商的缺点"></a>无头电商的缺点</h3><p><strong>1) 复杂性的增加</strong></p>
+<p>单体模式依旧是最简单模式，无头电商将失去这种简单，进入一个复杂的技术世界。幸运的是，现在的软件技术和云技术都可以更好的处理这些复杂度，当然这也涉及到技术思维的升级。。</p>
+<p><strong>2) 成本的增加</strong></p>
+<p>无头电商的推广和实施往往需要时间和耐心。从经验来看，无头电子商务实施通常会产生成本开销（由于需要更多开发）；集成也会更加复杂 ，其中会涉及到更多的第三方供应商。</p>
+<p>那么，如何管理这种复杂度和有效管理成本？有几点可能会有帮助：</p>
+<p>1）加强数据团队和云技术人才，增强管理技术复杂度的能力</p>
+<p>2）业务驱动的演化路径，一步步的演化系统架构，更好的系统架构要更加快速尝试更多的业务场景</p>
+<p>3）积极利用公有云基础架构，少造轮子，持续优化</p>
+<p>参考连接：</p>
+<p><a target="_blank" rel="noopener" href="https://paulnrogers.com/introduction-to-headless-ecommerce/">https://paulnrogers.com/introduction-to-headless-ecommerce/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sparkred.com/blog/michael-kors-case-study-a-journey-to-headless-commerce/">https://www.sparkred.com/blog/michael-kors-case-study-a-journey-to-headless-commerce/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ipraxa.com/blog/headless-ecommerce-guide/">https://www.ipraxa.com/blog/headless-ecommerce-guide/</a></p>
+<p><a target="_blank" rel="noopener" href="https://jss.sitecore.com/features">https://jss.sitecore.com/features</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bigcommerce.com/blog/headless-commerce/">https://www.bigcommerce.com/blog/headless-commerce/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.degdigital.com/insights/headless-architecture-digital-experiences/">https://www.degdigital.com/insights/headless-architecture-digital-experiences/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bigcommerce.com/blog/flexible-headless-commerce-solutions/">https://www.bigcommerce.com/blog/flexible-headless-commerce-solutions/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a88b80d88284">https://www.jianshu.com/p/a88b80d88284</a></p>
+<p>作者介绍：<strong>欧阳辰</strong>，品友互动，CTO，《Druid实时大数据分析》书作者，《构建高质量的软件》译者，超过17年的互联网老兵。</p>
+<p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/author.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">AZTEC-基于ethereum的隐私交易-III-产品设计</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-30 10:01:04" itemprop="dateCreated datePublished" datetime="2019-07-30T10:01:04+08:00">2019-07-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="产品设计的关键步骤"><a href="#产品设计的关键步骤" class="headerlink" title="产品设计的关键步骤"></a>产品设计的关键步骤</h4><p>AZTEC 产品的关键步骤：1）生成 note；2）管理秘钥；3）验证 note</p>
+<p>AZTEC中的<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/aztec.js">aztec.js</a>能够工作在浏览器或者手机程序中，生成 proof 大约需要 10ms，非常高效。</p>
+<h4 id="1-生成-note"><a href="#1-生成-note" class="headerlink" title="1.生成 note"></a>1.生成 note</h4><p>证明（proof）中的保密 Token 需要用到 note。note 在票据登记所（note registry）中登记，proof 也在 note registry 中登记。</p>
+<p>生成一个新的 note 需要 owner 的<code>publicKey</code>，所有人使用其地址证明其 owner 的身份，<code>value</code>是 note 中保密 Token 的值：</p>
+<p><code>bobNote1 = await aztec.note.create(bob.publicKey, 100);</code></p>
+<h4 id="2-管理秘钥"><a href="#2-管理秘钥" class="headerlink" title="2.管理秘钥"></a>2.管理秘钥</h4><p>每一个 note 都有一个对应的查看秘钥（viewing key）；同时还有一个对应的暂存秘钥（ephemeral key）。暂存秘钥用于恢复查看秘钥，同时 note 的 owner 的 private key 也可以恢复查看秘钥。</p>
+<p>在服务器端，恢复查看秘钥并再次发送给到 owner 需要一套完备的管理系统，目前 AZTEC 还没有这样的系统。</p>
+<p>在客户端，建议将暂存秘钥加密后保存起来。</p>
+<h4 id="3-消费-note"><a href="#3-消费-note" class="headerlink" title="3.消费 note"></a>3.消费 note</h4><p>消费 note 使用标准的 Join Split 证明。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; proofData, expectedOutput, signatures &#125; = aztec.proof.joinSplit.encodeJoinSplitTransaction(&#123;</span><br><span class="line">  inputNotes: [bobNote1],</span><br><span class="line">  outputNotes: [sallyTaxiFee, bobNote2],</span><br><span class="line">  senderAddress: accounts[<span class="number">0</span>],</span><br><span class="line">  inputNoteOwners: [bob],</span><br><span class="line">  publicOwner: accounts[<span class="number">0</span>],</span><br><span class="line">  kPublic: <span class="number">0</span>,</span><br><span class="line">  validatorAddress: privateVenmoContract.address,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>kPublic是被转换的 ERC20 Token 的值。负值代表 ERC20 Token 被消耗，且转换为 note；正值代表将 note 兑换回到 ERC20 Token。且遵守<code>kPublic == outputNotes</code></p>
+<p>Join Split证明是自动使用<code>inputNoteOwners: [bob]</code>的私钥来签名交易的。更加严谨的话可以使用<code>confidentialApprove</code>方法，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> signature = aztec.signer.signNote(assetAddress, noteHash, spenderAddress, owner.privateKey);</span><br><span class="line">ZkAsset.confidentialApprove(noteHash, spender, <span class="literal">true</span>, signature);</span><br></pre></td></tr></table></figure>
+
+<p>最后再使用下面的语句最终消费掉 note：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> privateVenmoContract.confidentialTransfer(proofData, signatures, &#123;</span><br><span class="line">    <span class="keyword">from</span>: accounts[<span class="number">0</span>],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="AZTEC-的交易流程"><a href="#AZTEC-的交易流程" class="headerlink" title="AZTEC 的交易流程"></a>AZTEC 的交易流程</h4><p><img src="/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/txprocess.png"></p>
+<p>如图所示，结合<a target="_blank" rel="noopener" href="https://github.com/AztecProtocol/loan-dapp-starter-kit">借贷 DApp</a>，分析AZTEC的步骤：</p>
+<h4 id="1-借贷-ZkAsset"><a href="#1-借贷-ZkAsset" class="headerlink" title="1.借贷 ZkAsset"></a>1.借贷 ZkAsset</h4><h5 id="1-1-构建-proof"><a href="#1-1-构建-proof" class="headerlink" title="1.1.构建 proof"></a>1.1.构建 proof</h5><p>用 aztec.js 构建 proof。即 proofData：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">   proofData,</span><br><span class="line">&#125; = aztec.proof.mint.encodeMintTransaction(&#123;</span><br><span class="line">        newTotalMinted: newTotalNote,</span><br><span class="line">        oldTotalMinted: oldTotalNote,</span><br><span class="line">        adjustedNotes: [loanNotionalNote],</span><br><span class="line">        senderAddress: loanDappContract.address,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="1-2-注册-note"><a href="#1-2-注册-note" class="headerlink" title="1.2.注册 note"></a>1.2.注册 note</h5><p>proof 可以被 Mint 成为新的 note，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Loan(loanId).confidentialMint(MINT_PROOF, bytes(_proofData));</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-结算-ZkAsset"><a href="#2-结算-ZkAsset" class="headerlink" title="2.结算 ZkAsset"></a>2.结算 ZkAsset</h4><h5 id="2-1-批准-ACE-合约代表-owner-花费-ERC20-Token"><a href="#2-1-批准-ACE-合约代表-owner-花费-ERC20-Token" class="headerlink" title="2.1.批准 ACE 合约代表 owner 花费 ERC20 Token"></a>2.1.批准 ACE 合约代表 owner 花费 ERC20 Token</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> settlementToken.approve(aceContract.address, value);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-构建-proof"><a href="#2-2-构建-proof" class="headerlink" title="2.2.构建 proof"></a>2.2.构建 proof</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; </span><br><span class="line">     proofData, </span><br><span class="line">     expectedOutput</span><br><span class="line">&#125; = aztec.proof.joinSplit.encodeJoinSplitTransaction(&#123;</span><br><span class="line">    inputNotes: [],</span><br><span class="line">    outputNotes: [Note1, Note2], <span class="comment">// note values sum to kPublic</span></span><br><span class="line">    senderAddress: account.address,</span><br><span class="line">    inputNoteOwners: [],</span><br><span class="line">    publicOwner: account.address,</span><br><span class="line">    kPublic: -value, </span><br><span class="line">    validatorAddress: joinSplitContract.address,</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-批准-ACE-合约花费-ERC20-Token"><a href="#2-3-批准-ACE-合约花费-ERC20-Token" class="headerlink" title="2.3.批准 ACE 合约花费 ERC20 Token"></a>2.3.批准 ACE 合约花费 ERC20 Token</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> ACE.publicApprove(zkAsset.address, hashProof, kPublic, &#123;</span><br><span class="line">      <span class="keyword">from</span>: accounts[<span class="number">0</span>],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-4-转发交易"><a href="#2-4-转发交易" class="headerlink" title="2.4.转发交易"></a>2.4.转发交易</h5><p>转发 proof 给到 ACE，proof 中的senderAddress与发起调用ACE.validateProof的msg.sender 需保持一致。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(bytes memory _proofOutputs) = ACE.validateProof(JOIN_SPLIT_PROOF, address(<span class="built_in">this</span>), _proofData);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-5-处理转移指令-Transfer-Instructions"><a href="#2-5-处理转移指令-Transfer-Instructions" class="headerlink" title="2.5.处理转移指令(Transfer Instructions)"></a>2.5.处理转移指令(Transfer Instructions)</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_loanVariables.settlementToken.confidentialTransferFrom(JOIN_SPLIT_PROOF, _proofOutputs.get(<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-结算贷款处理"><a href="#3-结算贷款处理" class="headerlink" title="3.结算贷款处理"></a>3.结算贷款处理</h4><h5 id="3-1-批准结算合约来花费-note"><a href="#3-1-批准结算合约来花费-note" class="headerlink" title="3.1.批准结算合约来花费 note"></a>3.1.批准结算合约来花费 note</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> settlementSignature = signNote(</span><br><span class="line">   zkSettlementAsset.address,</span><br><span class="line">   settlementNoteHash,</span><br><span class="line">   loanId,</span><br><span class="line">   lender.privateKey);</span><br><span class="line"><span class="keyword">await</span> zkSettlementAsset.confidentialApprove(</span><br><span class="line">   settlementNoteHash,</span><br><span class="line">   loanId,</span><br><span class="line">   <span class="literal">true</span>,</span><br><span class="line">   settlementSignature, </span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">from</span>: lender.address,</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-构建-proof"><a href="#3-2-构建-proof" class="headerlink" title="3.2.构建 proof"></a>3.2.构建 proof</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">     proofData,</span><br><span class="line">&#125; = aztec.proof.bilateralSwap.encodeBilateralSwapTransaction(&#123;</span><br><span class="line">        inputNotes: [takerBid, takerAsk],</span><br><span class="line">        outputNotes: [makerAsk, makerBid],</span><br><span class="line">        senderAddress: loanId,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其中需要<code>takerBid == makerAsk</code> ; <code>takerAsk == makerBid</code></p>
+<h5 id="3-3-终极交易并更新状态"><a href="#3-3-终极交易并更新状态" class="headerlink" title="3.3.终极交易并更新状态"></a>3.3.终极交易并更新状态</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(bytes memory _proofOutputs) = ACE.validateProof(BILATERAL_SWAP_PROOF, address(<span class="built_in">this</span>), _proofData);</span><br><span class="line">(bytes memory _loanProofOutputs) = _proofOutputs.get(<span class="number">0</span>);</span><br><span class="line">(bytes memory _settlementProofOutputs) = _proofOutputs.get(<span class="number">1</span>);</span><br><span class="line">settlementZkAsset.confidentialTransferFrom(BILATERAL_SWAP_PROOF, _settlementProofOutputs);</span><br><span class="line">loanZkAsset.confidentialTransferFrom(BILATERAL_SWAP_PROOF, _loanProofOutputs);</span><br></pre></td></tr></table></figure>
+
+<p>由此完成了借贷以及结算，同时全部的账目均为保密。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -506,184 +835,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/07/24/%E5%85%B3%E4%BA%8Eethereum%E9%9A%90%E7%A7%81%E6%95%B0%E6%8D%AE%E7%9A%84%E7%8E%B0%E7%8A%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/24/%E5%85%B3%E4%BA%8Eethereum%E9%9A%90%E7%A7%81%E6%95%B0%E6%8D%AE%E7%9A%84%E7%8E%B0%E7%8A%B6/" class="post-title-link" itemprop="url">关于ethereum隐私数据的现状</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-24 17:34:04" itemprop="dateCreated datePublished" datetime="2019-07-24T17:34:04+08:00">2019-07-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="一句话概述：以太坊上没有隐私数据"><a href="#一句话概述：以太坊上没有隐私数据" class="headerlink" title="一句话概述：以太坊上没有隐私数据"></a>一句话概述：以太坊上没有隐私数据</h3><h5 id="private-声明帮不了你"><a href="#private-声明帮不了你" class="headerlink" title="private 声明帮不了你"></a>private 声明帮不了你</h5><p><code>string private secret;</code></p>
-<p>如上，将变量设置为private只是确保仅通过特定的 function 才能够更改变量的值。但就数据的隐私性“private”而言，这是没用的。基本上，以太坊smart contract上的所有内容都在（所有）节点（即所有矿工和参与者）的硬盘上，私有变量只是为了使阅读不方便，但并不意味着不可能。它不足以保护您的敏感、隐私信息。如下图所示。<br>而且，smart contract 的代码是透明的，private 的变量声明是很容易被以太坊用户识别的。</p>
-<p><img src="/2019/07/24/%E5%85%B3%E4%BA%8Eethereum%E9%9A%90%E7%A7%81%E6%95%B0%E6%8D%AE%E7%9A%84%E7%8E%B0%E7%8A%B6/setsecret.png"></p>
-<p><img src="/2019/07/24/%E5%85%B3%E4%BA%8Eethereum%E9%9A%90%E7%A7%81%E6%95%B0%E6%8D%AE%E7%9A%84%E7%8E%B0%E7%8A%B6/rawdata.png"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0x5 - length of the string</span><br><span class="line">0x68 - h (ASCII code 104)</span><br><span class="line">0x65 - e</span><br><span class="line">0x6c - l</span><br><span class="line">0x6c - l</span><br><span class="line">0x6f - o</span><br></pre></td></tr></table></figure>
-
-<h4 id="private-data-上链的方式如下，但是都觉得是隔靴搔痒："><a href="#private-data-上链的方式如下，但是都觉得是隔靴搔痒：" class="headerlink" title="private data 上链的方式如下，但是都觉得是隔靴搔痒："></a>private data 上链的方式如下，但是都觉得是隔靴搔痒：</h4><p>1.hash 上链，作为存证的证明</p>
-<p>2.密文上链。</p>
-<p>3.时间锁 Time-locked secrets</p>
-<p>4.EIP1024</p>
-<p>请参考：<a target="_blank" rel="noopener" href="https://www.coindesk.com/four-projects-seek-solve-ethereums-privacy-paradox">How to secure Sensitive data on an Ethereum Smart contract?</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/" class="post-title-link" itemprop="url">zokrates-基于ethereum的zkp-II-进阶</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-24 16:01:04" itemprop="dateCreated datePublished" datetime="2019-07-24T16:01:04+08:00">2019-07-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="Project-link-gt-https-github-com-WillZhuang-zkp-workshop-project"><a href="#Project-link-gt-https-github-com-WillZhuang-zkp-workshop-project" class="headerlink" title="Project link -&gt; https://github.com/WillZhuang/zkp-workshop-project"></a>Project link -&gt; <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project">https://github.com/WillZhuang/zkp-workshop-project</a></h3><p>让我来 step by step 做介绍：</p>
-<h4 id="1-编写关于-bid-case-的-code"><a href="#1-编写关于-bid-case-的-code" class="headerlink" title="1.编写关于 bid case 的 code"></a>1.编写关于 bid case 的 code</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">/// This zksnark <span class="keyword">is</span> to be used to verify that an operator has choosen</span><br><span class="line">/// the lowest bid that was actually submitted by an approved supplier was choosen</span><br><span class="line">/// by the operator <span class="keyword">for</span> the work. For this proof of concept, we will structure the</span><br><span class="line">/// proof to use <span class="number">3</span> suppliers only.</span><br><span class="line"></span><br><span class="line">///    Inputs <span class="keyword">for</span> the SNARK</span><br><span class="line"></span><br><span class="line">///    PUBLIC FIELDS</span><br><span class="line">///    input_of_py: field[<span class="number">3</span>] public keys <span class="keyword">for</span> each supplier - should be EDDSA public keys</span><br><span class="line">///    *  A: Curve point. Public part of the key used to create S.</span><br><span class="line"></span><br><span class="line">///    PRIVATE FIELDS</span><br><span class="line">///    input_of_py: field[<span class="number">3</span>] actual bid <span class="keyword">from</span> each supplier</span><br><span class="line">///    input_of_py: Requires per each EDDSA signatures per supplier</span><br><span class="line">///    *  R: Curve point. Hidden version of the per-message nonce.</span><br><span class="line">///    *  S: Field element. Signature to be verified.</span><br><span class="line">///    input_of_py: a secret to aide <span class="keyword">in</span> building out the merkel tree of the results</span><br><span class="line"></span><br><span class="line">///    *  context: Curve parameters used to create S. Tells you which curve was used.</span><br><span class="line">///    The context can be generated <span class="keyword">from</span> the babyjubjub curve.</span><br><span class="line"></span><br><span class="line">///    Returns <span class="keyword">for</span> the SNARK</span><br><span class="line">///    <span class="keyword">return</span>: a merkel tree including...</span><br><span class="line">///    <span class="number">1.</span> private key of choosen supplier</span><br><span class="line">///    <span class="number">2.</span> secret</span><br><span class="line">///    <span class="number">3.</span> A: Curve point. Public part of the key used to create S.</span><br><span class="line"></span><br><span class="line">// In the vectors, the supplier order should be kept the same to compare/access (i.e. supplier one has first bid, supplier two second bid, etc.)</span><br><span class="line"></span><br><span class="line">//For signatures</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;ecc/babyjubjubParams.code&quot;</span> <span class="keyword">as</span> context</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;signatures/verifyEddsa.code&quot;</span> <span class="keyword">as</span> verifyEddsa</span><br><span class="line">//For unpacking bids correctly</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/unpack128.code&quot;</span> <span class="keyword">as</span> unpack128</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/pack128.code&quot;</span> <span class="keyword">as</span> pack128</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/nonStrictUnpack256.code&quot;</span> <span class="keyword">as</span> unpack256</span><br><span class="line">//For unpacking signatures correctly</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/pack128.code&quot;</span> <span class="keyword">as</span> pack128</span><br><span class="line">//For merkle tree - changed to padded</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;hashes/sha256/512bitPadded.code&quot;</span> <span class="keyword">as</span> sha256</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>(<span class="params">private field[<span class="number">6</span>] R, \</span></span></span><br><span class="line"><span class="function"><span class="params"> field[<span class="number">6</span>] A, \</span></span></span><br><span class="line"><span class="function"><span class="params"> field[<span class="number">3</span>] S, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field secret, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidone, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidtwo, \</span></span></span><br><span class="line"><span class="function"><span class="params"> private field bidthree</span>) -&gt; (field[2]):</span></span><br><span class="line"></span><br><span class="line">//Since each message <span class="keyword">is</span> constructed <span class="keyword">from</span> the bids, no way to input_of_py a faulty bid</span><br><span class="line"></span><br><span class="line">//Reconstruct messages:</span><br><span class="line">//Note: Field element can be a value between <span class="number">0</span> <span class="keyword">and</span> p (p upper limit: <span class="number">2</span>^<span class="number">254</span>)</span><br><span class="line">//Makes an assumption that every bid will be <span class="number">64</span> bit number</span><br><span class="line">//Message <span class="keyword">in</span> the signature should be <span class="number">512</span> bits</span><br><span class="line"></span><br><span class="line">field[<span class="number">128</span>] bidoneunpacked = unpack128(bidone)</span><br><span class="line">field[<span class="number">512</span>] bidonemessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidoneunpacked]</span><br><span class="line">field[<span class="number">128</span>] bidtwounpacked = unpack128(bidtwo)</span><br><span class="line">field[<span class="number">512</span>] bidtwomessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidtwounpacked]</span><br><span class="line">field[<span class="number">128</span>] bidthreeunpacked = unpack128(bidthree)</span><br><span class="line">field[<span class="number">512</span>] bidthreemessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidthreeunpacked]</span><br><span class="line"></span><br><span class="line">context = context()</span><br><span class="line"></span><br><span class="line">// Supplier <span class="number">1</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">0.</span><span class="number">.2</span>], S[<span class="number">0</span>], A[<span class="number">0.</span><span class="number">.2</span>], bidonemessage[<span class="number">0.</span><span class="number">.256</span>], bidonemessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line">// Supplier <span class="number">2</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">2.</span><span class="number">.4</span>], S[<span class="number">1</span>], A[<span class="number">2.</span><span class="number">.4</span>], bidtwomessage[<span class="number">0.</span><span class="number">.256</span>], bidtwomessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line">// Supplier <span class="number">3</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">4.</span><span class="number">.6</span>], S[<span class="number">2</span>], A[<span class="number">4.</span><span class="number">.6</span>], bidthreemessage[<span class="number">0.</span><span class="number">.256</span>], bidthreemessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line"></span><br><span class="line">//Lowest bid should correllate <span class="keyword">with</span> supplier</span><br><span class="line">//To Do: write the simplest implementation to simplify, each of the below would be a <span class="built_in">range</span> proof</span><br><span class="line">field[<span class="number">3</span>] lowestbidder = [...[<span class="number">0</span>; <span class="number">3</span>]] //Save supplier <span class="keyword">and</span> the lowest bid</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidone &lt; bidtwo &amp;&amp; bidone &lt; bidthree then [A[<span class="number">0</span>], A[<span class="number">1</span>], bidone] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidtwo &lt; bidone &amp;&amp; bidtwo &lt; bidthree then [A[<span class="number">2</span>], A[<span class="number">3</span>], bidtwo] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidthree &lt; bidone &amp;&amp; bidthree &lt; bidtwo then [A[<span class="number">4</span>], A[<span class="number">5</span>], bidthree] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line"></span><br><span class="line">//Now we have the lowest bid, supplier sig verified, and secret --&gt; ready for the merkle tree</span><br><span class="line">//<span class="number">512</span>bitpadded - same merkle tree <span class="keyword">as</span> ethereum</span><br><span class="line">//Leaf One: lowest bid + secret</span><br><span class="line">//Makes an assumption that every secret will be <span class="number">64</span> bit number</span><br><span class="line">field lowest = lowestbidder[<span class="number">2</span>]</span><br><span class="line">field[<span class="number">256</span>] lowestbidunpacked = unpack256(lowest)</span><br><span class="line">field[<span class="number">256</span>] secretunpacked = unpack256(secret)</span><br><span class="line">field[<span class="number">256</span>] leafone = sha256(lowestbidunpacked, secretunpacked)</span><br><span class="line"></span><br><span class="line">//Leaf Two: Curve point A: A[<span class="number">0</span>] + A[<span class="number">1</span>]</span><br><span class="line">//We know that A[<span class="number">0</span>] <span class="keyword">and</span> A[<span class="number">1</span>] will be <span class="number">64</span> bit numbers, need to unpack to <span class="number">256</span></span><br><span class="line">field[<span class="number">256</span>] a0unpacked = unpack256(A[<span class="number">0</span>])</span><br><span class="line">field[<span class="number">256</span>] a1unpacked = unpack256(A[<span class="number">1</span>])</span><br><span class="line">field[<span class="number">256</span>] leaftwo = sha256(a0unpacked, a1unpacked)</span><br><span class="line"></span><br><span class="line">//Build the root of leaf one + leaf two</span><br><span class="line">field[<span class="number">256</span>] root = sha256(leafone, leaftwo)</span><br><span class="line"></span><br><span class="line">//Before returning, compress back to field element root - split off <span class="number">128</span> bits</span><br><span class="line">res0 = pack128(root[.<span class="number">.128</span>])</span><br><span class="line">res1 = pack128(root[<span class="number">128.</span>.])</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [res0, res1]</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-编译"><a href="#2-编译" class="headerlink" title="2.编译"></a>2.编译</h4><p><code>zokrates compile -i verifybid.code</code></p>
-<p>生成 out 和 out.code 文件。其中 out 文件为 102M，out.code 文件为 60M，文件 size 较大。</p>
-<h4 id="3-设置"><a href="#3-设置" class="headerlink" title="3.设置"></a>3.设置</h4><p><code>zokrates setup</code></p>
-<p>生成 proving.key 和 verification.key 文件。其中 proving.key 为 121M，文件较大。</p>
-<h4 id="4-执行程序"><a href="#4-执行程序" class="headerlink" title="4.执行程序"></a>4.执行程序</h4><p><code>zokrates compute-witness -a 10055980565918579776429468085502320403896861311334950973306171539247124720876 9872212025624827705538064352986283580914984702567748676648365783032194062540 15914440638590293656936968551196129378835493705090190454426890248467449623197 7164401624892807842686423552737135338148312648059491863415011813391162897156 17656893400745400645892949581714190787095935883004706460374622673779099869831 13238137875306891162631161684759202257598937454005976664682588856632564854848 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 6460329147541296150725376868570071708599740324087744825213520062979428542760 8063340131639693693865282091868641282847827816145781069349300386706996098818 21548706238088528999687556989620717323700520797702367873886065001951944889761 45 500 400 300</code></p>
-<p>-a 后面为执行程序的参数，即对应着<strong>verifybid.code</strong>中的入参 private field[6] R, field[6] A, field[3] S, private field secret, private field bidone, private field bidtwo, private field bidthree</p>
-<p>其中的 500，400，300 即为 3 方的报价，此处可在前序的智能合约中编写为下面的逻辑：</p>
-<p>party one，输入 500，执行 smart contract，</p>
-<p>party two，输入 400，执行 smart contract，</p>
-<p>party three，输入 300，执行smart contract，</p>
-<p>smart contract 收集到法定报价数量之后，verifier 端收到 event，执行 step5 和 step6。</p>
-<p>其余参数内容来自<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/input_files/inputs_of_command_paras">inputs_of_command_paras</a></p>
-<h4 id="5-生成证明"><a href="#5-生成证明" class="headerlink" title="5.生成证明"></a>5.生成证明</h4><p><code>zokrates generate-proof</code></p>
-<p>生成 witness 文件。其中 witness 文件为 82M，文件较大。</p>
-<h4 id="6-导出-solidity-verifier"><a href="#6-导出-solidity-verifier" class="headerlink" title="6.导出 solidity verifier"></a>6.导出 solidity verifier</h4><p><code>zokrates export-verifier</code></p>
-<p>生成<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/contracts/Verifier.sol">Verifier.sol</a>。</p>
-<h4 id="7-编写合约"><a href="#7-编写合约" class="headerlink" title="7.编写合约"></a>7.编写合约</h4><p>编写<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/contracts/Bid_operator.sol">Bid_operator.sol</a>合约，引用 verifyTx 函数。</p>
-<h4 id="8-使用-truffle-部署合约"><a href="#8-使用-truffle-部署合约" class="headerlink" title="8.使用 truffle 部署合约"></a>8.使用 truffle 部署合约</h4><p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/migrations/2_deploy_Verifier.js">2_deploy_Verifier.js</a> 和 <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/migrations/3_deploy_Bid_operator.js">3_deploy_Bid_operator.js</a> 作为配置文件。</p>
-<h4 id="9-测试"><a href="#9-测试" class="headerlink" title="9.测试"></a>9.测试</h4><p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/tree/master/test">test/bid_operator.js</a> 中的a, b, c 和 input 均来自于<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/zkp_files/proof.json">proof.json</a>。</p>
-<h4 id="回头来总结一下："><a href="#回头来总结一下：" class="headerlink" title="回头来总结一下："></a>回头来总结一下：</h4><p>1.本次的 bid case 的目的为验证operator选择了最低的 bid 报价，并且验证了该 bid 为 supplier 所提供；</p>
-<p><strong>不能证明</strong> supplier one，two，three 之间互相<strong>看不到</strong>其他 supplier 的 bid。</p>
-<p>2.zokrates默认的证明算法为 <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">G16</a>，<a target="_blank" rel="noopener" href="https://zokrates.github.io/reference/proving_schemes.html">根据 zokrates 的说明</a>，在使用了签名和 ethereum address 作为proofs 证明的情况下，G16 是安全的。并且 G16 无需引用<strong>libsnark</strong>，生成 witness 和 proof 的速度大大加快，使用配置文件的 size 大大降低。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/38/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/40/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/38/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/40/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

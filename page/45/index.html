@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">259</span>
+          <span class="site-state-item-count">261</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,240 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" class="post-title-link" itemprop="url">golang调优工具-pprof</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-07 14:56:17" itemprop="dateCreated datePublished" datetime="2018-06-07T14:56:17+08:00">2018-06-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-09-29 09:07:22" itemprop="dateModified" datetime="2022-09-29T09:07:22+08:00">2022-09-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="CPU-Profiling"><a href="#CPU-Profiling" class="headerlink" title="CPU Profiling"></a>CPU Profiling</h4><p>Golang 提供了 pprof 包（runtime/pprof）用于输出运行时的 profiling 数据，这些数据可以被 pprof 工具（或者 go tool pprof，其为 pprof 的变种）使用。通常我们这样来使用 pprof 包：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 定义 flag cpuprofile</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">var</span> cpuprofile = flag.String(<span class="string">&quot;cpuprofile&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;write cpu profile to file&quot;</span>)</span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="number">4</span>    flag.Parse()</span><br><span class="line"><span class="number">5</span>    <span class="comment">// 如果命令行设置了 cpuprofile</span></span><br><span class="line"><span class="number">6</span>    <span class="keyword">if</span> *cpuprofile != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line"><span class="number">7</span>        <span class="comment">// 根据命令行指定文件名创建 profile 文件</span></span><br><span class="line"><span class="number">8</span>        f, err := os.Create(*cpuprofile)</span><br><span class="line"><span class="number">9</span>        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">10</span>            log.Fatal(err)</span><br><span class="line"><span class="number">11</span>        &#125;</span><br><span class="line"><span class="number">12</span>        <span class="comment">// 开启 CPU profiling</span></span><br><span class="line"><span class="number">13</span>        pprof.StartCPUProfile(f)</span><br><span class="line"><span class="number">14</span>        <span class="keyword">defer</span> pprof.StopCPUProfile()</span><br><span class="line"><span class="number">15</span>    &#125;</span><br><span class="line"><span class="number">16</span>    ...</span><br></pre></td></tr></table></figure>
+
+<p>假定我们编写的一个程序 mytest 中加入了上述代码则可以执行并生成 profile 文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mytest -cpuprofile=mytest.prof</span><br></pre></td></tr></table></figure>
+
+<p>这里，我们生成了 mytest.prof profile 文件。有了 profile 文件就可以使用 go tool pprof 程序来解析此文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof mytest mytest.prof</span><br></pre></td></tr></table></figure>
+
+<p>pprof 程序中最重要的命令就是 topN，此命令用于显示 profile 文件中的最靠前的 N 个样本（samples），例如（此例为 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> 中的例子）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) top10</span><br><span class="line">2 Total: 2525 samples</span><br><span class="line">3    298  11.8%  11.8%    345  13.7% runtime.mapaccess1_fast64</span><br><span class="line">4    268  10.6%  22.4%   2124  84.1% main.FindLoops</span><br><span class="line">5    251   9.9%  32.4%    451  17.9% scanblock</span><br><span class="line">6    178   7.0%  39.4%    351  13.9% hash_insert</span><br><span class="line">7    131   5.2%  44.6%    158   6.3% sweepspan</span><br><span class="line">8    119   4.7%  49.3%    350  13.9% main.DFS</span><br><span class="line">9     96   3.8%  53.1%     98   3.9% flushptrbuf</span><br><span class="line">10    95   3.8%  56.9%     95   3.8% runtime.aeshash64</span><br><span class="line">11    95   3.8%  60.6%    101   4.0% runtime.settype_flush</span><br><span class="line">12    88   3.5%  64.1%    988  39.1% runtime.mallocgc</span><br></pre></td></tr></table></figure>
+
+<p>开启 CPU profiling 后，Golang 程序在 1 秒钟会停顿 100 次，每次停顿都会记录 1 个样本。上例中，前两列表示运行的函数的样本数量（the number of samples in which the function was running）和占总样本数的百分比，例如说 runtime.mapaccess1_fast64 函数在 298 次采样中（占总采样数量的 11.8%）正在运行。第三列表示前几行样本数量总和占总样本数的百分比（第二行 22.4% 为 11.8% + 10.6%）。第四、五列表示出现的函数的样本数量（the number of samples in which the function appeared）和占总样本数的百分比，这里“出现的函数”指的是在采样中正在运行或者等待某个被调用函数返回的函数，换句话就是采样中那些位于调用栈上的函数。我们可以使用 -cum（cumulative 的缩写）flag 来以第四、五列为标准排序。需要注意的是，每次采样只会包括最底下的 100 个栈帧（stack frames）。</p>
+<p>使用 web 命令能够以图形化的方式（SVG 格式）显示函数调用关系。例如（图片来源于 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> ）：</p>
+<p><img src="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/1.png"></p>
+<p>这里每个方块的大小由运行的函数的样本数量决定（这样就能方便的一眼看到热点函数）。箭头表示的是调用关系，箭头上的数字表示的是采样到的调用次数。web 命令还可以指定显示特定的函数，例如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(pprof) web mapaccess1</span><br></pre></td></tr></table></figure>
+
+<p>当我们有大致的想法（也就是确定热点函数）后，就可以深入特定的函数。我们使用 list 命令（此例为 <a target="_blank" rel="noopener" href="http://blog.golang.org/profiling-go-programs">http://blog.golang.org/profiling-go-programs</a> 中的例子）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list DFS</span><br><span class="line">2 Total: 2525 samples</span><br><span class="line">3 ROUTINE ====================== main.DFS <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak1.go</span><br><span class="line">4    119    697 Total samples (flat / cumulative)</span><br><span class="line">5      3      3  240: func DFS(currentNode *BasicBlock, nodes []*UnionFindNode, number map[*BasicBlock]int, last []int, current int) int &#123;</span><br><span class="line">6      1      1  241:     nodes[current].Init(currentNode, current)</span><br><span class="line">7      1     37  242:     number[currentNode] = current</span><br><span class="line">8      .      .  243:</span><br><span class="line">9      1      1  244:     lastid := current</span><br><span class="line">10    89     89  245:     <span class="keyword">for</span> _, target := range currentNode.OutEdges &#123;</span><br><span class="line">11     9    152  246:             <span class="keyword">if</span> number[target] == unvisited &#123;</span><br><span class="line">12     7    354  247:                     lastid = DFS(target, nodes, number, last, lastid+1)</span><br><span class="line">13     .      .  248:             &#125;</span><br><span class="line">14     .      .  249:     &#125;</span><br><span class="line">15     7     59  250:     last[number[currentNode]] = lastid</span><br><span class="line">16     1      1  251:     <span class="built_in">return</span> lastid</span><br></pre></td></tr></table></figure>
+
+<p>上例中，第一列为运行到此行时的样本数，第二列为运行到此行或从此行调用的样本数，第三列为行号。如果需要显示汇编，可以使用命令 disasm（使用命令 weblist 可以同时显示源码和汇编代码， 这里 有一个范例）。通过样本数，我们可以定位到热点行，然后考虑适合的优化策略。</p>
+<h4 id="pprof-包"><a href="#pprof-包" class="headerlink" title="pprof 包"></a>pprof 包</h4><p>pprof 包进行 profiling 有两种方式：</p>
+<ul>
+<li>采样。CPU Profiling 需要不断采样，（如上所述）pprof 包提供了一套特殊的 API（StartCPUProfile / StopCPUProfile）</li>
+<li>快照。下面详细谈这种方式（同样可以使用 go tool pprof 程序来解析输出的 profile 文件）</li>
+</ul>
+<p>pprof 包预先定义了（还可以自己扩展）4 种快照模式：</p>
+<ul>
+<li>goroutine，当前所有 goroutines 的 stack traces</li>
+<li>heap，所有的堆内存分配（为降低开销仅获取一个近似值，To reduce overhead, the memory profiler only records information for approximately one block per half megabyte allocated (the “1-in-524288 sampling rate”), so these are approximations to the actual counts）</li>
+<li>threadcreate，致使新系统线程创建的 stack traces</li>
+<li>block，致使在同步原语上阻塞的 stack traces</li>
+</ul>
+<p>相关 API 具体用法如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 根据名字查找 Profile</span></span><br><span class="line"><span class="number">2</span> p := pprof.Lookup(<span class="string">&quot;heap&quot;</span>)</span><br><span class="line"><span class="number">3</span> <span class="comment">// 将一个 pprof（程序）格式的快照写入 w</span></span><br><span class="line"><span class="number">4</span> p.WriteTo(w, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里的 WriteTo 方法原型为：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">func</span> <span class="params">(p *Profile)</span> <span class="title">WriteTo</span><span class="params">(w io.Writer, debug <span class="keyword">int</span>)</span> <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
+
+<p>其中 debug 参数：</p>
+<ul>
+<li>为 0 时，仅仅输出 pprof（程序）需要的十六进制地址</li>
+<li>为 1 时，输出时增加函数名和行号，这样无需工具也可以阅读此 profile</li>
+<li>为 2 时，并且当输出 goroutine profile 时，输出的 goroutine 栈的格式为未 recovered panic 时的格式</li>
+</ul>
+<h4 id="memory-profiling"><a href="#memory-profiling" class="headerlink" title="memory profiling"></a>memory profiling</h4><p>以 <a target="_blank" rel="noopener" href="https://blog.golang.org/profiling-go-programs">https://blog.golang.org/profiling-go-programs</a> 中的例子为例：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 定义 flag memprofile</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">var</span> memprofile = flag.String(<span class="string">&quot;memprofile&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;write memory profile to this file&quot;</span>)</span><br><span class="line"><span class="number">3</span> ...</span><br><span class="line"><span class="number">4</span>    <span class="comment">// 需要 profiling 的函数</span></span><br><span class="line"><span class="number">5</span>    FindHavlakLoops(cfgraph, lsgraph)</span><br><span class="line"><span class="number">6</span>    <span class="keyword">if</span> *memprofile != <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line"><span class="number">7</span>        f, err := os.Create(*memprofile)</span><br><span class="line"><span class="number">8</span>        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line"><span class="number">9</span>            log.Fatal(err)</span><br><span class="line"><span class="number">10</span>        &#125;</span><br><span class="line"><span class="number">11</span>        <span class="comment">// WriteHeapProfile 等价于 Lookup(&quot;heap&quot;).WriteTo(w, 0)</span></span><br><span class="line"><span class="number">12</span>        pprof.WriteHeapProfile(f)</span><br><span class="line"><span class="number">13</span>        <span class="comment">// 关闭文件</span></span><br><span class="line"><span class="number">14</span>        f.Close()</span><br><span class="line"><span class="number">15</span>        <span class="keyword">return</span></span><br><span class="line"><span class="number">16</span>    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 go tool pprof 程序打开生成的 profile 文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) top5</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3    56.3  68.4%  68.4%     56.3  68.4% main.FindLoops</span><br><span class="line">4    17.6  21.3%  89.7%     17.6  21.3% main.(*CFG).CreateNode</span><br><span class="line">5     8.0   9.7%  99.4%     25.6  31.0% main.NewBasicBlockEdge</span><br><span class="line">6     0.5   0.6% 100.0%      0.5   0.6% itab</span><br><span class="line">7     0.0   0.0% 100.0%      0.5   0.6% fmt.init</span><br></pre></td></tr></table></figure>
+
+<p>这里显示了函数当前大致分配的内存。类似 CPU profiling，通过 list 命令查看函数具体的内存分配情况：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list FindLoops</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3 ROUTINE ====================== main.FindLoops <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak3.go</span><br><span class="line">4   56.3   56.3 Total MB (flat / cumulative)</span><br><span class="line">5...</span><br><span class="line">6    1.9    1.9  268:     nonBackPreds := make([]map[int]bool, size)</span><br><span class="line">7    5.8    5.8  269:     backPreds := make([][]int, size)</span><br><span class="line">8      .      .  270:</span><br><span class="line">9    1.9    1.9  271:     number := make([]int, size)</span><br><span class="line">10   1.9    1.9  272:     header := make([]int, size, size)</span><br><span class="line">11   1.9    1.9  273:     types := make([]int, size, size)</span><br><span class="line">12   1.9    1.9  274:     last := make([]int, size, size)</span><br><span class="line">13   1.9    1.9  275:     nodes := make([]*UnionFindNode, size, size)</span><br><span class="line">14     .      .  276:</span><br><span class="line">15     .      .  277:     <span class="keyword">for</span> i := 0; i &lt; size; i++ &#123;</span><br><span class="line">16   9.5    9.5  278:             nodes[i] = new(UnionFindNode)</span><br><span class="line">17     .      .  279:     &#125;</span><br><span class="line">18...</span><br><span class="line">19     .      .  286:     <span class="keyword">for</span> i, bb := range cfgraph.Blocks &#123;</span><br><span class="line">20     .      .  287:             number[bb.Name] = unvisited</span><br><span class="line">21  29.5   29.5  288:             nonBackPreds[i] = make(map[int]bool)</span><br><span class="line">22     .      .  289:     &#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了这些信息，我们就可以着手进行优化了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/" class="post-title-link" itemprop="url">开源协议的详细要求</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-05 13:52:57" itemprop="dateCreated datePublished" datetime="2018-06-05T13:52:57+08:00">2018-06-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="BSD开源协议"><a href="#BSD开源协议" class="headerlink" title="BSD开源协议"></a>BSD开源协议</h4><p>是一个给于使用者很大自由的协议。可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件再发布。当你发布使用了BSD协议的代码，或者以BSD协议代码为基础做二次开发自己的产品时，需要满足三个条件：</p>
+<ul>
+<li>如果再发布的产品中包含源代码，则在源代码中必须带有原来代码中的BSD协议。</li>
+<li>如果再发布的只是二进制类库/软件，则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议。</li>
+<li>不可以用开源代码的作者/机构名字和原来产品的名字做市场推广。</li>
+</ul>
+<p>BSD代码鼓励代码共享，但需要尊重代码作者的著作权。BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销售，因此是对商业集成很友好的协议。很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码，在必要的时候可以修改或者 二次开发。</p>
+<h4 id="Apache-Licene-2-0-协议"><a href="#Apache-Licene-2-0-协议" class="headerlink" title="Apache Licene 2.0 协议"></a>Apache Licene 2.0 协议</h4><p>Apache Licence是著名的非盈利开源组织Apache采用的协议。该协议和BSD类似，同样鼓励代码共享和尊重原作者的著作权，同样允许代码修改，再发布（作为开源或商业软件）。需要满足的条件也和BSD类似：</p>
+<ul>
+<li>需要给代码的用户一份Apache Licence</li>
+<li>如果你修改了代码，需要在被修改的文件中说明。</li>
+<li>在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议，商标，专利声明和其他原来作者规定需要包含的说明。</li>
+<li>如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有Apache Licence。你可以在Notice中增加自己的许可，但不可以表现为对Apache Licence构成更改。</li>
+<li>Apache Licence也是对商业应用友好的许可。使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售。</li>
+</ul>
+<p>英文原文：<a target="_blank" rel="noopener" href="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</a></p>
+<h4 id="MIT-协议"><a href="#MIT-协议" class="headerlink" title="MIT 协议"></a>MIT 协议</h4><p>MIT许可证之名源自麻省理工学院（Massachusetts Institute of Technology, MIT），又称「X条款」（X License）或「X11条款」（X11 License）</p>
+<p>MIT内容与三条款BSD许可证（3-clause BSD license）内容颇为近似，但是赋予软体被授权人更大的权利与更少的限制。</p>
+<p>被授权人有权利使用、复制、修改、合并、出版发行、散布、再授权及贩售软体及软体的副本。</p>
+<p>被授权人可根据程式的需要修改授权条款为适当的内容。</p>
+<p>在软件和软件的所有副本中都必须包含版权声明和许可声明。</p>
+<p>此授权条款并非属copyleft的自由软体授权条款，允许在自由/开放源码软体或非自由软体（proprietary software）所使用。</p>
+<p>此亦为MIT与BSD（The BSD license, 3-clause BSD license）本质上不同处。</p>
+<p>MIT条款可与其他授权条款并存。另外，MIT条款也是自由软体基金会（FSF）所认可的自由软体授权条款，与GPL相容。</p>
+<p>协议英文原文：<a target="_blank" rel="noopener" href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a></p>
+<h4 id="GPL-协议"><a href="#GPL-协议" class="headerlink" title="GPL 协议"></a>GPL 协议</h4><p>在自由软件所使用的各种许可证之中，最为人们注意的也许是通用性公开许可证(General Public License，简称GPL)。</p>
+<p>GPL同其它的自由软件许可证一样，许可社会公众享有：运行、复制软件的自由，发行传播软件的自由，获得软件源码的自由，改进软件并将自己作出的改进版本向社会发行传播的自由。<br>GPL还规定：只要这种修改文本在整体上或者其某个部分来源于遵循GPL的程序，该修改文本的 整体就必须按照GPL流通，不仅该修改文本的源码必须向社会公开，而且对于这种修改文本的流通不准许附加修改者自己作出的限制。因此，一项遵循GPL流通 的程序不能同非自由的软件合并。GPL所表达的这种流通规则称为copyleft，表示与copyright(版权)的概念“相左”。</p>
+<p>GPL协议最主要的几个原则：</p>
+<ul>
+<li><p>确保软件自始至终都以开放源代码形式发布，保护开发成果不被窃取用作商业发售。任何一套软 件，只要其中使用了受 GPL 协议保护的第三方软件的源程序，并向非开发人员发布时，软件本身也就自动成为受 GPL 保护并且约束的实体。也就是说，此时它必须开放源代码。</p>
+</li>
+<li><p>GPL 大致就是一个左侧版权（Copyleft，或译为“反版权”、“版权属左”、“版权所无”、“版责”等）的体现。你可以去掉所有原作的版权 信息，只要你保持开源，并且随源代码、二进制版附上 GPL 的许可证就行，让后人可以很明确地得知此软件的授权信息。GPL 精髓就是，只要使软件在完整开源 的情况下，尽可能使使用者得到自由发挥的空间，使软件得到更快更好的发展。</p>
+</li>
+<li><p>无论软件以何种形式发布，都必须同时附上源代码。例如在 Web 上提供下载，就必须在二进制版本（如果有的话）下载的同一个页面，清楚地提供源代码下载的链接。如果以光盘形式发布，就必须同时附上源文件的光盘。</p>
+</li>
+<li><p>开发或维护遵循 GPL 协议开发的软件的公司或个人，可以对使用者收取一定的服务费用。但还是一句老话——必须无偿提供软件的完整源代码，不得将源代码与服务做捆绑或任何变相捆绑销售。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -585,183 +819,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/" class="post-title-link" itemprop="url">首个区块链小程序上线首日即叫停</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-05-10 08:44:44" itemprop="dateCreated datePublished" datetime="2018-05-10T08:44:44+08:00">2018-05-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这款区块链小程序“小协议”，用户只需输入协议的标题和内容，可以选择是否加密存储协议内容，支付一定的服务费（费用和字数正相关），生成协议，甲方将协议微信转发乙方，乙方同意之后，这份协议就会被写入以太坊网络。</p>
-<p><img src="/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/1.png"></p>
-<p>在使用小协议时，不需要用户购买以太坊进行支付，直接微信支付人民币，小协议会在后台用以太坊帮写入用户所需要的数据。全部过程都在微信里完成。</p>
-<p>据了解，小协议会读取甲方和乙方的微信ID，这是固定的身份标识，背后通常绑定了很多个人核心信息，例如手机号、银行卡、指纹等等，安全性较高，易验证。这解决了电子合同的身份验证问题。</p>
-<p>会话秘钥是指甲方创建协议和乙方确认协议时，根据当时的时间戳，在微信系统内生成的一次记录值，这秘钥是可变的，只和本次会话挂钩。这解决了签订时间的问题。</p>
-<p>另外，小协议的显现载体是通过图片为载体来显现合同内容的，因此解决了显现载体的问题。</p>
-<p>但是，一份有法律效应的协议，除了不可篡改且能验明身份，还需要得到现有法律的支持，不然出了纠纷，法院也无法解决问题，这个协议就变得没有意义。这也许是此次“小协议”暂停服务的重要原因之一。国内对电子协议是有专门立法的，但是在具体执行上，存在一些不认可的领域，尤其是涉及到大额交易时。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/05/04/Credits-%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/04/Credits-%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">Credits 共识算法分析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-05-04 20:00:17" itemprop="dateCreated datePublished" datetime="2018-05-04T20:00:17+08:00">2018-05-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 13:51:24" itemprop="dateModified" datetime="2023-09-14T13:51:24+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Credits 白皮书：</p>
-<p><a target="_blank" rel="noopener" href="https://www.credits.com/Content/Docs/TechnicalWhitePaperCREDITSEng.pdf">https://www.credits.com/Content/Docs/TechnicalWhitePaperCREDITSEng.pdf</a></p>
-<h3 id="网络节点"><a href="#网络节点" class="headerlink" title="网络节点"></a>网络节点</h3><p>节点的类型：</p>
-<ol>
-<li>公共节点（CN）是参加交易验证的节点，具有最小的信任因子。它也是可信节点和当前处理的候选人。</li>
-<li>可信节点（TN）是参加交易验证的节点，具有最大值信任因子（1），它是当前处理和普通节点的候选人。在投票和选举的数学计算期间，该节点不是可信的。数学计算取决于节点的数量和网络的复杂性。</li>
-<li>网络主节点（MN）是参与验证的节点。负责将交易添加到账本中。在投票和选举的数学计算期间，该节点不是可信的。</li>
-</ol>
-<p>系统使用可信因子 - 从0到1的绝对分数值，以（可信节点数的数量+1）表示网络中节点的总数。该可信节点的最大数量不能超过网络节点的50％。</p>
-<h3 id="网络主节点的概念"><a href="#网络主节点的概念" class="headerlink" title="网络主节点的概念"></a>网络主节点的概念</h3><p>所有网络节点都是分布式的，没有任何一个具有优先权。网络节点被定义为将处理存储事务队列，构建一个新的交易块并将其放入账本中的节点。</p>
-<p>CREDITS平台通过最新的节点账本和容量证明的校验以证明节点的账本是最新的。<br>基于最新的账本，节点通过计算一个 hash 运算来使得自己变成网络主节点。之后全网广播，结构中包含了一个时间戳和一个基于最新账本的计算值，其他网络节点接到结果后开始验证并通过。此验证过程原则上为 BFT。验证通过后全网认定了唯一的网络主节点。</p>
-<p>添加之后，初始消息被分成若干块，每块由16个词组成。每个消息都经过64 ~ 80 次迭代，在每次迭代中，2个次被转换，其余的词定义转换函数。每个块的结果都被hash 计算得到摘要。</p>
-<h3 id="网络节点设备"><a href="#网络节点设备" class="headerlink" title="网络节点设备"></a>网络节点设备</h3><p>建议使用物质激励来维护网络中最优性能的服务器和高互联网带宽。作为物质补偿，主网络节点的所有者将获得报酬，即CREDITS Token。其余的部分（½）赠予参与BFT共识的可信节点。百分比可以是改变的，通过网络的联邦投票决定费率激励系统。</p>
-<h3 id="构建共识"><a href="#构建共识" class="headerlink" title="构建共识"></a>构建共识</h3><p>如上所述，主网络节点由所有节点选择。主要任务是：获取候选状态的事务以推动所有节点追加账本。</p>
-<p>整个过程可以分为以下几个阶段：</p>
-<ol>
-<li>搜索网络主节点;</li>
-<li>构建可信节点;</li>
-<li>接收交易清单并建立一份候选人清单;</li>
-<li>处理候选人名单，节点投票（可信节点和普通节点有不同的权重因子;</li>
-<li>移除候选人未经证实的交易;</li>
-<li>构建一个已经被确认的交易清单，加入账本;</li>
-<li>使用包含的块的时间戳和散列码将交易添加到账本中;</li>
-<li>将块发送到所有网络节点。收到时，它被添加到所有节点的注册表中。</li>
-</ol>
-<h3 id="交易没有被包含在注册表中"><a href="#交易没有被包含在注册表中" class="headerlink" title="交易没有被包含在注册表中"></a>交易没有被包含在注册表中</h3><p>未包含在就绪交易列表中的交易标记为已拒绝。这样的交易立即显示给交易的发起人。</p>
-<p>不包含在账本中的交易仍保留在候选人的集合中并存储在网络节点上。服务器同时也在收取新交易，然后搜索过程重新开始。这种连续循环操作可以在保持高度可靠性的同时快速进行交易的稳定性。</p>
-<p>—笔者认为上述过程对交易的排序是不严谨的。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/44/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/46/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/44/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/46/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

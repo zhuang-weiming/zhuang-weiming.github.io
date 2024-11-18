@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">259</span>
+          <span class="site-state-item-count">261</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,295 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/" class="post-title-link" itemprop="url">以太坊编程_III</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-24 21:36:12" itemprop="dateCreated datePublished" datetime="2018-02-24T21:36:12+08:00">2018-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>目录</strong></p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">迈出第一步</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">与合约进行交互</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/">现实世界中的构架和工具</a></p>
+</li>
+</ol>
+<p><strong>3. 现实世界中的构架和工具</strong></p>
+<p>或许你已经注意到了，我们所做的工作大部分都很依赖人力。尽管这是一个新兴产业，但是一些工具将会降低开发难度。下面将介绍其中一部分。</p>
+<p><strong>3.1. 通过Truffle部署</strong></p>
+<p>目前为止，我们与合约进行交互的唯一方式是通过节点控制台将它们手动部署到一个 testrpc 节点上，再使用 Web3 加载它们。现在，我要向你介绍 Truffle 。它是一个以太坊开发构架，具有调试、部署和测试智能合约等功能。</p>
+<p>我们要做的第一件事是通过Truffle部署合约。让我们为此创建一个新的目录，运行以下指令来安装Truffle，启动我们的项目：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir truffle-experiment</span><br><span class="line">$ <span class="built_in">cd</span> truffle-experiment/</span><br><span class="line">$ npm install truffle@4.0.4</span><br><span class="line">$ npx truffle init</span><br></pre></td></tr></table></figure>
+
+<p>会看见有一些文件夹和文件被创建出来。目录结构如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">truffle-experiment&#x2F;</span><br><span class="line">├── contracts&#x2F;</span><br><span class="line">│   └── Migrations.sol</span><br><span class="line">├── migrations&#x2F;</span><br><span class="line">│   └── 1_initial_migration.js</span><br><span class="line">├── test&#x2F;</span><br><span class="line">├── truffle.js</span><br><span class="line">└── truffle-config.js</span><br></pre></td></tr></table></figure>
+
+<p>智能合约应当放在 <em>contracts</em> 文件夹里。<em>migrations</em> 文件夹中的 javascript 文件将帮助我们把合约部署在网络上。你或许也看见了第一个文件夹中的 <em>Migrations</em> 合约，在这个文件夹中，迁移历史将会存储在区块链上。测试文件夹最初是空的，专门用来保存我们的测试文件。最后，你会看见 truffle.js 和 truffle-config.js 这两个文件。我们先略过它们不谈，你也可以查看<a target="_blank" rel="noopener" href="http://truffleframework.com/docs/">文档</a>了解详情。</p>
+<p>现在，让我们抛开这些无聊的东西，聚焦于一些有趣的地方。要举例说明我们是如何通过Truffle 部署合约的，可以采用与该指南上一篇文章中相同的代币合约的例子。请复制该代码并将它粘贴至合约文件夹里的 <em>MyToken.sol</em> 文件中。之后，创建一个名为 <em>2_deploy_my_token.js</em> 的新迁移文件，并将下列几行代码复制进去：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MyToken = artifacts.require(<span class="string">&#x27;./MyToken.sol&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">deployer</span>) </span>&#123;</span><br><span class="line">  deployer.deploy(MyToken)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如你所见，迁移会将我们的代币部署于网络中。这次，我们无需运行 testrpc 节点，因为 <em>Truffle</em> 已经自带了一个模拟节点，可用于开发和测试之途。我们只需要打开一个终端运行 <em>npx truffle develop</em> 并使用 <em>truffle migrate</em> 运行迁移。<a target="_blank" rel="noopener" href="https://github.com/zkat/npx">npx介绍</a>。之后，你会看到下列输出值：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">truffle(develop)&gt; truffle migrate</span><br><span class="line"></span><br><span class="line">Using network ‘develop’.</span><br><span class="line"></span><br><span class="line">Running migration: 1_initial_migration.js</span><br><span class="line">Deploying Migrations…</span><br><span class="line">… 0xf5776c9f32a9b5b7600d88a6a24b0ef433f559c31aaeb5eaf6e2fc5e2f7fa669</span><br><span class="line">Migrations: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0</span><br><span class="line">Saving successful migration to network…</span><br><span class="line">… 0xd7bc86d31bee32fa3988f1c1eabce403a1b5d570340a3a9cdba53a472ee8c956</span><br><span class="line">Saving artifacts…</span><br><span class="line"></span><br><span class="line">Running migration: 2_deploy_my_token.js</span><br><span class="line">Deploying MyToken…</span><br><span class="line">… 0xc74019c2fe3b3ef1d4e2033c2e4b9fa13611f3150f8b6b37334a8e29e24b056c</span><br><span class="line">MyToken: 0x345ca3e014aaf5dca488057592ee47305d9b3e10</span><br><span class="line">Saving successful migration to network…</span><br><span class="line">… 0xf36163615f41ef7ed8f4a8f192149a0bf633fe1a2398ce001bf44c43dc7bdda0</span><br><span class="line">Saving artifacts…</span><br></pre></td></tr></table></figure>
+<p>我们只关注 MyToken: <em>0x345ca3e014aaf5dca488057592ee47305d9b3e10</em> 这行代码，它是我们已部署的代币合约的地址。在默认情况下，Truffle 为模拟节点预置了10个拥有虚拟ETH的地址，就像使用 testrpc 时那样。我们可以通过 web3 以太币账户访问该地址列表。此外，Truffle 使用列表中的第一个地址（索引为0的那个）部署这些合约，这意味着它将成为 MyToken 的所有者。</p>
+<p>鉴于 Web3 可用于Truffle控制台内，你可以运行下列指令来检查所有者的余额：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">truffle(develop)&gt; owner = web3.eth.accounts[0]</span><br><span class="line">truffle(develop)&gt; instance = MyToken.at(<span class="string">&#x27;[DEPLOYED_ADDRESS]&#x27;</span>)</span><br><span class="line">truffle(develop)&gt; instance.balanceOf(owner)</span><br></pre></td></tr></table></figure>
+<p>注意：别忘了将 [DEPLOYED_ADDRESS] 替换成由Truffle赋予的已部署合约的地址，例如： <em>0x345ca3e014aaf5dca488057592ee47305d9b3e10</em> 。</p>
+<p>我们也可以先将一些代币发送至另一个地址，再检查更新过后的余额：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// send tokens</span></span><br><span class="line">amount = <span class="number">10</span></span><br><span class="line">recipient = web3.eth.accounts[<span class="number">1</span>]</span><br><span class="line">txHash = instance.sendTokens(recipient, amount, &#123; <span class="attr">from</span>: owner &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// check balances</span></span><br><span class="line">instance.balanceOf(owner)</span><br><span class="line">instance.balanceOf(recipient)</span><br></pre></td></tr></table></figure>
+
+<p>现在已经可以看到接受者的账户里有10枚代币了！我们可以通过下列代码搜索交易信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.getTransaction(txHash)</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.2. 测试智能合约</strong><br>接下来，Truffle更有趣又有用的一点是，我们可以测试我们的合约。这一构架能让你通过两种不同方式编写测试代码：Javascript 和 Solidity。在这篇文章中，我们将学习一些关于JS测试这个最常用选项的基本知识。</p>
+<p>Truffle使用后台的 <a target="_blank" rel="noopener" href="https://mochajs.org/">Mocha</a> 作为测试构架，并使用 <a target="_blank" rel="noopener" href="http://chaijs.com/">Chai</a> 来执行断言。如果你不熟悉这两个库也没有关系，它们真的都很简单，执行的语法也与其它测试架构相似。</p>
+<p>准备好了，让我们开始介绍第一则测试实例吧。我们需要在测试文件夹里创建一个 MyToken.js 文件。一旦你创建完成之后，请将下方代码粘贴进去。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MyToken = artifacts.require(<span class="string">&#x27;MyToken&#x27;</span>)</span><br><span class="line"></span><br><span class="line">contract(<span class="string">&#x27;MyToken&#x27;</span>, <span class="function"><span class="params">accounts</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  it(<span class="string">&#x27;has a total supply and a creator&#x27;</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> owner = accounts[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">const</span> myToken = <span class="keyword">await</span> MyToken.new(&#123; <span class="attr">from</span>: owner &#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> creator = <span class="keyword">await</span> myToken.creator()</span><br><span class="line">    <span class="keyword">const</span> totalSupply = <span class="keyword">await</span> myToken.totalSupply()</span><br><span class="line">    </span><br><span class="line">    assert(creator *= owner)</span><br><span class="line">    assert(totalSupply.eq(<span class="number">10000</span>))</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>要运行 <em>Truffle 测试</em>的话，你只需使用指令 <em>npx truffle test</em>。再次提醒：此处无需在后台运行 rpc 测试节点，因为 Truffle 会帮你运行好。</p>
+<p>你可能已经注意到了，这是我们第二次在代码中使用 <em>artifacts.require()</em> 。第一次是在编写 <em>MyToken</em> migration 代码的时候。Artifact是分别编译每个合约的结果。这些 Artifacts 将被置于与你的项目根相关的 <em>build/contracts/</em> 目录之内。我们通过 <em>artifacts.require()</em> 告诉 Truffle 想与哪个合约进行交互。只提供合约名并实现抽象化使用。你也可以阅读<a target="_blank" rel="noopener" href="http://truffleframework.com/docs/getting_started/migrations#artifacts-require-">这篇文章</a>来详细了解 Truffle artifacts。</p>
+<p>剩下的最后一个重点是 <em>contract()</em> 函数，它确实与Mocha的 <em>describe()</em> 函数相似。这就是 Truffle 保障<a target="_blank" rel="noopener" href="http://truffleframework.com/docs/getting_started/testing#clean-room-environment">clean-room environment</a>的方式。Truffle 将重新把合约部署给以太坊客户端，并在每次被调用之时提供一列可用账户。不过，我们不建议将已部署的合约实例用于测试。让每个测试管理它们自己的实例会更好。</p>
+<p>既然我们了解了有关 Truttle 测试的一些基本知识，让我们再介绍一个有趣的场景吧。我们将测试账户之间的代币转让：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">&#x27;allows token transfers&#x27;</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> owner = accounts[<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">const</span> recipient = accounts[<span class="number">1</span>]</span><br><span class="line">  <span class="keyword">const</span> myToken = <span class="keyword">await</span> MyToken.new(&#123; <span class="attr">from</span>: owner &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">await</span> myToken.sendTokens(recipient, <span class="number">10</span>, &#123; <span class="attr">from</span>: owner &#125;)</span><br><span class="line">  <span class="keyword">const</span> ownerBalance = <span class="keyword">await</span> myToken.balanceOf(owner)</span><br><span class="line">  assert(ownerBalance.eq(<span class="number">9990</span>))</span><br><span class="line">  <span class="keyword">const</span> recipientBalance = <span class="keyword">await</span> myToken.balanceOf(recipient)</span><br><span class="line">  assert(recipientBalance.eq(<span class="number">10</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>其它的测试实例见<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/3-using-truffle">此处</a>，从中你还可以看到我是如何使用 Truffle 来完成这个 mini DApp 的。你会看到我设置了同样的特性，就像我们在上一篇文章中对 app 所做的那样。 唯一改变之处是我们正在使用 Truffle 启动测试节点、部署合约并添加测试，从而确保我们的合约能达到我们预期的效果。</p>
+<p><strong>3.3.OpenZeppelin</strong></p>
+<p>如果你阅读到此处，想必你已经听说过 <a target="_blank" rel="noopener" href="https://openzeppelin.org/">OpenZeppelin</a> 了吧。如果你还没有的话，你只需要知道它是有助于你构建智能合约的最常用构架。它是一个开源构架，提供可重复使用的智能合约构建分布式应用、协议和组织，从而降低使用经测试和社区审查的标准代码所带来的安全隐患。</p>
+<p>鉴于代币合约的数量之大，以太坊社区于两年前创建了一个名为 <a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md">ERC20</a> 的代币标准。其理念是允许 DApps 和钱包以共同的方式在多种界面和 DApps 之间处理代币。</p>
+<p>也就是说，最常用的 OpenZeppelin 合约就是 ERC20 用例。这就是我们第一步要对 MyToken 合约做的事：使之与 ERC20 兼容。让我们先安装 OpenZeppelin 构架，这需要运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install zeppelin-solidity</span><br></pre></td></tr></table></figure>
+<p>现在，看看我们用一些OpenZeppelin合约构建的新用例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &#39;zeppelin-solidity&#x2F;contracts&#x2F;token&#x2F;BasicToken.sol&#39;;</span><br><span class="line">import &#39;zeppelin-solidity&#x2F;contracts&#x2F;ownership&#x2F;Ownable.sol&#39;;</span><br><span class="line"></span><br><span class="line">contract MyToken is BasicToken, Ownable &#123;</span><br><span class="line"></span><br><span class="line">  uint256 public constant INITIAL_SUPPLY &#x3D; 10000;</span><br><span class="line">  function MyToken() &#123;</span><br><span class="line">    totalSupply &#x3D; INITIAL_SUPPLY;</span><br><span class="line">    balances[msg.sender] &#x3D; INITIAL_SUPPLY;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如你所见，我们已经去除了很多核心功能。好吧，我们还没有去除这些功能，只是向OpenZeppelin 合约下达了该指令。这的确很有用，因为我们是在重复使用经过审核的安全代码，这意味着我们已经减少了合约的受攻击可能性。</p>
+<p>此外，我们正将代币合约从 <a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/zeppelin-solidity/blob/v1.5.0/contracts/ownership/Ownable.sol">Ownable</a> 和 <a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/zeppelin-solidity/blob/v1.5.0/contracts/token/BasicToken.sol">BasicToken</a> 这两个 OpenZeppelin 合约扩展而来。是的，Solidity 支持多重继承，而且对你来说，知道顺序的重要性真的很重要。不过，这超出了本文的介绍范围，不过你可以从<a target="_blank" rel="noopener" href="https://solidity.readthedocs.io/en/develop/contracts.html#inheritance">此处</a>了解更多详情。</p>
+<p>正如上文所说，我们正将<em>MyToken</em>从<em>Ownable</em>中扩展而来。让我们看一看这个合约：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">contract Ownable &#123;</span><br><span class="line">  address public owner;</span><br><span class="line"></span><br><span class="line">  event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);</span><br><span class="line"></span><br><span class="line">  function Ownable() public &#123;</span><br><span class="line">    owner &#x3D; msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  modifier onlyOwner() &#123;</span><br><span class="line">    require(msg.sender * owner);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function transferOwnership(address newOwner) public onlyOwner &#123;</span><br><span class="line">    require(newOwner !&#x3D; address(0));</span><br><span class="line">    OwnershipTransferred(owner, newOwner);</span><br><span class="line">    owner &#x3D; newOwner;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Ownable提供三大主要功能：</p>
+<ul>
+<li>它有一个特殊地址供我们调用其“owner”；</li>
+<li>它允许我们转让合约的所有权；</li>
+<li>它提供了有用的onlyOwner修改器，确保只有所有者才能调用某个函数。</li>
+</ul>
+<p>很有用对吧？另一方面，我们也在扩展 BasicTokencontract（基础代币合约）。让我们了解下它的功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import &#39;..&#x2F;math&#x2F;SafeMath.sol&#39;;</span><br><span class="line"></span><br><span class="line">contract ERC20Basic &#123;</span><br><span class="line">  uint256 public totalSupply;</span><br><span class="line">  function balanceOf(address who) public view returns (uint256);</span><br><span class="line">  function transfer(address to, uint256 value) public returns (bool);</span><br><span class="line">  event Transfer(address indexed from, address indexed to, uint256 value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract BasicToken is ERC20Basic &#123;</span><br><span class="line">  using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">  mapping(address &#x3D;&gt; uint256) balances;</span><br><span class="line"></span><br><span class="line">  function transfer(address _to, uint256 _value) public returns (bool) &#123;</span><br><span class="line">    require(_to !&#x3D; address(0));</span><br><span class="line">    require(_value &lt;&#x3D; balances[msg.sender]);</span><br><span class="line"></span><br><span class="line">    balances[msg.sender] &#x3D; balances[msg.sender].sub(_value);</span><br><span class="line">    balances[_to] &#x3D; balances[_to].add(_value);</span><br><span class="line">    Transfer(msg.sender, _to, _value);</span><br><span class="line">    return true;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function balanceOf(address _owner) public view returns (uint256 balance) &#123;</span><br><span class="line">    return balances[_owner];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相信你更熟悉这个代码。这基本上是我们过去在 MyToken 合约中所做的事。这里存在一些细微的差异，因为我们没有遵循原始版本的ERC20标准。我们此处所说的 <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/blob/master/3-using-truffle/contracts/MyToken.sol">sendTokens</a> 只是转让，除了触发 <a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md#transfer"><em>transfer</em></a> <a target="_blank" rel="noopener" href="https://solidity.readthedocs.io/en/develop/contracts.html#events">事件</a>之外执行的几乎是同样的行为。</p>
+<p>另一个重要的事是使用<em>SafeMath</em>编写<em>uint256</em>代码。SafeMath是 OpenZeppelin 推荐使用的库，用来进行带有安全检查的数学运算。这是另一个常用合约，因为它能保证数学运算不会溢出。</p>
+<p>OpenZeppelin 本身就是一个完整的领域，请花点时间深入分析并学习它。你可以先从读取并密切关注已经审查的<a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/zeppelin-solidity">代码库</a>的安全细节开始。</p>
+<blockquote>
+<p>原文链接: <a target="_blank" rel="noopener" href="https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-3-abdd9644d0c2">https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-3-abdd9644d0c2</a></p>
+<p>作者: Facu Spagnuolo</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/" class="post-title-link" itemprop="url">以太坊编程_II</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-24 21:32:27" itemprop="dateCreated datePublished" datetime="2018-02-24T21:32:27+08:00">2018-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>目录</strong></p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-I/">迈出第一步</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/">与合约进行交互</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-III/">现实世界中的构架和工具</a></p>
+</li>
+</ol>
+<p><strong>2.尝试与合约进行交互</strong></p>
+<p><strong>2.1以太坊智能合约介绍</strong></p>
+<p>阅读到这里，对以太坊已经有了基础的了解，已经与以太坊节点进行了交互，并在账户之间发送了一些交易等等。但除此之外，让以太坊如此惊艳的还有：智能合约。</p>
+<p>正如我在简介中所说，智能合约是一个运行在以太坊虚拟机（EVM）上的程序。你可以创建智能合约来做任何你想做的事情，但是在今天，大多数智能合约都被用于像I-C-Os或者代币销售那样的众筹工具。接下来请允许我解释这些概念。</p>
+<p>从众筹开始说起，相信这是一个你非常熟悉的概念。举办众筹活动的项目，其目的是为了开展项目而筹集资金。你可以几乎零成本的发行一种与你的项目相关的数字资产，并将其出售给任何人。这就是我们所说的初始代币发行（I-C-O）。</p>
+<p>要想实现一个具有智能合约的I-C-O，你只需要实现使你的数字资产可交易并且有价值的逻辑。这听起来不错，这些就是以太坊代币，是以太坊生态系统中的一种数字资产。</p>
+<p>接下来让我们试着通过一个例子来分析这些例子。</p>
+<p>假设你的健康食品公司想要推出一种新的品牌。你决定进行一次I-C-O来筹集20,000个ETH。你用10个代币换取你收集到的每个ETH，并承诺，贡献者可以在你的商店使用这些代币购买食物。为此，你需要开发一个代币智能合约为每个贡献者存储他们相应的代币数量。</p>
+<p>现在，假设你筹集到了这笔钱，开展了你的项目并开了你的第一家店。然后，你决定每份沙拉以1个代币的价格出售。一周以后，你的客人越来越多，但是沙拉的供应却是有限的，客人意识到这一点并开始把你的代币当作资产交易，从而提高了其市场价值。</p>
+<p>这一过程在现实生活中实际存在，因为以太坊几乎允许任何人创建他们自己的可交易的数字资产。</p>
+<p><strong>2.2你的第一个智能合约</strong></p>
+<p>让我们看看如何建立一种基本的以太坊代币吧。我将通过这个例子介绍一些Solidity的基础知识。</p>
+<p>请记住这个例子仅用于学习，不能使用它从事商业活动。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.0;</span><br><span class="line">contract MyToken &#123;</span><br><span class="line"> address public creator;</span><br><span class="line"> uint256 public totalSupply;</span><br><span class="line"> mapping (address &#x3D;&gt; uint256) public balances;</span><br><span class="line"> </span><br><span class="line"> function MyToken() public &#123;</span><br><span class="line">   creator &#x3D; msg.sender;</span><br><span class="line">   totalSupply &#x3D; 10000;</span><br><span class="line">   balances[creator] &#x3D; totalSupply;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> function balanceOf(address owner) public constant returns(uint256)&#123;</span><br><span class="line">   return balances[owner];</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> function sendTokens(address receiver, uint256 amount) public returns(bool)&#123;</span><br><span class="line">   address owner &#x3D; msg.sender;</span><br><span class="line"></span><br><span class="line">   require(amount &gt; 0);</span><br><span class="line">   require(balances[owner] &gt;&#x3D; amount);</span><br><span class="line"></span><br><span class="line">   balances[owner] -&#x3D; amount;</span><br><span class="line">   balances[receiver] +&#x3D; amount;</span><br><span class="line">   return true;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让我们一步步来。<em>pragma</em>关键词显示了你使用的源码的Solidity版本。然后，用合约的名字进行合约定义初始化，在这个例子中，名字就是<em>MyToken</em>。</p>
+<p>接下来，你可以看到三个变量：</p>
+<p><em>creator</em> 是一个地址变量，用于存储该合约的拥有者。</p>
+<p><em>TotalSupply</em> 是一个256位的无符号整数，用于存储愿意与投资者共享的代币总数。</p>
+<p><em>balance</em> 是从地址到无符号整数的映射，其记录着每个投资者的余额。</p>
+<p>之后，你将看到构造函数。正如你所见，这是一个与合约同名的函数，同时每当该合约的一个新的实例被部署在网络中时它将被调用一次。这就是合约的所有者被存储的地方。由于所有的函数调用都是一笔交易，因此可以通过交易的发送者即 <em>msg.sender</em> 获得合约的所有者信息。这个合约定义了总共10,000个代币。</p>
+<p>下一个函数十分简单：<em>balanceOf</em> 用于展示参数指定的地址的余额。也许你想知道 <em>constant</em> 关键字是什么意思。这是因为Solidity的函数分为两种，一种是常量函数，一种是非常量函数。</p>
+<p>非常量函数执行后状态会发生变化。另一方面，常量函数只读一次，这意味着它不执行任何状态转换，而是只读取数据。实际上，共有两种类型的常量函数：</p>
+<p><em>view</em> 声明函数承诺不修改状态（常量的别名）</p>
+<p><em>pure</em> 声明函数承诺不读取或者修改状态</p>
+<p><em>sendTokens</em> 函数允许我们在地址间交换代币。这是一个非常量函数或者说是一个交易函数，因为使用这个函数将改变余额。该函数的参数是接收者的地址以及欲转移的代币数量，函数的返回值是一个表示交易是否成功执行的布尔（Boolean）类型数据。你可以跳过第一行，它只是把函数的发送者保存在<em>owner</em>变量中。</p>
+<p>接下来，你将看到两个先决条件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">require(amount &gt; 0);</span><br><span class="line">require(balances[owner] &gt;&#x3D; amount);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><em>Require</em> 是你可以用来检查条件或者进行验证的方法之一。它将评估一个条件并在条件不满足时恢复原状。因此，在这个例子中，要求被转移的代币 <em>amount</em> 大于零，同时要保证发送者有足够的余额来支付该笔代币转移。</p>
+<p>最后，你要从 <em>owner</em> 的余额中减去交易转移的代币数量，并将其添加到 <em>receiver</em> 的余额中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> balances[owner] -&#x3D; amount;</span><br><span class="line"> balances[receiver] +&#x3D; amount;</span><br><span class="line"> return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.3 部署智能合约</strong></p>
+<p>现在让我们开始试着玩一下智能合约吧！首先需要在网络上部署智能合约。为了实现部署，需要使用名为 solc的Solidity编译器用于编译node.js。你可以通过以下指令安装它：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g solc</span><br></pre></td></tr></table></figure>
+
+<p>创建一个叫做 <em>MyToken.sol</em> 的文件并把合约代码粘贴到文件中，并在放置该文件的路径下打开一个控制终端。首先，通过运行以下指令编译文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solcjs MyToken.sol --bin</span><br></pre></td></tr></table></figure>
+
+<p>执行完该指令，编译器将创建一个 <em>MyToken_sol_MyToken.bin</em> 文件作为输出。你可以看到该文件只包含字节码。接着，你将需要使用solc来构建ABI（应用二进制接口），它是合约的接口或者说模板，通过它你可以获得可用的方法。这就是与Web3的联系点。你只需要运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solcjs MyToken.sol --abi</span><br></pre></td></tr></table></figure>
+
+<p>接着，你将看到一个叫做 <em>MyTolen_sol_MyToken.abi</em> 的新文件，其中包含的JSON内容定义了你的合约的接口。</p>
+<p>最后，你只需要使用在后台运行的 <em>testrpc</em> ，通过node.js控制台部署你的合约。你完成了这些工作后，我们就开始初始化 <em>web3</em> 吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//instance web3</span></span><br><span class="line">Web3 = <span class="built_in">require</span>(<span class="string">&#x27;web3&#x27;</span>)</span><br><span class="line">provider = <span class="keyword">new</span> Web3.providers.HttpProvider(<span class="string">&quot;http://localhost:8545&quot;</span>)</span><br><span class="line">web3 = <span class="keyword">new</span> Web3(provider)</span><br></pre></td></tr></table></figure>
+
+<p>Web3 为你提供了解析合约ABI的可能性，并提供了一个JavaScriot API 与之交互。接着，你只需使用字节码就可以将该合约的一个新实例部署到 <em>testrpc</em> 上。请按照下面的命令输入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// load files</span></span><br><span class="line">myTokenABIFile = fs.readFileSync(<span class="string">&#x27;MyToken_sol_MyToken.abi&#x27;</span>)</span><br><span class="line">myTokenABI  = <span class="built_in">JSON</span>.parse(myTokenABIFile.toString())</span><br><span class="line">myTokenBINFile = fs.readFileSync(<span class="string">&#x27;MyToken_sol_MyToken.bin&#x27;</span>)</span><br><span class="line">myTokenByteCode = myTokenBINFile.toString()</span><br><span class="line"><span class="comment">//deploy</span></span><br><span class="line">account = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">MyTokenContract = web3.eth.contract(myTokenABI)</span><br><span class="line">contractData = &#123; <span class="attr">data</span>: myTokenByteCode, <span class="attr">from</span>: account, <span class="attr">gas</span>: <span class="number">999999</span> &#125;</span><br><span class="line">deployedContract = MyTokenContract.new(contractData)</span><br></pre></td></tr></table></figure>
+
+<p>最后，你可以通过调用 <em>deployedContract.address</em> 检查新部署的合约地址。请保存该地址，因为将需要使用这个地址与你的合约进行交互 :) 。</p>
+<p><strong>2.4 Web3与智能合约</strong></p>
+<p>让我们从搜索你的 <em>testrpc</em> 账户余额开始。为此，你首先需要访问已部署的合约实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">contractAddress = deployedContract.address</span><br><span class="line">instance = MyTokenContract.at(contractAddress)</span><br><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">address</span> =&gt;</span> &#123;</span><br><span class="line"> tokens = instance.balanceOf.call(address)</span><br><span class="line"> <span class="built_in">console</span>.log(address + <span class="string">&quot;: &quot;</span> + tokens)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>正如我们所预期的，第一个账户拥有所有的代币。太棒了！接下来，让我们将一部分代币转移到其他账户：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// send tokens</span></span><br><span class="line">amount = <span class="number">10</span></span><br><span class="line"><span class="keyword">from</span> = web3.eth.accounts[<span class="number">0</span>]</span><br><span class="line">to = web3.eth.accounts[<span class="number">1</span>]</span><br><span class="line">transactionHash = instance.sendTokens(to, amount, &#123; <span class="attr">from</span>: <span class="keyword">from</span> &#125;)</span><br><span class="line"><span class="comment">// checkout balances again</span></span><br><span class="line">web3.eth.accounts.forEach(<span class="function"><span class="params">address</span> =&gt;</span> &#123;</span><br><span class="line"> tokens = instance.balanceOf.call(address)</span><br><span class="line"> <span class="built_in">console</span>.log(address + <span class="string">&quot;: &quot;</span> + tokens)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>你应该可以看到，现在第二个地址有了10个代币！你也可以搜索交易信息，正如你在本指南第一部分所做的那样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web3.eth.getTransaction(transactionHash)</span><br></pre></td></tr></table></figure>
+
+<p>我还为这个mini DApp设计了一个简单的UI，你可以在<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/ethereum-spiking/tree/master/2-interacting-with-a-contract">这里</a>看到它。你将看到一个包含了我们合约ABI的 <em>MyToken.json</em> 文件。我只是把solidity编译器生成的ABI的内容粘贴到这里面。你还可以看到一个与前一个应用相似的 app.js 文件，但是这个app.js文件还包含了我刚刚向你展示的用于发送代币以及展示账户代币余额详细信息的逻辑。</p>
+<p><img src="/2018/02/24/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-II/1.jpeg"><br><em>开发的用来测试 MyToken 转账的 DApp 的 UI</em></p>
+<p>你也可以下载这个 App 并开始与它游戏。你将被要求提供你开发的合约案例的地址。</p>
+<p>注意：为了减轻术语负担，这篇文章中描述的代币并非ERC20标准的代币。如果你不知道什么是ERC20协议代币，我们会在下一篇文章中解释它。</p>
+<blockquote>
+<p>原文链接: <a target="_blank" rel="noopener" href="https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-2-7bbf15e1a953">https://blog.zeppelin.solutions/a-gentle-introduction-to-ethereum-programming-part-2-7bbf15e1a953</a></p>
+<p>作者: Facu Spagnuolo</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -566,205 +855,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/02/13/What-is-an-ERC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/02/13/What-is-an-ERC/" class="post-title-link" itemprop="url">What is an ERC?</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-02-13 10:33:37" itemprop="dateCreated datePublished" datetime="2018-02-13T10:33:37+08:00">2018-02-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>ERC stands for “<strong>Ethereum Request for Comment</strong>” This is Ethereum’s version of a Request for Comments (RFC), a concept devised by the Internet Engineering Task Force. Memos within an RFC contain technical and organizational notes. For ERCs, this includes some technical guidelines for the buildout of the Ethereum network.</p>
-<p>This was written by Ethereum developers for the Ethereum community. Thus, the workflow of generating an ERC includes a developer. To create standards for the Ethereum platform, a developer submits an Ethereum Improvement Proposal (EIP). This includes protocol specifications and contract standards. Once that EIP is approved by a committee and finalized, it becomes an ERC. The complete list of EIPs can be found here.</p>
-<p>The finalized EIPs give the Ethereum developers a set of implementable standards. This allows Smart Contracts to be built with these standards, which a common interface can access. ERC20 is the most well-known of all the standards within the entire crypto community, and most tokens issued on top of the Ethereum platform use it.</p>
-<p>Sources link ==&gt; <a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts">https://github.com/OpenZeppelin/openzeppelin-contracts</a></p>
-<h3 id="ERC20"><a href="#ERC20" class="headerlink" title="ERC20"></a>ERC20</h3><p>任何 ERC20 代币都能立即兼容以太坊钱包（几乎所有支持以太币的钱包，包括Jaxx、MEW、imToken等，也支持 erc20的代币</p>
-<p>The ERC20 standard includes the following functions:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">totalSupply() <span class="comment">//returns total token supply</span></span><br><span class="line">balanceOf(address _owner) <span class="comment">//returns account balance of _owner’s account</span></span><br><span class="line">transfer(address _to, uint256 _value) <span class="comment">//takes in number _value and transfers that amount of tokens to address _to and triggers transferevent</span></span><br><span class="line">transferFrom(address _from, address _to, uint256 _value) <span class="comment">//transfers _value amount of tokens from the address _from to the address _to, and triggers the transfer event.拥有者从 _from地址给 _to地址转账授权范围内的一定额度的一类同质化通证。</span></span><br><span class="line">approve(address _spender, uint256 _value) <span class="comment">//allows _spender to withdraw any number up to _value amount</span></span><br><span class="line">allowance(address _owner, address _spender) <span class="comment">//returns the amount which the_spender is still allowed to withdraw from the _owner</span></span><br><span class="line"><span class="comment">// 授权给_spender账户一定额度。拥有者 _owner给消费者_spender在当前查询账户授权(approve)的额度。</span></span><br></pre></td></tr></table></figure>
-
-
-<p>The following events are triggered based on the functions above:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transfer(address indexed _from, address indexed _to, uint256 _value) <span class="comment">//this is triggered whenever tokens are transferred</span></span><br><span class="line">approval(address indexed _owner, address indexed _spender, uint256 _value) <span class="comment">//is triggered on any call to approve()</span></span><br></pre></td></tr></table></figure>
-
-<p>ERC20 was proposed in 2015 and officially formalized in September 2017. It is a great starting point for token standardization. However, some in the developer community have noted that it has certain flaws and vulnerabilities. Additionally, there are some use cases that require something different. </p>
-<p>另外，<a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20">https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20</a> </p>
-<h4 id="Extensions-扩张功能"><a href="#Extensions-扩张功能" class="headerlink" title="Extensions\扩张功能"></a>Extensions\扩张功能</h4>
-
-
-
-
-
-
-
-<h4 id="Utilities-工具方法"><a href="#Utilities-工具方法" class="headerlink" title="Utilities\工具方法"></a>Utilities\工具方法</h4>
-
-
-
-<h3 id="ERC223"><a href="#ERC223" class="headerlink" title="ERC223"></a>ERC223</h3><p>Status: Open</p>
-<p>Date Proposed: 3/5/2017</p>
-<p>一句话：ERC223令牌标准可以防止令牌在以太坊网络上丢失。</p>
-<p>A post by developer Dexaran describes these two scenarios in detail:</p>
-<p>There are two ways of performing a transaction in ERC20 tokens:</p>
-<ol>
-<li>transfer function.</li>
-<li>approve + transferFrom mechanism.</li>
-</ol>
-<p>Token balance is just a variable in the token contract.</p>
-<p>The transaction of a token is a change in the internal variables of the contract. The balance of the sender will be decreased and the balance of the recipient will be increased.</p>
-<p>The transfer function will not notify the recipient when the transaction occurs. The recipient will not be able to recognize the incoming transaction! I wrote this illustration of the process that is leading to unhandled transactions and money losses.<br>As a result, if the recipient is a contract, users must transfer their tokens using the approve +transferFrom mechanism. If the recipient is an externally owned account address, users must transfer their tokens via the transfer function. If a user makes a mistake and chooses the wrong function, the token will get stuck inside contract (contract will not recognize a transaction). There will be no way to extract stuck tokens.</p>
-<p>His proposed solution to this issue is contained within ERC223. It is very similar to the ERC20 standard, but it solves the problems described above. When tokens are transferred to a smart contract, a special function of that contract is tokenFallback. This allows the receiving contract to decline the tokens or trigger further actions. This can be used in place of the approvefunction in most cases.</p>
-<p>由openzeppelin-contracts <code>SafeERC20</code> 完成。</p>
-<h3 id="ERC621"><a href="#ERC621" class="headerlink" title="ERC621"></a>ERC621</h3><p>Status: Open</p>
-<p>Date Proposed: 5/1/2017</p>
-<p>一句话：发行 Token 总量可变。<strong>ERC621</strong> = ERC20 + increaseSupply() + decreaseSupply()</p>
-<p>ERC621 is an extension of the ERC20 token standard. It adds two additional functions, increaseSupply and decreaseSupply. This can increase and decrease the token supply in circulation. ERC20 only allows a single token issuance event. This restricts the supply to a certain amount which can’t be changed. ERC621 proposes that totalSupply can be modified.</p>
-<h3 id="ERC721"><a href="#ERC721" class="headerlink" title="ERC721"></a>ERC721</h3><p>Status: Open</p>
-<p>Date Proposed: 9/22/2017</p>
-<p>一句话：每个代币都是 unique，例如以太猫。</p>
-<p>ERC721 is very different than ERC20 and ERC223. It describes a non-fungible token. This means that each token is totally different and each one can have a different value to different users. One way to think about this is to recall CryptoKittes. Each one is its own separate commodity whose value is based on its own rarity and desirability by users.</p>
-<p>ERC721 tokens can be used in any exchange, but the token value is “a result of the uniqueness and rareness associated with each token.” The standard functions are name, symbol, totalSupply, balanceOf, ownerOf , approve , takeOwnership , transfer , tokenOfOwnerByIndex, and tokenMetadata. It also defines two events: Transfer and Approval. This article by Gerald Nash does a good job explaining the concept of fungibility as it relates to tokens and goes into good technical detail.</p>
-<h3 id="ERC1155"><a href="#ERC1155" class="headerlink" title="ERC1155"></a>ERC1155</h3><p>Status: Final</p>
-<p>Date Proposed: 2018-06-17</p>
-<p>一句话：ERC-1155的创造者是Enjin coin的CTO Witek Radomski。ERC1155标准定义了一种解决上述问题的新方法。现在“物品”（可能包含ERC20的token或ERC721的token或两者都有）可以被单一的一个合约（打包处理）来定义了。合约里包含区别token们所需的最小量的数据。</p>
-<p>ERC1155协议主要包括ERC1155Mintable.sol同质化可增发智能合约和ERC1155NonFungibleMintable.sol非同质化可增发智能合约，本章只讲解同质化可增发智能合约的功能。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2012/06/08/tail-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">tail 命令使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2012-06-08 16:28:14" itemprop="dateCreated datePublished" datetime="2012-06-08T16:28:14+08:00">2012-06-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>UNIX/Linux用户在系统或者应用中触发动作，想要看到针对动作的实时log，这个时候tail命令正是可以一展身手的时候了。</p>
-<p>例：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f sci.log.D20120224.T000000 | grep -v getCommonCodeList | grep -v getRuleDetails | grep -v getExceptionList | grep zhuangwm | grep <span class="string">&quot;Invoking api Method:&quot;</span></span><br></pre></td></tr></table></figure>
-<p>tail —用于输出文件的最后10行信息的内容。-f  是指当文件长度增长的时候，输出文件增长的部分。<br>sci.log.D20120224.T000000 —被搜索的文件名称。<br>|  —是指管道，用于将前面的输出作为输入到后面的命令中<br>grep -v getCommonCodeList —是查找文件里符合条件的字符串。 -v 是指反转查找，用于排除所列出来的文字对象</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/49/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><span class="page-number current">50</span><a class="page-number" href="/page/51/">51</a><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/51/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/49/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><span class="page-number current">50</span><a class="page-number" href="/page/51/">51</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/51/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
