@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">261</span>
+          <span class="site-state-item-count">262</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,117 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/" class="post-title-link" itemprop="url">椭圆曲线密码</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-04-29 14:50:04 / Modified: 19:45:52" itemprop="dateCreated datePublished" datetime="2021-04-29T14:50:04+08:00">2021-04-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>​    椭圆曲线和很多学习完基础代数之后见过的方程差不多。y在等号的左边，而x在等号的右边。椭圆曲线有如下的形式：<br>$$<br>y^2 = x^3+ax+b<br>$$<br>​    你肯定接触过其他类似的方程。比如，在基础代数课上就学过线性函数：<br>$$<br>y=mx+b<br>$$<br>​    你可能还记得m叫作斜率，b叫作截距。你也能画出线性函数图像。类似地，你可能也熟悉二次函数和它的图像：<br>$$<br>y=ax^2+bx+c<br>$$<br>​    在学习代数时，你还接触过更高阶的函数比如三次函数及其图像。<br>$$<br>y=ax^3+bx^2+cx+d<br>$$<br>​    椭圆曲线和他们没有太大的区别。椭圆曲线和三次函数不同的地方在于等号左边是y的平方，这使得函数图像沿x轴对称：<br>$$<br>y^2 = x^3 + ax + b<br>$$<br><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/1.png"></p>
+<p>​    因为椭圆曲线的等号左边是y的平方，所以它也不像三次函数那样陡峭。此外，椭圆曲线可能是不想接的，如下图：</p>
+<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/2.png"></p>
+<p>​    比如，比特币使用的椭圆曲线被称为secp256k1，使用下面的方程：<br>$$<br>y^2=x^3+7<br>$$</p>
+<h3 id="椭圆曲线的加法"><a href="#椭圆曲线的加法" class="headerlink" title="椭圆曲线的加法"></a>椭圆曲线的加法</h3><p>过曲线上的两点A、B画一条直线，找到直线与椭圆曲线的交点，交点关于x轴对称位置的点，定义为A+B，即为加法。如下图所示：A + B = C</p>
+<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/3.png"></p>
+<p>​    椭圆曲线因其点加法运算(point addition)而被广泛使用。</p>
+<h3 id="椭圆曲线的二倍运算"><a href="#椭圆曲线的二倍运算" class="headerlink" title="椭圆曲线的二倍运算"></a>椭圆曲线的二倍运算</h3><p>​    上述方法无法解释A + A，即两点重合的情况，因此在这种情况下，将椭圆曲线在A点的切线，与椭圆曲线的交点，交点关于x轴对称位置的点，定义为A + A，即2A，即为二倍运算。</p>
+<p><img src="/2021/04/29/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%AF%86%E7%A0%81/4.png"></p>
+<h3 id="同余运算"><a href="#同余运算" class="headerlink" title="同余运算"></a>同余运算</h3><p>​    同余就是有相同的余数，两个整数 a、 b，若它们除以正整数 m所得的余数相等，则称 a，b对于模m同余。<br>$$<br>a≡b (mod m)<br>$$</p>
+<h3 id="有限域"><a href="#有限域" class="headerlink" title="有限域"></a>有限域</h3><p>​    椭圆曲线是连续的，并不适合用于加密，所以必须把椭圆曲线变成离散的点，要把椭圆曲线定义在有限域上。而椭圆曲线密码所使用的椭圆曲线是定义在有限域内，有限域最常见的例子是有限域GF(p)，指给定某质数p，由0,1,2…,p-1共p个元素组成的整数集合中加法、二倍运算。例如GF(233)就是：<br>$$<br>y^2=(x^3+7) (mod 223)<br>$$<br>详见上一篇帖子。</p>
+<h3 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a>乘法逆元</h3><p>在模7乘法中：</p>
+<ul>
+<li>1的逆元为1 (1*1)%7=1</li>
+<li>2的逆元为4 (2*4)%7=1</li>
+<li>3的逆元为5 (3*5)%7=1</li>
+<li>4的逆元为2 (4*2)%7=1</li>
+<li>5的逆元为3 (5*3)%7=1</li>
+<li>6的逆元为6 (6*6)%7=1</li>
+</ul>
+<h3 id="数学解释"><a href="#数学解释" class="headerlink" title="数学解释"></a>数学解释</h3><p>​    并不是所有的椭圆曲线都适合加密，上述是一类可以用来加密的椭圆曲线，也是最为简单的一类。</p>
+<p>针对曲线Ep(a,b)表示为：<br>$$<br>y^2=x^3+ax+b(mod p), x,y \in [0,p],p为质数<br>$$<br>​    该曲线关于x轴对称。选择两个满足下列条件的小于p(p为素数)的非负整数a、b，要求满足以下条件：<br>$$<br>4a^3+27b^2≠0(mod p),a和b是小于p的非负整数<br>$$<br>1、有限域的负元</p>
+<p>​    P(x,y)的负元是(x,-ymodp)=(x,p-y)</p>
+<p>2、有限域的加法，P+Q</p>
+<p>​    P(x1,y1)，Q(x2,y2)和R(x3,y3)三点，其中R是PQ直线与曲线的交点的关于x轴的对称点，即 R=P+Q，有如下关系：<br>$$<br>x_3≡k^2-x_1-x_2(modp),y_3≡k(x_1-x_3)-y_1(modp)<br>$$<br>3、斜率计算</p>
+<p>​    若P=Q，即计算P点切线，则<br>$$<br>k=(3x_2+a) \div (2y_1)<br>$$<br>​    若P≠Q，则<br>$$<br>k=(y_2-y_1) \div (x_2-x_1)<br>$$</p>
+<h3 id="椭圆曲线加解密算法原理"><a href="#椭圆曲线加解密算法原理" class="headerlink" title="椭圆曲线加解密算法原理"></a>椭圆曲线加解密算法原理</h3><p>​    设私钥、公钥分别为d、Q，即Q = dG，其中G为基点，椭圆曲线上的已知G和dG，求d是非常困难的，也就是说已知公钥和基点，想要算出私钥是非常困难的。<em>其中基点是椭圆曲线上选择的一个点，这个点能够保证满足dG=∞的最小正整数n足够大，也就是阶足够大。1&lt;私钥&lt;n，大于n的私钥必能在[1,n)中找到对应的私钥b使得aG=bG，换句话说也就是有足够多的私钥。</em><br><strong>公钥加密：</strong>选择随机数r，将消息M生成密文C，该密文是一个点对，C = {rG, M+rQ}，其中Q为公钥。<br><strong>私钥解密</strong>：M + rQ - d(rG) = M + r(dG) - d(rG) = M，其中d、Q分别为私钥、公钥。</p>
+<h3 id="椭圆曲线签名算法原理"><a href="#椭圆曲线签名算法原理" class="headerlink" title="椭圆曲线签名算法原理"></a>椭圆曲线签名算法原理</h3><p>​    椭圆曲线签名算法(ECDSA)。设私钥、公钥分别为d、Q，即Q = dG，其中G为基点。</p>
+<p>私钥签名：</p>
+<ul>
+<li>选择随机数r，计算点rG(x, y)。</li>
+<li>根据随机数r、消息M的哈希h、私钥d，计算s = (h + dx)/r。　　</li>
+<li>将消息M、和签名{rG, s}发给接收方。</li>
+</ul>
+<p>公钥验证签名：　　</p>
+<ul>
+<li>接收方收到消息M、以及签名{rG=(x,y), s}。　　</li>
+<li>根据消息求哈希h。　　</li>
+<li>使用发送方公钥Q计算：hG/s + xQ/s，并与rG比较，如相等即验签成功。<br>原理：hG/s + xQ/s = hG/s + x(dG)/s = (h+xd)G/s = r(h+xd)G / (h+dx) = rG</li>
+</ul>
+<h3 id="签名过程"><a href="#签名过程" class="headerlink" title="签名过程"></a>签名过程</h3><p>​    假设要签名的消息是一个字符串：“Hello World!”。DSA签名的第一个步骤是对待签名的消息生成一个消息摘要，不同的签名算法使用不同的消息摘要算法，而ECDSA256使用SHA256生成256比特的摘要。</p>
+<p>​    摘要生成结束后，应用签名算法对摘要进行签名：</p>
+<ul>
+<li>产生一个随机数k</li>
+<li>利用随机数k，计算出两个大数r和s。将r和s拼在一起就构成了对消息摘要的签名。<br>这里需要注意的是，因为随机数k的存在，对于同一条消息，使用同一个算法，产生的签名是不一样的。从函数的角度来理解，签名函数对同样的输入会产生不同的输出。因为函数内部会将随机值混入签名的过程。</li>
+</ul>
+<h3 id="验证过程"><a href="#验证过程" class="headerlink" title="验证过程"></a>验证过程</h3><p>​    关于验证过程，这里不讨论它的算法细节。从宏观上看，消息的接收方从签名中分离出r和s，然后利用公开的密钥信息和s计算出r。如果计算出的r和接收到的r值相同，则表示验证成功，否则，表示验证失败。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -646,120 +757,6 @@
 <p>​    (a) L1(a)(Z(a)-1) = 1</p>
 <p>​    (b) Z(a)f’(a) = g’(a)Z(a·g)</p>
 <p>如果上述检验OK，则输出<strong>acc</strong>。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/09/Plonk-2-%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%E7%9A%84%E6%BC%94%E8%BF%9B/" class="post-title-link" itemprop="url">Plonk-2-零知识证明的演进</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-09 09:09:04" itemprop="dateCreated datePublished" datetime="2021-04-09T09:09:04+08:00">2021-04-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-04-29 17:34:58" itemprop="dateModified" datetime="2022-04-29T17:34:58+08:00">2022-04-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>论文原文 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">953.pdf (iacr.org)</a>，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge</a></p>
-<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>利用可更新的通用结构化参考字符串的zk-SNARK构造消除了部署zk-SNARKs [GKM +]的主要障碍之一。 Maller等人的重要工作，[MBKM19]提出了Sonic-第一个具有实用性的zk-SNARK，具有完全简洁的验证，可用于带有这种SRS(structured reference string)的通用算术电路。但是，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/601.pdf">支持完全简洁验证的Sonic版本</a>仍然需要相对较高的证明建造费用。 我们提出了一种具有完全简洁验证的通用SNARK结构，并且大大减少了证明方的运行时间（根据电路结构的不同，证明者的运行时间比完全简洁验证程序模式下的[MBKM19]少7.5-20倍）。与[MBKM19]类似，我们依赖于基于Bayer和Groth [BG12]的置换参数。但是，我们专注于“评估亚组而不是单项式系数”； 这样可以简化置换参数和算术化步骤。</p>
-<h3 id="4-理想的低度协议"><a href="#4-理想的低度协议" class="headerlink" title="4.理想的低度协议"></a>4.理想的低度协议</h3><p>​    我们在证明者和验证者之间定义了一种有限类型的协议，以清晰地捕获和抽象多项式承诺方案（例如[KZG10]）。在Plonk协议中，证明者将低度的多项式发送给第三方 <strong><em>I</em></strong>。然后，验证者可以询问 <strong><em>I</em></strong> ，证明者的多项式与验证者已知的其他预定义多项式之间是否存在某些恒等式。</p>
-<p><strong>定义 4.1.</strong> 定值正整数 <em>d, D, t, l</em> . A(<em>d, D, t, l</em>) 多项式协议，其中，证明者<strong>P</strong>poly，验证者<strong>V</strong>poly和受信方**<em>I**</em>之间存在多轮协议，其进行如下。</p>
-<p>1.协议定义包括一组预处理多项式 g1, … , gl ∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]。</p>
-<p>2.<strong>P</strong>poly的消息被发送到 <strong><em>I</em></strong>，并且对于f∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]，形式为f。 如果<strong>P</strong>poly发送的消息不是这种形式，则协议中止。</p>
-<p>3.<strong>V</strong>poly到<strong>P</strong>poly的消息是任意的（但是我们将集中讨论公共硬币协议，其中消息只是随机的硬币）</p>
-<p>4.在协议末尾，假设 f1, … , ft 是从<strong>P</strong>poly发送到 <strong><em>I</em></strong> 的多项式。<strong>V</strong>poly可能会问 <strong><em>I</em></strong> 在{f1, . . . , ft , g1, . . . , gl}之间是否存在某些多项式恒等式:<br>$$<br>F(X) := G(X,h_1(v_1(X)), … , h_M(v_M(X)))≡0<br>$$<br>其中，hi ∈  {f1, . . . , ft , g1, . . . , gl}，G ∈ <strong><em>F</em></strong> [X, X1, … , Xm], v1, … , vm ∈ <strong><em>F</em></strong> <em>&lt;d</em>[<strong>X</strong>]，此 F ∈ <strong><em>F</em></strong> <em>&lt;D</em>[<strong>X</strong>]中，任一 f1, . . . , ft 都是<strong>P</strong>poly按照本协议制作的。</p>
-<p>5.在收到 <strong><em>I</em></strong> 的回答之后，如果所有身份均成立，则<strong>V</strong>poly输出 <strong>acc</strong>，否则输出 <strong>rej</strong>。</p>
-<p><strong>结论 4.2.</strong>  一个更加复杂的模型，<strong>P</strong>poly发送消息(f, n) 至 <strong><em>I</em></strong>，其中 <em>n</em> <em>≤</em> d ，由 <strong><em>I</em></strong> 执行 f ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>] 。但是，我们避免这样做，因为我们的协议不需要这种额外的功能，并且会导致效率降低，因为它转化为需要使用多项式承诺方案，并且能够动态实施小于d度的边界。</p>
-<p>​    我们以自然的方式为关系定义多项式协议。</p>
-<p><strong>定义 4.3.</strong> 给定关系<strong>R</strong>，<strong>R</strong>是具有以下属性的多项式协议。</p>
-<p>1.协议的第一步，<strong>P</strong>poly和<strong>V</strong>poly都被给与一个输入 x。假设<strong>P</strong>poly拥有w，并且 (x, ω) ∈ <strong>R</strong>。</p>
-<p>2.完整性(Completeness)：如果<strong>P</strong>poly正确地遵从协议，使用证明人 ω 生成 x，<strong>V</strong>poly将百分之百接受。</p>
-<p>3.知识健全性(Knowledge Soundness)：存在一个有效的 <strong>E</strong> 即给定对<strong>P</strong>poly的消息的访问权，给到 <strong><em>I</em></strong> ，输出ω，使得对于<strong>P</strong>poly的任何策略，下列事件的概率为negl(λ)。</p>
-<p>​    a.在协议的末尾，<strong>V</strong>poly输出<strong>acc</strong>，并且</p>
-<p>​    b. (x, ω) ∉ <strong>R</strong>。</p>
-<p><strong>结论 4.4.</strong> 我们故意不为理想的协议定义零知识属性，因为获得ZK取决于最终“编译”协议中泄漏给我的多项式的信息量。这又取决于用于编译的多项式承诺方案的具体细节。</p>
-<h4 id="4-1范围上的多项式协议"><a href="#4-1范围上的多项式协议" class="headerlink" title="4.1范围上的多项式协议"></a>4.1范围上的多项式协议</h4><p>​    在我们的协议中，<strong>V</strong>poly 实际上需要检查某些多项式方程式是否在输入值的特定范围内成立，而不是作为多项式恒等式。首次启发，对于子集 <strong><em>S</em></strong> ⊂ <strong><em>F</em></strong> ，我们定义了一个**<em>S**</em>范围(<em>d, D, t, l</em>)的多项式协议，该协议与 a(<em>d, D, t, l</em>) 多项式协议相同，不同之处在于：验证者询问他的恒等式是否在S的所有点上都成立，而不是完全一样。然后，我们以与定义4.3中完全相同的方式为关系定义范围多项式协议。</p>
-<p>​    我们表明，将范围协议转换为多项式协议只会产生一个额外的证明者多项式。</p>
-<p><strong>引理4.5.</strong> 令P为R的范围S的(<em>d, D, t, l</em>)多项式协议。然后我们可以构造 a(<em>max{d, |S|, D−|S|}, D, t+1,  l+1</em>)，也就是R的多项式协议P∗。</p>
-<p>本引理，我们使用以下简单声明。</p>
-<p><strong>断言4.6.</strong> 定义 <em>F1,…,Fk</em> ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]。定义 <strong><em>Z</em></strong> ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]。假设部分 i ∈ [k]，Z ∉ <strong><em>Fi</em></strong>。则：</p>
-<p>1.有一种可能性，1/|<strong><em>F</em></strong>| 之上存在a1,…,ak ∈ <strong><em>F</em></strong> ， Z 不属于 <strong><em>F</em></strong><br>$$<br>F := \sum ^k _{j=1} a_j \cdot F_j<br>$$<br>2.假设 Z 在 <strong><em>F</em></strong> 上分解为不同的线性因子，有一种可能，k/|<strong><em>F</em></strong>|之上存在a，a∈F，Z不属于 <strong><em>F</em></strong><br>$$<br>G:= \sum ^k _{j=1} a^ {j-1} \cdot F_j<br>$$<br><strong>证明.</strong> Z|F 等同于 (F mod Z)=0. 另有 R:= (<strong><em>Fi</em></strong> mod Z)， R ≠ 0，则R不为零二项式：<br>$$<br>F := \sum ^k _{j=1,j≠i} a_j \cdot F_j + a_i \cdot R(mod Z)<br>$$<br>因此，每一个特定的aj，最多有一个值 ai∈*<strong>F**<em>，该</em></strong>F*** mod Z = 0。第一点证明完毕。</p>
-<p>为了证明第二，类似地写：<br>$$<br>G := \sum ^k _{j=1,j≠i} a^{j-1} \cdot F_j + a^{i-1} \cdot R(mod Z)<br>$$<br>令 x ∈ <strong><em>F</em></strong> ，使 Z(x)=0，但 R(x)≠0。则 G mod <em>Z</em> = 0，即 G(x)=0，推导出 a 是非零多项式的根。<br>$$<br>g(Y) := \sum ^k _{j=1,j≠i} Y^{j-1} \cdot F_j(x) + Y^{i-1} \cdot R(x)<br>$$<br>最多k个a值是这种情况。</p>
-<p><strong>证明.</strong> (引理4.5.) 令P为范围S的(<em>d, D, t, l</em>)多项式协议。构建P*，同P一致，附加条件是 Zs(X) :=∏(X-a), a∈S。P* 的执行与P 一致，直到<strong>V</strong>poly在S域内请求恒等式。假设验证者请求 k 个恒等式：F1(X),…,Fk(X)，Fi的总维度的最大值是D，如定义4.1.所讲。P* 处理如下：</p>
-<ul>
-<li><p><strong>V</strong>poly发送队列a1,…,ak ∈ <strong><em>F</em></strong> 给到<strong>P</strong>poly。</p>
-</li>
-<li><p><strong>P</strong>poly计算二项式<br>$$<br>T:=\frac {\sum a_i \cdot F_i} {Z_S} ,i∈[k]<br>$$</p>
-</li>
-<li><p><strong>P</strong>poly发送 T 给到 <strong><em>I</em></strong></p>
-</li>
-<li><p><strong>V</strong>poly查询恒等式</p>
-</li>
-</ul>
-<p>$$<br>\sum _{i∈[k]} a_j \cdot F_i(X) ≡ T \cdot Z_S<br>$$</p>
-<p>遵循断言4.6，即有一种可能性，1/|<strong><em>F</em></strong>| 基于<strong>V</strong>poly的选择的a1,…,ak之上，适当的 T∈F[X]等同于<em>F1,…,Fk</em>，消失于范围S之中。这等效于<strong>V</strong>poly在P的类似执行中输出acc。</p>
-<h4 id="4-2从多项式协议到代数协议。"><a href="#4-2从多项式协议到代数协议。" class="headerlink" title="4.2从多项式协议到代数协议。"></a>4.2从多项式协议到代数协议。</h4><p>​    <a target="_blank" rel="noopener" href="https://books.google.co.jp/books?id=ce7gDwAAQBAJ&pg=PA97&lpg=PA97&dq=algebraic+adversary&source=bl&ots=7UqZAMlvRT&sig=ACfU3U1wBeYP14ZjOWj_RSZVmRLuwj9OQA&hl=en&sa=X&ved=2ahUKEwjbrbG7ofrvAhXOE4gKHT8fAwQQ6AEwBHoECAQQAw#v=onepage&q=algebraic%20adversary&f=false">离散对数甚至许多Diffie-Hellman式的问题都很困难。因此，打破具体小组中这种普遍困难的假设的唯一方法是以非平凡的方式使用基础小组表示形式。基于此，GGM(generic group model)可以非常有用地进行完整性检查，以验证给定假设的有效性，甚至可以保证给定密码方案的安全性。但是，GGM无法实施：GGM中存在安全的加密方案，但是在与任何具体组实例化时都不安全。</a></p>
-<p>​    AGM(algebraic group model)只考虑代数对象。一个代数对象A可以任意使用群组中的元素，但是必须根据输入组元素对其输出组元素中的任何一个提供显式分解，即A还必须输出一个解释，说明如何使用组操作从其输入中计算其输出中的任何组元素。</p>
-<p>​    我们希望使用Section 3的多项式承诺方案，将一个多项式协议编译成在代数组模型中具有知识健全性的协议（在第2.2节中定义）。</p>
-<p>​    具体证明略。</p>
-<p><strong>减少字段元素的数量</strong> ：我们描述了Mary Maller进行的优化，以减少来自M的证明中的*<strong>F*<strong>元素的数量。我们从一个说明性示例开始。假设</strong>V*<em>希望检查恒等式h1(X)·h2(X)-h3(X)≡0。上述编译将使P以随机x∈</em></strong>F*<strong>方式发送h1，h2，h3。</strong>V**将检查h1(x)h2(x)-h3(x)=0。因此，P发送了三个字段元素。</p>
-<p>​    但是请注意，我们可以让P只发送c:= h1(x)，然后在开放协议中简单地验证多项式L(X):=c·h2(X)-h3(X)是否在x处为零。请注意，我们可以计算com(L)= c·com(h2)-com(h3)</p>
 
       
     </div>
