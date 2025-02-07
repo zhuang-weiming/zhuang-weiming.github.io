@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">263</span>
+          <span class="site-state-item-count">264</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,85 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/" class="post-title-link" itemprop="url">如何使用polygonID</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-02-20 14:23:00 / Modified: 15:23:09" itemprop="dateCreated datePublished" datetime="2024-02-20T14:23:00+08:00">2024-02-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>继续前序学习的DID产品，关于polygonID的进一步学习，本文介绍如何使用polygonID。<br>前序文章：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/">iden3和polygonID原理应用和实战</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">polygonID SDK部分代码分析</a><br><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/issuer-node/">polygonID Issuer-Node</a> 启动以后，有2台 docker container 服务器运行，1) Issuer Node API; 2) Issuer Node UI。这两个服务都有各自的 API 给到前端 - 手机App 或者 Web site调用。<br>其中，</li>
+<li>Issuer Node API是文档中<a target="_blank" rel="noopener" href="https://devs.polygonid.com/docs/issuer-node/issuer-node-api/introduction"> Issuer Node Core API </a>的部分。</li>
+<li>Issuer Node UI API 是文档中<a target="_blank" rel="noopener" href="https://devs.polygonid.com/docs/issuer/issuer-node-ui"> Issuer Node UI </a>的部分。<br>Issuer Node API只是在 Issuer-Node 启动时，调用一次，用来为 Issuer 生成 DID，其后不再被直接调用。前端应用调用API是调用 Issuer Node UI API。关于 Issuer Node UI API 的文档目前是<a target="_blank" rel="noopener" href="https://www.postman.com/dark-star-200015/workspace/public/folder/23322631-5f8ec341-42b9-44e5-ac45-f1ed8966bd4c">在 Postman 中</a>。其中：<ul>
+<li>Credential - VC创建，取得，删除，作废，取得状态。</li>
+<li>Auth - 鉴权 QR Code。即 Link 地址对应的 QR Code。</li>
+<li>Connection - 如文档所示( <a target="_blank" rel="noopener" href="https://devs.polygonid.com/docs/issuer-node/issuer-node-guide/">https://devs.polygonid.com/docs/issuer-node/issuer-node-guide/</a> )，Connection 展示 ID Holders 和 Credentials 的所属关系。</li>
+<li>Schema - 生成 VC 所使用的数据字段管理。</li>
+<li>State - 管理 Identity State，取得，公开至区块链。</li>
+<li>Link - 通过 link，进入VC。Link创建，取得，删除，失效，创建鉴权，和取得QR Code。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -497,87 +576,6 @@
 <li>区块链在当前的最佳用例？各大银行间清算。如<a target="_blank" rel="noopener" href="https://www.jpmorgan.com/onyx/index">Onyx 在 J.P.Morgan 内部</a>的使用。</li>
 <li>区块链在国际汇款用例可否使用？目前国际汇款的国际标准是<a target="_blank" rel="noopener" href="https://www.iso20022.org/about-iso-20022"> ISO20022</a>，区块链还不是。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/" class="post-title-link" itemprop="url">Flutter和React-Native项目如何被原生App所重用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-01-10 14:26:00" itemprop="dateCreated datePublished" datetime="2024-01-10T14:26:00+08:00">2024-01-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-01-11 15:00:06" itemprop="dateModified" datetime="2024-01-11T15:00:06+08:00">2024-01-11</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>继续讨论 <a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/polygonid-flutter-sdk">https://github.com/0xPolygonID/polygonid-flutter-sdk</a> ，其中使用了c-polygonid / witnesscalc / rapidsnark / babyjubjub 这4个外部lib库，有c，golang，rust等编译后得到的 .a 文件。那么Flutter开发的部分内容，如手机DB存储等如何重用呢？</p>
-<h3 id="Flutter-开发的代码，通过如下方式可以被原生App重用"><a href="#Flutter-开发的代码，通过如下方式可以被原生App重用" class="headerlink" title="Flutter 开发的代码，通过如下方式可以被原生App重用"></a>Flutter 开发的代码，通过如下方式可以被原生App重用</h3><p>打包多个静态原生库成为一个xcframework库：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild -create-xcframework -library &lt;path/to/lib1&gt; -headers &lt;header directory for lib1&gt; -library &lt;path/to/lib2&gt; -headers &lt;header directory for lib2&gt; -output &lt;path/to/output.xcframework&gt;</span><br></pre></td></tr></table></figure>
-<p>但是，一个.xcframework 文件在每一个平台中，如macOS，iOS中，只能含有一个静态库。所以可以如下。<br>第一步，<a target="_blank" rel="noopener" href="https://www.unix.com/man-page/OSX/1/lipo/">https://www.unix.com/man-page/OSX/1/lipo/</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lipo -info</span><br><span class="line">lipo -create &lt;path/to/lib1&gt; &lt;path/to/lib2&gt; -output &lt;path/to/combineLib&gt;</span><br><span class="line">lipo &lt;path/to/Fatlib&gt; -thin arm64 -output &lt;path/to/arm64Lib&gt;</span><br><span class="line">lipo &lt;path/to/Fatlib&gt; -thin x86_64 -output &lt;path/to/x86_64Lib&gt;</span><br></pre></td></tr></table></figure>
-<p>在 arm64 iOS 设备中，.xcframework / thin lib / fat lib 绝可以调试开发；在 arm64 iOS Simulators仿真中，目前尚无法调试开始 fat lib。</p>
-<p>第二步，得到FlutterEngine，即Flutter.framework文件。运行 <code>flutter builld ios-framework</code> 命令后， 从 dart 库编译为 ios framework 的时候，在本地 flutter 电脑中，安装好的工具链目录里在直接 copy 得到 Flutter.framework 文件。<br><img src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/3.png"><br>从该命令来看， Flutter.xcframework 是直接 copy 的，app.xcframework 是编译的（从dart），Build plugins 是编译 Flutter  SDK 项目用到的第三方库的 framework文件。</p>
-<p>总体来看，调用链条如下</p>
-<pre><code>App &lt;--&gt; Polygon SDK &lt;--&gt; FlutterEngine(Flutter.framework) &lt;--&gt; PolygonFlutterChannel(dart) &lt;--&gt; UsercaseClass(dart) &lt;--&gt; NativeLibs(swift/c/golang/rust)</code></pre>
-<h3 id="React-Native-开发的代码，通过如下方式可以被原生App重用"><a href="#React-Native-开发的代码，通过如下方式可以被原生App重用" class="headerlink" title="React Native 开发的代码，通过如下方式可以被原生App重用"></a>React Native 开发的代码，通过如下方式可以被原生App重用</h3><p><a target="_blank" rel="noopener" href="https://github.com/facebook/hermes">https://github.com/facebook/hermes</a> - A JavaScript engine optimized for running React Native. Hermes is a JavaScript engine optimized for fast start-up of <a target="_blank" rel="noopener" href="https://reactnative.dev/">React Native</a> apps. It features ahead-of-time static optimization and compact bytecode.<br>第一步，<a target="_blank" rel="noopener" href="https://reactnative.dev/docs/hermes%EF%BC%8C">https://reactnative.dev/docs/hermes，</a> 在该文档中，<code>pod install</code> 执行之后，如iOS开发端，hermes.xcframework 即已经被拉到本地，如下图。<br><img src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/1.png"></p>
-<p>第二步，从 Reactnative 项目代码打包到 jsbundle 资源文件。具体流程是放在了 Xcode 工程里的一个自定义脚本这里，每次Xcodes编译 App 的时候，就会根据情况来对 js 打包。<br><img src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/2.png"><br>总体来说，native swift/OC 通过调用 hermes 来调用 React-Native 中的JS 代码逻辑。</p>
 
       
     </div>

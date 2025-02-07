@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">263</span>
+          <span class="site-state-item-count">264</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,94 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/07/22/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-I-%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/22/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-I-%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">zokrates-基于ethereum的zkp-I-介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-22 15:53:04" itemprop="dateCreated datePublished" datetime="2019-07-22T15:53:04+08:00">2019-07-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Zokrates"><a href="#Zokrates" class="headerlink" title="Zokrates"></a>Zokrates</h3><p><a target="_blank" rel="noopener" href="https://github.com/Zokrates/ZoKrates">ZoKrates</a>是以太坊上<a target="_blank" rel="noopener" href="https://github.com/scipr-lab/libsnark">zkSNARKs</a>的工具箱。它可以帮助您在DApp中使用可验证的计算，从高级语言的程序规范到生成计算证明，以及在Solidity中验证这些证明。</p>
+<p>闲话少叙，开搞</p>
+<p>1.编写 .code 文件</p>
+<p>.code 文件是证明的逻辑内容，函数的返回内容为 field、field[n]。</p>
+<p>2.1 compile，编译 .code 文件，Zokrates内部生成数字电路，没有指定文件名称的话，默认生成 ./out.code</p>
+<p><code>./zokrates compile -i root.code</code></p>
+<p>2.2 perform the setup phase，进行安装。为 ./out.code 中的已编译程序生成可信设置。在./proving.key和./verifying.key处创建一个证明密钥和一个验证密钥。这些密钥源自随机源，通常称为“有毒废物”。任何有权访问随机源的人都可以生成假证明，该证明将由协议后的验证者接受。</p>
+<p><code>./zokrates setup</code></p>
+<p>2.3 execute the program，执行证明。计算在./out.code中找到的已编译程序的witness和程序的参数。witness是变量的有效分配，包括计算结果。-a 后面跟着程序的参数，用空格分隔。<br>在./witness创建一个witness文件</p>
+<p><code>./zokrates compute-witness -a 337 113569</code></p>
+<p>2.4 generate a proof of computation，生成 proof（证明）。使用./proving.key中的证明密钥，生成./out.code的证明，从而得到./witness。</p>
+<p><code>./zokrates generate-proof</code></p>
+<p>2.5 export a solidity verifier，使用./verifying.key上的验证密钥，生成一个Solidity合约，其中包含生成的验证密钥和公共函数，以验证./out.code上已编译程序的解决方案。<br>在./verifier.sol被创建。</p>
+<p><code>./zokrates export-verifier</code></p>
+<p>3.通过验证者合同，可以检查此证明。例如，使用web3，调用将如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Verifier.at(<span class="xml"><span class="tag">&lt;<span class="name">verifier</span> <span class="attr">contract</span> <span class="attr">address</span>&gt;</span>).verifyTx(A, A_p, B, B_p, C, C_p, H, K, [...publicInputs, ...outputs])</span></span><br></pre></td></tr></table></figure>
+
+<p>A, A_p, B, B_p, C, C_p, H, K的值，以及publicInputs和 outputs 均来自于步骤2.4中生成的proof.json文件。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -624,89 +712,6 @@
 </ol>
 <p>然而，缺点是私钥不在您的控制中，因为它们存储在Coinbase的托管服务器上。Coinbase不支持智能合约。</p>
 <p>也就是说，这是一种很好的短期储存ETH的方法。如果打算长期持有以太币，应该使用纸质钱包的方法或使用像Ledger Nano S这样的硬件钱包。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/03/26/%E4%BF%9D%E9%99%A9%E8%A1%8C%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E7%A0%94%E7%A9%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/26/%E4%BF%9D%E9%99%A9%E8%A1%8C%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E7%A0%94%E7%A9%B6/" class="post-title-link" itemprop="url">保险行业区块链应用研究</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-03-26 10:36:31" itemprop="dateCreated datePublished" datetime="2019-03-26T10:36:31+08:00">2019-03-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/Y2019/V5/I3/207">Research on Blockchain Application in Insurance Industry</a></p>
-<p>全文: <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/abstract/abstract563.shtml#">PDF</a> (4379 KB)   <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/abstract/abstract563.shtml#">HTML</a> (1 KB) </p>
-<p>输出: <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/article/getTxtFile.do?fileType=BibTeX&id=563">BibTeX</a> | <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/article/getTxtFile.do?fileType=EndNote&id=563">EndNote</a> (RIS)      </p>
-<table>
-<thead>
-<tr>
-<th align="left">Abstract：Blockchain technology will play an important role in digital transformation in insurance industry. This paper attempts to introduce CBGM (Consortium Blockchain Governance Model) which can help insurance institutions to leverage blockchain technology to build insurance digital ecosystem more efficiently. This paper leverages authors experience of applying blockchain technology in insurance industry recent years. Firstly, application scenarios of blockchain in insurance industry has been sorted out. Meanwhile, the challenges of using blockchain technology has been analyzed, whose one of the key challenges is how to manage consortium. Secondly, CBGM and 6 sub-modules have been developed and introduced which is targeted to provide common method to manage consortium. Finally, an example of using CBGM has been shared and proposal for insurance institution has been provided.</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Key words： <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/abstract/abstract563.shtml#">blockchain</a>       <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/abstract/abstract563.shtml#">insurance</a>       <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/abstract/abstract563.shtml#">consortium</a>       <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/abstract/abstract563.shtml#">governance model</a>       <a target="_blank" rel="noopener" href="http://journal09.magtech.org.cn/Jwk_xxaqyj/CN/abstract/abstract563.shtml#">project implementation</a></td>
-</tr>
-</tbody></table>
 
       
     </div>
