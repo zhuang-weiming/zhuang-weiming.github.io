@@ -270,7 +270,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-02-13 18:22:00 / Modified: 18:31:08" itemprop="dateCreated datePublished" datetime="2025-02-13T18:22:00+08:00">2025-02-13</time>
+      <time title="Created: 2025-02-13 18:22:00 / Modified: 18:31:40" itemprop="dateCreated datePublished" datetime="2025-02-13T18:22:00+08:00">2025-02-13</time>
     </span>
 
   
@@ -434,7 +434,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-02-12 10:40:19" itemprop="dateModified" datetime="2025-02-12T10:40:19+08:00">2025-02-12</time>
+        <time title="Modified: 2025-02-17 10:42:28" itemprop="dateModified" datetime="2025-02-17T10:42:28+08:00">2025-02-17</time>
       </span>
 
   
@@ -477,23 +477,378 @@
 </tr>
 </tbody></table>
 <h2 id="训练要占用多少显存"><a href="#训练要占用多少显存" class="headerlink" title="训练要占用多少显存"></a>训练要占用多少显存</h2><p>这里还有另外一个在线的网页工具：<a target="_blank" rel="noopener" href="https://huggingface.co/spaces/hf-accelerate/model-memory-usage">https://huggingface.co/spaces/hf-accelerate/model-memory-usage</a><br><img src="/2025/02/11/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%A6%81%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E6%98%BE%E5%AD%98/1.jpg"></p>
-<h2 id="训练要占用多少时间"><a href="#训练要占用多少时间" class="headerlink" title="训练要占用多少时间"></a>训练要占用多少时间</h2><ul>
-<li>$总时间=总计算量/(实际算力)$</li>
-<li>$训练时间 = 8 * 模型token数 * 参数量/(GPU数量 * GPU的flops * GPU利用率)$</li>
+<p>模型包括： DeepSeek R1 (671B)，DeepSeek R1 Distill Qwen 7B， 14B， 32B， 以及 DeepSeek R1 Distill Llama 8B， 70B 这些模型，</p>
+<ol>
+<li>假设在并发 3 个用户的情况下运行这些模型所需的资源？</li>
+<li>关于 DeepSeek R1 系列模型在不同数据量下进行微调（并非全量训练），并在一天内完成微调所需的硬件资源。分别在 1K，1M，1GB，1T 数据量下训练这些模型所需的资源和训练时长。</li>
+</ol>
+<p>根据您提供的信息，以及之前的分析，以下是关于 DeepSeek R1 系列模型微调硬件资源需求的全面分析，并以表格形式呈现：</p>
+<h2 id="DeepSeek-R1-模型微调硬件资源需求总表-单日内完成"><a href="#DeepSeek-R1-模型微调硬件资源需求总表-单日内完成" class="headerlink" title="DeepSeek R1 模型微调硬件资源需求总表 (单日内完成)"></a>DeepSeek R1 模型微调硬件资源需求总表 (单日内完成)</h2><p>采用BF16（2字节/参数）的情况下，考虑到 Unsloth 主要优化 LoRA 微调，并且更适用于单 GPU 或少量 GPU 场景，基于 Unsloth 优化 LoRA 微调的假设，重新评估 DeepSeek R1 系列模型在中小数据量 (1K, 1M, 1G, 10G) 下的硬件资源需求。 对于超大数据量 (100G) 和超大模型 (DeepSeek-R1-671B)，我仍然保留 ZeRO-3 优化。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>数据size</th>
+<th>GPU 配置 (显存需求)</th>
+<th>CPU 核心数</th>
+<th>内存</th>
+<th>存储 (SSD/NVMe)</th>
+<th>网络带宽</th>
+<th>关键配置说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DeepSeek-R1-671B BF16</strong></td>
+<td>1M</td>
+<td>16×A100 80G</td>
+<td>64核</td>
+<td>512GB</td>
+<td>2TB</td>
+<td>25Gbps RDMA</td>
+<td>模型并行 (TP=16) + 数据并行 (DP=2)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>64×A100 80G</td>
+<td>256核</td>
+<td>1TB</td>
+<td>5TB</td>
+<td>50Gbps RDMA</td>
+<td>TP=8 + DP=8 + ZeRO-3</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>128×A100 80G</td>
+<td>512核</td>
+<td>2TB</td>
+<td>10TB</td>
+<td>100Gbps RDMA</td>
+<td>TP=8 + DP=16 + ZeRO-3</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>192×A100 80G</td>
+<td>768核</td>
+<td>4TB</td>
+<td>15TB</td>
+<td>150Gbps RDMA</td>
+<td>TP=8 + DP=24 + ZeRO-3</td>
+</tr>
+<tr>
+<td><strong>Distill-Qwen-7B 4-bit</strong></td>
+<td>1M</td>
+<td>1×A10G 24G (Unsloth)</td>
+<td>8核</td>
+<td>64GB</td>
+<td>500GB</td>
+<td>1Gbps</td>
+<td>单卡 4-bit LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>2×A10G 24G (Unsloth)</td>
+<td>16核</td>
+<td>128GB</td>
+<td>1TB</td>
+<td>5Gbps</td>
+<td>DP=2 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>4×A10G 24G (Unsloth)</td>
+<td>32核</td>
+<td>256GB</td>
+<td>2TB</td>
+<td>5Gbps</td>
+<td>DP=4 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>8×A10G 24G (Unsloth)</td>
+<td>64核</td>
+<td>512GB</td>
+<td>3TB</td>
+<td>10Gbps</td>
+<td>DP=8 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td><strong>Distill-Qwen-14B 4-bit</strong></td>
+<td>1M</td>
+<td>1×A100 40G (Unsloth)</td>
+<td>16核</td>
+<td>128GB</td>
+<td>1TB</td>
+<td>5Gbps</td>
+<td>单卡 LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>4×A100 40G (Unsloth)</td>
+<td>32核</td>
+<td>256GB</td>
+<td>2TB</td>
+<td>10Gbps</td>
+<td>DP=4 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>8×A100 40G (Unsloth)</td>
+<td>64核</td>
+<td>512GB</td>
+<td>3TB</td>
+<td>10Gbps</td>
+<td>DP=8 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>16×A100 40G (Unsloth)</td>
+<td>128核</td>
+<td>1TB</td>
+<td>5TB</td>
+<td>25Gbps</td>
+<td>DP=16 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td><strong>Distill-Qwen-32B BF16</strong></td>
+<td>1G</td>
+<td>4×A100 80G (Unsloth)</td>
+<td>64核</td>
+<td>512GB</td>
+<td>2TB</td>
+<td>10Gbps</td>
+<td>TP=4 + DP=2</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>8×A100 80G (Unsloth)</td>
+<td>128核</td>
+<td>1TB</td>
+<td>3TB</td>
+<td>25Gbps</td>
+<td>DP=8 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>32×A100 80G</td>
+<td>256核</td>
+<td>2TB</td>
+<td>10TB</td>
+<td>50Gbps RDMA</td>
+<td>TP=4 + DP=8 + ZeRO-3</td>
+</tr>
+<tr>
+<td><strong>Distill-Llama-8B 4-bit</strong></td>
+<td>1M</td>
+<td>1×A10G 24G (Unsloth)</td>
+<td>8核</td>
+<td>64GB</td>
+<td>500GB</td>
+<td>1Gbps</td>
+<td>单卡 LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>2×A10G 24G (Unsloth)</td>
+<td>16核</td>
+<td>128GB</td>
+<td>1TB</td>
+<td>5Gbps</td>
+<td>DP=2 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>4×A10G 24G (Unsloth)</td>
+<td>32核</td>
+<td>256GB</td>
+<td>2TB</td>
+<td>5Gbps</td>
+<td>DP=4 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>8×A10G 24G (Unsloth)</td>
+<td>48核</td>
+<td>384GB</td>
+<td>3TB</td>
+<td>10Gbps</td>
+<td>DP=8 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td><strong>Distill-Llama-70B BF16</strong></td>
+<td>1M</td>
+<td>8×A100 80G</td>
+<td>64核</td>
+<td>512GB</td>
+<td>2TB</td>
+<td>25Gbps RDMA</td>
+<td>TP=4 + DP=2 (ZeRO-3 for 70B still recommended)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>32×A100 80G</td>
+<td>128核</td>
+<td>1TB</td>
+<td>5TB</td>
+<td>25Gbps RDMA</td>
+<td>TP=4 + DP=8 (ZeRO-3 for 70B still recommended)</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>64×A100 80G</td>
+<td>256核</td>
+<td>2TB</td>
+<td>10TB</td>
+<td>50Gbps RDMA</td>
+<td>TP=8 + DP=8 + ZeRO-3</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>128×A100 80G</td>
+<td>512核</td>
+<td>4TB</td>
+<td>15TB</td>
+<td>100Gbps RDMA</td>
+<td>TP=8 + DP=16 + ZeRO-3</td>
+</tr>
+<tr>
+<td><strong>GPU 配置 (显存需求)</strong>: 指完成微调任务所需的 GPU 型号和数量，以及总显存需求。例如 “16×A100 80G” 表示需要 16 张 80GB 显存的 A100 GPU。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>CPU 核心数</strong>: 训练任务所需的 CPU 核心数量，主要用于数据预处理和模型管理。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>内存</strong>: 系统内存需求，用于数据缓存、模型加载和训练过程中的临时数据存储。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>存储 (SSD/NVMe)</strong>: 高速固态硬盘容量需求，用于存储训练数据、模型参数和中间结果。NVMe SSD 提供更快的读写速度，适用于大数据量训练。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>网络带宽</strong>: 多 GPU 训练时所需的网络带宽，用于 GPU 之间的数据通信。RDMA (Remote Direct Memory Access) 网络提供更低的延迟和更高的带宽，适用于大规模分布式训练。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>关键配置说明</strong>: 简要描述了针对不同模型和数据量所采用的关键并行策略和优化技术，例如模型并行 (TP)、数据并行 (DP)、ZeRO-3 优化和梯度累积等。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>预估并发 3 用户显存需求</strong>: 粗略估计为模型参数显存占用的 3 倍或更高。因为并发用户需要模型的多份副本或共享模型但需要额外的上下文缓存等。实际情况可能更复杂。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ol>
+<li><strong>Unsloth 对资源需求的影响</strong>:<ul>
+<li><strong>中小模型 (Distill-Qwen-7B/14B/32B, Distill-Llama-8B) 和中小数据量 (1K - 100G)</strong>: 使用 Unsloth 库进行 LoRA 微调，可以显著降低 GPU 资源需求。例如，Distill-Qwen-7B 在 1K 数据量下，单张 A10G 24G 即可完成微调；即使在 100G 数据量下，也仅需 8 张 A10G 24G GPU。</li>
+<li><strong>超大模型 (DeepSeek-R1-671B) 和大数据量 (100G)</strong>: 对于这些极端情况，Unsloth 的优化可能不足以完全解决显存瓶颈。因此，表格中仍然保留了 ZeRO-3 优化，并结合 Unsloth 的 FlashAttention-2 优化，以期达到最佳的性能和资源效率。</li>
 </ul>
-<p>其中对于不同的GPU其flops是不同的，一般情况下GPU的利用率在0.3-0.55之间。<br>那么对于1B参数的模型和1T的数据，假设1个GPU，大概的耗时为：</p>
-<ul>
-<li><p>$耗时= 8 * 10^9 * 1T / (1 * 300T * 0.3 ) =  1028天$<br>上述的1T是1万亿的数据，300T是300TFLOPS，就是GPU每秒算300万亿次。这个8是怎么来的呢，因为对于每个token，每个模型参数，需要进行2次浮点运算，我们整体包括前向+反向+重激活计算，所以整体是1+2+1=4，那么整体上就是8次了。<br>对于1B参数的模型，1T tokens相当于每个参数训练1000次，远超常规需求（如Chinchilla建议的20 tokens/参数）。实际场景中，这可能对应多轮训练（epochs），但需警惕过拟合风险，也可能是反复多次的实验，例如，对训练的结果不满意，调整参数后，重新训练。</p>
 </li>
-<li><p><strong>实际对比</strong>：<br>  GPT-3 175B训练消耗约314 ZFLOPS（1 ZFLOPS=10211021），用时约1个月（使用数千块A100）。按此比例，1B模型+1T tokens的计算量（8×10218×1021 FLOPS）在单GPU下确实需数年，与结果一致。</p>
-</li>
-<li><p><strong>优化可能性:</strong></p>
-<ul>
-<li>多GPU并行：<br>使用数据并行（如128 GPUs），时间可缩短至约8天（1028/1281028/128），但需考虑通信开销。</li>
-<li>混合精度训练：<br>启用FP16/混合精度可提升算力利用率（如从0.3→0.5），时间降至617天。</li>
-<li>模型与数据调整：<br>减少token量至合理范围（如20B tokens），时间缩短至20天。</li>
+<li><strong>LoRA 微调的优势</strong>:<ul>
+<li>表格中所有基于 Unsloth 的配置方案都假设使用 LoRA 微调。LoRA 本身就是一种参数高效微调方法，可以显著减少需要训练的参数量，从而降低显存需求和加速训练。</li>
+<li>Unsloth 进一步优化了 LoRA 的实现，使其在速度和显存效率方面更具优势。</li>
 </ul>
 </li>
+<li><strong>FlashAttention-2 的加速作用</strong>:<ul>
+<li>Unsloth 集成的 FlashAttention-2 可以显著加速训练过程，这有助于在 “日内完成微调” 的目标下，使用更少的 GPU 资源。</li>
+</ul>
+</li>
+</ol>
+<h2 id="关键分析逻辑"><a href="#关键分析逻辑" class="headerlink" title="关键分析逻辑"></a>关键分析逻辑</h2><ol>
+<li>模型参数量 vs. GPU 显存:<ul>
+<li>参数高效<strong>微调 (如 LoRA) 显著降低了显存需求</strong>，公式估算如下： $$ \text{显存} \approx \text{模型参数} \times (2\ \text{bytes} \times \text{激活系数}) + \text{优化器状态} $$ 其中，激活系数在 LoRA 场景下约为 0.1-0.3，优化器状态通过 ZeRO-3 等技术可以大幅减少。</li>
+</ul>
+</li>
+<li>数据量 vs. 训练并行度:<ul>
+<li>小数据量 (1K, 1M): 资源需求主要由模型大小决定。较小的 Distill 模型甚至可以在单张消费级 GPU 上完成微调。</li>
+<li>大数据量 (1G, 1T): 数据并行成为关键。需要增加 GPU 数量以提高数据吞吐量，并配合高速网络 (如 RDMA) 保证并行效率。</li>
+</ul>
+</li>
+<li>训练时长与硬件资源:<ul>
+<li>表格中的配置旨在将微调时间压缩到 <strong>一天以内</strong>。更快的训练速度通常需要更多的 GPU 资源并行计算。</li>
+<li>实际训练时间还会受到 <strong>模型结构</strong>、<strong>超参数设置</strong>、<strong>优化算法</strong> 等多种因素影响。上述表格提供的是一个 <strong>硬件配置参考</strong>，实际部署时可能需要根据具体情况进行调整。</li>
+</ul>
+</li>
+<li>优化技术:<ul>
+<li>混合精度训练 (BF16/FP16): 降低显存占用和计算复杂度，加速训练过程。</li>
+<li>梯度检查点: 通过计算换取显存，进一步降低显存峰值。</li>
+<li>ZeRO-3: 将优化器状态、梯度和模型参数分片到多张 GPU 上，极大地减少单卡显存需求，尤其适用于超大模型 (如 671B)。</li>
+<li>模型并行 (Tensor Parallelism, TP): 将模型按层或张量切分到多张 GPU 上，降低单卡显存压力，适用于超大模型。</li>
+<li>数据并行 (Data Parallelism, DP): 将数据分片到多张 GPU 上，每张 GPU 训练模型完整副本的一部分数据，提高数据吞吐量，适用于大数据量训练。</li>
+<li>梯度累积: 在显存受限时，通过多次小批量梯度计算累积梯度，模拟大批量训练的效果。</li>
+</ul>
+</li>
+<li>网络与存储:<ul>
+<li><strong>RDMA 网络</strong>: 对于大规模分布式训练 (尤其是模型并行和数据并行结合)，RDMA 网络可以显著降低 GPU 间通信延迟，提高并行效率。</li>
+<li>高速 SSD/NVMe 存储: 大数据量训练时，高速存储可以加速数据加载，避免 I/O 瓶颈。</li>
+</ul>
+</li>
+</ol>
+<p><strong>请注意:</strong></p>
+<ul>
+<li>上述表格提供的是 <strong>估算和建议</strong>，实际资源需求可能因具体任务和实现细节有所不同。</li>
+<li>在实际部署时，建议 <strong>从小规模配置开始测试</strong>，并根据训练速度和资源利用率逐步调整硬件配置。</li>
+<li>云服务平台通常提供多种 GPU 实例和高速网络配置，可以根据表格中的建议选择合适的云资源进行模型微调。</li>
 </ul>
 
       
