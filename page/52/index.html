@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">267</span>
+          <span class="site-state-item-count">268</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,110 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/02/15/Jasper%E9%A1%B9%E7%9B%AE%E5%91%8A%E8%AF%89%E4%BD%A0-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%A7%E9%A2%9D%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/15/Jasper%E9%A1%B9%E7%9B%AE%E5%91%8A%E8%AF%89%E4%BD%A0-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%A7%E9%A2%9D%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A1%8C/" class="post-title-link" itemprop="url">Jasper项目告诉你-分布式大额支付系统是否可行</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-15 11:04:39" itemprop="dateCreated datePublished" datetime="2018-02-15T11:04:39+08:00">2018-02-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p> 翻译：<a target="_blank" rel="noopener" href="https://www.bankofcanada.ca/wp-content/uploads/2017/05/fsr-june-2017-chapman.pdf">https://www.bankofcanada.ca/wp-content/uploads/2017/05/fsr-june-2017-chapman.pdf</a></p>
+<ul>
+<li>分布式账本技术(DLT)通常被称为比特币的基础。DLT提供了一种全新方式进行(和跟踪)金融交易。研究人员正在调查其在金融体系的实用性。</li>
+<li>Jasper项目是基于DLT大额支付系统的技术验证。该验证对DLT作为金融系统基础建设技术的成熟度提供了重要见解。</li>
+<li>对于大额支付系统等关键的金融市场基础设施(FMI)，目前版本的DLT还无法提供与集中式系统同样的整体能力。然而，与DLT的初始加密货币应用相比，最新版本的DLT已经取得了巨大的进步。</li>
+<li>基于DLT的大额支付系统的优势是其可以接入更大的DLT生态市场(可能包括跨境交易)。</li>
+</ul>
+<h4 id="什么是分布式账本系统？"><a href="#什么是分布式账本系统？" class="headerlink" title="什么是分布式账本系统？"></a>什么是分布式账本系统？</h4><p>比特币在2009年引入分布式账本技术，其后开始流行。比特币是数字货币的代表。交易都记录在账本上，对所有人都是可见的，由分布式的计算机（矿工）维护。这些计算机是系统上的节点，这些节点在创建新交易时更新账本。该账本使用一系列密码学技术记录交易，若干笔交易被封装成块，交易块与块连接在一起，这种账本被称为区块链。<br>区块链是一个突破，它展示了一种方法来维护各方之间的账本，（i）没有人监督该系统；（ii）交易可以可靠地更新并且记录到比特币系统（无需担心其他成员的诚实度）。</p>
+<p>通过让矿工解决数学难题来争取获得验证交易块的权利，从而实现分布式账本的“可靠性”更新。第一个完成一个新的区块广播的矿工为其他矿工提供区块，并以该区块创建的新比特币（矿山）作为回报。虽然挖矿很难，但很容易验证。一旦其他节点看到并验证了这个新矿山，新的区块就被添加到链的后面，块中的交易则被认为是正确的，矿工们开始挖掘其他的新交易。节点对新区块达成一致的方式称为共识机制，比特币的共识机制叫做工作证明(PoW)。</p>
+<p>虽然比特币系统已具有相当的弹性，但是他有以下几个不足：</p>
+<p>（i）所有交易对每个人都是可见的，但是这是违反银行法的，并使某些参与方利益受损;</p>
+<p>（ii）在时间和能源方面，挖矿的代价非常高，在受信任的环境中通常不需要它的好处;</p>
+<p>（iii）该系统对任何参加者都是匿名开放的。</p>
+<p>为了解决上述问题，人们一直在开发比特币的替代品。新的分布式账本系统只允许受限制的可信对手访问。在一些系统中，共识机制被其他方法所取代。在Jasper阶段2中使用的Corda平台，是通过每个参与方都信任的公证节点完成的，并替换PoW。并且，放弃了区块链的链式结构，并将其替换为分布式账本结构，每个节点只能访问必要的数据，减少系统的透明度，为参与者提供更多隐私**。</p>
+<p>Jasper流动资金模型(LSM)利用一个定时多边支付结算的队列，如果银行有非紧急付款，将付款存入队列中。在银行提交付款通知后，提交的付款将与其他排队付款一起等待。定时到达时，该队列暂时被锁定，而算法结合所有提交的付款，确定每个银行的净付款并评其流动性。</p>
+<p><strong>支付队列本质上是集中的</strong>。关键的问题是如何在DLT系统中实现它，而不是使用传统的集中账本系统。这些技术问题带来了极大的复杂性。</p>
+<h4 id="流动资金模型"><a href="#流动资金模型" class="headerlink" title="流动资金模型"></a>流动资金模型</h4><p>Jasper项目的创新解决方案是在Corda平台上加入“吸入/呼出”程序。在”匹配”周期开始之前，银行向队列提交付款。这些付款不会立即添加到账本中，而是付款指令加载到队列中，直到”匹配”周期开始。此时，会发生一系列事件。首先，在“吸入”阶段，向参与匹配周期的所有银行发送通知，要求他们向加拿大银行发送数字存托凭证(DDR)。然后验证每一笔付款并添加到账本中。然后，在“呼出”阶段，”匹配”算法确定付款的全部子集，以净额为基础，在具备可用资金的情况下进行清算。加拿大银行将DDR付款返还给所有参与银行，金额等于他们所提供的金额，加上或减去”匹配”算法完成后的金额。</p>
+<p>举例说明，假设有两家银行A和B，在队列中支付对方100美元和90美元。此外，作为吸入阶段的一部分，每家银行都将15美元送到队列中。扣除两次付款后，该算法将向A银行收取10美元，并向B银行支付10美元。鉴于他们在吸入阶段的贡献，在呼出阶段A银行为支付5美元，对B银行为支付25美元。</p>
+<p>然后验证这些交易并将其添加到账本中。与算法不匹配的付款保留在队列中。此时开始一个新的匹配周期。在下一个匹配周期结束之前，银行可以自由输入或移除队列中的付款。重复该过程。</p>
+<h4 id="效率和金融稳定性风险"><a href="#效率和金融稳定性风险" class="headerlink" title="效率和金融稳定性风险"></a>效率和金融稳定性风险</h4><h4 id="信用和流动性风险"><a href="#信用和流动性风险" class="headerlink" title="信用和流动性风险"></a>信用和流动性风险</h4><p>Jasper平台没有设计信用风险，因为所有的支付都是对中央银行存款的索赔，这是无风险的资产。参与者通过LVTS将现金转入加拿大银行，然后，大额转账系统(LVTS创建DDR，DDR可以在分布式账本平台上交换。总的来说，本设计证明信用上是可兼容的。</p>
+<p>Jasper合并了一个模拟现有实时总额结算(RTGS)系统功能的流动资金模型(LSM)，以缓解流动性风险，参与者将对不够充足的DDR进行支付。Jasper流动资金模型(LSM)的性能目前正在使用模拟数据进行测试。预测这些模拟结果还为时尚早，但我们可以报告，迄今为止，还没有看到证据表明在分布式账本上实施LSM会改变其相对于中央系统的使用或性能。基于DLT技术的LSM很可能可以做出与现有LSM类似的流动性资金系统。</p>
+<h4 id="结算风险"><a href="#结算风险" class="headerlink" title="结算风险"></a>结算风险</h4><p>结算定义为资产不可撤销和无条件的转移。</p>
+<p>与Jasper方案相关的两个方面：分布式账本更新过程的确定性，和法律确权。</p>
+<p>为了确保法律的正当性，Jasper项目的结构如下：</p>
+<p>DDR的转让是相当于中央银行存款基础债权的完全（不可撤销）转移。这个设计与DDR的发行有关，因此独立于Jasper平台。</p>
+<p>另一方面，为确保方案最终完成，需要解决DLT基础技术相关的问题。在以太坊中，使用PoW共识机制来验证付款。但是PoW是不确定的，付款可能出现失败。在Corda平台中，理论上讲，可信公证人的角色将消除这种不确定性，交易一旦完成就无法撤销。但是，系统还没有经过压力测试，因此一些风险可能仍然与方案有关。</p>
+<h4 id="运营风险"><a href="#运营风险" class="headerlink" title="运营风险"></a>运营风险</h4><p>总体评估表明，与集中式平台相比，分布式账本如果没有经过精心设计，可能会降低运营弹性。基于Corda，Jasper阶段2在满足金融市场基础设施(PFMI)方面比当前集中式系统更加昂贵。在Jasper阶段2中，参与者需要投资高可用节点以减少停机的可能性。</p>
+<p>另一个关键方面是可扩展性。目前，LVTS每天处理32,000笔交易，峰值吞吐量约为每秒10笔交易。在DLT中，”分配”算法消耗了一定的时间。在像以太坊这样的PoW平台上，扩展能力有限。在第一阶段，大概是每秒14笔交易，以太坊是为公有链设计的，速度限制节点之间的信息流。虽然这个速度足以处理当前每日的LVTS，但它限制了未来的高峰量。相比之下，可扩展性不会成为Corda平台的一个限制，因为Corda没有基于固定时间的共识方法，只需要相关方的节点和公证人验证事务。</p>
+<h4 id="透明性和隐私"><a href="#透明性和隐私" class="headerlink" title="透明性和隐私"></a>透明性和隐私</h4><p>大额支付系统需要参与者保持交易私密性，防止其他参与者窥视这些信息。参与者的客户也需要保持隐私。PoW系统是不适合的，因为所有交易都是公开的。</p>
+<p>相比之下，基于公证的DLT系统（如Corda）则允许增加隐私，因为受信任的第三方（例如加拿大银行）有助于验证所有交易。Corda系统缺乏透明性意味着系统中没有任何节点(公证人可能除外)拥有全部信息。如果一个或多个节点的信息被破坏，则可能无法重建整个网络，因为即使公证人也没有全量的账本副本。这就需要对单个节点进行备份。这提出了在交易保持私密的限制下，DLT的运营恢复能力是否有可能的问题。</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>Jasper项目让我们更好地理解了DLT大额支付系统运营者，参与者和中央银行的角色和责任。在DLT框架中，运营者的角色可能更接近规则制定者或标准制定者的角色，而不是传统的IT基础架构运营商。</p>
+<p>此外，Jasper项目促使大额支付系统相关者共同开发平台。私人和公共部门合作，从项目中了解了DLT技术的很多内容。他们发现这降低了相互承认所涉过程的复杂性。</p>
+<p>纯粹独立的DLT大额支付系统不太可能与集中式的收益相匹配。因为上面讨论的LSM，与目前的集中式系统相比，增加的复杂性导致进一步的运营风险。</p>
+<p>相反，基于DLT的大额支付系统的好处是可以与更广泛的FMI生态系统互动。例如，将其他资产与支付相结合（抵押品质押和资产出售），通过整合后端系统，扩大范围经济并降低参与者的成本。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -745,81 +849,6 @@
 <p>Tel. (55) 52703701</p>
 <p>Cel. 04455 54551278</p>
 <p>=============================================================</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2010/11/07/remebering-csc-days/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/11/07/remebering-csc-days/" class="post-title-link" itemprop="url">remebering csc days</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2010-11-07 14:56:22" itemprop="dateCreated datePublished" datetime="2010-11-07T14:56:22+08:00">2010-11-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Sitting at my desk back in my office during my lunch break, I started to reminisce about my month long stay in Ghana with my 10 IBM colleagues – now my close friends. One week ago we were in Accra, the capital, preparing for our press conference, dressed in our business best (and the ladies looked amazing). Our goal for the press conference was to state what we had achieved for Ghana and our clients during our short stay. Five of us summarized the projects we worked on and the tangible deliverables in addition to the intangible short, medium, and long-term goals we left for our Ghanaian colleagues to achieve. It was the three client’s statements that really made us all realize the positive impact we had made – how much we had done for them in 16 working days, how we’ve shown them that when focused on a common set of goals, great things can be accomplished in a very short time. We all hope the excitement and drive we were able to share continues and the pace of success remains steady. </p>
-<p>29 days earlier eleven of us from all over the world landed in Accra – all IBMers but strangers nonetheless. We came from very diverse cultural and business backgrounds yet we all shared similar interests: the love of travel, the openness to new cultures, the joy of laughter and friendships, and the love of family and friends back home. Though our business skills were also diverse, we have core similarities there as well: we are all driven to achieve, we all have excellent problem solving skills, we all have great soft skills, and we all have excellent time management skills. We work hard, and we play hard – I guess that’s the IBM way.</p>
-<p>As the working days passed, the eleven of us became as close as family. We leaned on each other for support and wisdom; we celebrated each others’ successes and embraced each others’ challenges. We shared outstanding experiences touring Ghana and learning about its people and the growing economy. We realized how special this program was to us and our clients. Many of us shared stories where our clients first realized we were strangers when we started this assignment; they thought we had been working together for years. I don’t know how our team mates were selected, but I commend whomever it was that put the 11 of us together – it was perfect.</p>
-<p><img src="/2010/11/07/remebering-csc-days/1.jpg"></p>
-<p>As my last post to this blog, I just want to let anybody that is considering joining the IBM Corporate Service Corps know that they absolutely should do it. You will grow in many ways, both personally and professionally. On the professional side, how often do you get the chance to work on a two or three person team where your project deliverables will help shape a growing economy? How often do you get the business opportunity to lead such positively impacting projects? How often do your clients become great friends where they start telling you they’ll miss you 5 days before the project is over? It’s a life-changing experience, do it, and thank IBM while you’re at it.</p>
 
       
     </div>

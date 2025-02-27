@@ -13824,77 +13824,8 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 <td>100Gbps RDMA</td>
 <td>TP=8 + DP=16 + ZeRO-3</td>
 </tr>
-<tr>
-<td><strong>GPU 配置 (显存需求)</strong>: 指完成微调任务所需的 GPU 型号和数量，以及总显存需求。例如 “16×A100 80G” 表示需要 16 张 80GB 显存的 A100 GPU。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>CPU 核心数</strong>: 训练任务所需的 CPU 核心数量，主要用于数据预处理和模型管理。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>内存</strong>: 系统内存需求，用于数据缓存、模型加载和训练过程中的临时数据存储。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>存储 (SSD/NVMe)</strong>: 高速固态硬盘容量需求，用于存储训练数据、模型参数和中间结果。NVMe SSD 提供更快的读写速度，适用于大数据量训练。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>网络带宽</strong>: 多 GPU 训练时所需的网络带宽，用于 GPU 之间的数据通信。RDMA (Remote Direct Memory Access) 网络提供更低的延迟和更高的带宽，适用于大规模分布式训练。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>关键配置说明</strong>: 简要描述了针对不同模型和数据量所采用的关键并行策略和优化技术，例如模型并行 (TP)、数据并行 (DP)、ZeRO-3 优化和梯度累积等。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>预估并发 3 用户显存需求</strong>: 粗略估计为模型参数显存占用的 3 倍或更高。因为并发用户需要模型的多份副本或共享模型但需要额外的上下文缓存等。实际情况可能更复杂。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
+<p><strong>GPU 配置 (显存需求)</strong>: 指完成微调任务所需的 GPU 型号和数量，以及总显存需求。例如 “16×A100 80G” 表示需要 16 张 80GB 显存的 A100 GPU。<br><strong>CPU 核心数</strong>: 训练任务所需的 CPU 核心数量，主要用于数据预处理和模型管理。<br><strong>内存</strong>: 系统内存需求，用于数据缓存、模型加载和训练过程中的临时数据存储。<br><strong>存储 (SSD/NVMe)</strong>: 高速固态硬盘容量需求，用于存储训练数据、模型参数和中间结果。NVMe SSD 提供更快的读写速度，适用于大数据量训练。<br><strong>网络带宽</strong>: 多 GPU 训练时所需的网络带宽，用于 GPU 之间的数据通信。RDMA (Remote Direct Memory Access) 网络提供更低的延迟和更高的带宽，适用于大规模分布式训练。<br><strong>关键配置说明</strong>: 简要描述了针对不同模型和数据量所采用的关键并行策略和优化技术，例如模型并行 (TP)、数据并行 (DP)、ZeRO-3 优化和梯度累积等。<br><strong>预估并发 3 用户显存需求</strong>: 粗略估计为模型参数显存占用的 3 倍或更高。因为并发用户需要模型的多份副本或共享模型但需要额外的上下文缓存等。实际情况可能更复杂。</p>
 <ol>
 <li><strong>Unsloth 对资源需求的影响</strong>:<ul>
 <li><strong>中小模型 (Distill-Qwen-7B/14B/32B, Distill-Llama-8B) 和中小数据量 (1K - 100G)</strong>: 使用 Unsloth 库进行 LoRA 微调，可以显著降低 GPU 资源需求。例如，Distill-Qwen-7B 在 1K 数据量下，单张 A10G 24G 即可完成微调；即使在 100G 数据量下，也仅需 8 张 A10G 24G GPU。</li>
@@ -13952,5 +13883,87 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
         <tag>AI</tag>
         <tag>DeepSeek</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2025/02/27/cv-en-2025/</url>
+    <content><![CDATA[<h3 id="WEIMING-ZHUANG"><a href="#WEIMING-ZHUANG" class="headerlink" title="WEIMING ZHUANG"></a><strong>WEIMING ZHUANG</strong></h3><p>📱 18642696200 · 📧 <a href="mailto:&#122;&#119;&#109;&#x31;&#x33;&#54;&#50;&#48;&#48;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#122;&#119;&#109;&#x31;&#x33;&#54;&#50;&#48;&#48;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;</a> · <a href="https://zhuang-weiming.github.io/">Blog</a><br><strong>Summary</strong><br>Seasoned Fin-Tech strategist and technical leader with 15+ years of expertise in blockchain, AI, cloud, and regulatory technologies. Proven track record in driving digital transformation, vendor governance, and cross-border innovation at global institutions (HSBC, Dalian Commodity Exchange, Ant Financial). Holder of 13 patents, PMP® certified, and bilingual (English/Chinese) communicator. Recognized with <strong>Red Dot Award</strong>, <strong>HSBC Tech Excellence</strong>, and <strong>Shanghai Blockchain Innovation Champion</strong> for pioneering solutions in decentralized identity, federated learning, and CBDCs.</p>
+<hr>
+<h3 id="Professional-Experience"><a href="#Professional-Experience" class="headerlink" title="Professional Experience"></a><strong>Professional Experience</strong></h3><p><strong>HSBC Lab | Lead Full Stack Engineer</strong> <em>(Dec 2021–Present)</em></p>
+<ul>
+<li><p>Spearheaded <strong>CBDC (e-HKD)</strong>, <strong>Web3.0 (DID/NFT)</strong>, and <strong>AI/ML</strong> initiatives, aligning with HSBC’s global Fin-Tech roadmap. Led cross-border deployment of <strong>UI Test Robot</strong> (30% efficiency gain) and <strong>LLM fine-tuning workflows</strong>, earning <strong>2024 HSBC Tech Reward &amp; Recognition</strong> and <strong>Red Dot Award</strong> for decentralized identity solutions</p>
+<p>  .</p>
+</li>
+<li><p>Directed R&amp;D budget allocation ($2M+), vendor governance (10+ partners), and compliance frameworks for cloud/AI projects.</p>
+</li>
+<li><p>Co-developed <strong>EasyFL</strong>, a low-code federated learning platform reducing FL application code by 10x and accelerating training by 1.5x</p>
+<p>  .</p>
+</li>
+</ul>
+<p><strong>Dalian Commodity Exchange | Lead Architect</strong> <em>(Jul 2020–Dec 2021)</em></p>
+<ul>
+<li><p>Architected blockchain solutions for commodity trading, achieving <strong>CAICT Trusted Blockchain Certification</strong> and enabling $50M+ warehouse receipt financing for COFCO</p>
+<p>  .</p>
+</li>
+<li><p>Optimized IT governance processes, reducing vendor SLA compliance gaps by 25%.</p>
+</li>
+</ul>
+<p><strong>Shanghai Insurance Exchange | Technical Lead</strong> <em>(Apr 2017–Jun 2020)</em></p>
+<ul>
+<li><p>Built <strong>SHIE Blockchain</strong> for reinsurance and digital policies, published <em>Blockchain in Insurance Industry</em> in <em>Modern Bankers</em>. Led CAICT blockchain ratings (2018, 2021) and won <strong>2018 Shanghai Blockchain Innovation Competition</strong></p>
+<p>  .</p>
+</li>
+</ul>
+<p><strong>Ant Financial | Blockchain Expert</strong> <em>(Jul 2016–Mar 2017)</em></p>
+<ul>
+<li>Designed <strong>Ant Chain</strong>’s consensus algorithm for charitable donations, presented at <strong>MIIT Blockchain Conference</strong>.</li>
+</ul>
+<p><strong>IBM | Senior Architect/Consultant</strong> <em>(May 2007–Jul 2016)</em></p>
+<ul>
+<li>Delivered blockchain POCs for ICBC and Postal Savings Bank, certified <strong>IBM IT Application Consulting Expert</strong>.</li>
+</ul>
+<hr>
+<h3 id="Key-Innovations-amp-Leadership"><a href="#Key-Innovations-amp-Leadership" class="headerlink" title="Key Innovations &amp; Leadership"></a><strong>Key Innovations &amp; Leadership</strong></h3><ul>
+<li><p><strong>Patents</strong>: 13 filed (WO/US/CN), including <em>AI Vision for Fraud Detection</em>, <em>Raft-Based Blockchain Consensus</em>, and <em>NFT User Verification</em></p>
+<p>  .</p>
+</li>
+<li><p><strong>Awards</strong>: Red Dot Award (DID), HSBC Tech Excellence, Shanghai Financial Reform Research Achiever (2018–19).</p>
+</li>
+<li><p><strong>Publications</strong>: Authored <em>EasyFL: Low-Code Federated Learning Platform</em> (arXiv 2021)</p>
+<p>  , <em>When Foundation Models Meet Federated Learning</em> (Sony AI, 2023)</p>
+<p>  , and <em>Blockchain in Insurance</em>(Modern Bankers).</p>
+</li>
+<li><p><strong>Leadership</strong>: Mentored teams to win Red Dot Award and CAICT certifications; speaker at MIIT Blockchain Conference</p>
+<p>  .</p>
+</li>
+</ul>
+<hr>
+<h3 id="Education-amp-Certifications"><a href="#Education-amp-Certifications" class="headerlink" title="Education &amp; Certifications"></a><strong>Education &amp; Certifications</strong></h3><ul>
+<li><p><strong>M.Sc. &amp; B.Sc. in Electrical Engineering</strong>, Dalian Maritime University (2000–2007)</p>
+</li>
+<li><p><strong>Certifications</strong>: PMP® (2010–2013), IREB CPRE, IBM IT Application Consulting Expert, Secure Code Warrior (Orange Belt).</p>
+</li>
+<li><p><strong>Honors</strong>: Dalian 2020 Urgent Talent Certification, Sony AI Research Scientist (2023–Present)</p>
+<p>  .</p>
+</li>
+</ul>
+<hr>
+<h3 id="Technical-Skills"><a href="#Technical-Skills" class="headerlink" title="Technical Skills"></a><strong>Technical Skills</strong></h3><ul>
+<li><strong>Blockchain</strong>: Hyperledger, Ant Chain, DID/NFT frameworks.</li>
+<li><strong>AI/ML</strong>: Federated Learning (EasyFL), LLM fine-tuning, PyTorch, TensorFlow.</li>
+<li><strong>Cloud</strong>: AWS, Azure, IBM Cloud.</li>
+<li><strong>Languages</strong>: Python, Java, Solidity, JavaScript.</li>
+</ul>
+<hr>
+<h3 id="Tailoring-Notes"><a href="#Tailoring-Notes" class="headerlink" title="Tailoring Notes"></a><strong>Tailoring Notes</strong></h3><ol>
+<li><p><strong>Vendor &amp; Compliance Focus</strong>: Highlighted CAICT certifications, HSBC governance, and cross-border project leadership.</p>
+</li>
+<li><p><strong>AI/FL Expertise</strong>: Integrated federated learning innovations (EasyFL, Sony AI research) to align with AI-driven banking trends</p>
+<p> .</p>
+</li>
+<li><p><strong>Global Impact</strong>: Emphasized e-HKD (Hong Kong), COFCO financing (China), and Red Dot Award (international).</p>
+</li>
+</ol>
+]]></content>
   </entry>
 </search>
