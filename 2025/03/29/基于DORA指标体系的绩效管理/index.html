@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="一、战略层（DORA Metrics）   指标 描述 目标值    部署频率（Deployment Frequency） 每月部署到生产环境的次数 ≥ 每周一次   变更前置时间（Lead Time for Changes） 从代码提交到生产环境部署的平均时间 ≤ 1周   变更失败率（Change Failure Rate） 生产环境变更导致事故的比例 ≤ 5%   平均恢复时间（Mean T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于DORA指标体系的绩效管理">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2025/03/29/%E5%9F%BA%E4%BA%8EDORA%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB%E7%9A%84%E7%BB%A9%E6%95%88%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="一、战略层（DORA Metrics）   指标 描述 目标值    部署频率（Deployment Frequency） 每月部署到生产环境的次数 ≥ 每周一次   变更前置时间（Lead Time for Changes） 从代码提交到生产环境部署的平均时间 ≤ 1周   变更失败率（Change Failure Rate） 生产环境变更导致事故的比例 ≤ 5%   平均恢复时间（Mean T">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-29T03:50:00.000Z">
+<meta property="article:modified_time" content="2025-03-29T04:00:51.254Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2025/03/29/%E5%9F%BA%E4%BA%8EDORA%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB%E7%9A%84%E7%BB%A9%E6%95%88%E7%AE%A1%E7%90%86/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>基于DORA指标体系的绩效管理 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%88%98%E7%95%A5%E5%B1%82%EF%BC%88DORA-Metrics%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">一、战略层（DORA Metrics）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%89%A7%E8%A1%8C%E5%B1%82%EF%BC%88%E7%B2%BE%E7%BB%86%E5%8C%96%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">二、执行层（精细化指标体系）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E7%A0%94%E5%8F%91%E9%98%B6%E6%AE%B5%EF%BC%88Development%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">（一）研发阶段（Development）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E9%83%A8%E7%BD%B2%E9%98%B6%E6%AE%B5%EF%BC%88Deployment%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">（二）部署阶段（Deployment）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%B8%89%EF%BC%89%E8%BF%90%E7%BB%B4%E9%98%B6%E6%AE%B5%EF%BC%88Operation%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">（三）运维阶段（Operation）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E5%9B%9B%EF%BC%89%E4%BA%8B%E6%95%85%E7%AE%A1%E7%90%86%EF%BC%88Incident-Management%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">（四）事故管理（Incident Management）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%BA%94%EF%BC%89%E5%8F%98%E6%9B%B4%E7%AE%A1%E7%90%86%EF%BC%88Change-Management%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">（五）变更管理（Change Management）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E5%85%AD%EF%BC%89%E7%B3%BB%E7%BB%9F%E6%B7%98%E6%B1%B0%E7%AE%A1%E7%90%86%EF%BC%88Demise-amp-Decommission%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">（六）系统淘汰管理（Demise &amp; Decommission）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E6%96%BD%E4%B8%8E%E6%B2%BB%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">三、实施与治理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8A%A5%E5%91%8A%E4%B8%8E%E5%9B%9E%E9%A1%BE%E6%9C%BA%E5%88%B6"><span class="nav-number">3.1.</span> <span class="nav-text">1. 报告与回顾机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8A%80%E6%9C%AF%E6%94%AF%E6%92%91%E5%B9%B3%E5%8F%B0"><span class="nav-number">3.2.</span> <span class="nav-text">2. 技术支撑平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%BB%84%E7%BB%87%E4%B8%8E%E6%BF%80%E5%8A%B1"><span class="nav-number">3.3.</span> <span class="nav-text">3. 组织与激励</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%A2%84%E6%9C%9F%E6%95%88%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">四、预期效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference-link"><span class="nav-number">4.1.</span> <span class="nav-text">Reference link:</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">269</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/03/29/%E5%9F%BA%E4%BA%8EDORA%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB%E7%9A%84%E7%BB%A9%E6%95%88%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于DORA指标体系的绩效管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-03-29 11:50:00 / Modified: 12:00:51" itemprop="dateCreated datePublished" datetime="2025-03-29T11:50:00+08:00">2025-03-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一、战略层（DORA-Metrics）"><a href="#一、战略层（DORA-Metrics）" class="headerlink" title="一、战略层（DORA Metrics）"></a>一、战略层（DORA Metrics）</h2><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>目标值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>部署频率（Deployment Frequency）</td>
+<td>每月部署到生产环境的次数</td>
+<td>≥ 每周一次</td>
+</tr>
+<tr>
+<td>变更前置时间（Lead Time for Changes）</td>
+<td>从代码提交到生产环境部署的平均时间</td>
+<td>≤ 1周</td>
+</tr>
+<tr>
+<td>变更失败率（Change Failure Rate）</td>
+<td>生产环境变更导致事故的比例</td>
+<td>≤ 5%</td>
+</tr>
+<tr>
+<td>平均恢复时间（Mean Time to Restore，MTTR）</td>
+<td>故障发生到修复完成的平均时长</td>
+<td>≤ 2小时</td>
+</tr>
+</tbody></table>
+<h2 id="二、执行层（精细化指标体系）"><a href="#二、执行层（精细化指标体系）" class="headerlink" title="二、执行层（精细化指标体系）"></a>二、执行层（精细化指标体系）</h2><h3 id="（一）研发阶段（Development）"><a href="#（一）研发阶段（Development）" class="headerlink" title="（一）研发阶段（Development）"></a>（一）研发阶段（Development）</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>目标值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单元测试覆盖率</td>
+<td>单元测试代码覆盖率</td>
+<td>≥80%</td>
+</tr>
+<tr>
+<td>代码审查一次通过率</td>
+<td>首次通过代码审查比例</td>
+<td>≥85%</td>
+</tr>
+<tr>
+<td>技术债务</td>
+<td>SonarQube技术债务评分</td>
+<td>≤ 技术债务比例15%</td>
+</tr>
+<tr>
+<td>敏捷迭代按时交付率</td>
+<td>Sprint内任务完成率</td>
+<td>≥90%</td>
+</tr>
+</tbody></table>
+<h3 id="（二）部署阶段（Deployment）"><a href="#（二）部署阶段（Deployment）" class="headerlink" title="（二）部署阶段（Deployment）"></a>（二）部署阶段（Deployment）</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>目标值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>首次上线成功率</td>
+<td>一次性成功部署比例</td>
+<td>≥95%</td>
+</tr>
+<tr>
+<td>部署自动化覆盖率</td>
+<td>CI/CD管道自动化程度</td>
+<td>≥90%</td>
+</tr>
+<tr>
+<td>平均部署周期</td>
+<td>提交到上线部署的周期</td>
+<td>≤2天</td>
+</tr>
+</tbody></table>
+<h3 id="（三）运维阶段（Operation）"><a href="#（三）运维阶段（Operation）" class="headerlink" title="（三）运维阶段（Operation）"></a>（三）运维阶段（Operation）</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>目标值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统可用率</td>
+<td>系统正常运行的比例</td>
+<td>≥99.95%</td>
+</tr>
+<tr>
+<td>平均故障间隔（MTBF）</td>
+<td>系统两次事故之间的平均时间</td>
+<td>≥30天</td>
+</tr>
+<tr>
+<td>自动化监控覆盖率</td>
+<td>关键系统自动监控覆盖程度</td>
+<td>≥95%</td>
+</tr>
+<tr>
+<td>服务响应延迟</td>
+<td>应用的99%响应延迟</td>
+<td>≤500ms</td>
+</tr>
+</tbody></table>
+<h3 id="（四）事故管理（Incident-Management）"><a href="#（四）事故管理（Incident-Management）" class="headerlink" title="（四）事故管理（Incident Management）"></a>（四）事故管理（Incident Management）</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>目标值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事故响应时间</td>
+<td>事故发生到首次响应的平均时间</td>
+<td>≤15分钟</td>
+</tr>
+<tr>
+<td>事故关闭时间（MTTR）</td>
+<td>从事故发生到关闭的平均时间</td>
+<td>≤2小时</td>
+</tr>
+<tr>
+<td>一级事故数量</td>
+<td>严重事故（P1级）发生次数</td>
+<td>每月≤2次</td>
+</tr>
+<tr>
+<td>RCA完成率</td>
+<td>重大事故根因分析完成比例</td>
+<td>100%</td>
+</tr>
+</tbody></table>
+<h3 id="（五）变更管理（Change-Management）"><a href="#（五）变更管理（Change-Management）" class="headerlink" title="（五）变更管理（Change Management）"></a>（五）变更管理（Change Management）</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>目标值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>变更回退率</td>
+<td>需要回滚的变更比例</td>
+<td>≤5%</td>
+</tr>
+<tr>
+<td>紧急变更比例</td>
+<td>紧急变更占全部变更的比例</td>
+<td>≤10%</td>
+</tr>
+<tr>
+<td>变更审批效率</td>
+<td>变更申请到审批完成时间</td>
+<td>≤1个工作日</td>
+</tr>
+</tbody></table>
+<h3 id="（六）系统淘汰管理（Demise-amp-Decommission）"><a href="#（六）系统淘汰管理（Demise-amp-Decommission）" class="headerlink" title="（六）系统淘汰管理（Demise &amp; Decommission）"></a>（六）系统淘汰管理（Demise &amp; Decommission）</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>目标值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统及时退役率</td>
+<td>按计划淘汰系统的及时率</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>淘汰成本控制</td>
+<td>实际退役成本与计划的差异比例</td>
+<td>≤10%</td>
+</tr>
+</tbody></table>
+<h2 id="三、实施与治理模式"><a href="#三、实施与治理模式" class="headerlink" title="三、实施与治理模式"></a>三、实施与治理模式</h2><h3 id="1-报告与回顾机制"><a href="#1-报告与回顾机制" class="headerlink" title="1. 报告与回顾机制"></a>1. 报告与回顾机制</h3><ul>
+<li>每季度向战略层汇报DORA指标，审视整体战略目标达成情况。</li>
+<li>每月运营回顾精细化指标，针对执行偏差提出整改。</li>
+<li>每周团队自查具体指标，持续改进。</li>
+</ul>
+<h3 id="2-技术支撑平台"><a href="#2-技术支撑平台" class="headerlink" title="2. 技术支撑平台"></a>2. 技术支撑平台</h3><ul>
+<li>DevOps平台自动收集开发、测试、部署数据。</li>
+<li>ITSM（如ServiceNow）跟踪事故、变更数据。</li>
+<li>APM（如Prometheus/Grafana）实时监控运维指标。</li>
+<li>数据可视化平台（如Power BI）集中展现指标。</li>
+</ul>
+<h3 id="3-组织与激励"><a href="#3-组织与激励" class="headerlink" title="3. 组织与激励"></a>3. 组织与激励</h3><ul>
+<li>指标与团队绩效激励直接关联，优秀团队给予奖励。</li>
+<li>存在明显问题的团队，组织针对性改进辅导。</li>
+</ul>
+<h2 id="四、预期效果"><a href="#四、预期效果" class="headerlink" title="四、预期效果"></a>四、预期效果</h2><ul>
+<li>保持开发与运维的效率、稳定性双平衡。</li>
+<li>确保监管合规性，同时保证技术与业务的快速响应能力。</li>
+<li>促进组织持续改善，实现稳定高效的整体技术管理水平。</li>
+</ul>
+<h3 id="Reference-link"><a href="#Reference-link" class="headerlink" title="Reference link:"></a>Reference link:</h3><p><a target="_blank" rel="noopener" href="https://dora.dev/capabilities/">https://dora.dev/capabilities/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2025/03/29/%E5%9F%BA%E4%BA%8EDORA%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB%E7%9A%84%E7%BB%A9%E6%95%88%E7%AE%A1%E7%90%86/" title="基于DORA指标体系的绩效管理">https://zhuang-weiming.github.io/2025/03/29/基于DORA指标体系的绩效管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag"># 软件工程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/02/13/SFT%E3%80%81DPO%E3%80%81GRPO%E4%B8%89%E7%A7%8D%E8%AE%AD%E7%BB%83%E5%99%A8%E7%9A%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" rel="prev" title="SFT、DPO、GRPO三种训练器的训练数据与应用场景">
+                  <i class="fa fa-chevron-left"></i> SFT、DPO、GRPO三种训练器的训练数据与应用场景
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'c5132cd03241350aecf8ddc508a06f43',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
