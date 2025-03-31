@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">269</span>
+          <span class="site-state-item-count">270</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,191 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/" class="post-title-link" itemprop="url">比较-隐私交易Nightfall和Zeto和Zether和ZAMA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-09-12 15:20:00" itemprop="dateCreated datePublished" datetime="2024-09-12T15:20:00+08:00">2024-09-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-11-14 09:32:54" itemprop="dateModified" datetime="2024-11-14T09:32:54+08:00">2024-11-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>以下是 <a target="_blank" rel="noopener" href="https://github.com/EYBlockchain/nightfall_3">Nightfall_3</a>、<a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto">Zeto</a> 、 <a target="_blank" rel="noopener" href="https://github.com/Consensys/anonymous-zether">Zether</a> 和 <a target="_blank" rel="noopener" href="https://github.com/zama-ai/fhevm">ZAMA</a> 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Nightfall_3</strong></th>
+<th><strong>Zeto</strong></th>
+<th align="left"><strong>Zether</strong></th>
+<th align="left"><a target="_blank" rel="noopener" href="https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf">kinexys by JPMorgan </a>| ZAMA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Privacy Algorithm</strong></td>
+<td>ZK-SNARKS, Groth16 by Circom</td>
+<td>ZK-SNARKS, Groth16 by Circom</td>
+<td align="left">Bullet-Proof with ElGamal encryption and homomorphic addition</td>
+<td align="left">Kinexys used Zama’s open-source fhEVM-native solution to keep balances and transaction amounts encrypted, ensuring confidentiality while maintaining composability through FHE.</td>
+</tr>
+<tr>
+<td><strong>Anonymity</strong></td>
+<td>Extremely high, anonymity achieved with hashes and ZKPs.</td>
+<td>Extremely high, Stealth Addresses.</td>
+<td align="left">Medium, the identity of transactors hidden among the anonymity set.</td>
+<td align="left">Extremely high, Stealth Addresses.</td>
+</tr>
+<tr>
+<td><strong>Transaction Model</strong></td>
+<td>UTXO</td>
+<td>UTXO</td>
+<td align="left">Account Balance State</td>
+<td align="left">Account Balance State</td>
+</tr>
+<tr>
+<td><strong>Non-repudiation</strong></td>
+<td>Not currently supported, transaction submitters can deny.</td>
+<td><strong>Supported</strong>, when using the circuit requiring encrypted secrets for the authority.</td>
+<td align="left">Not currently supported, auditing balance requires a special viewing key that involves additional cryptography.</td>
+<td align="left"><strong>Supported</strong>, FHE ‘s KMS operator would need to provision the auditor with the FHE decryption key to review all transactions. The stealth address service could also specify addresses that are allowed to decrypt transactions.</td>
+</tr>
+<tr>
+<td><strong>Public Chain Support</strong></td>
+<td>Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
+<td>Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Polygon, etc.</td>
+<td align="left">Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Polygon, etc. <strong>ZK Rollup deployment has failed.</strong></td>
+<td align="left">Supported on EVM based blockchains.</td>
+</tr>
+<tr>
+<td><strong>Transaction Cost</strong></td>
+<td><strong>Low</strong>, ZK verification happens off-chain.</td>
+<td>High, ZK SNARKS verification on-chain with varied cost depending on the usage of encryption and non-traceability.</td>
+<td align="left">High, bulletproof verification on-chain is more costly than ZK SNARKS based proofs.</td>
+<td align="left">High.</td>
+</tr>
+<tr>
+<td><strong>Transaction Delay</strong></td>
+<td>1~2 blocks time</td>
+<td>1~2 blocks time</td>
+<td align="left">1~2 blocks time</td>
+<td align="left">1~2 blocks time</td>
+</tr>
+<tr>
+<td><strong>Standard Tokens Support</strong></td>
+<td>Both fungible and non-fungible tokens with ERC20 and ERC721 tokens anchoring.</td>
+<td>Only fungible tokens with ERC20 tokens anchoring.</td>
+<td align="left">Only fungible tokens with ERC20 tokens anchoring.</td>
+<td align="left">Only fungible tokens with ERC20 tokens anchoring.</td>
+</tr>
+<tr>
+<td><strong>Double-spending Prevention</strong></td>
+<td>Nullifier (<strong>offchain</strong>) mechanism prevents double spending.</td>
+<td>UTXO or nullifier (<strong>offchain</strong>) based double spend prevention depending on the specific implementation.</td>
+<td align="left">ElGamal encryption (<strong>onchain</strong>) homomorphic computation combined with zero-knowledge proofs prevent double spending.</td>
+<td align="left">FHE (<strong>onchain</strong>) prevent double spending. ElGamal encryption (offchain).</td>
+</tr>
+<tr>
+<td><strong>Programmability</strong></td>
+<td>Limited programmability due to the optimistic transaction design with off-chain ZKP verification.</td>
+<td>Full programmability across multiple UTXOs. Supported by Paladin for programmable privacy.</td>
+<td align="left">Full programmability due to on-chain verifications.</td>
+<td align="left">Full with ZAMA framework.</td>
+</tr>
+<tr>
+<td><strong>Limitations</strong></td>
+<td>The optimistic transaction model means a confirmation window of multiple days to transaction finality.</td>
+<td>Fragmented UTXOs require new transactions to transfer multiple UTXOs. No fee custom implementations.</td>
+<td align="left">Only one spending transaction per account can occur within one epoch (approximately two block times). Limited self-custody wallet support.</td>
+<td align="left">ZAMA(FHE) + Stealth Addresses</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Low. Relies on a centralized sequencer/block proposer.</td>
+<td>High, peer-to-peer transactions. Solutions based on UTXOs.</td>
+<td align="left">Low. Limited by the one spending transaction per account per epoch design.</td>
+<td align="left">High. Offchain service - ZAMA(FHE) + Stealth Addresses</td>
+</tr>
+<tr>
+<td><strong>Community Support</strong></td>
+<td>Questionable, abandoned by Polygon for a ZK-based Layer 2. Only supports code from EY. GPL-3.0 license.</td>
+<td>Hosted in LFDT Labs (formerly Hyperledger Labs). Active, supported by Kaleido.</td>
+<td align="left">Weak, supported by Consensys but no updates in the last two years. Apache License 2.0 View license.</td>
+<td align="left"><strong>BSD-3-Clause-Clear</strong> license. To commercially use Zama’s technology you need to be granted Zama’s patent license.</td>
+</tr>
+<tr>
+<td>Reference link</td>
+<td></td>
+<td></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf">https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Inco-fhevm/confidential-erc20-framework/blob/main/whitepaper.pdf">https://github.com/Inco-fhevm/confidential-erc20-framework/blob/main/whitepaper.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Inco-fhevm/confidential-erc20-framework/">https://github.com/Inco-fhevm/confidential-erc20-framework/</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -537,83 +722,6 @@
 <p><img src="/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/2.png"></p>
 <h2 id="Linea"><a href="#Linea" class="headerlink" title="Linea"></a>Linea</h2><p>安装手册：<a target="_blank" rel="noopener" href="https://docs.linea.build/developers/guides/run-a-node/use-docker">https://docs.linea.build/developers/guides/run-a-node/use-docker</a></p>
 <h2 id="Polygon"><a href="#Polygon" class="headerlink" title="Polygon"></a>Polygon</h2><p>安装手册：<a target="_blank" rel="noopener" href="https://docs.polygon.technology/pos/how-to/full-node/full-node-docker/">https://docs.polygon.technology/pos/how-to/full-node/full-node-docker/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/08/12/%E6%9C%AA%E6%9D%A5%E4%B9%8B%E4%BA%A7%E4%B8%9A%E8%B6%8B%E5%8A%BF-%E5%90%B4%E5%86%9B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/12/%E6%9C%AA%E6%9D%A5%E4%B9%8B%E4%BA%A7%E4%B8%9A%E8%B6%8B%E5%8A%BF-%E5%90%B4%E5%86%9B/" class="post-title-link" itemprop="url">未来之产业趋势-吴军</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-08-12 09:55:00" itemprop="dateCreated datePublished" datetime="2024-08-12T09:55:00+08:00">2024-08-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-08-13 17:26:30" itemprop="dateModified" datetime="2024-08-13T17:26:30+08:00">2024-08-13</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>关于《脉络》这一本书，吴军和尹烨做了一期视频会议，分享了关于一些未来的预测。</p>
-<ol>
-<li>无论是中国的，还是人类的，其生产远远没有过剩。大片的沙漠，河流，土地，太阳能，风能，等等都在等待开发。地球即使经历核大战，环境也仍然大幅优于火星，所以移民火星，月球将是是非常遥远的未来。</li>
-<li>未来看好虚拟经济，服务业。如未来的老龄化，思想文化大发展等趋势，相应的原宇宙，区块链/加密货币，AR/VR，AI，医疗，金融/税务，等服务业。</li>
-<li>给目前高考学生的报考方向<br> 1.计算机；<br> 2.医疗，医学，药学，健康，护理，生物学；<br> 3.金融；<br> 4.教育。<br> 普通人的话，还看好餐馆儿，护理等就业方向。</li>
-<li>未来看好的经济圈<br> 1.英语地域圈；<br> 2.东亚中日韩；<br> 3.印度。</li>
-</ol>
 
       
     </div>
