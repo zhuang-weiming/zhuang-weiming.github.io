@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">271</span>
+          <span class="site-state-item-count">273</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,259 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">10种常见的软件架构模式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-21 08:45:26" itemprop="dateCreated datePublished" datetime="2018-05-21T08:45:26+08:00">2018-05-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-09-05 15:31:38" itemprop="dateModified" datetime="2023-09-05T15:31:38+08:00">2023-09-05</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>原文作者：<a target="_blank" rel="noopener" href="https://medium.com/@vijinimallawaarachchi?source=post_header_lockup">Vijini Mallawaarachchi</a><br>原文地址：<a target="_blank" rel="noopener" href="https://medium.com/towards-data-science/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013">10 Common Software Architectural Patterns in a nutshell</a></p>
+<p>有没有想过要设计多大的企业规模系统？在主要的软件开发启动之前，我们必须选择好体系结构，它将为我们提供所需的功能和质量。因此，在将它们应用到具体设计之前，我们应该了解不同的体系结构。</p>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/1.png"></p>
+<h3 id="什么是架构模式？"><a href="#什么是架构模式？" class="headerlink" title="什么是架构模式？"></a>什么是架构模式？</h3><p>根据维基百科中的定义：</p>
+<blockquote>
+<p>架构模式是一个通用的、可重用的解决方案，用于在给定上下文中的软件体系结构中经常出现的问题。架构模式与软件设计模式类似，但具有更广泛的范围。</p>
+</blockquote>
+<p>在本文中，将简要地解释以下10种常见的体系架构模式，以及它们的用法、优缺点。</p>
+<ol>
+<li>Layer 分层模式</li>
+<li>CS 客户端-服务器模式</li>
+<li>MS 主从设备模式</li>
+<li>Filter 管道-过滤器模式</li>
+<li>Broker 代理模式</li>
+<li>P2P 点对点模式</li>
+<li>Bus 事件总线模式</li>
+<li>MVC 模型-视图-控制器模式</li>
+<li>Blockboard 黑板模式</li>
+<li>Expression 解释器模式</li>
+</ol>
+<h3 id="一-Layer-分层模式"><a href="#一-Layer-分层模式" class="headerlink" title="一. Layer 分层模式"></a>一. Layer 分层模式</h3><p>这种模式也称为多层体系架构模式。它可以用来构造可以分解为子任务组的程序，每个子任务都处于一个特定的抽象级别。每个层都为下一个提供更高层次服务。</p>
+<p>一般信息系统中最常见的是如下所列的4层。</p>
+<ul>
+<li>表示层(也称为UI层)</li>
+<li>应用层(也称为服务层)</li>
+<li>业务逻辑层(也称为领域层)</li>
+<li>数据访问层(也称为持久化层)</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>一般的桌面应用程序</li>
+<li>电子商务Web应用程序</li>
+</ul>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/2.png"></p>
+<h3 id="二-CS-客户端-服务器模式"><a href="#二-CS-客户端-服务器模式" class="headerlink" title="二. CS 客户端-服务器模式"></a>二. CS 客户端-服务器模式</h3><p>这种模式由两部分组成：一个服务器和多个客户端。服务器组件将为多个客户端组件提供服务。客户端从服务器请求服务，服务器为这些客户端提供相关服务。此外，服务器持续侦听客户机请求。</p>
+<p>使用场景：</p>
+<ul>
+<li>电子邮件，文件共享和银行等在线应用程序<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/3.png"></li>
+</ul>
+<h3 id="三-MS-主从设备模式"><a href="#三-MS-主从设备模式" class="headerlink" title="三. MS 主从设备模式"></a>三. MS 主从设备模式</h3><p>这种模式由两方组成,主设备和从设备。主设备组件在相同的从设备组件中分配工作，并计算最终结果，这些结果是从设备返回的结果。</p>
+<p>使用场景：</p>
+<ul>
+<li>在数据库复制中，主数据库被认为是权威的来源，并且要与之同步</li>
+<li>在计算机系统中与总线连接的外围设备(主和从驱动器)<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/4.png"></li>
+</ul>
+<h3 id="四-管道-过滤器模式"><a href="#四-管道-过滤器模式" class="headerlink" title="四. 管道-过滤器模式"></a>四. 管道-过滤器模式</h3><p>此模式可用于构造、生成和处理数据流的系统。每个处理步骤都封装在一个过滤器组件内。要处理的数据是通过管道传递的。这些管道可以用于缓冲或用于同步。</p>
+<p>使用场景：</p>
+<ul>
+<li>编译器。连续的过滤器执行词法分析、解析、语义分析和代码生成</li>
+<li>生物信息学的工作流<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/5.png"></li>
+</ul>
+<h3 id="五-代理模式"><a href="#五-代理模式" class="headerlink" title="五. 代理模式"></a>五. 代理模式</h3><p>此模式用于构造具有解耦组件的分布式系统。这些组件可以通过远程服务调用彼此交互。代理组件负责组件之间的通信协调。</p>
+<p>服务器将其功能(服务和特征)发布给代理。客户端从代理请求服务，然后代理将客户端重定向到其注册中心的适当服务。</p>
+<p>使用场景：</p>
+<ul>
+<li>消息代理软件，如Apache ActiveMQ，Apache Kafka，RabbitMQ和JBoss Messaging</li>
+<li>负债均衡 Ngix</li>
+</ul>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/6.png"></p>
+<h3 id="六-点对点模式"><a href="#六-点对点模式" class="headerlink" title="六. 点对点模式"></a>六. 点对点模式</h3><p>在这种模式中，单个组件被称为对等点。对等点可以作为客户端，从其他对等点请求服务，作为服务器，为其他对等点提供服务。对等点可以充当客户端或服务器或两者的角色，并且可以随时间动态地更改其角色。</p>
+<p>使用场景：</p>
+<ul>
+<li>像Gnutella和G2这样的文件共享网络</li>
+<li>多媒体协议，如P2PTV和PDTP</li>
+<li>像Spotify这样的专有多媒体应用程序</li>
+</ul>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/7.png"></p>
+<h3 id="七-事件总线模式"><a href="#七-事件总线模式" class="headerlink" title="七. 事件总线模式"></a>七. 事件总线模式</h3><p>这种模式主要是处理事件，包括4个主要组件：事件源、事件监听器、通道和事件总线。消息源将消息发布到事件总线上的特定通道上。侦听器订阅特定的通道。侦听器会被通知消息，这些消息被发布到它们之前订阅的一个通道上。</p>
+<p>使用场景：</p>
+<ul>
+<li>安卓开发</li>
+<li>通知服务</li>
+</ul>
+<p><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/8.png"></p>
+<h3 id="八-MVC-模型-视图-控制器模式"><a href="#八-MVC-模型-视图-控制器模式" class="headerlink" title="八. MVC 模型-视图-控制器模式"></a>八. MVC 模型-视图-控制器模式</h3><p>这种模式，也称为MVC模式，把一个交互式应用程序划分为3个部分，</p>
+<ul>
+<li>模型：包含核心功能和数据</li>
+<li>视图：将信息显示给用户(可以定义多个视图)</li>
+<li>控制器：处理用户输入的信息<br>这样做是为了将信息的内部表示与信息的呈现方式分离开来，并接受用户的请求。它分离了组件，并允许有效的代码重用。</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>在主要编程语言中互联网应用程序的体系架构</li>
+<li>像Django和Rails这样的Web框架<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/9.png"></li>
+</ul>
+<h3 id="九-黑板模式"><a href="#九-黑板模式" class="headerlink" title="九. 黑板模式"></a>九. 黑板模式</h3><p>这种模式对于没有确定解决方案策略的问题是有用的。黑板模式由3个主要组成部分组成。</p>
+<ul>
+<li>黑板——包含来自解决方案空间的对象的结构化全局内存</li>
+<li>知识源——专门的模块和它们自己的表示</li>
+<li>控制组件——选择、配置和执行模块<br>所有的组件都可以访问黑板。组件可以生成添加到黑板上的新数据对象。组件在黑板上查找特定类型的数据，并通过与现有知识源的模式匹配来查找这些数据。</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>语音识别</li>
+<li>车辆识别和跟踪</li>
+<li>蛋白质结构识别</li>
+<li>声纳信号的解释<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/10.png"></li>
+</ul>
+<h3 id="十-解释器模式"><a href="#十-解释器模式" class="headerlink" title="十. 解释器模式"></a>十. 解释器模式</h3><p>这个模式用于设计一个解释用专用语言编写的程序的组件。它主要指定如何评估程序的行数，即以特定的语言编写的句子或表达式。其基本思想是为每种语言的符号都有一个分类。</p>
+<p>使用场景：</p>
+<ul>
+<li>数据库查询语言，比如SQL</li>
+<li>用于描述通信协议的语言<br><img src="/2018/05/21/10%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/11.png"></li>
+</ul>
+<h3 id="体系架构模式的比较"><a href="#体系架构模式的比较" class="headerlink" title="体系架构模式的比较"></a>体系架构模式的比较</h3><p>下面给出的表格总结了每种体系架构模式的优缺点。</p>
+<p>名称—优点—缺点<br>1.分层模式:<br>    - 一个较低的层可以被不同的层所使用。层使标准化更容易，因为我们可以清楚地定义级别。可以在层内进行更改，而不会影响其他层。<br>    - 不是普遍适用的。在某些情况下，某些层可能会被跳过。<br>2.客户端-服务器模式:<br>    - 很好地建立一组服务，用户可以请求他们的服务。<br>    - 请求通常在服务器上的单独线程中处理。由于不同的客户端具有不同的表示，进程间通信会导致额外开销。<br>3.主从设备模式:<br>    - 准确性——将服务的执行委托给不同的从设备，具有不同的实现。<br>    - 从设备是孤立的：没有共享的状态。主-从通信中的延迟可能是一个问题，例如在实时系统中。这种模式只能应用于可以分解的问题。<br>4.管道-过滤器模式:<br>    - 展示并发处理。当输入和输出由流组成时，过滤器在接收数据时开始计算。轻松添加过滤器，系统可以轻松扩展。过滤器可重复使用。可以通过重新组合一组给定的过滤器来构建不同的管道。<br>    - 效率受到最慢的过滤过程的限制。从一个过滤器移动到另一个过滤器时的数据转换开销。<br>5.代理模式:<br>    - 允许动态更改、添加、删除和重新定位对象，这使开发人员的发布变得透明。<br>    - 要求对服务描述进行标准化。<br>6.点对点模式:<br>    - 支持分散式计算。对任何给定节点的故障处理具有强大的健壮性。在资源和计算能力方面具有很高的可扩展性。<br>    - 服务质量没有保证，因为节点是自愿合作的。安全是很难得到保证的。性能取决于节点的数量。<br>7.事件总线模式:<br>    - 新的发布者、订阅者和连接可以很容易地添加。对高度分布式的应用程序有效。<br>    - 可伸缩性可能是一个问题，因为所有消息都是通过同一事件总线进行的。<br>8.模型-视图-控制器模式:<br>    - 可以轻松地拥有同一个模型的多个视图，这些视图可以在运行时连接和断开。<br>    - 增加复杂性。可能导致许多不必要的用户操作更新。<br>9.黑板模式:<br>    - 很容易添加新的应用程序。扩展数据空间的结构很简单。<br>    - 修改数据空间的结构非常困难，因为所有应用程序都受到了影响。可能需要同步和访问控制。<br>10.解释器模式:<br>    - 高度动态的行为是可行的。对终端用户编程性提供好处。提高灵活性，因为替换一个解释程序很容易。<br>    - 由于解释语言通常比编译后的语言慢，因此性能可能是一个问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/" class="post-title-link" itemprop="url">首个区块链小程序上线首日即叫停</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-10 08:44:44" itemprop="dateCreated datePublished" datetime="2018-05-10T08:44:44+08:00">2018-05-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这款区块链小程序“小协议”，用户只需输入协议的标题和内容，可以选择是否加密存储协议内容，支付一定的服务费（费用和字数正相关），生成协议，甲方将协议微信转发乙方，乙方同意之后，这份协议就会被写入以太坊网络。</p>
+<p><img src="/2018/05/10/%E9%A6%96%E4%B8%AA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E7%BA%BF%E9%A6%96%E6%97%A5%E5%8D%B3%E5%8F%AB%E5%81%9C/1.png"></p>
+<p>在使用小协议时，不需要用户购买以太坊进行支付，直接微信支付人民币，小协议会在后台用以太坊帮写入用户所需要的数据。全部过程都在微信里完成。</p>
+<p>据了解，小协议会读取甲方和乙方的微信ID，这是固定的身份标识，背后通常绑定了很多个人核心信息，例如手机号、银行卡、指纹等等，安全性较高，易验证。这解决了电子合同的身份验证问题。</p>
+<p>会话秘钥是指甲方创建协议和乙方确认协议时，根据当时的时间戳，在微信系统内生成的一次记录值，这秘钥是可变的，只和本次会话挂钩。这解决了签订时间的问题。</p>
+<p>另外，小协议的显现载体是通过图片为载体来显现合同内容的，因此解决了显现载体的问题。</p>
+<p>但是，一份有法律效应的协议，除了不可篡改且能验明身份，还需要得到现有法律的支持，不然出了纠纷，法院也无法解决问题，这个协议就变得没有意义。这也许是此次“小协议”暂停服务的重要原因之一。国内对电子协议是有专门立法的，但是在具体执行上，存在一些不认可的领域，尤其是涉及到大额交易时。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -521,163 +774,6 @@
 <li>集群规模400，门槛201；</li>
 <li>在这个网络中，某个集群包含 &gt; = 200 个故障节点的概率（如系统失速）为10e-17</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/" class="post-title-link" itemprop="url">算法图解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-12 09:42:23" itemprop="dateCreated datePublished" datetime="2018-04-12T09:42:23+08:00">2018-04-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这是我见过的最 nice 的算法图解。</p>
-<p><a target="_blank" rel="noopener" href="https://idea-instructions.com/">https://idea-instructions.com/</a></p>
-<p><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/quick-sort.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/public-key.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/merge-sort.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/graph-scan.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/euler-path.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/bogo-sort.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/binary-search.png"><br><img src="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/avl-tree.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Algorand算法特性总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-04-09 11:56:41" itemprop="dateCreated datePublished" datetime="2018-04-09T11:56:41+08:00">2018-04-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-09-14 13:50:50" itemprop="dateModified" datetime="2023-09-14T13:50:50+08:00">2023-09-14</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.algorand.com/">here is algorand网址链接</a></p>
-<h4 id="PoW的安全性"><a href="#PoW的安全性" class="headerlink" title="PoW的安全性"></a>PoW的安全性</h4><p>基于PoW的区块链假定矿工拥有生成下一个区块所需的大部分计算能力。但是，工作证明已将权力集中在少数采矿池中。在比特币中，实际上只有三个这样的矿池控制区块链。对于任何实体而言，这种权力集中对于渴望分权的系统是不可接受的，并且很可能是非常危险的。</p>
-<h4 id="Bonded-PoS的安全性"><a href="#Bonded-PoS的安全性" class="headerlink" title="Bonded PoS的安全性"></a>Bonded PoS的安全性</h4><p>在基于Bonded PoS的区块链中，每个用户都可能将自己的部分资金置于危险境地。那些这样做的人有权根据他们的赌注选择一个新的区块。原则上，如果他们发现行为不端，他们可能会失去他们的赌注，如果他们主张通过行为失误赚更多的钱，这可能不是很有威慑力。但是，一个普通用户只能负担得起的一小部分资金。因此，这个系统可能会成为富有的不诚实的人的牺牲品，这些个人通过大量的资金来控制区块链。</p>
-<h4 id="DPoS的安全性"><a href="#DPoS的安全性" class="headerlink" title="DPoS的安全性"></a>DPoS的安全性</h4><p>在基于DPoS的区块链中，生成区块的权力在很长的时间间隔内被提供给一小部分公认的用户群。这种方法可能比工作量证明的成本更低，但无可否认的是相当集中！在这里，安全依赖于这个小组中大多数人的诚实，但任何一小部分用户都是攻击者的明显目标。</p>
-<h4 id="安全在Algorand"><a href="#安全在Algorand" class="headerlink" title="安全在Algorand"></a>安全在Algorand</h4><p>如果系统中的大部分资金由诚实用户所有，Algorand将保证安全工作。请注意，我们并不是谈论一些特殊用户拥有的大部分资金，而是所有用户拥有的资金。此外，Algorand的用户不需要将任何一小部分资金投入赌注。用户的钱始终留在她的手中，随时准备用尽自己的希望。</p>
-<h4 id="高效且可扩展"><a href="#高效且可扩展" class="headerlink" title="高效且可扩展"></a>高效且可扩展</h4><p>Algorand因为它在两个阶段产生一个新的块，每一个都完美地缩放。<br>阶段1：随机选择一个用户并提出一个新的区块。<br>阶段2：随机选择一小部分用户来验证并同意该区块。</p>
-<h4 id="Algorand不能被审查"><a href="#Algorand不能被审查" class="headerlink" title="Algorand不能被审查"></a>Algorand不能被审查</h4><p>两阶段中，用户按照他们在系统中的金额成比例地选择。它可能不包含在由不诚实用户提出的区块中，但只要其提议者是诚实的，它就会进入新的区块。因此，进入Algorand区块链所需的交易费用也非常低。这允许在平等条件下处理宏观和微观支付。</p>
-<h4 id="灵活性是成功的关键。"><a href="#灵活性是成功的关键。" class="headerlink" title="灵活性是成功的关键。"></a>灵活性是成功的关键。</h4><p>Algorand通过其标志性的建议和约定机制产生一个新的区块。在很高的层次上，Algorand秘密并即时召集一小群用户，他们的加密和安全选择能够公平地代表所有用户的社区（由他们在系统中的持股量加权）。这个代表性的委员会就新的区块达成协议，但事实上，它可以用来就其他问题达成一致。例如，改变议定书或修改货币政策。</p>
-<p>我们应该认识到，在任何复杂的系统中改变都是必要的。传统的加密货币是静态的，任何“改变方向”都需要一个硬分叉，从而导致社区分裂。从长远来看，分散会削弱社区和任何货币的效用。</p>
-<p>传统的加密货币没有内置的安全机制来达成协议。因此，关于变革的辩论是非常结构化的，无论达成任何形式的协议，都必须在链条外达成。因此，人们总是怀疑任何结论的正确性。</p>
-<p>相比之下，Algorand使社区和协议得以发展。Algorand以其有效和安全的拜占庭协议为中心。经过辩论后，在区块链上发布了一项拟议更改，并使用Algorand的共识协议，社群投票接受或拒绝该提案。如果获得批准，建议的更改将立即生效。</p>
-<p>在Algorand，这种协议并不是通过智能合同来实施的。相反，它直接内置于协议的核心。</p>
-<p>相关文章链接：</p>
-<p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">可验证随机函数VRF之Algorand共识算法</a></p>
 
       
     </div>
