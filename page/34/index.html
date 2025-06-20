@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">274</span>
+          <span class="site-state-item-count">275</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,124 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/03/15/ERC777%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/03/15/ERC777%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">ERC777介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-03-15 15:01:04" itemprop="dateCreated datePublished" datetime="2020-03-15T15:01:04+08:00">2020-03-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-777">ERC777</a>保持与 ERC20 兼容。</p>
+<p>操作员通常利用合约发送token，并具备发送 / 接收钩子，以使得持有者对其token拥有更多的控制权。</p>
+<p>它利用 <a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-1820">ERC1820</a> 来了解在合同和用户地址收到token时是否以及在何处通知它们。</p>
+<h3 id="解决的问题-相对于ERC20的优点"><a href="#解决的问题-相对于ERC20的优点" class="headerlink" title="解决的问题(相对于ERC20的优点)"></a>解决的问题(相对于ERC20的优点)</h3><ol>
+<li>同样使用 <code>send(dest, value, data)</code> 发送Ether</li>
+<li>使用 <code>tokensToSend</code> 钩子，合约和用户地址都可以控制和拒绝发送出去的token</li>
+<li>使用 <code>tokensReceived </code> 钩子，合约和用户地址都可以控制和拒绝接收到的token</li>
+<li><code>tokensReceived </code> 钩子允许发送token到合约地址，并在交易中心发出通知。而ERC20需要<code>approve/transferFrom</code> 两次调用才能达到这样的效果</li>
+<li>token持有人可以指定/去除操作员（合约）地址，这些操作员通常是已经验证过的合约contract，例如交易所，支票处理器或自动收费系统</li>
+<li>每一笔交易含有 <code>data</code> 和 <code>operatorData</code> ，它们是bytes字段，在token持有人和操作员之间传递信息</li>
+<li><code>tokensReceived </code> 钩子函数可以通过代理合约来部署，所以ERC777是与ERC20钱包兼容的</li>
+</ol>
+<h3 id="构建ERC777合约"><a href="#构建ERC777合约" class="headerlink" title="构建ERC777合约"></a>构建ERC777合约</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.5</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/token/ERC777/ERC777.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line">contract GLDToken is ERC777 &#123;</span><br><span class="line">    <span class="title">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">        uint256 initialSupply,</span></span><br><span class="line"><span class="params">        address[] memory defaultOperators</span></span><br><span class="line"><span class="params">    </span>)</span><br><span class="line">        <span class="title">ERC777</span>(<span class="params"><span class="string">&quot;Gold&quot;</span>, <span class="string">&quot;GLD&quot;</span>, defaultOperators</span>)</span><br><span class="line">        <span class="title">public</span></span><br><span class="line">    &#123;</span><br><span class="line">        _mint(msg.sender, msg.sender, initialSupply, <span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ERC777扩展了ERC20，对ERC20提供兼容性支持。使用 <code>_mint</code> 将 <code>initialSupply</code> 分配给部署者帐户。与ERC20的_mint不同，此参数包含一些额外的参数，但是可以放心地忽略它们。</p>
+<p><code>initialSupply</code> 没有设定小数。ERC777规定小数始终返回固定值18，因此无需自行设置。</p>
+<p>最后，我们需要设置defaultOperators：操作员帐户（通常是智能合约地址），该帐户将能够代表其持有者转让token。如果不打算在token中使用操作员（合约），则只需传递一个空数组即可。</p>
+<p>基本的ERC777合约就是这样！ 现在，对其进行部署，并使用相同的balanceOf方法来查询部署者的余额：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> GLDToken.balanceOf(deployerAddress)</span></span><br><span class="line">1000</span><br></pre></td></tr></table></figure>
+
+<p>要将token从一个帐户转移到另一个帐户，既可以使用ERC20的“transfer”方法，也可以使用新的ERC777的“send”方法，其作用非常相似，但是增加了一个可选的<code>data</code>字段：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> GLDToken.transfer(otherAddress, 300)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> GLDToken.send(otherAddress, 300, <span class="string">&quot;&quot;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> GLDToken.balanceOf(otherAddress)</span></span><br><span class="line">600</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> GLDToken.balanceOf(deployerAddress)</span></span><br><span class="line">400</span><br></pre></td></tr></table></figure>
+
+<p>ERC777接口定义如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">interface ERC777Token &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">string memory</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">symbol</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">string memory</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">totalSupply</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint256</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">balanceOf</span>(<span class="params">address holder</span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint256</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义代币最小的划分粒度。</span></span><br><span class="line">    <span class="comment">// 要求必须在创建时设定，之后不可以更改，不管是在铸币、发送还是销毁操作的代币数量，必需是粒度的整数倍</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">granularity</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint256</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 操作员 相关的操作（操作员是可以代表持有者发送和销毁代币的账号地址）</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">defaultOperators</span>(<span class="params"></span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">address[] memory</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">isOperatorFor</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        address operator,</span></span></span><br><span class="line"><span class="function"><span class="params">        address holder</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) <span class="title">external</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool</span>)</span>;</span><br><span class="line">    <span class="comment">// 设置一个地址作为 msg.sender 的操作员，需要触发 AuthorizedOperator 事件</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">authorizeOperator</span>(<span class="params">address operator</span>) <span class="title">external</span></span>;</span><br><span class="line">    <span class="comment">// 移除 msg.sender 上 operator 操作员的权限， 需要触发 RevokedOperator 事件</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">revokeOperator</span>(<span class="params">address operator</span>) <span class="title">external</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送代币</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">address to, uint256 amount, bytes calldata data</span>) <span class="title">external</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">operatorSend</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        address <span class="keyword">from</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        address to,</span></span></span><br><span class="line"><span class="function"><span class="params">        uint256 amount,</span></span></span><br><span class="line"><span class="function"><span class="params">        bytes calldata data,</span></span></span><br><span class="line"><span class="function"><span class="params">        bytes calldata operatorData</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) <span class="title">external</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销毁代币</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">burn</span>(<span class="params">uint256 amount, bytes calldata data</span>) <span class="title">external</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">operatorBurn</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        address <span class="keyword">from</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        uint256 amount,</span></span></span><br><span class="line"><span class="function"><span class="params">        bytes calldata data,</span></span></span><br><span class="line"><span class="function"><span class="params">        bytes calldata operatorData</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) <span class="title">external</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送代币事件</span></span><br><span class="line">    event Sent(</span><br><span class="line">        address indexed operator,</span><br><span class="line">        address indexed <span class="keyword">from</span>,</span><br><span class="line">        address indexed to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes data,</span><br><span class="line">        bytes operatorData</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 铸币事件</span></span><br><span class="line">    event Minted(</span><br><span class="line">        address indexed operator,</span><br><span class="line">        address indexed to,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes data,</span><br><span class="line">        bytes operatorData</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销毁代币事件</span></span><br><span class="line">    event Burned(</span><br><span class="line">        address indexed operator,</span><br><span class="line">        address indexed <span class="keyword">from</span>,</span><br><span class="line">        uint256 amount,</span><br><span class="line">        bytes data,</span><br><span class="line">        bytes operatorData</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 授权操作员事件</span></span><br><span class="line">    event AuthorizedOperator(</span><br><span class="line">        address indexed operator,</span><br><span class="line">        address indexed holder</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 撤销操作员事件</span></span><br><span class="line">    event RevokedOperator(address indexed operator, address indexed holder);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="钩子函数如何工作"><a href="#钩子函数如何工作" class="headerlink" title="钩子函数如何工作"></a>钩子函数如何工作</h3><p><img src="/2020/03/15/ERC777%E4%BB%8B%E7%BB%8D/1.png"></p>
+<p>首先来了解一下 ERC1820， ERC1820是一个全局的合约，在以太坊链上有一个唯一的合约地址，它总是 <code>0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24</code>。</p>
+<p>ERC1820 合约提过了两个主要接口：</p>
+<ul>
+<li><code>setInterfaceImplementer(address _addr, bytes32 _interfaceHash, address _implementer)</code><br>用来设置地址（_addr）的接口（_interfaceHash 接口名称的 keccak256 ）由哪个合约实现（_implementer）。</li>
+<li><code>getInterfaceImplementer(address _addr, bytes32 _interfaceHash) external view returns (address)</code><br>这个函数用来查询地址（_addr）的接口由哪个合约实现。</li>
+</ul>
+<p>ERC777 使用 <code>send</code> 转账时，会分别在持有者和接收者地址上使用 ERC1820 的 getInterfaceImplementer 函数进行查询，查看是否有对应的实现合约，ERC777 标准规范里预定了接口及函数名称，如果有实现则进行相应的调用。</p>
+<p>ERC777 使用 <code>operatorSend</code> 转账时，可以通过参数<code>operatorData</code>携带操作者的信息，发送代币除了执行对应账户的余额加减和触发事件之外，还有<strong>额外的规定</strong>：</p>
+<ol>
+<li>如果持有者有通过 ERC1820 注册 <code>ERC777TokensSender</code> 实现接口，代币合约必须调用其 <code>tokensToSend</code> 钩子函数。</li>
+<li>如果接收者有通过 ERC1820 注册 <code>ERC777TokensRecipient</code> 实现接口， 代币合约必须调用其 <code>tokensReceived</code> 钩子函数。</li>
+<li>如果有 <code>tokensToSend</code> 钩子函数，必须在修改余额状态之前调用。</li>
+<li>如果有 <code>tokensReceived</code> 钩子函数，必须在修改余额状态之后调用。</li>
+<li>调用钩子函数及触发事件时，<code>data</code> 和 <code>operatorData</code>必须原样传递，因为 tokensToSend 和 tokensReceived 函数可能根据这个数据取消转账（触发 <code>revert</code>）。</li>
+</ol>
+<p><strong>从而保证了ERC777交易以及钩子函数的原子性。</strong></p>
+<p>参考链接 ==&gt;</p>
+<p><a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-777">https://eips.ethereum.org/EIPS/eip-777</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/0xjac/ERC777">https://github.com/0xjac/ERC777</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.openzeppelin.com/contracts/2.x/erc777">https://docs.openzeppelin.com/contracts/2.x/erc777</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts">https://github.com/OpenZeppelin/openzeppelin-contracts</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -588,185 +706,6 @@
 </ul>
 </li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">项目型公司的商业模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-23 11:35:04" itemprop="dateCreated datePublished" datetime="2020-02-23T11:35:04+08:00">2020-02-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-01-15 23:18:27" itemprop="dateModified" datetime="2024-01-15T23:18:27+08:00">2024-01-15</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>转自  <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI5MzMzODE5MQ==&mid=2247487472&idx=1&sn=2a25673fc38bf773696aadc3cef984a1&chksm=ec72e2d0db056bc68456d7fa0d0d916229581e76fe76d8b2c0e423deadeae209d8e9251a3b66&mpshare=1&scene=24&srcid=&sharer_sharetime=1582335838599&sharer_shareid=df06ad3b18ff46aee92c57b5322b6917&key=fe5b7cbb58f3b3700a3bd14d0fa77ad4acc3ef6f6964c6885867ab1c21922369afa76b31b524ae9b8e32fb768ea1245aeba3691f226253c311f3a01254747e3edd9deabf6c41f74e35b0d8b3f5732d88&ascene=14&uin=MjY4NjE1NTk4MQ==&devicetype=Windows+10&version=62080079&lang=zh_CN&exportkey=AbWMEVWe099cNaFWcYvkeu4=&pass_ticket=k+dqhwXYiC9oaOSfLqQ50TuJE38FKNBOjudSiD8kv9GBW1HvtY6ZKbLDdMS/34tT">陈果George</a> 的公众号文章。</p>
-<p>IT、咨询、工程设计等等<strong>以人员作为主要资源，公司内部为专业/行业/区域等多维度矩阵式组织，面向客户以“项目”为形式开展服务交付</strong>的商业模式，我称为“专业服务项目型公司”，运维和产品业务不在此列。</p>
-<p>项目型公司的主要运营流程是：</p>
-<p><strong>销售管理：</strong>开展销售活动，管理客户（account）和商机漏斗（pipeline），根据不同的“成单概率”来分别管理商机，驱动销售转化效率</p>
-<p><strong>合同管理：</strong>客户签单，亦即签署项目合同，之前，需要进行合同评审， 包括法务、价格、资源、技术方案、风险等控制环节</p>
-<p><strong>立项管理：</strong>根据客户合同进行项目立项，驱动合同向收入的转化效率和速度，尤其是上市公司，需要达成当期的财务目标</p>
-<p><strong>项目管理：</strong>向客户交付项目，这类公司运营特点是项目有一定的周期，短则几个月，长则几年，公司的利润由项目利润构成，必须加强项目过程控制，方能确保公司利润目标达成，因而项目过程中一方面要确保项目进度，驱动收入达成，另一方面要确保项目质量，控制风险，按月滚动预测未来的资源投入以及到项目结束时的利润。</p>
-<p><strong>资源管理：</strong>项目主要成本是人工资源投入，作为项目型企业组织结构的特点，这些专业人员人事关系上属于专业资源池，根据需要在项目中开展工作，填报项目工时，相应地依据其工时标准成本计入项目成本，“收费工时比率”（Utilization或billability）是公司运营效率的重要指标，从损益表角度看，资源池的总体工时，能被记入项目的部分成为能转化收入的成本，而剩余不能被记入项目的部分，则成为公司管理费用</p>
-<p><strong>费用管理：</strong>其他成本、费用的管理，包括项目相关的分包、差旅，以及公司管理费</p>
-<p><strong>产能管理：</strong>公司的不同服务产品（Offering）需要不同专业能力的资源，前端销售以及项目交付产生的资源需求和资源池里专业合适的资源供给需要滚动匹配，这就是项目型公司的供应链管理，保证产销平衡，跟制造业供应链管理的原理完全一样，组织上，类似于制造业的供应链管理中心，服务公司也要有资源（Resource）和产能（Capacity）管理（R&amp;CM）部门。</p>
-<p><strong>体验管理：</strong>服务业是people business，只有满意敬业的员工，才有满意付钱的客户，才会有公司的利润，因而需要密切监控员工和顾客的满意度。</p>
-<p><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/1.jpeg"></p>
-<p>基于这样的运营体系，公司在<strong>周度、月度、季度的经营分析</strong>上，通常需要利用这些KPI，来分析、监控公司以及各事业部的运营情况，如上图所示。</p>
-<p>需要说明，这些KPI取数的具体口径和时间点，取决于管理需要和会计核算原则，有些按月，有些可以到周，有些为当期数或当期（季/年）累积数，有些为到期末（季/年）预测数：</p>
-<p><strong>1、利润KPI：</strong>公司及各条线事业部的经营毛利</p>
-<p><strong>2、收入KPI：</strong>各条线事业部的营业收入，由项目转化而来；新签单以及在手订单未交付额（backlog）是收入来源</p>
-<p><strong>3、合同前收入KPI：</strong>客户已经确认订单，但是合同尚处于签署流程中，尚未开首付款发票，本着谨慎会计原则，在合同前开工，提前转化收入，这对上市公司增加收入具有重要意义</p>
-<p><strong>4、签单KPI：</strong>实际已签署合同签署金额（signings）</p>
-<p><strong>5、商机KPI：</strong>按预计金额、成单时间和成单概率报告的数字，滚动的签单预测尤为重要，在一个季度内，对于成单概率高（例如90%，75%阶段）的商机，要按周承诺（commit）签单数字，对重点销售项目要明确提出并跟进关单措施，如果出现承诺订单滑掉，要紧抓中概率（例如50%阶段）商机；同时，对本季以后的未来半年到一年的商机要有一定的可视度，保证运营健康</p>
-<p><strong>6、交付质量KPI：</strong>从各个事业部角度，要制定总体项目管理的综合性评价指标，这是一个动态性指标，按月按项目更新并汇总，包括预测项目毛利率，预测成本离计划成本的偏差、流程合规性要求等，同时，对重点项目和重点负面问题项目（严重成本超支）要专项列示，并提出改进措施</p>
-<p><strong>7、资源管理KPI：</strong>如果实现了有效的工时管理制度，资源利用指标可分为收费（billable/chargeable）利用率和有效（productive）利用率，后者包括了前者以及研发、售前支持等有效但不产生收入的活动，资源利用率是公司的生命线指标，如果低于一定的值，说明资源严重闲置，要不是产能管理的问题（签回来的项目没人做，闲的人又不会做新签回来的项目），要不就要限制招人甚至裁员了。</p>
-<p><strong>8、分包KPI：</strong>分包需要占成本一定的比率，适当使用分包有助于提高资源利用率；专业服务公司使用分包的主要目的不是降低成本，而是优化资源利用率。</p>
-<p><strong>9、应收和坏账KPI：</strong>半年以上的应收账、坏账计提、已计提坏账回收等分事业部的指标，以及重大项目列示，对利润有直接影响</p>
-<p><strong>10、需求和能力KPI：</strong>和供应链管理完全一样，需要从需求（demand）和供给（supply）两方面，从专业能力维度（打个比方，例如咨询公司的战略咨询、供应链咨询、财务咨询、人力资源咨询、技术咨询）区分，从时间维度看给出未来一段时间已上项目、计划出项目、被项目预定、资源缺口等数据，并给出培训、外包、招聘、招聘计划到岗等措施</p>
-<p><strong>11、体验KPI：</strong>公司员工在项目中工作，项目中进行周期性员工满意度调研，形成综合的员工满意度指标；客户满意度指标原理类似。</p>
-<p>专业服务项目型公司一般基于下图这样的组织架构和责任中心体系来开展运作：矩阵式的客户维度和专业维度的负责人（例如咨询公司的合伙人）开展合作；每个项目的主责，可能属于两个维度中的任何一个；管控上，要做到组织利润中心和项目利润中心的权责匹配。</p>
-<p><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/2.png"></p>
-<p>专业服务公司的<strong>核心业务流程</strong>是销售管理和项目管理，相应地<strong>支持性流程</strong>有财务管理、资源管理以及运营监控等。运用IT工具来支撑这些业务流程，有利于加强项目管控、促进协作、控制风险。</p>
-<p>传统ERP软件的项目模块（例如SAP ERP的PS模块）解决了项目供应链、项目计划/活动和项目成本等项目相关业务和管理活动的集成，而专业项目管理软件（例如著名的Oracle Primavera）则专长于复杂的项目计划、项目合同、资源和排程优化等。然而，由于“企业项目”的多种特性类型，通用项目型ERP很难具体适用于企业各种类型的项目管理。</p>
-<p>在项目型ERP领域里有20多年历史的SAP ERP，直到2014年后才推出了适用于专业服务项目管理的商务项目管理（Commercial Project Management）模块，简称CPM，下图展示了SAP CPM及覆盖的业务流程范围。CPM是一个架在SAP ERP标准的项目模块（SAP ERP-PS）和商务智能（SAP BO）之上的计划和分析工具；不过，在新版S/4 HANA以及S/4 HANA Cloud里，CPM已经成为标准功能。</p>
-<p><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/3.jpeg"></p>
-<p>![](项目型公司的商</p>
-<p><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/4.jpeg"></p>
-<p>来源：SAP网站</p>
-<p>业务管理相关的IT系统主要有：</p>
-<p><strong>核心业务系统 —— 管理核心业务流程</strong></p>
-<ul>
-<li>销售管理CRM系统</li>
-<li>项目管理ERP系统</li>
-<li>财务系统（和项目管理ERP可以属于一个套件）</li>
-</ul>
-<p><strong>辅助系统 —— 辅助业务流程</strong></p>
-<ul>
-<li>合同管理系统</li>
-<li>资源管理系统</li>
-<li>商务智能报表系统</li>
-</ul>
-<p><strong>其他相关的应用系统 —— 支持体系</strong>，但是和业务系统有一定的相关性，可以建立系统集成关系</p>
-<ul>
-<li>HR系统</li>
-<li>招聘系统</li>
-<li>外包采购系统</li>
-<li>差旅报销系统</li>
-<li>预算管理系统</li>
-</ul>
-<p><strong>其他工具系统，</strong>例如：协作工具、敏捷工具、生产平台（例如DevOps）、文档管理、知识管理、培训系统等等</p>
-<p>将总体IT应用架构描绘示意如下：</p>
-<p><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/5.jpeg"></p>
-<h3 id="CRM系统"><a href="#CRM系统" class="headerlink" title="CRM系统"></a><strong>CRM系统</strong></h3><p><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/6.jpeg"></p>
-<p>用CRM系统覆盖上述流程，基于系统的支持，可以为经营管理提供如下重要信息：</p>
-<ul>
-<li>客户：维护客户信息，一个客户下可以有多个商机</li>
-<li>商机：管理商机相关信息，跟踪围绕商机采取的销售活动，其中商机金额和销售阶段（或者成单概率，例如：100%-已签单， 90%-合同流程中， 75%-已中标， 50%-赢面较大，25%-机会评估中）是开展销售控制的主要指标</li>
-<li>销售管道报表：总经理、销售负责人和财务负责人根据公司级或事业部级的汇总销售管道报表，推动销售达成，支持对签单及收入作出准确预测</li>
-</ul>
-<h3 id="商务合同系统"><a href="#商务合同系统" class="headerlink" title="商务合同系统"></a>商务合同系统</h3><p>由于CRM系统主要处理客户、商机、管道的管理，可能不会覆盖到详细的合同、报价等流程，有些对这些流程的内控处理要求高的公司，会有专门的信息系统来管理这个过程。CRM软件和ERP软件多少都会覆盖到这个部分，企业可以根据实际情况来决定架构规划，其通常功能包括：</p>
-<p><strong>方案评估：</strong>向客户提交方案建议书或投标方案时，进行方案的技术评估、风险评估，按权限审批</p>
-<p><strong>投标和报价流程：</strong>处理投标的商务流程，投标报价按权限审批</p>
-<p><strong>合同审批：</strong>进单过程中，对合同（包括：法务条款TOB和工作内容文本SOW）的各级评审并按权限审批，例如：</p>
-<ul>
-<li>法务评审</li>
-<li>财务评审</li>
-<li>技术方案评审</li>
-<li>资源评审</li>
-<li>质量标准/风险评审</li>
-<li>其他合规性评审（例如数据安全、贸易限制等）</li>
-</ul>
-<h3 id="项目ERP系统（项目财务）"><a href="#项目ERP系统（项目财务）" class="headerlink" title="项目ERP系统（项目财务）"></a><strong>项目ERP系统（项目财务）</strong></h3><p>项目型ERP是专业服务项目型公司最核心的业务系统，实现了项目管理的财务业务一体化，从项目往上汇总，形成反映公司运营状况的财务信息。我将项目管理的端到端流程梳理如下：</p>
-<p><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/7.jpeg"></p>
-<p>项目型ERP所覆盖的功能主要包括：</p>
-<ul>
-<li>项目立项，建立WBS、资源计划、成本预算及项目计划</li>
-<li>安排项目资源（即人员）</li>
-<li>项目人员每周填报工作，通过方便的time sheet管理，归集项目直接人工成本</li>
-<li>其他成本、费用信息可以从财务系统中导入</li>
-<li>管理项目变更</li>
-<li>月度成本和收入确认</li>
-<li>月度进度更新，ETC/EAC成本滚动预测，相应更新项目预算</li>
-<li>项目里程碑确认和通知开票</li>
-<li>项目状态报表</li>
-</ul>
-<p>“项目”是公司最小颗粒度的利润中心，是公司收入和利润的根本来源。从公司管理的角度，项目管理需要围绕下图的“项目财务模型”，在报价、合同以及项目执行的这三个环节，动态地关注项目成本和项目毛利（GP）：</p>
-<p><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/8.jpeg"></p>
-<p>专业服务公司的大多数客户项目都是价格固定、按照工作范围（SOW）投入资源来交付，按里程碑开票收款，这类<strong>固定价格项目</strong>的期间收入确认原则一般采用“完工百分比（POC）”法，而数量相对较少的<strong>运维类项目</strong>采用“期间均摊法”确认收入，<strong>人天类项目（T&amp;M）</strong>采用“按确认人天开票”确认收入。</p>
-<p>POC方法要求项目过程中持续维护项目预算，按月归集并确认成本，从而确认收入。不仅如此，为了准确达成公司经营预算，及时发现并控制经营风险，因而，在项目执行中，项目经理及交付责任人（DO）每月开展滚动的项目财务预测显得尤其重要。</p>
-<h3 id="资源管理系统"><a href="#资源管理系统" class="headerlink" title="资源管理系统"></a>资源管理系统</h3><p>“资源”是指通过投入时间进项目工作，可以转化为收入的专业人员，例如项目经理、咨询顾问、工程师等。资源管理系统的主要功能是：</p>
-<ul>
-<li>技能管理：管理每个资源的技能、技能类型分群等</li>
-<li>资源计划：相当于制造业的物料需求计划（MRP），将资源技能和项目需求进行匹配，综合管理：资源预留（根据销售或项目情况，book资源）、资源进项目和出项目的时间点预测、需求平衡等等</li>
-<li>资源管理执行：资源上项目、下项目的过程管理</li>
-</ul>
-<p>软件公司采用的团队协作工具，例如Jira，也能很好地管理资源，并跟项目ERP和财务管理系统集成：</p>
-<h3 id="财务系统"><a href="#财务系统" class="headerlink" title="财务系统"></a><img src="/2020/02/23/%E9%A1%B9%E7%9B%AE%E5%9E%8B%E5%85%AC%E5%8F%B8%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/9.jpeg" alt="img">财务系统</h3><p>专业服务项目型公司的财务系统和企业标准财务软件并无太大区别，因而本文不再赘述。财务系统和前述的项目ERP系统可以是一个套件，例如SAP、Oracle，也可以分别部署，其覆盖的主要内容有：</p>
-<ul>
-<li>成本管理：包括成本中心、成本要素和成本对象的管理，从部门、项目、活动类型等多个维度，进行成本费用的归集和分析</li>
-<li>应收账管理：尤其关注半年以上账龄的应收账状态，以及坏账计提和回收</li>
-<li>总帐管理</li>
-</ul>
-<h3 id="管理分析报表"><a href="#管理分析报表" class="headerlink" title="管理分析报表"></a>管理分析报表</h3><p>前述六个模块是运营管理的各个环节，这些运营系统数据统一注入企业数据仓库（EDW），通过商业智能平台，向管理者提供各种分析报表。</p>
 
       
     </div>
