@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">275</span>
+          <span class="site-state-item-count">276</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,147 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/12/20/%E5%85%B3%E4%BA%8EGeth%E7%9B%91%E6%8E%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/12/20/%E5%85%B3%E4%BA%8EGeth%E7%9B%91%E6%8E%A7/" class="post-title-link" itemprop="url">关于Geth监控</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-20 21:08:04" itemprop="dateCreated datePublished" datetime="2019-12-20T21:08:04+08:00">2019-12-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>go-ethereum 在 2019 年 7 月推出了 <code>Geth v1.9.x</code> 版本。</p>
+<p>Geth 可以通过 <code>--metrics</code> 命令符收集运行状态信息。 <code>Geth v1.9.x</code> 有3套独立的监控体系，<a target="_blank" rel="noopener" href="https://golang.org/pkg/expvar/">ExpVars</a>，<a target="_blank" rel="noopener" href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a> 和 <a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a>：</p>
+<ol>
+<li><h3 id="ExpVars"><a href="#ExpVars" class="headerlink" title="ExpVars"></a><a target="_blank" rel="noopener" href="https://golang.org/pkg/expvar/">ExpVars</a></h3></li>
+</ol>
+<p>是将Golang系统公共指标暴露给到HTTP接口。Geth 用 <code>pprof</code> 来作为埋点暴露这些公共参数。</p>
+<p>运行 Geth –metrics –pprof 将暴露指标成为<a target="_blank" rel="noopener" href="https://golang.org/pkg/expvar/">ExpVars</a>的格式，于地址 </p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:6060/debug/metrics%E3%80%82">http://127.0.0.1:6060/debug/metrics。</a></p>
+<p>ExpVars 有 Golang 非常好的支持。</p>
+<ol start="2">
+<li><h3 id="Prometheus"><a href="#Prometheus" class="headerlink" title="Prometheus"></a><a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a></h3></li>
+</ol>
+<p>同理 ExpVars，运行 Geth –metrics –pprof 将暴露指标成为<a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a>的格式，于地址 </p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:6060/debug/metrics/prometheus%E3%80%82">http://127.0.0.1:6060/debug/metrics/prometheus。</a></p>
+<p><a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a>更加接近业界的标准。</p>
+<ol start="3">
+<li><h3 id="InfluxDB"><a href="#InfluxDB" class="headerlink" title="InfluxDB"></a><a target="_blank" rel="noopener" href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a></h3></li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://golang.org/pkg/expvar/">ExpVars</a> 和 <a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a> 是拉取pull数据的监控方式。<a target="_blank" rel="noopener" href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a> 是推送push数据的监控方式。</p>
+<p><a target="_blank" rel="noopener" href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a>的启用有些麻烦，请参见 <code>geth help</code> 中的 <code>--metrics.influxdb</code> 及其子标识。</p>
+<h3 id="参数可视化"><a href="#参数可视化" class="headerlink" title="参数可视化"></a>参数可视化</h3><p>推荐使用 <a target="_blank" rel="noopener" href="https://grafana.com/">Grafana</a>，建议使用 <a target="_blank" rel="noopener" href="http://127.0.0.1:6060/debug/metrics">geth-prometheus</a> 项目中给出的图表，参考链接==&gt; <a target="_blank" rel="noopener" href="https://github.com/karalabe/geth-prometheus">https://github.com/karalabe/geth-prometheus</a>。效果如下图：</p>
+<p><img src="/2019/12/20/%E5%85%B3%E4%BA%8EGeth%E7%9B%91%E6%8E%A7/1.jpg"></p>
+<p>参考文档==&gt; <a target="_blank" rel="noopener" href="https://blog.ethereum.org/2019/07/10/geth-v1-9-0/">Geth v1.9.0 Six months distilled</a></p>
+<p>具体功能如下：</p>
+<ul>
+<li>节点进程监控<ul>
+<li>节点的存活，进程中CPU、内存使用率，IO</li>
+</ul>
+</li>
+<li>区块链数据健康监控<ul>
+<li>节点出块高度历史，出块时间，出块间隔趋势，交易量历史，TPS，磁盘占用，数据目录大小增长趋势</li>
+</ul>
+</li>
+<li>运行环境监控<ul>
+<li>主机运行环境的系统负载、CPU、内存、磁盘空间使用情况、网络流量、TCP 连接数等</li>
+</ul>
+</li>
+<li>故障告警通知<ul>
+<li>监控告警策略</li>
+<li>支持邮件通知、短信通知</li>
+</ul>
+</li>
+<li>节点网络监控<ul>
+<li>连接节点数、网络拓扑、地理位置等</li>
+</ul>
+</li>
+</ul>
+<p>仪表板的监控指标：</p>
+<ul>
+<li>Summary Dashboard<ul>
+<li>各节点最新块高</li>
+<li>各节点监控进程存活</li>
+<li>各节点 CPU 使用率变化</li>
+<li>节点列表</li>
+</ul>
+</li>
+<li>Node Info Dashboard<ul>
+<li>Chain Meta Data - 链的配置信息，如 Chain Name、创建时间等</li>
+<li>Chain Info - 链的最新块高、共识节点数、共识节点出块历史趋势</li>
+<li>Node Info - 选定节点的详细信息，包括区块链数据、运行环境、运行软件信息</li>
+</ul>
+</li>
+<li>Host Info Dashboard<ul>
+<li>各节点运行主机的信息，包括系统负载、CPU、内存、硬盘使用率、网络流量</li>
+</ul>
+</li>
+<li>Process Info Dashboard<ul>
+<li>节点中进程（pprof）的历史情况、CPU、内存、IO 变化历史</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -790,91 +931,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/12/05/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%86%85%E7%9A%84%E5%85%B1%E8%AF%86%E4%B8%8E%E4%BF%A1%E4%BB%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/12/05/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%86%85%E7%9A%84%E5%85%B1%E8%AF%86%E4%B8%8E%E4%BF%A1%E4%BB%BB/" class="post-title-link" itemprop="url">区块链内的共识与信任</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-12-05 14:47:04" itemprop="dateCreated datePublished" datetime="2019-12-05T14:47:04+08:00">2019-12-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>refer link==&gt; <a target="_blank" rel="noopener" href="http://www.jryj.org.cn/CN/abstract/abstract535.shtml">http://www.jryj.org.cn/CN/abstract/abstract535.shtml</a> (中国人民银行研究局/金融研究所)</p>
-<p>（：：姚前先生的文章常读常有心得）</p>
-<p>共识（consensus）和去信任（trustless）是区块链两个非常重要的基础概念。这两个概念脱胎于计算机领域，很难再经济学上予以严格定义，却很容易被误解。比如，将共识等同于消除了信息不对称或实现了共同信念，将去信任等同于没有信用风险。</p>
-<p><strong>1.共识的界定</strong></p>
-<p>目前对区块链共识的讨论，涉及三种不同语境下的共识概念—机器共识、治理共识和市场共识，其中治理共识和市场共识可以成为“人的共识”。很多误解就源于混淆了这三类共识，或者泛化了共识的范围和性质。</p>
-<p><strong>第一，机器共识。</strong>机器共识属于分布式计算领域的问题，目标是在存在各种差错、恶意攻击以及可能不同步的对等式网络中（peer-to-peer network），并且在没有中央协调的情况下，确保分布式账本在不同网络节点上的备份文本是一致的（不是语义一致）。</p>
-<p>对等式网络的节点（特别是负责生成和验证区块的节点）有诚实节点和恶意节点之分。诚实节点遵守预先定义的算法规则（主要是共识算法），能完美地发送和接收消息，但其行为完全是机械性的。恶意用户可以任意偏离算法规则。在一定限制条件下（比如比特币要求50%以上算力由诚实节点掌握），算法规则保证了机器共识的可行性、稳定性和安全性。机器共识的范围限于区块链内与Token的状态和交易等有关的信息。</p>
-<p><strong>第二，治理共识。</strong>指在群体治理中，群体成员发展并同意某一个对群体最有利的决策。比如，比特币社区关于“扩容”和分叉的讨论可以在治理共识框架下理解。治理共识的要素包括：1.不同的利益群体；2.一定治理结构和议事规则；3.相互冲突的利益或意见之间的调和折衷；4.对成员有普遍约束的群体决策。袁勇等（2018）指出，治理共识涉及人的主观价值判断，处理的是主观的多值共识，治理共识的参与者通过群体间协调和协作过程收敛到唯一意见，而此过程如果不收敛，就意味着治理共识的失败。</p>
-<p><strong>第三，市场共识。</strong>Token参与交易时（不管是不同Token之间交易，还是Token与区块链外资产或权利交易），就涉及市场共识。市场共识体现在市场交易形成的均衡价格中。</p>
-<p>三类共识之间存在紧密而复杂的关系。机器共识是对等式网络的节点运行算法规则的产物，治理共识反映由人（包括网络节点的拥有者或控制着）来制定或修改算法规则的过程。市场共识受机器共识和治理共识的影响。比如，如果分布式账本的安全性没有保障（即机器共识失效），比特币的市场价格将受到毁灭性冲击。再比如，2017年比特币社区对“SegWit2x”的讨论（即引入隔离见证并将单个区块的大小从1M提升到2M），对当时比特币价格走势有明显的影响，就体现了治理共识对算法共识的影响。下文如无特别说明，讨论的均是机器共识。</p>
-<p><strong>2.去信任含义的辨析</strong></p>
-<p>去信任源于Token被交易时，Token的状态变更和交易确认同步发生这一安排。设想Alice以比特币向Bob买入某一货物。Alice向Bob支付比特币这一过程无需两人之间有任何了解，也无需受信任的第三方机构，就可以在区块链内有保障地进行。这是去信任的真正含义。但在交易的另一端，Alice如何确保Bob会按时向她交付合格的货物？只要做不到一手交比特币、一手交货，就存在不容忽视的交易对手信用风险。只有准确识别、评估信用风险并引入风险防范措施，很多交易才能进行。比如，在暗网交易中，交易平台通常设立第三方托管账户（escrow account）。买方先将比特币打入第三方托管账户，等收到商品并确认后，才通知交易平台将比特币转给卖方。如果没有第三方托管账目这个增信手段，比特币忠实拥趸之间的交易也会大幅减少。</p>
-<p>因此，区块链内的去信任环境，不能简单外推到区块链外。一旦脱离Token交易等原生场景，区块链要解决现实中的信任问题，往往需要引入区块链外的可信中心机制予以辅助。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/56/">56</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
