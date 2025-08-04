@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="本文将为您清晰梳理三类MCP部署方案，帮助企业根据自身IT政策和安全要求选择最适合的实施路径。 一、Self-host MCP：企业PC零依赖部署MCP示例  ​基础工具​：文件系统操作(filesystem)、内存管理(memory)、时间服务(time) ​开发套件​：Git仓库管理(git)、SQLite数据库操作(sqlite) ​本地逻辑处理​：顺序执行引擎(sequential-thi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="企业端MCP分类">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="本文将为您清晰梳理三类MCP部署方案，帮助企业根据自身IT政策和安全要求选择最适合的实施路径。 一、Self-host MCP：企业PC零依赖部署MCP示例  ​基础工具​：文件系统操作(filesystem)、内存管理(memory)、时间服务(time) ​开发套件​：Git仓库管理(git)、SQLite数据库操作(sqlite) ​本地逻辑处理​：顺序执行引擎(sequential-thi">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-04T08:49:49.443Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>企业端MCP分类 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Self-host-MCP%EF%BC%9A%E4%BC%81%E4%B8%9APC%E9%9B%B6%E4%BE%9D%E8%B5%96%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">一、Self-host MCP：企业PC零依赖部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%81%E4%B8%9A%E5%86%85%E7%BD%91%E9%9C%80%E8%A6%81%E4%B8%BA%E4%B8%8B%E9%9D%A2%E7%9A%84%E5%B7%A5%E5%85%B7%E6%8F%90%E4%BE%9B-internet%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="nav-number">1.1.</span> <span class="nav-text">企业内网需要为下面的工具提供 internet访问权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%A2%9E%E5%BC%BA%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.</span> <span class="nav-text">开发增强工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Server-host-MCP%EF%BC%9A%E4%BC%81%E4%B8%9A%E7%A7%81%E6%9C%89%E5%8C%96%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">二、Server-host MCP：企业私有化部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">数据库连接器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS%E4%BC%81%E4%B8%9A%E6%9C%8D%E5%8A%A1%E9%9B%86%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">AWS企业服务集成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="nav-number">2.3.</span> <span class="nav-text">监控分析工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Internet-host-MCP%EF%BC%9A%E4%BA%92%E8%81%94%E7%BD%91%E4%BE%9D%E8%B5%96%E5%9E%8B%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">三、Internet-host MCP：互联网依赖型服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E4%B8%8E%E6%90%9C%E7%B4%A2%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.1.</span> <span class="nav-text">网络与搜索服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%91%E5%B9%B3%E5%8F%B0%E9%9B%86%E6%88%90"><span class="nav-number">3.2.</span> <span class="nav-text">云平台集成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AI%E5%A2%9E%E5%BC%BA%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.3.</span> <span class="nav-text">AI增强服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9AAPI%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.4.</span> <span class="nav-text">商业API连接</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">280</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          企业端MCP分类
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-01 16:00:00" itemprop="dateCreated datePublished" datetime="2025-08-01T16:00:00+08:00">2025-08-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-08-04 16:49:49" itemprop="dateModified" datetime="2025-08-04T16:49:49+08:00">2025-08-04</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本文将为您清晰梳理三类MCP部署方案，帮助企业根据自身IT政策和安全要求选择最适合的实施路径。</p>
+<h2 id="一、Self-host-MCP：企业PC零依赖部署"><a href="#一、Self-host-MCP：企业PC零依赖部署" class="headerlink" title="一、Self-host MCP：企业PC零依赖部署"></a>一、Self-host MCP：企业PC零依赖部署</h2><p>MCP示例</p>
+<ul>
+<li>​<strong>基础工具</strong>​：文件系统操作(filesystem)、内存管理(memory)、时间服务(time)</li>
+<li>​<strong>开发套件</strong>​：Git仓库管理(git)、SQLite数据库操作(sqlite)</li>
+<li>​<strong>本地逻辑处理</strong>​：顺序执行引擎(sequential-thinking)</li>
+<li>​<strong>一体化工具</strong>​：开发实用工具集(everything)</li>
+</ul>
+<h3 id="企业内网需要为下面的工具提供-internet访问权限"><a href="#企业内网需要为下面的工具提供-internet访问权限" class="headerlink" title="企业内网需要为下面的工具提供 internet访问权限"></a>企业内网需要为下面的工具提供 internet访问权限</h3><ul>
+<li>​<strong>基础设施即代码</strong>​：CDK(cdk-mcp-server)、CloudFormation(cfn-mcp-server)、Terraform(terraform-mcp-server)</li>
+<li>​<strong>API网关</strong>​：AWS本地API代理(aws-api-mcp-server)</li>
+</ul>
+<h3 id="开发增强工具"><a href="#开发增强工具" class="headerlink" title="开发增强工具"></a>开发增强工具</h3><ul>
+<li>​<strong>文档处理</strong>​：Markdown转换器(markdownify-mcp)</li>
+<li>​<strong>浏览器自动化</strong>​：浏览器工具集(browser-tools-mcp)、Playwright测试框架(mcp-playwright)</li>
+</ul>
+<blockquote>
+<p>​<strong>实施建议</strong>​：这些MCP可以打包成企业标准开发环境镜像，通过IT部门统一分发，确保版本一致性和安全合规。</p>
+</blockquote>
+<h2 id="二、Server-host-MCP：企业私有化部署"><a href="#二、Server-host-MCP：企业私有化部署" class="headerlink" title="二、Server-host MCP：企业私有化部署"></a>二、Server-host MCP：企业私有化部署</h2><p>这类MCP部署在企业内部服务器集群，适合需要团队共享资源但又不允许连接外网的环境。通过Kubernetes等容器编排平台，可以实现高可用和弹性扩展。</p>
+<h3 id="数据库连接器"><a href="#数据库连接器" class="headerlink" title="数据库连接器"></a>数据库连接器</h3><ul>
+<li>​<strong>关系型数据库</strong>​：PostgreSQL(postgres)、MySQL(mysql)</li>
+<li>​<strong>内存数据库</strong>​：Redis(redis)</li>
+<li>​<strong>文档数据库</strong>​：MongoDB兼容(documentdb)、Cassandra兼容(amazon-keyspaces)</li>
+</ul>
+<h3 id="AWS企业服务集成"><a href="#AWS企业服务集成" class="headerlink" title="AWS企业服务集成"></a>AWS企业服务集成</h3><p><em>前提：企业使用AWS混合云方案</em></p>
+<ul>
+<li>​<strong>数据服务</strong>​：DynamoDB(dynamodb-mcp-server)、S3表格存储(s3-tables-mcp-server)</li>
+<li>​<strong>分析服务</strong>​：Aurora(aurora-dsql-mcp-server)、Neptune图数据库(amazon-neptune-mcp-server)</li>
+<li>​<strong>数据仓库</strong>​：Redshift(redshift-mcp-server)</li>
+</ul>
+<h3 id="监控分析工具"><a href="#监控分析工具" class="headerlink" title="监控分析工具"></a>监控分析工具</h3><ul>
+<li>​<strong>指标监控</strong>​：Prometheus(prometheus-mcp-server)、CloudWatch(cloudwatch-mcp-server)</li>
+<li>​<strong>错误追踪</strong>​：Sentry(sentry)</li>
+</ul>
+<blockquote>
+<p>​<strong>部署示例</strong>​：使用Docker Compose可以快速搭建包含权限控制和审计日志的MCP服务栈：</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mcp-gateway:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mcp-gateway:latest</span></span><br><span class="line">    <span class="attr">ports:</span> [<span class="string">&quot;8000:8000&quot;</span>]</span><br><span class="line">  <span class="attr">postgres-mcp:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres-mcp-server:1.2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">DB_HOST:</span> <span class="string">internal-db</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Internet-host-MCP：互联网依赖型服务"><a href="#三、Internet-host-MCP：互联网依赖型服务" class="headerlink" title="三、Internet-host MCP：互联网依赖型服务"></a>三、Internet-host MCP：互联网依赖型服务</h2><p>这类MCP需要连接互联网和第三方API，为企业提供最广泛的能力扩展，但需要严格评估数据隐私和合规要求。</p>
+<h3 id="网络与搜索服务"><a href="#网络与搜索服务" class="headerlink" title="网络与搜索服务"></a>网络与搜索服务</h3><ul>
+<li>​<strong>搜索引擎</strong>​：Brave搜索API(brave-search)</li>
+<li>​<strong>内容获取</strong>​：网页抓取(fetch)、高级爬虫(puppeteer)</li>
+</ul>
+<h3 id="云平台集成"><a href="#云平台集成" class="headerlink" title="云平台集成"></a>云平台集成</h3><ul>
+<li>​<strong>协作工具</strong>​：Google Drive(gdrive)、Slack(slack)</li>
+<li>​<strong>代码托管</strong>​：GitHub(github)、GitLab(gitlab)</li>
+</ul>
+<h3 id="AI增强服务"><a href="#AI增强服务" class="headerlink" title="AI增强服务"></a>AI增强服务</h3><ul>
+<li>​<strong>创意生成</strong>​：AI艺术创作(everart)</li>
+<li>​<strong>大模型服务</strong>​：AWS Bedrock自动化(aws-bedrock-data-automation)</li>
+</ul>
+<h3 id="商业API连接"><a href="#商业API连接" class="headerlink" title="商业API连接"></a>商业API连接</h3><ul>
+<li>​<strong>地图服务</strong>​：Google Maps(google-maps)</li>
+<li>​<strong>云成本管理</strong>​：AWS定价API(aws-pricing)</li>
+<li>​<strong>文档查询</strong>​：AWS官方文档(aws-documentation)</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/" title="企业端MCP分类">https://zhuang-weiming.github.io/2025/08/01/企业端MCP分类/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/07/18/Agents%20%E6%99%BA%E8%83%BD%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E5%B7%A5%E5%85%B7%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90/" rel="prev" title="Agents 智能代码编写工具市场分析">
+                  <i class="fa fa-chevron-left"></i> Agents 智能代码编写工具市场分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/" rel="next" title="Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments">
+                  Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'bc5ff6ec4d9df0881301cc9fb0837832',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

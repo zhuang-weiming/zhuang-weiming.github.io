@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">278</span>
+          <span class="site-state-item-count">280</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,268 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/" class="post-title-link" itemprop="url">Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-04 16:50:00 / Modified: 16:50:26" itemprop="dateCreated datePublished" datetime="2025-08-04T16:50:00+08:00">2025-08-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Executive-Summary"><a href="#Executive-Summary" class="headerlink" title="Executive Summary"></a>Executive Summary</h2><p>Model Context Protocol (MCP) servers are revolutionizing development workflows by providing seamless integration between AI assistants and development tools. However, implementing MCP servers like HashiCorp’s Terraform MCP Server within large banking institutions presents unique challenges due to strict security requirements, network isolation, and regulatory compliance needs.</p>
+<p>This article examines the technical architecture, network requirements, and implementation strategies for deploying Terraform MCP servers in highly regulated banking environments.</p>
+<h2 id="Understanding-MCP-Architecture-in-Banking-Context"><a href="#Understanding-MCP-Architecture-in-Banking-Context" class="headerlink" title="Understanding MCP Architecture in Banking Context"></a>Understanding MCP Architecture in Banking Context</h2><h3 id="Core-Components-Overview"><a href="#Core-Components-Overview" class="headerlink" title="Core Components Overview"></a>Core Components Overview</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    Banking Intranet Zone                    │</span><br><span class="line">│  ┌─────────────────┐    JSON-RPC 2.0    ┌─────────────────┐ │</span><br><span class="line">│  │   VS Code       │ ─────────────────&gt; │   MCP Server    │ │</span><br><span class="line">│  │   (MCP Client)  │ &lt;───────────────── │   Process       │ │</span><br><span class="line">│  └─────────────────┘    stdio pipes     │  (Docker&#x2F;npx&#x2F;   │ │</span><br><span class="line">│           │                             │   uvx&#x2F;native)   │ │</span><br><span class="line">│           │                             └─────────────────┘ │</span><br><span class="line">│           │                                      │          │</span><br><span class="line">│           ▼                                      ▼          │</span><br><span class="line">│  ┌─────────────────┐                    ┌─────────────────┐ │</span><br><span class="line">│  │   Developer     │                    │   Internal      │ │</span><br><span class="line">│  │   Workstation   │                    │   Terraform     │ │</span><br><span class="line">│  └─────────────────┘                    │   Registry      │ │</span><br><span class="line">│                                         └─────────────────┘ │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>The MCP server operates as a process (containerized via Docker, or directly via npx/uvx/native installation) that bridges VS Code with Terraform operations through JSON-RPC 2.0 protocol over stdio pipes, eliminating the need for network ports while maintaining security.</p>
+<h3 id="MCP-Server-Deployment-Options"><a href="#MCP-Server-Deployment-Options" class="headerlink" title="MCP Server Deployment Options"></a>MCP Server Deployment Options</h3><p>The Terraform MCP Server can be deployed using different methods, all maintaining the same communication architecture:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Docker deployment (recommended for banking)</span></span><br><span class="line">docker run -i --rm hashicorp/terraform-mcp-server:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># NPX deployment (Node.js package manager)</span></span><br><span class="line">npx @hashicorp/terraform-mcp-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># UVX deployment (Python package manager)</span></span><br><span class="line">uvx terraform-mcp-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># Native binary deployment</span></span><br><span class="line">./terraform-mcp-server</span><br></pre></td></tr></table></figure>
+
+<p>All deployment methods use identical JSON-RPC 2.0 communication over stdio pipes, ensuring consistent behavior regardless of the installation approach.</p>
+<h2 id="Banking-Network-Architecture-Challenges"><a href="#Banking-Network-Architecture-Challenges" class="headerlink" title="Banking Network Architecture Challenges"></a>Banking Network Architecture Challenges</h2><h3 id="Traditional-Banking-Network-Zones"><a href="#Traditional-Banking-Network-Zones" class="headerlink" title="Traditional Banking Network Zones"></a>Traditional Banking Network Zones</h3><p>Large banks typically implement multi-tier network architectures:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Internet ──&gt; DMZ ──&gt; Application Zone ──&gt; Database Zone</span><br><span class="line">    │         │            │                   │</span><br><span class="line">    │         │            │                   │</span><br><span class="line">   WAF    Firewall    Internal Apps        Databases</span><br><span class="line">                           │</span><br><span class="line">                           ▼</span><br><span class="line">                  Developer Workstations</span><br><span class="line">                     (Isolated Zone)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Key-Banking-Network-Constraints"><a href="#Key-Banking-Network-Constraints" class="headerlink" title="Key Banking Network Constraints"></a>Key Banking Network Constraints</h3><ol>
+<li><strong>Air-Gapped Environments</strong>: Many development zones have no direct internet access</li>
+<li><strong>Strict Egress Controls</strong>: All outbound traffic requires explicit approval</li>
+<li><strong>Container Registry Restrictions</strong>: External Docker registries often blocked</li>
+<li><strong>DNS Limitations</strong>: External DNS resolution may be restricted</li>
+<li><strong>Proxy Requirements</strong>: All HTTP/HTTPS traffic must route through corporate proxies</li>
+</ol>
+<h2 id="Network-Requirements-Analysis-for-Banking"><a href="#Network-Requirements-Analysis-for-Banking" class="headerlink" title="Network Requirements Analysis for Banking"></a>Network Requirements Analysis for Banking</h2><h3 id="Standard-MCP-Server-Network-Needs"><a href="#Standard-MCP-Server-Network-Needs" class="headerlink" title="Standard MCP Server Network Needs"></a>Standard MCP Server Network Needs</h3><p>The original Terraform MCP Server requires:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">External Dependencies:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docs.aws.amazon.com:443</span>        <span class="comment"># AWS documentation</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">registry.terraform.io:443</span>      <span class="comment"># Terraform registry</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">github.com:443</span>                 <span class="comment"># Module sources</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docker.io:443</span>                  <span class="comment"># Container registry</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">checkov.io:443</span>                 <span class="comment"># Security scanning updates</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Internal Communication:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">stdio</span> <span class="string">pipes</span> <span class="string">(no</span> <span class="string">network</span> <span class="string">ports)</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Docker</span> <span class="string">daemon</span> <span class="string">access</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Local</span> <span class="string">filesystem</span> <span class="string">access</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Banking-Adapted-Network-Architecture"><a href="#Banking-Adapted-Network-Architecture" class="headerlink" title="Banking-Adapted Network Architecture"></a>Banking-Adapted Network Architecture</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    Banking Intranet                         │</span><br><span class="line">│                                                             │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   Developer     │   stdio      │   MCP Server    │       │</span><br><span class="line">│  │   Workstation   │ ───────────&gt; │   Process       │       │</span><br><span class="line">│  │   (VS Code)     │              │                 │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│           │                                │                │</span><br><span class="line">│           │                                ▼                │</span><br><span class="line">│           │                       ┌─────────────────┐       │</span><br><span class="line">│           │                       │   Internal      │       │</span><br><span class="line">│           │                       │   Terraform     │       │</span><br><span class="line">│           │                       │   Registry      │       │</span><br><span class="line">│           │                       └─────────────────┘       │</span><br><span class="line">│           │                                │                │</span><br><span class="line">│           ▼                                ▼                │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   Internal      │              │   Corporate     │       │</span><br><span class="line">│  │   Container     │              │   Proxy         │       │</span><br><span class="line">│  │   Registry      │              │                 │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│                                                             │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="Implementation-Strategies-for-Banking-Environments"><a href="#Implementation-Strategies-for-Banking-Environments" class="headerlink" title="Implementation Strategies for Banking Environments"></a>Implementation Strategies for Banking Environments</h2><h3 id="Strategy-1-Controlled-Internet-Access"><a href="#Strategy-1-Controlled-Internet-Access" class="headerlink" title="Strategy 1: Controlled Internet Access"></a>Strategy 1: Controlled Internet Access</h3><p><strong>Approach</strong>: Selective external access through secure proxies</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Developer ──→ MCP Server ──→ Corporate Proxy ──→ Internet</span><br><span class="line">Workstation    Container      (with filtering)     (Limited)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Proxy Configuration</strong>:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># corporate-proxy.yaml</span></span><br><span class="line"><span class="attr">allowed_domains:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docs.aws.amazon.com</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">registry.terraform.io</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">github.com</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docker.io</span></span><br><span class="line"></span><br><span class="line"><span class="attr">blocked_patterns:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;*.social-media.com&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;*.entertainment.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">security_scanning:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">malware_detection:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">data_loss_prevention:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Container Configuration</strong>:</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dockerfile for banking environment</span></span><br><span class="line"><span class="keyword">FROM</span> hashicorp/terraform-mcp-server:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure proxy settings</span></span><br><span class="line"><span class="keyword">ENV</span> HTTP_PROXY=http://proxy.bank.com:<span class="number">8080</span></span><br><span class="line"><span class="keyword">ENV</span> HTTPS_PROXY=http://proxy.bank.com:<span class="number">8080</span></span><br><span class="line"><span class="keyword">ENV</span> NO_PROXY=localhost,<span class="number">127.0</span>.<span class="number">0.1</span>,*.bank.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add internal CA certificates</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> internal-ca-certs.pem /usr/<span class="built_in">local</span>/share/ca-certificates/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> update-ca-certificates</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Strategy-2-Hybrid-Approach"><a href="#Strategy-2-Hybrid-Approach" class="headerlink" title="Strategy 2: Hybrid Approach"></a>Strategy 2: Hybrid Approach</h3><p><strong>Approach</strong>: Combination of internal mirroring and controlled external access</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    Banking Network                          │</span><br><span class="line">│                                                             │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   MCP Server    │   Primary    │   Internal      │       │</span><br><span class="line">│  │   Container     │ ───────────&gt; │   Resources     │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│           │                                                 │</span><br><span class="line">│           │ Fallback                                        │</span><br><span class="line">│           ▼                                                 │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   Corporate     │   Filtered   │   External      │       │</span><br><span class="line">│  │   Proxy         │ ───────────&gt; │   Resources     │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│                                                             │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Operational-Workflow-in-Banking-Environment"><a href="#Operational-Workflow-in-Banking-Environment" class="headerlink" title="Operational Workflow in Banking Environment"></a>Operational Workflow in Banking Environment</h2><h3 id="Risk-Assessment-Matrix"><a href="#Risk-Assessment-Matrix" class="headerlink" title="Risk Assessment Matrix"></a>Risk Assessment Matrix</h3><table>
+<thead>
+<tr>
+<th>Risk Factor</th>
+<th>Impact</th>
+<th>Probability</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Container Vulnerabilities</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Regular security scanning</td>
+</tr>
+<tr>
+<td>Network Breach</td>
+<td>High</td>
+<td>Low</td>
+<td>Zero-trust architecture</td>
+</tr>
+<tr>
+<td>Compliance Violation</td>
+<td>High</td>
+<td>Low</td>
+<td>Comprehensive logging</td>
+</tr>
+</tbody></table>
+<h2 id="Troubleshooting-Common-Banking-Implementation-Issues"><a href="#Troubleshooting-Common-Banking-Implementation-Issues" class="headerlink" title="Troubleshooting Common Banking Implementation Issues"></a>Troubleshooting Common Banking Implementation Issues</h2><h3 id="Issue-Proxy-Configuration-Issues"><a href="#Issue-Proxy-Configuration-Issues" class="headerlink" title="Issue : Proxy Configuration Issues"></a>Issue : Proxy Configuration Issues</h3><p><strong>Problem</strong>: External requests failing through corporate proxy</p>
+<p><strong>Solution</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set proxy environment variables</span></span><br><span class="line"><span class="built_in">export</span> HTTP_PROXY=http://proxy.bank.com:8080</span><br><span class="line"><span class="built_in">export</span> HTTPS_PROXY=http://proxy.bank.com:8080</span><br><span class="line"><span class="built_in">export</span> NO_PROXY=localhost,127.0.0.1,*.bank.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>Of cause this is a big risk for each developer to set proxy on the MCP Server in everyday working. Because we can’t fully follow the bank’s internet access policy via the Proxy Configuration</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/" class="post-title-link" itemprop="url">企业端MCP分类</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-01 16:00:00" itemprop="dateCreated datePublished" datetime="2025-08-01T16:00:00+08:00">2025-08-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-08-04 16:49:49" itemprop="dateModified" datetime="2025-08-04T16:49:49+08:00">2025-08-04</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文将为您清晰梳理三类MCP部署方案，帮助企业根据自身IT政策和安全要求选择最适合的实施路径。</p>
+<h2 id="一、Self-host-MCP：企业PC零依赖部署"><a href="#一、Self-host-MCP：企业PC零依赖部署" class="headerlink" title="一、Self-host MCP：企业PC零依赖部署"></a>一、Self-host MCP：企业PC零依赖部署</h2><p>MCP示例</p>
+<ul>
+<li>​<strong>基础工具</strong>​：文件系统操作(filesystem)、内存管理(memory)、时间服务(time)</li>
+<li>​<strong>开发套件</strong>​：Git仓库管理(git)、SQLite数据库操作(sqlite)</li>
+<li>​<strong>本地逻辑处理</strong>​：顺序执行引擎(sequential-thinking)</li>
+<li>​<strong>一体化工具</strong>​：开发实用工具集(everything)</li>
+</ul>
+<h3 id="企业内网需要为下面的工具提供-internet访问权限"><a href="#企业内网需要为下面的工具提供-internet访问权限" class="headerlink" title="企业内网需要为下面的工具提供 internet访问权限"></a>企业内网需要为下面的工具提供 internet访问权限</h3><ul>
+<li>​<strong>基础设施即代码</strong>​：CDK(cdk-mcp-server)、CloudFormation(cfn-mcp-server)、Terraform(terraform-mcp-server)</li>
+<li>​<strong>API网关</strong>​：AWS本地API代理(aws-api-mcp-server)</li>
+</ul>
+<h3 id="开发增强工具"><a href="#开发增强工具" class="headerlink" title="开发增强工具"></a>开发增强工具</h3><ul>
+<li>​<strong>文档处理</strong>​：Markdown转换器(markdownify-mcp)</li>
+<li>​<strong>浏览器自动化</strong>​：浏览器工具集(browser-tools-mcp)、Playwright测试框架(mcp-playwright)</li>
+</ul>
+<blockquote>
+<p>​<strong>实施建议</strong>​：这些MCP可以打包成企业标准开发环境镜像，通过IT部门统一分发，确保版本一致性和安全合规。</p>
+</blockquote>
+<h2 id="二、Server-host-MCP：企业私有化部署"><a href="#二、Server-host-MCP：企业私有化部署" class="headerlink" title="二、Server-host MCP：企业私有化部署"></a>二、Server-host MCP：企业私有化部署</h2><p>这类MCP部署在企业内部服务器集群，适合需要团队共享资源但又不允许连接外网的环境。通过Kubernetes等容器编排平台，可以实现高可用和弹性扩展。</p>
+<h3 id="数据库连接器"><a href="#数据库连接器" class="headerlink" title="数据库连接器"></a>数据库连接器</h3><ul>
+<li>​<strong>关系型数据库</strong>​：PostgreSQL(postgres)、MySQL(mysql)</li>
+<li>​<strong>内存数据库</strong>​：Redis(redis)</li>
+<li>​<strong>文档数据库</strong>​：MongoDB兼容(documentdb)、Cassandra兼容(amazon-keyspaces)</li>
+</ul>
+<h3 id="AWS企业服务集成"><a href="#AWS企业服务集成" class="headerlink" title="AWS企业服务集成"></a>AWS企业服务集成</h3><p><em>前提：企业使用AWS混合云方案</em></p>
+<ul>
+<li>​<strong>数据服务</strong>​：DynamoDB(dynamodb-mcp-server)、S3表格存储(s3-tables-mcp-server)</li>
+<li>​<strong>分析服务</strong>​：Aurora(aurora-dsql-mcp-server)、Neptune图数据库(amazon-neptune-mcp-server)</li>
+<li>​<strong>数据仓库</strong>​：Redshift(redshift-mcp-server)</li>
+</ul>
+<h3 id="监控分析工具"><a href="#监控分析工具" class="headerlink" title="监控分析工具"></a>监控分析工具</h3><ul>
+<li>​<strong>指标监控</strong>​：Prometheus(prometheus-mcp-server)、CloudWatch(cloudwatch-mcp-server)</li>
+<li>​<strong>错误追踪</strong>​：Sentry(sentry)</li>
+</ul>
+<blockquote>
+<p>​<strong>部署示例</strong>​：使用Docker Compose可以快速搭建包含权限控制和审计日志的MCP服务栈：</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mcp-gateway:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mcp-gateway:latest</span></span><br><span class="line">    <span class="attr">ports:</span> [<span class="string">&quot;8000:8000&quot;</span>]</span><br><span class="line">  <span class="attr">postgres-mcp:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres-mcp-server:1.2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">DB_HOST:</span> <span class="string">internal-db</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Internet-host-MCP：互联网依赖型服务"><a href="#三、Internet-host-MCP：互联网依赖型服务" class="headerlink" title="三、Internet-host MCP：互联网依赖型服务"></a>三、Internet-host MCP：互联网依赖型服务</h2><p>这类MCP需要连接互联网和第三方API，为企业提供最广泛的能力扩展，但需要严格评估数据隐私和合规要求。</p>
+<h3 id="网络与搜索服务"><a href="#网络与搜索服务" class="headerlink" title="网络与搜索服务"></a>网络与搜索服务</h3><ul>
+<li>​<strong>搜索引擎</strong>​：Brave搜索API(brave-search)</li>
+<li>​<strong>内容获取</strong>​：网页抓取(fetch)、高级爬虫(puppeteer)</li>
+</ul>
+<h3 id="云平台集成"><a href="#云平台集成" class="headerlink" title="云平台集成"></a>云平台集成</h3><ul>
+<li>​<strong>协作工具</strong>​：Google Drive(gdrive)、Slack(slack)</li>
+<li>​<strong>代码托管</strong>​：GitHub(github)、GitLab(gitlab)</li>
+</ul>
+<h3 id="AI增强服务"><a href="#AI增强服务" class="headerlink" title="AI增强服务"></a>AI增强服务</h3><ul>
+<li>​<strong>创意生成</strong>​：AI艺术创作(everart)</li>
+<li>​<strong>大模型服务</strong>​：AWS Bedrock自动化(aws-bedrock-data-automation)</li>
+</ul>
+<h3 id="商业API连接"><a href="#商业API连接" class="headerlink" title="商业API连接"></a>商业API连接</h3><ul>
+<li>​<strong>地图服务</strong>​：Google Maps(google-maps)</li>
+<li>​<strong>云成本管理</strong>​：AWS定价API(aws-pricing)</li>
+<li>​<strong>文档查询</strong>​：AWS官方文档(aws-documentation)</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -542,372 +804,6 @@
 <li>​<strong>市场格局演变</strong>​：短期内，圆币凭借本土合规优势占据香港B2B支付市场，京东则需在供应链场景中证明规模效应；长期看，多币种稳定币（如离岸人民币）或成竞争焦点。</li>
 </ol>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/06/19/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-three/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/06/19/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-three/" class="post-title-link" itemprop="url">软件工程之特性管理-feature-management-day-three</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-06-19 17:10:00" itemprop="dateCreated datePublished" datetime="2025-06-19T17:10:00+08:00">2025-06-19</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-06-20 11:34:06" itemprop="dateModified" datetime="2025-06-20T11:34:06+08:00">2025-06-20</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>涵盖五种Feature Flag类型的多维度差异分析：</p>
-<table>
-<thead>
-<tr>
-<th>​<strong>维度</strong>​</th>
-<th>​<strong>Release Flags</strong>​</th>
-<th>​<strong>Experiment Flags</strong>​</th>
-<th>​<strong>Kill Switches</strong>​</th>
-<th>​<strong>Operational Flags</strong>​</th>
-<th>​<strong>Permission Flags</strong>​</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>​<strong>目的</strong>​</td>
-<td>渐进发布新功能，降低风险</td>
-<td>A/B测试或多变量实验</td>
-<td>紧急关闭故障功能</td>
-<td>技术实现切换（如库升级）</td>
-<td>基于角色/权限控制功能访问</td>
-</tr>
-<tr>
-<td>​<strong>触发条件</strong>​</td>
-<td>用户百分比/环境配置</td>
-<td>用户分桶规则（如用户ID、地理位置）</td>
-<td>系统故障告警或人工干预</td>
-<td>技术指标阈值（如性能基线）</td>
-<td>用户属性（如订阅等级、内部权限）</td>
-</tr>
-<tr>
-<td>​<strong>生效速度</strong>​</td>
-<td>分钟级（依赖缓存/配置刷新）</td>
-<td>秒级（动态分桶）</td>
-<td>​<strong>毫秒级</strong>​（最高优先级）</td>
-<td>秒级（自动/手动切换）</td>
-<td>秒级（实时权限校验）</td>
-</tr>
-<tr>
-<td>​<strong>影响范围</strong>​</td>
-<td>特定用户群或环境</td>
-<td>实验组用户</td>
-<td>​<strong>全局功能</strong>​</td>
-<td>局部技术组件</td>
-<td>特定用户角色</td>
-</tr>
-<tr>
-<td>​<strong>操作角色</strong>​</td>
-<td>产品负责人 / 开发者</td>
-<td>数据分析师/产品经理</td>
-<td>SRE/高层决策者</td>
-<td>运维/SRE</td>
-<td>管理员/安全团队</td>
-</tr>
-<tr>
-<td>​<strong>依赖系统</strong>​</td>
-<td>CI/CD流水线+功能开关平台</td>
-<td>数据分析平台（Amplitude / Mixpanel 等工具）+用户分桶服务</td>
-<td>告警系统+手动触发机制</td>
-<td>监控系统+配置中心</td>
-<td>IAM系统或用户数据库</td>
-</tr>
-<tr>
-<td>​<strong>预期生命周期</strong>​</td>
-<td>​<strong>​≤40天</strong>​（短期功能验证）</td>
-<td>​<strong>​≤40天</strong>​（实验周期）</td>
-<td>​<strong>永久</strong>​（长期应急）</td>
-<td>​<strong>​≤7天</strong>​（技术过渡期）</td>
-<td>​<strong>永久或动态</strong>​（按业务需求）</td>
-</tr>
-<tr>
-<td>​<strong>代码侵入性</strong>​</td>
-<td>中（可通过抽象接口/策略模式缓解）</td>
-<td>高（需支持多变量逻辑）</td>
-<td>低（简单布尔开关）</td>
-<td>中（需兼容新旧实现）</td>
-<td>高（需集成权限逻辑）</td>
-</tr>
-<tr>
-<td>​<strong>典型使用场景</strong>​</td>
-<td>新购物车UI的渐进发布</td>
-<td>登录页按钮颜色的转化率测试</td>
-<td>支付系统故障时降级</td>
-<td>数据库驱动版本迁移</td>
-<td>仅向VIP用户开放高级功能</td>
-</tr>
-<tr>
-<td>​<strong>数据要求</strong>​</td>
-<td>基础使用量统计</td>
-<td>​<strong>详细事件跟踪+统计分析</strong>​</td>
-<td>系统健康度监控</td>
-<td>技术指标日志（如延迟、错误率）</td>
-<td>用户属性实时查询</td>
-</tr>
-<tr>
-<td>​<strong>风险等级</strong>​</td>
-<td>中（可能影响用户体验）</td>
-<td>低（可控实验范围）</td>
-<td>​<strong>高</strong>​（直接影响业务）</td>
-<td>中（技术风险）</td>
-<td>低（权限错误可能导致功能泄露）</td>
-</tr>
-<tr>
-<td>​<strong>清理优先级</strong>​</td>
-<td>高（避免技术债务）</td>
-<td>中（实验结束即清理）</td>
-<td>不适用</td>
-<td>​<strong>最高</strong>​（影响性能 / 代码稳定性，需快速清理）</td>
-<td>低（长期存在）</td>
-</tr>
-</tbody></table>
-<h3 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a>补充说明</h3><ol>
-<li>​<strong>生命周期管理</strong>​<ul>
-<li>Release/Experiment flags会标记为<strong>Potentially Stale</strong>超期后，需定期审查</li>
-<li>Kill switches和Permission flags支持<strong>永久存活</strong>，但需定期测试有效性</li>
-</ul>
-</li>
-<li>​<strong>依赖关系</strong>​<ul>
-<li>Experiment flags可能依赖<strong>Parent Flag</strong>实现分层实验</li>
-<li>Permission flags通常与(AWS)<strong>IAM系统深度集成</strong>​</li>
-</ul>
-</li>
-<li>​<strong>高级控制</strong>​<ul>
-<li>Release flags支持<strong>渐进式Rollout</strong>​</li>
-<li>Operational flags推荐与<strong>Canary发布</strong>结合使用</li>
-</ul>
-</li>
-<li>​<strong>安全合规</strong>​<ul>
-<li>Kill switches需<strong>独立于主系统</strong>的触发机制</li>
-<li>Permission flags需支持<strong>审计日志</strong>​</li>
-</ul>
-</li>
-</ol>
-<h3 id="深入分析Operational-Flag示例"><a href="#深入分析Operational-Flag示例" class="headerlink" title="深入分析Operational Flag示例"></a>深入分析Operational Flag示例</h3><p><img src="/2025/06/19/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-three/1.png"><br><strong>双保险机制</strong>​：</p>
-<ol>
-<li>Canary控制<strong>业务流量分配</strong>​（哪些用户的请求进入新流程）</li>
-<li>Operational Flag控制<strong>技术实现路由</strong>​（实际访问新DB还是旧DB）</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 银行支付路由伪代码</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_payment</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="comment"># Canary控制：5%流量进入新系统</span></span><br><span class="line">    <span class="keyword">if</span> canary.is_selected(request.user_id):</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Operational Flag控制：新系统是否真正处理</span></span><br><span class="line">        <span class="keyword">if</span> operational_flag.is_enabled(<span class="string">&quot;new_payment_engine&quot;</span>):</span><br><span class="line">            result = new_engine.process(request)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 影子流量比对</span></span><br><span class="line">            old_result = old_engine.process(request)</span><br><span class="line">            - compare_results(result, old_result)</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> old_engine.process(request)  <span class="comment"># 仅流量路由，不实际处理</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 非Canary流量</span></span><br><span class="line">    <span class="keyword">return</span> old_engine.process(request)</span><br></pre></td></tr></table></figure>
-
-<p><strong>Unleash双策略配置</strong>​:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;features&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;new_payment_engine&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;gradualRollout&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;rollout&quot;</span>: <span class="number">100</span>,  <span class="comment">// 完全开启后才会生效</span></span><br><span class="line">            <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;serviceLoad&quot;</span>, <span class="comment">// &quot;userId&quot;, &quot;sessionId&quot;, &quot;random&quot;</span></span><br><span class="line">            <span class="attr">&quot;groupId&quot;</span>: <span class="string">&quot;low_traffic_window&quot;</span>  <span class="comment">// 仅系统负载&lt;40%时生效</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>银行级最佳实践</strong></p>
-<ul>
-<li><p>​分层验证​：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">```text</span><br><span class="line">Phase 1 - Canary发布 (1%流量):</span><br><span class="line">  │</span><br><span class="line">  ├── Operational Flag OFF → 仅收集基础设施指标,如 CPU Load / Latency</span><br><span class="line">  │</span><br><span class="line">  └── Operational Flag ON → 全功能验证</span><br><span class="line"></span><br><span class="line">Phase 2 - 渐进式Rollout (10% → 50% → 100%):</span><br><span class="line">  │</span><br><span class="line">  ├── 按客户价值分群（VIP优先）</span><br><span class="line">  │</span><br><span class="line">  └── 按地域分步（监管宽松区先行）</span><br><span class="line"></span><br><span class="line">Phase 3 - 全量发布:</span><br><span class="line">  ├── 移除Flag或转为永久配置</span><br><span class="line">  └── 清理弃用代码分支</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>熔断策略​：</p>
-<ul>
-<li>当新DB查询延迟&gt;500ms时，基于 Prometheus / NewRelic 等监控告警系统自动触发,自动关闭Operational Flag</li>
-<li>Canary流量自动降级到旧DB，但不中断服务</li>
-</ul>
-</li>
-<li><p>​合规审计​：</p>
-<ul>
-<li>记录所有Flag切换操作（满足SOX审计）</li>
-<li>Canary和Operational的决策日志关联到同一TraceID</li>
-</ul>
-</li>
-<li><p>禁止循环依赖（如FlagA依赖FlagB，FlagB又依赖FlagA）</p>
-<ul>
-<li>实际上，任何依赖和关联，都很容易造成feature 发版失败<h3 id="监控与清理-​"><a href="#监控与清理-​" class="headerlink" title="监控与清理**​"></a>监控与清理**​</h3></li>
-</ul>
-</li>
-</ul>
-<p>​<strong>清理时机判断</strong>​：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlagCleanupPolicy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldCleanup</span><span class="params">(FeatureFlag flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> flag.isStale() ||  <span class="comment">// 超过预期生命周期</span></span><br><span class="line">            (flag.getUsageRate() &lt; <span class="number">0.1</span>% &amp;&amp;  <span class="comment">// 低使用率</span></span><br><span class="line">             flag.getLastModified().olderThan(<span class="number">14</span>, DAYS));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​<strong>清理步骤</strong>​：</p>
-<ol>
-<li>代码中移除Flag条件判断</li>
-<li>删除Unleash控制台配置。可以标记为 deprecated/stale，进行灰度移除</li>
-<li>更新 <strong>架构决策记录</strong>​(ADR)</li>
-</ol>
-<h3 id="软件工程实践"><a href="#软件工程实践" class="headerlink" title="软件工程实践"></a>软件工程实践</h3><ol>
-<li>Trunk-Based Development（主干开发）<br>是解决 Feature Flag 依赖关系混乱的治本之道，尤其是在银行这类高合规要求的场景下。<br><img src="/2025/06/19/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-three/2.png"></li>
-<li>​<strong>小批量提交</strong>​：每个PR仅包含1个Flag的完整变更集</li>
-<li>​<strong>Flag封装</strong>​：通过接口隔离实现细节<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 银行支付系统示例</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RiskEngine</span> </span>&#123;</span><br><span class="line">    <span class="function">Result <span class="title">calculateRisk</span><span class="params">(Transaction tx)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过Flag选择实现</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RiskEngine <span class="title">getEngine</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> unleash.isEnabled(<span class="string">&quot;risk_v2&quot;</span>) ? </span><br><span class="line">        <span class="keyword">new</span> RiskEngineV2() : </span><br><span class="line">        <span class="keyword">new</span> RiskEngineV1();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><strong>面向接口编程</strong>：降低代码冲突率，明确代码块的责任。本类或者方法的代码变更，不要影响其他类和方法</li>
-<li><strong>依赖关系静态分析​</strong><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❌ 检测到禁止的依赖链:</span><br><span class="line">payment.v3 -&gt; risk.v2 -&gt; data.v1 -&gt; payment.v3</span><br></pre></td></tr></table></figure></li>
-<li><strong>架构决策记录（ADR）​</strong><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># ADR-042: 风控系统Flag依赖规范</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 决策</span></span><br><span class="line"><span class="bullet">-</span> 所有风控相关Flag必须单向依赖</span><br><span class="line"><span class="bullet">-</span> 禁止跨业务域Flag耦合</span><br><span class="line"></span><br><span class="line"><span class="section">## 执行</span></span><br><span class="line"><span class="code">    C[支付Flag] --&gt; A</span></span><br><span class="line"><span class="code">    D[审计Flag] --&gt; A</span></span><br><span class="line"><span class="code">    A[风控Flag] --&gt; B[数据层Flag]</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<p><strong>7. 分层解耦模式</strong>​<br>​<strong>代码结构</strong>​：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">├── features/</span><br><span class="line">│   ├── risk<span class="emphasis">_v2/       # 包含完整特性代码</span></span><br><span class="line"><span class="emphasis">│   │   ├── RiskEngineV2.java</span></span><br><span class="line"><span class="emphasis">│   │   └── RiskEngineTest.java</span></span><br><span class="line"><span class="emphasis">│   └── payment_</span>v3/</span><br><span class="line">└── feature<span class="emphasis">_flags/     # 集中管理所有Flag</span></span><br><span class="line"><span class="emphasis">    ├── RiskFlags.java # 显式声明依赖关系</span></span><br><span class="line"><span class="emphasis">    └── PaymentFlags.java</span></span><br></pre></td></tr></table></figure>
-<ol start="8">
-<li>TDD（测试驱动开发）<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正确做法：通过测试强制解耦</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">should_work_independently_of_data_model</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 给定旧数据模型</span></span><br><span class="line">    FeatureFlag.disable(<span class="string">&quot;new_data_model&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 当启用新风控引擎</span></span><br><span class="line">    FeatureFlag.enable(<span class="string">&quot;new_risk_engine&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 那么系统仍应正常工作</span></span><br><span class="line">    assertThat(processTransaction(request)).isSuccessful();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-所有Flag相关代码必须满足：</li>
-</ol>
-<ul>
-<li>独立单元测试覆盖率≥90%</li>
-<li>集成测试验证Flag组合场景<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        [End-to-End Tests]</span><br><span class="line">           /       \</span><br><span class="line">[Integration Tests] [Feature Flag交互测试]</span><br><span class="line">          \         /</span><br><span class="line">        [Unit Tests（强制隔离Flag）]</span><br></pre></td></tr></table></figure>
-<h4 id="Google的实践经验​"><a href="#Google的实践经验​" class="headerlink" title=". Google的实践经验​"></a><strong>. Google的实践经验</strong>​</h4></li>
-<li>每天主干分支接收 ​<strong>20,000+次提交</strong>​</li>
-<li>通过<strong>Feature Flag + TDD</strong>实现：<ul>
-<li>平均故障恢复时间（MTTR）&lt; 1小时</li>
-<li>代码冲突率降低76%</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/06/19/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-two/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/06/19/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-two/" class="post-title-link" itemprop="url">软件工程之特性管理-feature-management-day-two</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-06-19 17:08:00" itemprop="dateCreated datePublished" datetime="2025-06-19T17:08:00+08:00">2025-06-19</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-06-20 11:33:37" itemprop="dateModified" datetime="2025-06-20T11:33:37+08:00">2025-06-20</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Unleash 如何作为控制面板（Control Plane）与服务侧解耦</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  [Unleash Server]</span><br><span class="line">     ↑        ↑</span><br><span class="line">[Admin 配置] [监控回报]</span><br><span class="line">     ↓        ↓</span><br><span class="line"> ┌───────────────┐</span><br><span class="line"> │ FeatureContext│ ← 用户属性、风险等级、时间窗口...</span><br><span class="line"> └───────┬───────┘</span><br><span class="line">		↓</span><br><span class="line"> [业务服务] →  [新/旧逻辑分支]</span><br></pre></td></tr></table></figure>
-
-<p>以下是针对IT场景的五种Feature Flag类型的设计模式及代码实现，结合金融行业特有的安全性、合规性和高可用性要求：</p>
-<h3 id="1-Release-Flags（新功能渐进发布）​"><a href="#1-Release-Flags（新功能渐进发布）​" class="headerlink" title="1. Release Flags（新功能渐进发布）​"></a>1. Release Flags（新功能渐进发布）​</h3><p>​<strong>​场景​</strong>​：手机银行APP新转账流程灰度发布<br>​<strong>​设计模式​</strong>​：客户分群策略 + 交易金额阈值控制</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Spring Boot + Unleash (银行核心系统)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/transfer&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransferController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;TransferResponse&gt; <span class="title">executeTransfer</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="meta">@RequestBody</span> TransferRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="meta">@RequestHeader(&quot;X-Customer-Tier&quot;)</span> String customerTier)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 根据客户等级和金额阈值启用新流程（VIP客户且金额&lt;50万）</span></span><br><span class="line">        <span class="keyword">boolean</span> isNewFlow = unleash.isEnabled(</span><br><span class="line">            <span class="string">&quot;new_transfer_flow&quot;</span>,</span><br><span class="line">            Map.of(</span><br><span class="line">                <span class="string">&quot;customerTier&quot;</span>, customerTier,</span><br><span class="line">                <span class="string">&quot;amount&quot;</span>, request.getAmount().toString()</span><br><span class="line">            )</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (isNewFlow &amp;&amp; request.getAmount().compareTo(<span class="keyword">new</span> BigDecimal(<span class="string">&quot;500000&quot;</span>)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> newTransferService.execute(request); <span class="comment">// 新风控引擎</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> legacyTransferService.execute(request); <span class="comment">// 原有逻辑</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unleash策略配置</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;new_transfer_flow&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;gradualRollout&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;percentage&quot;</span>: <span class="number">20</span>  <span class="comment">// 首批开放20%VIP客户</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;remoteAddress&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;IPs&quot;</span>: <span class="string">&quot;10.2.3.0/24&quot;</span>  <span class="comment">// 仅内部测试网络可用</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-Experiment-Flags（A-B测试）​"><a href="#2-Experiment-Flags（A-B测试）​" class="headerlink" title="2. Experiment Flags（A/B测试）​"></a>2. Experiment Flags（A/B测试）​</h3><p>​<strong>​场景​</strong>​：信用卡还款页面UI优化实验<br>​<strong>​设计模式​</strong>​：哈希客户号分桶 + 实时埋点</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Django + Unleash (银行前端系统)</span></span><br><span class="line"><span class="keyword">from</span> UnleashClient <span class="keyword">import</span> UnleashClient</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化Unleash客户端</span></span><br><span class="line">unleash = UnleashClient(</span><br><span class="line">    url=<span class="string">&quot;https://unleash.yourbank.com/api&quot;</span>,</span><br><span class="line">    app_name=<span class="string">&quot;credit_card_frontend&quot;</span>,</span><br><span class="line">    environment=<span class="string">&quot;production&quot;</span>,</span><br><span class="line">    custom_headers=&#123;<span class="string">&quot;Authorization&quot;</span>: <span class="string">&quot;YOUR_API_KEY&quot;</span>&#125;</span><br><span class="line">)</span><br><span class="line">unleash.initialize_client()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">credit_card_payment</span>(<span class="params">request</span>):</span></span><br><span class="line">    customer_no = request.user.customer_no</span><br><span class="line">    context = &#123;</span><br><span class="line">        <span class="string">&quot;userId&quot;</span>: customer_no,</span><br><span class="line">        <span class="string">&quot;properties&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;risk_level&quot;</span>: get_risk_level(customer_no),  <span class="comment"># 自定义上下文属性</span></span><br><span class="line">            <span class="string">&quot;country&quot;</span>: request.user.country_code</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用Unleash判断是否启用实验</span></span><br><span class="line">    <span class="keyword">if</span> unleash.is_enabled(<span class="string">&quot;credit_card_ui_v3&quot;</span>, context):</span><br><span class="line">        <span class="comment"># 获取Variant（需要Unleash配置策略变体）</span></span><br><span class="line">        variant = unleash.get_variant(<span class="string">&quot;credit_card_ui_v3&quot;</span>, context)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 实时埋点（Unleash默认支持impression事件）</span></span><br><span class="line">        track_event(</span><br><span class="line">            event_type=<span class="string">&quot;UI_EXPERIMENT&quot;</span>,</span><br><span class="line">            customer_no=customer_no,</span><br><span class="line">            experiment_variant=variant[<span class="string">&#x27;name&#x27;</span>],  <span class="comment"># variant结构: &#123;&#x27;name&#x27;: &#x27;assisted&#x27;, &#x27;enabled&#x27;: True&#125;</span></span><br><span class="line">            page=<span class="string">&quot;credit_card_payment&quot;</span></span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> render(<span class="string">f&quot;payment_<span class="subst">&#123;variant[<span class="string">&#x27;name&#x27;</span>]&#125;</span>.html&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> render(<span class="string">&quot;payment_control.html&quot;</span>)  <span class="comment"># 默认UI</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>unleash 配置</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unleash Admin控制台配置</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;credit_card_ui_v3&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;flexibleRollout&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;rollout&quot;</span>: <span class="number">100</span>,         <span class="comment">// 100%流量参与</span></span><br><span class="line">        <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;userId&quot;</span>,  <span class="comment">// 按用户ID固定分桶</span></span><br><span class="line">        <span class="attr">&quot;groupId&quot;</span>: <span class="string">&quot;experiment&quot;</span>  <span class="comment">// 实验分组</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;userWithId&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;userIds&quot;</span>: <span class="string">&quot;12345,67890&quot;</span>  <span class="comment">// 可指定白名单用户</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;variants&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;control&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;weight&quot;</span>: <span class="number">50</span>  <span class="comment">// 权重50%</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;simplified&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;weight&quot;</span>: <span class="number">30</span>  <span class="comment">// 权重30%</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;assisted&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;weight&quot;</span>: <span class="number">20</span>,  <span class="comment">// 权重20%</span></span><br><span class="line">      <span class="attr">&quot;payload&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;json&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: &#123;<span class="attr">&quot;showTutor&quot;</span>: <span class="literal">true</span>&#125;  <span class="comment">// 可携带额外参数</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="​3-Kill-Switches（紧急熔断）​​"><a href="#​3-Kill-Switches（紧急熔断）​​" class="headerlink" title="​3. Kill Switches（紧急熔断）​​"></a><strong>​3. Kill Switches（紧急熔断）​</strong>​</h3><p>​<strong>​场景​</strong>​：大额转账系统异常熔断<br>​<strong>​设计模式​</strong>​：双通道触发 + 本地缓存强制更新</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化Unleash客户端（需提前配置）</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/Unleash/unleash-client-go/v3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    unleash.Initialize(</span><br><span class="line">        unleash.WithUrl(<span class="string">&quot;https://unleash.yourbank.com/api&quot;</span>),</span><br><span class="line">        unleash.WithAppName(<span class="string">&quot;payment_system&quot;</span>),</span><br><span class="line">        unleash.WithCustomHeaders(http.Header&#123;<span class="string">&quot;Authorization&quot;</span>: []<span class="keyword">string</span>&#123;<span class="string">&quot;YOUR_API_KEY&quot;</span>&#125;&#125;),</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ProcessLargeTransfer</span><span class="params">(transfer *pb.TransferRequest)</span> <span class="params">(*pb.TransferResponse, error)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 使用Unleash判断熔断状态</span></span><br><span class="line">    ctx := unleash.Context&#123;</span><br><span class="line">        UserId:    transfer.UserId,</span><br><span class="line">        Properties: <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;</span><br><span class="line">            <span class="string">&quot;country&quot;</span>:    transfer.CountryCode,</span><br><span class="line">            <span class="string">&quot;amount&quot;</span>:     strconv.FormatInt(transfer.Amount, <span class="number">10</span>),</span><br><span class="line">            <span class="string">&quot;risk_level&quot;</span>: getRiskLevel(transfer.UserId),</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> !unleash.IsEnabled(<span class="string">&quot;large_transfer_enabled&quot;</span>, ctx) &#123;</span><br><span class="line">        audit.LogEmergencyEvent(transfer, <span class="string">&quot;unleash_killswitch_activated&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, status.Error(codes.Unavailable, <span class="string">&quot;服务临时维护&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 正常处理逻辑...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>unleash 配置</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unleash Admin控制台配置</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;large_transfer_enabled&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;gradualRollout&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;rollout&quot;</span>: <span class="number">100</span>,  <span class="comment">// 默认100%开启</span></span><br><span class="line">        <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;userId&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;remoteAddress&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;IPs&quot;</span>: <span class="string">&quot;10.2.3.0/24&quot;</span>  <span class="comment">// 仅允许内网访问</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;variants&quot;</span>: [],</span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="4-Operational-Flags（系统迁移）​​"><a href="#4-Operational-Flags（系统迁移）​​" class="headerlink" title="4. Operational Flags（系统迁移）​​"></a><strong>4. Operational Flags（系统迁移）​</strong>​</h3><p>​<strong>场景</strong>​：核心账户系统数据库迁移<br>​<strong>设计模式</strong>​：影子流量对比 + 自动回退</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.getunleash.Unleash;</span><br><span class="line"><span class="keyword">import</span> io.getunleash.UnleashContext;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Unleash unleash;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AuditLogger auditLogger;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AccountService</span><span class="params">(Unleash unleash, AuditLogger auditLogger)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.unleash = unleash;</span><br><span class="line">        <span class="keyword">this</span>.auditLogger = auditLogger;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Balance <span class="title">getBalance</span><span class="params">(String accountNo)</span> <span class="keyword">throws</span> BankSystemException </span>&#123;</span><br><span class="line">        <span class="comment">// 构建Unleash上下文</span></span><br><span class="line">        UnleashContext context = UnleashContext.builder()</span><br><span class="line">            .addProperty(<span class="string">&quot;accountType&quot;</span>, getAccountType(accountNo))</span><br><span class="line">            .addProperty(<span class="string">&quot;timeWindow&quot;</span>, </span><br><span class="line">                java.time.LocalTime.now().getHour() &lt; <span class="number">6</span> ? <span class="string">&quot;low-traffic&quot;</span> : <span class="string">&quot;peak&quot;</span>)</span><br><span class="line">            .addProperty(<span class="string">&quot;accountNo&quot;</span>, accountNo) <span class="comment">// 用于单账户回退</span></span><br><span class="line">            .build();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">boolean</span> useNewDB = unleash.isEnabled(<span class="string">&quot;account_db_migration&quot;</span>, context);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Balance balance = useNewDB ? </span><br><span class="line">                newDbQuery(accountNo) : </span><br><span class="line">                legacyDbQuery(accountNo);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 影子流量比对</span></span><br><span class="line">            <span class="keyword">if</span> (useNewDB) &#123;</span><br><span class="line">                Balance legacyBalance = legacyDbQuery(accountNo);</span><br><span class="line">                auditLogger.compareResults(<span class="string">&quot;balance_query&quot;</span>, balance, legacyBalance);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">return</span> balance;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            <span class="comment">// 单账户回退（通过Unleash的个性化配置）</span></span><br><span class="line">            Map&lt;String, String&gt; fallbackConfig = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            fallbackConfig.put(<span class="string">&quot;accountNo&quot;</span>, accountNo);</span><br><span class="line">            unleash.more().updateContext(<span class="string">&quot;account_db_migration&quot;</span>, </span><br><span class="line">                <span class="string">&quot;disableForAccount&quot;</span>, fallbackConfig);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> BankSystemException(<span class="string">&quot;DB_OPERATION_FAILED&quot;</span>, ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> Balance <span class="title">newDbQuery</span><span class="params">(String accountNo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 新数据库查询实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> Balance <span class="title">legacyDbQuery</span><span class="params">(String accountNo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 旧数据库查询实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getAccountType</span><span class="params">(String accountNo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取账户类型逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>unleash 配置</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">&quot;features&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;account_db_migration&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;银行核心系统数据库迁移开关&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;gradualRollout&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;rollout&quot;</span>: <span class="string">&quot;30&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;accountType&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;groupId&quot;</span>: <span class="string">&quot;migration&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;flexibleRollout&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;rollout&quot;</span>: <span class="string">&quot;100&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;timeWindow&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;groupId&quot;</span>: <span class="string">&quot;low-traffic&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;userWithId&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;userIds&quot;</span>: <span class="string">&quot;disabled_account_1,disabled_account_2&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;variants&quot;</span>: [],</span><br><span class="line">      <span class="attr">&quot;dependencies&quot;</span>: [],</span><br><span class="line">      <span class="attr">&quot;tags&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;banking&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;core-system&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;impressionData&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;segments&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">&quot;constraints&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;timeWindow&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;IN&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;low-traffic&quot;</span>],</span><br><span class="line">          <span class="attr">&quot;caseInsensitive&quot;</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-Permission-Flags（权限控制）​​"><a href="#5-Permission-Flags（权限控制）​​" class="headerlink" title="5. Permission Flags（权限控制）​​"></a><strong>5. Permission Flags（权限控制）​</strong>​</h3><p>​<strong>场景</strong>​：企业网银大额审批功能<br>​<strong>设计模式</strong>​：RBAC + 实时权限同步</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.getunleash.Unleash;</span><br><span class="line"><span class="keyword">import</span> io.getunleash.UnleashContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/transfer&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransferApprovalController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Unleash unleash;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AuditLogger auditLogger;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TransferApprovalController</span><span class="params">(Unleash unleash, AuditLogger auditLogger)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.unleash = unleash;</span><br><span class="line">        <span class="keyword">this</span>.auditLogger = auditLogger;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/approve-large&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ResponseEntity&lt;?&gt; approveLargeTransfer(</span><br><span class="line">            <span class="meta">@RequestBody</span> TransferRequest request,</span><br><span class="line">            <span class="meta">@RequestHeader(&quot;X-User-Info&quot;)</span> String userInfo) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 解析用户信息</span></span><br><span class="line">        User user = parseUserInfo(userInfo);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 构建Unleash上下文</span></span><br><span class="line">        UnleashContext context = UnleashContext.builder()</span><br><span class="line">                .userId(user.getId())</span><br><span class="line">                .addProperty(<span class="string">&quot;roles&quot;</span>, String.join(<span class="string">&quot;,&quot;</span>, user.getRoles()))</span><br><span class="line">                .addProperty(<span class="string">&quot;amount&quot;</span>, String.valueOf(request.getAmount()))</span><br><span class="line">                .addProperty(<span class="string">&quot;branchCode&quot;</span>, user.getBranchCode())</span><br><span class="line">                .addProperty(<span class="string">&quot;currency&quot;</span>, request.getCurrency())</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查权限</span></span><br><span class="line">        <span class="keyword">boolean</span> isApprovalAllowed = unleash.isEnabled(<span class="string">&quot;large_transfer_approval&quot;</span>, context);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!isApprovalAllowed) &#123;</span><br><span class="line">            auditLogger.logAccessViolation(user.getId(), <span class="string">&quot;large_transfer_approval_denied&quot;</span>, request);</span><br><span class="line">            <span class="keyword">return</span> ResponseEntity.status(HttpStatus.FORBIDDEN)</span><br><span class="line">                    .body(<span class="keyword">new</span> ErrorResponse(<span class="string">&quot;超出审批权限&quot;</span>, <span class="string">&quot;INSUFFICIENT_PRIVILEGES&quot;</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 执行审批逻辑</span></span><br><span class="line">        <span class="keyword">return</span> processApproval(request, user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> User <span class="title">parseUserInfo</span><span class="params">(String userInfo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 解析JWT或其它用户信息</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ResponseEntity&lt;?&gt; processApproval(TransferRequest request, User user) &#123;</span><br><span class="line">        <span class="comment">// 审批逻辑实现</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>unleash admin 配置如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">&quot;features&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;large_transfer_approval&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;大额转账审批权限控制&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;userWithId&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;constraints&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;roles&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;STR_CONTAINS&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;branch_manager&quot;</span>],</span><br><span class="line">              <span class="attr">&quot;caseInsensitive&quot;</span>: <span class="literal">false</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;amount&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;NUM_LTE&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;1000000&quot;</span>]</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;default&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;constraints&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;branchCode&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;IN&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;SHANGHAI&quot;</span>, <span class="string">&quot;BEIJING&quot;</span>],</span><br><span class="line">              <span class="attr">&quot;caseInsensitive&quot;</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;amount&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;NUM_LTE&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;5000000&quot;</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;currency&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;IN&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;CNY&quot;</span>, <span class="string">&quot;USD&quot;</span>]</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;variants&quot;</span>: [],</span><br><span class="line">      <span class="attr">&quot;tags&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;security&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;high&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;impressionData&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 

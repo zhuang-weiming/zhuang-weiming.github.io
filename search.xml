@@ -14958,4 +14958,148 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
         <tag>AI</tag>
       </tags>
   </entry>
+  <entry>
+    <title>企业端MCP分类</title>
+    <url>/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/</url>
+    <content><![CDATA[<p>本文将为您清晰梳理三类MCP部署方案，帮助企业根据自身IT政策和安全要求选择最适合的实施路径。</p>
+<h2 id="一、Self-host-MCP：企业PC零依赖部署"><a href="#一、Self-host-MCP：企业PC零依赖部署" class="headerlink" title="一、Self-host MCP：企业PC零依赖部署"></a>一、Self-host MCP：企业PC零依赖部署</h2><p>MCP示例</p>
+<ul>
+<li>​<strong>基础工具</strong>​：文件系统操作(filesystem)、内存管理(memory)、时间服务(time)</li>
+<li>​<strong>开发套件</strong>​：Git仓库管理(git)、SQLite数据库操作(sqlite)</li>
+<li>​<strong>本地逻辑处理</strong>​：顺序执行引擎(sequential-thinking)</li>
+<li>​<strong>一体化工具</strong>​：开发实用工具集(everything)</li>
+</ul>
+<h3 id="企业内网需要为下面的工具提供-internet访问权限"><a href="#企业内网需要为下面的工具提供-internet访问权限" class="headerlink" title="企业内网需要为下面的工具提供 internet访问权限"></a>企业内网需要为下面的工具提供 internet访问权限</h3><ul>
+<li>​<strong>基础设施即代码</strong>​：CDK(cdk-mcp-server)、CloudFormation(cfn-mcp-server)、Terraform(terraform-mcp-server)</li>
+<li>​<strong>API网关</strong>​：AWS本地API代理(aws-api-mcp-server)</li>
+</ul>
+<h3 id="开发增强工具"><a href="#开发增强工具" class="headerlink" title="开发增强工具"></a>开发增强工具</h3><ul>
+<li>​<strong>文档处理</strong>​：Markdown转换器(markdownify-mcp)</li>
+<li>​<strong>浏览器自动化</strong>​：浏览器工具集(browser-tools-mcp)、Playwright测试框架(mcp-playwright)</li>
+</ul>
+<blockquote>
+<p>​<strong>实施建议</strong>​：这些MCP可以打包成企业标准开发环境镜像，通过IT部门统一分发，确保版本一致性和安全合规。</p>
+</blockquote>
+<h2 id="二、Server-host-MCP：企业私有化部署"><a href="#二、Server-host-MCP：企业私有化部署" class="headerlink" title="二、Server-host MCP：企业私有化部署"></a>二、Server-host MCP：企业私有化部署</h2><p>这类MCP部署在企业内部服务器集群，适合需要团队共享资源但又不允许连接外网的环境。通过Kubernetes等容器编排平台，可以实现高可用和弹性扩展。</p>
+<h3 id="数据库连接器"><a href="#数据库连接器" class="headerlink" title="数据库连接器"></a>数据库连接器</h3><ul>
+<li>​<strong>关系型数据库</strong>​：PostgreSQL(postgres)、MySQL(mysql)</li>
+<li>​<strong>内存数据库</strong>​：Redis(redis)</li>
+<li>​<strong>文档数据库</strong>​：MongoDB兼容(documentdb)、Cassandra兼容(amazon-keyspaces)</li>
+</ul>
+<h3 id="AWS企业服务集成"><a href="#AWS企业服务集成" class="headerlink" title="AWS企业服务集成"></a>AWS企业服务集成</h3><p><em>前提：企业使用AWS混合云方案</em></p>
+<ul>
+<li>​<strong>数据服务</strong>​：DynamoDB(dynamodb-mcp-server)、S3表格存储(s3-tables-mcp-server)</li>
+<li>​<strong>分析服务</strong>​：Aurora(aurora-dsql-mcp-server)、Neptune图数据库(amazon-neptune-mcp-server)</li>
+<li>​<strong>数据仓库</strong>​：Redshift(redshift-mcp-server)</li>
+</ul>
+<h3 id="监控分析工具"><a href="#监控分析工具" class="headerlink" title="监控分析工具"></a>监控分析工具</h3><ul>
+<li>​<strong>指标监控</strong>​：Prometheus(prometheus-mcp-server)、CloudWatch(cloudwatch-mcp-server)</li>
+<li>​<strong>错误追踪</strong>​：Sentry(sentry)</li>
+</ul>
+<blockquote>
+<p>​<strong>部署示例</strong>​：使用Docker Compose可以快速搭建包含权限控制和审计日志的MCP服务栈：</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mcp-gateway:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mcp-gateway:latest</span></span><br><span class="line">    <span class="attr">ports:</span> [<span class="string">&quot;8000:8000&quot;</span>]</span><br><span class="line">  <span class="attr">postgres-mcp:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres-mcp-server:1.2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">DB_HOST:</span> <span class="string">internal-db</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Internet-host-MCP：互联网依赖型服务"><a href="#三、Internet-host-MCP：互联网依赖型服务" class="headerlink" title="三、Internet-host MCP：互联网依赖型服务"></a>三、Internet-host MCP：互联网依赖型服务</h2><p>这类MCP需要连接互联网和第三方API，为企业提供最广泛的能力扩展，但需要严格评估数据隐私和合规要求。</p>
+<h3 id="网络与搜索服务"><a href="#网络与搜索服务" class="headerlink" title="网络与搜索服务"></a>网络与搜索服务</h3><ul>
+<li>​<strong>搜索引擎</strong>​：Brave搜索API(brave-search)</li>
+<li>​<strong>内容获取</strong>​：网页抓取(fetch)、高级爬虫(puppeteer)</li>
+</ul>
+<h3 id="云平台集成"><a href="#云平台集成" class="headerlink" title="云平台集成"></a>云平台集成</h3><ul>
+<li>​<strong>协作工具</strong>​：Google Drive(gdrive)、Slack(slack)</li>
+<li>​<strong>代码托管</strong>​：GitHub(github)、GitLab(gitlab)</li>
+</ul>
+<h3 id="AI增强服务"><a href="#AI增强服务" class="headerlink" title="AI增强服务"></a>AI增强服务</h3><ul>
+<li>​<strong>创意生成</strong>​：AI艺术创作(everart)</li>
+<li>​<strong>大模型服务</strong>​：AWS Bedrock自动化(aws-bedrock-data-automation)</li>
+</ul>
+<h3 id="商业API连接"><a href="#商业API连接" class="headerlink" title="商业API连接"></a>商业API连接</h3><ul>
+<li>​<strong>地图服务</strong>​：Google Maps(google-maps)</li>
+<li>​<strong>云成本管理</strong>​：AWS定价API(aws-pricing)</li>
+<li>​<strong>文档查询</strong>​：AWS官方文档(aws-documentation)</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>AI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments</title>
+    <url>/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/</url>
+    <content><![CDATA[<h2 id="Executive-Summary"><a href="#Executive-Summary" class="headerlink" title="Executive Summary"></a>Executive Summary</h2><p>Model Context Protocol (MCP) servers are revolutionizing development workflows by providing seamless integration between AI assistants and development tools. However, implementing MCP servers like HashiCorp’s Terraform MCP Server within large banking institutions presents unique challenges due to strict security requirements, network isolation, and regulatory compliance needs.</p>
+<p>This article examines the technical architecture, network requirements, and implementation strategies for deploying Terraform MCP servers in highly regulated banking environments.</p>
+<h2 id="Understanding-MCP-Architecture-in-Banking-Context"><a href="#Understanding-MCP-Architecture-in-Banking-Context" class="headerlink" title="Understanding MCP Architecture in Banking Context"></a>Understanding MCP Architecture in Banking Context</h2><h3 id="Core-Components-Overview"><a href="#Core-Components-Overview" class="headerlink" title="Core Components Overview"></a>Core Components Overview</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    Banking Intranet Zone                    │</span><br><span class="line">│  ┌─────────────────┐    JSON-RPC 2.0    ┌─────────────────┐ │</span><br><span class="line">│  │   VS Code       │ ─────────────────&gt; │   MCP Server    │ │</span><br><span class="line">│  │   (MCP Client)  │ &lt;───────────────── │   Process       │ │</span><br><span class="line">│  └─────────────────┘    stdio pipes     │  (Docker&#x2F;npx&#x2F;   │ │</span><br><span class="line">│           │                             │   uvx&#x2F;native)   │ │</span><br><span class="line">│           │                             └─────────────────┘ │</span><br><span class="line">│           │                                      │          │</span><br><span class="line">│           ▼                                      ▼          │</span><br><span class="line">│  ┌─────────────────┐                    ┌─────────────────┐ │</span><br><span class="line">│  │   Developer     │                    │   Internal      │ │</span><br><span class="line">│  │   Workstation   │                    │   Terraform     │ │</span><br><span class="line">│  └─────────────────┘                    │   Registry      │ │</span><br><span class="line">│                                         └─────────────────┘ │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>The MCP server operates as a process (containerized via Docker, or directly via npx/uvx/native installation) that bridges VS Code with Terraform operations through JSON-RPC 2.0 protocol over stdio pipes, eliminating the need for network ports while maintaining security.</p>
+<h3 id="MCP-Server-Deployment-Options"><a href="#MCP-Server-Deployment-Options" class="headerlink" title="MCP Server Deployment Options"></a>MCP Server Deployment Options</h3><p>The Terraform MCP Server can be deployed using different methods, all maintaining the same communication architecture:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Docker deployment (recommended for banking)</span></span><br><span class="line">docker run -i --rm hashicorp/terraform-mcp-server:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># NPX deployment (Node.js package manager)</span></span><br><span class="line">npx @hashicorp/terraform-mcp-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># UVX deployment (Python package manager)</span></span><br><span class="line">uvx terraform-mcp-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># Native binary deployment</span></span><br><span class="line">./terraform-mcp-server</span><br></pre></td></tr></table></figure>
+
+<p>All deployment methods use identical JSON-RPC 2.0 communication over stdio pipes, ensuring consistent behavior regardless of the installation approach.</p>
+<h2 id="Banking-Network-Architecture-Challenges"><a href="#Banking-Network-Architecture-Challenges" class="headerlink" title="Banking Network Architecture Challenges"></a>Banking Network Architecture Challenges</h2><h3 id="Traditional-Banking-Network-Zones"><a href="#Traditional-Banking-Network-Zones" class="headerlink" title="Traditional Banking Network Zones"></a>Traditional Banking Network Zones</h3><p>Large banks typically implement multi-tier network architectures:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Internet ──&gt; DMZ ──&gt; Application Zone ──&gt; Database Zone</span><br><span class="line">    │         │            │                   │</span><br><span class="line">    │         │            │                   │</span><br><span class="line">   WAF    Firewall    Internal Apps        Databases</span><br><span class="line">                           │</span><br><span class="line">                           ▼</span><br><span class="line">                  Developer Workstations</span><br><span class="line">                     (Isolated Zone)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Key-Banking-Network-Constraints"><a href="#Key-Banking-Network-Constraints" class="headerlink" title="Key Banking Network Constraints"></a>Key Banking Network Constraints</h3><ol>
+<li><strong>Air-Gapped Environments</strong>: Many development zones have no direct internet access</li>
+<li><strong>Strict Egress Controls</strong>: All outbound traffic requires explicit approval</li>
+<li><strong>Container Registry Restrictions</strong>: External Docker registries often blocked</li>
+<li><strong>DNS Limitations</strong>: External DNS resolution may be restricted</li>
+<li><strong>Proxy Requirements</strong>: All HTTP/HTTPS traffic must route through corporate proxies</li>
+</ol>
+<h2 id="Network-Requirements-Analysis-for-Banking"><a href="#Network-Requirements-Analysis-for-Banking" class="headerlink" title="Network Requirements Analysis for Banking"></a>Network Requirements Analysis for Banking</h2><h3 id="Standard-MCP-Server-Network-Needs"><a href="#Standard-MCP-Server-Network-Needs" class="headerlink" title="Standard MCP Server Network Needs"></a>Standard MCP Server Network Needs</h3><p>The original Terraform MCP Server requires:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">External Dependencies:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docs.aws.amazon.com:443</span>        <span class="comment"># AWS documentation</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">registry.terraform.io:443</span>      <span class="comment"># Terraform registry</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">github.com:443</span>                 <span class="comment"># Module sources</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docker.io:443</span>                  <span class="comment"># Container registry</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">checkov.io:443</span>                 <span class="comment"># Security scanning updates</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Internal Communication:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">stdio</span> <span class="string">pipes</span> <span class="string">(no</span> <span class="string">network</span> <span class="string">ports)</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Docker</span> <span class="string">daemon</span> <span class="string">access</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Local</span> <span class="string">filesystem</span> <span class="string">access</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Banking-Adapted-Network-Architecture"><a href="#Banking-Adapted-Network-Architecture" class="headerlink" title="Banking-Adapted Network Architecture"></a>Banking-Adapted Network Architecture</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    Banking Intranet                         │</span><br><span class="line">│                                                             │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   Developer     │   stdio      │   MCP Server    │       │</span><br><span class="line">│  │   Workstation   │ ───────────&gt; │   Process       │       │</span><br><span class="line">│  │   (VS Code)     │              │                 │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│           │                                │                │</span><br><span class="line">│           │                                ▼                │</span><br><span class="line">│           │                       ┌─────────────────┐       │</span><br><span class="line">│           │                       │   Internal      │       │</span><br><span class="line">│           │                       │   Terraform     │       │</span><br><span class="line">│           │                       │   Registry      │       │</span><br><span class="line">│           │                       └─────────────────┘       │</span><br><span class="line">│           │                                │                │</span><br><span class="line">│           ▼                                ▼                │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   Internal      │              │   Corporate     │       │</span><br><span class="line">│  │   Container     │              │   Proxy         │       │</span><br><span class="line">│  │   Registry      │              │                 │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│                                                             │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="Implementation-Strategies-for-Banking-Environments"><a href="#Implementation-Strategies-for-Banking-Environments" class="headerlink" title="Implementation Strategies for Banking Environments"></a>Implementation Strategies for Banking Environments</h2><h3 id="Strategy-1-Controlled-Internet-Access"><a href="#Strategy-1-Controlled-Internet-Access" class="headerlink" title="Strategy 1: Controlled Internet Access"></a>Strategy 1: Controlled Internet Access</h3><p><strong>Approach</strong>: Selective external access through secure proxies</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Developer ──→ MCP Server ──→ Corporate Proxy ──→ Internet</span><br><span class="line">Workstation    Container      (with filtering)     (Limited)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Proxy Configuration</strong>:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># corporate-proxy.yaml</span></span><br><span class="line"><span class="attr">allowed_domains:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docs.aws.amazon.com</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">registry.terraform.io</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">github.com</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docker.io</span></span><br><span class="line"></span><br><span class="line"><span class="attr">blocked_patterns:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;*.social-media.com&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;*.entertainment.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">security_scanning:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">malware_detection:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">data_loss_prevention:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Container Configuration</strong>:</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Dockerfile for banking environment</span></span><br><span class="line"><span class="keyword">FROM</span> hashicorp/terraform-mcp-server:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure proxy settings</span></span><br><span class="line"><span class="keyword">ENV</span> HTTP_PROXY=http://proxy.bank.com:<span class="number">8080</span></span><br><span class="line"><span class="keyword">ENV</span> HTTPS_PROXY=http://proxy.bank.com:<span class="number">8080</span></span><br><span class="line"><span class="keyword">ENV</span> NO_PROXY=localhost,<span class="number">127.0</span>.<span class="number">0.1</span>,*.bank.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add internal CA certificates</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> internal-ca-certs.pem /usr/<span class="built_in">local</span>/share/ca-certificates/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> update-ca-certificates</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Strategy-2-Hybrid-Approach"><a href="#Strategy-2-Hybrid-Approach" class="headerlink" title="Strategy 2: Hybrid Approach"></a>Strategy 2: Hybrid Approach</h3><p><strong>Approach</strong>: Combination of internal mirroring and controlled external access</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    Banking Network                          │</span><br><span class="line">│                                                             │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   MCP Server    │   Primary    │   Internal      │       │</span><br><span class="line">│  │   Container     │ ───────────&gt; │   Resources     │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│           │                                                 │</span><br><span class="line">│           │ Fallback                                        │</span><br><span class="line">│           ▼                                                 │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   Corporate     │   Filtered   │   External      │       │</span><br><span class="line">│  │   Proxy         │ ───────────&gt; │   Resources     │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│                                                             │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Operational-Workflow-in-Banking-Environment"><a href="#Operational-Workflow-in-Banking-Environment" class="headerlink" title="Operational Workflow in Banking Environment"></a>Operational Workflow in Banking Environment</h2><h3 id="Risk-Assessment-Matrix"><a href="#Risk-Assessment-Matrix" class="headerlink" title="Risk Assessment Matrix"></a>Risk Assessment Matrix</h3><table>
+<thead>
+<tr>
+<th>Risk Factor</th>
+<th>Impact</th>
+<th>Probability</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Container Vulnerabilities</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Regular security scanning</td>
+</tr>
+<tr>
+<td>Network Breach</td>
+<td>High</td>
+<td>Low</td>
+<td>Zero-trust architecture</td>
+</tr>
+<tr>
+<td>Compliance Violation</td>
+<td>High</td>
+<td>Low</td>
+<td>Comprehensive logging</td>
+</tr>
+</tbody></table>
+<h2 id="Troubleshooting-Common-Banking-Implementation-Issues"><a href="#Troubleshooting-Common-Banking-Implementation-Issues" class="headerlink" title="Troubleshooting Common Banking Implementation Issues"></a>Troubleshooting Common Banking Implementation Issues</h2><h3 id="Issue-Proxy-Configuration-Issues"><a href="#Issue-Proxy-Configuration-Issues" class="headerlink" title="Issue : Proxy Configuration Issues"></a>Issue : Proxy Configuration Issues</h3><p><strong>Problem</strong>: External requests failing through corporate proxy</p>
+<p><strong>Solution</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Set proxy environment variables</span></span><br><span class="line"><span class="built_in">export</span> HTTP_PROXY=http://proxy.bank.com:8080</span><br><span class="line"><span class="built_in">export</span> HTTPS_PROXY=http://proxy.bank.com:8080</span><br><span class="line"><span class="built_in">export</span> NO_PROXY=localhost,127.0.0.1,*.bank.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>Of cause this is a big risk for each developer to set proxy on the MCP Server in everyday working. Because we can’t fully follow the bank’s internet access policy via the Proxy Configuration</strong></p>
+]]></content>
+      <tags>
+        <tag>AI</tag>
+      </tags>
+  </entry>
 </search>
