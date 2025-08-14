@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">280</span>
+          <span class="site-state-item-count">281</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,90 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/10/21/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E5%92%8C%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/21/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E5%92%8C%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">终端安全和网络代理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-21 11:57:00 / Modified: 11:57:37" itemprop="dateCreated datePublished" datetime="2024-10-21T11:57:00+08:00">2024-10-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="通用架构"><a href="#通用架构" class="headerlink" title="通用架构"></a>通用架构</h2><p>员工 —&gt;<br>Downstream(DRN) — HTTPS—&gt; Int. Firewall —HTTPS —&gt; Upstream (DMZ) —&gt; Ext. Firewall —&gt; Internet</p>
+<h2 id="聊天软件"><a href="#聊天软件" class="headerlink" title="聊天软件"></a>聊天软件</h2><p>员工 —&gt;<br>GRE Router(HK, UK, China等国家) —&gt; GRE Tunnel Encapsulation —&gt; <strong>Zscaler</strong> (Cloud) —&gt; MS Cloud (Teams) </p>
+<h2 id="网盘"><a href="#网盘" class="headerlink" title="网盘"></a>网盘</h2><p>员工 —&gt;<br>网络策略Policy —&gt; SAML —&gt; Azure IDP </p>
+<h2 id="上网浏览"><a href="#上网浏览" class="headerlink" title="上网浏览"></a>上网浏览</h2><p>员工 —&gt;<br>网络策略Policy —&gt; Internet</p>
+<h2 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h2><p>远程员工 —&gt;<br>网络策略Policy —&gt; 拆分通道 —&gt; ZOOM</p>
+<h2 id="Zscaler的能力"><a href="#Zscaler的能力" class="headerlink" title="Zscaler的能力"></a><a target="_blank" rel="noopener" href="https://www.zscaler.com/">Zscaler的能力</a></h2><ul>
+<li>1）为用户建立profile，2）制定policy，3）执行policy - 控制用户的网络浏览。</li>
+<li>可以和企业内部的 AD 整合。</li>
+<li>用户端无法logout，无法退出，无法修改policy，确保用户执行policy。</li>
+<li>管理员端可以方便地监控全体用户端流量情况，如，哪些 App 流量最高，用户端device类型/型号。</li>
+<li>支持多云环境，自动更新，低延时，<strong>全球部署</strong>。</li>
+</ul>
+<h2 id="Broadcom"><a href="#Broadcom" class="headerlink" title="Broadcom"></a><a target="_blank" rel="noopener" href="https://www.broadcom.com/">Broadcom</a></h2><ul>
+<li>服务端网络安全管理</li>
+</ul>
+<h2 id="Trellix-Endpoint-Security"><a href="#Trellix-Endpoint-Security" class="headerlink" title="Trellix Endpoint Security"></a><a target="_blank" rel="noopener" href="https://www.trellix.com/products/endpoint-security/">Trellix Endpoint Security</a></h2><ul>
+<li>确保所有安全组件无缝运行，为所有载体提供强大的保护。</li>
+<li>可以在用户工作电脑端，云端部署。</li>
+<li>中心化管理。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -661,87 +745,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">Eth系节点安装</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-08-12 15:09:00" itemprop="dateCreated datePublished" datetime="2024-08-12T15:09:00+08:00">2024-08-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-10-10 16:54:09" itemprop="dateModified" datetime="2024-10-10T16:54:09+08:00">2024-10-10</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Ethereum"><a href="#Ethereum" class="headerlink" title="Ethereum"></a>Ethereum</h2><p>安装手册：<a target="_blank" rel="noopener" href="https://github.com/eth-educators/eth-docker">https://github.com/eth-educators/eth-docker</a></p>
-<ul>
-<li>32 GiB of RAM - 16 GiB works but can be challenging depending on client mix</li>
-<li>4 CPU cores</li>
-<li>4TB <a target="_blank" rel="noopener" href="https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038">“mainstream” SSD</a> - TLC and DRAM.<br>如 GCP 示例：<br><img src="/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/1.png"><br>• <strong>8 vCPU</strong>: This means the virtual machine (VM) has 8 virtual Central Processing Units (vCPUs). A vCPU is a virtualized CPU that the VM uses to run processes. Each vCPU is a share of the physical CPU’s resources allocated to the VM.<br>• <strong>4 cores</strong>: This refers to the number of physical cores backing the virtual CPUs. In this case, the 8 vCPUs are mapped to 4 physical CPU cores. Typically, this implies that each physical core is hyper-threaded, meaning it can handle two threads simultaneously, effectively providing two vCPUs per core.</li>
-</ul>
-<p><img src="/2024/08/12/Eth%E7%B3%BB%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85/2.png"></p>
-<h2 id="Linea"><a href="#Linea" class="headerlink" title="Linea"></a>Linea</h2><p>安装手册：<a target="_blank" rel="noopener" href="https://docs.linea.build/developers/guides/run-a-node/use-docker">https://docs.linea.build/developers/guides/run-a-node/use-docker</a></p>
-<h2 id="Polygon"><a href="#Polygon" class="headerlink" title="Polygon"></a>Polygon</h2><p>安装手册：<a target="_blank" rel="noopener" href="https://docs.polygon.technology/pos/how-to/full-node/full-node-docker/">https://docs.polygon.technology/pos/how-to/full-node/full-node-docker/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/56/">56</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
