@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">281</span>
+          <span class="site-state-item-count">282</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,410 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/02/11/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%A6%81%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E6%98%BE%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/11/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%A6%81%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E6%98%BE%E5%AD%98/" class="post-title-link" itemprop="url">大模型要占用多少显存</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-02-11 09:48:00" itemprop="dateCreated datePublished" datetime="2025-02-11T09:48:00+08:00">2025-02-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-02-27 10:52:31" itemprop="dateModified" datetime="2025-02-27T10:52:31+08:00">2025-02-27</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="部署要占用多少显存"><a href="#部署要占用多少显存" class="headerlink" title="部署要占用多少显存"></a>部署要占用多少显存</h2><p>以运行精度为 INT8 的大模型为例，这种精度的参数，一个参数需要占用一个字节。<br>$1B参数模型 = 10亿参数 * 每个参数占用1Byte$<br>$1G显存 = 1024<em>1024</em>1024Byte$<br>也就是说<br><strong>INT8 精度类型：1B 参数需要约 1G 显存。</strong></p>
+<table>
+<thead>
+<tr>
+<th>dtype</th>
+<th align="center">1B模型需要占用的显存</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>float32</td>
+<td align="center">4G</td>
+</tr>
+<tr>
+<td>fp16/bf16</td>
+<td align="center">2G</td>
+</tr>
+<tr>
+<td>int8</td>
+<td align="center">1G</td>
+</tr>
+<tr>
+<td>int4</td>
+<td align="center">0.5G</td>
+</tr>
+<tr>
+<td>然后就可以快速计算各个类型精度的大模型需要多少显存，例如 f16 的 70B 参数大模型，就需要“精度膨胀系数” 2*70=140G显存。</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="训练要占用多少显存"><a href="#训练要占用多少显存" class="headerlink" title="训练要占用多少显存"></a>训练要占用多少显存</h2><p>这里还有另外一个在线的网页工具：<a target="_blank" rel="noopener" href="https://huggingface.co/spaces/hf-accelerate/model-memory-usage">https://huggingface.co/spaces/hf-accelerate/model-memory-usage</a><br><img src="/2025/02/11/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%A6%81%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E6%98%BE%E5%AD%98/1.jpg"></p>
+<p>模型包括： DeepSeek R1 (671B)，DeepSeek R1 Distill Qwen 7B， 14B， 32B， 以及 DeepSeek R1 Distill Llama 8B， 70B 这些模型，</p>
+<ol>
+<li>假设在并发 3 个用户的情况下运行这些模型所需的资源？</li>
+<li>关于 DeepSeek R1 系列模型在不同数据量下进行微调（并非全量训练），并在一天内完成微调所需的硬件资源。分别在 1K，1M，1GB，1T 数据量下训练这些模型所需的资源和训练时长。</li>
+</ol>
+<p>根据您提供的信息，以及之前的分析，以下是关于 DeepSeek R1 系列模型微调硬件资源需求的全面分析，并以表格形式呈现：</p>
+<h2 id="DeepSeek-R1-模型微调硬件资源需求总表-单日内完成"><a href="#DeepSeek-R1-模型微调硬件资源需求总表-单日内完成" class="headerlink" title="DeepSeek R1 模型微调硬件资源需求总表 (单日内完成)"></a>DeepSeek R1 模型微调硬件资源需求总表 (单日内完成)</h2><p>采用BF16（2字节/参数）的情况下，考虑到 Unsloth 主要优化 LoRA 微调，并且更适用于单 GPU 或少量 GPU 场景，基于 Unsloth 优化 LoRA 微调的假设，重新评估 DeepSeek R1 系列模型在中小数据量 (1K, 1M, 1G, 10G) 下的硬件资源需求。 对于超大数据量 (100G) 和超大模型 (DeepSeek-R1-671B)，我仍然保留 ZeRO-3 优化。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>数据size</th>
+<th>GPU 配置 (显存需求)</th>
+<th>CPU 核心数</th>
+<th>内存</th>
+<th>存储 (SSD/NVMe)</th>
+<th>网络带宽</th>
+<th>关键配置说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DeepSeek-R1-671B BF16</strong></td>
+<td>1M</td>
+<td>16×A100 80G</td>
+<td>64核</td>
+<td>512GB</td>
+<td>2TB</td>
+<td>25Gbps RDMA</td>
+<td>模型并行 (TP=16) + 数据并行 (DP=2)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>64×A100 80G</td>
+<td>256核</td>
+<td>1TB</td>
+<td>5TB</td>
+<td>50Gbps RDMA</td>
+<td>TP=8 + DP=8 + ZeRO-3</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>128×A100 80G</td>
+<td>512核</td>
+<td>2TB</td>
+<td>10TB</td>
+<td>100Gbps RDMA</td>
+<td>TP=8 + DP=16 + ZeRO-3</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>192×A100 80G</td>
+<td>768核</td>
+<td>4TB</td>
+<td>15TB</td>
+<td>150Gbps RDMA</td>
+<td>TP=8 + DP=24 + ZeRO-3</td>
+</tr>
+<tr>
+<td><strong>Distill-Qwen-7B 4-bit</strong></td>
+<td>1M</td>
+<td>1×A10G 24G (Unsloth)</td>
+<td>8核</td>
+<td>64GB</td>
+<td>500GB</td>
+<td>1Gbps</td>
+<td>单卡 4-bit LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>2×A10G 24G (Unsloth)</td>
+<td>16核</td>
+<td>128GB</td>
+<td>1TB</td>
+<td>5Gbps</td>
+<td>DP=2 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>4×A10G 24G (Unsloth)</td>
+<td>32核</td>
+<td>256GB</td>
+<td>2TB</td>
+<td>5Gbps</td>
+<td>DP=4 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>8×A10G 24G (Unsloth)</td>
+<td>64核</td>
+<td>512GB</td>
+<td>3TB</td>
+<td>10Gbps</td>
+<td>DP=8 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td><strong>Distill-Qwen-14B 4-bit</strong></td>
+<td>1M</td>
+<td>1×A100 40G (Unsloth)</td>
+<td>16核</td>
+<td>128GB</td>
+<td>1TB</td>
+<td>5Gbps</td>
+<td>单卡 LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>4×A100 40G (Unsloth)</td>
+<td>32核</td>
+<td>256GB</td>
+<td>2TB</td>
+<td>10Gbps</td>
+<td>DP=4 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>8×A100 40G (Unsloth)</td>
+<td>64核</td>
+<td>512GB</td>
+<td>3TB</td>
+<td>10Gbps</td>
+<td>DP=8 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>16×A100 40G (Unsloth)</td>
+<td>128核</td>
+<td>1TB</td>
+<td>5TB</td>
+<td>25Gbps</td>
+<td>DP=16 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td><strong>Distill-Qwen-32B BF16</strong></td>
+<td>1G</td>
+<td>4×A100 80G (Unsloth)</td>
+<td>64核</td>
+<td>512GB</td>
+<td>2TB</td>
+<td>10Gbps</td>
+<td>TP=4 + DP=2</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>8×A100 80G (Unsloth)</td>
+<td>128核</td>
+<td>1TB</td>
+<td>3TB</td>
+<td>25Gbps</td>
+<td>DP=8 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>32×A100 80G</td>
+<td>256核</td>
+<td>2TB</td>
+<td>10TB</td>
+<td>50Gbps RDMA</td>
+<td>TP=4 + DP=8 + ZeRO-3</td>
+</tr>
+<tr>
+<td><strong>Distill-Llama-8B 4-bit</strong></td>
+<td>1M</td>
+<td>1×A10G 24G (Unsloth)</td>
+<td>8核</td>
+<td>64GB</td>
+<td>500GB</td>
+<td>1Gbps</td>
+<td>单卡 LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>2×A10G 24G (Unsloth)</td>
+<td>16核</td>
+<td>128GB</td>
+<td>1TB</td>
+<td>5Gbps</td>
+<td>DP=2 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>4×A10G 24G (Unsloth)</td>
+<td>32核</td>
+<td>256GB</td>
+<td>2TB</td>
+<td>5Gbps</td>
+<td>DP=4 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>8×A10G 24G (Unsloth)</td>
+<td>48核</td>
+<td>384GB</td>
+<td>3TB</td>
+<td>10Gbps</td>
+<td>DP=8 + LoRA 微调 (Unsloth)</td>
+</tr>
+<tr>
+<td><strong>Distill-Llama-70B BF16</strong></td>
+<td>1M</td>
+<td>8×A100 80G</td>
+<td>64核</td>
+<td>512GB</td>
+<td>2TB</td>
+<td>25Gbps RDMA</td>
+<td>TP=4 + DP=2 (ZeRO-3 for 70B still recommended)</td>
+</tr>
+<tr>
+<td></td>
+<td>1G</td>
+<td>32×A100 80G</td>
+<td>128核</td>
+<td>1TB</td>
+<td>5TB</td>
+<td>25Gbps RDMA</td>
+<td>TP=4 + DP=8 (ZeRO-3 for 70B still recommended)</td>
+</tr>
+<tr>
+<td></td>
+<td>10G</td>
+<td>64×A100 80G</td>
+<td>256核</td>
+<td>2TB</td>
+<td>10TB</td>
+<td>50Gbps RDMA</td>
+<td>TP=8 + DP=8 + ZeRO-3</td>
+</tr>
+<tr>
+<td></td>
+<td>100G</td>
+<td>128×A100 80G</td>
+<td>512核</td>
+<td>4TB</td>
+<td>15TB</td>
+<td>100Gbps RDMA</td>
+<td>TP=8 + DP=16 + ZeRO-3</td>
+</tr>
+</tbody></table>
+<p><strong>GPU 配置 (显存需求)</strong>: 指完成微调任务所需的 GPU 型号和数量，以及总显存需求。例如 “16×A100 80G” 表示需要 16 张 80GB 显存的 A100 GPU。<br><strong>CPU 核心数</strong>: 训练任务所需的 CPU 核心数量，主要用于数据预处理和模型管理。<br><strong>内存</strong>: 系统内存需求，用于数据缓存、模型加载和训练过程中的临时数据存储。<br><strong>存储 (SSD/NVMe)</strong>: 高速固态硬盘容量需求，用于存储训练数据、模型参数和中间结果。NVMe SSD 提供更快的读写速度，适用于大数据量训练。<br><strong>网络带宽</strong>: 多 GPU 训练时所需的网络带宽，用于 GPU 之间的数据通信。RDMA (Remote Direct Memory Access) 网络提供更低的延迟和更高的带宽，适用于大规模分布式训练。<br><strong>关键配置说明</strong>: 简要描述了针对不同模型和数据量所采用的关键并行策略和优化技术，例如模型并行 (TP)、数据并行 (DP)、ZeRO-3 优化和梯度累积等。<br><strong>预估并发 3 用户显存需求</strong>: 粗略估计为模型参数显存占用的 3 倍或更高。因为并发用户需要模型的多份副本或共享模型但需要额外的上下文缓存等。实际情况可能更复杂。</p>
+<ol>
+<li><strong>Unsloth 对资源需求的影响</strong>:<ul>
+<li><strong>中小模型 (Distill-Qwen-7B/14B/32B, Distill-Llama-8B) 和中小数据量 (1K - 100G)</strong>: 使用 Unsloth 库进行 LoRA 微调，可以显著降低 GPU 资源需求。例如，Distill-Qwen-7B 在 1K 数据量下，单张 A10G 24G 即可完成微调；即使在 100G 数据量下，也仅需 8 张 A10G 24G GPU。</li>
+<li><strong>超大模型 (DeepSeek-R1-671B) 和大数据量 (100G)</strong>: 对于这些极端情况，Unsloth 的优化可能不足以完全解决显存瓶颈。因此，表格中仍然保留了 ZeRO-3 优化，并结合 Unsloth 的 FlashAttention-2 优化，以期达到最佳的性能和资源效率。</li>
+</ul>
+</li>
+<li><strong>LoRA 微调的优势</strong>:<ul>
+<li>表格中所有基于 Unsloth 的配置方案都假设使用 LoRA 微调。LoRA 本身就是一种参数高效微调方法，可以显著减少需要训练的参数量，从而降低显存需求和加速训练。</li>
+<li>Unsloth 进一步优化了 LoRA 的实现，使其在速度和显存效率方面更具优势。</li>
+</ul>
+</li>
+<li><strong>FlashAttention-2 的加速作用</strong>:<ul>
+<li>Unsloth 集成的 FlashAttention-2 可以显著加速训练过程，这有助于在 “日内完成微调” 的目标下，使用更少的 GPU 资源。</li>
+</ul>
+</li>
+</ol>
+<h2 id="关键分析逻辑"><a href="#关键分析逻辑" class="headerlink" title="关键分析逻辑"></a>关键分析逻辑</h2><ol>
+<li>模型参数量 vs. GPU 显存:<ul>
+<li>参数高效<strong>微调 (如 LoRA) 显著降低了显存需求</strong>，公式估算如下： $$ \text{显存} \approx \text{模型参数} \times (2\ \text{bytes} \times \text{激活系数}) + \text{优化器状态} $$ 其中，激活系数在 LoRA 场景下约为 0.1-0.3，优化器状态通过 ZeRO-3 等技术可以大幅减少。</li>
+</ul>
+</li>
+<li>数据量 vs. 训练并行度:<ul>
+<li>小数据量 (1K, 1M): 资源需求主要由模型大小决定。较小的 Distill 模型甚至可以在单张消费级 GPU 上完成微调。</li>
+<li>大数据量 (1G, 1T): 数据并行成为关键。需要增加 GPU 数量以提高数据吞吐量，并配合高速网络 (如 RDMA) 保证并行效率。</li>
+</ul>
+</li>
+<li>训练时长与硬件资源:<ul>
+<li>表格中的配置旨在将微调时间压缩到 <strong>一天以内</strong>。更快的训练速度通常需要更多的 GPU 资源并行计算。</li>
+<li>实际训练时间还会受到 <strong>模型结构</strong>、<strong>超参数设置</strong>、<strong>优化算法</strong> 等多种因素影响。上述表格提供的是一个 <strong>硬件配置参考</strong>，实际部署时可能需要根据具体情况进行调整。</li>
+</ul>
+</li>
+<li>优化技术:<ul>
+<li>混合精度训练 (BF16/FP16): 降低显存占用和计算复杂度，加速训练过程。</li>
+<li>梯度检查点: 通过计算换取显存，进一步降低显存峰值。</li>
+<li>ZeRO-3: 将优化器状态、梯度和模型参数分片到多张 GPU 上，极大地减少单卡显存需求，尤其适用于超大模型 (如 671B)。</li>
+<li>模型并行 (Tensor Parallelism, TP): 将模型按层或张量切分到多张 GPU 上，降低单卡显存压力，适用于超大模型。</li>
+<li>数据并行 (Data Parallelism, DP): 将数据分片到多张 GPU 上，每张 GPU 训练模型完整副本的一部分数据，提高数据吞吐量，适用于大数据量训练。</li>
+<li>梯度累积: 在显存受限时，通过多次小批量梯度计算累积梯度，模拟大批量训练的效果。</li>
+</ul>
+</li>
+<li>网络与存储:<ul>
+<li><strong>RDMA 网络</strong>: 对于大规模分布式训练 (尤其是模型并行和数据并行结合)，RDMA 网络可以显著降低 GPU 间通信延迟，提高并行效率。</li>
+<li>高速 SSD/NVMe 存储: 大数据量训练时，高速存储可以加速数据加载，避免 I/O 瓶颈。</li>
+</ul>
+</li>
+</ol>
+<p><strong>请注意:</strong></p>
+<ul>
+<li>上述表格提供的是 <strong>估算和建议</strong>，实际资源需求可能因具体任务和实现细节有所不同。</li>
+<li>在实际部署时，建议 <strong>从小规模配置开始测试</strong>，并根据训练速度和资源利用率逐步调整硬件配置。</li>
+<li>云服务平台通常提供多种 GPU 实例和高速网络配置，可以根据表格中的建议选择合适的云资源进行模型微调。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -713,90 +1117,6 @@
 <ul>
 <li>0x84eb60e6732848f837f48402dcfff25e3d3d9304</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/" class="post-title-link" itemprop="url">Web安全培训</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-12-10 17:00:00 / Modified: 17:36:33" itemprop="dateCreated datePublished" datetime="2024-12-10T17:00:00+08:00">2024-12-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><p>Burp 抓包，改包工具， 基于java，运行，需要JRE<br>需要搭梯子才能登录其网站主页，美国公司，商业软件，年费399年费，有社区开源版本<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/1.png"><br>Burp未启动时，网络的路由环境<br>    本地（浏览器） — 服务器<br>Burp启动后，网络的路由环境<br>    本地（浏览器 — Burp） — 服务器<br>Burp extensions — <a target="_blank" rel="noopener" href="https://github.com/snoopysecurity/awesome-burp-extensions">https://github.com/snoopysecurity/awesome-burp-extensions</a></p>
-<p>DVWA靶场，里面是各种漏洞攻击的介绍和说明，是一个入门的联系资源，英文资源。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/2.png"></p>
-<p>Pikachu 漏洞练习平台，同理，中文资源。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/3.png"></p>
-<p><a target="_blank" rel="noopener" href="https://www.kali.org/">https://www.kali.org/</a> , 一个Linux发行版本，是专门针对各种信息安全任务或者练习而准备的。</p>
-<h2 id="前端一切不可靠，如上Burp在客户端做网络流量拦截，做中间人攻击"><a href="#前端一切不可靠，如上Burp在客户端做网络流量拦截，做中间人攻击" class="headerlink" title="前端一切不可靠，如上Burp在客户端做网络流量拦截，做中间人攻击"></a>前端一切不可靠，如上Burp在客户端做网络流量拦截，做中间人攻击</h2><p>对应的措施：<br>1.后端校验；2.前端不做逻辑判断；3.前端加密混淆；4.移动端加壳；5.反调试检测，防止逆向工程; 6.后台数据库存储字段最好经过KMS后端密文，常见的服务器本地算法 — hash(明文+盐值)<br>通常，<a target="_blank" rel="noopener" href="http://www.website.com/robots.txt%EF%BC%8C%E5%A6%82">www.website.com/robots.txt，如</a> <a target="_blank" rel="noopener" href="https://www.bilibili.com/robots.txt">https://www.bilibili.com/robots.txt</a> ，很多网站都有这样子一个网站URL的列表，表示本网站允许访问的URL。</p>
-<p>Burp 启动浏览器，在网站的<a target="_blank" rel="noopener" href="http://burp/%E5%9C%B0%E5%9D%80%EF%BC%8C">http://burp/地址，</a><br>在网页右上角点击CA Certificate 下载Burp颁发的证书。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/4.png"></p>
-<p>Burp暴力破解，尝试用户名和密码时，可以使用“Repeater”和“Intruder”两个菜单的功能。<br>通常登录成功后，response 的长度会有不同。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/5.png"><br>暴力破解的本质是 自动化，大量发送请求，猜测密码。<br>应对方法：<br>1.要求用户密码设置的复杂度；<br>2.识别爬虫/机器人：验证码，滑块，随机验证码；<br>3.限制登录频率：每次登录n秒以上方可，错误m次后冻结该用户x分钟，这样会带来问题：<br>A.前端限制，通过重置本地数据可以绕过；<br>B.IP地址限制，可能会误封正常用户，攻击者租用地址池拥有大量IP。<br>C.账号限制，会造成正常用户无法登录，恶意攻击者可以制造拒绝服务攻击。<br>4.增加密码强度，特别是增加密码长度是最有效的强度。<br>A.密码一户一用，避免一个密码到处使用，避免撞库攻击。<br>密码的本质是进行身份验证的手段。<br>密码的应用场景是基于以下假设：只有用户和服务器知道该密码<br>其他方式验证身份：短信验证码，指纹，面部识别，USBKEY，2FA，多因子验证等等。</p>
-<h2 id="社会工程"><a href="#社会工程" class="headerlink" title="社会工程"></a>社会工程</h2><p>黑客通过社会工程学（Social Engineering）实现攻击的手法多种多样，主要是利用人类的心理弱点和信任机制来获取信息或访问权限。<br>钓鱼攻击，尾随攻击，假冒身份，电话攻击，非技术性攻击，社交媒体欺骗，媒体投影攻击，关系建立攻击等等。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/6.png"></p>
-<h2 id="OWASP-—-Open-Web-Application-Security-Project"><a href="#OWASP-—-Open-Web-Application-Security-Project" class="headerlink" title="OWASP — Open Web Application Security Project"></a>OWASP — Open Web Application Security Project</h2><p>OWASP Top 10 提供了Web 安全领域发生最频繁的10种事故。最新版本是 2021 年发布的 — <a target="_blank" rel="noopener" href="https://owasp.org/Top10/zh_CN/">https://owasp.org/Top10/zh_CN/</a></p>
-<p>WebShell - 以网页形式实现shell的功能，能够对系统进行操作。例如，文件读写，命令执行等。也被称为网页木马。<br>首先，网站如果对用户上传的文件，不做控制，黑客则有可能会上传木马文件，黑客通过木马文件控制后台服务器，如下，<br>通过 <a target="_blank" rel="noopener" href="https://github.com/AntSwordProject/">https://github.com/AntSwordProject/</a> 工具可以执行网页木马。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/7.png"><br>执行木马 <?php eval($_POST['cmd']);?> 成功，成功访问到后端服务器的目录和文件。<br><img src="/2024/12/10/Web%E5%AE%89%E5%85%A8%E5%9F%B9%E8%AE%AD/8.png"></p>
-<p>仅仅依赖客户端 JavaScript 验证和服务器端 MIME 类型检查仍然不够安全，因为客户端验证很容易被绕过，而且 MIME 类型本身也可能被伪造，尽管概率较低。 为了构建一个更加严谨的文件上传系统，需要采取更全面的安全措施，将验证和安全检查融入整个上传流程的各个阶段。</p>
-<p>一个更严谨的文件上传系统应该包含以下措施：</p>
-<ol>
-<li>客户端验证 (加强):<br>文件类型检查 (加强): 虽然 file.type 相对可靠，但仍然不是绝对安全的。 可以考虑结合一些额外的检查：<br>文件头部信息检查: 读取文件的前几个字节，检查是否符合已知的文件格式规范。 这需要对不同文件类型的头部结构有深入的了解。 但这仍然只能作为辅助手段，不能完全依赖。<br>更严格的正则表达式: 使用更精确的正则表达式来验证文件名，但这仍然不能防止恶意文件伪装。<br>文件大小限制: 设置一个合理的文件大小限制，并进行客户端验证。<br>用户反馈: 提供清晰的用户反馈，告知用户文件上传失败的原因，例如文件类型不允许、文件大小超过限制等。<br>禁止直接拖拽上传: 避免用户直接拖拽文件到上传区域，强制用户通过“选择文件”按钮选择文件，这样可以更好地控制文件上传过程。</li>
-<li>服务器端验证 (多层防御):<br>文件类型检查 (多重验证): 不要仅仅依靠 MIME 类型，结合多种方法进行验证：<br>文件签名: 检查文件的魔术数字 (magic number)，这是一种非常可靠的方法。 不同的文件格式通常有独特的魔术数字。<br>文件内容分析: 对于一些关键的文件类型，可以进行更深入的内容分析，检查文件结构是否符合规范。 这需要根据具体的文件类型定制相应的分析方法。 这可能需要耗费较多资源。<br>文件大小限制: 设置严格的文件大小限制，防止资源耗尽攻击(Denial of Service,DoS)。<br>临时文件存储: 将上传的文件先保存到一个临时目录，然后再进行后续处理，这样可以避免恶意文件直接影响服务器。<br>文件扩展名检查 (补充): 虽然不完全可靠，但作为附加的检查，可以辅助判断文件的类型。<br>内容安全扫描 (关键): 使用专业的安全扫描工具，扫描上传的文件是否包含恶意代码、病毒或其他有害内容。 这可能是最关键的安全步骤，但会增加系统复杂性和成本。 一些云服务提供商提供此类服务。<br>白名单机制: 只允许特定类型的文件上传。 尽量避免使用黑名单，因为黑名单很难完全覆盖所有的恶意文件类型。<br>沙盒环境: 在沙盒环境中执行文件分析，以最大程度地限制恶意代码对服务器的影响。<br>日志记录: 记录所有的文件上传事件，包括文件名、MIME 类型、文件大小、上传时间以及验证结果。 这有助于追踪和分析安全事件。</li>
-<li>其他安全措施:<br>HTTPS: 使用 HTTPS 加密上传过程，防止数据被窃取。<br>输入验证: 对所有用户输入进行严格的验证，防止注入攻击。<br>代码安全审计: 定期对代码进行安全审计，查找和修复潜在的安全漏洞。<br>服务端代码示例，如下：<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;io&quot;</span></span><br><span class="line">	<span class="string">&quot;mime/multipart&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line">	<span class="string">&quot;path/filepath&quot;</span></span><br><span class="line">	<span class="string">&quot;regexp&quot;</span></span><br><span class="line">	<span class="string">&quot;strings&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/gabriel-vasile/mimetype&quot;</span> <span class="comment">// 用于更准确的 MIME 类型检测</span></span><br><span class="line">	<span class="string">&quot;github.com/google/uuid&quot;</span>             <span class="comment">// 用于生成唯一的文件名</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// AllowedMimeTypes 定义允许上传的文件类型</span></span><br><span class="line"><span class="keyword">var</span> AllowedMimeTypes = <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">bool</span>&#123;</span><br><span class="line">	<span class="string">&quot;image/jpeg&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">	<span class="string">&quot;image/png&quot;</span>:  <span class="literal">true</span>,</span><br><span class="line">	<span class="string">&quot;image/gif&quot;</span>:  <span class="literal">true</span>,</span><br><span class="line">	<span class="comment">// 添加其他允许的 MIME 类型</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// MaxFileSize 定义允许上传的最大文件大小 (字节)</span></span><br><span class="line"><span class="keyword">const</span> MaxFileSize = <span class="number">10</span> * <span class="number">1024</span> * <span class="number">1024</span> <span class="comment">// 10MB</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// uploadHandler 处理文件上传请求</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">uploadHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> r.Method != http.MethodPost &#123;</span><br><span class="line">		http.Error(w, <span class="string">&quot;Method Not Allowed&quot;</span>, http.StatusMethodNotAllowed)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	file, handler, err := r.FormFile(<span class="string">&quot;file&quot;</span>) <span class="comment">// 假设表单字段名为 &quot;file&quot;</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusBadRequest)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> file.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 客户端验证 (加强)</span></span><br><span class="line">	fileName := handler.Filename</span><br><span class="line">	<span class="keyword">if</span> !isValidFileName(fileName) &#123; <span class="comment">// 检查文件名是否合法</span></span><br><span class="line">		http.Error(w, <span class="string">&quot;Invalid file name&quot;</span>, http.StatusBadRequest)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fileSize := handler.Size</span><br><span class="line">	<span class="keyword">if</span> fileSize &gt; MaxFileSize &#123;</span><br><span class="line">		http.Error(w, <span class="string">&quot;File too large&quot;</span>, http.StatusRequestEntityTooLarge)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 服务器端验证 (多层防御)</span></span><br><span class="line">	detectedMimeType, err := mimetype.DetectReader(file)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, <span class="string">&quot;Failed to detect MIME type&quot;</span>, http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> !AllowedMimeTypes[detectedMimeType.String()] &#123;</span><br><span class="line">		http.Error(w, <span class="string">&quot;Invalid file type&quot;</span>, http.StatusBadRequest)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 使用 UUID 生成唯一的文件名，避免文件名冲突</span></span><br><span class="line">	newFileName := uuid.New().String() + filepath.Ext(fileName)</span><br><span class="line">	uploadPath := <span class="string">&quot;./uploads/&quot;</span> + newFileName <span class="comment">// 定义上传文件的存储路径</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创建上传目录，如果不存在</span></span><br><span class="line">	os.MkdirAll(<span class="string">&quot;./uploads/&quot;</span>, <span class="number">0755</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创建文件并保存</span></span><br><span class="line">	newFile, err := os.Create(uploadPath)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> newFile.Close()</span><br><span class="line"></span><br><span class="line">	_, err = io.Copy(newFile, file)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//  此处添加更严格的安全检查，例如：</span></span><br><span class="line">	<span class="comment">//  1. 使用第三方库进行病毒扫描 (ClamAV, VirusTotal API 等)</span></span><br><span class="line">	<span class="comment">//  2. 更深入的文件内容分析，根据文件类型进行特定检查</span></span><br><span class="line"></span><br><span class="line">	fmt.Fprintf(w, <span class="string">&quot;File uploaded successfully: %s\n&quot;</span>, newFileName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// isValidFileName 检查文件名是否合法，防止目录遍历攻击等</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isValidFileName</span><span class="params">(fileName <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	re := regexp.MustCompile(<span class="string">`^[a-zA-Z0-9._-]+$`</span>) <span class="comment">// 只允许字母、数字、点、下划线和短横线</span></span><br><span class="line">	<span class="keyword">return</span> re.MatchString(fileName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/upload&quot;</span>, uploadHandler)</span><br><span class="line">	fmt.Println(<span class="string">&quot;Server listening on port 8080&quot;</span>)</span><br><span class="line">	http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 更易于管理。<br>MaxFileSize: 设置了最大文件大小限制。<br>mimetype 库: 使用了 github.com/gabriel-vasile/mimetype 库来更准确地检测 MIME 类型。 这比只依赖 handler.Header.Get(“Content-Type”) 更可靠。<br>UUID 生成文件名: 使用 UUID 生成唯一的文件名，避免文件名冲突和潜在的安全问题。<br>isValidFileName 函数: 对文件名进行简单的验证，防止目录遍历等攻击。 这只是一个基本的示例，实际应用中可能需要更复杂的验证规则。<br>临时文件存储 (缺失但建议): 为了更安全，应该先将文件保存到临时目录，验证通过后再移动到最终存储位置。<br>安全扫描 (缺失但必须): 代码中用注释标注了需要添加安全扫描的地方。 你需要集成一个专业的安全扫描库或服务 (例如 ClamAV, VirusTotal API 等) 来扫描上传的文件是否包含恶意代码。 这是至关重要的安全步骤。</li>
-</ol>
-<h2 id="Linux-系统排查"><a href="#Linux-系统排查" class="headerlink" title="Linux 系统排查"></a>Linux 系统排查</h2><p>1.查看用户行为<br>/etc/passwd，/etc/shadow 中存储了account和密码信息，黑客可能会增加高权限用户在如上两个文件夹中<br>如 macOS 中，<br>➜  ~ sudo dscl . -list /Users | while read user; do sudo dscl . -read /Users/“$user” UserShell | grep -q ‘/bin/bash’ &amp;&amp; echo $user; done<br>_mbsetupuser<br>postgres<br>➜  ~ last<br>Zzz  ttys000                         Tue Dec 10 14:05   still logged in<br>Zzz  ttys000                         Mon Dec  9 11:29 - 11:29  (00:00)<br>Zzz  ttys000                         Sat Dec  7 19:35 - 19:35  (00:00)<br>Zzz  console                         Tue Dec  3 14:51   still logged in<br>reboot time                                Tue Dec  3 14:50<br>还有，如查看用户的密码是否为空，用户执行过的命令，等等。<br>3.查看进程，例如，黑客通过服务器在挖矿等异常。lspf， top等命令。<br>更多可以查看 Linux 应急响应手册 — <a target="_blank" rel="noopener" href="https://github.com/Just-Hack-For-Fun/Linux-INCIDENT-RESPONSE-COOKBOOK">https://github.com/Just-Hack-For-Fun/Linux-INCIDENT-RESPONSE-COOKBOOK</a></p>
-<h2 id="威胁情报中心："><a href="#威胁情报中心：" class="headerlink" title="威胁情报中心："></a>威胁情报中心：</h2><p>Windows 系统工具 - <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/sysinternals/">https://learn.microsoft.com/en-us/sysinternals/</a><br>腾讯威胁情报中心 - <a target="_blank" rel="noopener" href="https://tix.qq.com/">https://tix.qq.com/</a><br>可疑文件分析 - <a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/home/upload">https://www.virustotal.com/gui/home/upload</a></p>
 
       
     </div>

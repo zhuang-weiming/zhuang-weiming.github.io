@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">281</span>
+          <span class="site-state-item-count">282</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,92 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">polygonID SDK部分代码分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-11-22 15:44:00 / Modified: 16:59:39" itemprop="dateCreated datePublished" datetime="2023-11-22T15:44:00+08:00">2023-11-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>回到<a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/polygonid-flutter-sdk">polygonID SDK project</a>，在项目中，<a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/">理论性的iden3和polygonID算法</a>，在实际代码中，如何连接呢？本文接续上文<a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/"> iden3和polygonID原理应用和实战</a>，讲述具体代码，如何实现的。</p>
+<h3 id="算法1：生成最终的proof"><a href="#算法1：生成最终的proof" class="headerlink" title="算法1：生成最终的proof"></a>算法1：生成最终的proof</h3><p>从技术角度来看，一个身份包括三棵树：claims tree，revocation tree，roots of roots tree。</p>
+<h4 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h4><p><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/polygonid-flutter-sdk/blob/a552fc6b2430353b05c0c2ef3c17567704012a90/lib/iden3comm/domain/use_cases/generate_iden3comm_proof_use_case.dart">https://github.com/0xPolygonID/polygonid-flutter-sdk/blob/a552fc6b2430353b05c0c2ef3c17567704012a90/lib/iden3comm/domain/use_cases/generate_iden3comm_proof_use_case.dart</a></p>
+<ol>
+<li>为生成proof，准备入参：<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Prepare atomic query inputs 准备计算查询的入参</span></span><br><span class="line">Uint8List res = <span class="keyword">await</span> _proofRepository  </span><br><span class="line">    .calculateAtomicQueryInputs(  </span><br><span class="line">  id: didEntity.identifier,  <span class="comment">// 用户 DID</span></span><br><span class="line">  profileNonce: param.profileNonce,  <span class="comment">// 用户个人资料随机数</span></span><br><span class="line">  claimSubjectProfileNonce: param.claimSubjectProfileNonce,  <span class="comment">// 用户声明主题资料随机数</span></span><br><span class="line">  authClaim: authClaim,  <span class="comment">// 用户授权声明</span></span><br><span class="line">  incProof: incProof,  <span class="comment">// 如上图中 用户Claims Tree Root</span></span><br><span class="line">  nonRevProof: nonRevProof,  <span class="comment">// 如上图中 用户Revocation Tree Root</span></span><br><span class="line">  gistProof: gistProof,  <span class="comment">// 如上图中 用户Roots Tree Toot</span></span><br><span class="line">  treeState: treeState,  <span class="comment">// 如上图中 用户Identity State</span></span><br><span class="line">  challenge: param.challenge,  <span class="comment">// 挑战，由Issuer生成，作为生成proof的一部分</span></span><br><span class="line">  signature: signature,  <span class="comment">// 用户针对challenge的签名</span></span><br><span class="line">  claim: param.credential,  <span class="comment">// 用户证书，其中包含的PII Data</span></span><br><span class="line">  proofScopeRequest: param.request.toJson(),  </span><br><span class="line">  circuitId: param.request.circuitId,  <span class="comment">// 使用的电路ID</span></span><br><span class="line">  config: config,  </span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>其中部分参数的示例如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;genesisDID&quot;</span>: <span class="string">&quot;did:iden3:tT2t3b685r2dKsjo4MioyKeceFT4mQEYfDd69EY5Y&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;profileNonce&quot;</span>: <span class="string">&quot;0&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;authClaim&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;304427537360709784173770334266246861770&quot;</span>,</span><br><span class="line">    <span class="string">&quot;0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;17640206035128972995519606214765283372613874593503528180869261482403155458945&quot;</span>,</span><br><span class="line">    <span class="string">&quot;20634138280259599560273310290025659992320584624461316485434108770067472477956&quot;</span>,</span><br><span class="line">    <span class="string">&quot;15930428023331155902&quot;</span>,</span><br><span class="line">    <span class="string">&quot;0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;0&quot;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;authClaimIncMtp&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;existence&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;siblings&quot;</span>: []</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;authClaimNonRevMtp&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;existence&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;siblings&quot;</span>: []</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;treeState&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;state&quot;</span>: <span class="string">&quot;18656147546666944484453899241916469544090258810192803949522794490493271005313&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;claimsRoot&quot;</span>: <span class="string">&quot;9763429684850732628215303952870004997159843236039795272605841029866455670219&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;revocationRoot&quot;</span>: <span class="string">&quot;0&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;rootOfRoots&quot;</span>: <span class="string">&quot;0&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;gistProof&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;root&quot;</span>: <span class="string">&quot;4924303677736085224554833340748086265406229626627819375177261957522622163007&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;proof&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;existence&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">&quot;siblings&quot;</span>: [],</span><br><span class="line">      <span class="attr">&quot;node_aux&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;key&quot;</span>: <span class="string">&quot;24846663430375341177084327381366271031641225773947711007341346118923321345&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;6317996369756476782464660619835940615734517981889733696047139451453239145426&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;signature&quot;</span>: <span class="string">&quot;fccc15d7aed2bf4f5d7dbe55c81087970344d13e5d9f348e61965ac364f41d29b366b52bc0820c603877352054833da083f5595c29c881ccd8ee47aa639aa103&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;challenge&quot;</span>: <span class="string">&quot;10&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>生成证明：<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Prove 生成最终证明，其中的步骤实际是在调用iden3的类库</span></span><br><span class="line"><span class="keyword">return</span> _proveUseCase  </span><br><span class="line">    .execute(param: ProveParam(atomicQueryInputs, param.circuitData))</span><br><span class="line">    .then((proof) &#123;  </span><br><span class="line">_stacktraceManager.addTrace(<span class="string">&quot;[GenerateIden3commProofUseCase] proof&quot;</span>);  </span><br><span class="line">logger().i(<span class="string">&quot;[GenerateProofUseCase] proof: <span class="subst">$proof</span>&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>2.1 生成证明的具体过程：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Future&lt;ZKProofEntity&gt; execute(&#123;<span class="keyword">required</span> ProveParam param&#125;) <span class="keyword">async</span> &#123;  </span><br><span class="line">  <span class="keyword">try</span> &#123;  </span><br><span class="line">    <span class="comment">// Calculate witness  计算见证</span></span><br><span class="line">    Uint8List wtnsBytes = <span class="keyword">await</span> _proofRepository.calculateWitness(  </span><br><span class="line">      param.circuitData,  </span><br><span class="line">      param.inputs,  </span><br><span class="line">    );  </span><br><span class="line">    <span class="comment">// Generate proof  生成证明</span></span><br><span class="line">    ZKProofEntity zkProofEntity = <span class="keyword">await</span> _proofRepository.prove(  </span><br><span class="line">      param.circuitData,  </span><br><span class="line">      wtnsBytes,  </span><br><span class="line">    );  </span><br><span class="line">    _stacktraceManager.addTrace(<span class="string">&quot;[ProveUseCase] proof&quot;</span>);  </span><br><span class="line">    logger().i(<span class="string">&quot;[ProveUseCase] proof: <span class="subst">$zkProofEntity</span>&quot;</span>);  </span><br><span class="line">    <span class="keyword">return</span> zkProofEntity;  </span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="算法2：稀疏默克尔树"><a href="#算法2：稀疏默克尔树" class="headerlink" title="算法2：稀疏默克尔树"></a>算法2：稀疏默克尔树</h3><h4 id="代码接口如下"><a href="#代码接口如下" class="headerlink" title="代码接口如下"></a>代码接口如下</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SMTRepository</span> </span>&#123;  </span><br><span class="line">  Future&lt;<span class="keyword">void</span>&gt; addLeaf(  </span><br><span class="line">      &#123;<span class="keyword">required</span> NodeEntity leaf,  </span><br><span class="line">      <span class="keyword">required</span> TreeType type,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> did,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> privateKey&#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;NodeEntity&gt; getNode(  </span><br><span class="line">      &#123;<span class="keyword">required</span> HashEntity hash,  </span><br><span class="line">      <span class="keyword">required</span> TreeType type,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> did,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> privateKey&#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;<span class="keyword">void</span>&gt; addNode(  </span><br><span class="line">      &#123;<span class="keyword">required</span> HashEntity hash,  </span><br><span class="line">      <span class="keyword">required</span> NodeEntity node,  </span><br><span class="line">      <span class="keyword">required</span> TreeType type,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> did,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> privateKey&#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;HashEntity&gt; getRoot(  </span><br><span class="line">      &#123;<span class="keyword">required</span> TreeType type,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> did,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> privateKey&#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;<span class="keyword">void</span>&gt; setRoot(  </span><br><span class="line">      &#123;<span class="keyword">required</span> HashEntity root,  </span><br><span class="line">      <span class="keyword">required</span> TreeType type,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> did,  </span><br><span class="line">      <span class="keyword">required</span> <span class="built_in">String</span> privateKey&#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;MTProofEntity&gt; generateProof(&#123;  </span><br><span class="line">    <span class="keyword">required</span> HashEntity key,  </span><br><span class="line">    <span class="keyword">required</span> TreeType type,  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> did,  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> privateKey,  </span><br><span class="line">  &#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;<span class="keyword">void</span>&gt; createSMT(&#123;  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">int</span> maxLevels,  </span><br><span class="line">    <span class="keyword">required</span> TreeType type,  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> did,  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> privateKey,  </span><br><span class="line">  &#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;<span class="keyword">void</span>&gt; removeSMT(&#123;  </span><br><span class="line">    <span class="keyword">required</span> TreeType type,  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> did,  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> privateKey,  </span><br><span class="line">  &#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;<span class="built_in">String</span>&gt; hashState(&#123;  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> claims,  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> revocation,  </span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">String</span> roots,  </span><br><span class="line">  &#125;);  </span><br><span class="line">  </span><br><span class="line">  Future&lt;<span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">dynamic</span>&gt;&gt; convertState(&#123;<span class="keyword">required</span> TreeStateEntity state&#125;);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>综上，polygonID 很好地在手机端（<a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/polygonid-flutter-sdk">Flutter</a>）和web端（<a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/js-sdk">JavaScript and TypeScript</a>）实现了DID-Holder端SDK。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -805,180 +891,6 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line">    <span class="string">&quot;sync&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据存储：使用映射来存储已处理请求的唯一标识符</span></span><br><span class="line"><span class="keyword">var</span> processedRequests = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">bool</span>)</span><br><span class="line"><span class="keyword">var</span> mutex = &amp;sync.Mutex&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理HTTP请求的处理程序函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handleRequest</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 从请求中获取唯一标识符</span></span><br><span class="line">    requestID := r.Header.Get(<span class="string">&quot;Request-ID&quot;</span>)</span><br><span class="line">    <span class="comment">// 使用互斥锁保护共享数据</span></span><br><span class="line">    mutex.Lock()</span><br><span class="line">    <span class="keyword">defer</span> mutex.Unlock()</span><br><span class="line">    <span class="comment">// 检查请求是否已经处理过</span></span><br><span class="line">    <span class="keyword">if</span> processedRequests[requestID] &#123;</span><br><span class="line">        <span class="comment">// 如果已处理过，返回已处理的响应</span></span><br><span class="line">        w.WriteHeader(http.StatusOK)</span><br><span class="line">        fmt.Fprintf(w, <span class="string">&quot;Request already processed\n&quot;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果未处理过，执行请求操作</span></span><br><span class="line">        <span class="comment">// 注意：在实际应用中，要确保请求操作是幂等的</span></span><br><span class="line">        result := performRequestOperation(r)</span><br><span class="line">        <span class="comment">// 更新已处理请求的映射</span></span><br><span class="line">        processedRequests[requestID] = <span class="literal">true</span></span><br><span class="line">        <span class="comment">// 返回操作结果</span></span><br><span class="line">        <span class="keyword">if</span> result &#123;</span><br><span class="line">            w.WriteHeader(http.StatusOK)</span><br><span class="line">            fmt.Fprintf(w, <span class="string">&quot;Request processed successfully\n&quot;</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            w.WriteHeader(http.StatusInternalServerError)</span><br><span class="line">            fmt.Fprintf(w, <span class="string">&quot;Request processing failed\n&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行请求操作的函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">performRequestOperation</span><span class="params">(r *http.Request)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="comment">// 在这里执行实际的请求操作，确保操作是幂等的</span></span><br><span class="line">    <span class="comment">// 例如，创建订单、更新资源、执行业务逻辑等</span></span><br><span class="line">    <span class="comment">// 如果操作成功，返回true；否则返回false</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// 创建HTTP服务器</span></span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/process&quot;</span>, handleRequest)</span><br><span class="line">    http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>Bug针对上述代码中的 <code>result</code> ，如果是 false 的情况下，该 Token 的请求处理结果应该记录为 <code>false</code>， 即 <code>processedRequests[requestID] = false</code>。<br>本例子中，供应商的错误在哪里呢？供应商系统的幂等服务，在24小时内，如果出现错误，服务不会重新执行，而是认为已经处理完成，继续抛出同样的 error message。实在不能够接受。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2023/09/14/BloombergGPT%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/14/BloombergGPT%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/" class="post-title-link" itemprop="url">BloombergGPT论文解读</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2023-09-14 16:31:00 / Modified: 17:13:31" itemprop="dateCreated datePublished" datetime="2023-09-14T16:31:00+08:00">2023-09-14</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h3><p>BloombergGPT是布隆伯格2023年3月30日公开在arXiv的一篇文章——<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.17564">BloombergGPT: A Large Language Model for Finance</a>中涉及到的语言模型，也是金融领域第一个公开发表文章的大语言模型（以下简称“LLM”）。</p>
-<h3 id="2-要点"><a href="#2-要点" class="headerlink" title="2. 要点"></a>2. 要点</h3><ul>
-<li>BloombergGPT是Bloomberg训练出来的金融大语言模型（LLM for Finance）</li>
-<li>模型参数量为500亿，使用了包含3630亿token的金融领域数据集以及3450亿token的通用数据集</li>
-<li>隐藏层维度为7680，多头的头数为40</li>
-<li>模型采用Unigram tokenizer，AdamW优化器</li>
-<li>模型在64个AWS的p4d.24xlarge实例上训练了53天，其中每个p4d.24xlarge实例包含了8块40GB的A100GPU</li>
-<li>对BloombergGPT的评估包含了两部分：金融领域评估与通用领域评估</li>
-<li>评估对比的其他大语言模型有GPT-NeoX、OPT、BLOOM、GPT-3</li>
-<li>在金融领域任务上，BloombergGPT综合表现最好；在通用任务上，BloombergGPT的综合得分同样优于相同参数量级的其他模型，并且在某些任务上的得分要高于参数量更大的模型</li>
-<li>BloombergGPT模型在金融领域取得好效果的同时，并没有以牺牲模型通用能力为代价</li>
-<li>对模型定性评估的结果表明，BloombergGPT可以提高工作效率</li>
-<li>出于安全性的考虑，BloogbergGPT模型不会被公开，但是模型训练和评估的相关经验和思考会被分享出来</li>
-<li>作者认为，对模型效果提升促进最大的三个因素（按影响从高到低排序）分别为精心清洗的数据集、合理的tokenizer、流行的模型结构</li>
-</ul>
-<p>文章的主要贡献在以下几点：</p>
-<ul>
-<li>混合数据集训练方法不仅可以在特定任务上表现出色，也可以在一般NLP基准测试上表现良好</li>
-<li>不同于常见的网络爬取数据，本文的数据包含了巨量的可信来源的精心清洗的数据</li>
-<li>不仅包含了模型在基准测试集上的评估结果，也包含了在Bloomberg内部任务上的评估结果</li>
-<li>在超过7000亿个token的语料库中的5690亿个token上训练出一个500亿参数的LLM</li>
-<li>使用Unigram模型而非常用的基于贪心合并的子词标记器进行tokenize，方便在推理时进行更智能的标记化</li>
-<li>借鉴BLOOM的训练大模型方法，同时也将自己自己在训练BloombergGPT中的经验分享</li>
-</ul>
-<h3 id="3-数据集"><a href="#3-数据集" class="headerlink" title="3.数据集"></a>3.数据集</h3><p><strong>BloombergGPT是一个有500亿参数、基于BLOOM模型的LLM</strong>，过程中采用了一种兼具通用能力和特定领域的方法。<br>作者首先构建了FinPile——一个包含了新闻、档案、网络爬取的新闻稿件、英文财经文档等英文金融文档的金融领域数据集，同时也采用了通用的数据集。</p>
-<h4 id="金融领域数据集"><a href="#金融领域数据集" class="headerlink" title="金融领域数据集"></a>金融领域数据集</h4><p>金融领域数据集共包含了3630亿个token，占总数据集token量的54.2%，具体由以下几个部分构成：</p>
-<ul>
-<li>金融领域相关网页，2980亿token，占比42.01%</li>
-<li>金融领域知名新闻源，380亿token，占比5.31%</li>
-<li>公司财报，140亿token，占比2.04%</li>
-<li>金融相关公司的出版物，90亿token，占比1.21%</li>
-<li>bloomberg，50亿token，占比0.7%</li>
-</ul>
-<p>因为包含一部分收费和私有数据，所以这份数据集不会被公开，但是文章中公开了模型训练方法。</p>
-<h4 id="通用数据集"><a href="#通用数据集" class="headerlink" title="通用数据集"></a>通用数据集</h4><p>**通用数据集共包含了3450亿个token，占总数据集token量的48.73%**，具体分为如下几个部分：</p>
-<ul>
-<li>The Pile数据集，1840亿token，占比25.9%</li>
-<li>C4数据集，1380亿token，占比19.48%</li>
-<li>Wikipedia数据集，240亿token，占比3.35%</li>
-</ul>
-<p>数据集使用Unigram tokenizer对原始文本进行tokenize。具体处理时，作者这了两点改进（具体内容可参考原论文《2.3Tokenization》）：</p>
-<ul>
-<li>在pretokenization这一步，将数字视为单个token，并且允许词组的存在，以提高信息密度减少句子长度</li>
-<li>使用分治的思想优化Unigram tokenizer在大数据集上的实现，并对最终词表大小控制在13万这个数量级上</li>
-</ul>
-<h3 id="4-模型"><a href="#4-模型" class="headerlink" title="4.模型"></a>4.模型</h3><h4 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h4><p>模型基于BLOOM模型的自回归结构，具体包含了70层transformer decoder。<br>另外一些细节如下（详见《3.1 Architecture》）：</p>
-<ul>
-<li>前馈层（FFN）中的非线性函数采用GELU</li>
-<li>位置编码采用ALiBi编码</li>
-<li>模型在第一层多了一个layer normalization</li>
-</ul>
-<h4 id="模型尺度"><a href="#模型尺度" class="headerlink" title="模型尺度"></a>模型尺度</h4><p>这一部分，作者先有了算力预算（<strong>40G内存A100共130万GPU小时</strong>），并且给中间checkpoint存储留出了约25%的时间预算。<br><strong>根据Chinchilla scaling laws，计算出模型的参数和需要的数据量大小——模型参数为500亿，token数据量为11000+亿</strong>。<br>考虑到金融领域token数量要占总token数量的50%以上，而且目前的数据暂时无法再进行扩充，最终<strong>模型参数量选择为500亿，token数据量为7000+亿</strong>。<br>另一方面，隐藏层维度D也可以根据decoder的层数计算出来，这里经过计算<strong>隐藏层维度为7680</strong>，多头的<strong>头数为40</strong>。</p>
-<h4 id="训练配置"><a href="#训练配置" class="headerlink" title="训练配置"></a>训练配置</h4><p>这一部分原始论文写的比较详细，具体见《3.3 Training Configuration》，这里简单摘要如下：</p>
-<ul>
-<li>作者在<strong>每篇文档的最后添加了特殊标记&lt;|endoftext|&gt;，模型训练时选取的句子长度为2048token</strong></li>
-<li>训练时采用的优化方法是<strong>AdamW，beta1、beta2、weight decay取值分别为0.9、0.95、0.1</strong>，初始学习率为6e-5，采用cosine衰减、线性warmup方式</li>
-<li>模型参数随机初始化为<strong>均值0、标准差0.006588的正态分布</strong>，并对MLP的第二层和注意力层输出进行缩放</li>
-<li>关于训练的不稳定性，文章中没有描述训练BloombergGPT时采用的方法，只是介绍了相关进展</li>
-<li>关于计算使用到的硬件，使用了<strong>64个AWS的p4d.24xlarge实例，每个p4d.24xlarge实例包含了8块40GB的A100GPU</strong></li>
-</ul>
-<h4 id="大规模优化采用的方法"><a href="#大规模优化采用的方法" class="headerlink" title="大规模优化采用的方法"></a>大规模优化采用的方法</h4><p>这一部分中，作者描述了具体优化时采用的方法：ZeRO优化、MiCS、Activation Checkpointing、混合精度训练（Mixed Precision Training）、内核融合（fused kernels）。<br>具体见《3.4 Large-scale Optimization》<br>经过上述优化，上述硬件的<strong>平均算力水平达到了102TFLOPs</strong>，<strong>训练一步需要32.5秒</strong>。</p>
-<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>文章中记录<strong>模型共训练了139,200步</strong>，进行了约<strong>0.8个epoch</strong>，<strong>训练了53天</strong>。<br>一个epoch都没有训练完的原因是这时验证集上的损失函数已经不再继续下降了。<br><strong>具体训练过程如下</strong>：</p>
-<ul>
-<li>初始训练的batch size大小为1024，warm-up过程持续了7200步，随后作者将batch size修改为2048。</li>
-<li>115,500步之后，验证集上的损失不再下降，然后作者将学习率缩小为原始的2/3；</li>
-<li>129,900步之后，学习率缩小为之前的1/2，同时增加dropout</li>
-<li>137,100步之后，学习率再次缩小为之前的1/2</li>
-<li>最终，训练在146,000步结束。作者选取139,200这一步的模型最为最终使用的模型</li>
-</ul>
-<p>这里推荐阅读原始文章3.3节与3.4节中关于训练方法的描述，对于大模型训练有一定的参考意义。</p>
-<h3 id="5-评估"><a href="#5-评估" class="headerlink" title="5.评估"></a>5.评估</h3><p>文章中对BloombergGPT的<strong>评估分成了两部分</strong>：<strong>金融领域任务与通用任务</strong>。这样做的目的也比较直观，就是<strong>验证在特定领域预训练后的模型能够在特定领域表现好，同时在通用领域的表现也不会差太多</strong>这一观点。<br>同时，文章<strong>对比了BloombergGPT、GPT-NeoX、OPT、BLOOM、GPT-3在不同任务上的表现</strong>。注意，这里<strong>因为GPT-3模型无法获取，故仅在部分通用任务上进行了评测</strong>。<br>作者对每一个模型均独立进行了评测，并且在每一个任务中使用相同的标准prompt、相同的样例、不使用任务描述和任何CoT prompt，以保证评测结果的公平性。<br>对于有多个答案的任务，文章中采用了**基于似然的分类方法（likelihood-based classification）进行评估；对于其他任务，文章采用贪心解码（greedy decoding）的方式进行评估。</p>
-<h4 id="holdout-loss"><a href="#holdout-loss" class="headerlink" title="holdout loss"></a>holdout loss</h4><p>作者首先在FinPile数据集预留的部分样本上对各个模型进行了bits per byte的评估。<br>bits per byte指标是评估语言模型的一种常见指标<strong>，类似于perplexity，取值越小，模型越好。具体计算方法可见</strong><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/a/261789">How to compute bits per character (BPC)?</a><br><strong>BloombergGPT在金融语料上的bits per byte均好于其他模型，并且在财报（Filings）这个类别上表现尤其突出</strong>。这个结果也符合预期。否则可能就没有后面任务对比的必要了。<br>文章又将金融领域任务分成了<strong>外部任务和Bloomberg内部任务</strong>。在每个任务上，作者除了评估模型在任务上的表现，还评估了同一任务下不同模型生成结果之间两两比较的胜率（WR）。</p>
-<h4 id="外部任务"><a href="#外部任务" class="headerlink" title="外部任务"></a>外部任务</h4><p>外部任务主要如下：</p>
-<ul>
-<li>ConvFinQA，标普500收益报告问答推理</li>
-<li>FiQA SA，金融新闻和微博客标题基于方面的情感三分类（正负中）</li>
-<li>FPB，金融新闻句子级别情感三分类（正负中）</li>
-<li>Headline，新闻标题在预定义标签下的二分类</li>
-<li>NER，信用风险评估数据的命名实体识别</li>
-</ul>
-<p><strong>BloombergGPT在上述5个任务中的4个都取得了最好效果，在另外一个取得了第二名；并且在模型两两结果对比的胜率最高，同时在ConvFinQA这个任务上遥遥领先。</strong></p>
-<h4 id="Bloomberg内部任务之情感分析"><a href="#Bloomberg内部任务之情感分析" class="headerlink" title="Bloomberg内部任务之情感分析"></a>Bloomberg内部任务之情感分析</h4><p>这个任务中的情感分析均为基于方面的情感三分类（aspect-specific sentiment），数据集的内容通过任务名称就可以略知一二。<br><strong>BloombergGPT在上述4个数据集上的表现均大幅领先于其他模型</strong>。</p>
-<h4 id="探索性任务：NER"><a href="#探索性任务：NER" class="headerlink" title="探索性任务：NER"></a>探索性任务：NER</h4><p>注意，这里的<strong>NER只涉及到ORG、PER、LOC这三类实体</strong>。<br>同时探索性任务<strong>NER+NED是指识别出实体后再将实体链接到上市公司的股票简称</strong>。比如“AAPL announced that they will stop using Intel chips in future products.” 这句话<strong>NER的结果是“AAPL, Intel”</strong>，<strong>NER+NED的结果是 “AAPL, INTC”</strong>。<br>这两类任务涉及到的数据集包括了<strong>7个数据集</strong>，分别为BN（Bloomberg BN wire上内容）、BFW（Bloomberg First Word上的内容）、Filings（财报内容）、Headlines（Bloomberg news内容）、Premium（Bloogberg收录 的第三方新闻内容）、Transcripts（公司新闻发布会的文字记录）、Social Media。<br>最终，<strong>NER任务下，BloombergGPT仅在Headlines这一个数据集上得分最高；但在NER+NED任务下，BloombergGPT在除了Social Media任务的其他任务上均得分第一</strong>。</p>
-<h4 id="通用任务"><a href="#通用任务" class="headerlink" title="通用任务"></a>通用任务</h4><p>文章在通用任务上做了相当多的对比，这里<strong>仅对任务类型和结果做简要描述，详细内容见文章中的5.4~5.7节</strong>。<br>作者在<strong>BIG-bench Hard</strong>（BIG-bench的一个子集，仅包含目前模型表现无法超过人类的任务）、<strong>常识测试</strong>（不提供任何背景知识，仅可以训练时使用的数据）、<strong>阅读理解</strong>、<strong>语言学</strong>（消歧、语法识别、蕴含判别等）等任务上进行了测试。<br><strong>在BIG-bench Hard任务上，BloombergGPT得分低于参数量更大的PaLM和BLOOM，但是与参数规模类似的GPT-NeoX或OPT66B相比，BloombergGPT的性能更接近BLOOM</strong>，这说明开发金融专用的大语言模型并没有明显牺牲其通用能力。<br><strong>在常识测试任务中，BloombergGPT在1个任务上取得了第一名，在其余3个任务上取得了第二名（这里未考虑GPT-3）</strong>。<br><strong>在阅读理解任务上，GPT-3在所有任务上排名第一，BloombergGPT在5/6个任务上排名第二</strong>，且得分远高于BLOOM模型。<br><strong>在语言学任务上，GPT-3在综合排名第一，BloombergGPT综合排名第二</strong>，且综合得分高于BLOOM模型。</p>
-<h4 id="评测总结"><a href="#评测总结" class="headerlink" title="评测总结"></a>评测总结</h4><p><strong>在金融领域任务上，BloombergGPT综合表现最好</strong>；<br><strong>在通用任务上，BloombergGPT的综合得分优于相同参数量级的其他模型，并且在某些任务上的得分要高于参数量更大的模型</strong>。<br>这都说明，开发金融专用的大语言模型在金融领域取得好效果的同时，并没有以牺牲模型通用能力为代价。<br>这一结论也可以给我们一个启示，<strong>在其他特定领域，我们也可以开发专用的大语言模型</strong>。</p>
-<h4 id="定性评估"><a href="#定性评估" class="headerlink" title="定性评估"></a>定性评估</h4><p>作者在文章的第6章还展示了对BloombergGPT定性评估的例子，以展示模型在专业领域带来的促进作用。<br>这些列子包括：</p>
-<ul>
-<li>BQL（Bloomberg查询语言）生成，即使用自然语言完成Bloomberg数据库查询，类似NL2SQL</li>
-<li>新闻标题提示，辅助记者生成新闻短标题</li>
-<li>金融问答</li>
-</ul>
-<h3 id="6-道德伦理、限制与研究意义"><a href="#6-道德伦理、限制与研究意义" class="headerlink" title="6.道德伦理、限制与研究意义"></a>6.道德伦理、限制与研究意义</h3><p>这一章没有太多值得写的，主要就是强调了目前大语言模型可能会生成有害的、有偏见的内容，并且可能存在prompt注入导致信息泄露的风险，Bloomberg在使用大语言模型前后都会做好风控，保证生成内容的准确性。<br>同时，<strong>BloogbergGPT模型不会被公开，但是模型训练和评估的相关经验和思考会被分享出来</strong>。</p>
-<h3 id="7-总结与展望"><a href="#7-总结与展望" class="headerlink" title="7.总结与展望"></a>7.总结与展望</h3><p>文章提出了BloombergGPT——一个金融领域顶级的LLM，并且在训练特定领域大语言模型做出了如下贡献：</p>
-<ul>
-<li><strong>使用领域数据和通用数据的训练方式可以让模型在这两个方面得到平衡的结果</strong></li>
-<li>模型参数量参考了Chinchilla scaling laws</li>
-<li>公布了相关训练细节</li>
-</ul>
-<p>下一步，作者们会在以下方向继续研究：</p>
-<ul>
-<li>金融领域的fine-tuning</li>
-<li>使用更无害和更无偏见的语言</li>
-<li>研究tokenization方法对模型结果的影响</li>
-</ul>
-<p>最后，作者把模型取得目前效果归结于以下三个因素（按影响从高到低排序）：</p>
-<ul>
-<li><strong>精心清洗的内部数据集</strong></li>
-<li><strong>tokenizer的选择</strong></li>
-<li><strong>流行的模型结构</strong></li>
-</ul>
 
       
     </div>
