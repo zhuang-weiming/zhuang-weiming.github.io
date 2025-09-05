@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">282</span>
+          <span class="site-state-item-count">283</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2023/07/05/Terraform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/07/05/Terraform/" class="post-title-link" itemprop="url">Terraform</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-05 17:10:00" itemprop="dateCreated datePublished" datetime="2023-07-05T17:10:00+08:00">2023-07-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:46:00" itemprop="dateModified" datetime="2025-09-05T16:46:00+08:00">2025-09-05</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Terraform-https-www-terraform-io"><a href="#Terraform-https-www-terraform-io" class="headerlink" title="Terraform - https://www.terraform.io/"></a>Terraform - <a target="_blank" rel="noopener" href="https://www.terraform.io/">https://www.terraform.io/</a></h3><p>Terraform is a provisioning focus tool.</p>
+<p><a target="_blank" rel="noopener" href="https://www.redhat.com/zh/%E4%B8%BB%E9%A2%98/%E8%87%AA%E5%8A%A8%E5%8C%96/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BD%AE%E5%A4%87">provisioning - 置备是创建和设置 IT 基础架构的过程</a>，包括为管理用户和系统对各种资源访问权限所需执行的步骤。置备是部署服务器、应用、网络组件、存储、边缘设备等的早期阶段。</p>
+<p>置备与<a target="_blank" rel="noopener" href="https://www.redhat.com/zh/topics/automation/what-is-configuration-management">配置管理</a> - configuration-management 不同，但它们都属于部署过程中的步骤。一旦置备了系统，下一步就是配置系统，并在一段时间内使其保持一致。</p>
+<h3 id="如何组合使用"><a href="#如何组合使用" class="headerlink" title="如何组合使用"></a>如何组合使用</h3><ul>
+<li>Provisioning + Config management = Terraform + <a target="_blank" rel="noopener" href="https://www.ansible.com/">Ansible</a></li>
+<li>Provisioning + Server Templating = Terraform + <a target="_blank" rel="noopener" href="https://www.packer.io/">packer</a></li>
+<li>Provisioning + Orchestration Tool = Terraform + <a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/">kubernetes</a>，通常在AWS中会使用<a target="_blank" rel="noopener" href="https://www.w3schools.com/aws/aws_cloudessentials_awseks.php">EKS</a>服务。</li>
+</ul>
+<h3 id="Terraform-Architecture"><a href="#Terraform-Architecture" class="headerlink" title="Terraform Architecture"></a>Terraform Architecture</h3><p><img src="/2023/07/05/Terraform/1.png"></p>
+<h3 id="如何编写Terraform的代码？"><a href="#如何编写Terraform的代码？" class="headerlink" title="如何编写Terraform的代码？"></a>如何编写Terraform的代码？</h3><p>根据上图架构中，我们需要参考如下，AWS Provider 的文档，通过其中的代码，provisioning地构建AWS的IT基础设施。</p>
+<p><a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs">https://registry.terraform.io/providers/hashicorp/aws/latest/docs</a></p>
+<h3 id="如何执行Terraform？"><a href="#如何执行Terraform？" class="headerlink" title="如何执行Terraform？"></a>如何执行Terraform？</h3><p>all terraform cli docs are here ==&gt; <a target="_blank" rel="noopener" href="https://developer.hashicorp.com/terraform/tutorials/cli">https://developer.hashicorp.com/terraform/tutorials/cli</a></p>
+<h4 id="1-terraform-init"><a href="#1-terraform-init" class="headerlink" title="1.terraform init"></a>1.terraform init</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">➜  02-overview git:(main) pwd</span><br><span class="line">/Users/xxx/Documents/source_code/devops-directive-terraform-course/02-overview</span><br><span class="line">➜  02-overview git:(main) ls</span><br><span class="line">README.md main.tf</span><br><span class="line">➜  02-overview git:(main) terraform -help  </span><br><span class="line">Usage: terraform [global options] &lt;subcommand&gt; [args]</span><br><span class="line"></span><br><span class="line">The available commands for execution are listed below.</span><br><span class="line">The primary workflow commands are given first, followed by</span><br><span class="line">less common or more advanced commands.</span><br><span class="line"></span><br><span class="line">Main commands:</span><br><span class="line">  init          Prepare your working directory for other commands</span><br><span class="line">  validate      Check whether the configuration is valid</span><br><span class="line">  plan          Show changes required by the current configuration</span><br><span class="line">  apply         Create or update infrastructure</span><br><span class="line">  destroy       Destroy previously-created infrastructure</span><br><span class="line"></span><br><span class="line">All other commands:</span><br><span class="line">  console       Try Terraform expressions at an interactive command prompt</span><br><span class="line">  fmt           Reformat your configuration in the standard style</span><br><span class="line">  force-unlock  Release a stuck lock on the current workspace</span><br><span class="line">  get           Install or upgrade remote Terraform modules</span><br><span class="line">  graph         Generate a Graphviz graph of the steps in an operation</span><br><span class="line">  import        Associate existing infrastructure with a Terraform resource</span><br><span class="line">  login         Obtain and save credentials for a remote host</span><br><span class="line">  logout        Remove locally-stored credentials for a remote host</span><br><span class="line">  metadata      Metadata related commands</span><br><span class="line">  output        Show output values from your root module</span><br><span class="line">  providers     Show the providers required for this configuration</span><br><span class="line">  refresh       Update the state to match remote systems</span><br><span class="line">  show          Show the current state or a saved plan</span><br><span class="line">  state         Advanced state management</span><br><span class="line">  taint         Mark a resource instance as not fully functional</span><br><span class="line">  test          Experimental support for module integration testing</span><br><span class="line">  untaint       Remove the &#x27;tainted&#x27; state from a resource instance</span><br><span class="line">  version       Show the current Terraform version</span><br><span class="line">  workspace     Workspace management</span><br><span class="line"></span><br><span class="line">Global options (use these before the subcommand, if any):</span><br><span class="line">  -chdir=DIR    Switch to a different working directory before executing the</span><br><span class="line">                given subcommand.</span><br><span class="line">  -help         Show this help output, or the help for a specified subcommand.</span><br><span class="line">  -version      An alias for the &quot;version&quot; subcommand.</span><br><span class="line">➜  02-overview git:(main) terraform init </span><br><span class="line"></span><br><span class="line">Initializing the backend...</span><br><span class="line"></span><br><span class="line">Initializing provider plugins...</span><br><span class="line">- Finding hashicorp/aws versions matching &quot;~&gt; 3.0&quot;...</span><br><span class="line">- Installing hashicorp/aws v3.76.1...</span><br><span class="line">- Installed hashicorp/aws v3.76.1 (signed by HashiCorp)</span><br><span class="line"></span><br><span class="line">Terraform has created a lock file .terraform.lock.hcl to record the provider</span><br><span class="line">selections it made above. Include this file in your version control repository</span><br><span class="line">so that Terraform can guarantee to make the same selections by default when</span><br><span class="line">you run &quot;terraform init&quot; in the future.</span><br><span class="line"></span><br><span class="line">Terraform has been successfully initialized!</span><br><span class="line"></span><br><span class="line">You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see</span><br><span class="line">any changes that are required for your infrastructure. All Terraform commands</span><br><span class="line">should now work.</span><br><span class="line"></span><br><span class="line">If you ever set or change modules or backend configuration for Terraform,</span><br><span class="line">rerun this command to reinitialize your working directory. If you forget, other</span><br><span class="line">commands will detect it and remind you to do so if necessary.</span><br><span class="line"></span><br><span class="line">➜  02-overview git:(main) tree</span><br><span class="line">.</span><br><span class="line">|____main.tf</span><br><span class="line">|____.terraform</span><br><span class="line">| |____providers</span><br><span class="line">| | |____registry.terraform.io</span><br><span class="line">| | | |____hashicorp</span><br><span class="line">| | | | |____aws</span><br><span class="line">| | | | | |____3.76.1</span><br><span class="line">| | | | | | |____darwin_arm64</span><br><span class="line">| | | | | | | |____terraform-provider-aws_v3.76.1_x5</span><br><span class="line">|____README.md</span><br><span class="line">|____.terraform.lock.hcl</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-terraform-plan"><a href="#2-terraform-plan" class="headerlink" title="2.terraform plan"></a>2.terraform plan</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> terraform plan</span></span><br><span class="line">An execution plan has been generated and is shown below.</span><br><span class="line">Resource actions are indicated with the following symbols:</span><br><span class="line">  + create</span><br><span class="line"></span><br><span class="line">Terraform will perform the following actions:</span><br><span class="line"></span><br><span class="line"><span class="meta">  #</span><span class="bash"> aws_instance.example will be created</span></span><br><span class="line">  + resource &quot;aws_instance&quot; &quot;example&quot; &#123;</span><br><span class="line">      + ami                          = &quot;ami-0829e595217a759b9&quot;</span><br><span class="line">      + arn                          = (known after apply)</span><br><span class="line">           + tags                         = &#123;</span><br><span class="line">          + &quot;Name&quot;  = &quot;int32bit-test-ft&quot;</span><br><span class="line">          + &quot;Owner&quot; = &quot;int32bit&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      + vpc_security_group_ids       = (known after apply)</span><br><span class="line">      + ...</span><br><span class="line"></span><br><span class="line">Plan: 1 to add, 0 to change, 0 to destroy.</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-terraform-apply"><a href="#3-terraform-apply" class="headerlink" title="3.terraform apply"></a>3.terraform apply</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> terraform apply</span></span><br><span class="line">Plan: 1 to add, 0 to change, 0 to destroy.</span><br><span class="line"></span><br><span class="line">Do you want to perform these actions?</span><br><span class="line">  Terraform will perform the actions described above.</span><br><span class="line">  Only &#x27;yes&#x27; will be accepted to approve.</span><br><span class="line"></span><br><span class="line">  Enter a value: yes</span><br><span class="line"></span><br><span class="line">aws_instance.example: Creating...</span><br><span class="line">aws_instance.example: Still creating... [10s elapsed]</span><br><span class="line">aws_instance.example: Still creating... [20s elapsed]</span><br><span class="line">aws_instance.example: Creation complete after 20s [id=i-0bb96d24b6e6d37eb]</span><br><span class="line"></span><br><span class="line">Apply complete! Resources: 1 added, 0 changed, 0 destroyed.</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/07/05/Terraform/2.png"></p>
+<h4 id="4-terraform-destroy"><a href="#4-terraform-destroy" class="headerlink" title="4.terraform destroy"></a>4.terraform destroy</h4><h4 id="5-adfs"><a href="#5-adfs" class="headerlink" title="5.adfs"></a>5.adfs</h4><p>在实际企业环境中，aws 的使用通常是需要多重身份验证的，所以多数使用 ADFS (multi factor authentication with active directory)。</p>
+<p>其中最常用的工具是 <a target="_blank" rel="noopener" href="https://github.com/venth/aws-adfs%EF%BC%8C%E9%80%9A%E8%BF%87">https://github.com/venth/aws-adfs，通过</a> 证书 / 身份（如SSO）/ 密码 登陆aws，terraform也是如此。</p>
+<h3 id="实际项目结构"><a href="#实际项目结构" class="headerlink" title="实际项目结构"></a>实际项目结构</h3><p><img src="/2023/07/05/Terraform/3.png"></p>
+<p><strong>而且，在复杂的系统部署中，可以针对每一个module的tf中，添加 shell 脚本，如针对compute.tf单独运行的shell脚本，让每一个脚本（手动）执行，即每一terraform部署完成后，确认执行结果。</strong>分步骤地，解耦地完成复杂系统的部署工作，切能够按照企业要求，完成安全，网络，EKS等规则要求。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>all terraform providers ==&gt; <a target="_blank" rel="noopener" href="https://registry.terraform.io/browse/providers">https://registry.terraform.io/browse/providers</a><br>terraform Course ==&gt; <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7xngnjfIlK4&amp;t=8s">https://www.youtube.com/watch?v=7xngnjfIlK4&amp;t=8s</a> </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -621,97 +715,6 @@
 <p><img src="/2023/04/03/%E4%BD%BF%E7%94%A8SonarQube%E6%89%AB%E6%8F%8FBesu%E7%9A%84%E7%BB%93%E6%9E%9C/1.png"></p>
 <p><img src="/2023/04/03/%E4%BD%BF%E7%94%A8SonarQube%E6%89%AB%E6%8F%8FBesu%E7%9A%84%E7%BB%93%E6%9E%9C/2.png"></p>
 <p>结论：从SonarQube的评级来看，Besu的代码质量<strong>非常差</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2023/04/03/BIAN%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/03/BIAN%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">BIAN学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-03 13:42:00" itemprop="dateCreated datePublished" datetime="2023-04-03T13:42:00+08:00">2023-04-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-09-05 16:25:24" itemprop="dateModified" datetime="2025-09-05T16:25:24+08:00">2025-09-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>BIAN ( The Banking Industry Architecture Network) 是一个业界多方协作的非营利性组织，由全球领先银行、技术提供商、顾问和学者组成，定义了一个用以简化和标准化核心银行体系结构的银行技术框架。这一框架基于面向服务的架构 (SOA) 原则，银行可以借助 BIAN 参考模型建立起业务能力“积木块”，通过与现有系统进行映射和对接，理清应用之间的边界，从而达成面向服务的、松耦合的未来银行架构。从架构及技术角度看， BIAN 融汇了业界关于银行业务模型和技术体系的积累、结合 SOA 架构和微服务架构理念，基于业务能力、组件及服务而形成的银行应用之间互联互通的技术标准。</p>
-<h3 id="BIAN-的业务能力"><a href="#BIAN-的业务能力" class="headerlink" title="BIAN 的业务能力"></a>BIAN 的业务能力</h3><p>从业务架构的角度来看，BIAN 提供了两个重要的企业架构工件，一个是业务能力地图 Business Capability Map，一个是价值链 Value Chain。</p>
-<p><img src="/2023/04/03/BIAN%E5%AD%A6%E4%B9%A0/1.png"></p>
-<p>BIAN 的业务能力地图构建方式与普通企业架构实践是有区别的。一般情况下，业务架构设计过程中会集中业务和分析师等人员，采用自上而下逐步分解的方式构建业务能力地图。而 BIAN 的业务能力地图，是由一系列已经构建完成的原子级能力，通过映射的方式汇总为业务能力地图。主要的目的是为了与业务架构进行对齐，以适配主流的业务架构分析方法。</p>
-<p><img src="/2023/04/03/BIAN%E5%AD%A6%E4%B9%A0/2.png"></p>
-<p>服务域（BIAN 称为 Service Domain，俺称为原子能力）代表一组离散的、原子的（唯一/不重叠的）业务功能，它们构成了任何银行的功能构建块 （Functional Building Blocks），用于为解决方案的开发提供业务功能框架。服务域和业务能力为明显不同的目的而将业务区分开来。服务域是一种功能细分，旨在提供一个开发/部署框架。业务能力代表了不同的业务所拥有的能力，目的是制定和实施业务战略。</p>
-<p><img src="/2023/04/03/BIAN%E5%AD%A6%E4%B9%A0/3.jpg"></p>
-<p>BIAN 服务域可以被认为是 “对某物做某事的能力”，专注于对一个业务对象所执行的操作。BIAN 服务域是原子性的，这意味着 “代表了可以被服务化的最小实际能力或功能分区。” 换句话讲，一个服务域将封装适合（被封装到） IT 服务中的最小实际业务功能 Business Functionality 。在某些情况下，服务域直接（或几乎）与业务能力相一致；然而，由于服务域是面向功能的，它们通常与价值流 Value Stream 有关，或者更经常地与价值流阶段 Value Stream Stage（或其一部分）有关。</p>
-<h3 id="BIAN-的价值链"><a href="#BIAN-的价值链" class="headerlink" title="BIAN 的价值链"></a>BIAN 的价值链</h3><p>BIAN 的价值链并不是真正的价值链，因为价值链是要进行更下一步分解的，但是 BIAN 仅分解到第 2 层就戛然而止。BIAN 使用价值链视图的真正目的，是给银行另外一个看待原子业务能力的视角。</p>
-<h3 id="BIAN-到底是什么"><a href="#BIAN-到底是什么" class="headerlink" title="BIAN 到底是什么"></a>BIAN 到底是什么</h3><p>经过多年积累，BIAN 为银行业务构建了一批原子业务能力，使银行在信息化建设的过程中可以利用 BIAN 的行业框架，依据自身实际情况进行调优后，便捷高效地实施数字化战略。BIAN 构建了便于业务侧理解的业务能力地图与价值链，将原子业务能力通过映射的方式与两个业务架构中的关键工件进行关联，从而实现银行的业务与 IT 对齐。原子能力便于组装的特性，极大地促进了业务侧的创新与调整；通过统一规范的接口，为银行铺就了一条互联互通的开放之路。</p>
-<ol>
-<li>业务颗粒度（业务价值），架构颗粒度（UML建模），API，都已经是一套完整的设计，作为架构师可以开箱即用。</li>
-<li>原本BIAN只是解决银行间互操作的问题，目前已经远远超过了这样子的范围，成为核心银行的架构标杆。</li>
-<li>BIAN的设计基于开放银行，充分考虑SaaS模式，这样子的设计架构下，第三方服务可以很容易融入核心银行。例如，salesforce的产品可以很容易地融入核心银行，以完成CRM的功能。</li>
-</ol>
-<p>参考链接：</p>
-<ol>
-<li>官网地址 - <a target="_blank" rel="noopener" href="https://bian.org/">https://bian.org/</a></li>
-<li>BIAN PORTAL - <a target="_blank" rel="noopener" href="https://portal.bian.org/dashboard/">https://portal.bian.org/dashboard/</a></li>
-<li>最新版servicelandscape（20230403） - <a target="_blank" rel="noopener" href="https://bian.org/servicelandscape-11-0-0/">https://bian.org/servicelandscape-11-0-0/</a></li>
-</ol>
 
       
     </div>

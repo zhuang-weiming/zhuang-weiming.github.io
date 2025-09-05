@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">282</span>
+          <span class="site-state-item-count">283</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,87 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E8%87%AA%E6%AF%81%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E8%87%AA%E6%AF%81%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">智能合约-自毁模式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-09-18 14:01:31" itemprop="dateCreated datePublished" datetime="2020-09-18T14:01:31+08:00">2020-09-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.12</span>;</span><br><span class="line"></span><br><span class="line">contract SelfDesctructionContract &#123;</span><br><span class="line">    address payable owner;</span><br><span class="line">    </span><br><span class="line">    modifier ownerRestricted &#123;</span><br><span class="line">        <span class="built_in">require</span> (owner == msg.sender);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    <span class="title">constructor</span>(<span class="params"></span>) <span class="title">public</span> &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用ownerRestricted修饰符来限定只有合约的所有者才能调用该函数</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">destructContract</span>(<span class="params"></span>) <span class="title">public</span> <span class="title">payable</span> <span class="title">ownerRestricted</span> </span>&#123;</span><br><span class="line">        selfdestruct(owner);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>owner 必须可接受支付的回收的gas。</p>
+<p>关联文档：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/01/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-CURD%E7%9A%84%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/">智能合约-CURD的详细分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E8%87%AA%E6%AF%81%E6%A8%A1%E5%BC%8F/">智能合约-自毁模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E6%A8%A1%E5%BC%8F/">智能合约-工厂合约模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E5%90%8D%E5%AD%97%E7%99%BB%E5%BD%95%E6%A8%A1%E5%BC%8F/">智能合约-名字登录模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2020/09/18/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E9%80%80%E6%AC%BE%E6%96%B9%E5%BC%8F/">智能合约-退款方式</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -619,101 +700,6 @@
 <p>一是交易账本：采用传统的（分布式）数据库技术，利用现有金融核心系统成熟经验，满足当前交易性能要求。</p>
 <p>二是结果账本：用于记录最终交易结果，可采用最新的分布式账本技术，中央银行和各运营机构共同参与，各节点维护相同的账本数据，通过共识机制，保证各节点账本数据的全局一致性，并且难以篡改。通过异步方式提交结果账本，从而不影响交易账本的处理时效。结果账本数据一经写入，便具有高可靠、高安全、高可信等特点，并可为社会提供基于可信数据的确权服务，从而充分发挥分布式账本技术的优势。</p>
 <p>2016年，中国央行的数字货币原型系统就采用了“双账本”技术路线，随着分布式账本技术的不断优化，性能不断提升，交易账本向结果账本异步写入交易结果，其延时会逐渐缩短。有理由相信：同步写入之日，就是分布式账本取代传统分布式数据库之时。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/07/30/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7%E4%B8%8E%E6%95%B0%E5%AD%97%E9%87%91%E8%9E%8D-%E8%87%AA%E9%87%91%E8%9E%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/07/30/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7%E4%B8%8E%E6%95%B0%E5%AD%97%E9%87%91%E8%9E%8D-%E8%87%AA%E9%87%91%E8%9E%8D/" class="post-title-link" itemprop="url">数字资产与数字金融-自金融</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-07-30 08:36:31" itemprop="dateCreated datePublished" datetime="2020-07-30T08:36:31+08:00">2020-07-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="数字资产各种属性深度融合，益于创新"><a href="#数字资产各种属性深度融合，益于创新" class="headerlink" title="数字资产各种属性深度融合，益于创新"></a>数字资产各种属性深度融合，益于创新</h3><p>数字资产：股票是股东权益的证券化，债券是债券的证券化，电子黄金是黄金的证券化，抵押贷款证券（MBS）是银行信贷的证券化，证券的意义在于为资产创造了流动性，但有了资产数字化，传统证券的含义可能就会有新的变化。</p>
-<p>真正意义的数字资产应该是原生的、包含全信息的、以数字形式展现和流转的资产。数字化后的订货合同、物流单据、发票、保理合同等资产，才是真正的数字资产。数字资产模糊了证券属性。</p>
-<h3 id="资产数字化的关键是如何为实体经济赋能"><a href="#资产数字化的关键是如何为实体经济赋能" class="headerlink" title="资产数字化的关键是如何为实体经济赋能"></a>资产数字化的关键是如何为实体经济赋能</h3><blockquote>
-<p>程序 = 算法 + 结构，获得图灵奖的Pascal之父——Nicklaus Wirth提出的著名公式</p>
-</blockquote>
-<p>金融科技 = 算法 + 数据。</p>
-<p>数字资产产生、流通、确权都依靠全新的价值交换技术，可采用基于真随机数的加密技术，也可以采用基于区块链技术、DAG技术或者公证人机制的分布式账本技术，在未来甚至可采用量子叠加态和量子计算实现的量子技术。</p>
-<p>可以说区块链承载了太多的理想，获得了资本和产业的热捧。溢美之词，掩盖了该技术在比特币、以太坊之外少有重大应用的尴尬。技术人员应该沉静下来，认真分析并探索改进区块链系统交互，如何解决区块链上的数据隐私问题，如何将智能合约与现行法规相结合，如何设计适合区块链的治理机制和标准，等等。</p>
-<p>我国是互联网大国，也是数据大国。但是就数据质量来说，却不是这样。怎样在数量优势上提升质量，把数据资源转化为价值资产，从而产生信用并为实体经济服务，最终促进社会经济发展，无疑是我国金融科技领域的难题和挑战。而这恰恰是资产数字化的关键所在。</p>
-<p>区块链作为一项可信技术，由多方认可，多方背书，是新一代金融基础设施的技术雏形，可以为现有金融机构未能触及的底层实体“加持”信用，增进相互协作，降低交易成本，有可能创造一个全新局面。</p>
-<h3 id="资产自金融，普惠共享"><a href="#资产自金融，普惠共享" class="headerlink" title="资产自金融，普惠共享"></a>资产自金融，普惠共享</h3><p>自金融的典型特征：1）用户自主掌控数字身份；2）用户自主掌控数字资产；3）用户之间点对点交易，可以独立于第三方中介机构。</p>
-<p>如何才能让中小企业获得平等的信息话语权和自主融资的能力？一个行之有效的解决方案是利用DLT与分布式文件系统技术，将底层资产的全量原生信息同步上链，利用公私钥技术实现权利人持有并转移资产，通过核心企业的信息服务商接入，持续有效地披露底层真实贸易背景，从而形成数字资产。数字资产赋予传统资产高度自主流动性，极大地提高了供应链金融业务的效率和真实性，为投资人建立了一个动态、完整、真实、可信的信息披露机制，从根本上解决了中小企业底层资产多层级流转的信息穿透问题，荣中小企业获得对等话语权，无须用以来核心企业信用，独立开展融资活动，同时金融机构可以不依赖核心企业，直接通过可信的DLT账本，获取融资所需的中小企业底层资产信息。让传统金融中的弱势群体不再弱势，不再融资难、融资贵，金融将变得更加贴近实体，更加普惠共享，同时在现代科技的支持下，其安全性与监管的便利性，同传统金融资产相比，已不可同日而已，可以灵活地补充现有金融服务的空白地带。</p>
-<h3 id="资产数字化将催生金融的零售革命"><a href="#资产数字化将催生金融的零售革命" class="headerlink" title="资产数字化将催生金融的零售革命"></a>资产数字化将催生金融的零售革命</h3><p>数字金融的发展将模糊场内与场外之间的边界。某种意义上，目前导致市场出现场内、场外分层的主因之一，是（技术）可信程度不到位。传统技术无法很好解决金融交易的信任问题，因此许多交易需要在有组织的场内市场开展（当然也有规模经济的因素），国家认可的法理保障解决了可信问题。随着区块链、物联网等现代数字金融科技的发展，技术可信成为法律增信的补充手段。通过可信技术的赋能，原来分处“两张皮”的数据与价值，真正聚合成为物理与逻辑一体的数字资产。数字是价值，价值是数字，数字的流转就是价值的流转。任何资产均可利用可信技术开展数字化，流转盘活起来，而不完全依赖法律增信，此时，什么是场内，什么是场外，也就不再泾渭分明。</p>
-<p>数字金融或将重构金融运行方式、服务模式乃至整个生态体系。在科技驱动下，它不用依赖传统的金融中介作用，即可让资产在保留原生全量信息的条件下流通起来。原先在场外大规模“沉寂”的非标准化资产，如仓单、知识产权、合同等各类资产，将焕发全新的金融“生命力”，低成本、高效率流转起来，经济前景和意义不可估量。</p>
-<p>再做一步思考，数字资产化将催生金融的零售革命，就像互联网的出现催生了阿里巴巴等零售巨头一样，零售金融市场的觉醒将会带来更具深远影响的金融变革。</p>
-<h3 id="数字货币将超越美元，升级换代"><a href="#数字货币将超越美元，升级换代" class="headerlink" title="数字货币将超越美元，升级换代"></a>数字货币将超越美元，升级换代</h3><p>数字资产互换数字货币！在数字资产的世界里，数字法币的缺失是问题的根本。对此，私人部门和公共部门均在发力。</p>
-<p>从比特币缺乏基础资产支撑，到各类稳定代币的探索，或基于法币抵押，或基于算法，再到监管部门的介入，基于法币抵押的稳定代币因对法币的价值锚定得到增信，再到近期 JPM Coin、Facebook Libra的出现，虚拟货币价值不稳定和不合规的问题有望得到解决。因此，加密货币不再一定就是虚拟货币。</p>
-<p>加密货币已经有可能成为真正意义上的货币，它不一定是数字M0，也有可能是比银行存款货币更高层次的货币：Mn。与数字M0相比，M1、M2……Mn等高层次货币的数字化或更具有想想空间。</p>
-<p>中央银行一向被认为不适合承担数字货币供给的角色。主要担忧当数字货币向C端发行流通时，中央银行可能面临极大的服务压力和成本。比如，加拿大央行Jasper项目、新加坡金管局Ubin项目、欧洲中央银行和日本中央银行Stella项目等，正在试验加密货币技术，但还停留在B端应用场景。</p>
-<p>按照IMF经济学家的观点，支付宝和微信支付本质上就是央行数字货币。支付宝和微信支付是100%备付准备金存缴，Libra白皮书提到100%资产储备，前者是将所有资金存缴中央银行，后者将资金交由第三方托管。事实上，100%准备金存缴之后，如何激励商业机构的行为，既要马儿跑，又要马儿不吃草，这有可能是一个新的命题。</p>
-<p>技术上，100%准备经存缴意味着数字货币的发行、流通、收回、销毁等全生命周期均要依附于传统账户体系，这增大了中央银行中心系统的压力和复杂性，而且，难以实现“账户松耦合”的要求，自金融创新不容易展开，跨境支付的想象空间亦大打折扣。相比较，央行加密货币（Central Bank Crypto-Currencie，CBCC）可以让客户真正自主管理自己的货币，而不是托付给第三方，赋予客户自主掌控的能力，也可以超越Swift，开辟跨境支付的全新战场。</p>
-<p>英格兰银行行长Carney认为类似Libra的数字货币将是全球储备货币的更好选择。数字货币不仅仅是法币的数字化，就像数字资产不仅仅是资产数字化那么简单，未来的数字货币需要修补现有货币体系的弊端，超越美元，升级换代。</p>
-<h3 id="重新审视传统监管范式"><a href="#重新审视传统监管范式" class="headerlink" title="重新审视传统监管范式"></a>重新审视传统监管范式</h3><p>传统上以牌照管理为关键、以金融机构为抓手、以开立在金融机构的账户为核心的监管范式，需要重新审视。</p>
-<p>一是机构准入的牌照管理，应转变为用户转入的权限管理。在自金融模式下，中介机构不再是抓手，用户才是关键。用户入场须经过相关认证机构的身份认证和核验，业务过程须与身份认证隔离，并采用密码学原语与方案来实现交易身份以及内容隐私保护，管理部门则有权开展穿透式监管。在此基础上，各国监管部门根据客户的数字身份归集本国居民，划定数字司法辖区，对本国居民设置各类业务参与权限。本国居民与非本国居民的金融业务和资金往来，由各国监管部门按照各自的资本账户开放和跨国金融监管政策进行规制。以Facebook受监管的金融子公司Calibra为例，其首个产品就是Libra数字钱包，Facebook通过Calibra钱包将社交用户的身份信息与Libra用户的区块链地址进行连接，钱包代替了持牌金融机构成为自金融环境下被监管的主体，这样可以按照司法辖区的具体要求落实监管策略，兼顾了用户隐私保护与监管合规的要求。</p>
-<p>二是业务核准，应增加智能合约审核。智能合约在上链之前必须经过相关部门的验证，判断程序是否能按照监管部门的政策预期运行，必要时，监管部门可阻止不合规的智能合约上链或者关闭本国居民执行该智能合约，同时还可建立允许代码暂停或终止执行的监管干预机制。此外，智能合约的参数设置也是一种监管手段，监管部门亦可通过调整或干预智能合约参数，来管控自金融业务规模和风险。</p>
 
       
     </div>

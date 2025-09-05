@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">282</span>
+          <span class="site-state-item-count">283</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,172 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/" class="post-title-link" itemprop="url">可聚合子向量承诺应用于无状态加密货币</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-20 19:30:31" itemprop="dateCreated datePublished" datetime="2020-06-20T19:30:31+08:00">2020-06-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>将可聚合子向量承诺应用于无状态加密货币 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2020/527.pdf">https://eprint.iacr.org/2020/527.pdf</a></p>
+<h3 id="0-摘要"><a href="#0-摘要" class="headerlink" title="0.摘要"></a>0.摘要</h3><p>可聚合子向量承诺（aSVC, An aggregatable subvector commitment）方案是一种向量承诺（VC）方案，可以将多个证明聚合到单个小的子向量证明中。本文中，我们对aSVC进行了形式化处理，通过恒定大小的多项式承诺，给出了素数阶组的有效构造，并使用它来引向高效的无状态加密货币。</p>
+<p>aSVC支持：</p>
+<ul>
+<li><p>在 O(n log n) 时间内计算所有n个 O(1) 大小的证明</p>
+</li>
+<li><p>在 O(1) 时间内更新证明</p>
+</li>
+<li><p>将b个证明汇总到 O(1) 大小的子向量证明，时间为 O(b log2 b)。</p>
+</li>
+</ul>
+<p>重要的是，我们的方案具有 O(n) 大小的证明密钥，O(1) 大小的验证密钥和 O(1) 大小的更新密钥。相比之下，先前在素数阶组中具有恒定大小证明的方案：</p>
+<ul>
+<li><p>需要 O(n2) 时间来计算所有证明</p>
+</li>
+<li><p>需要 O(n) 大小的更新密钥来更新 O(1) 中的证明时间</p>
+</li>
+<li><p>或不支持汇总证明。</p>
+<p>此外，基于隐藏顺序组的方案：</p>
+</li>
+<li><p>具有更大的具体证明大小和计算时间</p>
+</li>
+<li><p>不支持证明更新</p>
+</li>
+</ul>
+<p>我们使用aSVC具有非常低的通信和计算开销，在此基础上，构建无状态加密货币。 具体来说，大小固定的可聚合证明将每个块的证明开销减少到一个组元素。 相反，以前的工作需要O(b log n)组元素，其中b是每个块的交易数。 此外，较小证明将区块验证时间从O(b log n)配对减少到只有两个配对和O(b)大小的多幂运算。最后，与先前工作中的O(b log n)相比，aSVC较小的更新密钥仅占用O(b)区块空间。同样，它们的可验证性将矿工存储从O(n)减少到O(1)。最终结果将是一种无状态的加密货币超过了现有技术。</p>
+<h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h3><p>在无状态加密货币中，矿工和加密货币用户都不需要存储完整的区块链。取而代之的是，使用经过身份验证的数据结构（ADS, authenticated data structure）对由用户帐户余额组成的区块链状态进行身份验证。这样，矿工仅存储区块链状态的简要摘要。 尽管如此，矿工仍然可以验证用户发送的交易，这些用户现在提供了他们有足够余额的证明。 此外，矿工仍可以提议新的区块，并且用户可以在新区块发布时轻松地同步或更新其证明。</p>
+<p>由于无状态加密货币的诸多优势，已引起越来越多的关注：</p>
+<ul>
+<li>针对摘要的无状态事务验证要比针对已存储数据库的有状态验证更好地扩展</li>
+<li>无状态加密货币消除了矿工或整个节点验证区块所需的数百GB的存储空间</li>
+<li>无状态性通过允许矿工有效地从一个碎片切换到另一个碎片，使碎片变得更加容易</li>
+<li>由于验证块是无状态且高效的，因此任何人都可以成为完整节点，从而产生更具弹性的分布式加密货币</li>
+</ul>
+<p>先前的工作显示了如何使用RSA累加器或Merkle哈希树有效地获取基于UTXO的无状态加密货币。但是，对于基于帐户的加密货币，当前的解决方案要么具有比理想的证明大小大的值，要么基于隐蔽的组，而后者实际上要慢一些。因此，本文的重点是改善基于帐户的无状态加密货币的具体和渐进复杂性。（在[Zah18，But16，Cor16，Pat17，Eth17，Yan16]中深入讨论了基于帐户和基于UTXO的设计的优缺点。）</p>
+<p><strong>向量承诺（VC）中基于帐户的无状态加密货币。</strong>先前的工作开创了在任何矢量承诺（VC）方案之上构建基于帐户的无状态加密货币的想法。在较高级别，VC方案允许证明方计算向量v = [v0, v1, . . . , vn−1]的简洁承诺c，此处具有n个元素，其中vi∈Zp。重要的是，证明者可以生成证明πi，证明vi是v中位于位置i的元素，并且任何验证者都可以根据承诺c对其进行检查。</p>
+<p>证明者需要证明密钥<strong>prk</strong>来提交向量并计算证明，而验证者需要验证密钥<strong>vrk</strong>来验证证明（通常|vrk| &lt;&lt; |prk|）。某些VC方案支持更新：如果向量中的一个或多个元素发生更改，则可以有效地更新承诺和证明。 为此，需要绑定到更新位置<strong>j</strong>的更新密钥<strong>upkj</strong>。证明，验证和更新密钥一起被称为VC的公共参数。</p>
+<h4 id="1-1本文的贡献"><a href="#1-1本文的贡献" class="headerlink" title="1.1本文的贡献"></a>1.1本文的贡献</h4><p>如果基础VC具有：</p>
+<ul>
+<li><p>具有亚线性时间验证的亚线性大小的可更新证明</p>
+</li>
+<li><p>可更新承诺</p>
+</li>
+<li><p>亚线性大小的更新密钥</p>
+</li>
+</ul>
+<p>则可以从VC有效地构建无状态加密货币。我们说这样的VC方案具有”可扩展的更新”。不幸的是，大多数VC没有可伸缩的更新，或者如果具有，它们的证明和更新密钥大小也并不理想。最后，虽然可以通过可伸缩的更新来增强隐藏顺序组中的方案，但是其具体性能与原始顺序组中的方案不匹配。在本文中，我们提出了一种具有可扩展更新的新型VC，它具有最佳的证明大小，并使用它来构建有效的无状态加密货币。</p>
+<p><strong>具有可伸缩更新的可聚合子向量承诺（aSVC）</strong>。 我们提出了可聚合子向量承诺（aSVC）的新概念，即支持承诺更新，证明更新以及将证明聚合为子向量证明的SVC。 然后，我们构建了一个在配对友好组上具有可伸缩更新的aSVC。 我们的aSVC在多个方面都优于以前的工作：</p>
+<ul>
+<li>具有恒定大小的 I-subvector 证明：一组元素。</li>
+<li>具有恒定大小的更新密钥：两个组元素（或在无状态加密货币设置中使用时，一个组元素）</li>
+<li>它可以在O(1)时间内更新证明和承诺</li>
+<li>它可以使用O(|<strong><em>I</em></strong>|)幂和O(|<strong><em>I</em></strong>| log2 |<strong><em>I</em></strong>|)场运算将多个证明快速聚合为 I-subvector </li>
+<li>我们的aSVC可以通过用于多项式承诺的预计算证明的新技术，在O(n log n)时间内快速计算所有证明</li>
+</ul>
+<p>Vitalik提出一个新思想：使用部分分数分解来聚合多项式承诺中的证明。我们不仅使用此功能来汇总证明，还可以减少更新密钥的大小。此外，为了证明aSVC的安全性，我们必须加强<strong>KZG</strong>多项式承诺的安全性定义，并证明它们仍然可以满足aSVC。最后，aSVC可用于通过有效更新，可更新的基本零知识数据库，匿名凭证和无状态智能合约验证来改进可验证的数据库。</p>
+<p>以下内容转自 ==&gt; <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ifelfFEsHc71SijQ5MC4jQ">https://mp.weixin.qq.com/s/ifelfFEsHc71SijQ5MC4jQ</a></p>
+<p>不需要账本就能记账听上去不可思议，但其思路是简单的：在以前，节点有账本，一笔交易来后它翻看账本，查询交易是否合法；在以后，节点没有账本，交易发送方在提交交易的同时需要提交一个密码学证明（为了区分，后文特指密码学证明时都用proof表示），自己证明自己的这笔交易是合法的。</p>
+<p>可出块节点为什么能够通过一个proof来判断某笔交易是否合法？这里涉及到两个密码学的重要概念，第一个叫<strong>「成员证明」</strong>。它指的是通过某种方法，证明个体是群体的一部分。如果能够证明某个账户状态是整个账本状态的一部分，出块节点当然就能相信这个账户状态，并以此为根据进行交易合法性的判断。第二个叫<strong>「向量承诺」</strong>，它可以将群体，不管这个群体有多庞大，压缩成仅仅一个数，然后给出成员证明，该成员证明表明的是某个个体是属于这个数背后所关联的群体的，且能证明个体在群体中的位置，以及进行证明的更新。</p>
+<p>可聚合子向量承诺（aSVC）的工作过程是这样的：</p>
+<ol>
+<li><p>初始化分片，即在账本建立时确定账户的初始情况。假设某个分片建立时有100个账户，这些账户都有初始的余额，我们需要用v(i)代表第i个账户，它是（地址i，余额i）这样的一对值；用V代表全部账户，它是（地址1，余额1）（地址2，余额2）……（地址100，余额100）这样的一组值。同时需要生成两个值，第一个叫c，它是对V的承诺，代表的是此时该分片所有账户和账户里的余额。出块节点手中都握有c，（可以对比Merkle树根来便于理解），它是将来用于验证的摘要。第二个叫π(i)，它是对v(i) 是V的成员的证明，代表第i个账户及该账户的余额是在总账本V中。每个账户都握有且只握有自己的π(i)，它是将来发送交易时提交给出块节点的proof。在初始化阶段，承诺和证明的生成是需要初始「状态」的。</p>
+</li>
+<li><p>第一笔交易。账户 i 发起整个分片的第一笔交易，此时它需要把π(i)和交易一起提交给出块节点，出块节点对π(i)进行计算，看结果是否与自己手中的c相符合，如果一致就可以相信发送方账户确实有多少余额，并以此判断它提交的交易是否合法。</p>
+</li>
+<li><p>接下来是关键之处：对c和π(i)进行更新。</p>
+</li>
+</ol>
+<p>c（对整个账本的承诺）不再是根据状态生成，它是用第一笔交易发生之前的c，以及第一笔交易引起的余额变动生成的；π(i)（账户对自己的证明）也不是根据状态生成，它是用第一笔交易发生之前的π(i)，以及第一笔交易对该账户的改变生成的。</p>
+<p>在完成c和π(i)的更新之后，出块节点手中便有了可以承诺所有用户新余额的新承诺（新c），账户手中也有了可以证明自己新余额的新proof（新π(i)）。</p>
+<p>以此类推，每笔交易都会改变一次c，改变一次全部π(i)，但这种改变不再依赖于状态数据，它取决于旧的c和π(i)，以及上一笔交易；当需要验证一笔新交易时，出块节点手中总有最新的c，它通过c和账户提供的π(i)就能判断某笔交易是否合法，是否可被打包进区块。</p>
+<p>那么到这一步，就终于实现了「不需要账本就能记账」，不管对于出块节点，还是对于账户，它们手中握着的都是某种密码学的证明，而不是账本的状态。另需一提的是，无状态与分片似乎是绝配，但无状态并不是针对分片的一种设计，它是针对公链的一种设计。</p>
+<p>aSVC的设计目标是要成为一个高效的成员证明，降低上述过程中的通信开销和计算开销，使得这种方案可用于无状态区块链的实现。从论文来看，使用aSVC方案，c和π(i)的大小仅为几十个字节，π(i)的更新时间为O(1)，验证时间也为O(1)，该方案还支持把多个proof聚合为一个O(1)大小的proof，这种低开销的实现正是aSVC的意义所在。不过就像Vitalik在以太坊研究者论坛中展开的相关讨论，aSVC还需要做进一步的优化。</p>
+<p>文章的最后是对全文的简要总结：分布式系统的状态分片设计与密码学的成员证明设计相结合，实现以太坊2.0在性能上突破。</p>
+<ol>
+<li><p>为了安全，以太坊2.0的状态分片需要随机分配出块节点。</p>
+</li>
+<li><p>如果出块节点需要账本，账本同步会成为新的性能瓶颈，账本存储也会影响PoS的去中心化。</p>
+</li>
+<li><p>是否有不需要账本就能验证余额的方式？</p>
+</li>
+<li><p>第一个思路转变：把查找账本的方式改为证明账本的方式。这需要借助于密码学来完成。</p>
+</li>
+<li><p>第二个思路转变：把证明账本状态的方式改为证明交易行为的方式，实现无状态和无需账本的记账。这需要借助于密码学来完成。</p>
+</li>
+<li><p>密码学的工具有很多，当有了目标后，需要根据应用需求选择和组合适当的工具形成方案，并对方案进行优化。</p>
+</li>
+</ol>
+<p>在文章中我们用自然语言描述了aSVC的工作，如果你感兴趣，可以通过aSVC 的API定义来更清晰地了解它。如下图所示：第一个红框是初始化时生成承诺c，第二个红框是根据交易更新c；第一个绿框是初始化时生成证明π(i)，第二个绿框是根据交易更新π(i)；蓝框是出块节点用c和π(i)做验证。</p>
+<p><img src="/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/1.png"></p>
+<p>在上述过程中，最核心的工作是**根据交易引发的变动把旧的c变成新的c，把旧的π(i)变成新的π(i)**。不但要能够完成更新，且这种更新的开销是可以被接受的，这是aSVC要解决的关键问题。我们以c的更新为例来介绍aSVC是如何做的。</p>
+<p>如前文所述，c承诺的是V，从c到新c，实际上就是从承诺V到承诺一个新的V。对V来说，它是由一系列的点构成的，（地址1，余额1）是一个点，（地址2，余额2）是另一个点……（地址100，余额100）是第100个点。</p>
+<p>借助于拉格朗日插值法，可以把这一系列的点变成一个多项式（该多项式代表的曲线经过所有这些点），这意味着可以把对一系列点的承诺变成对一个多项式的承诺；从c到新c，也就等价于从承诺一个多项式到承诺另一个多项式。</p>
+<p>而<strong>多项式有着各种神奇的属性，对多项式及多项式变换的承诺可以是小的、快速的</strong>。那么通过这种从点到多项式的转化，就可以把c的更新开销变为可接受的。</p>
+<p>但这只是对aSVC方案思路的一个简单、片面的介绍，在该方案中还使用了诸多其他工具和方法，而且它依然在追求更好的设计。</p>
+<p>如果你想更多的了解它，可以去阅读原论文，其中的3.1节和4.1节是最有助于理解整篇论文的部分。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -627,82 +793,6 @@
 
 <h3 id="DeliverTx"><a href="#DeliverTx" class="headerlink" title="DeliverTx"></a>DeliverTx</h3><p>在执行 <code>ExecuteTx(logHeader, app.committer, app.txDecoder, req.GetTx())</code> 中，<code>executor execution.Executor</code> 被指定为 <code>app.committer</code> , 与 CheckTX 执行同样的 <code>Execute</code> 逻辑</p>
 <h3 id="Commit"><a href="#Commit" class="headerlink" title="Commit"></a>Commit</h3><p>具体执行逻辑为 <code>/execution/execution.go</code> 中的 <code>func (exe *executor) Commit(header *abciTypes.Header) (stateHash []byte, err error)</code> </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/05/18/%E4%BD%93%E9%AA%8CHyperledger-Burrow-3/" class="post-title-link" itemprop="url">体验Hyperledger-Burrow-3</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-05-18 14:52:31" itemprop="dateCreated datePublished" datetime="2020-05-18T14:52:31+08:00">2020-05-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="burrow-natives-Dump-Solidity-interface-contracts-for-Burrow-native-contracts"><a href="#burrow-natives-Dump-Solidity-interface-contracts-for-Burrow-native-contracts" class="headerlink" title="./burrow natives , Dump Solidity interface contracts for Burrow native contracts."></a>./burrow natives , Dump Solidity interface contracts for Burrow native contracts.</h3><p>抽出Burrow内置的solidity接口合约。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow natives       </span><br><span class="line">pragma solidity &gt;=<span class="number">0.4</span><span class="number">.24</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* acmstate.ReaderWriter for managing Secure Native authorizations.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>This interface describes the functions exposed by the native permissions layer in burrow.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>These functions can be accessed as if this contract were deployed at a special address (0x0A758FEB535243577C1A79AE55BED8CA03E226EC).</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>This special address is defined as the last 20 bytes of the sha3 hash of the the contract name.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>To instantiate the contract use:</span></span><br><span class="line"><span class="comment">* <span class="doctag">@dev </span>Permissions permissions = Permissions(address(uint256(keccak256(&quot;Permissions&quot;))));</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">interface Permissions &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Adds a role to an account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether role was added</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Removes a role from an account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether role was removed</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">removeRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Indicates whether an account has a role</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Role role name</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether account has role</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasRole</span>(<span class="params">address _account, string memory _role</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Sets the permission flags for an account. Makes them explicitly set (on or off).</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the base permissions flags to set for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Set whether to set or unset the permissions flags at the account level</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was set as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setBase</span>(<span class="params">address _account, uint64 _permission, bool _set</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Unsets the permissions flags for an account. Causes permissions being unset to fall through to global permissions.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags to unset for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was unset as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">unsetBase</span>(<span class="params">address _account, uint64 _permission</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Indicates whether an account has a subset of permissions set</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Account account address</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags (mask) to check whether enabled against base permissions for the account</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>result whether account has the passed permissions flags set</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasBase</span>(<span class="params">address _account, uint64 _permission</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">bool _result</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@notice </span>Sets the global (default) permissions flags for the entire chain</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Permission the permissions flags to set</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param </span>Set whether to set (or unset) the permissions flags</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return </span>The permission flag that was set as uint64</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setGlobal</span>(<span class="params">uint64 _permission, bool _set</span>) <span class="title">public</span> <span class="title">view</span> <span class="title">returns</span> (<span class="params">uint64 _result</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="burrow-dump-Dump-chain-state-to-backup"><a href="#burrow-dump-Dump-chain-state-to-backup" class="headerlink" title="./burrow dump , Dump chain state to backup"></a>./burrow dump , Dump chain state to backup</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow dump local backup_dump</span><br><span class="line">Sourcing config <span class="keyword">from</span> first <span class="keyword">of</span>: defaults</span><br><span class="line">Sourcing config <span class="keyword">from</span> defaults</span><br><span class="line">Sourcing config <span class="keyword">from</span> first <span class="keyword">of</span>: genesis file at genesis.json</span><br><span class="line">Sourcing config <span class="keyword">from</span> genesis file at genesis.json</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping accounts&quot;</span>&#125;</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping names&quot;</span>&#125;</span><br><span class="line">&#123;<span class="string">&quot;log_channel&quot;</span>:<span class="string">&quot;Info&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;Dumping events&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="burrow-restore-Restore-new-chain-from-backup"><a href="#burrow-restore-Restore-new-chain-from-backup" class="headerlink" title="./burrow restore, Restore new chain from backup"></a>./burrow restore, Restore new chain from backup</h3><p>从backup文件恢复区块链</p>
 
       
     </div>

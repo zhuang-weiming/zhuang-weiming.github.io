@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">282</span>
+          <span class="site-state-item-count">283</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,78 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2021/05/12/Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/12/Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Groth16的理解与总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-12 14:58:04" itemprop="dateCreated datePublished" datetime="2021-05-12T14:58:04+08:00">2021-05-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-25 14:04:50" itemprop="dateModified" datetime="2021-05-25T14:04:50+08:00">2021-05-25</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/%E4%B8%80%E6%96%87%E4%BA%86%E8%A7%A3%E6%9C%80%E7%83%AD%E9%97%A8%E7%9A%84zkSNARK%E6%96%B9%E6%A1%88-Groth16.pdf">Markdown ==&gt; 一文了解最热门的zkSNARK方案-Groth16.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/WillZhuang.github.io/blob/master/2021/05/12/Groth16%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/%E4%B8%80%E6%96%87%E4%BA%86%E8%A7%A3%E6%9C%80%E7%83%AD%E9%97%A8%E7%9A%84zkSNARK%E6%96%B9%E6%A1%88-Groth16.pdf">web ==&gt; 一文了解最热门的zkSNARK方案-Groth16.pdf</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -661,146 +733,6 @@
 <p>​    注意，这提供了在<code>s</code>处的多项式的“定值”，而不知道<code>s</code>。例如，x^3 + 2x^2+5 将由(G * s^3) + 2 * (G * s^2) + 5 * G表示。我们可以用符号<code>[P]</code>来表示用这种方式（即<code>G * P(s)</code>）编码的P。在做减除技巧时，可以使用<a target="_blank" rel="noopener" href="https://medium.com/@VitalikButerin/exploring-elliptic-curve-pairings-c73c1864e627">椭圆曲线对</a>来证明这两个多项式实际上满足关系：检查<code>e([P] - G * a, G2) = e([Q], [x] - G2 * z)</code>是否作为检查<code>P(x) - a = Q(x) * (x - z)</code>的代理。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>​    最后，再讨论一下这个方案，给定一个程序P，将其转换为一个电路，并生成一组如下所示的方程：<br>$$<br>({Q_L}_i)a_i + ({Q_R}_i)b_i + ({Q_O}_i)c_i + ({Q_M}_i)a_ib_i + {Q_C}_i = 0<br>$$<br>​    然后将这组方程转换为一个多项式方程：<br>$$<br>Q_L(x)a(x) + Q_R(x)b(x) + Q_O(x)c(x) + Q_M(x)a(x)b(x) + Q_C(x) = 0<br>$$<br>​    还可以从回路中生成复制约束的列表。从这些复制约束生成表示排列线指数的三个多项式：σa(x), σb(x), σc(x)。要生成证明，需要计算所有线的值，并将其转换为三个多项式：a(x), b(x), c(x)。作为置换检查参数的一部分，还可以计算六个“坐标对累加器”多项式。最后计算辅因子Hi(x)。</p>
 <p>​    多项式之间有一组方程需要检查，可以通过对多项式作出承诺，在某些随机z处打开它们（同时证明这些opening是正确的），并在这些求值结果上运行方程，而不是在原始多项式上运行方程来完成这项工作。证明本身只是一些承诺和opening，可以用几个方程式来检查。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2021/04/14/Plonk-4-%E7%BA%A6%E6%9D%9F%E4%B8%8E%E4%B8%BB%E5%8D%8F%E8%AE%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/14/Plonk-4-%E7%BA%A6%E6%9D%9F%E4%B8%8E%E4%B8%BB%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">Plonk-4-约束与主协议</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-14 07:52:04" itemprop="dateCreated datePublished" datetime="2021-04-14T07:52:04+08:00">2021-04-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 17:35:38" itemprop="dateModified" datetime="2021-04-29T17:35:38+08:00">2021-04-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>论文原文 ==&gt; <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">953.pdf (iacr.org)</a>，<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2019/953.pdf">PlonK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge</a></p>
-<h3 id="6-约束系统Constraint-systems"><a href="#6-约束系统Constraint-systems" class="headerlink" title="6 约束系统Constraint systems"></a>6 约束系统Constraint systems</h3><p>​    给定整数m，n，且n≤m≤2n我们提出一种约束系统，该系统捕获扇入的两个算术电路，这些算术电路具有n个门和m条导线，不受限制地扇出。</p>
-<p>​    约束系统 C=(V,Q) 定义如下:</p>
-<ul>
-<li><p>V的约束是 V=(a,b,c)，其中a,b,c∈[m]，[m]的阶数为n。我们将a，b，c分别视为C的左，右和输出序列。</p>
-</li>
-<li><p>Q=(qL,qR,qO,qM,qC)∈(<strong><em>F</em></strong>n)，其中(<strong><em>F</em></strong>n)的阶数为5，qL,qR,qO,qM,qC∈**<em>F**</em>n 为选择器向量，每个选择器向量的阶数为n。</p>
-</li>
-</ul>
-<p>x∈*<strong>F***m，i∈[n]，为了满足C，需要满足以下条件：<br>$$<br>(qL)<em>i \cdot X</em>{a_i} + (qR)<em>i \cdot X</em>{b_i} + (qO)<em>i \cdot X</em>{c_i} + (qM)<em>i \cdot (X</em>{a_i}X_{b_i}) + (qC)_i = 0<br>$$<br>​    为了定义基于C的关系，我们将其扩展为包括正整数l≤m和“公共输入”的子集 *</strong>I*<strong>⊂[m]。在不失一般性的前提下，假设**<em>I</em></strong>= {1,…,l}。</p>
-<p>​    定义Rc为一组集合对(x,ω)，其中x∈*<strong>F**<em>l，l为阶数，ω∈</em></strong>F***m_l，m-l 为阶数，则 x:=(x,ω)满足C。</p>
-<p>​    我们将继续展示此类约束的一些有用实例。</p>
-<p><strong>算术电路</strong>：n个门且扇入为2的电路，每个门是加法门或乘法门，约束系统可以如下：</p>
-<p>1.m设置为线路数，每根线路与索引i∈[m]相关联。</p>
-<p>​    针对每一个i∈[n]，</p>
-<p>2.设定<strong>a</strong>i，<strong>b</strong>i，<strong>c</strong>i为第i个门的左、右、输出线路。</p>
-<p>3.设定(qL)i=0，(qR)i=0，(qM)i=1，(qO)i=-1，当第i个门是乘法门。</p>
-<p>4.设定(qL)i=1，(qR)i=1，(qM)i=0，(qO)i=-1，当第i个门是加法门。（同时可以使用线性组合门，(qL)i，(qR)i为非零整数值）</p>
-<p>5.(qC)i=0。</p>
-<p><strong>布尔约束</strong>：证明系统中常见的一种情况是需要强制执行 <strong>X</strong>j∈{0,1}，其中j∈[m]，i∈[n]，则：</p>
-<p>​        <strong>a</strong>i=<strong>b</strong>i=j，(qL)i=-1，(qM)i=1，(qR)i=(qO)i=(qC)i=0</p>
-<p><strong>增强公共输入</strong>：非常方便直接，强制执行公共输入值<strong>X</strong>1,…,<strong>X</strong>l：强制约束<strong>X</strong>j=Xj，i∈[n]，则：</p>
-<p>​        <strong>a</strong>i=j，(qL)i=1，(qM)i=(qR)i=(qO)i=0，(qC)i=-xj</p>
-<h3 id="7-主协议Main-protocol"><a href="#7-主协议Main-protocol" class="headerlink" title="7 主协议Main protocol"></a>7 主协议Main protocol</h3><p>​    令C=(V,Q)为第6节所述形式的约束系统。我们介绍关系Rc的主要协议。首先，如下定义C的分区（称为Tc）将很方便。</p>
-<p>​    令 V=(a,b,c)，认为V是[m]中的一个向量<strong>V</strong>，[m]的阶数为3n。令i∈[m]，Ti⊂[3n]为是索引集j∈[3n]，如Vj=i。现在定义：<br>$$<br>T_c := {T_i}_{i∈[m]}<br>$$<br>​    在介绍本协议之前，我们先做一个最终定义。如果i∈[l]，我们说C为l个公共输入做好了准备。</p>
-<p>​        <strong>a</strong>i=i，(qL)i=1，(qM)i=(qR)i=(qO)i=0，(qC)i=0</p>
-<p>​    回顾 H∈{g,. . .,gn}，我们提出用于Rc的H范围多项式协议</p>
-<p><strong>前处理</strong>：令 <em>σ</em> = <em>σ</em>(Tc)</p>
-<p>​    如5.1节所讲，多项式SID1，SID2，SID3，Sσ1，Sσ2，Sσ3∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]。</p>
-<p>​    多项式qL，qR，qO，qM，qC ∈ <strong><em>F</em></strong> &lt;n[<strong>X</strong>]，针对每一个i∈[n]均满足：<br>$$<br>q_L(g^i):=(q_L)_i,q_R(g^i):=(q_R)_i,q_O(g^i):=(q_O)_i,q_M(g^i):=(q_M)_i,q_C(g^i):=(q_C)_i<br>$$<br><strong>协议</strong>：</p>
-<p>1.<strong>X</strong>∈ <strong><em>F</em></strong>，*<strong>F*<strong>的阶数为m，令</strong>X<strong>为</strong>P<strong>poly的公共输入X。</strong>P**poly计算3个多项式fL，fR，fO∈ *</strong>F*** &lt;n[<strong>X</strong>]，i∈[n]，<br>$$<br>f_L(i)=X_{a_i},f_R(i)=X_{b_i},f_O(i)=X_{c_i}<br>$$<br><strong>P</strong>poly发送fL，fR，fO给到第三方 <strong><em>I</em></strong>。</p>
-<p>2.<strong>P</strong>poly和<strong>V</strong>poly使用5.1节所讲到的排列协议，使用排列σ，σ介于(fL, fR, fO)与自身之间。如5.2阶所讲，将确切地检查(fL, fR, fO)是否满足Tc。</p>
-<p>3.<strong>V</strong>poly计算公共输入多项式：<br>$$<br>PI(X):= \sum _{i∈[l]}-x_i \cdot L_i(X)<br>$$<br>4.<strong>V</strong>poly在H范围内检验恒等式：<br>$$<br>q_L \cdot f_L + q_R \cdot f_R + q_O \cdot f_O + q_M \cdot f_L \cdot f_R + (q_C + PI) = 0<br>$$</p>
-<h3 id="8-最终协议"><a href="#8-最终协议" class="headerlink" title="8.最终协议"></a>8.最终协议</h3><h4 id="8-1-多项式定义一个专用电路"><a href="#8-1-多项式定义一个专用电路" class="headerlink" title="8.1 多项式定义一个专用电路"></a>8.1 多项式定义一个专用电路</h4><p>以下多项式，唯一性地定义一个通用的SNARK电路：</p>
-<ul>
-<li><p>qM(X)，qL(X)，qR(X)，qO(X)，qC(X)，定义电路算术化的“选择器”多项式</p>
-</li>
-<li><p>SID1(X)=X，SID2(X)=k1X，SID3(X)=k2X：应用于a, b, c的恒等式排列。选择k1，k2∈*<strong>F*** ，使得H，k1·H，k2·H是*</strong>F****中H的不同的协集，因此由3n个不同的元素组成。例如，ω是二次残基的，k1为任何二次非残基，而k2为不包含在k1·H中的二次非残基。</p>
-</li>
-<li><p>Sσ1(X)，Sσ2(X)，Sσ3(X)：复制排列应用于a，b，c</p>
-</li>
-<li><p>n为给定电路总的门数。V使用它来计算消失的多项式：<br>$$<br>Z_H(X)=X^n-1<br>$$</p>
-</li>
-</ul>
-<h4 id="8-2-对线路价值的承诺Commitments-to-wire-values"><a href="#8-2-对线路价值的承诺Commitments-to-wire-values" class="headerlink" title="8.2 对线路价值的承诺Commitments to wire values"></a>8.2 对线路价值的承诺Commitments to wire values</h4><p>对于以下协议，我们描述了包含n个算术门的通用SNARK电路的证明关系。证据proof的见证人witnesses是线路价值的见证。承诺commitments [a]1，[b]1，[c]1将Kate多项式承诺通过计算方式绑定到线路价值。</p>
-<h4 id="8-3-展开的通用的SNARK证明关系"><a href="#8-3-展开的通用的SNARK证明关系" class="headerlink" title="8.3 展开的通用的SNARK证明关系"></a>8.3 展开的通用的SNARK证明关系</h4><p>$$<br>Rsnark(λ)=\begin{Bmatrix} (x,w,crs) = ((w_i)<em>{i \in [l]}),((w_i) ^{3n} _{i=1,i \in [l]}),((q</em>{M_i},q_{L_i},q_{R_i},q_{O_i},q_{C_i}) ^n _{i=1}, n, σ(x))\<br>\text {For all } i \in {1,…,3n }:w_i \in F_p, </p>
-<p>\ \text {and for all } i \in {1,…,n}:w_iw_{n+i}q_{M_i} + w_iq_{L_i} + w_{n+i}q_{R_i} + w_{2n+i}q_{O_i} + q_{C_i} = 0<br>\ \text { and for all } i \in {1,…,3n}:w_i=w_{σ(i)}<br>\end{Bmatrix}<br>$$</p>
-<h4 id="8-4-协议"><a href="#8-4-协议" class="headerlink" title="8.4 协议"></a>8.4 协议</h4><p>​    我们将下面的协议描述为使用Fiat-Shamir启发式技术的非交互式协议。为此，我们总是通过笔录表示共同的预处理输入，公共输入以及证明者在特定时间点之前编写的证明元素的串联。使用<strong>transcript</strong>通过(Fiat-Shamir)获得随机挑战。或者，可以通过发送随机字段元素的验证程序替换我们在“compute challenges”下写下的所有要点，以获得交互式协议，从中可以得出非交互式协议。使用R来指代哈希函数R:{0,1}→**<em>F**</em>p来模拟随机预言。</p>
-<p><strong>共同的预处理输入：</strong><br>$$<br>\begin{matrix}<br>n,(x \cdot [1]<em>1,…,x^{n+5} \cdot [1]<em>1),(q</em>{M_i},q_{L_i},q_{R_i},q_{O_i},q_{C_i}) ^n _{i=1} ,  σ(X), \<br>q_M(X)=\sum ^n _{i=1} q</em>{M_i}L_i(X),\<br>q_L(X)=\sum ^n <em>{i=1} q</em>{L_i}L_i(X),\<br>q_R(X)=\sum ^n <em>{i=1} q</em>{R_i}L_i(X),\<br>q_O(X)=\sum ^n <em>{i=1} q</em>{O_i}L_i(X),\<br>q_C(X)=\sum ^n <em>{i=1} q</em>{C_i}L_i(X),\</p>
-<p>S_{σ1}(X)=\sum ^n <em>{i=1} σ(i)L_i(X),\<br>S_{σ2}(X)=\sum ^n _{i=1} σ(n+i)L_i(X),\<br>S</em>{σ3}(X)=\sum ^n <em>{i=1} σ(2n+i)L_i(X),\<br>\end{matrix}<br>$$<br><strong>公共输入：</strong><br>$$<br>l,(w_i)</em>{i \in [l]}<br>$$</p>
-<h4 id="证明人算法："><a href="#证明人算法：" class="headerlink" title="证明人算法："></a>证明人算法：</h4><p><strong>证明人输入：</strong><br>$$<br>(w_i)_{i \in [3n]}<br>$$<br><strong>Round 1:</strong></p>
-<p>​    生成随机的盲标量(b1,…,b9)∈ <strong><em>F</em></strong>p</p>
-<p>​    计算线路多项式 a(X)，b(X)，c(X):<br>$$<br>\begin{matrix}<br>a(X)=(b_1X+b_2)Z_H(X)+\sum <em>{i=1} ^n w_iL_i(X)    \<br>b(X)=(b_3X+b_4)Z_H(X)+\sum _{i=1} ^n w</em>{n+i}L_i(X)    \<br>c(X)=(b_5X+b_6)Z_H(X)+\sum <em>{i=1} ^n w</em>{2n+i}L_i(X)    \<br>\end{matrix}<br>$$<br>​    计算<br>$$<br>[a]_1 := [ \alpha (x)]_1,[b]_1 := [b(x)]_1,[c]_1 := [c(x)]_1<br>$$<br>​    第一个输出 <strong><em>P</em></strong> 为：<br>$$<br>[a]_1 ,[b]_1 ,[c]_1<br>$$<br><strong>Round 2:</strong></p>
-<p>​    计算排列挑战(β, γ)∈ <strong><em>F</em></strong>p: β = R(transcript,0), γ = R(transcript,1)</p>
-<p>​    计算排列多项式 z(X):<br>$$<br>\begin{matrix}<br>z(X)=<br>(b_7X^2+b_8X+b_9)Z_H(X)+    \<br>L_1(X)+    \<br>\sum <em>{i=1} ^{n-1}\left(L</em>{i+1}(X) \prod ^i <em>{j=1} \frac{(w_j+\beta w^{j-1}+\gamma)(w_{n+j}+\beta k_1w^{j-1}+\gamma)(w_{2n+j}+\beta k_2w^{j-1}+\gamma)}{(w_j+\sigma(j)\beta+\gamma))(w</em>{n+j}+\sigma(n+j)\beta+\gamma)(w_{2n+j}+\sigma(2n+j)\beta+\gamma)}\right)<br>\end{matrix}<br>$$<br>​    计算:<br>$$<br>[z]_1:=[z(x)]_1<br>$$<br>​    第二个输出 <strong><em>P</em></strong> 为：<br>$$<br>([z]_1)<br>$$<br><strong>Round 3:</strong></p>
-<p>​    计算商数挑战α∈ <strong><em>F</em></strong>p：<em>α</em> = <em>R</em>(transcript)</p>
-<p>​    计算商数二项式t(X)：<br>$$<br>\begin{matrix}<br>t(X)=(a(X)b(X)q_M(X)+a(X)q_L(X)+b(X)q_R(X)+c(X)q_O(X)+PI(X)+q_C(X)) \frac{1}{Z_H(X)} \+ ((a(X)+\beta X+\gamma)(b(X)+\beta k_1X+\gamma)(c(X)+\beta k_2X+\gamma)z(X)) \frac{\alpha}{Z_H(X)}<br>\- ((a(X)+\beta S_{\sigma 1} (X)+\gamma)(b(X)+\beta S_{\sigma 2} (X)+\gamma)(c(X)+\beta S_{\sigma 3} (X)+\gamma)z(X\omega))\frac{\alpha}{Z_H(X)}<br>\+ ((z(X)-1)L_1(X)\frac{\alpha ^2}{Z_H(X)}<br>\end{matrix}<br>$$<br>​    拆分 t(X) 为多项式 tlo(X)，tmid(X)和thi(X)， tlo(X)阶数&lt;n，thi(X)阶数≤n+5，即<br>$$<br>t(X)=t_{lo}(X)+X^nt_{mind}(X)+X^{2n}t_{hi}(X)<br>$$<br>​    计算<br>$$<br>[t_{lo}]<em>1:=[t</em>{lo}(x)]<em>1, [t</em>{mid}]_1:=[tmid(x)]<em>1, [t</em>{hi}]<em>1:=[t</em>{hi}(x)]<em>1<br>$$<br>​    第三个输出 <strong><em>P</em></strong> 为：<br>$$<br>([t</em>{lo}]<em>1,[t</em>{mid}]<em>1,[t</em>{hi}]_1)<br>$$<br><strong>Round 4:</strong></p>
-<p>​    计算评估挑战ζ∈ <strong><em>F</em></strong>p：ζ= <em>R</em>(transcript)</p>
-<p>​    计算开放评估：<br>$$<br>\overline a=a(ζ),\overline b=b(ζ), \overline c=c(ζ),\overline S_{\sigma 1}=S_{\sigma 1}(ζ), \overline S_{\sigma 2}=S_{\sigma 2}(ζ), \overline t=t(ζ), \overline z=z(ζω)<br>$$<br>​    计算线性化多项式 r(X)：<br>$$<br>\begin{matrix}<br>r(X)=(\overline a \overline b \cdot q_M(X)+\overline a \cdot q_L(X)+\overline b \cdot q_R(X)+ \overline c \cdot q_O(X)+q_C(X)) \</p>
-<ul>
-<li>((\overline a+\beta ζ+\gamma)(\overline b+\beta k_1ζ+\gamma)(\overline c+\beta k_2ζ+\gamma)\cdot z(X))\alpha<br>\- ((\overline a+\beta \overline S_{\sigma 1}+\gamma)(\overline b+\beta S_{\sigma 2}+\gamma)\beta \overline z_ω \cdot S_{\sigma 3}(X)) \alpha<br>\+ ((z(X))L_1(ζ){\alpha ^2}<br>\end{matrix}<br>$$<br>​    计算线性化评估<br>$$<br>\overline r = r(ζ)<br>$$<br>​    第四个输出 <strong><em>P</em></strong> 为：<br>$$<br>(\overline a, \overline b, \overline c, \overline S_{\sigma 1},\overline S_{\sigma 2},\overline z_ω,\overline t,\overline r)<br>$$</li>
-</ul>
-<p><strong>Round 5:</strong></p>
-<p>​    计算开放挑战 υ∈ <strong><em>F</em></strong>p：υ= <em>R</em>(transcript)</p>
-<p>​    计算开放证明多项式 Wζ(X)：<br>$$<br>W_ζ(X)=\frac{1}{X-ζ}\left(<br>\begin{matrix}<br>(t_{lo}(X)+ζ^nt_{mid}(X)+ζ^{2n}t_{hi}(X)-\overline t)\<br>+υ(r(X)-\overline r)\<br>+υ^2(a(X)-\overline a)\<br>+υ^3(b(X)-\overline b)\<br>+υ^4(c(X)-\overline c)\<br>+υ^5(S_{\sigma 1}(X)-\overline S_{\sigma 1})\<br>+υ^6(S_{\sigma 2}(X)-\overline S_{\sigma 2})\</p>
-<p>\end{matrix}<br>\right)<br>$$<br>​    计算开放证明多项式：<br>$$<br>W_{ζω}(X)=\frac{(z(X)-\overline z_ω)}{X-ζω}<br>$$<br>​    计算：<br>$$<br>[W_ζ]<em>1:=[W_ζ(x)]_1,[W_ζω]_1:=[W_ζω(x)]_1<br>$$<br>​    第五个输出P为<br>$$<br>([W_ζ]_1,[W_ζω]_1)<br>$$<br>​    返回<br>$$<br>π</em>{SNARK}=\left(<br>[a]<em>1,[b]<em>1,[c]_1,[z]_1,[t</em>{lo}]<em>1,[t</em>{mid}]<em>1,[t</em>{hi}]<em>1,[W_ζ]_1,[W_ζω]_1,\overline a, \overline b, \overline c, \overline S</em>{\sigma 1},\overline S</em>{\sigma 2},\overline r, \overline z_ω<br>\right)<br>$$<br>​    计算多点评估挑战 u∈ <strong><em>F</em></strong>p：u = R(transcript)</p>
-<p>​    现在，我们以最小化<strong>G1</strong>标量乘法次数的方式描述验证程序算法。</p>
-<h4 id="验证人算法："><a href="#验证人算法：" class="headerlink" title="验证人算法："></a>验证人算法：</h4><p><strong>验证预处理输入：</strong><br>$$<br>\begin{matrix}<br>[q_M]<em>1:=q_M(x)\cdot [1]_1\,<br>[q_L]_1:=q_L(x)\cdot [1]_1\<br>,[q_R]_1:=q_R(x)\cdot [1]_1\<br>,[q_O]_1:=q_O(x)\cdot [1]_1\<br>,[S</em>{\sigma 1}]<em>1:=S</em>{\sigma 1}(x)\cdot [1]<em>1\<br>,[S</em>{\sigma 2}]<em>1:=S</em>{\sigma 2}(x)\cdot [1]<em>1\<br>,[S</em>{\sigma 3}]<em>1:=S</em>{\sigma 3}(x)\cdot [1]_1\<br>x \cdot [1]_2<br>\end{matrix}<br>$$</p>
-<p>$$<br>\begin{matrix}<br>1.验证 \left(<br>[a]<em>1,[b]<em>1,[c]_1,[z]_1,[t</em>{lo}]<em>1,[t</em>{mid}]<em>1,[t</em>{hi}]_1,[W_ζ]_1,[W_ζω]_1<br>\right) \in G_1 \<br>2.验证\left(<br>\overline a, \overline b, \overline c, \overline S</em>{\sigma 1},\overline S_{\sigma 2},\overline r, \overline z_ω<br>\right) \in F ^7 <em>p \<br>3.验证 (w_i)_{i \in [l]} \in F ^l _p \<br>4.计算 \beta,\gamma,\alpha,ζ,v, u \in F_p 如证明人算法描述 \<br>5.计算零多项式评估 Z_H(ζ)=ζ^n-1 \<br>6.计算拉格朗日多项式评估 L_1(ζ)=\frac{ζ^n-1}{n(ζ-1)} \<br>7.计算公共多项式评估 PI(ζ)=\sum</em>{i\in l} w_iL_i(ζ) \<br>8.计算求商多项式评估 \overline t = \frac{\overline r + PI(ζ) - ((\overline a+\beta \overline S_{\sigma 1}+\gamma)(\overline b+\beta \overline S_{\sigma 2}+\gamma)(\overline c+\gamma) \overline z_ω)\alpha - L_1(ζ)\alpha ^2)}{Z_H(ζ)}<br>\end{matrix}<br>$$</p>
-<p>9.计算第一部分的批多项式承诺<br>10.计算整体批多项式承诺<br>11.计算群编码批评估<br>12.验证全部评估</p>
 
       
     </div>
