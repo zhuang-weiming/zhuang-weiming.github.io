@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="1. 概念 幂等性 + 事务性 Kafka 的 enable.idempotence&#x3D;true 解决了 生产端的消息重复发送问题，保证“至多一次” → “恰好一次”。 transactional.id + 事务 API 则让生产者能把多个写操作当作原子单元，要么全写入，要么全不写。   消费者端隔离级别 isolation.level&#x3D;read_committed 确保消费端只读取 提交成功的事务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka在金融系统中的实践">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2025/09/05/Kafka%E5%9C%A8%E9%87%91%E8%9E%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="1. 概念 幂等性 + 事务性 Kafka 的 enable.idempotence&#x3D;true 解决了 生产端的消息重复发送问题，保证“至多一次” → “恰好一次”。 transactional.id + 事务 API 则让生产者能把多个写操作当作原子单元，要么全写入，要么全不写。   消费者端隔离级别 isolation.level&#x3D;read_committed 确保消费端只读取 提交成功的事务">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-09-05T08:02:00.000Z">
+<meta property="article:modified_time" content="2025-09-05T09:02:21.533Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="架构设计">
+<meta property="article:tag" content="kafka">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2025/09/05/Kafka%E5%9C%A8%E9%87%91%E8%9E%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Kafka在金融系统中的实践 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">1. 概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">2. 工程实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%87%91%E8%9E%8D%E5%9C%BA%E6%99%AF%E6%A1%88%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">3. 金融场景案例</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">282</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/09/05/Kafka%E5%9C%A8%E9%87%91%E8%9E%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kafka在金融系统中的实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-09-05 16:02:00 / Modified: 17:02:21" itemprop="dateCreated datePublished" datetime="2025-09-05T16:02:00+08:00">2025-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h2><ol>
+<li><strong>幂等性 + 事务性</strong><ul>
+<li>Kafka 的 enable.idempotence=true 解决了 <strong>生产端的消息重复发送问题</strong>，保证“至多一次” → “恰好一次”。</li>
+<li>transactional.id + 事务 API 则让生产者能把多个写操作当作原子单元，要么全写入，要么全不写。</li>
+</ul>
+</li>
+<li><strong>消费者端隔离级别</strong><ul>
+<li>isolation.level=read_committed 确保消费端只读取 <strong>提交成功的事务消息</strong>，不会读到失败/未提交的写入。</li>
+<li>这相当于 SQL 里的 <strong>READ COMMITTED 隔离级别</strong>。</li>
+</ul>
+</li>
+<li><strong>两阶段提交（2PC）与事务日志</strong><ul>
+<li>Kafka 内部事务机制不是严格意义上的 <strong>分布式 XA 2PC</strong>，而是 <strong>Producer Coordinator + Transaction Log</strong> 的轻量实现。</li>
+<li>当你把多个 Topic/Partition 的消息放在一个事务里时，Kafka 会写一条 <strong>事务日志（txn log）</strong>，由 Coordinator 来决定事务的提交/中止状态，消费者依赖 txn log 过滤未提交消息。</li>
+<li>所以它更像是 “<strong>Kafka 内部的两阶段提交</strong>”，如果要与外部数据库（如 MySQL、Redis）做一致性，仍需要 <strong>外部协调机制</strong>（典型是 Outbox Pattern）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-工程实践"><a href="#2-工程实践" class="headerlink" title="2. 工程实践"></a>2. 工程实践</h2><p>在金融支付类系统里，通常会结合以下手段来确保可靠性：</p>
+<ul>
+<li><strong>生产端配置最佳实践</strong><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">enable.idempotence</span>=<span class="string">true   # 解决了生产端的消息重复发送问题，保证“至多一次” → “恰好一次”。</span></span><br><span class="line"><span class="attr">acks</span>=<span class="string">all    # 确保 ISR 同步确认，确保消息不重复</span></span><br><span class="line"><span class="attr">retries</span>=<span class="string">Integer.MAX_VALUE    # 确保消息不丢失</span></span><br><span class="line"><span class="meta">max.in.flight</span>=<span class="string">1   # 避免并发请求导致的乱序</span></span><br><span class="line"><span class="meta">transactional.id</span>=<span class="string">tx-producer-001</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>消费端配置最佳实践</strong><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">isolation.level</span>=<span class="string">read_committed</span></span><br><span class="line"><span class="meta">enable.auto.commit</span>=<span class="string">false   # 结合事务手动提交offset</span></span><br><span class="line"><span class="comment"># offset 也写入 Kafka 的事务，确保消息消费与结果提交原子化。</span></span><br><span class="line"><span class="comment"># 常见模式是 Kafka + DB 的事务性写入（即 Outbox Pattern）</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>幂等消费（Exactly Once Processing）</strong><ul>
+<li>即使 Kafka 层面保证了 “Exactly Once Delivery”，但在消费者更新外部存储（数据库、账本系统）时，仍要确保幂等性。</li>
+<li>常见做法：<ul>
+<li>使用 <strong>唯一事务ID/流水号</strong> 作为幂等键</li>
+<li>在数据库侧维护 dedup 表/唯一索引，避免重复扣款</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-金融场景案例"><a href="#3-金融场景案例" class="headerlink" title="3. 金融场景案例"></a>3. 金融场景案例</h2><ol>
+<li><strong>支付宝/微信支付 - 支付链路</strong><ul>
+<li>Kafka 事务常用于 <strong>支付事件流</strong>，比如：<ul>
+<li>扣款事件（资金冻结）</li>
+<li>风控事件（交易审核）</li>
+<li>清算/记账事件（账本入账）</li>
+</ul>
+</li>
+<li>如果任何一步失败，整个事务会被中止，消费者端不会看到“半成品交易”。</li>
+</ul>
+</li>
+<li><strong>证券交易所撮合系统</strong><ul>
+<li>撮合引擎把订单事件写入 Kafka，撮合成功后再写入交易结果事件，两者要么同时写入，要么同时回滚。</li>
+<li>避免出现 “订单被接收但未撮合成功” 这种不一致。</li>
+</ul>
+</li>
+<li><strong>银行账务系统（Outbox + Kafka EOS）</strong><ul>
+<li>常见设计是 <strong>双写一致性</strong>：<ul>
+<li>业务库写账务流水（Outbox 表）</li>
+<li>Kafka Connect CDC 监听 Outbox 表 → 推送到 Kafka → 消费到清算/风控服务</li>
+</ul>
+</li>
+<li>Outbox 表和账务写操作在同一数据库事务中完成，Kafka 端依赖 EOS 保证消息不丢不重。</li>
+</ul>
+</li>
+</ol>
+<p>总结：Kafka EOS <strong>只能保证 Kafka 内部端到端不丢不重</strong>，如果要与外部系统（DB/账本）做事务一致性，需要使用 <strong>Outbox Pattern 或幂等消费</strong> 来兜底。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2025/09/05/Kafka%E5%9C%A8%E9%87%91%E8%9E%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/" title="Kafka在金融系统中的实践">https://zhuang-weiming.github.io/2025/09/05/Kafka在金融系统中的实践/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+              <a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" rel="tag"># 架构设计</a>
+              <a href="/tags/kafka/" rel="tag"># kafka</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/05/Web3-Vendor-for-Bank/" rel="prev" title="Web3-Vendor-for-Bank">
+                  <i class="fa fa-chevron-left"></i> Web3-Vendor-for-Bank
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'e07d79e64bbb1318bd82560cc6500c36',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

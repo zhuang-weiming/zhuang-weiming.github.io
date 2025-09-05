@@ -201,7 +201,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">62</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -245,6 +245,194 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/09/05/Kafka%E5%9C%A8%E9%87%91%E8%9E%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/09/05/Kafka%E5%9C%A8%E9%87%91%E8%9E%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">Kafka在金融系统中的实践</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-09-05 16:02:00 / Modified: 17:02:21" itemprop="dateCreated datePublished" datetime="2025-09-05T16:02:00+08:00">2025-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h2><ol>
+<li><strong>幂等性 + 事务性</strong><ul>
+<li>Kafka 的 enable.idempotence=true 解决了 <strong>生产端的消息重复发送问题</strong>，保证“至多一次” → “恰好一次”。</li>
+<li>transactional.id + 事务 API 则让生产者能把多个写操作当作原子单元，要么全写入，要么全不写。</li>
+</ul>
+</li>
+<li><strong>消费者端隔离级别</strong><ul>
+<li>isolation.level=read_committed 确保消费端只读取 <strong>提交成功的事务消息</strong>，不会读到失败/未提交的写入。</li>
+<li>这相当于 SQL 里的 <strong>READ COMMITTED 隔离级别</strong>。</li>
+</ul>
+</li>
+<li><strong>两阶段提交（2PC）与事务日志</strong><ul>
+<li>Kafka 内部事务机制不是严格意义上的 <strong>分布式 XA 2PC</strong>，而是 <strong>Producer Coordinator + Transaction Log</strong> 的轻量实现。</li>
+<li>当你把多个 Topic/Partition 的消息放在一个事务里时，Kafka 会写一条 <strong>事务日志（txn log）</strong>，由 Coordinator 来决定事务的提交/中止状态，消费者依赖 txn log 过滤未提交消息。</li>
+<li>所以它更像是 “<strong>Kafka 内部的两阶段提交</strong>”，如果要与外部数据库（如 MySQL、Redis）做一致性，仍需要 <strong>外部协调机制</strong>（典型是 Outbox Pattern）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-工程实践"><a href="#2-工程实践" class="headerlink" title="2. 工程实践"></a>2. 工程实践</h2><p>在金融支付类系统里，通常会结合以下手段来确保可靠性：</p>
+<ul>
+<li><strong>生产端配置最佳实践</strong><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">enable.idempotence</span>=<span class="string">true   # 解决了生产端的消息重复发送问题，保证“至多一次” → “恰好一次”。</span></span><br><span class="line"><span class="attr">acks</span>=<span class="string">all    # 确保 ISR 同步确认，确保消息不重复</span></span><br><span class="line"><span class="attr">retries</span>=<span class="string">Integer.MAX_VALUE    # 确保消息不丢失</span></span><br><span class="line"><span class="meta">max.in.flight</span>=<span class="string">1   # 避免并发请求导致的乱序</span></span><br><span class="line"><span class="meta">transactional.id</span>=<span class="string">tx-producer-001</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>消费端配置最佳实践</strong><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">isolation.level</span>=<span class="string">read_committed</span></span><br><span class="line"><span class="meta">enable.auto.commit</span>=<span class="string">false   # 结合事务手动提交offset</span></span><br><span class="line"><span class="comment"># offset 也写入 Kafka 的事务，确保消息消费与结果提交原子化。</span></span><br><span class="line"><span class="comment"># 常见模式是 Kafka + DB 的事务性写入（即 Outbox Pattern）</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>幂等消费（Exactly Once Processing）</strong><ul>
+<li>即使 Kafka 层面保证了 “Exactly Once Delivery”，但在消费者更新外部存储（数据库、账本系统）时，仍要确保幂等性。</li>
+<li>常见做法：<ul>
+<li>使用 <strong>唯一事务ID/流水号</strong> 作为幂等键</li>
+<li>在数据库侧维护 dedup 表/唯一索引，避免重复扣款</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-金融场景案例"><a href="#3-金融场景案例" class="headerlink" title="3. 金融场景案例"></a>3. 金融场景案例</h2><ol>
+<li><strong>支付宝/微信支付 - 支付链路</strong><ul>
+<li>Kafka 事务常用于 <strong>支付事件流</strong>，比如：<ul>
+<li>扣款事件（资金冻结）</li>
+<li>风控事件（交易审核）</li>
+<li>清算/记账事件（账本入账）</li>
+</ul>
+</li>
+<li>如果任何一步失败，整个事务会被中止，消费者端不会看到“半成品交易”。</li>
+</ul>
+</li>
+<li><strong>证券交易所撮合系统</strong><ul>
+<li>撮合引擎把订单事件写入 Kafka，撮合成功后再写入交易结果事件，两者要么同时写入，要么同时回滚。</li>
+<li>避免出现 “订单被接收但未撮合成功” 这种不一致。</li>
+</ul>
+</li>
+<li><strong>银行账务系统（Outbox + Kafka EOS）</strong><ul>
+<li>常见设计是 <strong>双写一致性</strong>：<ul>
+<li>业务库写账务流水（Outbox 表）</li>
+<li>Kafka Connect CDC 监听 Outbox 表 → 推送到 Kafka → 消费到清算/风控服务</li>
+</ul>
+</li>
+<li>Outbox 表和账务写操作在同一数据库事务中完成，Kafka 端依赖 EOS 保证消息不丢不重。</li>
+</ul>
+</li>
+</ol>
+<p>总结：Kafka EOS <strong>只能保证 Kafka 内部端到端不丢不重</strong>，如果要与外部系统（DB/账本）做事务一致性，需要使用 <strong>Outbox Pattern 或幂等消费</strong> 来兜底。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/09/05/Web3-Vendor-for-Bank/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/09/05/Web3-Vendor-for-Bank/" class="post-title-link" itemprop="url">Web3-Vendor-for-Bank</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-09-05 16:02:00 / Modified: 16:42:28" itemprop="dateCreated datePublished" datetime="2025-09-05T16:02:00+08:00">2025-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/2025/09/05/Web3-Vendor-for-Bank/1.png"><br><a href>https://www.avaloq.com/services/ecosystem</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/08/15/dbos.dev/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,10 +456,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-08-15 16:36:00 / Modified: 22:12:23" itemprop="dateCreated datePublished" datetime="2025-08-15T16:36:00+08:00">2025-08-15</time>
+      <time title="Created: 2025-08-15 16:36:00" itemprop="dateCreated datePublished" datetime="2025-08-15T16:36:00+08:00">2025-08-15</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:29:37" itemprop="dateModified" datetime="2025-09-05T16:29:37+08:00">2025-09-05</time>
+      </span>
 
   
 </div>
@@ -468,10 +662,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-08-14 09:54:00 / Modified: 10:11:33" itemprop="dateCreated datePublished" datetime="2025-08-14T09:54:00+08:00">2025-08-14</time>
+      <time title="Created: 2025-08-14 09:54:00" itemprop="dateCreated datePublished" datetime="2025-08-14T09:54:00+08:00">2025-08-14</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:43:19" itemprop="dateModified" datetime="2025-09-05T16:43:19+08:00">2025-09-05</time>
+      </span>
 
   
 </div>
@@ -684,10 +884,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-08-04 16:50:00 / Modified: 17:14:05" itemprop="dateCreated datePublished" datetime="2025-08-04T16:50:00+08:00">2025-08-04</time>
+      <time title="Created: 2025-08-04 16:50:00" itemprop="dateCreated datePublished" datetime="2025-08-04T16:50:00+08:00">2025-08-04</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:43:57" itemprop="dateModified" datetime="2025-09-05T16:43:57+08:00">2025-09-05</time>
+      </span>
 
   
 </div>
@@ -733,297 +939,6 @@
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dockerfile for banking environment</span></span><br><span class="line"><span class="keyword">FROM</span> hashicorp/terraform-mcp-server:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure proxy settings</span></span><br><span class="line"><span class="keyword">ENV</span> HTTP_PROXY=http://proxy.bank.com:<span class="number">8080</span></span><br><span class="line"><span class="keyword">ENV</span> HTTPS_PROXY=http://proxy.bank.com:<span class="number">8080</span></span><br><span class="line"><span class="keyword">ENV</span> NO_PROXY=localhost,<span class="number">127.0</span>.<span class="number">0.1</span>,*.bank.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add internal CA certificates</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> internal-ca-certs.pem /usr/<span class="built_in">local</span>/share/ca-certificates/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> update-ca-certificates</span></span><br></pre></td></tr></table></figure>
 <p><strong>Vision (推荐)：环境标准化</strong> - 强调不应由开发者手动在容器或本地设置代理。正确的做法是由IT部门提供一个<strong>预先配置好代理和证书的、不可修改的标准化MCP Server</strong></p>
 <p><strong>Of cause this is a big risk for each developer to set proxy on the MCP Server in everyday working. Because we can’t fully follow the bank’s internet access policy via the Proxy Configuration</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/" class="post-title-link" itemprop="url">企业端MCP分类</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-01 16:00:00" itemprop="dateCreated datePublished" datetime="2025-08-01T16:00:00+08:00">2025-08-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-08-04 17:05:55" itemprop="dateModified" datetime="2025-08-04T17:05:55+08:00">2025-08-04</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在银行等金融机构，数据不出域是基本要求。本分类方法旨在帮助企业将不同敏感度的操作与相应的安全域进行绑定，从而在享受MCP便利的同时，确保合规性。本文将为您清晰梳理三类MCP部署方案，帮助企业根据自身IT政策和安全要求选择最适合的实施路径。</p>
-<h2 id="一、PC-host-MCP：企业PC零依赖部署"><a href="#一、PC-host-MCP：企业PC零依赖部署" class="headerlink" title="一、PC-host MCP：企业PC零依赖部署"></a>一、PC-host MCP：企业PC零依赖部署</h2><p>开发者本地部署，但根据其功能可能需要<strong>受控地访问网络资源</strong>（如内网的制品库或外网的官方Registry）<br>MCP示例</p>
-<ul>
-<li>​<strong>基础工具</strong>​：文件系统操作(filesystem)、内存管理(memory)、时间服务(time)</li>
-<li>​<strong>开发套件</strong>​：Git仓库管理(git)、SQLite数据库操作(sqlite)</li>
-<li>​<strong>本地逻辑处理</strong>​：顺序执行引擎(sequential-thinking)</li>
-<li>​<strong>一体化工具</strong>​：开发实用工具集(everything)</li>
-</ul>
-<h3 id="企业内网需要为下面的工具提供-internet访问权限"><a href="#企业内网需要为下面的工具提供-internet访问权限" class="headerlink" title="企业内网需要为下面的工具提供 internet访问权限"></a>企业内网需要为下面的工具提供 internet访问权限</h3><ul>
-<li>​<strong>基础设施即代码</strong>​：CDK(cdk-mcp-server)、CloudFormation(cfn-mcp-server)、Terraform(terraform-mcp-server)</li>
-<li>​<strong>API网关</strong>​：AWS本地API代理(aws-api-mcp-server)</li>
-</ul>
-<h3 id="开发增强工具"><a href="#开发增强工具" class="headerlink" title="开发增强工具"></a>开发增强工具</h3><ul>
-<li>​<strong>文档处理</strong>​：Markdown转换器(markdownify-mcp)</li>
-<li>​<strong>浏览器自动化</strong>​：浏览器工具集(browser-tools-mcp)、Playwright测试框架(mcp-playwright)</li>
-</ul>
-<h3 id="​审计和治理"><a href="#​审计和治理" class="headerlink" title="​审计和治理"></a>​审计和治理</h3><p>如何进行版本统一管理和漏洞扫描？</p>
-<h2 id="二、Server-host-MCP：企业私有化部署"><a href="#二、Server-host-MCP：企业私有化部署" class="headerlink" title="二、Server-host MCP：企业私有化部署"></a>二、Server-host MCP：企业私有化部署</h2><p>这类MCP部署在企业内部服务器集群，适合需要团队共享资源但又不允许连接外网的环境。通过Kubernetes等容器编排平台，可以实现高可用和弹性扩展。</p>
-<h3 id="数据库连接器"><a href="#数据库连接器" class="headerlink" title="数据库连接器"></a>数据库连接器</h3><ul>
-<li>​<strong>关系型数据库</strong>​：PostgreSQL(postgres)、MySQL(mysql)</li>
-<li>​<strong>内存数据库</strong>​：Redis(redis)</li>
-<li>​<strong>文档数据库</strong>​：MongoDB兼容(documentdb)、Cassandra兼容(amazon-keyspaces)</li>
-</ul>
-<h3 id="AWS企业服务集成"><a href="#AWS企业服务集成" class="headerlink" title="AWS企业服务集成"></a>AWS企业服务集成</h3><p><em>前提：企业使用AWS混合云方案</em></p>
-<ul>
-<li>​<strong>数据服务</strong>​：DynamoDB(dynamodb-mcp-server)、S3表格存储(s3-tables-mcp-server)</li>
-<li>​<strong>分析服务</strong>​：Aurora(aurora-dsql-mcp-server)、Neptune图数据库(amazon-neptune-mcp-server)</li>
-<li>​<strong>数据仓库</strong>​：Redshift(redshift-mcp-server)</li>
-</ul>
-<h3 id="监控分析工具"><a href="#监控分析工具" class="headerlink" title="监控分析工具"></a>监控分析工具</h3><ul>
-<li>​<strong>指标监控</strong>​：Prometheus(prometheus-mcp-server)、CloudWatch(cloudwatch-mcp-server)</li>
-<li>​<strong>错误追踪</strong>​：Sentry(sentry)</li>
-</ul>
-<blockquote>
-<p>​<strong>部署示例</strong>​：使用Docker Compose可以快速搭建包含权限控制和审计日志的MCP服务栈：</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mcp-gateway:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mcp-gateway:latest</span></span><br><span class="line">    <span class="attr">ports:</span> [<span class="string">&quot;8000:8000&quot;</span>]</span><br><span class="line">  <span class="attr">postgres-mcp:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres-mcp-server:1.2</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">DB_HOST:</span> <span class="string">internal-db</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="​审计和治理-1"><a href="#​审计和治理-1" class="headerlink" title="​审计和治理"></a>​审计和治理</h3><p>如何进行权限控制、资源配额和审计？（例如，谁可以连接哪个数据库MCP）。</p>
-<h2 id="三、Internet-host-MCP：互联网依赖型服务"><a href="#三、Internet-host-MCP：互联网依赖型服务" class="headerlink" title="三、Internet-host MCP：互联网依赖型服务"></a>三、Internet-host MCP：互联网依赖型服务</h2><p>这类MCP需要连接互联网和第三方API，为企业提供最广泛的能力扩展，但需要严格评估数据隐私和合规要求。</p>
-<h3 id="网络与搜索服务"><a href="#网络与搜索服务" class="headerlink" title="网络与搜索服务"></a>网络与搜索服务</h3><ul>
-<li>​<strong>搜索引擎</strong>​：Brave搜索API(brave-search)</li>
-<li>​<strong>内容获取</strong>​：网页抓取(fetch)、高级爬虫(puppeteer)</li>
-</ul>
-<h3 id="云平台集成"><a href="#云平台集成" class="headerlink" title="云平台集成"></a>云平台集成</h3><ul>
-<li>​<strong>协作工具</strong>​：Google Drive(gdrive)、Slack(slack)</li>
-<li>​<strong>代码托管</strong>​：GitHub(github)、GitLab(gitlab)</li>
-</ul>
-<h3 id="AI增强服务"><a href="#AI增强服务" class="headerlink" title="AI增强服务"></a>AI增强服务</h3><ul>
-<li>​<strong>创意生成</strong>​：AI艺术创作(everart)</li>
-<li>​<strong>大模型服务</strong>​：AWS Bedrock自动化(aws-bedrock-data-automation)</li>
-</ul>
-<h3 id="商业API连接"><a href="#商业API连接" class="headerlink" title="商业API连接"></a>商业API连接</h3><ul>
-<li>​<strong>地图服务</strong>​：Google Maps(google-maps)</li>
-<li>​<strong>云成本管理</strong>​：AWS定价API(aws-pricing)</li>
-<li>​<strong>文档查询</strong>​：AWS官方文档(aws-documentation)</li>
-</ul>
-<h3 id="​审计和治理-2"><a href="#​审计和治理-2" class="headerlink" title="​审计和治理"></a>​审计和治理</h3><p>审批流程是什么？如何进行数据泄露防护（DLP）和API调用监控？</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/07/18/Agents%20%E6%99%BA%E8%83%BD%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E5%B7%A5%E5%85%B7%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/07/18/Agents%20%E6%99%BA%E8%83%BD%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E5%B7%A5%E5%85%B7%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">Agents 智能代码编写工具市场分析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-07-18 15:59:00" itemprop="dateCreated datePublished" datetime="2025-07-18T15:59:00+08:00">2025-07-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-08-04 16:52:15" itemprop="dateModified" datetime="2025-08-04T16:52:15+08:00">2025-08-04</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Solutions-Evaluation-for-Enterprise"><a href="#Solutions-Evaluation-for-Enterprise" class="headerlink" title="Solutions Evaluation for Enterprise"></a>Solutions Evaluation for Enterprise</h2><p>This is the short term market AI-powered coding assistants with agent capability.</p>
-<table>
-<thead>
-<tr>
-<th>Solution</th>
-<th>Data Security</th>
-<th>Agent Coding</th>
-<th>Enterprise Features</th>
-<th>Cost Efficiency</th>
-<th>Open Source</th>
-<th>Service for HK &amp; China</th>
-<th>RECM</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Copilot GPT4.1/4o</td>
-<td>⭐⭐ <br>May need Azure</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Claude Code</td>
-<td>⭐⭐⭐</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>⭐⭐ <br>CLI only</td>
-<td>⭐⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Gemini CLI</td>
-<td>⭐⭐</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐ <br>CLI only</td>
-<td>⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>Y</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://windsurf.com/">Windsurf</a></td>
-<td>⭐⭐</td>
-<td>⭐ <br>No agent yet</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>N</td>
-</tr>
-<tr>
-<td>Cursor</td>
-<td>⭐⭐ <br>Route to Cursor’s server first</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>N</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://github.com/cline/cline">Cline</a> + Claude</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐⭐ <br>VS Code only</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>Full MIT</td>
-<td>Y</td>
-<td>Y</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://roocode.com/">Roo Code</a> + Claude</td>
-<td>⭐⭐ <br>Route to Roo Code server first</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐⭐ <br>VS Code only</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>Full MIT</td>
-<td>Y</td>
-<td>N</td>
-</tr>
-</tbody></table>
-<p>![[腾讯AI Coding 研究报告.pdf]]</p>
-<h2 id="Other-options"><a href="#Other-options" class="headerlink" title="Other options"></a>Other options</h2><p>For long term, we have more choices with promotion of the market.</p>
-<ul>
-<li>Amazon Q Developer - <a target="_blank" rel="noopener" href="https://aws.amazon.com/q/developer/">https://aws.amazon.com/q/developer/</a> , can service to users of China &amp; HK</li>
-<li>Kiro - <a target="_blank" rel="noopener" href="https://kiro.dev/">https://kiro.dev/</a>, ![[AWS Kiro IDE 深度研究报告.pdf]]</li>
-<li>Kimi K2 - <a target="_blank" rel="noopener" href="https://platform.moonshot.cn/">https://platform.moonshot.cn/</a> , <a target="_blank" rel="noopener" href="https://platform.moonshot.ai/">https://platform.moonshot.ai/</a> , China AI LLM</li>
-</ul>
-<p>reference link ==&gt; 腾讯AI Coding⾮共识报告 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/p5szrZfb6dzMze7p6Aeyeg">https://mp.weixin.qq.com/s/p5szrZfb6dzMze7p6Aeyeg</a></p>
 
       
     </div>

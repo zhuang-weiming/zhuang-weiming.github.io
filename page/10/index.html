@@ -201,7 +201,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">62</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,167 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/04/18/Axelar%E8%B7%A8%E9%93%BE%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/04/18/Axelar%E8%B7%A8%E9%93%BE%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">Axelar跨链机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-04-18 14:01:00 / Modified: 16:02:43" itemprop="dateCreated datePublished" datetime="2024-04-18T14:01:00+08:00">2024-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>reference: <a target="_blank" rel="noopener" href="https://docs.axelar.dev/">https://docs.axelar.dev/</a></p>
+<h3 id="跨链转移Token"><a href="#跨链转移Token" class="headerlink" title="跨链转移Token"></a>跨链转移Token</h3><p>情况一：<a target="_blank" rel="noopener" href="https://docs.axelar.dev/dev/send-tokens/introduction#call-sendtoken-on-an-evm-source-chain">Call <code>sendToken()</code> on an EVM source chain</a><br>    - step 1: 找到 source chain 的 Gateway 的合约地址。<br>    EVM 链使用 Axelar Gateway 智能合约发送Token。 这些是应用程序层智能合约，用于发送和接收有效负载以及监控交易状态。<br>Gateway合约的接口如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function sendToken(</span><br><span class="line">    string memory destinationChain,</span><br><span class="line">    string memory destinationAddress,</span><br><span class="line">    string memory symbol,</span><br><span class="line">    uint256 amount</span><br><span class="line">) external;</span><br></pre></td></tr></table></figure>
+<pre><code>- step 2: 调用 source chain 的approve()。
+- step 3: 在 source chain 上，利用Gateway合约将调用sendToken()。</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sendToken(</span><br><span class="line">    &quot;avalanche&quot;, &#x2F;&#x2F; destination chain name</span><br><span class="line">    &quot;0xF16DfB26e1FEc993E085092563ECFAEaDa7eD7fD&quot;, &#x2F;&#x2F; some destination wallet address (should be your own)</span><br><span class="line">    &quot;axlUSDC&quot;, &#x2F;&#x2F; asset symbol, can be differ by chain, see above</span><br><span class="line">    100000000 &#x2F;&#x2F; amount (in atomic units)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>此时，token将出现在目标链（destination chain）的地址上。</p>
+<p>情况二：<a target="_blank" rel="noopener" href="https://docs.axelar.dev/dev/send-tokens/introduction#call-sendtoken-on-a-cosmos-based-source-chain">## Call <code>sendToken()</code> on a Cosmos-based source chain</a><br>基于COSMOS的 source chain的话，sendToken()是一笔IBC的交易。消息（message）被投送到 Axelar 到一个固定的地址上<code>axelar1dv4u5k73pzqrxlzujxg3qp8kvc3pje7jtdvu72npnt5zhq05ejcsn5qme5</code>，该地址在Axelar网络上，被用于接收GMP消息，消息格式如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  destination_chain,</span><br><span class="line">  destination_address,</span><br><span class="line">  payload: <span class="literal">null</span>,</span><br><span class="line">  <span class="keyword">type</span>: <span class="number">3</span>, <span class="comment">// corresponds to the `sendToken` command on Axelar</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用AxelarJS-SDK调用sendToken"><a href="#利用AxelarJS-SDK调用sendToken" class="headerlink" title="利用AxelarJS SDK调用sendToken()"></a>利用AxelarJS SDK调用sendToken()</h3><p>前端应用可以利用AxelarJS SDK调用sendToken()。</p>
+<h3 id="使用存款地址（deposit-address）转移资产"><a href="#使用存款地址（deposit-address）转移资产" class="headerlink" title="使用存款地址（deposit address）转移资产"></a>使用存款地址（deposit address）转移资产</h3><p>存款地址（deposit address）是由 Axelar 中继服务（Relayer）创建和监控的临时一次性地址。 存款地址通常最多可运行 24 小时。如果出现以下情况，请使用存款地址：</p>
+<ul>
+<li>您需要 sendToken() 方法未提供的功能，例如 Cosmos-to-X。</li>
+<li>您希望允许从不与 Axelar 交互的钱包进行Token转移，例如从中心化交易所提取资金时。<br>如需使用存款地址转移资产，需要使用AxelarJS SDK并发起AxelarAssetTransfer。</li>
+</ul>
+<h3 id="构建跨链代币（Interchain-Token）"><a href="#构建跨链代币（Interchain-Token）" class="headerlink" title="构建跨链代币（Interchain Token）"></a>构建跨链代币（Interchain Token）</h3><p>链间代币是可在多个区块链上使用的 ERC-20 token。借助 Axelar 的链间代币服务 (Interchain Token Service)，可以从头开始创建新的跨链代币，也可以更新以太坊区块链上已存在的Token。如果Token不被 Axelar 支持，将该Token加入链间代币服务 (Interchain Token Service)即可。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/04/18/%E9%9F%A9%E5%9B%BD%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/04/18/%E9%9F%A9%E5%9B%BD%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81/" class="post-title-link" itemprop="url">韩国央行数字货币</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-04-18 09:43:00 / Modified: 09:44:52" itemprop="dateCreated datePublished" datetime="2024-04-18T09:43:00+08:00">2024-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Cos-CBDC: Design and Implementation of CBDC on Cosmos Blockchain:<br><a target="_blank" rel="noopener" href="https://www.ieice.org/publications/proceedings/bin/pdf_link.php?fname=p303-han.pdf&amp;iconf=APNOMS&amp;year=2021&amp;vol=67&amp;number=TS8-4&amp;lang=E">https://www.ieice.org/publications/proceedings/bin/pdf_link.php?fname=p303-han.pdf&amp;iconf=APNOMS&amp;year=2021&amp;vol=67&amp;number=TS8-4&amp;lang=E</a></p>
+<ul>
+<li>Cos-CBDC, a CBDC system based on Cosmos blockchain. The transaction capacity of Cos-CBDC can be up to <strong>15,000 TPS</strong> depending on the block size and the number of validators in the BFT-based consensus algorithm.</li>
+<li>R3 Corda and Hyperledger Fabric as the blockchain platforms for CBDC, these platforms are not suitable for implementing cross border payments. COSMOS IBC allow different types of blockchains to trade tokens and data with each other.</li>
+<li>cos-CBDC propose multi signature (Multisig) and Multi-party computation (MPC). E.g. Central Bank, Commercial Bank, Customer, these 3 parties  generate a Group Key with MPC. This Group Key.</li>
+</ul>
+<p>The Bank of Korea’s CBDC research:<br><a target="_blank" rel="noopener" href="https://www.bis.org/publ/bppdf/bispap123_m.pdf">https://www.bis.org/publ/bppdf/bispap123_m.pdf</a></p>
+<ul>
+<li>there is no immediate need to issue CBDC in Korea. Therefore, the BOK is actively engaging in research and preparations so that if a decision is made in the future regarding the introduction of CBDC, it can be issued without any delay.</li>
+<li>Key considerations in the BOK’s CBDC research<ul>
+<li>The decline in the use of cash.</li>
+<li>Big tech’s market dominance and concentration of personal information.</li>
+<li>The proliferation of global stablecoins.</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -471,146 +632,6 @@
 </ul>
 </li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/01/19/%E7%A2%B3%E5%87%8F%E6%8E%92%E6%A0%87%E5%87%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/01/19/%E7%A2%B3%E5%87%8F%E6%8E%92%E6%A0%87%E5%87%86/" class="post-title-link" itemprop="url">碳减排标准</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-01-19 10:51:00 / Modified: 10:53:38" itemprop="dateCreated datePublished" datetime="2024-01-19T10:51:00+08:00">2024-01-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>CDP（前称为碳信息披露项目）</strong>:</p>
-<ul>
-<li>网站：<a target="_blank" rel="noopener" href="https://www.cdp.net/">cdp.net</a></li>
-<li>CDP是一个国际非营利组织，提供一个系统化的平台，让公司、城市、州和地区能够测量、披露、管理和分享关键的环境信息。</li>
-</ul>
-<p><strong>Verra</strong></p>
-<ul>
-<li>网站：<a target="_blank" rel="noopener" href="https://verra.org/">https://verra.org/</a></li>
-<li>Verra sets the world’s leading standards for climate action and sustainable development.<br>  →  We build standards for activities as diverse as reducing deforestation, to improving agricultural practices, to addressing plastic waste, and to achieving gender equality.<br>  →  We manage programs to certify that these activities achieve measurable high-integrity outcomes.<br>  →  And we work with governments, businesses, and civil society to advance the use of these standards, including through the development of markets.</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/01/17/SSR-Stablecoin-Supply-Ration/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/01/17/SSR-Stablecoin-Supply-Ration/" class="post-title-link" itemprop="url">SSR-Stablecoin-Supply-Ration</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-01-17 15:26:00 / Modified: 15:31:18" itemprop="dateCreated datePublished" datetime="2024-01-17T15:26:00+08:00">2024-01-17</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.footprint.network/research/token/stablecoin/stablecoin-master?series_date-85674=past90days">https://www.footprint.network/research/token/stablecoin/stablecoin-master?series_date-85674=past90days</a>~</p>
-<p><img src="/2024/01/17/SSR-Stablecoin-Supply-Ration/1.png"></p>
 
       
     </div>

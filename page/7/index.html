@@ -201,7 +201,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">62</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -245,6 +245,179 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/09/03/%E5%85%AC%E6%9C%89%E9%93%BE%E6%8A%80%E6%9C%AF%E4%B8%BA%E9%93%B6%E8%A1%8C%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E9%A3%8E%E9%99%A9%E5%92%8C%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/03/%E5%85%AC%E6%9C%89%E9%93%BE%E6%8A%80%E6%9C%AF%E4%B8%BA%E9%93%B6%E8%A1%8C%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E9%A3%8E%E9%99%A9%E5%92%8C%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7/" class="post-title-link" itemprop="url">公有链技术为银行带来的新风险和不确定性</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-09-03 17:30:00" itemprop="dateCreated datePublished" datetime="2024-09-03T17:30:00+08:00">2024-09-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:25:24" itemprop="dateModified" datetime="2025-09-05T16:25:24+08:00">2025-09-05</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>根据BIS的文章：<a target="_blank" rel="noopener" href="https://www.bis.org/bcbs/publ/wp44.pdf">https://www.bis.org/bcbs/publ/wp44.pdf</a></p>
+<p>直接说结论：公有链会产生现有风险分类中的风险，主要是<strong>运营风险，其次是流动性风险和市场风险</strong>。银行有管理此类风险的经验，但公有链带来了一些新挑战，可能需要新的或额外的方法来管理风险。减轻这些风险的做法处于不同的发展阶段，一般没有经过压力测试。虽然针对这些风险的技术解决方案尚未成熟，但快速发展可能会产生新的解决方案（和风险），这些解决方案（和风险）可能值得进一步研究。</p>
+<p>Discussion of potential mitigants</p>
+<ul>
+<li>A. Business Continuity Planning Governance risk; technology/attack risk; political, policy, and legal uncertainty </li>
+<li>B. Technology-based control over parties and transactions Legal/compliance risk (money laundering/financing of terrorism) </li>
+<li>C. Permissioning a subset of node infrastructure Legal/compliance risk (money laundering/financing of terrorism); technology/attack risks, consumer protections risk </li>
+<li>D. Technology to address privacy/confidentiality/consumer protection risks Privacy/confidentiality/consumer protection risks </li>
+<li>E. Technology to address liquidity risk Liquidity risk</li>
+</ul>
+<h3 id="Business-continuity-planning"><a href="#Business-continuity-planning" class="headerlink" title="Business continuity planning"></a>Business continuity planning</h3><p>BCP could involve a registry that can be used to recover ownership after disruption, such as an off-chain database. For example, in the event of a hard fork or an attack on the blockchain that creates uncertainty as to the distributed ledger’s accuracy, the off-chain records could be used to identify the rightful owner of the assets or the branch of the fork that should be followed. BCP could also set out all relevant internal processes, including those to ensure that all transactions and participants are traceable, potential lost data can be recovered, and the records on the ownership of the assets can be retrieved within a reasonable timeframe. In addition, BCP could define an alternative blockchain where assets would be created or ported in case of disruption of the primary blockchain (“designation of a contingency chain”).</p>
+<h3 id="Technology-based-control-over-parties-and-transactions"><a href="#Technology-based-control-over-parties-and-transactions" class="headerlink" title="Technology-based control over parties and transactions"></a>Technology-based control over parties and transactions</h3><p>On certain permissionless blockchains, tokens that parties transact in are created or subject to constraints programmed by smart contracts. Those smart contracts determine the tokens’ operational attributes and limitations. Among other things, smart contracts can be used to control and limit access to and ownership of a token and even to reverse transactions that have already been processed. These features, in turn, could be used to mitigate some of the AML/CFT risk associated with permissionless blockchains. Implementation of permissions can take a number of forms: </p>
+<ol>
+<li>Denylisting: when a crypto-asset has deny-listing functionality, the issuer can use the smart contract to bar specified addresses on the blockchain from holding or accessing the asset. A banking organisation might use this functionality to prevent transactions to or from wallets associated with known terrorists, criminals, or states subject to Office of Foreign Assets Control (OFAC) sanctions. The ability to infinitely create new wallets may limit the effectiveness of this mitigant. </li>
+<li>Allowlisting: the inverse of denylisting. The token in question is programmed to be accessed only by approved addresses on the blockchain. Addresses that are not on the allowlist will not be able to receive or send the asset. The issuer can add or remove participants to the allowlist via the smart contract.</li>
+<li>Privacy-preserving identity verification: technologies such as zero-knowledge proofs may allow identity verification while preserving privacy at the transaction level. Such technologies are nascent in both development and application.</li>
+<li>A controller: smart contracts can also be used to empower a designated entity (the controller) to control and limit access to the cryptoasset; block and reverse transactions that are fraudulent; and amend the code that implements the cryptoasset functions to address any deficiencies that may emerge. The controller could be the entity that develops and maintains the business continuity plan (discussed above). The controller would not exercise control over the permissionless network itself, but over the specific tokens of a specific issuance. The controller could use its authority to help mitigate legal/compliance risks, in particular money laundering / financing of terrorism and OFAC sanctions risks, through the use of off-chain due diligence and blockchain-related permissioning technology.<h3 id="Permissioning-node-infrastructure"><a href="#Permissioning-node-infrastructure" class="headerlink" title="Permissioning node infrastructure"></a>Permissioning node infrastructure</h3>Permissioning a subset of nodes might create known validators that are deemed safe for particular users such as banks to interact with. This may help address risks such as legal and compliance risks (including gas fee risks or ML/FT risks), technology/attack risks (including MEV risks), and consumer protection. This would likely come at the cost of slowing down transactions for the parties attempting to avoid paying gas fees to nodes operated by criminals or other sanctioned parties.<h3 id="Technology-to-address-privacy-confidentiality-and-consumer-protection-risks"><a href="#Technology-to-address-privacy-confidentiality-and-consumer-protection-risks" class="headerlink" title="Technology to address privacy, confidentiality and consumer protection risks"></a>Technology to address privacy, confidentiality and consumer protection risks</h3>Technology to address privacy, confidentiality, and consumer protection risks is being developed. Some potential solutions, such as zero-knowledge proofs, may take the form of permissioned chains “one level up” from the primary blockchain. In such a configuration, the primary chain is referred to as a layer 1 chain, while the chain one level up is referred to as a layer 2 chain. Alternatively, a separate blockchain that communicates with the permissionless primary blockchain, called a sidechain, may be employed. In addition to zero knowledge proofs, other methods such as fully homomorphic encryption might be used to protect consumer information.<h3 id="Technology-to-address-liquidity-risk"><a href="#Technology-to-address-liquidity-risk" class="headerlink" title="Technology to address liquidity risk"></a>Technology to address liquidity risk</h3>Low transaction throughput of popular permissionless blockchains can be exacerbated in times of system stress, imposing liquidity risk on tokenised assets. Several variations on layer 1 consensus mechanisms are intended to speed up the clearance of transactions. In addition, many blockchain projects aim to speed up transaction processing on layer 2 chains and sidechains. However, while these solutions aim to off-load transaction volume from layer 1s, they still depend on the base permissionless blockchain for final settlement and therefore only partly compensate for the layer 1’s transaction processing speed. These technologies are all developing rapidly.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/08/19/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%93%B6%E8%A1%8C%E4%B8%9A%E7%9A%84%E8%90%BD%E5%9C%B0%E6%83%85%E5%86%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/08/19/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9C%A8%E9%93%B6%E8%A1%8C%E4%B8%9A%E7%9A%84%E8%90%BD%E5%9C%B0%E6%83%85%E5%86%B5/" class="post-title-link" itemprop="url">区块链在银行业的落地情况</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-08-19 14:51:00" itemprop="dateCreated datePublished" datetime="2024-08-19T14:51:00+08:00">2024-08-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:25:24" itemprop="dateModified" datetime="2025-09-05T16:25:24+08:00">2025-09-05</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>1. 摩根大通（JPMorgan Chase）</strong><br>• <strong>项目名称</strong>: Liink by J.P. Morgan (原名为Interbank Information Network, IIN)<br>• <strong>业务金额</strong>: 摩根大通通过Liink的Confirm应用来改进全球资金转账，并降低交易被退回的概率。通过Liink进行的全球支付涉及超过9500000笔交易。此平台目前有90多家金融机构参与，覆盖20多个国家。<br>• <strong>启动时间</strong>: 2019年以后，Liink在继续扩展和优化功能。<br>• <strong>技术实现</strong>: Liink是由摩根大通的Onyx部门开发的一个分布式账本平台，最初称为Interbank Information Network (IIN)。该平台利用区块链技术来提高全球银行间支付的透明度和效率。Liink的技术架构基于<a target="_blank" rel="noopener" href="https://github.com/Consensys/quorum">Quorum，这是一种许可链</a>，旨在确保高效、安全的交易处理。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.jpmorgan.com/onyx/liink">J.P. Morgan Liink</a></p>
+<p><strong>2. 汇丰银行（HSBC）</strong><br>• <strong>项目名称</strong>: Contour (原名为Voltron)<br>• <strong>业务金额</strong>: Contour是一个基于区块链的贸易融资平台，旨在简化和加速全球贸易流程。目前，该平台处理的业务金额已超过1亿美元，主要涉及信用证（Letter of Credit）的数字化交易。超过20家银行，包括恒生，中国银行（香港），花旗银行，工商银行，ING，渣打银行，DBS，等等。<br>• <strong>启动时间</strong>: 2019年正式推出，并且仍在全球范围内扩展。汇丰银行是 Contour 平台的创始成员之一，并且在推动平台的设计、开发和推广方面发挥了重要作用。<br>• <strong>技术实现</strong>: Contour（前称为Voltron）使用R3的<a target="_blank" rel="noopener" href="https://corda.net/">Corda区块链</a>平台来实现贸易融资数字化。Corda是一个专为金融服务设计的分布式账本技术，允许企业通过智能合约来自动化贸易融资流程，并确保交易的安全性和透明性。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.contour.network/network-coverage/#partners">Contour partners</a> </p>
+<p><strong>3. 瑞银集团（UBS）</strong><br>• <strong>项目名称</strong>: Utility Settlement Coin (USC)<br>• <strong>业务金额</strong>: USC项目涉及数亿美元的结算交易，由瑞银牵头，参与银行包括巴克莱、德意志银行、汇丰银行等。该项目致力于利用区块链技术进行金融市场的数字化结算。但没有具体的金额披露。<br>• <strong>启动时间</strong>: 2019年继续扩展并成立了Fnality International公司来推动项目的商业化。<br>• <strong>技术实现</strong>: USC项目由多家全球银行联合开发，使用了基于区块链的分布式账本技术，旨在创建一种数字货币用于金融市场的结算。该项目后来成立了Fnality International公司，进一步推动了该技术的实际应用。USC具体基于哪一种区块链技术，目前没有公开，但是可以看到<a href="%5Bhttps://entethalliance.org/%5D(https://entethalliance.org/)">Ethereum Enterprise Alliance (EEA) </a>是Utility Settlement Coin (USC)的活跃成员之一。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.fnality.org/">Fnality International</a></p>
+<p><strong>4. 花旗集团（Citigroup）</strong><br>• <strong>项目名称</strong>: SETL<br>• <strong>业务金额</strong>: Citigroup通过投资SETL平台，支持数亿美元的现金和其他资产的区块链结算。SETL旨在现代化资本市场基础设施，确保高效、安全的资产转移。但没有具体的金额披露。<br>• <strong>启动时间</strong>: 2019年起，Citigroup持续支持SETL的发展。<br>• <strong>技术实现</strong>: SETL平台旨在通过区块链技术来现代化资本市场基础设施。它允许资产（如现金、证券等）的安全、高效转移。SETL具体基于哪一种区块链技术，目前没有公开。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.setl.io/">SETL</a></p>
+<p><strong>5. ING银行（ING）</strong><br>• <strong>项目名称</strong>: HQLAx<br>• <strong>业务金额</strong>: HQLAx平台旨在优化证券借贷市场，参与的市场规模达到数十亿美元，主要涉及银行间的高质量流动性资产（HQLA）借贷交易。<br>• <strong>启动时间</strong>: 2018年<br>• <strong>技术实现</strong>: HQLAx基于R3的Corda平台开发，该平台虽然是许可链，但项目与公有链有紧密关联。HQLAx通过区块链技术改善了市场的流动性和透明度。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.hqla-x.com/">HQLAx Overview</a> ， <a target="_blank" rel="noopener" href="https://corda.net/modal/hqlax/">https://corda.net/modal/hqlax/</a></p>
+<p><strong>6. 渣打银行（Standard Chartered）</strong><br>• <strong>项目名称</strong>: Zodia Custody<br>• <strong>业务金额</strong>: Zodia Custody服务于大型金融机构，如渣打银行和Northern Trust，提供安全的加密资产托管。<br>• <strong>启动时间</strong>: 2020年<br>• <strong>技术实现</strong>: 采用多重签名和冷存储技术，确保符合主要金融监管要求，保障数字资产的安全存储。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.zodia.io/">Zodia Custody Overview</a></p>
+<p>• <strong>项目名称</strong>: Partior<br>• <strong>业务金额</strong>: Partior为渣打银行、新加坡银行等金融机构提供跨境支付结算服务。<br>• <strong>启动时间</strong>: 2021年<br>• <strong>技术实现</strong>: 基于区块链技术，支持实时跨境支付结算，降低交易对手风险，并减少结算时间。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.partior.com/">Partior Overview</a></p>
+<p>• <strong>项目名称</strong>: Olea<br>• <strong>业务金额</strong>: Olea为渣打银行和汇丰银行等大客户提供供应链金融服务，帮助企业管理和融资供应链。<br>• <strong>启动时间</strong>: 2021年<br>• <strong>技术实现</strong>: 利用区块链技术创建透明且可追踪的供应链融资流程，减少企业融资的时间和成本。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.olea.net/">Olea Overview</a></p>
+<p><strong>7. 西班牙对外银行（BBVA）</strong><br>• <strong>项目名称</strong>: BBVA Corporate Loans on Blockchain<br>• <strong>业务金额</strong>: 西班牙对外银行利用区块链平台进行了数十亿美元的企业贷款结算。<br>• <strong>启动时间</strong>: 2018年<br>• <strong>技术实现</strong>: 该项目使用了基于以太坊（Ethereum）的公有链技术来记录和结算企业贷款，使交易透明化并降低操作风险。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.bbva.com/en/innovation/bbva-signs-world-first-blockchain-based-syndicated-loan-arrangement-with-red-electrica-corporacion/">BBVA Blockchain Projects</a></p>
+<p> <strong>8. 法国农业信贷银行（Crédit Agricole）</strong><br>• <strong>项目名称</strong>: Tokenization of Bonds on Blockchain<br>• <strong>业务金额</strong>: 法国农业信贷银行的意大利分行与金融科技初创公司BlockInvest合作，正在推动债券代币化项目。该项目特别关注中小企业（SMEs）的债券发行，这也是意大利央行探索分布式账本技术（DLT）的一部分。<br>• <strong>启动时间</strong>: 自2021年以来，该项目一直在发展，最近在2023年进行了扩展，重点是平台的扩展和新监管要求的整合，包括未来可能引入的加密欧元。<br>• <strong>技术实现</strong>: 该项目使用了以太坊（Ethereum）和Polygon公有区块链平台，以提供一个安全透明的环境来进行债券发行。项目旨在提高债券交易的效率，增加市场的流动性和可访问性。未来，项目计划集成自动交割对付（DvP）和链上身份解决方案，以确保合规性和提高运营效率。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://sebgroup.com/press/news/2023/seb-and-credit-agricole-cib-launch-digital-bond-platform-built-on-blockchain-technology">SEB and Crédit Agricole CIB launch digital bond platform built on blockchain technology</a>，<a target="_blank" rel="noopener" href="https://www.ledgerinsights.com/credit-agricole-italy-bond-tokenization/">https://www.ledgerinsights.com/credit-agricole-italy-bond-tokenization/</a></p>
+<p><strong>9. 富达投资（Fidelity Investments）</strong><br>• <strong>项目名称</strong>: Fidelity Digital Assets<br>• <strong>业务金额</strong>: 未披露具体金额，但富达投资的数字资产业务管理着大量的加密货币，包括比特币和以太坊，服务于全球的机构投资者。<br>• <strong>启动时间</strong>: 2018年启动，是传统金融机构中较早涉足数字资产托管领域的公司之一。<br>• <strong>技术实现</strong>: 富达的数字资产平台通过定制化的冷存储和热存储解决方案，提供高度安全的数字资产托管服务。平台采用了多重签名技术和先进的安全协议，确保资产的安全性和符合监管要求。此外，富达还提供交易执行、市场接入和其他增值服务，以帮助客户在数字资产市场中进行投资。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.fidelitydigitalassets.com/">Fidelity Digital Assets</a> <a target="_blank" rel="noopener" href="https://www.theblock.co/post/67146/fidelity-backed-crypto-security-startup-fireblocks-launches-secure-asset-transfer-network">Fidelity-backed crypto security startup Fireblocks launches ‘Secure Asset Transfer Network’</a></p>
+<p><strong>10. 德意志银行（Deutsche Bank）</strong><br>• <strong>项目名称</strong>: Digital Asset Custody Platform<br>• <strong>业务金额</strong>: 具体金额未披露，但该平台旨在为机构客户提供广泛的数字资产托管服务，包括比特币和以太坊等主要加密货币。德意志银行已经为此申请了监管许可，显示其在这一领域的重大投入  。<br>• <strong>启动时间</strong>: 项目于2021年启动，并在2023年加速推进。<br>• <strong>技术实现</strong>: 平台结合了传统银行系统和数字资产生态系统，提供机构级别的冷存储和热存储解决方案，确保资产的安全性和合规性。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.coindesk.com/business/2021/02/13/deutsche-bank-quietly-plans-to-offer-crypto-custody-prime-brokerage/">CoinDesk</a>, <a target="_blank" rel="noopener" href="https://dailyhodl.com/2021/02/14/deutsche-bank-preparing-to-support-crypto-assets-providing-prime-brokerage-and-storage-for-clients/">Daily Hodl</a></p>
+<p><strong>11. 法国巴黎银行（BNP Paribas）</strong><br>• <strong>项目名称</strong>: BNP Paribas Securities Services’ Digital Asset Custody<br>• <strong>业务金额</strong>: 未披露具体金额，但该平台旨在为机构客户提供安全且合规的数字资产托管服务。<br>• <strong>启动时间</strong>: 2022年启动，目前正在积极扩展服务以满足市场需求。<br>• <strong>技术实现</strong>: 法国巴黎银行与两大金融科技公司Fireblocks和METACO合作，开发了这一数字资产托管平台。Fireblocks提供热钱包、代币化和连接基础设施层，METACO则提供银行级别的数字资产托管和编排平台。平台集成了区块链技术，旨在为客户提供安全且高效的数字资产发行、转移和托管服务。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://securities.cib.bnpparibas/bnp-paribas-securities-services-to-develop-digital-assets-custody-capabilities-through-partnerships-with-metaco-and-fireblocks/">BNP Paribas Securities Services to develop digital assets custody capabilities through partnerships with METACO and Fireblocks</a></p>
+<p><strong>12. 瑞银集团（UBS）</strong><br>• <strong>项目名称</strong>: UBS Digital Asset Custody<br>• <strong>业务金额</strong>: 未披露具体金额，但主要为高净值客户和机构投资者提供服务。<br>• <strong>启动时间</strong>: 2021年启动，逐步扩展数字资产管理服务。<br>• <strong>技术实现</strong>: 该平台采用区块链技术，提供全面的数字资产管理和托管服务，确保高效且安全的资产交易。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://www.ubs.com/global/en/investment-bank/tokenize.html">UBS Tokenize</a></p>
+<p><strong>13. 高盛（Goldman Sachs）</strong><br>• <strong>项目名称</strong>: Goldman Sachs Digital Asset Custody<br>• <strong>业务金额</strong>: 未披露具体金额，但高盛的数字资产托管服务预计涉及数十亿美元的资产管理。<br>• <strong>启动时间</strong>: 2021年启动，并逐步扩展以涵盖更多类型的数字资产。<br>• <strong>技术实现</strong>: 平台整合了冷存储和热存储解决方案，确保符合机构投资者的安全性和合规性要求。<br>• <strong>相关资料</strong>: <a target="_blank" rel="noopener" href="https://developer.gs.com/discover/gs-dap">Goldman Sachs/discover/gs-dap</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/08/16/%E9%87%91%E8%9E%8D%E5%BA%94%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%9B%BE%E8%A1%A8%E5%BA%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,10 +441,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-08-16 16:15:00 / Modified: 16:32:59" itemprop="dateCreated datePublished" datetime="2024-08-16T16:15:00+08:00">2024-08-16</time>
+      <time title="Created: 2024-08-16 16:15:00" itemprop="dateCreated datePublished" datetime="2024-08-16T16:15:00+08:00">2024-08-16</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:29:47" itemprop="dateModified" datetime="2025-09-05T16:29:47+08:00">2025-09-05</time>
+      </span>
 
   
 </div>
@@ -427,7 +606,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-08-13 17:26:30" itemprop="dateModified" datetime="2024-08-13T17:26:30+08:00">2024-08-13</time>
+        <time title="Modified: 2025-09-05 16:43:57" itemprop="dateModified" datetime="2025-09-05T16:43:57+08:00">2025-09-05</time>
       </span>
 
   
@@ -447,480 +626,6 @@
 <li>给目前高考学生的报考方向<br> 1.计算机；<br> 2.医疗，医学，药学，健康，护理，生物学；<br> 3.金融；<br> 4.教育。<br> 普通人的话，还看好餐馆儿，护理等就业方向。</li>
 <li>未来看好的经济圈<br> 1.英语地域圈；<br> 2.东亚中日韩；<br> 3.印度。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/08/06/CBDC%20Architecture/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/06/CBDC%20Architecture/" class="post-title-link" itemprop="url">CBDC Architecture</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-08-06 22:04:00" itemprop="dateCreated datePublished" datetime="2024-08-06T22:04:00+08:00">2024-08-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-08-07 17:35:30" itemprop="dateModified" datetime="2024-08-07T17:35:30+08:00">2024-08-07</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.bis.org/publ/othp82.pdf">https://www.bis.org/publ/othp82.pdf</a><br>1.Technical requirements for a CBDC architecture.</p>
-<table>
-<thead>
-<tr>
-<th>Category</th>
-<th>High-level technical requirements</th>
-<th>High-priority</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Modular Design - Balance layer</td>
-<td>Allows for the creation, possession and destruction of CBDC. 允许创建、拥有和销毁 CBDC。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Modular Design - Balance layer</td>
-<td>Allows for flexible approach, issuing fungible tokens (type 1) and non-fungible tokens (type 2) for specific use cases. 允许采用灵活的方法，为特定用例发行可替代代币（类型 1）和不可替代代币（类型 2）。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Modular Design - Balance layer</td>
-<td>Scalable databases (ledger-keeping infrastructure) to hold resources and on which settlements can be reflected.可扩展的数据库（分类账保存基础设施），用于保存资源并反映结算。</td>
-<td></td>
-</tr>
-<tr>
-<td>Modular Design - Balance layer</td>
-<td>Connectivity between basic type 1 and type 2 tokenisation infrastructure. 基本类型 1 和类型 2 标记化基础设施之间的连接。</td>
-<td></td>
-</tr>
-<tr>
-<td>Modular Design - Settlement layer</td>
-<td>Central banks can use parts of existing payment systems or can create a new platform that works in parallel to the existing system. 中央银行可以使用现有支付系统的部分功能，也可以创建与现有系统并行运行的新平台。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Modular Design - Settlement layer</td>
-<td>API infrastructure allows for consent and payment initiation. API 基础设施允许同意和启动付款。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Modular Design - Settlement layer</td>
-<td>Settlement function is highly scalable in terms of the number of transactions, issuers and recipients. 结算功能在交易数量、发行人和接收人方面具有高度的可扩展性。</td>
-<td></td>
-</tr>
-<tr>
-<td>Modular Design - Settlement layer</td>
-<td>API infrastructure allows for information-sharing (balance and transactions). API 基础设施允许信息共享（余额和交易）。</td>
-<td></td>
-</tr>
-<tr>
-<td>Modular Design - Settlement layer</td>
-<td>Public wallet through an app that consumes the API architecture described above to serve as a backstop in case other solutions are unavailable. 公共钱包通过使用上述 API 架构的应用程序，在其他解决方案不可用时充当后盾。</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Issuance / destruction</td>
-<td>Issuance could be considered by transferring resources through the RTGS to an account held by the central bank for this purpose. 可以考虑通过将资源通过 RTGS 转移到中央银行为此目的持有的账户来进行发行。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Issuance / destruction</td>
-<td>The previous step would allow for the creation of a token in the type 2 case or to increase the balance of the ledger for a type 1 solution. 上一步将允许在类型 2 的情况下创建令牌，或者增加类型 1 解决方案的分类账余额。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Issuance / destruction</td>
-<td>For adequate destruction, tokens in the possession of the central bank are deleted (type 2) or the overall balance is reduced (type 1) solution. 为了充分销毁，删除央行持有的代币（类型2）或者减少整体余额（类型1）的解决方案。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Issuance / destruction</td>
-<td>The second step would imply the settlement of a transaction from the issuance account to the general account of the central bank. 第二步是将交易从发行账户结算到央行一般账户。</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Issuance / destruction</td>
-<td>Both issuance and destruction could work for type 1 and type 2 solutions. 发行和销毁均适用于第 1 类和第 2 类解决方案。</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Transaction settlement</td>
-<td>Centralised in first stage (only the central bank’s signature can validate transactions after checking ownership and no double spending) 第一阶段集中化（只有中央银行的签名才能在检查所有权后验证交易，并且不会出现双重支付）</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Transaction settlement</td>
-<td>Adaptable to allow for more signatures to the ecosystem (validate transactions through distributed consensus of approved signatures) 可适应生态系统中更多的签名（通过已批准签名的分布式共识来验证交易）</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Payment initiation / account information</td>
-<td>API calls to send requests (both information and payment initiation), provided a secure consent mechanism is used. 调用 API 发送请求（信息和付款启动），前提是使用安全的同意机制</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Payment initiation / account information</td>
-<td>Financial service providers broadly defined should be able to operate and provide services to final users. 广义的金融服务提供商应该能够运营并向最终用户提供服务。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Payment initiation / account information</td>
-<td>Uses API architecture to simplify value transfer to other providers and enable access to other financial services. 使用 API 架构简化向其他提供商的价值转移并实现对其他金融服务的访问</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Payment initiation / account information</td>
-<td>Payment service providers can access CBDC balances in any wallet (not only the one provided by the central bank), upon compliance with regulatory frameworks and security and data privacy principles. 在遵守监管框架和安全及数据隐私原则的前提下，支付服务提供商可以在任何钱包（不仅仅是中央银行提供的钱包）中访问 CBDC 余额。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Payment initiation / account information</td>
-<td>Information-sharing protocols and clear message structures to share transactional, aggregated and general information. 信息共享协议和清晰的消息结构，用于共享交易信息、汇总信息和一般信息。</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Payment initiation / account information</td>
-<td>Secure transactional information treatment.安全的交易信息处理。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Payment initiation / account information</td>
-<td>Open architecture to exploit information. 开放式架构以利用信息。</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>Straight through processing of clearing and settlement instructions. 直通式处理清算和结算指令。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>Implementation on a centralised structure. 按集中式结构实施。</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>Can explore the possibility of a decentralised programmability functionality. 可以探索分布式可编程功能的可能性。</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>Programs/systems that take temporary ownership of assets to allow DvP and PvP settlements, with the option of allowing financial intermediaries and qualified entities to potentially hold assets for settlement purposes. 采取临时资产所有权以允许 DvP 和 PvP 结算的程序/系统，可选择允许金融中介机构和合格实体为结算目的持有资产</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>Conditions or rules to support offline payments are defined. 定义支持离线支付的条件或规则</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>Secure enclaves on phones or other secure hardware to develop an offline functionality with the type 2/tokenised layer of the solution. 手机或其他安全硬件上的安全区域可通过解决方案的类型 2/标记化层开发离线功能。</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>Design focused on simplicity for the final user. 设计注重最终用户的简便性</td>
-<td></td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>Seamless onboarding of new users or entities onto the CBDC platform that allows for a smooth and efficient registering process. 将新用户或实体无缝加入 CBDC 平台，实现顺畅、高效的注册流程。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Core functions - Programmability</td>
-<td>System is consistent with projects on cross-border functionality by the BIS Innovation Hub. 该系统与 BIS 创新中心的跨境功能项目一致。</td>
-<td></td>
-</tr>
-<tr>
-<td>Operational - Scalability</td>
-<td>Scalable ledger at the different levels of the system keeping infrastructure that can handle many simultaneous transactions. 系统不同层级的可扩展分类账保持着可以同时处理多笔交易的基础设施。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Operational - Scalability</td>
-<td>Highly scalable settlement infrastructure to fulfil settlement needs within the CBDC record-keeping infrastructure. 高度可扩展的结算基础设施，以满足 CBDC 记录保存基础设施内的结算需求。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Operational - User experience</td>
-<td>Simple onboarding. 简单的注册</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Operational - User experience</td>
-<td>Adaptable to allow for private intermediaries to distribute the CBDC to end users or to enable direct participation of end users with the system (public direct-to-customer access). 可适应私人中介机构将 CBDC 分发给最终用户或允许最终用户直接参与系统（公共直接面向客户的访问）</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Operational - User experience</td>
-<td>Ability to enable P2P transactions and operate with private intermediaries. 能够实现 P2P 交易并与私人中介机构合作</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Operational - Attribute function matrix on certified permissioned institutions</td>
-<td>Matrix is completely controlled by the central bank 监控完全由央行控制</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Operational - Attribute function matrix on certified permissioned institutions</td>
-<td>Possibility for distributed consensus in the decentralised transaction settlement for the type 2 case. 第 2 类案例中去中心化交易结算中实现分布式共识的可能性</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Operational - Attribute function matrix on certified permissioned institutions</td>
-<td>Dynamic, so that the central bank can modify functions or add new ones. 动态的，以便中央银行可以修改功能或添加新的功能。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Operational - Interoperability with traditional settlement system and other CBDCs</td>
-<td>Architecture allows platform to have modules to interact with different CBDC implementation protocols. 架构允许平台拥有模块来与不同的CBDC实现协议进行交互。</td>
-<td></td>
-</tr>
-<tr>
-<td>Operational - Interoperability with traditional settlement system and other CBDCs</td>
-<td>Architecture allows platform to have modules to interact with different payment messages (eg domestic, ISO 20022) 架构允许平台拥有与不同支付信息交互的模块（例如国内、ISO 20022）</td>
-<td></td>
-</tr>
-<tr>
-<td>Operational - Interoperability with traditional settlement system and other CBDCs</td>
-<td>Seamless transfers between commercial bank money and CBDC, and vice versa 商业银行货币与 CBDC 之间的无缝转移，反之亦然</td>
-<td></td>
-</tr>
-<tr>
-<td>Operational - Interoperability with traditional settlement system and other CBDCs</td>
-<td>CBDC participants in existing payment systems could help in this area 现有支付系统中的 CBDC 参与者可以在这方面提供帮助</td>
-<td></td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>100% available, granting flexibility to adapt to variations in the availability of the supporting infrastructure (eg allowing transactions to be processed once the infrastructure is back online). 100％可用，可灵活适应支持基础设施可用性的变化（例如，一旦基础设施恢复在线，即可处理交易）</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>Highest compliance with cyber security standards (eg those of the National Institute of Standards and Technology) 最高程度遵守网络安全标准（例如美国国家标准与技术研究院的标准）</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>Modular protocol for settlement instructions to allow for partial or total encryption with separate keys. 结算指令的模块化协议，允许使用单独的密钥进行部分或全部加密</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>Allows for separate message fields to keep relevant information encrypted only for those who need to see it. 允许使用单独的消息字段来加密相关信息，只对需要查看的人开放</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>Crypto-agile 加密敏捷</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>Encryption of databases 数据库加密</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>Separates personal information from transactional information in databases 将数据库中的个人信息与交易信息分开</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>Distinct levels of data confidentiality. Space for additional data uses, subject to users’ authorisation or sufficient application of privacy preserving techniques. 不同级别的数据保密性。为其他数据使用留出空间，但需获得用户授权或充分应用隐私保护技术。</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Embedded from the beginning of the design</td>
-<td>Geo-redundancy to mitigate the impact of unexpected events 地理冗余可减轻意外事件的影响</td>
-<td></td>
-</tr>
-<tr>
-<td>Cyber resilience - Technological independence</td>
-<td>Technology within the modules is easy to modify, replace or update if the information input and the expected output are not modified 如果信息输入和预期输出没有改变，模块内的技术很容易被修改、替换或更新</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Technological independence</td>
-<td>Inputs and outputs of each module are defined to ensure that changes in the module’s technology would not affect the system (APIs). API endpoints are versioned, with new methods being added as new or overloaded functions 定义每个模块的输入和输出，以确保模块技术的变化不会影响系统（API）。API 端点是版本化的，新方法被添加为新函数或重载函数</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Cyber resilience - Integration</td>
-<td>Some modules can be outsourced to the private sector, under two conditions: (i) the central bank must have access to the source code and associated artifacts needed to build the executable module; and (ii) there needs to be an alternative solution in the market to the private entity provider 一些模块可以外包给私营部门，但有两个条件：（i）中央银行必须能够访问构建可执行模块所需的源代码和相关工件；（ii）市场上需要有私人实体提供商的替代解决方案</td>
-<td></td>
-</tr>
-<tr>
-<td>Cyber resilience - Integration</td>
-<td>Central banks have a perfect view of what is happening within their walls and can intervene and change providers 中央银行对其内部发生的事情了如指掌，并可以进行干预和更换供应商</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Other - Clear path to provide services by third parties</td>
-<td>Clear rules of engagement 明确的服务商规则</td>
-<td></td>
-</tr>
-<tr>
-<td>Other - Clear path to provide services by third parties</td>
-<td>Open architecture for payment initiation 开放式支付架构</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Other - Clear path to provide services by third parties</td>
-<td>Open architecture for information-sharing</td>
-<td></td>
-</tr>
-<tr>
-<td>Other - Clear path to provide services by third parties</td>
-<td>Open API architecture</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Other - Clear path to provide services by third parties</td>
-<td>Open API architecture allows financial third parties to provide services based on CBDC</td>
-<td></td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/07/25/What%20should%20be%20the%20roadmap%20of%20Layer%202/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/07/25/What%20should%20be%20the%20roadmap%20of%20Layer%202/" class="post-title-link" itemprop="url">What should be the roadmap of Layer 2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-07-25 22:04:00 / Modified: 22:04:57" itemprop="dateCreated datePublished" datetime="2024-07-25T22:04:00+08:00">2024-07-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ol>
-<li>Enhancing Scalability and Efficiency:<br> •    Integration with Danksharding: layer 2 should align with Ethereum’s roadmap, particularly the Danksharding upgrade, which will allow for more efficient data handling and reduced costs. This integration will help improve the scalability and performance of Layer 2 solutions ￼.<br> •    Optimizing Rollups: Further development of optimistic rollups to increase throughput and reduce latency. This includes refining the fraud-proof mechanism and enhancing compatibility with Ethereum’s upgrades, such as the introduction of Verkle Trees and Single-Slot Finality ￼.</li>
-</ol>
-<p>do you have any detail idea, like some protocol or algorithm to implement the Enhancing Scalability and Efficiency with Ethereum upgrade?</p>
-<p>To enhance scalability and efficiency, particularly in alignment with Ethereum’s roadmap upgrades like Danksharding, layer 2 can consider implementing specific protocols and algorithms. Here are some detailed ideas:</p>
-<h3 id="1-Integration-with-Danksharding"><a href="#1-Integration-with-Danksharding" class="headerlink" title="1. Integration with Danksharding"></a>1. <strong>Integration with Danksharding</strong></h3><p><strong>Protocol/Algorithm Considerations:</strong></p>
-<ul>
-<li><strong>Data Availability Sampling (DAS)</strong>: Implement DAS to manage the availability of data within Danksharding. This method ensures that data is available and verifiable without requiring all nodes to store it, thus optimizing storage and bandwidth.</li>
-<li><strong>Blob Compression and Validation</strong>: Since Danksharding introduces “blobs” of data, layer 2 should develop efficient compression and validation algorithms. These would reduce the size of the blobs while maintaining data integrity, allowing for faster processing and lower storage costs.<h3 id="2-Optimizing-Rollups"><a href="#2-Optimizing-Rollups" class="headerlink" title="2. Optimizing Rollups"></a>2. <strong>Optimizing Rollups</strong></h3><strong>Protocol/Algorithm Considerations:</strong></li>
-<li><strong>Enhanced Fraud-Proof Mechanism</strong>: Develop a more efficient fraud-proof mechanism that can quickly detect and resolve discrepancies in transactions. This might involve optimizing the way fraud proofs are generated and verified, potentially using zk-SNARKs for concise and private proofs.</li>
-<li><strong>Verkle Trees Integration</strong>: Verkle Trees, a data structure combining vector commitments and Merkle Trees, can be used to store state data more efficiently. This can reduce the storage overhead for nodes, making rollups more scalable. layer 2 should integrate Verkle Trees to enhance the scalability and performance of state verification processes.</li>
-<li><strong>Single-Slot Finality Implementation</strong>: To align with Ethereum’s future SSF goals, layer 2 could experiment with similar mechanisms in its Layer 2 environment. This would involve ensuring that transactions can be finalized within a single block proposal slot, reducing latency and improving user experience.</li>
-</ul>
-<h3 id="3-Advanced-Rollup-Strategies"><a href="#3-Advanced-Rollup-Strategies" class="headerlink" title="3. Advanced Rollup Strategies"></a>3. <strong>Advanced Rollup Strategies</strong></h3><p><strong>Protocol/Algorithm Considerations:</strong></p>
-<ul>
-<li><strong>Optimistic and ZK-Rollup Hybrid Models</strong>: Combining optimistic rollups with zk-rollup features can offer the benefits of both high throughput and strong security guarantees. This hybrid approach could utilize zk-SNARKs for critical state transitions while maintaining the cost-efficiency of optimistic rollups.</li>
-<li><strong>Dynamic Rollup Configuration</strong>: Implement algorithms that can dynamically adjust rollup parameters based on network conditions. For example, adjusting batch sizes or fraud-proof intervals in response to congestion or changes in transaction volume.</li>
-</ul>
-<h3 id="4-Collaboration-with-Ethereum-Core-Developers"><a href="#4-Collaboration-with-Ethereum-Core-Developers" class="headerlink" title="4. Collaboration with Ethereum Core Developers"></a>4. <strong>Collaboration with Ethereum Core Developers</strong></h3><p>To ensure smooth integration and compatibility with Ethereum’s evolving protocols, layer 2 should work closely with Ethereum core developers. This collaboration could involve sharing insights, participating in EIP discussions, and co-developing solutions to shared challenges, such as scalability and data availability.</p>
-<p>By focusing on these areas, layer 2 can effectively leverage Ethereum’s upcoming upgrades, enhancing its own scalability and efficiency while contributing to the overall Ethereum ecosystem.</p>
 
       
     </div>
