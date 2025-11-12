@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="在大型国际银行的转型中，Core Banking system系统稳定但僵化，移动网银渠道却要求毫秒级响应与全天候在线。 架构设计 - 数据服务层核心思想​：将散落在各个“烟囱式”系统（银行卡&#x2F;信用卡支付、风控、保险等）的数据通过技术手段（CDC、日志解析）实时汇聚起来，构建统一、标准的数据模型，并通过 API 的方式透明地提供给前台应用。核心系统停机时，该数据层能提供​“Stand-In”应急服">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据服务层在银行容灾中的使用">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="在大型国际银行的转型中，Core Banking system系统稳定但僵化，移动网银渠道却要求毫秒级响应与全天候在线。 架构设计 - 数据服务层核心思想​：将散落在各个“烟囱式”系统（银行卡&#x2F;信用卡支付、风控、保险等）的数据通过技术手段（CDC、日志解析）实时汇聚起来，构建统一、标准的数据模型，并通过 API 的方式透明地提供给前台应用。核心系统停机时，该数据层能提供​“Stand-In”应急服">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/diagram_architecture2.png">
+<meta property="article:published_time" content="2025-09-10T09:28:00.000Z">
+<meta property="article:modified_time" content="2025-11-12T10:14:05.734Z">
+<meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="架构设计">
+<meta property="article:tag" content="bank">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhuang-weiming.github.io/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/diagram_architecture2.png">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>数据服务层在银行容灾中的使用 | Zhuang's Diary</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Zhuang's Diary</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82"><span class="nav-number">1.</span> <span class="nav-text">架构设计 - 数据服务层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%BB%E7%90%86%E3%80%81%E9%A3%8E%E9%99%A9%E4%B8%8E%E9%A1%B9%E7%9B%AE%E7%AE%A1%E6%8E%A7%EF%BC%9A%E6%A0%B8%E5%BF%83%E7%8E%B0%E4%BB%A3%E5%8C%96%E6%8E%A7%E5%88%B6%E5%A1%94"><span class="nav-number">2.</span> <span class="nav-text">治理、风险与项目管控：核心现代化控制塔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84%E7%AD%96%E7%95%A5"><span class="nav-number">3.</span> <span class="nav-text">技术选型与数据架构策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B5%81%E5%BC%8F%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8"><span class="nav-number">3.1.</span> <span class="nav-text">1. 流式同步与事件驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AD%98%E5%82%A8%E5%B9%B3%E5%8F%B0%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.2.</span> <span class="nav-text">2. 存储平台设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84%E7%AD%96%E7%95%A5"><span class="nav-number">3.3.</span> <span class="nav-text">3. 数据架构策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E5%BE%97%E5%88%B0%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">我们得到了什么？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Weiming Zhuang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">285</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/zhuangweiming/" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;zhuangweiming&#x2F;" rel="noopener" target="_blank"><i class="fab fa-linkedin fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据服务层在银行容灾中的使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-09-10 17:28:00" itemprop="dateCreated datePublished" datetime="2025-09-10T17:28:00+08:00">2025-09-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-11-12 18:14:05" itemprop="dateModified" datetime="2025-11-12T18:14:05+08:00">2025-11-12</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在大型国际银行的转型中，Core Banking system系统稳定但僵化，移动网银渠道却要求毫秒级响应与全天候在线。</p>
+<h2 id="架构设计-数据服务层"><a href="#架构设计-数据服务层" class="headerlink" title="架构设计 - 数据服务层"></a>架构设计 - 数据服务层</h2><p><strong>核心思想</strong>​：将散落在各个“烟囱式”系统（银行卡/信用卡支付、风控、保险等）的数据通过技术手段（CDC、日志解析）实时汇聚起来，构建统一、标准的数据模型，并通过 API 的方式透明地提供给前台应用。核心系统停机时，该数据层能提供<strong>​“Stand-In”应急服务</strong>——支持只读，甚至有限度的暂存式写入。</p>
+<ul>
+<li><strong>读写分离</strong>：读操作快速由数据服务层响应，写操作依赖主系统保障强一致性；</li>
+<li><strong>容灾能力提升</strong>：主系统故障时自动切换至 Stand-In 模式，关键服务仍可继续执行；</li>
+<li><strong>真正渐进替代</strong>：业务逻辑可逐步迁移至服务层，最终实现核心现代化，不需一蹴而就。</li>
+</ul>
+<p><img src="/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/diagram_architecture2.png"></p>
+<p><strong>主要机制说明：</strong></p>
+<ul>
+<li><strong>正常模式：</strong><ul>
+<li>所有读操作由数据服务层提供低延迟响应；</li>
+<li>写操作严格通过  Connector 等连接器进入Core Banking system系统，确保主记录一致性；</li>
+<li>Core Banking system 通过 CDC（如 Debezium）捕获变更并发布至 Kafka，数据服务层实时消费、更新缓存/数据库，最终一致性得以保障。</li>
+</ul>
+</li>
+<li><strong>容灾模式：</strong><ul>
+<li>Core Banking system不可用时，API 网关自动切换路由；</li>
+<li>写操作由轻量 Stand-In 服务代为接收，校验后写入本地“待处理交易”队列，并立即反馈客户“处理中”状态；</li>
+<li>主系统恢复后，后台任务自动逐笔回放交易，完成结算和Core Banking system同步处理。</li>
+</ul>
+</li>
+</ul>
+<h2 id="治理、风险与项目管控：核心现代化控制塔"><a href="#治理、风险与项目管控：核心现代化控制塔" class="headerlink" title="治理、风险与项目管控：核心现代化控制塔"></a>治理、风险与项目管控：核心现代化控制塔</h2><p>借鉴<a target="_blank" rel="noopener" href="https://www.oliverwyman.com/our-expertise/insights/2025/may/next-gen-core-banking-modernization.html?utm_source=chatgpt.com"> OliverWyman 建议的 <strong>Core Modernization Control Tower</strong></a>，可为该架构增设治理层，关键职责包括  ：</p>
+<ul>
+<li><strong>跨职能治理机制</strong>：聚焦业务、运营、技术多方 alignment，确保宏观战略与技术路径一致；</li>
+<li><strong>风险管理监督</strong>：对迁移过程中的操作风险、合规风险、系统风险进行持续审视；</li>
+<li><strong>迁移节奏策略</strong>：统筹“hollow-out”业务削减主机依赖的节奏与业务模块迁移优先级；</li>
+<li><strong>变更可视化与沟通机制</strong>：提供实时反馈与透明度，保障项目顺滑执行。</li>
+</ul>
+<h2 id="技术选型与数据架构策略"><a href="#技术选型与数据架构策略" class="headerlink" title="技术选型与数据架构策略"></a>技术选型与数据架构策略</h2><h3 id="1-流式同步与事件驱动"><a href="#1-流式同步与事件驱动" class="headerlink" title="1. 流式同步与事件驱动"></a>1. 流式同步与事件驱动</h3><ul>
+<li><strong>Debezium + Kafka</strong>：主流国际银行采用 Debezium 捕获 DB2 或主机日志，实时推送事件至 Kafka；这已是金融业标准方案  。<h3 id="2-存储平台设计"><a href="#2-存储平台设计" class="headerlink" title="2. 存储平台设计"></a>2. 存储平台设计</h3></li>
+<li><strong>Redis 集群</strong>：用于缓存极热数据，支撑毫秒级读性能；</li>
+<li><strong>TiDB / OceanBase</strong>：支持强一致性的分布式关系型存储；适用全量账户与交易数据场景。<h3 id="3-数据架构策略"><a href="#3-数据架构策略" class="headerlink" title="3. 数据架构策略"></a>3. 数据架构策略</h3></li>
+<li>结合 <strong>Data Mesh / Lakehouse</strong> 架构思路提升分析与共享能力；</li>
+<li>服务层接口应遵循 <strong>BIAN / Information Framework</strong> 等银行业标准，实现语义统一与模块化服务边界；增强系统的互操作性与标准合规性。</li>
+</ul>
+<h2 id="我们得到了什么？"><a href="#我们得到了什么？" class="headerlink" title="我们得到了什么？"></a>我们得到了什么？</h2><ul>
+<li><strong>弹性与连续性的革命</strong>​：Stand-In模式将核心停机从“灾难”变为“可管理的服务降级”，极大提升了业务连续性。</li>
+<li><strong>解耦开发能力</strong>：产品团队可绕开主机耦合，直接基于数据服务层构建灾备能力，实时风控等功能，交付加快；</li>
+<li><strong>开放 API 驱动</strong>：支持开放银行、第三方金融机构接入，实现更灵活生态协同及合作创新，符合当前数字银行趋势。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/" title="数据服务层在银行容灾中的使用">https://zhuang-weiming.github.io/2025/09/10/数据服务层在银行容灾中的使用/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" rel="tag"># 架构设计</a>
+              <a href="/tags/bank/" rel="tag"># bank</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/05/Modern%20Core%20Banking%20and%20Wealth%20Platforms/" rel="prev" title="Modern Core Banking and Wealth Platforms">
+                  <i class="fa fa-chevron-left"></i> Modern Core Banking and Wealth Platforms
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/" rel="next" title="Best-Practice-Framework-of-Agentic-Coding">
+                  Best-Practice-Framework-of-Agentic-Coding <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weiming Zhuang</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : '516e41d7b049e0f4c538c0b11e16c312',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

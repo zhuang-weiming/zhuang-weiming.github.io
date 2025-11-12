@@ -15391,4 +15391,128 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
         <tag>vendor</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Best-Practice-Framework-of-Agentic-Coding</title>
+    <url>/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/</url>
+    <content><![CDATA[<h2 id="Best-Practice-Framework-Idea-→-Requirements-→-Design-→-Tasks-→-Implementation"><a href="#Best-Practice-Framework-Idea-→-Requirements-→-Design-→-Tasks-→-Implementation" class="headerlink" title="Best Practice Framework: Idea → Requirements → Design → Tasks → Implementation"></a>Best Practice Framework: Idea → Requirements → Design → Tasks → Implementation</h2><h3 id="1-Idea-Phase"><a href="#1-Idea-Phase" class="headerlink" title="1. Idea Phase"></a>1. <strong>Idea Phase</strong></h3><ul>
+<li><strong>Articulate the core concept</strong> - What problem are you solving?</li>
+<li><strong>Define the value proposition</strong> - Why does this matter?</li>
+<li><strong>Identify the target outcome</strong> - What success looks like</li>
+<li><strong>Consider alternatives</strong> - Are there simpler approaches?</li>
+</ul>
+<h3 id="2-Requirements-Phase"><a href="#2-Requirements-Phase" class="headerlink" title="2. Requirements Phase"></a>2. <strong>Requirements Phase</strong></h3><ul>
+<li><strong>Functional requirements</strong> - What must the system do?</li>
+<li><strong>Non-functional requirements</strong> - Performance, security, scalability</li>
+<li><strong>Constraints</strong> - Time, resources, existing tech stack</li>
+<li><strong>Acceptance criteria</strong> - How do we know it’s done?</li>
+</ul>
+<h3 id="3-Design-Phase"><a href="#3-Design-Phase" class="headerlink" title="3. Design Phase"></a>3. <strong>Design Phase</strong></h3><ul>
+<li><strong>Architecture decisions</strong> - High-level structure</li>
+<li><strong>Technology choices</strong> - Frameworks, libraries, patterns</li>
+<li><strong>Data flow</strong> - How information moves through the system</li>
+<li><strong>Interface contracts</strong> - APIs, function signatures, data schemas</li>
+</ul>
+<h3 id="4-Tasks-Phase"><a href="#4-Tasks-Phase" class="headerlink" title="4. Tasks Phase"></a>4. <strong>Tasks Phase</strong></h3><ul>
+<li><strong>Break down into atomic units</strong> - Each task should be independently completable</li>
+<li><strong>Sequence dependencies</strong> - What must happen before what</li>
+<li><strong>Identify risks</strong> - Where might things go wrong?</li>
+<li><strong>Plan validation</strong> - How to test each task</li>
+</ul>
+<h3 id="5-Implementation-Phase"><a href="#5-Implementation-Phase" class="headerlink" title="5. Implementation Phase"></a>5. <strong>Implementation Phase</strong></h3><ul>
+<li><strong>Execute in planned order</strong> - Follow the task sequence</li>
+<li><strong>Minimal viable code</strong> - Only what’s needed for the requirement</li>
+<li><strong>Validate incrementally</strong> - Test each piece as you build</li>
+<li><strong>Refactor if needed</strong> - Clean up after core functionality works</li>
+</ul>
+<h2 id="Why-This-Prevents-Amazon-Q-Hanging-Inefficiency"><a href="#Why-This-Prevents-Amazon-Q-Hanging-Inefficiency" class="headerlink" title="Why This Prevents Amazon Q Hanging/Inefficiency"></a>Why This Prevents Amazon Q Hanging/Inefficiency</h2><p><strong>The Problem with Skipping Idea Phase:</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">❌ <span class="string">&quot;Build me a user system&quot;</span></span><br><span class="line">→ Amazon Q guesses at requirements</span><br><span class="line">→ Implements generic solution</span><br><span class="line">→ Doesn<span class="number">&#x27;</span>t match your actual vision</span><br><span class="line">→ Multiple revision cycles</span><br></pre></td></tr></table></figure>
+
+<p><strong>The Power of Starting with Idea:</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">✅ <span class="string">&quot;I want users to collaborate on documents in real-time, like Google Docs&quot;</span></span><br><span class="line">→ Clear idea <span class="keyword">and</span> vision</span><br><span class="line">→ Specific requirements emerge naturally</span><br><span class="line">→ Design choices become obvious</span><br><span class="line">→ Implementation is focused <span class="keyword">and</span> efficient</span><br></pre></td></tr></table></figure>
+
+<h2 id="Practical-Application-Examples"><a href="#Practical-Application-Examples" class="headerlink" title="Practical Application Examples"></a>Practical Application Examples</h2><h3 id="Example-1-E-commerce-Feature"><a href="#Example-1-E-commerce-Feature" class="headerlink" title="Example 1: E-commerce Feature"></a>Example 1: E-commerce Feature</h3><p><strong>Idea:</strong> “Customers abandon carts because checkout is too complex”<br><strong>Requirements:</strong> One-click checkout for returning customers<br><strong>Design:</strong> Store payment methods, streamlined UI flow<br><strong>Tasks:</strong> Payment storage, UI simplification, security validation<br><strong>Implementation:</strong> Minimal code for core flow</p>
+<h3 id="Example-2-API-Optimization"><a href="#Example-2-API-Optimization" class="headerlink" title="Example 2: API Optimization"></a>Example 2: API Optimization</h3><p><strong>Idea:</strong> “Our API is slow because we’re making too many database calls”<br><strong>Requirements:</strong> Reduce response time by 50% without changing API contract<br><strong>Design:</strong> Implement caching layer and query optimization<br><strong>Tasks:</strong> Add Redis, optimize queries, implement cache invalidation<br><strong>Implementation:</strong> Focused changes to bottleneck areas only</p>
+<h2 id="Amazon-Q-Interaction-Best-Practices"><a href="#Amazon-Q-Interaction-Best-Practices" class="headerlink" title="Amazon Q Interaction Best Practices"></a>Amazon Q Interaction Best Practices</h2><h3 id="Communicate-the-Full-Journey"><a href="#Communicate-the-Full-Journey" class="headerlink" title="Communicate the Full Journey"></a>Communicate the Full Journey</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;IDEA: I want to add real-time notifications to keep users engaged</span></span><br><span class="line"><span class="string">REQUIREMENTS: Push notifications for comments, mentions, and updates</span></span><br><span class="line"><span class="string">DESIGN: WebSocket connection with fallback to polling</span></span><br><span class="line"><span class="string">CONTEXT: @workspace (existing Express.js app with Socket.io already installed)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Use-Progressive-Disclosure"><a href="#Use-Progressive-Disclosure" class="headerlink" title="Use Progressive Disclosure"></a>Use Progressive Disclosure</h3><ol>
+<li>Start with the idea and get alignment</li>
+<li>Drill into requirements together</li>
+<li>Explore design options</li>
+<li>Plan tasks collaboratively</li>
+<li>Execute implementation efficiently</li>
+</ol>
+<h3 id="Leverage-Context-Effectively"><a href="#Leverage-Context-Effectively" class="headerlink" title="Leverage Context Effectively"></a>Leverage Context Effectively</h3><p>@workspacefor understanding the bigger picture<br>@folder for architectural context<br>@file for implementation details<br>Share your idea first, then provide relevant context</p>
+<h2 id="Red-Flags-That-Indicate-Skipped-Phases"><a href="#Red-Flags-That-Indicate-Skipped-Phases" class="headerlink" title="Red Flags That Indicate Skipped Phases"></a>Red Flags That Indicate Skipped Phases</h2><ul>
+<li><strong>Vague requests</strong> - “Make it better” (missing idea)</li>
+<li><strong>Feature creep</strong> - Requirements keep expanding (unclear idea)</li>
+<li><strong>Over-engineering</strong> - Complex solutions for simple problems (poor design)</li>
+<li><strong>Rework cycles</strong> - Constant revisions (inadequate planning)</li>
+</ul>
+<h2 id="The-Compound-Benefits"><a href="#The-Compound-Benefits" class="headerlink" title="The Compound Benefits"></a>The Compound Benefits</h2><p>Each phase informs and improves the next:</p>
+<ul>
+<li><strong>Clear idea</strong> → More precise requirements</li>
+<li><strong>Precise requirements</strong> → Better design choices</li>
+<li><strong>Better design</strong> → Cleaner task breakdown</li>
+<li><strong>Clean tasks</strong> → Efficient implementation</li>
+<li><strong>Efficient implementation</strong> → Less debugging and rework</li>
+</ul>
+<p>This approach works for any agentic coding tool, not just Amazon Q. The key is treating the AI as a collaborative partner in the entire creative process, not just a code generator.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>requirements.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/1.png"><br>Design.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/2.png"><br>Task.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/3.png"></p>
+<p>Reference Link ==&gt; <a href="https://catalog.workshops.aws/qadvanced/en-US/00-introduction">https://catalog.workshops.aws/qadvanced/en-US/00-introduction</a></p>
+]]></content>
+      <tags>
+        <tag>AgenticCoding</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据服务层在银行容灾中的使用</title>
+    <url>/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>在大型国际银行的转型中，Core Banking system系统稳定但僵化，移动网银渠道却要求毫秒级响应与全天候在线。</p>
+<h2 id="架构设计-数据服务层"><a href="#架构设计-数据服务层" class="headerlink" title="架构设计 - 数据服务层"></a>架构设计 - 数据服务层</h2><p><strong>核心思想</strong>​：将散落在各个“烟囱式”系统（银行卡/信用卡支付、风控、保险等）的数据通过技术手段（CDC、日志解析）实时汇聚起来，构建统一、标准的数据模型，并通过 API 的方式透明地提供给前台应用。核心系统停机时，该数据层能提供<strong>​“Stand-In”应急服务</strong>——支持只读，甚至有限度的暂存式写入。</p>
+<ul>
+<li><strong>读写分离</strong>：读操作快速由数据服务层响应，写操作依赖主系统保障强一致性；</li>
+<li><strong>容灾能力提升</strong>：主系统故障时自动切换至 Stand-In 模式，关键服务仍可继续执行；</li>
+<li><strong>真正渐进替代</strong>：业务逻辑可逐步迁移至服务层，最终实现核心现代化，不需一蹴而就。</li>
+</ul>
+<p><img src="/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/diagram_architecture2.png"></p>
+<p><strong>主要机制说明：</strong></p>
+<ul>
+<li><strong>正常模式：</strong><ul>
+<li>所有读操作由数据服务层提供低延迟响应；</li>
+<li>写操作严格通过  Connector 等连接器进入Core Banking system系统，确保主记录一致性；</li>
+<li>Core Banking system 通过 CDC（如 Debezium）捕获变更并发布至 Kafka，数据服务层实时消费、更新缓存/数据库，最终一致性得以保障。</li>
+</ul>
+</li>
+<li><strong>容灾模式：</strong><ul>
+<li>Core Banking system不可用时，API 网关自动切换路由；</li>
+<li>写操作由轻量 Stand-In 服务代为接收，校验后写入本地“待处理交易”队列，并立即反馈客户“处理中”状态；</li>
+<li>主系统恢复后，后台任务自动逐笔回放交易，完成结算和Core Banking system同步处理。</li>
+</ul>
+</li>
+</ul>
+<h2 id="治理、风险与项目管控：核心现代化控制塔"><a href="#治理、风险与项目管控：核心现代化控制塔" class="headerlink" title="治理、风险与项目管控：核心现代化控制塔"></a>治理、风险与项目管控：核心现代化控制塔</h2><p>借鉴<a href="https://www.oliverwyman.com/our-expertise/insights/2025/may/next-gen-core-banking-modernization.html?utm_source=chatgpt.com"> OliverWyman 建议的 <strong>Core Modernization Control Tower</strong></a>，可为该架构增设治理层，关键职责包括  ：</p>
+<ul>
+<li><strong>跨职能治理机制</strong>：聚焦业务、运营、技术多方 alignment，确保宏观战略与技术路径一致；</li>
+<li><strong>风险管理监督</strong>：对迁移过程中的操作风险、合规风险、系统风险进行持续审视；</li>
+<li><strong>迁移节奏策略</strong>：统筹“hollow-out”业务削减主机依赖的节奏与业务模块迁移优先级；</li>
+<li><strong>变更可视化与沟通机制</strong>：提供实时反馈与透明度，保障项目顺滑执行。</li>
+</ul>
+<h2 id="技术选型与数据架构策略"><a href="#技术选型与数据架构策略" class="headerlink" title="技术选型与数据架构策略"></a>技术选型与数据架构策略</h2><h3 id="1-流式同步与事件驱动"><a href="#1-流式同步与事件驱动" class="headerlink" title="1. 流式同步与事件驱动"></a>1. 流式同步与事件驱动</h3><ul>
+<li><strong>Debezium + Kafka</strong>：主流国际银行采用 Debezium 捕获 DB2 或主机日志，实时推送事件至 Kafka；这已是金融业标准方案  。<h3 id="2-存储平台设计"><a href="#2-存储平台设计" class="headerlink" title="2. 存储平台设计"></a>2. 存储平台设计</h3></li>
+<li><strong>Redis 集群</strong>：用于缓存极热数据，支撑毫秒级读性能；</li>
+<li><strong>TiDB / OceanBase</strong>：支持强一致性的分布式关系型存储；适用全量账户与交易数据场景。<h3 id="3-数据架构策略"><a href="#3-数据架构策略" class="headerlink" title="3. 数据架构策略"></a>3. 数据架构策略</h3></li>
+<li>结合 <strong>Data Mesh / Lakehouse</strong> 架构思路提升分析与共享能力；</li>
+<li>服务层接口应遵循 <strong>BIAN / Information Framework</strong> 等银行业标准，实现语义统一与模块化服务边界；增强系统的互操作性与标准合规性。</li>
+</ul>
+<h2 id="我们得到了什么？"><a href="#我们得到了什么？" class="headerlink" title="我们得到了什么？"></a>我们得到了什么？</h2><ul>
+<li><strong>弹性与连续性的革命</strong>​：Stand-In模式将核心停机从“灾难”变为“可管理的服务降级”，极大提升了业务连续性。</li>
+<li><strong>解耦开发能力</strong>：产品团队可绕开主机耦合，直接基于数据服务层构建灾备能力，实时风控等功能，交付加快；</li>
+<li><strong>开放 API 驱动</strong>：支持开放银行、第三方金融机构接入，实现更灵活生态协同及合作创新，符合当前数字银行趋势。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>架构设计</tag>
+        <tag>bank</tag>
+      </tags>
+  </entry>
 </search>

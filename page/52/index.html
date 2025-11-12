@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">283</span>
+          <span class="site-state-item-count">285</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,322 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">可验证随机函数VRF之Algorand共识算法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-03-31 13:54:31" itemprop="dateCreated datePublished" datetime="2018-03-31T13:54:31+08:00">2018-03-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-09-14 14:06:49" itemprop="dateModified" datetime="2023-09-14T14:06:49+08:00">2023-09-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>2018年2月，图灵奖得主、MIT教授Sivio Micali募集400万美元开发Algorand区块链协议一事受到了国内外媒体的普遍关注。在MITMicali教授和MIT媒体实验室数字货币计划负责人Neha Narula合开课程《共享公共账本》(Shared Public Ledger)课程。这门课主要就是讲解Algorand。Algorand的目标是建立一个低能耗、高速度、民主化、可拓展性好而且几乎不会出现分叉的分布式账本。Algorand没有引入激励机制或发行数字加密货币。</p>
+<p>论文发表In Proceedings of the 26th ACM Symposium on Operating Systems Principles (SOSP), Shanghai, China, October 2017.：</p>
+<ul>
+<li><a href="nickolaihttps://people.csail.mit.edu/nickolai/papers/gilad-algorand.pdf">Algorand: Scaling Byzantine Agreements for Cryptocurrencies</a></li>
+</ul>
+<p>Algorand由algorithm(算法)和random(随机)两个词合成，顾名思义，就是基于随机算法的公共账本协议(public ledger)。Algorand针对比特币区块链系统的几个核心缺陷进行了改进。</p>
+<h3 id="1-Algorand的目标是："><a href="#1-Algorand的目标是：" class="headerlink" title="1. Algorand的目标是："></a>1. Algorand的目标是：</h3><ol>
+<li>能耗低，不管系统中有多用户，大约每1500名用户中只有1名会被系统挑中执行长达几秒钟的计算。</li>
+<li>民主化，不会出现类似比特币区块链系统的“矿工”群体。</li>
+<li>出现分叉的概率低于一兆分之一。假设Algorand中平均每分钟产生一个区块(后文会给出有关测试数据)，这个概率意味着平均每190万年出现一次分叉。</li>
+<li>可拓展性好。</li>
+</ol>
+<h3 id="2-Algorand算法假设"><a href="#2-Algorand算法假设" class="headerlink" title="2. Algorand算法假设"></a>2. Algorand算法假设</h3><ol>
+<li>网络中诚实节点的数目始终占优。</li>
+<li>节点可以自由地随时加入网络，而不需要申请。网络中每个节点通过一个公钥地址(同时也是钱包地址)表示，对于新加入的节点地址，只有被网络中其他节点转账成功(即钱包余额大于0)后，才可以参与到网络中的区块共识。</li>
+<li>攻击者也是动态变化的(诚实节点随时可能变为攻击者)。</li>
+</ol>
+<h3 id="3-用户和交易特征"><a href="#3-用户和交易特征" class="headerlink" title="3. 用户和交易特征"></a>3. 用户和交易特征</h3><p>Algorand是一个公有链系统。用户(或者节点)加入Algorand不需要事先申请，可以随时加入。Algorand对用户数量也没有任何限制。每个用户持有多个公钥。每个公钥均是一个电子签名机制的一部分，也就是有一个与之对应的私钥。每个公钥对应着一定数量的货币。每笔交易实际上是一个电子签名，该电子签名将一定数量的货币从某一个公钥转移给另一个公钥，并用前一个公钥对应的私钥进行加密。不难看出，Algorand的这些设计，与比特币是一样的。</p>
+<p>Algorand要求系统中2/3的货币由诚实用户掌握。诚实用户的含义是：其行为遵守有关指引(主要指拜赞庭共识协议，见下文)，并且能完美地发送和接收消息。诚实用户以外的是恶意用户，恶意用户的行为可以任意偏离有关指引。</p>
+<p>对恶意用户，Algorand假设他们由一个“敌对者”(adversary)控制。“敌对者”能发起强大攻击，包括：</p>
+<ol>
+<li>“敌对者”可以在任何时候瞬间地腐化任何他选中的用户，使其成为恶意用户(哪怕该用户之前是诚实用户)。</li>
+<li>“敌对者”完全控制并且完美协调所有恶意用户。可以理解为，恶意用户的行为(包括发送和接收消息)完全由“敌对者”代理。</li>
+<li>“敌对者”控制所有信息发送，但必须满足一点：诚实用户发出的消息能在一定时间内(该时间只与信息的存储大小有关)抵达95%的诚实用户。</li>
+<li>“敌对者”几乎不可能伪造诚实用户的电子签名或者干涉诚实用户之间的通讯。</li>
+</ol>
+<p>目前，Algorand是一个单纯的分布式账本协议，没有引入激励机制，没有发行类似比特币的数字加密货币。Algorand中交易所用的货币是外生给定的(可以是任何法定货币或数字加密货币)，交易只影响货币在不同用户之间的分配。而在比特币区块链系统中，“矿工”构建了被公共账本接受的区块后，就会得到系统给予的一定数量的比特币作为奖励。</p>
+<h3 id="4-网络通讯"><a href="#4-网络通讯" class="headerlink" title="4. 网络通讯"></a>4. 网络通讯</h3><p>与比特币区块链系统一样，Algorand假设用户之间的通讯采取“点对点传言”模式(peer-to-peer gossip)：当某一用户传播一条消息后，第一次收到这条消息的用户随机并且独立地选择他的一些“邻居”，并将消息传给“邻居”们。当没有用户是第一次收到这条消息时，这条消息的传播就终止了。</p>
+<p>Algorand对网络通讯的要求是：对任意大于95%的可及性参数(reachability)ρ和消息的存储大小参数μ，总存在一个时间参数λ(λ只与ρ和μ有关)，使得一个诚实用户发出的存储大小为μ的消息，在经过λ长时间后，至少被超过ρ的诚实用户接收。</p>
+<h3 id="5-密码抽签（cryptographic-sortition）"><a href="#5-密码抽签（cryptographic-sortition）" class="headerlink" title="5. 密码抽签（cryptographic sortition）"></a>5. 密码抽签（cryptographic sortition）</h3><p>密码抽签是Algorand的关键创新，也是其得名的由来，其要点如下：</p>
+<p>首先，Algorand创建并不断更新一个独立参数，称为“种子”。“种子”参数不仅不可能被“敌对者”预测，也不能被其操纵。</p>
+<p>其次，在BA每次循环中，Algorand基于当前 “种子”参数构建并公布一个随机算法(也被称为可验证的随机函数—verifiable random functions，见下文)。该随机算法中的一个关键参数是用户的私钥，这个私钥只有用户本人才知道。</p>
+<p>接着，每个用户使用自己的私钥运行系统公布的随机算法，得到自己的凭证(credential)。凭证值满足一定条件的用户就是这一轮的verifiers。verifiers组装一个新区块并连同自己的凭证一起对外发出。其中，在第一个子步骤中凭证值最小的那个verifier的地位比较特殊，称为leader。</p>
+<p>最后，所有verifiers基于leader组装的新区块运行拜赞庭协议BA。在BA的每次循环中的每一个子步骤中，被选中的verifier都是不同的。这样能有效防止验证权力集中在某些用户手中，避免“敌对者”通过腐化这些用户来攻击区块链。</p>
+<h3 id="6-共识机制"><a href="#6-共识机制" class="headerlink" title="6. 共识机制"></a>6. 共识机制</h3><p>Algorand中，verifier用户(仅指被系统随机挑中作为verifier的用户)通过一个BFT协议(由Micali教授开发，称为BA)对新区块达成共识。BA执行起来非常快。大致言之，BA每次循环有3个子步骤，在每次循环后均有1/3以上的概率能达成共识。一旦verifier对某一个新区块达成共识，超过一半的“验证者”再用自己的私钥对该区块进行电子签名，相当于认证，该区块就开始在Algorand网络中传播。</p>
+<p>BA的一个重要特征是：在点对点网络通讯下，BA的参与者可更换—player-replaceable。也就是，BA每次循环的每一个子步骤均可由全新的、独立随机选择的参与者来执行。在这种情况下，BA仍能正确、有效地达成共识。假设有上百万的用户，BA每次循环的每一个子步骤的参与者可以完全不一样，而且每一批参与者都无法确定下一批参与者是谁，从而无法串谋。</p>
+<h3 id="7-可能的攻击："><a href="#7-可能的攻击：" class="headerlink" title="7. 可能的攻击："></a>7. 可能的攻击：</h3><ol>
+<li><p>尽管可以通过对上一个区块的哈希计算来确定构建下一个区块的leader节点和verifier节点，但是由于哈希函数自身的性质，攻击节点只需要在区块中添加一些微小的改动就可以很大影响下一个区块的leader节点的选择，从而破坏leader／verifier的随机性。为保证完全随机，在区块中引入block quantity，Qr(r为第r个块)，一个区块的Qr值只有在当前区块的leader在整个网络中被揭晓时才能最终确认，从而使攻击者无法事先攻击。</p>
+</li>
+<li><p>即使leader／verifier的选择是完全随机的，攻击者也有可能在leader／verifier被揭晓的同时，马上攻击这些节点，从而控制leader/verifier。为解决这个问题，采用的方案是设计多个潜在的leader，并且每个潜在leader都独立完成区块的构建，然后每个潜在leader都将自己的认证信息，构建的区块一起发送到网络中，通过共识算法选定真正的leader。由于在真正leader的身份在被揭晓之前，网络已经完成了区块数据的广播，即使攻击者攻陷了真正的leader也无法改变区块的数据。</p>
+</li>
+<li><p>算法中，区块生成都需要经过若干步骤，如果在算法执行过程中verifier节点被攻击，比如网络被断开，可能造成算法无法持续执行下去，从而造成整个区块无法确认，整个网络被停滞。而且，也无法要求每个节点都7x24在线，始终为整个网络进行服务。因此设计算法支持player-replaceable，从而使任何节点都可以随时被其他节点接管。</p>
+</li>
+</ol>
+<h3 id="8-具体算法"><a href="#8-具体算法" class="headerlink" title="8. 具体算法"></a>8. 具体算法</h3><h4 id="8-1-选出verifier和leader"><a href="#8-1-选出verifier和leader" class="headerlink" title="8.1. 选出verifier和leader"></a>8.1. 选出verifier和leader</h4><ol>
+<li>系统创建并不断更新一个独立参数，称为“种子”,记为Q ^{r-1} 。第r轮的种子的参数是256位长度的字符串，入参是第r-k轮结束后活跃用户的公钥集合，记为PK^{r-k}。k被称为回溯参数或安全参数，比如=1，表示上一轮结束后的用户集合。上面2个参数属于公共知识。</li>
+<li>基于当前 “种子”构建并公布一个随机算法，称为可验证的随机函数(verifiable random functions)。该随机算法中的一个关键参数是用户的私钥，这个私钥只有用户本人才知道。</li>
+<li>每个用户使用自己的私钥对“种子”进行签名，用函数SIGi来表示，用它作为参数，运行系统公布的随机算法，用函数H()来表示，得到自己的凭证(credential)= H(SIGi(r,1,Q^{r-1}))(函数SIGi有多个输入参数时，表示将这些参数简单串联后再进行电子签名)。<br> 3.1. 凭证是一个近乎随机的、由0和1组成的长度为256的字符串，并且不同用户的凭证几乎不可能相同；<br> 3.2. 由凭证构建的2进制小数0.H(SIGi(r,1,Q^{r-1}))，也就是将凭证字符串写到小数点后在0和1之间均匀分布。</li>
+<li>凭证值满足一定条件的用户就是这一轮的验证者verifiers。<br> 4.1. 条件是：对0和1之间的一个数，0.H(SIGi(r,1,Q^{r-1}))≤p发生的概率为p，称所有满足此条件的用户为verifiers。<br> 4.2. 有1-10^{-18}的概率保证在所有verifiers中，至少有一个是诚实的。</li>
+<li>verifiers组装一个新区块并连同自己的凭证一起对外发出。第r轮第s步(s&gt;1)的verifier的产生程序与上文类似。其中，在第一个子步骤中凭证值最小(按字典方面排序)的那个verifier的地位比较特殊，称为leader。</li>
+<li>所有verifiers基于leader组装的新区块运行拜占庭协议BA。</li>
+<li>在BA的每次循环中的每一个子步骤中，被选中的“验证者”都是不同的。这样能有效防止验证权力集中在某些用户手中，避免“敌对者”通过腐化这些用户来攻击区块链。</li>
+</ol>
+<h4 id="8-2-种子seed的更新"><a href="#8-2-种子seed的更新" class="headerlink" title="8.2. 种子seed的更新"></a>8.2. 种子seed的更新</h4><p>用Br表示第轮结束后，拜占庭协议BA输出的区块。</p>
+<p>“种子”的更新过程是：<br>Q^r =H(SIGlr(Q^{r-1}，r)), 如果B^r不是空区块。<br>Q^r =H(Q^{r-1}，r）, 如果B^r是空区块。</p>
+<p>如果Algorand在第r轮受到了“敌对者”攻击，B^r可能是空的。</p>
+<h4 id="8-3-Algorand的BFT实现，即BA"><a href="#8-3-Algorand的BFT实现，即BA" class="headerlink" title="8.3. Algorand的BFT实现，即BA"></a>8.3. Algorand的BFT实现，即BA</h4><p>拜占庭协议BA相当于一个两阶段的投票机制。</p>
+<ul>
+<li>第一阶段，verifiers对其收到的候选区块(为控制通讯成本，实际上用的是候选区块的哈希摘要)运行分级共识协议(graded consensus), 选出verifiers共识最多的候选区块。</li>
+<li>第二阶段，verifiers对第一阶段选出的候选区块，运行二元拜占庭协议(binary Byzantine Agreement)，即要么接受它，要么接受空区块。需要强调的，在每一阶段中的每一个子步骤，Algorand可能使用完全不同的verifiers。</li>
+</ul>
+<p>以下为叙述方便，假设：</p>
+<ul>
+<li>系统处在第r轮；</li>
+<li>每一个子步骤都选出n名verifiers，其中恶意verifiers不超过t，并且n≥3t+1(也就是诚实“验证者”占比在2/3以上)。另外，引入计数函数 si(v)表示在第s步“验证者” i 收到的消息v的次数(来自同一发送人的只能算1次)。<h4 id="3-1-第一阶段：分级共识协议"><a href="#3-1-第一阶段：分级共识协议" class="headerlink" title="3.1. 第一阶段：分级共识协议"></a>3.1. 第一阶段：分级共识协议</h4>运行密码抽签程序，选出“领导者” lr 和这一步的“验证者”verifiers。用vi表示“验证者”i收到的并且他认识是来自“领导者”lr的候选区块。</li>
+</ul>
+<p>vir不一定等于“领导者”lr构建的候选区块：</p>
+<ul>
+<li>“验证者” i辨认 “领导者” 的方法是从他收到的所有“验证者”凭证中找出按字典排序最小者。但因为网络通讯原因，“领导者”lr发出的信息可能没有到达“验证者”i处。</li>
+<li>“领导者”lr正好被“敌对者”腐化，对不同“验证者”发出不同的候选区块。</li>
+<li>“验证者”i本身可能是恶意的。</li>
+</ul>
+<ol>
+<li> “验证者”i将收到的vi广播给其他用户。广播正确的vi代表他告诉其他验证者他同意该vi。</li>
+<li>当且仅当“验证者”i在步骤2中收到消息x的次数超过了2t+1次（即 2i(x)≥2t+1），他将消息x发给其他用户。“验证者”i按以下规则输出(vi,gi)：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">如果存在x使得#3i(x)≥2t+1，则, </span><br><span class="line">vi&#x3D;x, gi&#x3D;2；&#x2F;&#x2F;2轮都投票成功 如果x存在使得#3i(x)≥t+1，则, </span><br><span class="line">vi&#x3D;x, gi&#x3D;1；&#x2F;&#x2F;只有1轮投票成功 否则, </span><br><span class="line">vi&#x3D;Ø, gi&#x3D;1，其中Ø代表空区块。</span><br></pre></td></tr></table></figure>
+ 含义是：</li>
+</ol>
+<ul>
+<li>如果存在诚实“验证者”i，使得,gi=2，那么对任意其他“验证者”j，必有gj≥1,vj=vi。此时所有诚实“验证者”输出的候选区块是一样的。当然，如果一开始的“验证者”收到的候选区块都是v，那么最后一批“验证者”输出的也将都是v。</li>
+<li>对所有的诚实“验证者”i，gi≤1，并且他们输出的候选区块不一定相同。<h4 id="3-2-第二阶段：二元拜占庭协议"><a href="#3-2-第二阶段：二元拜占庭协议" class="headerlink" title="3.2. 第二阶段：二元拜占庭协议"></a>3.2. 第二阶段：二元拜占庭协议</h4>基于分级共识协议的输出{(vi,gi):i=1,2,K……n}对每个诚实“验证者”赋值：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果gi&#x3D;2，那么bi&#x3D;0；</span><br><span class="line">其他情况，bi&#x3D;1。</span><br></pre></td></tr></table></figure>
+  这些bi就是二元拜占庭协议的输入。</li>
+</ul>
+<ol>
+<li>第一步“验证者”i发出bi。<ul>
+<li>如果#1i(0)≥2t+1，那么“验证者”i设定bi=0，输出outi=0，并停止执行协议（也可以认为他以后将一直发出bi=0）；</li>
+<li>如果#1i(1)≥2t+1，那么“验证者”i设定bi=1；否则，“验证者”i设定bi=0。</li>
+</ul>
+</li>
+<li>第二步“验证者”i发出bi。<ul>
+<li>如果#2i(1)≥2t+1，那么“验证者”i设定bi=1，输出outi=1，并停止执行协议（也可以认为他以后将一直发出bi=1）；</li>
+<li>如果#2i(0)≥2t+1，那么“验证者”i设定bi=0；否则，“验证者”i设定bi=1。</li>
+</ul>
+</li>
+<li>第三步“验证者”i发出bi和SIGi(Qr-1,rj)。<ul>
+<li>如果#3i(0)≥2t+1，那么“验证者”i设定bi=0；</li>
+<li>如果#3i(1)≥2t+1，那么“验证者”i设定bi=1；</li>
+<li>否则，用Si表示所有给“验证者”i发送消息的其他“验证者”集合。</li>
+</ul>
+</li>
+</ol>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><ul>
+<li>algorand已经成功实施了1000个虚机节点，模拟了500,000用户数量。</li>
+<li>algorand的TPS性能是比特币的125倍，按照论文中给出的数据，每小时可以共识的交易是750M字节每小时，计算一下(按照每笔交易长度100字节计算)：750 1024 1024/60/60/100=2184.5 TPS，考虑到实际环境的运行，估计可以达到1000TPS左右。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/" class="post-title-link" itemprop="url">为区块链做设计有什么不同</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-03-28 19:48:42" itemprop="dateCreated datePublished" datetime="2018-03-28T19:48:42+08:00">2018-03-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>—即如何设计“可信”技术的信任。<br>翻译原文： <a target="_blank" rel="noopener" href="https://media.consensys.net/designing-for-blockchain-whats-different-and-what-s-at-stake-b867eeade1c9">https://media.consensys.net/designing-for-blockchain-whats-different-and-what-s-at-stake-b867eeade1c9</a><br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/1.png"><br>区块链技术正在重新定义信任，改变我们如何思考日常生活的结构，从身份、经济以及政府。它推动设计师进行系统和更大规模的思考 - 重新定义分散形式的未来团队的角色和价值。</p>
+<p>如果我们不解决人们实际存在的问题，就无法实现区块链的未来。</p>
+<p>我最近的目标是让这个领域有更多的设计师：更多的同理心，更多的用户研究，更多的设计思维，以及更多的关注现在遇到的用户。</p>
+<p>人们经常问：“区块链设计有什么不同？”我想给出更好的答案。这个答案从问正确的问题开始：设计信任的真正含义是什么？</p>
+<h3 id="为信任1-0做设计"><a href="#为信任1-0做设计" class="headerlink" title="为信任1.0做设计"></a>为信任1.0做设计</h3><p>早在2016年中，就开始在IBM开展区块链工作 - 首先是开发工具来获得和维护区块链网络，然后在短时间内发布潜在的身份识别产品。此时，并没有真正意识到在IBM和Hyperledger平台上所做的超越区块链的大局。加密货币热潮还没有真正开始。我从来没有在电视上看到任何加密货币的报道，朋友当然不知道我在说什么。</p>
+<p>在加入区块链团队的过程中，记得看过关于比特币的视频，了解了其中的运行原理。但Hyperledger中是没有加密货币的。关于比特币如何工作 - 挖掘，采矿奖励，防止双重开支的保障措施 - 都不在Hyperledger中。因为比特币存在品牌问题，IBM的区块链人员并没有重视，所以也没有真正讨论加密货币。</p>
+<p>IBM关注的是区块链的业务成果：节约成本，提高效率，缩短跟踪供应链上货物的时间。我仍然有很多关于激励和私人网络的问题，但是都没有得到解决。</p>
+<p>然后，在很短时间内从事了关于身份产品的工作。 我看到了区块链上自我主权认同的巨大潜力，我被迷住了。 这是一个真正帮助人们的机会 - 无证件，被贩运者，边缘案件，身份被盗的人。 这是一个让人们控制自己的数据并帮助他们的机会，而不是集中式的机构，如果他们想要的话，可以通它赚钱。 这时，区块链开始感觉像一场革命。 当你消除所有的障碍并将控制权交还给人时，小鱼可以与大鱼竞争。<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/2.png"><br>在2017年初，我写了关于如何在IBM设计区块链的问题 - 现在称之为Designing for Trust 1.0。 当时看到的是无法真正使用的应用程序，没有明确的流程。 我们一直在追求工程决策，扭曲用户体验，以适应已经构建的内容。 所以，我只是用以人为中心的常规设计原则来解决问题。有过分使用行话（专业术语）问题，并强调显示哈希值。 我认为这是因为大多数应用程序都是为想要看到区块链工作原理的其他开发人员提供的演示。没有人在谈论最终用户。</p>
+<p>所以我和同事们进行了最佳猜测，并试图使设计成为交互的重要组成部分。但它仍然是一个表面层，一个附加组件。 我们正在努力尝试和改造一种值得信赖的体验。</p>
+<p>设计理论的要点是：</p>
+<ul>
+<li>避免行话（生僻的专业词汇）和不可操作的数据（hash 值）。</li>
+<li>始终如一。使用设计系统。</li>
+<li>使用现有的 UX 模式。</li>
+<li>创建积极的指导和反馈。</li>
+<li>允许并预测错误。</li>
+<li>设计区块链的全球性 — 本地化，设备不可知论。</li>
+</ul>
+<p>上述内容看起来大部分是合理的。很多都是通过一致的视觉设计完成的。不需要华丽的动画（当用户没有明确地告诉它时，事物会移动）以及过多的交互流程。当用户遇到新事物和复杂事物时，这些都是优秀设计师会采用的。</p>
+<h3 id="加入以太坊"><a href="#加入以太坊" class="headerlink" title="加入以太坊"></a>加入以太坊</h3><p>在2017年7月，我加入了ConsenSys，这是一家主要专注于在Ethereum上构建应用的工作室。在写这篇文章的时候（3月23日），ConsenSys有47个活跃的“spokes”，它们基于区块链之上，工作在教育方法，赏金，土地登记，数据科学，会计，音乐和版权，科幻世界，医疗保健和供应链等等方面。这对设计师来说意味着什么，当我想到这个空间的设计意味着什么时，我突然间想到了更多的信息，用户组和数据。</p>
+<p>而在将加密电子货币方面与“真正的区块链可修复的问题”分开之前，我在ConsenSys似乎看到了什么事情可以让我们做到这一点。在比赛后期，我问自己：“在没有中央集权的情况下与一个大集团合作意味着什么？没有中间商的情况下，价值可以转移到什么程度？”</p>
+<h3 id="饥饿设计"><a href="#饥饿设计" class="headerlink" title="饥饿设计"></a>饥饿设计</h3><p>尽管区块链已经存在近十年了（自从Satoshi在2009年开发比特币创世区块以来），仍然没有足够的设计师，或者对设计师的实际操作有足够的了解。直到去年为止才有好转，因为大多数Web3用户都是那些非常感兴趣和有动力的人。一开始，这些情况大部分发生在命令行中，这些用户已经了解了系统。他们会忍无可忍。但是区块链的成功 - 这种分布式账本未来的传言 - 不仅取决于高度熟练和感兴趣的用户能否采用，还取决于那些试图做好工作，购买商品或玩得开心的普通人。</p>
+<p>像2017年12月的Cryptokitties拥堵危机等一些基础设施团队日益增长的问题，它带来了更多的临时用户进入这个空间，迫使很多团队重新评估他们的用户体验。 Cryptonerds开始对设计的力量更加感兴趣，希望设计师们做好准备。</p>
+<h3 id="设计思维"><a href="#设计思维" class="headerlink" title="设计思维"></a>设计思维</h3><p>人们对区块链感到非常兴奋，有时只是想制造一些东西 - 任何东西 - 使用它，不管是否有人真的需要它。 我们必须依靠一个坚实的过程来确保我们知道正在解决哪些问题以及如何知道是否确实正在解决问题。 通过这个测试并确定你是否真的解决了问题的一个策略是设计思维练习。<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/3.png"><br>“设计思维”只是解决关注人类问题的一种方式。 例如，让我们都同意并验证问题甚至是第一个问题。 然后，它就像绘图，原型设计和验证假设一样 - 因为产品团队（业务，设计和工程）的所有部分都需要参与。</p>
+<h3 id="低高保真"><a href="#低高保真" class="headerlink" title="低高保真"></a>低高保真</h3><p>当他们仍然在餐巾上时评估想法和解决方案。当你被颜色，按钮风格和字体分散注意力时，你不能专注于重要的事情,比如，它是否解决了问题？是否有要采用的层次结构？<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/4.png"><br>Metamask 的设计师Christian Jeria迅速勾勒出想法，向研讨会中的用户展示。</p>
+<h3 id="用户研究"><a href="#用户研究" class="headerlink" title="用户研究"></a>用户研究</h3><p>一旦你了解了区块链，为大多数用户客观设计已经太迟了。因为你不是你的用户。所以显然你需要研究和测试更多。<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/5.png"><br>不过，我认为最有效的策略是参与式设计，将用户带入研讨会。你不仅可以看到他们使用的东西，他们可以提供即时反馈，并与你共同构思。事情稍微复杂一点 - 签署法律文件，在特定地点采购用户，并制定补偿或奖励措施 - 但收益是指数级的。</p>
+<h3 id="合作"><a href="#合作" class="headerlink" title="合作"></a>合作</h3><p>在这个领域良好合作是非常关键的，因为团队中的任何一个人都不太可能完全理解所有领域。在ConsenSys，大多数团队都是远程的（分散的），所以必须制定新的策略，以创建“同一个房间中的每个人”动态：能够快速移动，被动地知道你的团队正在做什么，以及当语言不起作用时，互相展示你的意思。<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/6.png"></p>
+<h3 id="围绕“信赖机器”设计信任"><a href="#围绕“信赖机器”设计信任" class="headerlink" title="围绕“信赖机器”设计信任"></a>围绕“信赖机器”设计信任</h3><p>去年，一位同事说：“仅仅因为区块链技术的建立可以消除对信任的依赖，并不意味着用户会信任机器或网络。”就像我之前说过的那样，当时我认为这是使界面更加“值得信赖” - 对通过界面发生的事情更加诚实。</p>
+<p>然而，我认为“为信任而设计”比这更深刻。我们现在很难将经验与技术分开。当看到sprint的用户故事时，我会注意到这一点 - 将用户需求与网络/系统需求混淆非常容易。所以试图定义这些图层，我认为真正的关键是能够分辨它们之间的差异。<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/7.png"><br>我认为确实在谈论三种（也许更多）设计的层次：信任机器（区块链），人类系统相互信任和信任感。</p>
+<h3 id="1-信任机器"><a href="#1-信任机器" class="headerlink" title="1.信任机器"></a>1.信任机器</h3><p>第一层是设计层，它帮助用户信任区块链的各个方面。这意味着围绕现有系统进行设计，帮助人们以最痛苦的方式与机器进行交互，并教育用户了解正在发生的事情。设计师必须了解区块链是如何工作的，以了解什么可以或不可以改变，以便设计诸如gas，等待时间，智能合同和私钥管理等功能。</p>
+<p>尽管对用户进行教育和授权非常重要，但有时从设计角度来看，有必要努力将某些功能抽象出来，以便它们不会成为未来体验的组成部分。当然，关于用户是否应该了解参与的系统的所有内容是存在争议的。但期望每个用户都了解区块链的技术内部工作情况是不可能的。例如，用户不需要处理gas — 但现在，它仍然是体验的一部分。 CryptoKitty 危机完美地捕捉到了这种设计的困境。MetaMask的首席开发人员Dan Finlay对此进行了描述：</p>
+<blockquote>
+<p>主要问题在于用户发送的是一笔价格低于标准gas的交易，可能等待几天之后交易才能通过。但用户并不知道，用户感觉似乎整个以太坊网络都坏掉了。<br>在MetaMask上提出了一个小型解决方案：对于需要很长时间的交易，我们展示了一个按钮，让人们以更高的gas价格重新提交交易。那个小按钮基本上解决了整个问题。它允许人们参加gas拍卖。长期来说，要让用户不要成为加密经济学游戏中的被动乘客，而是成为活跃的玩家，这一点很重要。我们了解到，您不能简化gas拍卖。有时候，人们需要更高出价的动力。</p>
+</blockquote>
+<p>在区块链生态系统中，协作变得至关重要：设计师、研究人员和工程师紧密合作，为用户解决问题。这也是关于了解我们在历史上的位置 - 用未来的眼光和路线图来设计现在的东西。</p>
+<p>以太坊的第二层缩放解决方案：状态通道，等离子和Truebit</p>
+<p>对于以太坊来说，2018年是基础设施的一年。在生态系统开发出强大的扩展解决方案之前，信任设计也意味着在区块链上花费的交易时间。我们必须关注这些未决状态的用户体验：我们已经接受过技术培训，即使知道交易需要一段时间，仍然无法阻止挫折感和恐慌。<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/8.png"></p>
+<p>密钥管理是设计人员需要考虑的另一个关键用户体验。由于没有第三方在区块链空间管理用户的数字身份，因此用户必须使用私钥签署交易。安全和设计之间的权衡是长久的：设计是为了为用户创造最好的体验;安全性是为攻击者创造最糟糕的可能体验。必须平衡给予人完全控制的自由和给予人完全控制的危险。<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/9.png"></p>
+<p>Jonny Howle正在uPort上为此工作。当人们谈论区块链的好处时，他们经常使用“无摩擦”这个词。但让我们来谈谈这意味着什么 - 从中间人，等待时间，第三方等等中删除 - 在某些方面，在处理交易时确实有很好的用途与易犯错的人。作为设计师的一部分工作就是测量什么时间以及我们可以添加多少摩擦。</p>
+<h3 id="2-相互信任"><a href="#2-相互信任" class="headerlink" title="2.相互信任"></a>2.相互信任</h3><p>除了促进对区块链的信任之外，设计师还需要设计帮助用户信任并用于彼此协作的机制。这是不同的，因为这些都是可以作为设计师改变的事情，在这之前我们只是设计与区块链机制最舒服的互动。</p>
+<p>当一位同事首次向我提出“系统思维”作为产品设计师职位描述的技能时，我的反应很差。我们必须能够在用户研究和线框图，设计思维和原型以及前端和视觉设计和测试之间做到吗？</p>
+<p>去年我曾见过一些文章，提出在系统思维和设计思维之间找到一个桥梁，这一切似乎都很累人。但后来我意识到设计人员已经在系统层面思考，例如Design Systems。可持续发展，循环设计和社交平台的设计人员都在不断地考虑这种方式。区块链设计师是事实上的系统思考者。</p>
+<p><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/10.png"><br>因为现在有办法消除中间商，并快速转移对等价值 - 除了智能合约外 - 可以谈论如下事情：</p>
+<ul>
+<li>微小费用：激励用户更想要的东西。<a target="_blank" rel="noopener" href="https://kauri.io/">Kauri</a>正在探索如何激励为以太坊开发者提供优质帮助。</li>
+<li>赌注：给予团队一个理由认为你将以团队的最大利益作为行动指南。</li>
+<li>令牌注册管理机构（TCRs）：允许大量相互不信任或不必相互信任的人组织在一起的机制。</li>
+<li>治理：一群人如何决定事情？谁来投票？谁决定谁来投票？</li>
+<li>众包：思想的聚合与思考，人群的智慧，预测市场以及汇集资金的能力。</li>
+</ul>
+<p><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/11.png"></p>
+<p>设计机制是一个专门研究协议的领域，激励理性行为者以社会期望的方式行事。通常没有人能很好地理解用户并准确地预测用户的行为。必须为系统中的每个利益相关者绘制和设计步骤，同时必须经过研究和测试。</p>
+<p><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/12.png"><br>这就是将以人为本的设计、系统思维、机制设计和隐含经济学结合在一起的地方。人们不会为了一个系统而参与系统：必须研究激励以及他们如何映射到某人想要完成的事情。设计师需要了解并很好地调整激励措施，以便恰当地设计出可用且令人愉快的体验，并且还能维持更大的系统。</p>
+<h3 id="3-信任感"><a href="#3-信任感" class="headerlink" title="3.信任感"></a>3.信任感</h3><p>必须创建的最后一层是对信任的公开展示 - 人类被视为可信赖的一切。这个设计原则从Designing for Trust 1.0开始，主要是关于良好的设计：</p>
+<ul>
+<li>显式控制。界面应该以用户期望的方式运行。它不应该做用户没有明确告诉它做的事情</li>
+<li>减少焦虑和认知负担。复杂的相互作用会放慢速度并逐渐消失。</li>
+<li>指导一致性。视觉元素为用户提供暗示，让他们知道该期待什么 - 形状和颜色等元素在界面中具有意义。</li>
+<li>尊重既定的约定。除非绝对必要，否则不要让用户学习新的模式。</li>
+</ul>
+<p><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/13.png"></p>
+<p>还有其他一些方法来表现和证明可靠性。来自外部权威机构的徽章 - 例如推特帐户或批准的商人印章 - 是一种明显的方式。另一个是积极寻找是什么让用户感到困惑或焦虑，并解决这个问题。民众正在努力打击假新闻，在研究中了解到，内容消费者并不真正了解如何评估新闻的准确性或质量。他们提出了“信誉指标”来教育消费者为什么要信任某些信息。<br><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/14.png"></p>
+<h3 id="设计师是保护者"><a href="#设计师是保护者" class="headerlink" title="设计师是保护者"></a>设计师是保护者</h3><p>最后也是最重要的设计信任：道德和保护用户。如果人们最终因我们所做的事情而受到伤害，那么“信任机器”就会失败。就像在开始时所说的，事实是，区块链影响着人们生活中最亲密的部分 - 比如金钱，身份和健康 - 但生活往往像狂野的西部。</p>
+<p><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/15.png"></p>
+<p>区块链最引人注目的方面之一是在任何时候网络状态都是透明的。但是，这种激进的透明度有时会成为令人担忧的原因。如果有什么应该将你的真实生活身份与地址联系起来，那么你所做的一切都在那里。就个人而言，我担心数据三角测量 - 与其他数据结合变得敏感的无害数据。我们必须仔细考虑区块链上的数据以及管理的链接数据。像zkSNARKS这样的隐私解决方案提供了在不透露交易数据的情况下顺畅地在区块链上进行交易的机会。</p>
+<p><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/16.png"><br>用户面临的危险大部分存在于他们与区块链之间的空间中。除了作为攻击点 - 未授权用户可以攻击的不同点（输入或提取数据）的总和 - 这是人们忘记或丢失私钥的地方。这是诈骗活动的地方。</p>
+<p><img src="/2018/03/28/%E4%B8%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E5%81%9A%E8%AE%BE%E8%AE%A1%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C/17.png"><br>仅仅因为这些问题没有在区块链上发生，它们仍然是区块链高速路入口的一部分。必须尽一切可能来教育和保护人们。当出现问题时，用户会不顾一切地指责区块链。</p>
+<p>进入这个领域的原因是因为我想帮助别人，但有些时候我很担心。很担心现实生活中的黑镜头剧集，在完全理解我们正在取代的内容之前，用区块链代替传统系统，并构建只激励利润，上瘾（像当前的社交平台）或不良行为的系统（但并没有预料到）。</p>
+<h3 id="行动号召"><a href="#行动号召" class="headerlink" title="行动号召"></a>行动号召</h3><p>设计师，我们需要你在这里。几乎所有的项目都有可能改变我们做事情的方式，而且您有能力影响这种变化是正面还是负面。有很多重要的想法和紧迫的哲学问题，我们需要人们对这些话题给予关注。我们需要知道如何构思，测试，研究，迭代，实验和运送产品的人员。</p>
+<p>如果你是新手，不要只阅读文章。其实参与是快速学习的最佳途径。安装Metamask，购买Cryptokitty。在Coinbase上购买数字货币，然后花在Overstock上。</p>
+<p>区块链不仅仅是加密货币，所以要探索其他社区。查看Ujo的创作者门户网站和Cellarius的故事讲述平台。尝试赏金或Gitcoin的设计任务。编写智能合同或构建dApp的教程。把你的手指放在区块链上。</p>
+<p>不要害怕提问。每个人都是新的，我们一起解决它。在ConsenSys，我们一直在寻找产品设计师，系统和设计思想家，设计研究人员等等。我们需要您的帮助来构建和设计人们可以信任的分布式未来。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -500,202 +816,6 @@
 <p>如果智能合约开发者疏忽或者测试不充分，而造成智能合约的代码有漏洞的话，就非常容易被黑客利用并攻击。并且越是功能强大的智能合约，就越是逻辑复杂，也越容易出现逻辑上的漏洞。同时，智能合约语言Solidity自身与合约设计都可能存在漏洞。据有关调查统计，以太坊主要漏洞情况描述如下表：</p>
 <p><img src="/2018/03/25/DRC%E7%A7%AF%E6%9E%81%E5%BA%94%E5%AF%B9%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%B4%A6%E6%88%B7%E9%81%AD%E5%8F%97%E9%BB%91%E5%AE%A2%E6%94%BB%E5%87%BB%E4%BA%8B%E4%BB%B6/3.jpeg"><br><img src="/2018/03/25/DRC%E7%A7%AF%E6%9E%81%E5%BA%94%E5%AF%B9%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%B4%A6%E6%88%B7%E9%81%AD%E5%8F%97%E9%BB%91%E5%AE%A2%E6%94%BB%E5%87%BB%E4%BA%8B%E4%BB%B6/4.jpeg"><br><img src="/2018/03/25/DRC%E7%A7%AF%E6%9E%81%E5%BA%94%E5%AF%B9%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%B4%A6%E6%88%B7%E9%81%AD%E5%8F%97%E9%BB%91%E5%AE%A2%E6%94%BB%E5%87%BB%E4%BA%8B%E4%BB%B6/5.jpeg"></p>
 <p>上述漏洞目前已经广泛存在以太坊网络中，2018年2月24日，新加坡和英国几位研究员指出，3.4万多份以太坊智能合约可能存在容易被攻击的漏洞，导致数百万美元以太币暴露在风险中，其中2,365份属于著名项目。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/03/21/%E8%A7%A3%E9%87%8ASNARKs%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/03/21/%E8%A7%A3%E9%87%8ASNARKs%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0/" class="post-title-link" itemprop="url">解释SNARKs系列文章</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-03-21 17:51:35" itemprop="dateCreated datePublished" datetime="2018-03-21T17:51:35+08:00">2018-03-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ol>
-<li><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/snark-explain.html">解释 SNARKs 第一部分: 同态隐藏</a></li>
-<li><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/snark-explain2.html">解释 SNARKs 第二部分: 盲法评估多项式</a></li>
-<li><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/snark-explain3.html">解释 SNARKs 第三部分: 知识系数测试和假设</a></li>
-<li><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/snark-explain4.html">解释 SNARKs 第四部分: 如何为可验证多项式进行盲评价</a></li>
-<li><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/snark-explain5.html">解释 SNARKs 第五部分: 从计算到多项式</a></li>
-<li><a target="_blank" rel="noopener" href="https://z.cash/zh/blog/snark-explain6.html">解释 SNARKs 第六部分: 匹诺曹协议</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.z.cash/zh/snark-explain7/">解释 SNARKs 第七部分: 椭圆曲线配对方法</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/03/21/zkSNARKs%E4%B8%8Ezcash/" class="post-title-link" itemprop="url">zkSNARKs与zcash</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-03-21 14:09:22" itemprop="dateCreated datePublished" datetime="2018-03-21T14:09:22+08:00">2018-03-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="什么是zk-SNARKs？"><a href="#什么是zk-SNARKs？" class="headerlink" title="什么是zk-SNARKs？"></a>什么是zk-SNARKs？</h3><p>Zcash是zk-SNARKs的第一个广泛应用，它是一种零知识密码学的新形式。Zcash的隐私保证源于可以屏蔽交易，但仍可通过zk-SNARK证明在网络共识规则下验证为有效。</p>
-<p>缩写zk-SNARK代表“Zero-Knowledge Succinct Non-Interactive Argument of Knowledge 零知识简明非交互式知识”，并且指向的证明构造可以证明拥有某些信息，例如，一个密钥，不泄露该信息的情况下，也不在证明者和验证者之间进行任何交互。</p>
-<p>“零知识”证明允许一方（证明方 prover）向另一方（验证方 verifier）证明声明的内容是真实的，不泄露超出声明本身有效性的任何信息。例如，考虑使用随机数的散列，证明者可以说服验证者确实存在具有该散列值的数字，而不透露数字的内容是什么。</p>
-<p>在零知识“知识证明”中，证明者可以说服验证者不仅知道该数字存在，而且他们实际上知道这样一个数字，且不透露关于数字的任何信息。</p>
-<p>可以在几毫秒内验证“简洁”的零知识证明，即使对于非常大的程序的声明内容，验证长度也只有几百字节。在最初零知识协议中，证明者和验证者必须多次来回通信，但在“非交互式”结构中，证明者发送“证明”给验证者，“证明”由单个消息组成。目前，唯一已知的生成非交互式的，足够短的，以发布到区块链的零知识证明方法具有“初始设置阶段 initial setup phase”，此阶段生成在证明者和验证者之间共享的公共参考字符串。我们将这个公共参考字符串称为系统的公共参数。</p>
-<p>如果有人能够获得用于生成这些参数的随机性秘密，他们将能够创建对验证者看起来有效的错误证明。对于Zcash来说，这意味着恶意方可能会制造假币。为了防止此情况，Zcash设计了由多方程序产生公众参数。要详细了解参数生成程序并查看为防止随机性问题而采取的预防措施（例如，计算机正在生成公共参数），请访问<a target="_blank" rel="noopener" href="https://z.cash/technology/paramgen.html">Paramgen页面</a>。要了解有关参数生成协议背后的数学的更多信息，请阅读<a target="_blank" rel="noopener" href="https://z.cash/blog/generating-zcash-parameters.html">博客文章</a>或<a target="_blank" rel="noopener" href="https://github.com/zcash/mpc/blob/master/whitepaper.pdf">有关该主题的白皮书</a>。</p>
-<h3 id="ZK-SNARKS如何在ZCASH中构建"><a href="#ZK-SNARKS如何在ZCASH中构建" class="headerlink" title="ZK-SNARKS如何在ZCASH中构建"></a>ZK-SNARKS如何在ZCASH中构建</h3><p>为了在Zcash中拥有零知识隐私，根据网络共识规则确定交易有效的函数必须返回交易是否有效，而不泄露其执行计算的任何信息。这是通过对zk-SNARKs中的一些网络共识规则进行编码完成的。在很高的层面上，zk-SNARKs首先将你想要证明的东西转化为关于知道某些代数方程解的等价形式。 </p>
-<p>在下面的章节中，将简要介绍如何将用于确定有效交易的规则转换为方程，然后可以在候选解决方案上对方程进行评估，而不会向验证方程的当事方透露任何敏感信息。</p>
-<p>计算 → 算术电路 → R1CS → QAP → zk-SNARK</p>
-<p>将交易有效性函数转化为数学表示，第一步是将逻辑步骤分解为最小可能的操作，从而创建一个“算术电路”。 类似于一个布尔逻辑电路，其中一个程序被编译成离散的单个步骤，如AND，OR，NOT，当一个程序转换为一个算术电路时，它被分解为单个步骤，包括加法，减法， 乘法和除法（在特殊情况下，我们将避免使用除法）。</p>
-<p>下面是计算表达式（a + b）*（b * c）的算术电路的例子：</p>
-<p><img src="/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png"></p>
-<p>看着这样一个电路，我们可以将输入值a，b，c看作在输出线上从左到右的“行进”。我们的下一步是建立的一级约束系统 (Rank 1 Constraint System)，即R1CS，以检查这些值是否“行进正确”。在上图中，R1CS将确认，b和c进入的乘法门的值是 b*c。</p>
-<p>在这个R1CS表示中，验证者必须检查许多约束条件 - 几乎每条线路都有一个约束条件。 （由于技术原因，事实证明，我们只能对乘法门引出的线路有所限制。）在2012年<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2012/215.pdf">关于该主题的论文</a>中，Gennaro，Gentry，Parno和Raykova提出了一种很好的方法来“将所有这些约束集中成一个” 。该方法使用称为二次算术程序（QAP）的电路表示。需要检查的单个约束在多项式之间而不是数字之间。多项式可能相当大，因为当多项式之间的身份不成立时，它将无法保持多数点。因此，您只需检查两个多项式是否在一个随机选择的点上匹配，以便以高概率正确验证证明。</p>
-<p>如果证明者事先知道验证者选择检查哪一点，则他们可能能够制造无效的多项式，但仍然满足当时的身份。使用zk-SNARKs，复杂的数学技术（如同态加密和椭圆曲线配对）可用于“盲人式”评估多项式 - 即不知道哪个点正在评估。上面描述的公共参数用于确定将检查哪个点，且以加密形式，以便证明者和验证者都不知道公共参数是什么。</p>
-<p>到目前为止的描述主要涉及如何获得“SNARKs”中的S和N - 如何获得短暂的，非交互式的单一消息证明 - 但尚未解决允许 “zk”（零知识）部分证明者维护其秘密投入的机密性。事实证明，在这个阶段，通过使证明者使用仍然满足所需身份的原始多项式的“随机偏移”，可以容易地添加“zk”部分。</p>
-<p>有关Zcash中关于zk-SNARKs背后关键概念的深入解释，请参阅后面的博客文章。</p>
-<p>Zcash使用 <a target="_blank" rel="noopener" href="https://github.com/scipr-lab/libsnark">libsnark</a> 分支，这是一个用于zk-SNARKs的C++库。 您可以检查代码并了解更多关于在 <a target="_blank" rel="noopener" href="https://github.com/zcash/libsnark">github</a> 上的实现。要深入了解 Zcash zk-SNARKs 的协议，请参阅 <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2013/279.pdf">Pinocchio协议</a> 的本文。</p>
-<h3 id="ZK-SNARKS如何应用于创建屏蔽交易"><a href="#ZK-SNARKS如何应用于创建屏蔽交易" class="headerlink" title="ZK-SNARKS如何应用于创建屏蔽交易"></a>ZK-SNARKS如何应用于创建屏蔽交易</h3><p>在比特币中，通过链接发件人地址，收件人地址以及公共区块链上的输入和输出值来验证交易。 Zcash使用zk-SNARKs来证明有效交易的条件得到了满足，但没有透露任何有关地址或值的重要信息。 屏蔽交易的发件人构建了一个证据，以高概率显示：</p>
-<blockquote>
-<p>输入总和 等于 每个屏蔽转换的输出总和。</p>
-<p>发件人证明他们拥有输入的私钥，赋予他们花费的权力。</p>
-<p>输入的私钥与整个交易的签名链接起来，链接是加密的，则，交易不会被不知道这些私钥的人修改。</p>
-</blockquote>
-<p>另外，屏蔽交易必须满足下面描述的其他条件：</p>
-<p>比特币跟踪(未花费的交易输出)UTXO，以确定哪些交易是可用的。 在Zcash中，UTXO的屏蔽等同物称为“承诺”，花费承诺包含暴露出“花费人”。 Zcash节点保留已经创建的所有承诺的清单以及所有已经暴露的花费人。承诺和无效值存储为散列值，以避免公开关于承诺的任何信息，或者哪些无效值与哪些承诺相关。</p>
-<p>对于由屏蔽付款创建的每个新钞票，将公布一个承诺，其中包含以下内容的散列：</p>
-<ul>
-<li>钞票发送的地址</li>
-<li>发送的金额</li>
-<li>本钞票所特有的数字“rho”（稍后用于派生花费人）和一个随机数。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Commitment &#x3D; HASH(recipient address, amount, rho, r)</span><br></pre></td></tr></table></figure>
-
-<p>当屏蔽交易被花费时，发件人使用他们的支出密钥来公布一个花费者，该花费者是来自尚未用过的现有承诺的唯一编号（“rho”）的hash，并提供零知识证明，证明他们有权花费它。 该散列必须不在花费清单中，花费清单在区块链的每个节点中保存。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nullifier &#x3D; HASH(spending key, rho)</span><br></pre></td></tr></table></figure>
-<p>屏蔽交易的零知识证明证实，除了上面列出的条件外，以下认定也是正确的：</p>
-<blockquote>
-<p>对于每个输入，都存在明确的承诺。</p>
-<p>花费者和钞票承诺计算正确。</p>
-<p>输出钞票的花费者与任何其他钞票的花费者发生绝不会发生冲突。</p>
-</blockquote>
-<p>除了用于控制地址的支出密钥之外，Zcash还使用一组证明和验证密钥来创建和检查证明。这些密钥在上面讨论的公共参数程序中生成，并在Zcash网络中的所有参与者之间共享。对于每个屏蔽交易，发件人使用他们的证明密钥来生成他们的输入有效的证据。矿工通过使用验证密钥检查证明者的计算来检查被保护的交易遵循共识规则。Zcash证明生成的设计方式要求证明者事先做更多的工作，但它简化了验证，因此主要的计算工作被转移到交易的创建者（这就是为什么创建屏蔽Zcash事务可能会占用到40秒，同时验证事务有效仅需要几毫秒）。</p>
-<p>Zcash的屏蔽交易的隐私依赖于标准的，经过验证的密码学（散列函数和流密码），但它增加了zk-SNARKs，与承诺和花费机制一起使用，允许屏蔽交易的发送者和接收者证明加密交易是有效的。其他为加密货币提供隐私的方法依赖于模糊交易之间的链接，但事实上Zcash交易可以存储在完全加密的区块链中，为加密货币应用程序开辟了新的可能性。加密交易使得各方可以享受公共区块链的好处，同时保护他们的隐私。计划的未来升级将允许用户根据自己的判断有选择地披露有关被屏蔽交易的信息。查看Zcash博客文章的近期未来，了解<a target="_blank" rel="noopener" href="https://z.cash/blog/the-near-future-of-zcash.html">Zcash的未来计划</a>。</p>
-<p>有关如何在Zcash中构建屏蔽事务的更深入解释，请参阅我们的博客文章，了解屏蔽地址之间的事务如何工作。有关当前Zcash协议的完整详细信息，请参阅我们的<a target="_blank" rel="noopener" href="https://github.com/zcash/zips/blob/master/protocol/protocol.pdf">协议规范</a>。</p>
-<h3 id="ZK-SNARKS的未来应用"><a href="#ZK-SNARKS的未来应用" class="headerlink" title="ZK-SNARKS的未来应用"></a>ZK-SNARKS的未来应用</h3><p>在Zcash中创建屏蔽交易只是zk-SNARKs许多可能应用中的一个例子。从理论上讲，您可以使用zk-SNARK来验证任何关系，而不会泄露输入或泄露信息。对复杂函数生成证明的计算量仍然过大，许多程序还不适用，但Zcash团队正在推动优化zk-SNARKs的界限，并且已经以更高效的实施方式开创了新局面。</p>
-<p>就目前而言，Zcash的zk-SNARKs实现可以作为企业用例的<a target="_blank" rel="noopener" href="https://z.cash/blog/zsl.html">零知识安全层</a>添加到任何现有的分布式分类帐解决方案中。</p>
 
       
     </div>
