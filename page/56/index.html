@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">285</span>
+          <span class="site-state-item-count">286</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,129 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/02/13/What-is-an-ERC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/02/13/What-is-an-ERC/" class="post-title-link" itemprop="url">What is an ERC?</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-13 10:33:37" itemprop="dateCreated datePublished" datetime="2018-02-13T10:33:37+08:00">2018-02-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:22:59" itemprop="dateModified" datetime="2025-09-05T16:22:59+08:00">2025-09-05</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>ERC stands for “<strong>Ethereum Request for Comment</strong>” This is Ethereum’s version of a Request for Comments (RFC), a concept devised by the Internet Engineering Task Force. Memos within an RFC contain technical and organizational notes. For ERCs, this includes some technical guidelines for the buildout of the Ethereum network.</p>
+<p>This was written by Ethereum developers for the Ethereum community. Thus, the workflow of generating an ERC includes a developer. To create standards for the Ethereum platform, a developer submits an Ethereum Improvement Proposal (EIP). This includes protocol specifications and contract standards. Once that EIP is approved by a committee and finalized, it becomes an ERC. The complete list of EIPs can be found here.</p>
+<p>The finalized EIPs give the Ethereum developers a set of implementable standards. This allows Smart Contracts to be built with these standards, which a common interface can access. ERC20 is the most well-known of all the standards within the entire crypto community, and most tokens issued on top of the Ethereum platform use it.</p>
+<p>Sources link ==&gt; <a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts">https://github.com/OpenZeppelin/openzeppelin-contracts</a></p>
+<h3 id="ERC20"><a href="#ERC20" class="headerlink" title="ERC20"></a>ERC20</h3><p>任何 ERC20 代币都能立即兼容以太坊钱包（几乎所有支持以太币的钱包，包括Jaxx、MEW、imToken等，也支持 erc20的代币</p>
+<p>The ERC20 standard includes the following functions:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">totalSupply() <span class="comment">//returns total token supply</span></span><br><span class="line">balanceOf(address _owner) <span class="comment">//returns account balance of _owner’s account</span></span><br><span class="line">transfer(address _to, uint256 _value) <span class="comment">//takes in number _value and transfers that amount of tokens to address _to and triggers transferevent</span></span><br><span class="line">transferFrom(address _from, address _to, uint256 _value) <span class="comment">//transfers _value amount of tokens from the address _from to the address _to, and triggers the transfer event.拥有者从 _from地址给 _to地址转账授权范围内的一定额度的一类同质化通证。</span></span><br><span class="line">approve(address _spender, uint256 _value) <span class="comment">//allows _spender to withdraw any number up to _value amount</span></span><br><span class="line">allowance(address _owner, address _spender) <span class="comment">//returns the amount which the_spender is still allowed to withdraw from the _owner</span></span><br><span class="line"><span class="comment">// 授权给_spender账户一定额度。拥有者 _owner给消费者_spender在当前查询账户授权(approve)的额度。</span></span><br></pre></td></tr></table></figure>
+
+
+<p>The following events are triggered based on the functions above:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transfer(address indexed _from, address indexed _to, uint256 _value) <span class="comment">//this is triggered whenever tokens are transferred</span></span><br><span class="line">approval(address indexed _owner, address indexed _spender, uint256 _value) <span class="comment">//is triggered on any call to approve()</span></span><br></pre></td></tr></table></figure>
+
+<p>ERC20 was proposed in 2015 and officially formalized in September 2017. It is a great starting point for token standardization. However, some in the developer community have noted that it has certain flaws and vulnerabilities. Additionally, there are some use cases that require something different. </p>
+<p>另外，<a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20">https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20</a> </p>
+<h4 id="Extensions-扩张功能"><a href="#Extensions-扩张功能" class="headerlink" title="Extensions\扩张功能"></a>Extensions\扩张功能</h4>
+
+
+
+
+
+
+
+<h4 id="Utilities-工具方法"><a href="#Utilities-工具方法" class="headerlink" title="Utilities\工具方法"></a>Utilities\工具方法</h4>
+
+
+
+<h3 id="ERC223"><a href="#ERC223" class="headerlink" title="ERC223"></a>ERC223</h3><p>Status: Open</p>
+<p>Date Proposed: 3/5/2017</p>
+<p>一句话：ERC223令牌标准可以防止令牌在以太坊网络上丢失。</p>
+<p>A post by developer Dexaran describes these two scenarios in detail:</p>
+<p>There are two ways of performing a transaction in ERC20 tokens:</p>
+<ol>
+<li>transfer function.</li>
+<li>approve + transferFrom mechanism.</li>
+</ol>
+<p>Token balance is just a variable in the token contract.</p>
+<p>The transaction of a token is a change in the internal variables of the contract. The balance of the sender will be decreased and the balance of the recipient will be increased.</p>
+<p>The transfer function will not notify the recipient when the transaction occurs. The recipient will not be able to recognize the incoming transaction! I wrote this illustration of the process that is leading to unhandled transactions and money losses.<br>As a result, if the recipient is a contract, users must transfer their tokens using the approve +transferFrom mechanism. If the recipient is an externally owned account address, users must transfer their tokens via the transfer function. If a user makes a mistake and chooses the wrong function, the token will get stuck inside contract (contract will not recognize a transaction). There will be no way to extract stuck tokens.</p>
+<p>His proposed solution to this issue is contained within ERC223. It is very similar to the ERC20 standard, but it solves the problems described above. When tokens are transferred to a smart contract, a special function of that contract is tokenFallback. This allows the receiving contract to decline the tokens or trigger further actions. This can be used in place of the approvefunction in most cases.</p>
+<p>由openzeppelin-contracts <code>SafeERC20</code> 完成。</p>
+<h3 id="ERC621"><a href="#ERC621" class="headerlink" title="ERC621"></a>ERC621</h3><p>Status: Open</p>
+<p>Date Proposed: 5/1/2017</p>
+<p>一句话：发行 Token 总量可变。<strong>ERC621</strong> = ERC20 + increaseSupply() + decreaseSupply()</p>
+<p>ERC621 is an extension of the ERC20 token standard. It adds two additional functions, increaseSupply and decreaseSupply. This can increase and decrease the token supply in circulation. ERC20 only allows a single token issuance event. This restricts the supply to a certain amount which can’t be changed. ERC621 proposes that totalSupply can be modified.</p>
+<h3 id="ERC721"><a href="#ERC721" class="headerlink" title="ERC721"></a>ERC721</h3><p>Status: Open</p>
+<p>Date Proposed: 9/22/2017</p>
+<p>一句话：每个代币都是 unique，例如以太猫。</p>
+<p>ERC721 is very different than ERC20 and ERC223. It describes a non-fungible token. This means that each token is totally different and each one can have a different value to different users. One way to think about this is to recall CryptoKittes. Each one is its own separate commodity whose value is based on its own rarity and desirability by users.</p>
+<p>ERC721 tokens can be used in any exchange, but the token value is “a result of the uniqueness and rareness associated with each token.” The standard functions are name, symbol, totalSupply, balanceOf, ownerOf , approve , takeOwnership , transfer , tokenOfOwnerByIndex, and tokenMetadata. It also defines two events: Transfer and Approval. This article by Gerald Nash does a good job explaining the concept of fungibility as it relates to tokens and goes into good technical detail.</p>
+<h3 id="ERC1155"><a href="#ERC1155" class="headerlink" title="ERC1155"></a>ERC1155</h3><p>Status: Final</p>
+<p>Date Proposed: 2018-06-17</p>
+<p>一句话：ERC-1155的创造者是Enjin coin的CTO Witek Radomski。ERC1155标准定义了一种解决上述问题的新方法。现在“物品”（可能包含ERC20的token或ERC721的token或两者都有）可以被单一的一个合约（打包处理）来定义了。合约里包含区别token们所需的最小量的数据。</p>
+<p>ERC1155协议主要包括ERC1155Mintable.sol同质化可增发智能合约和ERC1155NonFungibleMintable.sol非同质化可增发智能合约，本章只讲解同质化可增发智能合约的功能。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -701,89 +824,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2010/10/23/ghana-day-21/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/10/23/ghana-day-21/" class="post-title-link" itemprop="url">ghana day 21</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2010-10-23 10:51:05" itemprop="dateCreated datePublished" datetime="2010-10-23T10:51:05+08:00">2010-10-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2023-11-15 23:53:13" itemprop="dateModified" datetime="2023-11-15T23:53:13+08:00">2023-11-15</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Day 21, that’s counted to the day of my departure from Ghana on 10/30. Three weeks have passed. So fast!</p>
-<p>The most enduring aspect of this CSC (Corporate Service Corps) experience has been the friendships formed. It’s a rare and possibly once-in-a-lifetime opportunity to spend an entire month closely engaging with a group of people, day in and day out. It’s been a pleasure to be part of such a wonderful group, and I hold immense respect for each individual. Being the youngest in our team, I’ve received abundant care and support, not just in work but in everyday life, and I’ve learned immensely.</p>
-<p>Yesterday, Roy, Anouk, and I completed the Ghana West Coast Marketing workshop. Mr. Hammond, the president of the Ghana Tourism Board (GTB), was the first to arrive at SNV, the workshop venue. His serious approach to the workshop was encouraging to see. Mr. Hammond also delivered the opening speech, introducing the IBM CSC Ghana 5 team to everyone.</p>
-<p>A total of 15 people participated in the workshop, representing GTB, Ricerca e Cooperazione, SNV, Ghana Wildlife Society, Wildlife Division, COSPE, and IBM. Roy, who is exceptional in his skills, designed the brainstorming process. The 12 participants were split into three groups for the first phase of discussion. After 30 minutes, they voted on all the ideas, using Canadian flag tabs as a cute voting method. We then selected the top three ideas for the second phase of the workshop.</p>
-<p><img src="/2010/10/23/ghana-day-21/1.jpg"></p>
-<p>speech</p>
-<p><img src="/2010/10/23/ghana-day-21/2.jpg"></p>
-<p>Phase one voting </p>
-<p>In phase two, there were 10 concrete problem&amp;topics prepared in advance and rearranged 12 participators into 3 groups, then jump in depth discussions on these 3 top ideas. Finally, we got a lot of ideas in workshop. We will organize them in structure, analysis, give conclusions and recommendations in our final presentation.<br>Really a wonderful day!</p>
-<p>Will</p>
-<p>Oct. 23 2010 </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/55/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><span class="page-number current">56</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/57/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/55/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><span class="page-number current">56</span><a class="page-number" href="/page/57/">57</a><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/57/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

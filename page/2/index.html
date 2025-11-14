@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">285</span>
+          <span class="site-state-item-count">286</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,129 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/09/05/Kafka%E5%9C%A8%E9%87%91%E8%9E%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/09/05/Kafka%E5%9C%A8%E9%87%91%E8%9E%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">Kafka在金融系统中的实践</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-09-05 16:02:00 / Modified: 17:03:04" itemprop="dateCreated datePublished" datetime="2025-09-05T16:02:00+08:00">2025-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h2><ol>
+<li><strong>幂等性 + 事务性</strong><ul>
+<li>Kafka 的 enable.idempotence=true 解决了 <strong>生产端的消息重复发送问题</strong>，保证“至多一次” → “恰好一次”。</li>
+<li>transactional.id + 事务 API 则让生产者能把多个写操作当作原子单元，要么全写入，要么全不写。</li>
+</ul>
+</li>
+<li><strong>消费者端隔离级别</strong><ul>
+<li>isolation.level=read_committed 确保消费端只读取 <strong>提交成功的事务消息</strong>，不会读到失败/未提交的写入。</li>
+<li>这相当于 SQL 里的 <strong>READ COMMITTED 隔离级别</strong>。</li>
+</ul>
+</li>
+<li><strong>两阶段提交（2PC）与事务日志</strong><ul>
+<li>Kafka 内部事务机制不是严格意义上的 <strong>分布式 XA 2PC</strong>，而是 <strong>Producer Coordinator + Transaction Log</strong> 的轻量实现。</li>
+<li>当你把多个 Topic/Partition 的消息放在一个事务里时，Kafka 会写一条 <strong>事务日志（txn log）</strong>，由 Coordinator 来决定事务的提交/中止状态，消费者依赖 txn log 过滤未提交消息。</li>
+<li>所以它更像是 “<strong>Kafka 内部的两阶段提交</strong>”，如果要与外部数据库（如 MySQL、Redis）做一致性，仍需要 <strong>外部协调机制</strong>（典型是 Outbox Pattern）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-工程实践"><a href="#2-工程实践" class="headerlink" title="2. 工程实践"></a>2. 工程实践</h2><p>在金融支付类系统里，通常会结合以下手段来确保可靠性：</p>
+<ul>
+<li><strong>生产端配置最佳实践</strong><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">enable.idempotence</span>=<span class="string">true   # 解决了生产端的消息重复发送问题，保证“至多一次” → “恰好一次”。</span></span><br><span class="line"><span class="attr">acks</span>=<span class="string">all    # 确保 ISR 同步确认，确保消息不重复</span></span><br><span class="line"><span class="attr">retries</span>=<span class="string">Integer.MAX_VALUE    # 确保消息不丢失</span></span><br><span class="line"><span class="meta">max.in.flight</span>=<span class="string">1   # 避免并发请求导致的乱序</span></span><br><span class="line"><span class="meta">transactional.id</span>=<span class="string">tx-producer-001</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>消费端配置最佳实践</strong><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">isolation.level</span>=<span class="string">read_committed</span></span><br><span class="line"><span class="meta">enable.auto.commit</span>=<span class="string">false   # 结合事务手动提交offset</span></span><br><span class="line"><span class="comment"># offset 也写入 Kafka 的事务，确保消息消费与结果提交原子化。</span></span><br><span class="line"><span class="comment"># 常见模式是 Kafka + DB 的事务性写入（即 Outbox Pattern）</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>幂等消费（Exactly Once Processing）</strong><ul>
+<li>即使 Kafka 层面保证了 “Exactly Once Delivery”，但在消费者更新外部存储（数据库、账本系统）时，仍要确保幂等性。</li>
+<li>常见做法：<ul>
+<li>使用 <strong>唯一事务ID/流水号</strong> 作为幂等键</li>
+<li>在数据库侧维护 dedup 表/唯一索引，避免重复扣款</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-金融场景案例"><a href="#3-金融场景案例" class="headerlink" title="3. 金融场景案例"></a>3. 金融场景案例</h2><ol>
+<li><strong>支付宝/微信支付 - 支付链路</strong><ul>
+<li>Kafka 事务常用于 <strong>支付事件流</strong>，比如：<ul>
+<li>扣款事件（资金冻结）</li>
+<li>风控事件（交易审核）</li>
+<li>清算/记账事件（账本入账）</li>
+</ul>
+</li>
+<li>如果任何一步失败，整个事务会被中止，消费者端不会看到“半成品交易”。</li>
+</ul>
+</li>
+<li><strong>证券交易所撮合系统</strong><ul>
+<li>撮合引擎把订单事件写入 Kafka，撮合成功后再写入交易结果事件，两者要么同时写入，要么同时回滚。</li>
+<li>避免出现 “订单被接收但未撮合成功” 这种不一致。</li>
+</ul>
+</li>
+<li><strong>银行账务系统（Outbox + Kafka EOS）</strong><ul>
+<li>常见设计是 <strong>双写一致性</strong>：<ul>
+<li>业务库写账务流水（Outbox 表）</li>
+<li>Kafka Connect CDC 监听 Outbox 表 → 推送到 Kafka → 消费到清算/风控服务</li>
+</ul>
+</li>
+<li>Outbox 表和账务写操作在同一数据库事务中完成，Kafka 端依赖 EOS 保证消息不丢不重。</li>
+</ul>
+</li>
+</ol>
+<p>总结：Kafka EOS <strong>只能保证 Kafka 内部端到端不丢不重</strong>，如果要与外部系统（DB/账本）做事务一致性，需要使用 <strong>Outbox Pattern 或幂等消费</strong> 来兜底。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -897,171 +1020,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/07/18/Agents%20%E6%99%BA%E8%83%BD%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E5%B7%A5%E5%85%B7%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/07/18/Agents%20%E6%99%BA%E8%83%BD%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E5%B7%A5%E5%85%B7%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">Agents 智能代码编写工具市场分析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-07-18 15:59:00" itemprop="dateCreated datePublished" datetime="2025-07-18T15:59:00+08:00">2025-07-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-09-05 16:43:57" itemprop="dateModified" datetime="2025-09-05T16:43:57+08:00">2025-09-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Solutions-Evaluation-for-Enterprise"><a href="#Solutions-Evaluation-for-Enterprise" class="headerlink" title="Solutions Evaluation for Enterprise"></a>Solutions Evaluation for Enterprise</h2><p>This is the short term market AI-powered coding assistants with agent capability.</p>
-<table>
-<thead>
-<tr>
-<th>Solution</th>
-<th>Data Security</th>
-<th>Agent Coding</th>
-<th>Enterprise Features</th>
-<th>Cost Efficiency</th>
-<th>Open Source</th>
-<th>Service for HK &amp; China</th>
-<th>RECM</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Copilot GPT4.1/4o</td>
-<td>⭐⭐ <br>May need Azure</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Claude Code</td>
-<td>⭐⭐⭐</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>⭐⭐ <br>CLI only</td>
-<td>⭐⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>Y</td>
-</tr>
-<tr>
-<td>Gemini CLI</td>
-<td>⭐⭐</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐ <br>CLI only</td>
-<td>⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>Y</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://windsurf.com/">Windsurf</a></td>
-<td>⭐⭐</td>
-<td>⭐ <br>No agent yet</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>N</td>
-</tr>
-<tr>
-<td>Cursor</td>
-<td>⭐⭐ <br>Route to Cursor’s server first</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>⭐⭐</td>
-<td>Proprietary</td>
-<td>N</td>
-<td>N</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://github.com/cline/cline">Cline</a> + Claude</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐⭐ <br>VS Code only</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>Full MIT</td>
-<td>Y</td>
-<td>Y</td>
-</tr>
-<tr>
-<td><a target="_blank" rel="noopener" href="https://roocode.com/">Roo Code</a> + Claude</td>
-<td>⭐⭐ <br>Route to Roo Code server first</td>
-<td>⭐⭐⭐⭐</td>
-<td>⭐⭐⭐ <br>VS Code only</td>
-<td>⭐⭐⭐⭐⭐</td>
-<td>Full MIT</td>
-<td>Y</td>
-<td>N</td>
-</tr>
-</tbody></table>
-<p>![[腾讯AI Coding 研究报告.pdf]]</p>
-<h2 id="Other-options"><a href="#Other-options" class="headerlink" title="Other options"></a>Other options</h2><p>For long term, we have more choices with promotion of the market.</p>
-<ul>
-<li>Amazon Q Developer - <a target="_blank" rel="noopener" href="https://aws.amazon.com/q/developer/">https://aws.amazon.com/q/developer/</a> , can service to users of China &amp; HK</li>
-<li>Kiro - <a target="_blank" rel="noopener" href="https://kiro.dev/">https://kiro.dev/</a>, ![[AWS Kiro IDE 深度研究报告.pdf]]</li>
-<li>Kimi K2 - <a target="_blank" rel="noopener" href="https://platform.moonshot.cn/">https://platform.moonshot.cn/</a> , <a target="_blank" rel="noopener" href="https://platform.moonshot.ai/">https://platform.moonshot.ai/</a> , China AI LLM</li>
-</ul>
-<p>reference link ==&gt; 腾讯AI Coding⾮共识报告 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/p5szrZfb6dzMze7p6Aeyeg">https://mp.weixin.qq.com/s/p5szrZfb6dzMze7p6Aeyeg</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">285</span>
+          <span class="site-state-item-count">286</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,240 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/" class="post-title-link" itemprop="url">用Go实现一个异步网络库</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-19 09:40:00" itemprop="dateCreated datePublished" datetime="2022-09-19T09:40:00+08:00">2022-09-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-02-21 11:04:21" itemprop="dateModified" datetime="2023-02-21T11:04:21+08:00">2023-02-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在需要高性能、节省资源的场景下，比如海量的连接、很高的并发，我们发现Go开始变得吃力，不但内存开销大，而且还会有频繁的goroutine调度。GC时间也变得越来越长，甚至还会把系统搞挂。这时，我们就可以考虑用Go构建经典的Reactor网络模型，来应对这种场景。</p>
+<h3 id="一、常见的服务端网络编程模型"><a href="#一、常见的服务端网络编程模型" class="headerlink" title="一、常见的服务端网络编程模型"></a>一、常见的服务端网络编程模型</h3><p>在具体讲Reactor网络库的实现前，我们先快速回顾下常见的服务端网络编程模型。</p>
+<p>服务端网络编程主要解决两个问题，一个是<strong>服务端如何管理连接，特别是海量连接、高并发连接（经典的c10k/c100k问题）</strong>，二是<strong>服务端如何处理请求（高并发时正常响应）</strong>。</p>
+<p>针对这两个问题，有三种解决方案，分别对应三种模型：</p>
+<ul>
+<li><p>传统IO阻塞模型。</p>
+</li>
+<li><p>Reactor模型。</p>
+</li>
+<li><p>Proactor模型。</p>
+</li>
+</ul>
+<p>下面两图分别是传统IO阻塞模型和Reactor模型，传统IO阻塞模型的特点是每条连接都是由单独的线/进程管理，业务逻辑（crud）跟数据处理（网络连接上的read和write）都在该线/进程完成。<strong>缺点很明显，并发大时，需要创建大量的线/进程，系统资源开销大；连接建立后，如果当前线/进程暂时还没数据可读，会阻塞在Read调用上，浪费系统资源</strong>。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/1.png"></p>
+<p>Reactor模型就是传统IO阻塞模型的改进，Reactor会起单独的线/进程去监听和分发事件，分发给其他EventHandlers处理数据读写和业务逻辑。这样，与传统IO阻塞模型不同的是，Reactor的连接都先到一个EventDispatcher上，一个核心的事件分发器，同时<strong>Reactor会使用IO多路复用在事件分发器上非阻塞地处理多个连接</strong>。</p>
+<p>这个EventDispatcher跟后面的EventHandlers可以都在一个线/进程，也可以分开，下文会有区分。整体来看，Reactor就是一种事件分发机制，所以Reactor也被称为事件驱动模型。<strong>简而言之，Reactor=IO多路复用（I/O multiplexing）+非阻塞IO（non-blocking I/O）</strong>。</p>
+<h4 id="（一）Reactor模型的三种实现"><a href="#（一）Reactor模型的三种实现" class="headerlink" title="（一）Reactor模型的三种实现"></a>（一）Reactor模型的三种实现</h4><p>根据Reactor的数量和业务线程的工作安排有3种典型实现：</p>
+<ul>
+<li><p>单Reactor多线程</p>
+</li>
+<li><p>单Reactor多线程带线程池</p>
+</li>
+<li><p>主从Reactor多线程（带线程池）</p>
+</li>
+</ul>
+<p>先看两个单Reactor：</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.png"></p>
+<p><strong>一个Reactor接管所有的事件安排</strong>，如果是建立连接事件，就交给Acceptor处理，接着创建对应的Handler处理该连接后续的读写事件。如果不是建立连接事件，就调用连接对应的Event Handler来响应。单Reator1和2的区别是2带了个线程池，一定程度上解放Event Handler线程，让Handler专注数据读写处理，特别是在遇到一些笨重、高耗时的业务逻辑时。</p>
+<p>再来看多Reactor，这个是本文的主角，第三节内容就是怎么实现它。多Reactor就是主从多Reactor，它的特点是<strong>多个Reactor在多个单独的线/进程中运行，MainReactor负责处理建立连接事件，交给它的Acceptor处理，处理完了，它再分配连接给SubReactor；SubReactor则处理这个连接后续的读写事件，SubReactor自己调用EventHandlers做事情</strong>。</p>
+<p>这种实现看起来职责就很明确，可以方便通过增加SubReactor数量来充分利用CPU资源，也是当前主流的服务端网络编程模型。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.1.jpeg"></p>
+<h4 id="（二）Proactor模型自带主角光环"><a href="#（二）Proactor模型自带主角光环" class="headerlink" title="（二）Proactor模型自带主角光环"></a>（二）Proactor模型自带主角光环</h4><p>尽管本文的主角是主从多Reactor，但如果Proactor要当主角，就没Reactor什么事。</p>
+<p>Proactor模型跟Reactor模型的<strong>本质区别是异步I/O和同步I/O的区别，即底层I/O实现</strong>。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/3.png"></p>
+<p>从上面两张图可以看出，Reactor模型依赖的同步I/O需要不断检查事件发生，然后拷贝数据处理，而Proactor模型使用的异步I/O只需等待系统通知，直接处理内核拷贝过来的数据，孰优孰劣，一言便知。</p>
+<p>基于异步I/O的Proactor模型实现如下图：</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/4.png"></p>
+<p>那为什么主角光环如此明显的Proactor不是当前主流的服务端网络编程模型呢？</p>
+<p>原因是在Linux下的AIO API–io_uring还没有像同步I/O那样能够覆盖和支持很多场景，即还没成熟到被广泛使用。</p>
+<h3 id="二、Go原生网络模型简介"><a href="#二、Go原生网络模型简介" class="headerlink" title="二、Go原生网络模型简介"></a>二、Go原生网络模型简介</h3><p>关于Go原生网络模型的实现，网上已经有很多文章，这里就不过多展开，读者可以结合下图追踪整个代码流程：</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/5.png"></p>
+<p>总结来说，<strong>Go所有的网络操作围绕网络描述符netFD展开，netFD与底层pollDesc结构绑定，当在一个netFD上读写遇到EAGAIN错误时，就将当前goroutine存储到绑定的pollDesc中，同时将goroutine给park住，直到这个netFD上的数据准备好，再唤醒goroutine完成数据读写</strong>。</p>
+<p>再总结来说，<strong>Go原生网络模型就是个单Reactor多协程模型</strong>。</p>
+<h4 id="三、如何从0到1实现异步网络库"><a href="#三、如何从0到1实现异步网络库" class="headerlink" title="三、如何从0到1实现异步网络库"></a>三、如何从0到1实现异步网络库</h4><p>我们现在回顾了常见的服务端网络编程模型，也知道Go处理连接的方式是一个连接给分配一个协程处理，即goroutine-per-conn模式。</p>
+<p>那本节就到了我们的重点，怎么去实现一个异步网络库（因为Reactor模型的实现，一般是主线程accept一个连接后，分给其他的线/进程异步处理后续的业务逻辑和数据读写，所以一般Reactor模型的网络库被称为异步网络库，并不是使用异步I/O的API）。</p>
+<p>在具体实现之前，笔者先介绍下需求背景。</p>
+<h4 id="（一）需求背景"><a href="#（一）需求背景" class="headerlink" title="（一）需求背景"></a>（一）需求背景</h4><p>Go的协程非常轻量，大部分场景下，基于Go原生网络库构建的应用都不会有什么性能瓶颈，资源占用也很可观。</p>
+<p>我们现在使用的网关是基于C++自研的一款网关，我们想统一技术栈，换成Go的，我们现在峰值会在百万连接上下，大概用了几十台机器，单机能稳定支撑几十万的连接。如果换成Go的话，我们一直疑惑，基于Go实现的网关单机能撑多少，内存跟CPU怎么样？能不能省点机器？</p>
+<p>于是，笔者开始针对这种有大量连接的场景对Go做了一波压测，得出的结论也显而易见：<strong>随着连接数上升，Go的协程数也随之线性上升，内存开销增大，GC时间占比增加。当连接数到达一定数值时，Go的强制GC还会把进程搞挂，服务不可用</strong>。（下文会有网络库的对比压测数据）</p>
+<p>接着，笔者翻阅内外网有同样场景的解决方案，基本都是往经典Reactor模型实现上做文章。比如最早的A Million WebSockets and Go，作者Sergey Kamardin使用epoll的方式代替goroutine-per-conn模式，百万连接场景下用少量的goroutine去代替一百万的goroutine。</p>
+<p>A Million WebSockets and Go：</p>
+<p><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/million-websockets-and-go-cc58418460bb/">https://www.freecodecamp.org/news/million-websockets-and-go-cc58418460bb/</a></p>
+<p>Sergey Kamardin的方案总结：</p>
+<p>Let’s structure the optimizations I told you about.</p>
+<ul>
+<li>A read goroutine with a buffer inside is expensive. Solution: netpoll (epoll, kqueue); reuse the buffers.</li>
+<li>A write goroutine with a buffer inside is expensive. Solution: start the goroutine when necessary; reuse the buffers.</li>
+<li>With a storm of connections, netpoll won’t work. Solution: reuse the goroutines with the limit on their number.</li>
+<li>net/http is not the fastest way to handle Upgrade to WebSocket. Solution: use the zero-copy upgrade on bare TCP connection.</li>
+</ul>
+<p>又比如字节基于Reactor网络库netpoll开发了RPC框架Kitex来应对高并发场景。</p>
+<p>笔者简单用Go实现了一个网关，使用这些Reactor网络库再进行了一波压测，结果符合预期：连接数上去后的Go网关确实比之前的稳定，内存占用也很可观。但最终都没有选用这些开源Reactor库，原因是<strong>这些开源库都不是开箱即用，都没有实现HTTP/1.x、TLS等常见协议；API设计不够灵活且专注的场景并不适合网关，比如netpoll目前主要专注于RPC场景</strong>（字节上周才正式对外开源HTTP框架Hertz）；<strong>整体改造成本高，难以适配运用到Go网关中</strong>。</p>
+<p>Netpoll的场景说明：</p>
+<p>另一方面，开源社区目前缺少专注于RPC方案的Go网络库。类似的项目如：evio，gnet等，均面向Redis，HAProxy这样的场景。</p>
+<h4 id="（二）总体分层设计"><a href="#（二）总体分层设计" class="headerlink" title="（二）总体分层设计"></a>（二）总体分层设计</h4><p>终于到了实现部分，我们先看一个Reactor库的总体分层设计，总体分为三层：应用层、连接层和基础层。</p>
+<p>应用层就是常见的EchoServer、HTTPServer、TLSServer和GRPCServer等等，主要负责协议解析、执行业务逻辑，对应Reactor模型里边的EventHandler。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/6.png"></p>
+<p>在Reactor模型中，应用层会实现事件处理的接口，等待连接层调用。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Handler Core 注册接口type Handler interface &#123;  OnOpen(c *Conn)</span></span><br><span class="line"><span class="comment">// happen on accept conn  OnClose(c *Conn, err error)</span></span><br><span class="line"><span class="comment">// happen ob delete conn  OnData(c *Conn, data []byte)</span></span><br><span class="line"><span class="comment">// happen on epoll wait  OnStop()&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>比如当连接建立后，可以调用OnOpen函数做些初始化逻辑，当连接上有新数据到来，可以调用OnData函数完成具体的协议解析和业务逻辑。</p>
+<h4 id="（三）连接层设计"><a href="#（三）连接层设计" class="headerlink" title="（三）连接层设计"></a>（三）连接层设计</h4><p>连接层就是整个Reactor模型的核心，根据上文的主从Reactor多线程模型，连接层主要有两种Reactor，一主（Main Reactor）多从（Sub Reactor），也可以多主多从。</p>
+<p>Main Reactor主要负责监听和接收连接，接着分配连接，它里边有个for循环，不断去accept新连接，这里的方法可以叫做acceptorLoop；Sub Reactor拿到Main Reactor分配的连接，它也是个for循环，一直等待着读写事件到来，然后干活，即回调应用层执行具体业务逻辑，它的方法可以叫做readWriteLoop。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/7.png"></p>
+<p>根据连接层的工作安排，可以发现我们需要以下三个数据结构：</p>
+<ul>
+<li><p>EventLoop：事件循环，即Reactor，用isMain区分主从，如果是Sub Reactor，每个SubReactor上挂着很多Conn。</p>
+</li>
+<li><p>Poller：Sub Reactor的里的readWriteLoop需要不断处理读写事件，这些事件在不同系统下由不同的I/O API监听和通知，在Linux系统下就是经典的Epoll三组函数，在Unix系统下（比如Mac）就是Kqueue。</p>
+</li>
+<li><p>Conn：Main Reactor的listener accept之后建立的连接，与一个文件描述符fd绑定。</p>
+</li>
+</ul>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/8.png"></p>
+<h4 id="值得注意的fd竞态"><a href="#值得注意的fd竞态" class="headerlink" title="值得注意的fd竞态"></a>值得注意的fd竞态</h4><p>每个连接都会与一个fd绑定，当某个连接关闭后，它会释放掉fd，供新连接绑定，这也叫<strong>fd的复用</strong>。</p>
+<p>通常我们的应用层会在一个协程池中执行它的业务逻辑，在连接层有个Sub Reactor在处理这个连接上的读写事件。</p>
+<p>如果在应用层那边关闭了连接，而在Sub Reactor那边刚好在准备读这个连接上的数据，即操作这个fd。</p>
+<p>当Sub Reactor还没来得及读，但被应用层关闭释放掉的fd，已经给到了一个新连接，这时Sub Reactor继续读这个fd上的数据，就会把新连接的数据读走。</p>
+<p>因此，我们需要<strong>针对fd的操作前后加个锁，即在关闭连接跟在连接上读写前先上锁，关闭后才释放掉锁，并且在连接上读写前判断连接是否关闭</strong>，这样才会避免脏数据。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.png"></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/VY8SELNGe95VxoqjGm1IfuicBMt3YLNVkg8j3Kte9fFPQgrTfkibf0xlCLkARz5cTdA5GDDzrRicXcruJrlsEuic6A/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="Image"></p>
+<h4 id="不可忽略的负载均衡"><a href="#不可忽略的负载均衡" class="headerlink" title="不可忽略的负载均衡"></a>不可忽略的负载均衡</h4><p>除了注意fd复用带来的竞态，还有一个不可忽略的负载均衡，在Main Reactor分配连接到Sub Reactor这个环节。</p>
+<p>未来避免某个Sub Reactor过载，我们可以参考Nginx的负载均衡策略，大概有以下三种方式：</p>
+<ul>
+<li><p>轮询调度（Round-Robin Scheduling）：轮询Sub Reactors，逐个分配。</p>
+</li>
+<li><p>Fd哈希：c.fd%len(s.workLoops)，以fd值哈希整个Sub Reactors数量。</p>
+</li>
+<li><p>最小连接数（Least Connections）：优先分配给连接数最小的sub reactor。</p>
+</li>
+</ul>
+<h3 id="（四）基础层设"><a href="#（四）基础层设" class="headerlink" title="（四）基础层设"></a>（四）基础层设</h3><p>Reactor的核心的活都在连接层干完了，<strong>基础层的作用是提供底层系统调用支持及做好内存管理</strong>。</p>
+<p>系统调用就是常见的listen/accept/read/write/epoll_create/epoll_ctl/epoll_wait等，这里不展开。但内存管理的方式会极大地影响网络库的性能。</p>
+<p>笔者曾经在处理连接上读事件的时候，先是用动态内存池的方式提供临时Buffer承接，对比使用固定Buffer去承接，前者需要一借一还，在某个简单Echo场景下压测，后者较前者提升了12wQPS，恐怖如斯。</p>
+<p>以下是常见的内存管理方案，针对连接上读写处理时的内存使用优劣对比：</p>
+<ul>
+<li><p><strong>固定数组</strong></p>
+</li>
+<li><p>每次读都申请固定大小的buffer。</p>
+</li>
+<li><p>好处是实现简单，坏处是会积累临时对象。</p>
+</li>
+<li><p><strong>RingBuffer</strong></p>
+</li>
+</ul>
+<p>读写分离，节省内存，但频繁扩容有性能损耗（扩容时需要搬迁老数据到新RingBuffer上）</p>
+<ul>
+<li><p><strong>LinkBuffer</strong></p>
+</li>
+<li><p>读写分离，节省内存</p>
+</li>
+<li><p>池化Block节点，方便扩容缩容且无性能损耗</p>
+</li>
+<li><p>可以实现NoCopy API，进一步提高性能。</p>
+</li>
+</ul>
+<p>这里最理想的是第三种内存管理方案，字节的netpoll有实现。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/10.png"></p>
+<p>这里引用某个项目的实现说明，<strong>NoCopy体现在连接层读到的数据，可以不用拷贝给应用层使用，而是让应用层引用LinkBuffer使用</strong>。</p>
+<p>首先来讲零拷贝读取接口，我们将读取操作分成了「引用读」「释放」两个步骤，「引用读」会把 Linked Buffer 中一定长度的字节数组以指针的形式取出，用户使用完这些数据后，主动执行「释放」告知 Linked Buffer 刚刚「引用读」的数据空间不会再被使用，可以释放掉，被「释放」了的数据不能再被读取和修改。</p>
+<p>零拷贝写入接口则是将用户传入的字节数组构造成一个个节点，每个节点里包含了字节数组的指针，再将这些节点添加到Linked Buffer中，自始至终都是对字节数组的指针进行操作，没有任何的拷贝行为。</p>
+<h3 id="（五）性能测试"><a href="#（五）性能测试" class="headerlink" title="（五）性能测试"></a>（五）性能测试</h3><p>以上3小节就是一个Reactor网络库的框架和实现设计，流程并不复杂，笔者认为<strong>真正考验的是基于Reactor库去实现常见的HTTP/1.x协议、TLS协议甚至HTTP/2.0协议等等</strong>，笔者在实现HTTP/1.x的时候就试了很多开源解析器，很多性能都不尽人意；在尝试直接使用Go官方自带的TLS协议解析器，发现TLS四次握手并不是连续的包，第三次握手时，客户端发送的信息可以等一会…大部分问题都比较棘手，这估计也是很多开源库没有实现这些协议的原因吧~</p>
+<ul>
+<li><h4 id="压测结果"><a href="#压测结果" class="headerlink" title="压测结果"></a>压测结果</h4></li>
+</ul>
+<p>在开发完Reactor网络库及在这个库的基础上实现常见的应用层协议后，我们需要一波压测检验网络库的性能。</p>
+<p>区别于网上大部分开源库只做简单的Echo压测，笔者这里构建了两种场景压测：</p>
+<ul>
+<li><p>Echo场景：EchoServer不需要做协议解析，也不需要做什么业务逻辑，目的是跟同类型的Reactor库做横向对比。</p>
+</li>
+<li><p>HTTP场景：HTTPServer需要解析HTTP/1.x协议，加上10w循环计数模拟业务逻辑，目的是跑到10w连接上跟Go net对比。</p>
+</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sum := <span class="number">0</span><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++ &#123;    sum += i&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终的结果如下4张图，可以忽略字节netpoll的数据，大概是因为这两种场景并不是netpoll的目标场景，即RPC场景，所以压测的姿势大概率不对。</p>
+<p>Echo场景下是4核机器跑的EchoServer，HTTP场景下是8核跑的HTTPServer。</p>
+<p>图1：Echo场景下，固定1KB数据包，不断增加连接数。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/11.png"></p>
+<p>图2：Echo场景下，固定1K连接数，不断增加数据包大小。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/12.png"></p>
+<p>图3和图4：HTTP场景下，固定1KB数据包，不断增加连接数，QPS和内存占用情况。</p>
+<p><img src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/13.png"></p>
+<ul>
+<li><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4></li>
+</ul>
+<p>通过压测结果，可以看出大部分压测，Go原生网络库都没有什么拉胯表现，<strong>只有在连接数上去了之后，或者需要处理的数据包越来越大的情况下，Go原生网络库才逐渐显示出颓势</strong>。尤其是当连接上到30w到50w之后，Go原生网络库的内存开销增大的同时，伴随的GC时间也变长，到50w连接的时候，一波强制GC服务就down了。</p>
+<p>这是Go原生网络库在50w连接时，强制GC后Down掉时的详情：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GC forcedgc 13 @146.006s 0%: 0.12+105+0.004 ms clock, 0.99+0/207/620+0.033 ms cpu, 5877-&gt;5877-&gt;4197 MB, 7006 MB goal, 8 Pgc 14 @197.643s 1%: 0.084+1084+0.061 ms clock, 0.67+5299/2139/1.8+0.49 ms cpu, 8187-&gt;8218-&gt;4825 MB, 8394 MB goal, 8 Pgc 15 @220.972s 1%: 4.1+1057+0.039 ms clock, 33+5215/2087/0+0.31 ms cpu, 9412-&gt;9442-&gt;4794 MB, 9651 MB goal, 8 PGC forced</span><br></pre></td></tr></table></figure>
+
+<p>这是Reactor网络库(wnet) 100w连接时，依然坚挺的GC详情：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gc 23 @208.600s 1%: 0.20+374+0.090 ms clock, 1.6+233/723/0+0.72 ms cpu, 873-&gt;891-&gt;450MB, 896 MB goal, 8 Pgc 24 @213.872s 1%: 0.18+419+0.051 ms clock, 1.5+4.8/830/0+0.41 ms cpu, 878-&gt;899-&gt;453MB, 900 MB goal, 8 Pgc 25 @219.270s 1%: 1.2+403+0.071 ms clock, 10+160/790/0+0.57 ms cpu, 884-&gt;907-&gt;454 MB,907 MB goal, 8 Pgc 26 @224.601s 1%: 0.12+425+0.056 ms clock, 1.0+112/849/0+0.44 ms cpu, 885-&gt;906-&gt;452MB, 908 MB goal, 8 Pgc 27 @229.851s 1%: 0.20+424+0.079 ms clock, 1.6+107/836/0+0.63 ms cpu, 881-&gt;903-&gt;453MB, 904 MB goal, 8 Pgc 28 @235.256s 1%: 0.17+431+0.038 ms clock, 1.4+77/863/0+0.30 ms cpu, 884-&gt;907-&gt;454MB, 907 MB goal, 8 Pgc 29 @240.622s 1%: 0.15+402+0.039 ms clock, 1.2+117/804/0+0.31 ms cpu, 885-&gt;907-&gt;452MB, 908 MB goal, 8 PGC forced</span><br></pre></td></tr></table></figure>
+
+<p>因此，综合来看，大部分应用场景，Go原生网络库就可以满足。相比Reactor网络库而言，<strong>Go原生网络库可以看作是以空间（内存、runtime）来换取时间（高吞吐量和低延时）。当空间紧张时，也就是连接数上来后，巨大的内存开销和相应的GC会导致服务不可用，而这种海量连接场景才是Reactor网络库的优势所在</strong>。比如电商大促等活动型场景，有预期的流量高峰，在高峰期会有海量的连接，海量的请求；还有一种直播弹幕、消息推送等长连接场景，也是有大量的长连接。</p>
+<h4 id="关联阅读-》-https-github-com-panjf2000-gnet"><a href="#关联阅读-》-https-github-com-panjf2000-gnet" class="headerlink" title="关联阅读==》 https://github.com/panjf2000/gnet"></a>关联阅读==》 <a target="_blank" rel="noopener" href="https://github.com/panjf2000/gnet">https://github.com/panjf2000/gnet</a></h4>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -587,162 +821,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2022/08/08/Libra2.0%E8%A7%A3%E8%AF%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/08/Libra2.0%E8%A7%A3%E8%AF%BB/" class="post-title-link" itemprop="url">Libra2.0解读</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-08-08 22:52:00" itemprop="dateCreated datePublished" datetime="2022-08-08T22:52:00+08:00">2022-08-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-09-05 16:29:47" itemprop="dateModified" datetime="2025-09-05T16:29:47+08:00">2025-09-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Rogoff教授以新型货币“战争”来形容这次数字货币的竞争有可能改变国运，因此这是 一个严肃的问题。</p>
-<p>Libra从1.0到2.0 (diem)， 协会主要从如下九个方面进行修正和回应：</p>
-<ul>
-<li><p>Asociation will create a comprehensive compliance program；协会将创建全面的合规计划；</p>
-</li>
-<li><p>Association wilset mandatory standards for unrestricted use of the Libra payment system；对于Libra（不受限制的）支付系统，协会将会设定强制性使用标准；</p>
-</li>
-<li><p>Association will conduc due diligence on Association Members andDesignated Dealers；协会将对协会会员和指定经销商进行尽职调查；</p>
-</li>
-<li><p>Association will distribute Libra Coins through regulated DesignatedDealers；协会将通过受监管的指定经销商分销Libra币；</p>
-</li>
-<li><p>Only regulated or Certified VASPs will be allowed to transact on the network without transaction and address balance limits；只允许受监管或认证的VASP（Virtual Asset Service Provider，数字资产服务提供商）在网络上交易，而且没有交易和余额限制（其他交易者有限制）；</p>
-</li>
-<li><p>Automated protocol-level compliance controls will apply for all on-chain activity；链上任何活动都会自动作合规性监；</p>
-</li>
-<li><p>Association will develop an off-blockchain travel rule protocol；协会将开发一个区块链外旅行规则协议（这是一个监管规则）；</p>
-</li>
-<li><p>Association’s FIU-function will monitor Libra network activity and coordinate with Libra network participants；协会的FIU职能将监测 Libra网络活动，并与Libra网络参与者协调；</p>
-</li>
-<li><p>Association will respond to identified potentially suspicious sanctioned activity，including through reporting.协会将对已查明的潜在可疑制裁活动作出回应，包括通过报告（合适的监管单位）。</p>
-</li>
-</ul>
-<p><strong>1. 全面的合规计划</strong></p>
-<p>这个计划旨在从以下几个方面满足或者超过相关法律要求和标准：</p>
-<ul>
-<li>指定首席合规官；</li>
-<li>成立一个负责监督报告责任的委员会；</li>
-<li>根据风险评估制定书面的反洗钱/反金融恐怖活动/制裁等的合规政策和程序并经协会理事会批准；</li>
-<li>对所有成员，指定经销商以及受监管和认证的VASPs进行基于凤险的尽职调查；</li>
-<li>根据定期的风险评估以及不断发展的合规要求，定期修订反洗钱/反金融恐怖活动/制裁合规计划；</li>
-<li>建立金融情报机构(FIU-Function,Financial Intelligence Unit–Function),以便监测潜在的可疑活动；</li>
-<li>指定一个类似于内部审计职能机构，对协会的反洗钱/反金融恐怖活动/制裁合规计划进行定期的独立审查；</li>
-<li>进行相关的员工培训。</li>
-</ul>
-<p><strong>2. 组织管理</strong><br>    协会会对其会员，指定经销商，受监管或认证的VASPs对准入Libra网络设置强制性标准。<br><strong>3. 尽职调查</strong><br>    协会将对协会会员和指定经销商进行尽职调查。尽职调查包括但不限于：</p>
-<ul>
-<li><p>实体状态；</p>
-</li>
-<li><p>制裁筛选；</p>
-</li>
-<li><p>负面新闻；</p>
-</li>
-<li><p>受益所有人和控制人；</p>
-</li>
-<li><p>遵守适用的反洗钱/反金融恐怖活动/制裁合规要求的情况（如果有的话)；</p>
-</li>
-<li><p>许可证和注册；</p>
-</li>
-<li><p>实体位置及其客户群的地理位置。日青青那组贵食个一丝</p>
-</li>
-</ul>
-<p><strong>4. 发币通过指定经销商</strong><br>    Libra网络将仅与指定经销商一起铸造向市场发行的Libra Coins,并且也只从这些指定经销商处兑换Libra Coins,这些指定经销商必须是受到监管的。Lbra网络和指定经销商一起铸造并销毁Libra Coins,不会和任何交易所或者终端有任何合同关系。</p>
-<p><strong>5. 仅受监管或认证的VASPs可以没有交易或是余额限制</strong><br>    协会期望大多数人会通过VASPs和Libra支付系统进行交互。VASPs为了方便用户进行交易，可能会将交易记录在其内部交易账簿上而不是Libra的区块链上。受监管或认证的VASPs在使用Libra交易系统时可无交易和余额的限制。但是Unhosted Wallets(非托管钱包，协会允许的可使用Libra交易系统的非VASPs机构)会受限。<br><strong>6. 协议层级（protocol-levl)的链上活动自动合规</strong><br>    协会将会在Libra协议层级自动执行合规要求。旨在使得Libra区块链上的交易活动自动合规。比如在协议中自动阻止受制裁的区块链地址的交易。<br><strong>7. 链下旅行规则协议</strong><br>    协会将开发区块链链下协议，通过明确受监管或认证的VASPs的使用旅行规则和记录保存要求，以促进合规。<br><strong>8. FIU功能监视Libra网络活动和参与者</strong><br>    协会将设立专门机构发挥金融情报机构的职能，以保持高水平的合规。这个机构将和政府以及服务提供者合作，以发现并阻止不当的平台使用行为。</p>
-<p><strong>9. 回应潜在的可疑或受制裁的活动</strong></p>
-<h4 id="Libra-2-0-的宏大目标-—-平台霸权"><a href="#Libra-2-0-的宏大目标-—-平台霸权" class="headerlink" title="Libra 2.0 的宏大目标 — 平台霸权"></a><strong>Libra 2.0 的宏大目标 — 平台霸权</strong></h4><ol>
-<li><strong>布局金融基建</strong></li>
-</ol>
-<p>Libra 2.0 提出新的支付方式、数字货币为基础的新金融基础基建有可能蔓延开来。Libra 2.0 指出协会期待与各国央行合作，参与国家数字法币的建设和运行。</p>
-<ol start="2">
-<li><strong>币链分离，弃币保链</strong></li>
-</ol>
-<p>放弃霸权币来保障霸权链的指导原则。传统数字货币，例如比特币，如果比特币平台不见了，比特币也就不复存在，就没有了价值。这是一种币链需要相互依存的设计和状态。Libra 2.0 的币和链是分离的，计划链处理多种稳定币和央行数字法币。</p>
-<p>策略上，放弃在任何国家和当地法币或是将来央行数字货币竞争的机会，换取Libra 2.0 平台在这些国家使用的许可权。正如Libra2.0提出的，Libra协会会和其他国家央行合作，允许这些国家的央行数字法币在Liba平台运行（这就是保链思想)，Libra还愿意放弃自己的Libra币（这就是弃币思想），而只使用当地发行的稳定币或是央行数字法币。</p>
-<p>Liba协会之所以采取该措施，是因为其重视链，认为币（数字货币）不是主要的创新，真正的突破在于链在协议层级传递价值，协会副主<br>席Dante Disparte的原文是“Blockchain,Not Crypto,Is at Core of Facebook’s Libra”。为了避免大家有不同认知，他还继续说：“加密货币不是这次创新的重要的维度，真正的突破是在协议层级传递价值，这才是Libra最大的贡献。没有区块链作为核心技术，会非常难开发一个开放钱包和开放用户(微信、支付宝)的平台”。</p>
-<p>在链的设计上，Libra2.0还提出了同一链服务多种数字货币的想法。Liba2.0注重开发区块链的底层架构，追求该架构的有效性、低成本及可和多个数字货币、金融机构以及用户交互(interoperability)的能力。Disparte多次强调交互性是Libra2.0的重中之重，链的交互性也代表了平台的交互性。Disparte也批评了传统数字代币（例如比特币）不是支付平台，而是单一数字商品交易平台，因为它不能和其他系统交互。</p>
-<p>非常明显，Libra2.0对交互性的追求，是为Libra平台能够做各种金融活动做准备，而不是像比特币平台一样只有单一功能。现在Lib只进行数字货币交易，但当Liba平台可以支持数字股票、衍生品以及其他数字资产交易的时候，Libra平台的价值会更加高涨。，</p>
-<ol start="3">
-<li><strong>避免“数字货币取代”(digital do1 arization)的可能性，追求比目鱼模型行。</strong></li>
-</ol>
-<p>“数字货币取代”这一说法经历了三个时间段。其最早出现在2017年，IMF(国际货币基金组织)认为数字货币会取代多国的法币，特别是在当地法币已经弱化的地方，例如津巴布韦，并且认为这是新型货币取代理论 (dolarion2.0)。以前是一个国家法币取代另外一个国家的法币在当地使用，这里是数字货币取代一个国家的法币。</p>
-<p>紧接着2019年，Libra 1.0白皮书出现的时候，Libra币被认为比比特币强大得多，如果比特币可以取代一些国家的法币，Lb币有可能会取代或是弱化更多国家的法币。紧接着，出现“8·23”事件一英国前央行行长认为数字货币以后可以取代美元成为世界储备货币，美元的世界储备货币地位受到数字货币的挑战。如果连美元这种强势货币都有可能在将来被取代，世界各国法币以后都有可能受到冲击。</p>
-<p>而协会为了让Libra项目能落地，则要积极避免类似的“数字货币取代”的说法，以免引起其他国家的恐慌，不想让其他国家认为Libra币有取代他国法币的企图。所以Libra2.0提到要积极和央行合作数字法币，或者帮助当地建立自己的稳定币或数字法币，并愿意放弃对应的Libra币。</p>
-<p>但从另一个角度看，要帮助一个国家或地区建立自已的稳定币，给Libra平台的能力创设了无限大的想象空间，实际是想要让一个国家或地区的稳定币（甚至央行发行的数字法币）依托于它的平台。这样一来，Libra平台会拥有其他国家数字法币的交易数据，也意味着Libra平台会有该国家或地区的金融信息。在未来，拥有这些数据，本身就具有巨大的优势。</p>
-<p>另外，Libra2.0追求比目鱼模型理论，即数字货币平台方具有不对称优势。平台背后的国家，相比于其他国家更有优势，比如一个国家可以通过监管的方式，部分决定平台可为与不可为的行为，平台越大，对背后的国家越有利，因为掌握了更多的数据和信息，以及拥有部分可控权。</p>
-<p>Libra2.0追求比目鱼模型的体现是允许政府和监管单位监管Libra作业。比如允许美联储参与实时监测Libra链上的交易信息。这也让美联储对数字货币的运作具有更好的“洞察力”。</p>
-<ol start="4">
-<li><strong>改变Libra金融作业架构</strong></li>
-</ol>
-<p>​    4.1 批发链，而非批发币</p>
-<p>​    4.2 混合经济模型 — 批发和零售均被融合进入 Libra 2.0。不是传统金融架构体系，不是传统的数字代币架构体系，也不是原英国央行的数字英镑架构体系，更不是币圈追求的DeFi金融架构体系。Libra 2.0 的混合模型可以使其快速部署。</p>
-<ol start="5">
-<li><strong>积极设定平台协议标准</strong></li>
-</ol>
-<p><img src="/2022/08/08/Libra2.0%E8%A7%A3%E8%AF%BB/2.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
