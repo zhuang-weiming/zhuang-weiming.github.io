@@ -23,28 +23,38 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.3.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhuang&#39;s Diary">
-<meta property="og:url" content="https://zhuang-weiming.github.io/index.html">
+<meta name="description" content="在《基于DORA指标体系的项目管理.md》学习之后，继续学习针对software engineering的管理和评估指标。 1. 代码数量用于规模估算。  Lines of Code（代码行数）: 所有物理代码行的总数（包括空行和注释）。这是一个最基础的规模指标。 Lines（行数）: 文件中的总行数，包括所有代码行、注释行和空行。这个数字通常比“Lines of Code”大，因为它包含了非代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件项目代码健康度评估体系">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="在《基于DORA指标体系的项目管理.md》学习之后，继续学习针对software engineering的管理和评估指标。 1. 代码数量用于规模估算。  Lines of Code（代码行数）: 所有物理代码行的总数（包括空行和注释）。这是一个最基础的规模指标。 Lines（行数）: 文件中的总行数，包括所有代码行、注释行和空行。这个数字通常比“Lines of Code”大，因为它包含了非代码">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/1.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/2.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/3.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/4.png">
+<meta property="article:published_time" content="2025-11-17T08:59:00.000Z">
+<meta property="article:modified_time" content="2025-11-19T08:39:13.110Z">
 <meta property="article:author" content="Weiming Zhuang">
+<meta property="article:tag" content="软件工程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/1.png">
 
 
-<link rel="canonical" href="https://zhuang-weiming.github.io/">
+<link rel="canonical" href="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/">
 
 
 <script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
-<title>Zhuang's Diary</title>
+<title>软件项目代码健康度评估体系 | Zhuang's Diary</title>
   
 
 
@@ -168,7 +178,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -181,6 +191,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%A3%E7%A0%81%E6%95%B0%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">1. 代码数量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Number-of-Coder-vs-Non-Coder-%E7%BC%96%E7%A0%81%E4%BA%BA%E6%95%B0%E5%AF%B9%E6%AF%94%E9%9D%9E%E7%BC%96%E7%A0%81%E4%BA%BA%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. Number of Coder vs Non-Coder 编码人数对比非编码人数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E5%9B%A2%E9%98%9F%E6%88%90%E7%86%9F%E5%BA%A6%E4%B8%8E%E4%BA%A7%E5%93%81%E9%98%B6%E6%AE%B5%E8%A7%86%E8%A7%92"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1. 团队成熟度与产品阶段视角</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E6%96%87%E5%8C%96%E4%B8%8E%E7%AE%A1%E7%90%86%E5%AF%BC%E5%90%91%E8%A7%86%E8%A7%92"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2. 文化与管理导向视角</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">2. 代码质量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Security%EF%BC%88%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. Security（安全性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Reliability%EF%BC%88%E5%8F%AF%E9%9D%A0%E6%80%A7%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. Reliability（可靠性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Maintainability%EF%BC%88%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. Maintainability（可维护性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E5%BA%A6%EF%BC%88Coverage%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 测试覆盖度（Coverage）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%8C%E5%8A%A8%E5%BB%BA%E8%AE%AE"><span class="nav-number">2.4.1.</span> <span class="nav-text">行动建议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E9%87%8D%E5%A4%8D%E5%BA%A6%EF%BC%88Duplications%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. 重复度（Duplications）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E5%A4%8D%E6%9D%82%E5%BA%A6%EF%BC%88Complexity%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">2.6. 复杂度（Complexity）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%87%E8%AE%BE%E6%9F%90%E4%B8%80%E9%A1%B5%E4%BB%A3%E7%A0%81%E7%9A%84-Cyclomatic-Complexity%EF%BC%88%E5%9C%88%E5%A4%8D%E6%9D%82%E5%BA%A6%EF%BC%89-68"><span class="nav-number">2.6.1.</span> <span class="nav-text">假设某一页代码的 Cyclomatic Complexity（圈复杂度）- 68</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.6.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%87%E8%AE%BE%E6%9F%90%E4%B8%80%E9%A1%B5%E4%BB%A3%E7%A0%81%E7%9A%84Cognitive-Complexity%EF%BC%88%E8%AE%A4%E7%9F%A5%E5%A4%8D%E6%9D%82%E5%BA%A6%EF%BC%89-64"><span class="nav-number">2.6.3.</span> <span class="nav-text">假设某一页代码的Cognitive Complexity（认知复杂度）- 64</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E8%AF%BB%E8%BF%99%E4%B8%AA%E5%80%BC-64"><span class="nav-number">2.6.4.</span> <span class="nav-text">如何解读这个值 - 64</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%88%E5%AF%B9%E6%AF%94%E5%9C%88%E5%A4%8D%E6%9D%82%E5%BA%A6%EF%BC%89"><span class="nav-number">2.6.5.</span> <span class="nav-text">示例（对比圈复杂度）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E5%BB%BA%E8%AE%AE"><span class="nav-number">2.6.6.</span> <span class="nav-text">总结与建议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%BB%BC%E5%90%88%E7%9A%84%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%8C%87%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">3. 综合的代码质量指数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E7%BB%BC%E5%90%88%E6%8C%87%E6%95%B0%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88"><span class="nav-number">4.</span> <span class="nav-text">代码质量综合指数设计方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">4.1.</span> <span class="nav-text">3.1. 设计原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB%E6%9E%84%E5%BB%BA"><span class="nav-number">4.2.</span> <span class="nav-text">3.2. 指标体系构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%90%84%E7%BB%B4%E5%BA%A6%E8%AF%84%E5%88%86%E8%A7%84%E5%88%99"><span class="nav-number">4.3.</span> <span class="nav-text">3.3. 各维度评分规则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-%E5%AE%89%E5%85%A8%E6%80%A7%E8%AF%84%E5%88%86-25"><span class="nav-number">4.3.1.</span> <span class="nav-text">3.3.1 安全性评分 (25%)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-%E5%8F%AF%E9%9D%A0%E6%80%A7%E8%AF%84%E5%88%86-25"><span class="nav-number">4.3.2.</span> <span class="nav-text">3.3.2 可靠性评分 (25%)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E8%AF%84%E5%88%86-20"><span class="nav-number">4.3.3.</span> <span class="nav-text">3.3.3 可维护性评分 (20%)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-4-%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E5%BA%A6%E8%AF%84%E5%88%86-15"><span class="nav-number">4.3.4.</span> <span class="nav-text">3.3.4 测试覆盖度评分 (15%)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-5-%E5%A4%8D%E6%9D%82%E5%BA%A6%E8%AF%84%E5%88%86-10"><span class="nav-number">4.3.5.</span> <span class="nav-text">3.3.5 复杂度评分 (10%)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-6-%E9%87%8D%E5%A4%8D%E5%BA%A6%E8%AF%84%E5%88%86-5"><span class="nav-number">4.3.6.</span> <span class="nav-text">3.3.6 重复度评分 (5%)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E6%9D%83%E9%87%8D%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.4.</span> <span class="nav-text">3.4. 权重配置示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E8%B4%A8%E9%87%8F%E7%AD%89%E7%BA%A7%E5%88%92%E5%88%86"><span class="nav-number">4.5.</span> <span class="nav-text">3.5. 质量等级划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E5%8F%AF%E8%A7%86%E5%8C%96%E4%BB%AA%E8%A1%A8%E6%9D%BF%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.6.</span> <span class="nav-text">3.6. 可视化仪表板设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">4. 如何使用</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -235,16 +246,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -257,9 +269,9 @@
       <meta itemprop="name" content="Zhuang's Diary">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/" class="post-title-link" itemprop="url">软件项目代码健康度评估体系</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          软件项目代码健康度评估体系
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -289,7 +301,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>在《基于DORA指标体系的项目管理.md》学习之后，继续学习针对software engineering的管理和评估指标。</p>
+        <p>在《基于DORA指标体系的项目管理.md》学习之后，继续学习针对software engineering的管理和评估指标。</p>
 <h2 id="1-代码数量"><a href="#1-代码数量" class="headerlink" title="1. 代码数量"></a>1. 代码数量</h2><p>用于规模估算。<br><img src="/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/1.png"></p>
 <ol>
 <li>Lines of Code（代码行数）: 所有物理代码行的总数（包括空行和注释）。这是一个最基础的规模指标。</li>
@@ -497,7 +509,6 @@
 <li>/_posts/基于DORA指标体系的项目管理.md</li>
 </ul>
 
-      
     </div>
 
     
@@ -505,8 +516,38 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Weiming Zhuang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2025/11/17/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%81%A5%E5%BA%B7%E5%BA%A6%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/" title="软件项目代码健康度评估体系">https://zhuang-weiming.github.io/2025/11/17/软件项目代码健康度评估体系/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag"># 软件工程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/14/%E5%A4%AA%E5%AD%90%E9%9B%86%E5%9B%A2%E9%99%88%E5%BF%97%E7%9A%8412%E4%B8%87%E6%9E%9A%E6%AF%94%E7%89%B9%E5%B8%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%90%BD%E5%85%A5%E7%BE%8E%E5%9B%BD%E5%8F%B8%E6%B3%95%E9%83%A8%E4%B9%8B%E6%89%8B%E7%9A%84?/" rel="prev" title="太子集团陈志的12万枚比特币是如何落入美国司法部之手的?">
+                  <i class="fa fa-chevron-left"></i> 太子集团陈志的12万枚比特币是如何落入美国司法部之手的?
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
@@ -514,510 +555,9 @@
 
 
 
-    
 
 
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/11/14/%E5%A4%AA%E5%AD%90%E9%9B%86%E5%9B%A2%E9%99%88%E5%BF%97%E7%9A%8412%E4%B8%87%E6%9E%9A%E6%AF%94%E7%89%B9%E5%B8%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%90%BD%E5%85%A5%E7%BE%8E%E5%9B%BD%E5%8F%B8%E6%B3%95%E9%83%A8%E4%B9%8B%E6%89%8B%E7%9A%84?/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/11/14/%E5%A4%AA%E5%AD%90%E9%9B%86%E5%9B%A2%E9%99%88%E5%BF%97%E7%9A%8412%E4%B8%87%E6%9E%9A%E6%AF%94%E7%89%B9%E5%B8%81%E6%98%AF%E5%A6%82%E4%BD%95%E8%90%BD%E5%85%A5%E7%BE%8E%E5%9B%BD%E5%8F%B8%E6%B3%95%E9%83%A8%E4%B9%8B%E6%89%8B%E7%9A%84?/" class="post-title-link" itemprop="url">太子集团陈志的12万枚比特币是如何落入美国司法部之手的?</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-11-14 10:42:00 / Modified: 10:54:10" itemprop="dateCreated datePublished" datetime="2025-11-14T10:42:00+08:00">2025-11-14</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="事件核心人物与实体"><a href="#事件核心人物与实体" class="headerlink" title="事件核心人物与实体"></a>事件核心人物与实体</h2><table>
-<thead>
-<tr>
-<th>人物/实体名称</th>
-<th>国籍/背景</th>
-<th>在事件中的角色与已公开行为</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>陈志（Chen Zhi）​</td>
-<td>柬埔寨</td>
-<td>资产所有者/控制者。​ 美国司法部起诉书指明的关键人物，被指控控制着太子集团，并是LuBian矿池被盗的127,272枚比特币的实际所有者。拥有英国和柬埔寨双重国籍。</td>
-</tr>
-<tr>
-<td>太子集团（Prince Holding Group）</td>
-<td>柬埔寨</td>
-<td>陈志控制的母公司。​ 美国司法部文件指出，LuBian矿池是该集团庞大业务网络中的一部分，该集团在柬埔寨从事房地产、娱乐和赌博等业务。</td>
-</tr>
-<tr>
-<td>LuBian矿池​</td>
-<td>未知（隶属于太子集团）</td>
-<td>操作实体。​ 一个曾经短暂达到全球算力排名第五的比特币矿池，因私钥生成机制中存在“伪随机数漏洞”，导致巨额比特币被盗。</td>
-</tr>
-<tr>
-<td>美国司法部​</td>
-<td>美国</td>
-<td>司法调查与执法主体。​ 经过长期调查，于2025年10月正式起诉陈志，并没收了与LuBian矿池被盗案直接相关的12.7万枚比特币。</td>
-</tr>
-<tr>
-<td>中国国家计算机病毒应急处理中心​</td>
-<td>中国</td>
-<td>技术分析机构。​ 于2024年12月发布公开报告，首次从技术层面详细分析了LuBian矿池被攻击的根本原因，揭示了“伪随机数漏洞”的技术细节。</td>
-</tr>
-</tbody></table>
-<ol>
-<li>2017年底 - 2018年：偶然诞生与快速崛起</li>
-</ol>
-<ul>
-<li>核心事件：据早期媒体报道（如链闻2020年的报道），LuBian矿池的创立极具偶然性。几位来自物流、投资等传统行业的合伙人（报道中使用了“刘萍”、“王强”等化名），因一批矿机滞留港口，为减少损失而决定自行挖矿，并创建了矿池。</li>
-<li>技术背景：报道提及，其中负责技术的合伙人毕业于香港大学，后在杭州创办了一家大数据科技公司。这是其技术能力的来源，但该合伙人及其公司的具体名称未在报道中公开。</li>
-<li>商业模式：矿池以“路边”为名，凭借低手续费等策略，迅速吸引算力，在短期内跻身全球矿池算力排名前列。</li>
-</ul>
-<ol start="2">
-<li>2020年初：高光时刻与漏洞潜伏</li>
-</ol>
-<ul>
-<li>核心事件：根据BTC.com等矿池数据网站的历史快照，2020年初，LuBian矿池的实时算力排名一度达到全球第五，这是其最辉煌的时刻。</li>
-<li>漏洞潜伏：此时，导致日后灾难的“伪随机数漏洞”已潜伏在其自研的钱包系统中。这个由技术团队引入的致命弱点，使得矿池的“金库”看似坚固，实则不堪一击。</li>
-</ul>
-<ol start="3">
-<li>2020年4月：漏洞爆发，资产被盗</li>
-</ol>
-<ul>
-<li>核心事件：根据中国国家计算机病毒应急处理中心于2024年底发布的《报告》，2020年4月，攻击者利用伪随机数漏洞，成功盗取了矿池钱包中的127,272枚比特币。在比特币被盗后，陈志及其太子集团曾多次<strong>通过区块链的OP_RETURN功能向黑客公开喊话</strong>，LuBian矿池通过比特币网络发送了超过1500条消息，请求归还资产并愿意支付赎金。这种行为本身就强烈暗示了他们承认自己是这批资产的实际所有者。一个无关的第三方不可能，也没有理由去为别人的损失支付赎金。</li>
-<li>关键信息：这是加密货币史上金额最大的盗窃案之一，根本原因是自研系统未采用密码学安全的随机数生成器。</li>
-</ul>
-<ol start="4">
-<li>2020年 - 2024年：资产沉寂与幕后追踪</li>
-</ol>
-<ul>
-<li>核心事件：被盗资产在链上沉寂。美国司法部启动秘密调查。资产控制方（陈志方面）曾通过区块链向黑客喊话。</li>
-<li>关键信息：这表明损失是真实的，控制方自身也是受害者，降低了“监守自盗”的嫌疑。</li>
-</ul>
-<ol start="5">
-<li>2024年底 - 2025年10月：技术披露与司法没收</li>
-</ol>
-<ul>
-<li>2025年10月：美国司法部对陈志提起刑事指控，并宣布没收其12.7万枚比特币。其起诉书中列出的25个比特币钱包地址，经过区块链分析公司（如Elliptic和Arkham Intelligence）的追踪，证实正是2020年从LuBian矿池被盗走的比特币最终流入的地址。这表明，在法律层面，美国司法部也将这批从LuBian矿池流出的资产直接认定为由陈志控制。12.7万枚比特币（价值150亿美元）已转入政府托管钱包。陈志及多名关联方（包括 3 名新加坡公民）因涉嫌通过加密货币为网络投资诈骗所得的数十亿美元洗钱，遭到美国当局制裁。</li>
-</ul>
-<p><strong>私钥的本质</strong>：比特币私钥本质上是一个极其庞大的随机数。标准比特币私钥是一个<strong>256位</strong>的二进制数。这个数字的空间有多大呢？是2的256次方，约等于10的77次方。<br>LuBian矿池的私钥生成机制在上述两个核心要点上出现了严重失误。使用了一种名为 Mersenne Twister (MT19937-32)​ 的伪随机数生成器（PRNG），并且仅以32位的种子进行初始化。这意味着，尽管生成的私钥在形式上可能仍然是256位，但其背后真正的随机性来源只有32位。根据报告中的计算，假设攻击脚本每秒可以测试100万个密钥，那么理论上遍历所有可能种子只需要大约1.17小时。</p>
-<p>最后，LuBian矿池使用的有缺陷的随机数生成器（Mersenne Twister, MT19937-32）和低熵（32位）问题，与加密货币领域已知的多个重大漏洞（如Libbitcoin的“MilkSad”漏洞、Trust Wallet的历史漏洞）高度相似。这种“重复前人重大错误”的模式，更符合一种缺乏安全审计和经验导致的疏忽。这可能是一个故意留下的后门，比如一个只有设计者知道的“主密钥”。但LuBian矿池的这种低熵漏洞，一旦被外界知晓，相当于把金库的钥匙放在了一个能被很多人猜到的地方。这对于后门设置者本身来说风险也极高。<br><strong>如果LuBian矿池严格使用比特币核心（Bitcoin Core）或其他成熟的开源钱包软件来生成和管理私钥，那么几乎可以100%避免这个导致灾难性后果的“伪随机数漏洞”。</strong></p>
-<p>参考链接：<br><a target="_blank" rel="noopener" href="https://finance.sina.com.cn/chanjing/gsnews/2025-11-13/doc-infxhqmu3714863.shtml">https://finance.sina.com.cn/chanjing/gsnews/2025-11-13/doc-infxhqmu3714863.shtml</a><br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hant/%E9%99%B3%E5%BF%97_(%E5%95%86%E4%BA%BA)">https://zh.wikipedia.org/zh-hant/%E9%99%B3%E5%BF%97_(%E5%95%86%E4%BA%BA)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/" class="post-title-link" itemprop="url">Best-Practice-Framework-of-Agentic-Coding</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-11-12 18:06:00 / Modified: 18:14:05" itemprop="dateCreated datePublished" datetime="2025-11-12T18:06:00+08:00">2025-11-12</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Best-Practice-Framework-Idea-→-Requirements-→-Design-→-Tasks-→-Implementation"><a href="#Best-Practice-Framework-Idea-→-Requirements-→-Design-→-Tasks-→-Implementation" class="headerlink" title="Best Practice Framework: Idea → Requirements → Design → Tasks → Implementation"></a>Best Practice Framework: Idea → Requirements → Design → Tasks → Implementation</h2><h3 id="1-Idea-Phase"><a href="#1-Idea-Phase" class="headerlink" title="1. Idea Phase"></a>1. <strong>Idea Phase</strong></h3><ul>
-<li><strong>Articulate the core concept</strong> - What problem are you solving?</li>
-<li><strong>Define the value proposition</strong> - Why does this matter?</li>
-<li><strong>Identify the target outcome</strong> - What success looks like</li>
-<li><strong>Consider alternatives</strong> - Are there simpler approaches?</li>
-</ul>
-<h3 id="2-Requirements-Phase"><a href="#2-Requirements-Phase" class="headerlink" title="2. Requirements Phase"></a>2. <strong>Requirements Phase</strong></h3><ul>
-<li><strong>Functional requirements</strong> - What must the system do?</li>
-<li><strong>Non-functional requirements</strong> - Performance, security, scalability</li>
-<li><strong>Constraints</strong> - Time, resources, existing tech stack</li>
-<li><strong>Acceptance criteria</strong> - How do we know it’s done?</li>
-</ul>
-<h3 id="3-Design-Phase"><a href="#3-Design-Phase" class="headerlink" title="3. Design Phase"></a>3. <strong>Design Phase</strong></h3><ul>
-<li><strong>Architecture decisions</strong> - High-level structure</li>
-<li><strong>Technology choices</strong> - Frameworks, libraries, patterns</li>
-<li><strong>Data flow</strong> - How information moves through the system</li>
-<li><strong>Interface contracts</strong> - APIs, function signatures, data schemas</li>
-</ul>
-<h3 id="4-Tasks-Phase"><a href="#4-Tasks-Phase" class="headerlink" title="4. Tasks Phase"></a>4. <strong>Tasks Phase</strong></h3><ul>
-<li><strong>Break down into atomic units</strong> - Each task should be independently completable</li>
-<li><strong>Sequence dependencies</strong> - What must happen before what</li>
-<li><strong>Identify risks</strong> - Where might things go wrong?</li>
-<li><strong>Plan validation</strong> - How to test each task</li>
-</ul>
-<h3 id="5-Implementation-Phase"><a href="#5-Implementation-Phase" class="headerlink" title="5. Implementation Phase"></a>5. <strong>Implementation Phase</strong></h3><ul>
-<li><strong>Execute in planned order</strong> - Follow the task sequence</li>
-<li><strong>Minimal viable code</strong> - Only what’s needed for the requirement</li>
-<li><strong>Validate incrementally</strong> - Test each piece as you build</li>
-<li><strong>Refactor if needed</strong> - Clean up after core functionality works</li>
-</ul>
-<h2 id="Why-This-Prevents-Amazon-Q-Hanging-Inefficiency"><a href="#Why-This-Prevents-Amazon-Q-Hanging-Inefficiency" class="headerlink" title="Why This Prevents Amazon Q Hanging/Inefficiency"></a>Why This Prevents Amazon Q Hanging/Inefficiency</h2><p><strong>The Problem with Skipping Idea Phase:</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">❌ <span class="string">&quot;Build me a user system&quot;</span></span><br><span class="line">→ Amazon Q guesses at requirements</span><br><span class="line">→ Implements generic solution</span><br><span class="line">→ Doesn<span class="number">&#x27;</span>t match your actual vision</span><br><span class="line">→ Multiple revision cycles</span><br></pre></td></tr></table></figure>
-
-<p><strong>The Power of Starting with Idea:</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">✅ <span class="string">&quot;I want users to collaborate on documents in real-time, like Google Docs&quot;</span></span><br><span class="line">→ Clear idea <span class="keyword">and</span> vision</span><br><span class="line">→ Specific requirements emerge naturally</span><br><span class="line">→ Design choices become obvious</span><br><span class="line">→ Implementation is focused <span class="keyword">and</span> efficient</span><br></pre></td></tr></table></figure>
-
-<h2 id="Practical-Application-Examples"><a href="#Practical-Application-Examples" class="headerlink" title="Practical Application Examples"></a>Practical Application Examples</h2><h3 id="Example-1-E-commerce-Feature"><a href="#Example-1-E-commerce-Feature" class="headerlink" title="Example 1: E-commerce Feature"></a>Example 1: E-commerce Feature</h3><p><strong>Idea:</strong> “Customers abandon carts because checkout is too complex”<br><strong>Requirements:</strong> One-click checkout for returning customers<br><strong>Design:</strong> Store payment methods, streamlined UI flow<br><strong>Tasks:</strong> Payment storage, UI simplification, security validation<br><strong>Implementation:</strong> Minimal code for core flow</p>
-<h3 id="Example-2-API-Optimization"><a href="#Example-2-API-Optimization" class="headerlink" title="Example 2: API Optimization"></a>Example 2: API Optimization</h3><p><strong>Idea:</strong> “Our API is slow because we’re making too many database calls”<br><strong>Requirements:</strong> Reduce response time by 50% without changing API contract<br><strong>Design:</strong> Implement caching layer and query optimization<br><strong>Tasks:</strong> Add Redis, optimize queries, implement cache invalidation<br><strong>Implementation:</strong> Focused changes to bottleneck areas only</p>
-<h2 id="Amazon-Q-Interaction-Best-Practices"><a href="#Amazon-Q-Interaction-Best-Practices" class="headerlink" title="Amazon Q Interaction Best Practices"></a>Amazon Q Interaction Best Practices</h2><h3 id="Communicate-the-Full-Journey"><a href="#Communicate-the-Full-Journey" class="headerlink" title="Communicate the Full Journey"></a>Communicate the Full Journey</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;IDEA: I want to add real-time notifications to keep users engaged</span></span><br><span class="line"><span class="string">REQUIREMENTS: Push notifications for comments, mentions, and updates</span></span><br><span class="line"><span class="string">DESIGN: WebSocket connection with fallback to polling</span></span><br><span class="line"><span class="string">CONTEXT: @workspace (existing Express.js app with Socket.io already installed)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Use-Progressive-Disclosure"><a href="#Use-Progressive-Disclosure" class="headerlink" title="Use Progressive Disclosure"></a>Use Progressive Disclosure</h3><ol>
-<li>Start with the idea and get alignment</li>
-<li>Drill into requirements together</li>
-<li>Explore design options</li>
-<li>Plan tasks collaboratively</li>
-<li>Execute implementation efficiently</li>
-</ol>
-<h3 id="Leverage-Context-Effectively"><a href="#Leverage-Context-Effectively" class="headerlink" title="Leverage Context Effectively"></a>Leverage Context Effectively</h3><p>@workspacefor understanding the bigger picture<br>@folder for architectural context<br>@file for implementation details<br>Share your idea first, then provide relevant context</p>
-<h2 id="Red-Flags-That-Indicate-Skipped-Phases"><a href="#Red-Flags-That-Indicate-Skipped-Phases" class="headerlink" title="Red Flags That Indicate Skipped Phases"></a>Red Flags That Indicate Skipped Phases</h2><ul>
-<li><strong>Vague requests</strong> - “Make it better” (missing idea)</li>
-<li><strong>Feature creep</strong> - Requirements keep expanding (unclear idea)</li>
-<li><strong>Over-engineering</strong> - Complex solutions for simple problems (poor design)</li>
-<li><strong>Rework cycles</strong> - Constant revisions (inadequate planning)</li>
-</ul>
-<h2 id="The-Compound-Benefits"><a href="#The-Compound-Benefits" class="headerlink" title="The Compound Benefits"></a>The Compound Benefits</h2><p>Each phase informs and improves the next:</p>
-<ul>
-<li><strong>Clear idea</strong> → More precise requirements</li>
-<li><strong>Precise requirements</strong> → Better design choices</li>
-<li><strong>Better design</strong> → Cleaner task breakdown</li>
-<li><strong>Clean tasks</strong> → Efficient implementation</li>
-<li><strong>Efficient implementation</strong> → Less debugging and rework</li>
-</ul>
-<p>This approach works for any agentic coding tool, not just Amazon Q. The key is treating the AI as a collaborative partner in the entire creative process, not just a code generator.</p>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>requirements.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/1.png"><br>Design.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/2.png"><br>Task.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/3.png"></p>
-<p>Reference Link ==&gt; <a target="_blank" rel="noopener" href="https://catalog.workshops.aws/qadvanced/en-US/00-introduction">https://catalog.workshops.aws/qadvanced/en-US/00-introduction</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">数据服务层在银行容灾中的使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-09-10 17:28:00" itemprop="dateCreated datePublished" datetime="2025-09-10T17:28:00+08:00">2025-09-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-11-12 18:14:05" itemprop="dateModified" datetime="2025-11-12T18:14:05+08:00">2025-11-12</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在大型国际银行的转型中，Core Banking system系统稳定但僵化，移动网银渠道却要求毫秒级响应与全天候在线。</p>
-<h2 id="架构设计-数据服务层"><a href="#架构设计-数据服务层" class="headerlink" title="架构设计 - 数据服务层"></a>架构设计 - 数据服务层</h2><p><strong>核心思想</strong>​：将散落在各个“烟囱式”系统（银行卡/信用卡支付、风控、保险等）的数据通过技术手段（CDC、日志解析）实时汇聚起来，构建统一、标准的数据模型，并通过 API 的方式透明地提供给前台应用。核心系统停机时，该数据层能提供<strong>​“Stand-In”应急服务</strong>——支持只读，甚至有限度的暂存式写入。</p>
-<ul>
-<li><strong>读写分离</strong>：读操作快速由数据服务层响应，写操作依赖主系统保障强一致性；</li>
-<li><strong>容灾能力提升</strong>：主系统故障时自动切换至 Stand-In 模式，关键服务仍可继续执行；</li>
-<li><strong>真正渐进替代</strong>：业务逻辑可逐步迁移至服务层，最终实现核心现代化，不需一蹴而就。</li>
-</ul>
-<p><img src="/2025/09/10/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%B1%82%E5%9C%A8%E9%93%B6%E8%A1%8C%E5%AE%B9%E7%81%BE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/diagram_architecture2.png"></p>
-<p><strong>主要机制说明：</strong></p>
-<ul>
-<li><strong>正常模式：</strong><ul>
-<li>所有读操作由数据服务层提供低延迟响应；</li>
-<li>写操作严格通过  Connector 等连接器进入Core Banking system系统，确保主记录一致性；</li>
-<li>Core Banking system 通过 CDC（如 Debezium）捕获变更并发布至 Kafka，数据服务层实时消费、更新缓存/数据库，最终一致性得以保障。</li>
-</ul>
-</li>
-<li><strong>容灾模式：</strong><ul>
-<li>Core Banking system不可用时，API 网关自动切换路由；</li>
-<li>写操作由轻量 Stand-In 服务代为接收，校验后写入本地“待处理交易”队列，并立即反馈客户“处理中”状态；</li>
-<li>主系统恢复后，后台任务自动逐笔回放交易，完成结算和Core Banking system同步处理。</li>
-</ul>
-</li>
-</ul>
-<h2 id="治理、风险与项目管控：核心现代化控制塔"><a href="#治理、风险与项目管控：核心现代化控制塔" class="headerlink" title="治理、风险与项目管控：核心现代化控制塔"></a>治理、风险与项目管控：核心现代化控制塔</h2><p>借鉴<a target="_blank" rel="noopener" href="https://www.oliverwyman.com/our-expertise/insights/2025/may/next-gen-core-banking-modernization.html?utm_source=chatgpt.com"> OliverWyman 建议的 <strong>Core Modernization Control Tower</strong></a>，可为该架构增设治理层，关键职责包括  ：</p>
-<ul>
-<li><strong>跨职能治理机制</strong>：聚焦业务、运营、技术多方 alignment，确保宏观战略与技术路径一致；</li>
-<li><strong>风险管理监督</strong>：对迁移过程中的操作风险、合规风险、系统风险进行持续审视；</li>
-<li><strong>迁移节奏策略</strong>：统筹“hollow-out”业务削减主机依赖的节奏与业务模块迁移优先级；</li>
-<li><strong>变更可视化与沟通机制</strong>：提供实时反馈与透明度，保障项目顺滑执行。</li>
-</ul>
-<h2 id="技术选型与数据架构策略"><a href="#技术选型与数据架构策略" class="headerlink" title="技术选型与数据架构策略"></a>技术选型与数据架构策略</h2><h3 id="1-流式同步与事件驱动"><a href="#1-流式同步与事件驱动" class="headerlink" title="1. 流式同步与事件驱动"></a>1. 流式同步与事件驱动</h3><ul>
-<li><strong>Debezium + Kafka</strong>：主流国际银行采用 Debezium 捕获 DB2 或主机日志，实时推送事件至 Kafka；这已是金融业标准方案  。<h3 id="2-存储平台设计"><a href="#2-存储平台设计" class="headerlink" title="2. 存储平台设计"></a>2. 存储平台设计</h3></li>
-<li><strong>Redis 集群</strong>：用于缓存极热数据，支撑毫秒级读性能；</li>
-<li><strong>TiDB / OceanBase</strong>：支持强一致性的分布式关系型存储；适用全量账户与交易数据场景。<h3 id="3-数据架构策略"><a href="#3-数据架构策略" class="headerlink" title="3. 数据架构策略"></a>3. 数据架构策略</h3></li>
-<li>结合 <strong>Data Mesh / Lakehouse</strong> 架构思路提升分析与共享能力；</li>
-<li>服务层接口应遵循 <strong>BIAN / Information Framework</strong> 等银行业标准，实现语义统一与模块化服务边界；增强系统的互操作性与标准合规性。</li>
-</ul>
-<h2 id="我们得到了什么？"><a href="#我们得到了什么？" class="headerlink" title="我们得到了什么？"></a>我们得到了什么？</h2><ul>
-<li><strong>弹性与连续性的革命</strong>​：Stand-In模式将核心停机从“灾难”变为“可管理的服务降级”，极大提升了业务连续性。</li>
-<li><strong>解耦开发能力</strong>：产品团队可绕开主机耦合，直接基于数据服务层构建灾备能力，实时风控等功能，交付加快；</li>
-<li><strong>开放 API 驱动</strong>：支持开放银行、第三方金融机构接入，实现更灵活生态协同及合作创新，符合当前数字银行趋势。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/09/05/Modern%20Core%20Banking%20and%20Wealth%20Platforms/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/05/Modern%20Core%20Banking%20and%20Wealth%20Platforms/" class="post-title-link" itemprop="url">Modern Core Banking and Wealth Platforms</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-09-05 18:02:00 / Modified: 18:04:32" itemprop="dateCreated datePublished" datetime="2025-09-05T18:02:00+08:00">2025-09-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Modern Core Banking and Wealth Platforms: Who’s Leading with Real Contracts (2019–2025)</p>
-<table>
-<thead>
-<tr>
-<th><strong>Vendor (HQ)</strong></th>
-<th><strong>Best practice case (2019 → present)</strong></th>
-<th><strong>Advantage domain</strong></th>
-<th><strong>Example large banks / clients</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong><a target="_blank" rel="noopener" href="https://www.avaloq.com/">Avaloq</a></strong> (Switzerland)</td>
-<td>Security Bank (Philippines) selected Avaloq RM Workplace to digitalize wealth management (Feb 2024). Avaloq also has multi-jurisdictional BPaaS / SaaS contracts and a notable Deutsche Bank wealth extension (contract extended to 2028).</td>
-<td>End-to-end wealth &amp; private-banking BPaaS / SaaS; strong in <strong>front-office RM tooling</strong> and outsourced operations.</td>
-<td>Security Bank, Deutsche Bank (wealth units)</td>
-</tr>
-<tr>
-<td><strong><a target="_blank" rel="noopener" href="https://www.temenos.com/">Temenos</a></strong> (Switzerland)</td>
-<td>Regions Bank (US) selected Temenos Banking Cloud to modernize customer records &amp; deposits (announced 2023). ABN AMRO extended its Temenos Banking Cloud subscription in 2022.</td>
-<td>Large-scale, proven core-and-cloud SaaS platform for retail &amp; corporate core modernization; strong partner ecosystem.</td>
-<td>Regions Bank (US), ABN AMRO (Netherlands), many global banks.</td>
-</tr>
-<tr>
-<td><strong><a target="_blank" rel="noopener" href="https://www.fnz.com/">FNZ</a></strong> (UK)</td>
-<td>Aviva extended a long-term platform partnership with FNZ (15-year extension announced Jan 2024) and continues to roll out adviser and analytics capabilities.</td>
-<td><strong>Wealth platform</strong> PaaS at scale — product distribution, adviser tooling, large AUM migrations and automation.</td>
-<td>Aviva (UK), UBS/Vanguard/large wealth managers via FNZ ecosystem.</td>
-</tr>
-<tr>
-<td><strong><a target="_blank" rel="noopener" href="https://www.crd.com/">Charles River / State Street</a></strong> (USA)</td>
-<td>T. Rowe Price expanded use of Charles River IMS (cloud) for portfolio management, trading and compliance (announced Apr 2024).</td>
-<td>Front &amp; middle-office solution for asset managers: portfolio mgmt, trading, compliance, data integration (State Street Alpha).</td>
-<td>T. Rowe Price, Banorte (examples of regional rollouts).</td>
-</tr>
-<tr>
-<td><strong>nCino</strong> (USA / <strong>Salesforce</strong>)</td>
-<td>Large enterprise deployments (e.g., Bendigo &amp; Adelaide Bank selected nCino 2023; U.S. Bank expanded nCino use in 2024) — strong traction in commercial lending, onboarding and CRM-adjacent functions.</td>
-<td><strong>Lending &amp; credit</strong> workflow automation, origination/onboarding, Salesforce-native deployments for enterprise banks.</td>
-<td>Bendigo &amp; Adelaide Bank, U.S. Bank, many regional &amp; enterprise banks.</td>
-</tr>
-<tr>
-<td><strong>Backbase</strong> (Netherlands)</td>
-<td>Backbase delivered enterprise digital banking platforms (MyState 2024) and launched AI-powered platform capabilities (2024–25 product announcements).</td>
-<td>Engagement / <strong>digital front-end platform with AI and composability for retail &amp; wealth</strong> customer journeys.</td>
-<td>MyState, multiple retail banks modernizing digital channels.</td>
-</tr>
-<tr>
-<td><strong>Oracle FLEXCUBE</strong> (Oracle)</td>
-<td>FlexCube continues to be deployed for sizable banks and credit unions (examples include TISA / regional banks go-lives 2024–25); widely used at scale globally.</td>
-<td>Large universal-banking core with comprehensive modules, strong enterprise scale and OCI integration.</td>
-<td>Various large banks and <strong>credit unions</strong> worldwide (Oracle customer listings).</td>
-</tr>
-<tr>
-<td><strong>Feedzai</strong> (Portugal / USA)</td>
-<td>Centrale partnership with Banco BPI (Portugal, Aug 2025) using <strong>Digital Trust</strong> for real-time behavioral biometrics and transaction monitoring; also a hybrid deployment at a major North American retail bank that saved ~$30M over 3 years.</td>
-<td><strong>AI-native financial crime prevention platform</strong>: real-time fraud &amp; AML detection, behavioral biometrics, anomaly detection and RiskOps orchestration.</td>
-<td>Banco BPI (Portugal); an unnamed major North American retail bank (hybrid implementation)</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
+    <div class="comments gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -1110,6 +650,26 @@
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'bcfbeadd6147f39af62f',
+      clientSecret: '36f4ca5368918536f72f6b3816b90c30f61effb3',
+      repo        : 'willzhuang.github.io',
+      owner       : 'WillZhuang',
+      admin       : ['WillZhuang'],
+      id          : 'dda5c1bcc993bfeea0c88738ec9a1f5b',
+      proxy       : 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
