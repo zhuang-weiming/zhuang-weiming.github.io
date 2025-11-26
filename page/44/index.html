@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">287</span>
+          <span class="site-state-item-count">289</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,216 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/" class="post-title-link" itemprop="url">ewasm实施说明</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-09 14:51:04" itemprop="dateCreated datePublished" datetime="2019-09-09T14:51:04+08:00">2019-09-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="概念介绍"><a href="#概念介绍" class="headerlink" title="概念介绍"></a>概念介绍</h3><p><strong><a target="_blank" rel="noopener" href="https://github.com/ewasm/hera">Hera</a></strong> 是 <a target="_blank" rel="noopener" href="https://github.com/ewasm/design">ewasm</a>（revision 4）虚拟机的 C++版本，对接了 <a target="_blank" rel="noopener" href="https://github.com/ethereum/evmc">EVMC</a> ABIv6。Hera 目的是利用各种 wasm 的后端，为 ethereum 提供服务。Hera 已经在 <a target="_blank" rel="noopener" href="https://github.com/ethereum/aleth">aleth</a> 和 <a target="_blank" rel="noopener" href="https://github.com/ethereum/go-ethereum">geth</a> 上被测试过了。同时，Hera 支持各种匹配于 EVMC 的客户端。</p>
+<p><em><a target="_blank" rel="noopener" href="https://github.com/ewasm/design">ewasm</a> 是以太坊系的 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/WebAssembly">WebAssembly</a> (Ethereum flavored WebAssembly)，目前的版本是 Revision 4。ewasm是使用WebAssembly确定性子集重新设计的以太坊智能合约执行层。</em></p>
+<p><em>使用WebAssembly作为智能合约的格式可以获得以下好处：</em></p>
+<ul>
+<li><em>近乎原生的智能合约的执行速度</em></li>
+<li><em>使用许多传统编程语言（如C，C ++和Rust）开发智能合约成为可能</em></li>
+<li><em>WebAssembly庞大的开发人员社区和WebAssembly工具链</em></li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/ethereum/evmc">EVMC</a></strong> 是以太坊虚拟机（EVMs）和以太坊客户端（如Geth）之间的<strong>低级别ABI</strong>。在EVM侧，它支持经典的EVM1和ewasm。 在客户端（如Geth）侧，它定义了EVM实现访问以太坊环境和状态（state）的接口。</p>
+<h3 id="ewasm实施设计1：Hera-geth"><a href="#ewasm实施设计1：Hera-geth" class="headerlink" title="ewasm实施设计1：Hera + geth"></a>ewasm实施设计1：Hera + geth</h3><ol>
+<li>创世块配置如下：</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;config&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;chainId&quot;</span>: <span class="number">1337</span>,</span><br><span class="line">        <span class="attr">&quot;homesteadBlock&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;byzantiumBlock&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;constantinopleBlock&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;eip150Block&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;eip155Block&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;eip158Block&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;ewasmBlock&quot;</span>: <span class="number">0</span>,	<span class="comment">//**odyssey划重点**</span></span><br><span class="line">        <span class="attr">&quot;ethash&quot;</span>: &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;nonce&quot;</span>: <span class="string">&quot;0xdeadbeefdeadbeef&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;timestamp&quot;</span>: <span class="string">&quot;0x00&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;parentHash&quot;</span>: <span class="string">&quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;mixhash&quot;</span>: <span class="string">&quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;difficulty&quot;</span>: <span class="string">&quot;0x40&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;gasLimit&quot;</span>: <span class="string">&quot;0xfffffffffffffff&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;alloc&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;0x7eff122b94897ea5b0e2a9abf47b86337fafebdc&quot;</span>: &#123; <span class="attr">&quot;balance&quot;</span>: <span class="string">&quot;10000000000000000000000000000000000&quot;</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Build geth with EVMC，编译带有 EVMC 的 geth</li>
+</ol>
+<p>从目前最新的版本 <a target="_blank" rel="noopener" href="https://github.com/ewasm/go-ethereum/releases/tag/v1.9.2-evmc.6.3.0-0">geth 1.9.2 with EVMC 6 support</a> 下载代码。其内已经有 Linux-amd64 的可执行文件，版本基于 geth1.9.2，在 ubuntu 等 linux 系统中可以直接运行。</p>
+<p>也可以进入到代码中自行 build：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">cd</span> go-ethereum</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> make geth</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>将 Hera 编译成为一个共享库文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/ewasm/hera -b v0.2.4</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">cd</span> hera</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> mkdir build &amp;&amp; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> cmake .. -DBUILD_SHARED_LIBS=ON     //该步骤前可能会需要执行 git submodule update --init</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> cmake --build .</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>使用步骤 1 中的创世块配置文档 geth-config.json</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> ./build/bin/geth --datadir /tmp/ewasm-node/4201/ init geth-config.json</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>运行 geth 与 Hera</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> ./build/bin/geth \</span></span><br><span class="line">--vm.ewasm=&quot;/path/to/libhera.so,metering=true,evm1mode=fallback&quot; \</span><br><span class="line">--datadir /tmp/ewasm-node/4201/ \</span><br><span class="line">--rpc --rpcapi &quot;web3,net,eth,debug&quot; \</span><br><span class="line">--rpcvhosts=&quot;*&quot; --rpcaddr &quot;0.0.0.0&quot; \</span><br><span class="line">--rpccorsdomain &quot;*&quot; \</span><br><span class="line">--vmodule &quot;miner=12,rpc=12&quot; \			//在 odyssey 中不必使用</span><br><span class="line">--mine --miner.threads 1 \				//在 odyssey 中不必使用</span><br><span class="line">--nodiscover \</span><br><span class="line">--networkid 1337 </span><br></pre></td></tr></table></figure>
+
+
+
+<p>另外 <a target="_blank" rel="noopener" href="https://github.com/go-interpreter/wagon">Wagon</a> 作为WebAssembly-based Go interpreter也是可用的。但是<a target="_blank" rel="noopener" href="https://github.com/gballet/go-ethereum%E9%A1%B9%E7%9B%AE%E5%B9%B4%E4%B9%85%E5%A4%B1%E4%BF%AE%E3%80%82%E5%8D%B3%E4%BD%BF%E6%98%AF%E4%B8%8B%E9%9D%A2%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%9F%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8%E7%9A%84%E3%80%82">https://github.com/gballet/go-ethereum项目年久失修。即使是下面的方式也不建议使用的。</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> go get github.com/ethereum/go-ethereum</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">cd</span> <span class="variable">$GOROOT</span>/src/github.com/ethereum/go-ethereum</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git remote add gballet git@github.com:gballet/go-ethereum.git</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git fetch gballet add-ewasm</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout add-ewasm</span></span><br></pre></td></tr></table></figure>
+
+<p>架构图如下，请参考：</p>
+<p><img src="/2019/09/09/ewasm%E5%AE%9E%E6%96%BD%E8%AF%B4%E6%98%8E/1.jpg"></p>
+<p>参考链接==&gt; </p>
+<ul>
+<li><p>Ewasm public testnet : <a target="_blank" rel="noopener" href="https://github.com/ewasm/testnet">https://github.com/ewasm/testnet</a> </p>
+</li>
+<li><p>WebAssembly 介绍 : <a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/07/26/WebAssembly-%E4%BB%8B%E7%BB%8D/">https://willzhuang.github.io/2018/07/26/WebAssembly-%E4%BB%8B%E7%BB%8D/</a> </p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/09/01/%E8%AE%A4%E8%AF%86DAO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/01/%E8%AE%A4%E8%AF%86DAO/" class="post-title-link" itemprop="url">认识DAO</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-01 17:46:04" itemprop="dateCreated datePublished" datetime="2019-09-01T17:46:04+08:00">2019-09-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>人类一直在不断发明组织和增加组织的新方法，从核心家庭，部落，国家，企业到全球经济。到目前为止，最先进的组织—互联网打开了大门，在全球范围内进行实时信息交换，但互联网缺乏通用协调的经济手段和全球同步生产。区块链通过提供可靠的，开放的和可编程的账本系统，进而产生分布式自治组织（DAO）。<br>DAO是开放的，自组织的网络，由加密经济激励和自执行代码协调，围绕共同目标进行合作。在网络效应的推动下，DAO提供了适度的模式激励用于生成开放和可共享的资源（例如开源代码和音乐文件）。随着在更加开放的资源中创作，DAO可以无限扩展，同时保持其一致性和连贯性，并且在许多案例中胜过现有的公司结构。 DAO吸引了区块链领域的顶尖人才，对创造更高效，更有弹性的组织努力着。尽管如此，到目前为止他们还缺乏成功部署关键要素，特别是适当的分布式治理体系（decentralized governance system）。<br>DAOstack是DAO的操作系统。有了DAOstack，成千上万的开源创作者可以联合起来生产分散式应用程序（DApps），同时将产品中的所有权分配给有价值的贡献者。人们可以合作拥有和管理排名系统，与TripAdvisor或YouTube展开竞争。自治网络可以进行集体投资或保险基金。我们相信DAO将从根本上改变人们组织的方式，从初创公司到公司，非营利组织甚至民族国家。 DAOstack开发了所需的基本元素实现向未来的过渡。<br>我们将描述DAO的未来：一种不对称的，反竞争的，可扩展的合作（将来定义如下）。后面的内容将探讨区块链，特别是DAO治理的主题。</p>
+<p>良好组织和协调大量个人的能力是最大的力量和社会驱动力之一，经历了数千年的不断演变。在本章中我们将描述当今传统组织面临的挑战，以及一种新的可能形式的网络组织：DAO。</p>
+<h3 id="传统组织"><a href="#传统组织" class="headerlink" title="传统组织"></a>传统组织</h3><p>代理商的合作提高了其对外部竞争市场力量的效率。这是公司的基本起源以及组织希望发展的原因。但是，协调代理商随着组织的发展需要增加协调成本，这就是组织无法无限期发展的原因。<br>在组织发展时，组织需要更加严格的结构，因此面临越来越大的挑战：a）保持对快速变化的条件的敏捷性；b）保持利益，信任和利益的一致性，以及其成员之间的互动。简而言之，组织越大，所需的内部摩擦就越难应付；组织越小，内部的摩擦也越小，外部竞争就越大。公司的实际规模通常是这两种力量之间的最佳平衡点。<br>偶尔，新技术或范式转换可以减少协调成本，将组织的规模和效率提升到新的水平。它触发了机构内部和机构之间的过渡工作和业务，以及此后的社会变革，就像众包和互联网本身被发明时的情况一样。<br>互联网允许在全球范围内进行开放，实时和点对点的信息交换。因此，互联网媒体已经比传统媒体更具有可扩展性，而且速度很快同化了后者。但是，互联网本身并不支持开放的，点对点的价值交换和通用协调，因此限制其推动全球合作的潜力。</p>
+<h3 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h3><p>区块链是第二次互联网革命，为信息和媒体互联网在价值和商业方面做出了贡献。通过解决信息信任问题，它可以实现前所未有的人群协调水平。从而形成分布式自治组织（DAO）的技术基础。 DAO是一种可扩展，自组织合作的新形式，由区块链运营的智能合约相协调。笔者认为DAO对未来商业大有希望，尽管围绕这一主题的区块链社区有很多贡献，但DAO的运作基础仍然缺失，成功的治理体系仍然处于探索的初期。</p>
+<h3 id="代理商"><a href="#代理商" class="headerlink" title="代理商"></a>代理商</h3><p>DAO的构建块是聪明的公司或代理商（我们将交替使用这些术语）。一个智能代理是一个原子治理单位，通过智能合约进行管理和运营区块链。它有自己的令牌（与公司资源的利益相关），自己的声誉系统（与公司事务的可信度和影响力有关），以及自己的治理体系（其“章程”编码在智能合约中）。<br>嵌入在智能合约中的治理协议可以是任何人都可以想到的。一个简单的例子是基于提案的治理系统，对所需的提案进行是/否多数表决批准和执行（这成为智能公司的单一行动）。提案可能与令牌有关，例如，分配和投票可以由选民声誉加权。在启发式可视化中，它可能如下所示：</p>
+<p><img src="/2019/09/01/%E8%AE%A4%E8%AF%86DAO/gov_sample.png"></p>
+<p>实心球代表公司的代理商；他们与中心的距离反映了他们的影响力，或者声誉（他们越接近他们的影响越大）；他们的规模反映了他们的本土代币占比（球越大，他们持有的公司代币就越多）。一个代理商建议分配5个ETH<br>代理A为她修复bug XXX的宝贵贡献。公司代理人投票表决由他们的声誉加权，并且一旦大多数声誉持有者同意该提议，智能合约自动执行其令牌分配。</p>
+<h3 id="DAOs"><a href="#DAOs" class="headerlink" title="DAOs"></a>DAOs</h3><p>代理商在区块链上运行智能合约。它们遵循无法破解的可验证规则并且只能根据规则本身进行更改。他们可能是也可能不是自治的，这取决于他们选择的治理体系；例如，一个机构可以自行保留另一个机构的决策否决权。</p>
+<p>DAO是一个无中心的代理网络，它本身也是一个代理机构，不受任何一点控制。它不是中央管理，代理商之间存在间接协调，在生物学中也称为共识主动性（stigmergy），由激励机制和代码触发。DAO是一个自组织实体，<br>而且大体上更像是有机体而不是组织。</p>
+<h4 id="扩展性"><a href="#扩展性" class="headerlink" title="扩展性"></a>扩展性</h4><p>所有传统组织的一个共同因素是”可扩展的“。这意味着随着决策数量的增长，传统组织的效率会越低。自由市场，互联网和基于网络效应的应用程序（如Facebook和Airbnb）都是“超级可扩展”结构 - 随着成员和交互的增长而变得更加有效。有了这个术语，DAO是一个“超级可扩展的组织”，它可以提高效率，敏捷性和可扩展性的自由市场，同时保持创业公司的一致性和追求可扩展任务的能力。</p>
+<h4 id="网络拓扑结构"><a href="#网络拓扑结构" class="headerlink" title="网络拓扑结构"></a>网络拓扑结构</h4><p>有各种各样的权力下放模式，因此可以考虑各种模式将DAO放入一个机构。考虑DAO的常见方法是组装模式：</p>
+<p><img src="/2019/09/01/%E8%AE%A4%E8%AF%86DAO/asm.png"></p>
+<p>在DAO的组装模式中，大量代理在单个决策中进行交互。代理商通过其智能合约，假设声誉和决策权力是公平分配的。尽管是最简单的，但这种模式本身就具有可扩展性，并且对其处理有限制能力，同时保持弹性。</p>
+<p><img src="/2019/09/01/%E8%AE%A4%E8%AF%86DAO/federal.png"></p>
+<p>以及联邦模式，由大量的分布式的组织治理合作连接为联邦共同体。</p>
+<h3 id="开放组织"><a href="#开放组织" class="headerlink" title="开放组织"></a>开放组织</h3><p>目前的世界经济体系是一个基于近似零和或输赢的游戏。通过竞争引发了向最高绩效的演变，但绩效是相对于本地而言最大化而不是全球的胜利。 （即，一家公司在自身生存方面做出优化，而不是一个更大的整体在利益方面做出优化。这是非合作纳什均衡的问题。<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BA%B3%E4%BB%80%E5%B9%B3%E8%A1%A1">纳什均衡</a>的意思是这样的，在一个博弈过程中，无论对方的策略选择如何，当事人一方都会选择某个确定的策略，则该策略被称作支配性策略。这是一个大规模协调的问题，阻止了<br>从竞争转向合作的可能。</p>
+<p>一个常见的例子是代码；它永远不会消耗，而且相反，眼睛越多，代码越好（也越安全）。与此同时，公司没有动力开源他们的代码，否则他们将不对称地给他们的竞争对手带来好处。在另一方面，显然，如果有十家竞争公司生产类似的产品，他们都可以从中受益，共同生产其产品的共享元素，而不是全部独立生产它们。这个难题可能在制药行业（例如电影《我不是药神》中反应的问题）也最为显着。</p>
+<p>知识产权（IP）是将反竞争资源转化为稀缺元素的传统手段，它们可以销售，但它在今天的加速步伐中变得越来越不明智，也越来越不实用。</p>
+<p>开放共享资源与当前经济不一致。但另一方面，它是非常大规模的，开放式的协作，并以DAO的基础。为了更加有效，DAO需要激励和奖励共享可重用组件。结果，更多现有的可共享组件将支持增长和DAO的有效性。开放组织是从目前非合作纳什转变的手段，平衡未来的合作国家。但是，DAO将取代现有的公司结构，因为他们更好或更道德，更简单，且更有效。</p>
+<p>以上内容来自：<a target="_blank" rel="noopener" href="https://daostack.io/">https://daostack.io</a> 的白皮书。笔者认为 DAO 会在未来的经济合作模式中占有一席之地。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -604,218 +814,6 @@
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a88b80d88284">https://www.jianshu.com/p/a88b80d88284</a></p>
 <p>作者介绍：<strong>欧阳辰</strong>，品友互动，CTO，《Druid实时大数据分析》书作者，《构建高质量的软件》译者，超过17年的互联网老兵。</p>
 <p><img src="/2019/08/19/Headless-Commerce-%E6%97%A0%E5%A4%B4%E7%94%B5%E5%95%86%E4%B8%8E%E4%B8%AD%E5%8F%B0%E9%9A%8F%E6%83%B3/author.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">AZTEC-基于ethereum的隐私交易-III-产品设计</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-30 10:01:04" itemprop="dateCreated datePublished" datetime="2019-07-30T10:01:04+08:00">2019-07-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="产品设计的关键步骤"><a href="#产品设计的关键步骤" class="headerlink" title="产品设计的关键步骤"></a>产品设计的关键步骤</h4><p>AZTEC 产品的关键步骤：1）生成 note；2）管理秘钥；3）验证 note</p>
-<p>AZTEC中的<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/aztec.js">aztec.js</a>能够工作在浏览器或者手机程序中，生成 proof 大约需要 10ms，非常高效。</p>
-<h4 id="1-生成-note"><a href="#1-生成-note" class="headerlink" title="1.生成 note"></a>1.生成 note</h4><p>证明（proof）中的保密 Token 需要用到 note。note 在票据登记所（note registry）中登记，proof 也在 note registry 中登记。</p>
-<p>生成一个新的 note 需要 owner 的<code>publicKey</code>，所有人使用其地址证明其 owner 的身份，<code>value</code>是 note 中保密 Token 的值：</p>
-<p><code>bobNote1 = await aztec.note.create(bob.publicKey, 100);</code></p>
-<h4 id="2-管理秘钥"><a href="#2-管理秘钥" class="headerlink" title="2.管理秘钥"></a>2.管理秘钥</h4><p>每一个 note 都有一个对应的查看秘钥（viewing key）；同时还有一个对应的暂存秘钥（ephemeral key）。暂存秘钥用于恢复查看秘钥，同时 note 的 owner 的 private key 也可以恢复查看秘钥。</p>
-<p>在服务器端，恢复查看秘钥并再次发送给到 owner 需要一套完备的管理系统，目前 AZTEC 还没有这样的系统。</p>
-<p>在客户端，建议将暂存秘钥加密后保存起来。</p>
-<h4 id="3-消费-note"><a href="#3-消费-note" class="headerlink" title="3.消费 note"></a>3.消费 note</h4><p>消费 note 使用标准的 Join Split 证明。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; proofData, expectedOutput, signatures &#125; = aztec.proof.joinSplit.encodeJoinSplitTransaction(&#123;</span><br><span class="line">  inputNotes: [bobNote1],</span><br><span class="line">  outputNotes: [sallyTaxiFee, bobNote2],</span><br><span class="line">  senderAddress: accounts[<span class="number">0</span>],</span><br><span class="line">  inputNoteOwners: [bob],</span><br><span class="line">  publicOwner: accounts[<span class="number">0</span>],</span><br><span class="line">  kPublic: <span class="number">0</span>,</span><br><span class="line">  validatorAddress: privateVenmoContract.address,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>kPublic是被转换的 ERC20 Token 的值。负值代表 ERC20 Token 被消耗，且转换为 note；正值代表将 note 兑换回到 ERC20 Token。且遵守<code>kPublic == outputNotes</code></p>
-<p>Join Split证明是自动使用<code>inputNoteOwners: [bob]</code>的私钥来签名交易的。更加严谨的话可以使用<code>confidentialApprove</code>方法，例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> signature = aztec.signer.signNote(assetAddress, noteHash, spenderAddress, owner.privateKey);</span><br><span class="line">ZkAsset.confidentialApprove(noteHash, spender, <span class="literal">true</span>, signature);</span><br></pre></td></tr></table></figure>
-
-<p>最后再使用下面的语句最终消费掉 note：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> privateVenmoContract.confidentialTransfer(proofData, signatures, &#123;</span><br><span class="line">    <span class="keyword">from</span>: accounts[<span class="number">0</span>],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="AZTEC-的交易流程"><a href="#AZTEC-的交易流程" class="headerlink" title="AZTEC 的交易流程"></a>AZTEC 的交易流程</h4><p><img src="/2019/07/30/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-III-%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/txprocess.png"></p>
-<p>如图所示，结合<a target="_blank" rel="noopener" href="https://github.com/AztecProtocol/loan-dapp-starter-kit">借贷 DApp</a>，分析AZTEC的步骤：</p>
-<h4 id="1-借贷-ZkAsset"><a href="#1-借贷-ZkAsset" class="headerlink" title="1.借贷 ZkAsset"></a>1.借贷 ZkAsset</h4><h5 id="1-1-构建-proof"><a href="#1-1-构建-proof" class="headerlink" title="1.1.构建 proof"></a>1.1.构建 proof</h5><p>用 aztec.js 构建 proof。即 proofData：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">   proofData,</span><br><span class="line">&#125; = aztec.proof.mint.encodeMintTransaction(&#123;</span><br><span class="line">        newTotalMinted: newTotalNote,</span><br><span class="line">        oldTotalMinted: oldTotalNote,</span><br><span class="line">        adjustedNotes: [loanNotionalNote],</span><br><span class="line">        senderAddress: loanDappContract.address,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h5 id="1-2-注册-note"><a href="#1-2-注册-note" class="headerlink" title="1.2.注册 note"></a>1.2.注册 note</h5><p>proof 可以被 Mint 成为新的 note，</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Loan(loanId).confidentialMint(MINT_PROOF, bytes(_proofData));</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-结算-ZkAsset"><a href="#2-结算-ZkAsset" class="headerlink" title="2.结算 ZkAsset"></a>2.结算 ZkAsset</h4><h5 id="2-1-批准-ACE-合约代表-owner-花费-ERC20-Token"><a href="#2-1-批准-ACE-合约代表-owner-花费-ERC20-Token" class="headerlink" title="2.1.批准 ACE 合约代表 owner 花费 ERC20 Token"></a>2.1.批准 ACE 合约代表 owner 花费 ERC20 Token</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> settlementToken.approve(aceContract.address, value);</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-2-构建-proof"><a href="#2-2-构建-proof" class="headerlink" title="2.2.构建 proof"></a>2.2.构建 proof</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; </span><br><span class="line">     proofData, </span><br><span class="line">     expectedOutput</span><br><span class="line">&#125; = aztec.proof.joinSplit.encodeJoinSplitTransaction(&#123;</span><br><span class="line">    inputNotes: [],</span><br><span class="line">    outputNotes: [Note1, Note2], <span class="comment">// note values sum to kPublic</span></span><br><span class="line">    senderAddress: account.address,</span><br><span class="line">    inputNoteOwners: [],</span><br><span class="line">    publicOwner: account.address,</span><br><span class="line">    kPublic: -value, </span><br><span class="line">    validatorAddress: joinSplitContract.address,</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-3-批准-ACE-合约花费-ERC20-Token"><a href="#2-3-批准-ACE-合约花费-ERC20-Token" class="headerlink" title="2.3.批准 ACE 合约花费 ERC20 Token"></a>2.3.批准 ACE 合约花费 ERC20 Token</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> ACE.publicApprove(zkAsset.address, hashProof, kPublic, &#123;</span><br><span class="line">      <span class="keyword">from</span>: accounts[<span class="number">0</span>],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-4-转发交易"><a href="#2-4-转发交易" class="headerlink" title="2.4.转发交易"></a>2.4.转发交易</h5><p>转发 proof 给到 ACE，proof 中的senderAddress与发起调用ACE.validateProof的msg.sender 需保持一致。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(bytes memory _proofOutputs) = ACE.validateProof(JOIN_SPLIT_PROOF, address(<span class="built_in">this</span>), _proofData);</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-5-处理转移指令-Transfer-Instructions"><a href="#2-5-处理转移指令-Transfer-Instructions" class="headerlink" title="2.5.处理转移指令(Transfer Instructions)"></a>2.5.处理转移指令(Transfer Instructions)</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_loanVariables.settlementToken.confidentialTransferFrom(JOIN_SPLIT_PROOF, _proofOutputs.get(<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-结算贷款处理"><a href="#3-结算贷款处理" class="headerlink" title="3.结算贷款处理"></a>3.结算贷款处理</h4><h5 id="3-1-批准结算合约来花费-note"><a href="#3-1-批准结算合约来花费-note" class="headerlink" title="3.1.批准结算合约来花费 note"></a>3.1.批准结算合约来花费 note</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> settlementSignature = signNote(</span><br><span class="line">   zkSettlementAsset.address,</span><br><span class="line">   settlementNoteHash,</span><br><span class="line">   loanId,</span><br><span class="line">   lender.privateKey);</span><br><span class="line"><span class="keyword">await</span> zkSettlementAsset.confidentialApprove(</span><br><span class="line">   settlementNoteHash,</span><br><span class="line">   loanId,</span><br><span class="line">   <span class="literal">true</span>,</span><br><span class="line">   settlementSignature, </span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">from</span>: lender.address,</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-2-构建-proof"><a href="#3-2-构建-proof" class="headerlink" title="3.2.构建 proof"></a>3.2.构建 proof</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">     proofData,</span><br><span class="line">&#125; = aztec.proof.bilateralSwap.encodeBilateralSwapTransaction(&#123;</span><br><span class="line">        inputNotes: [takerBid, takerAsk],</span><br><span class="line">        outputNotes: [makerAsk, makerBid],</span><br><span class="line">        senderAddress: loanId,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>其中需要<code>takerBid == makerAsk</code> ; <code>takerAsk == makerBid</code></p>
-<h5 id="3-3-终极交易并更新状态"><a href="#3-3-终极交易并更新状态" class="headerlink" title="3.3.终极交易并更新状态"></a>3.3.终极交易并更新状态</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(bytes memory _proofOutputs) = ACE.validateProof(BILATERAL_SWAP_PROOF, address(<span class="built_in">this</span>), _proofData);</span><br><span class="line">(bytes memory _loanProofOutputs) = _proofOutputs.get(<span class="number">0</span>);</span><br><span class="line">(bytes memory _settlementProofOutputs) = _proofOutputs.get(<span class="number">1</span>);</span><br><span class="line">settlementZkAsset.confidentialTransferFrom(BILATERAL_SWAP_PROOF, _settlementProofOutputs);</span><br><span class="line">loanZkAsset.confidentialTransferFrom(BILATERAL_SWAP_PROOF, _loanProofOutputs);</span><br></pre></td></tr></table></figure>
-
-<p>由此完成了借贷以及结算，同时全部的账目均为保密。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/07/29/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-II-%E5%8F%91%E5%B8%83%E8%87%B3Ganache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/29/AZTEC-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93-II-%E5%8F%91%E5%B8%83%E8%87%B3Ganache/" class="post-title-link" itemprop="url">AZTEC-基于ethereum的隐私交易-II-发布至Ganache</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-29 19:58:04" itemprop="dateCreated datePublished" datetime="2019-07-29T19:58:04+08:00">2019-07-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="项目进展"><a href="#项目进展" class="headerlink" title="项目进展"></a>项目进展</h4><p>AZTEC目前已经在 <a target="_blank" rel="noopener" href="https://etherscan.io/address/0xcf65A4e884373Ad12cd91c8C868F1DE9DA48501F#code">ethereum mainnet 上线PoC</a>，应用于 DAI 与 AZTEC Token 的转换，即从 DAI 的明文 ERC20 到密文 AZTEC note 的转换。</p>
-<p>目前 AZTEC 也可以实现独立密文 Token 的发布和使用，完全基于密文的 Join Split 交易证明。</p>
-<p>目前如果是 2 个输入note，2 个输出note，保密交易的情况下，在 ethereum 的 gas 消耗大概是 900,000gas。如果 <a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1108.md">EIP1108</a> 上线了的话，gas 消耗大约在 200,000 — 300,000gas 之间。</p>
-<h4 id="示例项目-step-by-step-发布至-Ganache"><a href="#示例项目-step-by-step-发布至-Ganache" class="headerlink" title="示例项目 step by step 发布至 Ganache"></a>示例项目 step by step 发布至 Ganache</h4><p>1.下载，<code>git clone https://github.com/AztecProtocol/aztec-ganache-starter-kit.git</code></p>
-<p>2.安装，<code>cd aztec-ganache-starter-kit &amp;&amp; yarn install</code></p>
-<p>3.复制 account 环境，<code>cp RENAME_ME.env .env</code></p>
-<p>4.通过 **package.json **的 script，配合.env 中的 account 配置，启动 Ganache，<code>yarn start</code></p>
-<p>5.通过 **package.json **的 script，按照 truffle-config.js 中的内容，配合migrations中的发布文件，编译合约并发布至 Ganache，<code>yarn migrate</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br></pre></td><td class="code"><pre><span class="line">➜  aztec-ganache-starter-kit git:(master) ✗ yarn migrate</span><br><span class="line">yarn run v1.16.0</span><br><span class="line"><span class="meta">$</span><span class="bash"> truffle compile --all &amp;&amp; truffle migrate --reset</span></span><br><span class="line"></span><br><span class="line">Compiling your contracts...</span><br><span class="line">===========================</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling ./contracts/AceContracts.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling ./contracts/Migrations.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling ./contracts/TestERC20.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/ACE.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/NoteRegistry.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/adjustSupply/AdjustSupply.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/adjustSupply/AdjustSupplyABIEncoder.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/bilateralSwap/BilateralSwap.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/bilateralSwap/BilateralSwapABIEncoder.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/dividendComputation/DividendComputation.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/dividendComputation/DividendComputationABIEncoder.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/joinSplit/JoinSplit.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/joinSplit/JoinSplitABIEncoder.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/privateRange/PrivateRange.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ACE/validators/privateRange/PrivateRangeABIEncoder.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ERC1724/ZkAsset.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ERC1724/ZkAssetMintable.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ERC1724/ZkAssetOwnable.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/ERC20/ERC20Mintable.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/interfaces/AdjustSupplyInterface.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/interfaces/DividendComputationInterface.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/interfaces/IAZTEC.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/interfaces/IZkAsset.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/interfaces/JoinSplitInterface.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/interfaces/PrivateRangeInterface.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/libs/LibEIP712.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/libs/NoteUtils.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/libs/ProofUtils.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling @aztec/protocol/contracts/libs/SafeMath8.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling openzeppelin-solidity/contracts/math/SafeMath.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling openzeppelin-solidity/contracts/ownership/Ownable.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling openzeppelin-solidity/contracts/token/ERC20/ERC20.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiling openzeppelin-solidity/contracts/token/ERC20/IERC20.sol</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Artifacts written to /home/user/Documents/Aztec/aztec-ganache-starter-kit/build/contracts</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Compiled successfully using:</span></span><br><span class="line">   - solc: 0.5.4+commit.9549d8ff.Emscripten.clang</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Compiling your contracts...</span><br><span class="line">===========================</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Everything is up to date, there is nothing to compile.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Starting migrations...</span><br><span class="line">======================</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Network name:    <span class="string">&#x27;development&#x27;</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Network id:      1564378609369</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Block gas <span class="built_in">limit</span>: 0x6691b7</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1_initial_migration.js</span><br><span class="line">======================</span><br><span class="line"></span><br><span class="line">   Deploying &#x27;Migrations&#x27;</span><br><span class="line">   ----------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0x6d94779d277c1f3f02ae8bf1e86ca9c62866f308ccd0834347233d2522ac2306</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0x31bA6208D85a545C75186c51d0F36B1498Fd70bB</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        1</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379036</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.99580786</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            209607</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.00419214 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Saving migration to chain.</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Saving artifacts</span></span><br><span class="line">   -------------------------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Total cost:          0.00419214 ETH</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">2_ace.js</span><br><span class="line">========</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   Deploying &#x27;ACE&#x27;</span><br><span class="line">   ---------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0x249b155829f8a7c069009129d008751e8c6547d39e54b961cb07d80beec13c29</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0x7BeDb6777e6fFe535Fc444217A80edf349DB8623</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        3</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379036</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.9273801</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            3379461</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.06758922 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   Deploying &#x27;AdjustSupply&#x27;</span><br><span class="line">   ------------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0xc8c52025eb50204fee60bc65cdb7b7abc09345abff8264e0f88b3f4ec80c54f5</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0x817888dC24398DEE4A53AB6b247b58C3B22F862c</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        4</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379037</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.9142172</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            658145</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.0131629 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   Deploying &#x27;BilateralSwap&#x27;</span><br><span class="line">   -------------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0xebc929146741026593580155d9d19844c96f65877eb48faa6e43bad2da812db5</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0xcD53E73dADB6eaD307892C0aBe0bfE5B2f8f570F</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        5</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379037</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.9055876</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            431480</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.0086296 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">   Deploying &#x27;JoinSplit&#x27;</span><br><span class="line">   ---------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0x1fa8ac853d1f6c9306418c07e50f85e3fee1a759ccbe79fa5b035fac0083b00c</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0x77c76635fdBE43afECa6A12cE8588010Ea6f2E02</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        6</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379037</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.8929998</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            629390</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.0125878 ETH</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   Deploying &#x27;PrivateRange&#x27;</span><br><span class="line">   ------------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0x5820bd16d8f9b725f2dcfe965dd7d8dd20e80a763ef1a8e7c2a98c35040d05b0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0xe052a2Ab6b49af87265e7d4b245B0AbFE470865b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        7</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379037</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.88160816</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            569582</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.01139164 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   Deploying &#x27;DividendComputation&#x27;</span><br><span class="line">   -------------------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0x6154f1716037db818d98ce0293c6370b84fca6977863ce90a5f736451dca4c68</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0x36cBFA4f87a3771E92D51F41fa0E32d5Ca65f340</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        8</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379038</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.86990106</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            585355</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.0117071 ETH</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Saving migration to chain.</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Saving artifacts</span></span><br><span class="line">   -------------------------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Total cost:          0.12506826 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3_ZkAsset.js</span><br><span class="line">============</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   Deploying &#x27;TestERC20&#x27;</span><br><span class="line">   ---------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0x166f81eec89ffc816f12dbcb05a581194125df3ab191fc8025c425cd641509e2</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0x1fE2f08A5D69e6A886B349bd8c26407C0e3Ef89d</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        16</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379039</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.84888398</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            629044</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.01258088 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   Deploying &#x27;ZkAsset&#x27;</span><br><span class="line">   -------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0xba9cbfe6a1c5de0126ff7152f12b0b72812c652ad63daa6604bcefd186180a96</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0x8B02C67c7175a48e1aBA3067b5F5eEA29a051ECd</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        17</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379039</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.81309922</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            1789238</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.03578476 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   Deploying &#x27;ZkAssetMintable&#x27;</span><br><span class="line">   ---------------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> transaction <span class="built_in">hash</span>:    0xd8d3c7e33af3e7ec5dfdb8e3a0ee5d3928b884011d87035443ab229f5c7a4502</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Blocks: 0            Seconds: 0</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> contract address:    0x2E63304e1F9f6AD963540A05D3f385426957A2C7</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block number:        18</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> block timestamp:     1564379040</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> account:             0x909E433c507A398a5405677B5b2767a3f523F73b</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> balance:             999.76265604</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas used:            2522159</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> gas price:           20 gwei</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> value sent:          0 ETH</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> total cost:          0.05044318 ETH</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Saving migration to chain.</span></span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Saving artifacts</span></span><br><span class="line">   -------------------------------------</span><br><span class="line"><span class="meta">   &gt;</span><span class="bash"> Total cost:          0.09880882 ETH</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">Summary</span><br><span class="line">=======</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Total deployments:   10</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Final cost:          0.22806922 ETH</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Done in 41.03s.</span><br></pre></td></tr></table></figure>
-
-<p>第一步 1_initial_migration.js</p>
-<p>第二步 2_ace.js。发布 ACE，<code>setCommonReferenceString</code> 方法建立零知识系统的配置文档</p>
-<p><code>await aceContract.setCommonReferenceString(constants.CRS);</code></p>
-<p>通过 ACE 的<code>setProof(proofId, address)</code>方法来设定各个执行证明的合约地址。proofId 为 proof 的类别，从<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@aztec/dev-utils"><code>@aztec/dev-utils</code></a>里面取得定义。address为发布的合约地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">await aceContract.setProof(MINT_PROOF, AdjustSupply.address);</span><br><span class="line">await aceContract.setProof(BILATERAL_SWAP_PROOF, BilateralSwap.address);</span><br><span class="line">await aceContract.setProof(DIVIDEND_PROOF, DividendComputation.address);</span><br><span class="line">await aceContract.setProof(JOIN_SPLIT_PROOF, JoinSplit.address);</span><br><span class="line">await aceContract.setProof(PRIVATE_RANGE_PROOF, PrivateRange.address);</span><br></pre></td></tr></table></figure>
-
-<p>第三步 3_ZkAsset.js。发布零知识资产（ZkAsset）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// initialise the ZkAsset with an equivilant</span></span><br><span class="line"><span class="keyword">await</span> deployer.deploy(</span><br><span class="line">  ZkAsset,</span><br><span class="line">  aceContract.address,</span><br><span class="line">  TestERC20.address,</span><br><span class="line">  <span class="number">1</span>,</span><br><span class="line">  <span class="literal">false</span>,</span><br><span class="line">  <span class="literal">true</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<p>此处共计 5 个参数：</p>
-<p>1.aceAddress — ACE 的合约地址；</p>
-<p>2.linkedTokenAddress — 零知识资产所代表的公开的 ERC20 Token 的合约地址，如不代表特定 Token 则可设定为 address(0)；</p>
-<p>3.scalingFactor — 是表示与代表的 ERC20 Token 的转换比例，此处为 1:1 转换；</p>
-<p>4.canAdjustSupply — owner 是否可以修改 note 的 totalSupply；</p>
-<p>5.canConvert — 是否可以将保密 note 转换回到公开的 ERC20 Token</p>
-<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">➜  aztec-ganache-starter-kit git:(master) ✗ truffle test</span><br><span class="line">Using network &#x27;development&#x27;.</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">Compiling your contracts...</span><br><span class="line">===========================</span><br><span class="line">\&gt; Everything is up to date, there is nothing to compile.</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  Contract: PrivateVenmo</span><br><span class="line">Bob wants to deposit 100</span><br><span class="line">Bob succesffully deposited 190</span><br><span class="line">Bob takes a taxi, Sally is the driver</span><br><span class="line">The fare comes to 25</span><br><span class="line">Bob paid sally 25 for the taxi and gets 75 back</span><br><span class="line">​    ✓ Bob should be able to deposit 100 then pay sally 25 by splitting notes he owns (5861ms)</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  1 passing (6s)</span><br></pre></td></tr></table></figure>
-
-<p>测试程序位于<code>test</code>文件夹内。</p>
 
       
     </div>

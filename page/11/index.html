@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">287</span>
+          <span class="site-state-item-count">289</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,212 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/05/11/Pseudonymization%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/05/11/Pseudonymization%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">Pseudonymization算法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-11 15:00:00" itemprop="dateCreated datePublished" datetime="2024-05-11T15:00:00+08:00">2024-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-05-14 15:37:58" itemprop="dateModified" datetime="2024-05-14T15:37:58+08:00">2024-05-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V2UJ9xzbJGs&amp;t=10633s">https://www.youtube.com/watch?v=V2UJ9xzbJGs&amp;t=10633s</a><br><a target="_blank" rel="noopener" href="https://www.bis.org/about/bisih/topics/cbdc/mcbdc_bridge.htm">https://www.bis.org/about/bisih/topics/cbdc/mcbdc_bridge.htm</a><br>BIS Innovation Summit 2024: Navigating rapid innovation (day 1)中，mbridge (showcase)中讲到，其项目的privacy中使用了 Pseudonymization algorithm。下面针对 Pseudonymization 展开详细讲述。</p>
+<h2 id="1-https-github-com-kiprotect-kodex"><a href="#1-https-github-com-kiprotect-kodex" class="headerlink" title="1. https://github.com/kiprotect/kodex"></a>1. <a target="_blank" rel="noopener" href="https://github.com/kiprotect/kodex">https://github.com/kiprotect/kodex</a></h2><p>假名化（Pseudonymization）算法可以分为几个类别，包括可逆和不可逆方法，以及结构保持和格式保持方法。以下是网页中提到的一些关键点：</p>
+<h3 id="假名化技术（PET）"><a href="#假名化技术（PET）" class="headerlink" title="假名化技术（PET）"></a>假名化技术（PET）</h3><ul>
+<li>假名化是一种隐私增强技术，它将数据点中的直接或间接标识符替换为其他“假名”值，从而保护数据所属个体的身份。</li>
+</ul>
+<h3 id="假名化方法分类"><a href="#假名化方法分类" class="headerlink" title="假名化方法分类"></a>假名化方法分类</h3><ul>
+<li><strong>可逆假名化方法</strong>：允许数据去假名化，即利用额外数据（如加密密钥或映射表）从假名恢复到原始标识符。</li>
+<li><strong>不可逆假名化方法</strong>：不允许从假名恢复到原始标识符。</li>
+<li><strong>确定性假名化方法</strong>：对同一个标识符应用时总是创建相同的假名。</li>
+<li><strong>非确定性方法</strong>：即使多次应用到同一个标识符，也会生成随机假名。</li>
+<li><strong>结构保持假名化方法</strong>：保持标识符的特定内部结构。</li>
+<li><strong>格式保持假名化方法</strong>：保持数据的原始格式。</li>
+</ul>
+<h3 id="可逆方法"><a href="#可逆方法" class="headerlink" title="可逆方法"></a>可逆方法</h3><p>Kodex支持基于格式保持加密的可逆假名化方法。使用原始密钥可以解密/去假名化生成的假名。例如，<code>merengue</code>假名化方法可以操作任意二进制数据，并生成二进制假名，此外还可以保持数据的前缀结构。</p>
+<h3 id="结构保持方法"><a href="#结构保持方法" class="headerlink" title="结构保持方法"></a>结构保持方法</h3><p>基于<code>merengue</code>方法，Kodex提供了多种结构保持假名化方法，可以操作如时间戳、IP地址和数字等数据类型。这些方法保持原始数据的格式，并且也可以保持结构信息。</p>
+<h3 id="不可逆方法"><a href="#不可逆方法" class="headerlink" title="不可逆方法"></a>不可逆方法</h3><p>Kodex也支持不可逆假名化方法，特别是基于密钥哈希的消息认证码（HMAC）的假名化，以及无密钥哈希的假名化（强烈不推荐）。例如，以下动作生成基于HMAC的假名：</p>
+<h3 id="假名化方法的配置参数"><a href="#假名化方法的配置参数" class="headerlink" title="假名化方法的配置参数"></a>假名化方法的配置参数</h3><ul>
+<li><code>merengue</code>方法接受一个<code>encode</code>参数，指定结果字节字符串的编码。目前唯一可能的值（也是默认值）是<code>base64</code>。</li>
+<li><code>structured</code>方法接受以下参数：<ul>
+<li><code>preserve-prefixes</code>：如果为_true_，将保留结构化数据值的前缀。例如，使用_date_格式时，具有共同前缀的日期（例如相同的年和月）将映射到也共享相同长度前缀的假名。默认为_false_。</li>
+<li><code>type</code>：指定要假名化的数据类型。必须是<code>ip</code>、<code>date</code>、<code>integer</code>、<code>ipv4</code>或<code>ipv6</code>之一。</li>
+<li><code>type-params</code>：根据所选类型指定额外的类型参数。目前，只有<code>integer</code>类型需要强制的<code>min</code>和<code>max</code>类型参数，以指定其范围。</li>
+<li><code>format</code>：指定要假名化的数据的类型依赖格式（如果适用）。目前，只有<code>date</code>类型支持<code>format</code>参数。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-https-github-com-aws-samples-pseudonymization-service"><a href="#2-https-github-com-aws-samples-pseudonymization-service" class="headerlink" title="2. https://github.com/aws-samples/pseudonymization-service"></a>2. <a target="_blank" rel="noopener" href="https://github.com/aws-samples/pseudonymization-service">https://github.com/aws-samples/pseudonymization-service</a></h2><p>示例中，pseudonymization-service 是利用 AES+gcm+siv实现的。<br><code>AES/GCM/SIV</code> 是一种基于 AES（高级加密标准）的加密模式，它结合了 Galois/Counter Mode（GCM）和 SIV（Synthetic Initialization Vector）的特性。</p>
+<h3 id="AES-GCM-SIV-的关键特性："><a href="#AES-GCM-SIV-的关键特性：" class="headerlink" title="AES/GCM/SIV 的关键特性："></a>AES/GCM/SIV 的关键特性：</h3><ol>
+<li><strong>AES (Advanced Encryption Standard)</strong>: AES 是一种广泛使用的对称加密算法，它以128位的块大小对数据进行加密。</li>
+<li><strong>GCM (Galois/Counter Mode)</strong>: GCM 是一种认证加密模式，它不仅提供加密，还提供数据完整性校验和重放攻击保护。GCM 使用一个nonce（一次性密码），也称为初始化向量（IV），以及一个附加的认证标签（tag）来确保数据的完整性和真实性。</li>
+<li><strong>SIV (Synthetic Initialization Vector)</strong>: SIV 是一种模式，它允许使用相同的加密密钥对多个消息进行加密，而不需要为每个消息生成新的随机IV。这在某些场景下非常有用，比如当需要加密大量数据或者需要从相同的密钥派生多个IV时。</li>
+</ol>
+<h3 id="EncryptionAESGCMSIV-类："><a href="#EncryptionAESGCMSIV-类：" class="headerlink" title="EncryptionAESGCMSIV 类："></a><code>EncryptionAESGCMSIV</code> 类：</h3><p>在 Java 中，<code>EncryptionAESGCMSIV</code> 类可能是用来实现 AES/GCM/SIV 加密模式的一个类。这个类可能包含以下功能：</p>
+<ul>
+<li><strong>加密数据</strong>：使用 AES/GCM/SIV 算法对输入数据进行加密，并生成密文和认证标签。</li>
+<li><strong>解密数据</strong>：使用相同的加密密钥和正确的认证标签对密文进行解密，恢复原始数据。</li>
+<li><strong>生成和验证认证标签</strong>：在加密过程中生成认证标签，并在解密过程中验证这个标签以确保数据的完整性和真实性。</li>
+</ul>
+<h3 id="使用场景："><a href="#使用场景：" class="headerlink" title="使用场景："></a>使用场景：</h3><p>AES/GCM/SIV 算法适用于需要高安全性和效率的场景，特别是在以下情况：</p>
+<ul>
+<li>数据需要在不安全的通道上传输，比如互联网。</li>
+<li>需要确保数据的完整性和防止篡改。</li>
+<li>需要抵抗重放攻击，即攻击者不能简单地重放之前捕获的加密数据。</li>
+</ul>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><p>使用任何加密算法时，都需要遵循最佳实践，比如：</p>
+<ul>
+<li>使用强密钥。</li>
+<li>密钥管理应该安全，避免泄露。</li>
+<li>使用合适的随机数生成器来生成 IV 或 nonce。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/05/06/BIS-Innovation-Summit-2024/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/05/06/BIS-Innovation-Summit-2024/" class="post-title-link" itemprop="url">BIS-Innovation-Summit-2024</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-06 20:44:00" itemprop="dateCreated datePublished" datetime="2024-05-06T20:44:00+08:00">2024-05-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-05-07 09:21:58" itemprop="dateModified" datetime="2024-05-07T09:21:58+08:00">2024-05-07</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.bis.org/events/bis_innovation_summit_2024/overview.htm">https://www.bis.org/events/bis_innovation_summit_2024/overview.htm</a></p>
+<h3 id="High-level-panel"><a href="#High-level-panel" class="headerlink" title="High-level panel"></a><strong>High-level panel</strong></h3><p>The future of CBDCs: the road ahead for retail versus wholesale CBDCs<br><em>Technology is evolving rapidly, and many experiments in the area of CBDC are in progress or have been concluded. Policy makers are still observing and deciding any next steps. In that context, panellists will discuss the future of retail and wholesale CBDCs.</em><br><strong>Speakers:</strong>  </p>
+<ol>
+<li>Shaktikanta Das, Governor, Reserve Bank of India, Blockchain-based tokens can facilitate peer-to-peer payments, but future advancements are needed, such as: 1) programmable features; 2) interest-bearing or interest-free options; 3) offline usability; 4) digital representation of physical cash; 5) varying levels of access control. When comparing fast payment systems to tokenized central bank digital currency (CBDC) payments linked to universal basic income (UBI) bank accounts, tokenized CBDC payments offer advantages such as: 1) enhanced efficiency and transparency; 2) capability to accommodate various token types; 3) automation through programmable features.</li>
+<li>Joachim Nagel, President, Deutsche Bundesbank There’s a need to accelerate the development of digital currency, and CBDCs will be distinct. A single distributed ledger technology (DLT) platform can support a wide range of services.</li>
+<li>Fabio Panetta, Governor, Bank of Italy Difficulties encountered with centralized CBDCs include: 1) challenges in handling a large volume of system requests and transactions in retail payments; 2) difficulty in achieving privacy. Additionally, CBDCs must consider facilitating convenient and cost-effective cross-border transactions as a functional requirement. Tokenization options include: 1) each country creating its own token; 2) utilizing an EU DLT process for wholesale settlement. In the future, there may be a greater demand for data engineers rather than economic analysts.</li>
+</ol>
+<h3 id="Showcase"><a href="#Showcase" class="headerlink" title="Showcase:"></a>Showcase:</h3><ol>
+<li><p><strong>project Mandala</strong> <a target="_blank" rel="noopener" href="https://www.bis.org/about/bisih/topics/cbdc/mandala.htm">https://www.bis.org/about/bisih/topics/cbdc/mandala.htm</a><br><img src="/2024/05/06/BIS-Innovation-Summit-2024/1.png"><br><img src="/2024/05/06/BIS-Innovation-Summit-2024/2.png"></p>
+</li>
+<li><p><strong>project mBridge</strong> <a target="_blank" rel="noopener" href="https://www.bis.org/about/bisih/topics/cbdc/mcbdc_bridge.htm">https://www.bis.org/about/bisih/topics/cbdc/mcbdc_bridge.htm</a><br><img src="/2024/05/06/BIS-Innovation-Summit-2024/3.png"><br><img src="/2024/05/06/BIS-Innovation-Summit-2024/4.png"><br><img src="/2024/05/06/BIS-Innovation-Summit-2024/5.png"><br><img src="/2024/05/06/BIS-Innovation-Summit-2024/6.png"><br><img src="/2024/05/06/BIS-Innovation-Summit-2024/7.png"></p>
+</li>
+</ol>
+<p><img src="/2024/05/06/BIS-Innovation-Summit-2024/8.png"><br><img src="/2024/05/06/BIS-Innovation-Summit-2024/9.png"><br>screenshot of HK central bank system, trading from e-HKD to e-THB via mBridge.<br><img src="/2024/05/06/BIS-Innovation-Summit-2024/10.png"></p>
+<p><img src="/2024/05/06/BIS-Innovation-Summit-2024/11.png"></p>
+<p>Full video link ==&gt; <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V2UJ9xzbJGs">https://www.youtube.com/watch?v=V2UJ9xzbJGs</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -449,189 +655,6 @@
 <li>定量策略<br>这类策略主要根据定量分析结果进行交易决策。常见的定量策略有以下几种。<br> (1) 动量策略:通过动量指标判断市场和股票趋势，在趋势形成时买入，在趋势反转时卖出。<br> (2) 价值策略:通过基本面和定量指标判断股票价值，在价值被低估时买人，在价值被高估时卖出。<br> (3) 机器学习策略:利用机器学习算法分析大量数据寻找交易信号，进行机器自动化交易。</li>
 <li>定性策略<br>这类策略主要根据定性分析和交易者主观判断进行交易。常见的定性策略有以下几种。<br> (1) 趋势跟随策略:通过图形分析方法判断市场趋势，跟随上升趋势买人，跟随下跌趋势卖出。<br> (2) 消息驱动策略:根据新闻事件和消息判断股票趋势，在利好消息出现时买人，在利空消息出现时卖出。<br> (3) 经验主义策略:根据交易者的经验和主观判断进行交易决策，难以形式化与定量化。<br>综上，交易策略是交易的指导思想和行动纲领。通过研究市场规律和价格行为，选择适合自己风格与能力的策略，并不断优化和调整，最终实现稳定的投资收益，这是每个交易者和投资者的重要学习课题。选择一种适合自己的交易策略，对交易至关重要。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/" class="post-title-link" itemprop="url">DID技术以外</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-03-01 16:00:00" itemprop="dateCreated datePublished" datetime="2024-03-01T16:00:00+08:00">2024-03-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2024-03-06 17:29:26" itemprop="dateModified" datetime="2024-03-06T17:29:26+08:00">2024-03-06</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="History-and-Evolution"><a href="#History-and-Evolution" class="headerlink" title="History and Evolution"></a>History and Evolution</h3><ul>
-<li>Federated Identity (2005 <a target="_blank" rel="noopener" href="https://openid.net/">OpenID</a> ~ 2010 <a target="_blank" rel="noopener" href="https://openid.net/developers/how-connect-works/">OpenID Connect</a> ~ 2015 <a target="_blank" rel="noopener" href="https://identity.foundation/">DIF</a> <a target="_blank" rel="noopener" href="https://sovrin.org/">sovrin</a>), like Sign In with Github/Google/Facebook.</li>
-<li>Decentralised identity (2015 ~ 2020 <a target="_blank" rel="noopener" href="https://www.w3.org/TR/did-core/">W3C</a> <a target="_blank" rel="noopener" href="https://digital-strategy.ec.europa.eu/en/policies/discover-eidas">eIDAS</a> ~ )</li>
-</ul>
-<h3 id="What-DID-Enables"><a href="#What-DID-Enables" class="headerlink" title="What DID Enables"></a>What DID Enables</h3><ul>
-<li>Portability</li>
-<li>Control</li>
-<li>Authenticity</li>
-<li>Security</li>
-<li>Composability</li>
-<li>Interoperability</li>
-<li>Privacy</li>
-</ul>
-<h3 id="Recent-Regulatory-Developments"><a href="#Recent-Regulatory-Developments" class="headerlink" title="Recent Regulatory Developments"></a>Recent Regulatory Developments</h3><ul>
-<li>European Commission - welcome final agreement on EU Digital Identity Wallet.</li>
-<li>King of Bhutan - receives first National Digital Identity.</li>
-<li>18 states of USA - live or piloting Mobile Driving Licenses, 17 more in legislative process.</li>
-<li>British Columbia and Ontario launch Digital ID wallets for citizens.</li>
-</ul>
-<h3 id="EU-Digital-Identity-Wallet"><a href="#EU-Digital-Identity-Wallet" class="headerlink" title="EU Digital Identity Wallet"></a>EU Digital Identity Wallet</h3><p><img src="/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/1.jpg"><a target="_blank" rel="noopener" href="https://kyc-world.com/eu-digital-identity-wallet-on-the-road-to-implementation/">https://kyc-world.com/eu-digital-identity-wallet-on-the-road-to-implementation/</a></p>
-<p><img src="/2024/03/01/DID%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/2.jpg"><br><a target="_blank" rel="noopener" href="https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en">https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en</a></p>
-<h3 id="Regulatory-Frameworks"><a href="#Regulatory-Frameworks" class="headerlink" title="Regulatory Frameworks"></a>Regulatory Frameworks</h3><ol>
-<li>Electronic ID - <a target="_blank" rel="noopener" href="https://digital-strategy.ec.europa.eu/en/policies/discover-eidas">eIDAS</a></li>
-<li>Trust Frameworks - British, Canada, Australia, New Zealand, Sweden</li>
-<li>Privacy Regulations - EU GDPR, California consumer privacy, 香港个人资料隐私专员公署</li>
-</ol>
-<h3 id="Relevant-Standards"><a href="#Relevant-Standards" class="headerlink" title="Relevant Standards"></a>Relevant Standards</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://identity.foundation/">DIF</a> - DIDComm</li>
-<li><a target="_blank" rel="noopener" href="https://www.hyperledger.org/projects/aries">Hyperledger - Aries</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/did-core/">W3C</a> - DID, VC</li>
-<li><a target="_blank" rel="noopener" href="https://www.iso.org/standard/69084.html">ISO - MDL</a></li>
-<li>IETF - <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/">SD-JWT VC</a>, <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/">SD-JWT</a> </li>
-<li> <a target="_blank" rel="noopener" href="https://openid.net/">OpenID</a> - <a target="_blank" rel="noopener" href="https://openid.net/sg/openid4vc/libraries/">OIDC 4 VCI, OIDC 4 VP</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/02/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8polygonID/" class="post-title-link" itemprop="url">如何使用polygonID</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-02-20 14:23:00 / Modified: 15:23:09" itemprop="dateCreated datePublished" datetime="2024-02-20T14:23:00+08:00">2024-02-20</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>继续前序学习的DID产品，关于polygonID的进一步学习，本文介绍如何使用polygonID。<br>前序文章：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/15/iden3%E5%92%8CpolygonID%E5%8E%9F%E7%90%86%E5%BA%94%E7%94%A8%E5%92%8C%E5%AE%9E%E6%88%98/">iden3和polygonID原理应用和实战</a></li>
-<li><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2023/11/22/polygonID%20SDK%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">polygonID SDK部分代码分析</a><br><a target="_blank" rel="noopener" href="https://github.com/0xPolygonID/issuer-node/">polygonID Issuer-Node</a> 启动以后，有2台 docker container 服务器运行，1) Issuer Node API; 2) Issuer Node UI。这两个服务都有各自的 API 给到前端 - 手机App 或者 Web site调用。<br>其中，</li>
-<li>Issuer Node API是文档中<a target="_blank" rel="noopener" href="https://devs.polygonid.com/docs/issuer-node/issuer-node-api/introduction"> Issuer Node Core API </a>的部分。</li>
-<li>Issuer Node UI API 是文档中<a target="_blank" rel="noopener" href="https://devs.polygonid.com/docs/issuer/issuer-node-ui"> Issuer Node UI </a>的部分。<br>Issuer Node API只是在 Issuer-Node 启动时，调用一次，用来为 Issuer 生成 DID，其后不再被直接调用。前端应用调用API是调用 Issuer Node UI API。关于 Issuer Node UI API 的文档目前是<a target="_blank" rel="noopener" href="https://www.postman.com/dark-star-200015/workspace/public/folder/23322631-5f8ec341-42b9-44e5-ac45-f1ed8966bd4c">在 Postman 中</a>。其中：<ul>
-<li>Credential - VC创建，取得，删除，作废，取得状态。</li>
-<li>Auth - 鉴权 QR Code。即 Link 地址对应的 QR Code。</li>
-<li>Connection - 如文档所示( <a target="_blank" rel="noopener" href="https://devs.polygonid.com/docs/issuer-node/issuer-node-guide/">https://devs.polygonid.com/docs/issuer-node/issuer-node-guide/</a> )，Connection 展示 ID Holders 和 Credentials 的所属关系。</li>
-<li>Schema - 生成 VC 所使用的数据字段管理。</li>
-<li>State - 管理 Identity State，取得，公开至区块链。</li>
-<li>Link - 通过 link，进入VC。Link创建，取得，删除，失效，创建鉴权，和取得QR Code。</li>
-</ul>
-</li>
-</ul>
 
       
     </div>

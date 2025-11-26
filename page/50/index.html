@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">287</span>
+          <span class="site-state-item-count">289</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,175 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" class="post-title-link" itemprop="url">pbft图解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-25 10:46:16" itemprop="dateCreated datePublished" datetime="2018-06-25T10:46:16+08:00">2018-06-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-08-28 09:21:13" itemprop="dateModified" datetime="2022-08-28T09:21:13+08:00">2022-08-28</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/bigpicturelabs/consensusPBFT">https://github.com/bigpicturelabs/consensusPBFT</a><br><img src="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg"></p>
+<h4 id="Definitions-of-each-abbreviation-in-the-diagram-are"><a href="#Definitions-of-each-abbreviation-in-the-diagram-are" class="headerlink" title="Definitions of each abbreviation in the diagram are;"></a>Definitions of each abbreviation in the diagram are;</h4><p>m: Request message object<br>c: Client ID<br>t: Timestamp<br>v: View ID<br>n: Sequence ID<br>i: Peer(Node) ID<br>r: Result of the request’s operation</p>
+<h4 id="Why-count-gt-2"><a href="#Why-count-gt-2" class="headerlink" title="Why count &gt;= 2 ?"></a>Why count &gt;= 2 ?</h4><p>In the diagram, the peer change its state to prepared or committed when the count value, which is the number of verified messages from other peers, is larger than 2. Actually, the condition is count &gt;= 2*f where f is the maximum number of faulty peers, which the network can tolerate. In this case, f is just 1, so the condition is count &gt;= 2.</p>
+<h4 id="What-is-the-reply-message"><a href="#What-is-the-reply-message" class="headerlink" title="What is the reply message?"></a>What is the reply message?</h4><p>Every node replies the result of the request’s operation to the client individually. The client will collect these reply messages and if f + 1 valid reply messages are arrived, the client will accept the result. In this sample implementation, there is no client. So, every node including the primary will return its reply message to the primary.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" class="post-title-link" itemprop="url">golang 随机数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-25 10:39:42" itemprop="dateCreated datePublished" datetime="2018-06-25T10:39:42+08:00">2018-06-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-09-29 09:08:16" itemprop="dateModified" datetime="2022-09-29T09:08:16+08:00">2022-09-29</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>随机数主要分为以下三类：</p>
+<ul>
+<li>弱伪随机数</li>
+<li>强伪随机数</li>
+<li>真随机数</li>
+</ul>
+<p>随机数的分类是根据随机数的性质进行的分类。随机数的性质分为以下三类：</p>
+<ul>
+<li>随机性一不存在统计学偏差，是完全杂乱的数列</li>
+<li>不可预测性一不能从过去的数列推测出”下一个出现的数</li>
+<li>不可重现性一除非将数列本身保存下来，否则不能重现相同的数列</li>
+</ul>
+<p>密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。<br><img src="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/1.png"></p>
+<h4 id="GoLang-中的伪随机数"><a href="#GoLang-中的伪随机数" class="headerlink" title="GoLang 中的伪随机数"></a>GoLang 中的伪随机数</h4><p>在 GoLang 中，我们可以通过 math/rand 包里的方法来生成一个伪随机数：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(rand.Int())   <span class="comment">// =&gt; 134020434</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你会发现运行的结果一直是 134020434，怎样才能显示不同的结果，需要了解一下“随机种子”的概念。</p>
+<h4 id="随机种子"><a href="#随机种子" class="headerlink" title="随机种子"></a>随机种子</h4><p>伪随机数，是使用一个确定性的算法计算出来的似乎是随机的数序，因此伪随机数实际上并不随机。</p>
+<p>那么自然，在计算伪随机数时假如使用的开始值不变的话，那么算法计算出的伪随机数的数序自然也是不变的咯。</p>
+<p>这个“开始值”，就被称为随机种子。</p>
+<p>可以通过 rand.Seed 方法设置随机种子，如果不设置，则默认值显示为 1，为了保证每次伪随机数生成器工作时使用的是不同的种子，通常的做法是采用当前时间作为种子。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    rand.Seed(<span class="keyword">int64</span>(time.Now().Unix()))</span><br><span class="line">    fmt.Println(rand.Intn(<span class="number">100</span>))     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="真随机数"><a href="#真随机数" class="headerlink" title="真随机数"></a>真随机数</h4><p>如果我们的应用对安全性要求比较高，需要使用真随机数的话，那么可以使用 crypto/rand 包中的方法。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;crypto/rand&quot;</span></span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/big&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    result, _ := rand.Int(rand.Reader, big.NewInt(<span class="number">100</span>))</span><br><span class="line">    fmt.Println(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -541,178 +710,6 @@
 <li><p>开发或维护遵循 GPL 协议开发的软件的公司或个人，可以对使用者收取一定的服务费用。但还是一句老话——必须无偿提供软件的完整源代码，不得将源代码与服务做捆绑或任何变相捆绑销售。</p>
 </li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/" class="post-title-link" itemprop="url">Decentralized Identity Foundation first anniversary</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-02 01:40:41" itemprop="dateCreated datePublished" datetime="2018-06-02T01:40:41+08:00">2018-06-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://note.youdao.com/noteshare?id=40a9c148897c69d4e65cafd722ff57d3">Decentralized Identity Foundation Grows To 56 Members In Our First Year</a></p>
-<p>May 23, 2018 marks the <a target="_blank" rel="noopener" href="http://identity.foundation/">Decentralized Identity Foundation</a>’s first anniversary. Over the past year, DIF has grown from a handful of founding organizations to 56 members. Together, we’re working to shape the future of decentralized identity technology and standards.</p>
-<p><img src="/2018/06/02/Decentralized-Identity-Foundation-first-anniversary/1.jpeg"></p>
-<h4 id="Technology-Under-Development"><a href="#Technology-Under-Development" class="headerlink" title="Technology Under Development"></a>Technology Under Development</h4><p>DIF members are working together to build a variety of technologies. Much of this work is being done in collaboration with the larger open source community through the W3C and events such as Rebooting Web of Trust and the Internet Identity Workshop.</p>
-<h4 id="Decentralized-Identifiers-DIDs"><a href="#Decentralized-Identifiers-DIDs" class="headerlink" title="Decentralized Identifiers (DIDs)"></a>Decentralized Identifiers (DIDs)</h4><p><a target="_blank" rel="noopener" href="https://w3c-ccg.github.io/did-spec/">Decentralized Identifiers (DIDs)</a> are a new type of identifier for verifiable, “self-sovereign” digital identity. DIDs are fully under the control of their owner, independent from any centralized registry, identity provider, or certificate authority.</p>
-<h4 id="Universal-Resolver"><a href="#Universal-Resolver" class="headerlink" title="Universal Resolver"></a>Universal Resolver</h4><p>The <a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/universal-resolver">Universal Resolver</a> is similar to Bind in the DNS system. However, instead of working with domain names, it works with self-sovereign identifiers that can be created and registered directly by their owners. This project was organized by DIF members with funding from British Columbia.</p>
-<h4 id="Chainpoint"><a href="#Chainpoint" class="headerlink" title="Chainpoint"></a>Chainpoint</h4><p><a target="_blank" rel="noopener" href="http://chaipoint.org/">Chainpoint</a> is an open standard for anchoring data to a blockchain and creating a timestamp proof.</p>
-<h4 id="Hubs"><a href="#Hubs" class="headerlink" title="Hubs"></a>Hubs</h4><p><a target="_blank" rel="noopener" href="https://github.com/decentralized-identity/hubs/">Hubs</a> are datastores containing semantic data objects at well-known locations. Each object in a Hub is signed by an identity and accessible via a globally recognized API format that explicitly maps to semantic data objects. Hubs are addressable via unique identifiers maintained in a global namespace. Several members within DIF have announced work on hub implementations, including Microsoft and <a target="_blank" rel="noopener" href="https://sovrin.org/">Sovrin</a>.</p>
-<h4 id="DIF-Steering-Committee-Members"><a href="#DIF-Steering-Committee-Members" class="headerlink" title="DIF Steering Committee Members"></a>DIF Steering Committee Members</h4><p>We’d like to thank the following Steering Committee members for providing leadership and helping DIF grow over the past year.</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/drummondreed/">Drummond Reed</a> — Chief Trust Officer, <a target="_blank" rel="noopener" href="https://www.evernym.com/">Evernym</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/rouvenheck/">Rouven Heck</a> — Co-Founder &amp; Project Lead, <a target="_blank" rel="noopener" href="http://uport.me/">uPort</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/ryaneshea/">Ryan Shea</a> — Co-founder, <a target="_blank" rel="noopener" href="http://blockstack.org/">Blockstack</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/muneebali/">Muneeb Ali</a> — Co-founder, Blockstack</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/wayne/">Wayne Vaughan</a> — Chief Executive Officer, <a target="_blank" rel="noopener" href="http://tierion.com/">Tierion</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/dbuchner/">Daniel Buchner</a> — Senior PM, Decentralized Identity, Microsoft</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/sivakannan/">Siva Kannan </a>— Chief Software Development Officer, <a target="_blank" rel="noopener" href="http://gem.co/">Gem</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/imthedoctor/">Matt Smith </a>— Software Architect, Gem</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/vinomaster/">Dan Gisolfi</a> — CTO Trusted Identity |Distinguished Engineer, IBM</p>
-</li>
-</ul>
-<h4 id="More-Projects-companies-working-on-blockchain-and-identity"><a href="#More-Projects-companies-working-on-blockchain-and-identity" class="headerlink" title="More Projects/companies working on blockchain and identity"></a>More Projects/companies working on blockchain and identity</h4><p><a target="_blank" rel="noopener" href="https://github.com/peacekeeper/blockchain-identity">More Projects/companies working on blockchain and identity. </a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/25/PBFT%E5%8D%8F%E8%AE%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B1%82N-3f-1/" class="post-title-link" itemprop="url">PBFT协议为什么要求N>3f+1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-05-25 17:00:31" itemprop="dateCreated datePublished" datetime="2018-05-25T17:00:31+08:00">2018-05-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-08-28 09:21:17" itemprop="dateModified" datetime="2022-08-28T09:21:17+08:00">2022-08-28</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>最坏的情况是：f个节点是有问题的，由于到达顺序的问题，有可能f个有问题的节点比正常的f个节点先返回消息，又要保证收到的正常的节点比有问题的节点多，所以需要满足N-f-f&gt;f =&gt; N&gt;3f，所以至少3f+1个节点。</p>
-<p>为什么至少要2f个prepare (包括自己的pre-prepare共2f+1)。这是因为之前论证的，如果有f个fault 节点，那么节点总数至少是N=3f+1。简单说一下论证过程，假设总数N个节点，f个fault节点，那么必须接收到N-f个消息应答，才能够判断出结果(因为fault节点可能不发送应答)。N-f个应答中有f个可能是假的(fault节点发出的)，那么真实的是N-f-f，要求真实的应答大于假的应答，即N-f-f &gt; f ==&gt; N &gt; 3f。所以: N_min = 3f+1 所以在prepare和commit两个阶段必须收到2f+1(包括自己) 的应答消息，才能证明有f+1非fault节点发送了应答。(注意前提是非fault对于相同的消息，会产生相同的消息应答)那么这里也有个问题：就是接收2f+1个消息的时，判断是否一致，是否需要对比数据的的签名。我的看法是，如果2f+1个v，n都相同，d(m)只需要f+1相同就可以了。否则就共识失败了。</p>
 
       
     </div>

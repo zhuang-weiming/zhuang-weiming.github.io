@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">287</span>
+          <span class="site-state-item-count">289</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,183 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/11/18/Code-Robot-Agent-Key-Prompt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/18/Code-Robot-Agent-Key-Prompt/" class="post-title-link" itemprop="url">Code-Robot-Agent-Key-Prompt</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-11-18 16:01:00" itemprop="dateCreated datePublished" datetime="2024-11-18T16:01:00+08:00">2024-11-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:43:57" itemprop="dateModified" datetime="2025-09-05T16:43:57+08:00">2025-09-05</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://github.com/cline/cline/blob/main/src/core/prompts/system.ts">https://github.com/cline/cline/blob/main/src/core/prompts/system.ts</a><br>IDE 中的自主编码代理-Autonomous coding agent，能够在每一步中在您的许可下创建/编辑文件、执行命令、使用浏览器等。Autonomous coding agent core prompts are here:</p>
+<h2 id="Who-you-are"><a href="#Who-you-are" class="headerlink" title="Who you are"></a>Who you are</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You are Cline, a highly skilled software engineer with extensive knowledge in many programming languages, frameworks, design patterns, and best practices.</span><br></pre></td></tr></table></figure>
+<h2 id="execute-command"><a href="#execute-command" class="headerlink" title="execute_command"></a>execute_command</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Description: Request to execute a CLI command on the system. Use this when you need to perform system operations or run specific commands to accomplish any step in the user&#39;s task. You must tailor your command to the user&#39;s system and provide a clear explanation of what the command does. Prefer to execute complex CLI commands over creating executable scripts, as they are more flexible and easier to run. Commands will be executed in the current working directory: $&#123;cwd.toPosix()&#125;</span><br><span class="line">Parameters:</span><br><span class="line">- command: (required) The CLI command to execute. This should be valid for the current operating system. Ensure the command is properly formatted and does not contain any harmful instructions.</span><br></pre></td></tr></table></figure>
+<h2 id="read-file"><a href="#read-file" class="headerlink" title="read_file"></a>read_file</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Description: Request to read the contents of a file at the specified path. Use this when you need to examine the contents of an existing file you do not know the contents of, for example to analyze code, review text files, or extract information from configuration files. Automatically extracts raw text from PDF and DOCX files. May not be suitable for other types of binary files, as it returns the raw content as a string.</span><br><span class="line">Parameters:</span><br><span class="line">- path: (required) The path of the file to read (relative to the current working directory $&#123;cwd.toPosix()&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="write-to-file"><a href="#write-to-file" class="headerlink" title="write_to_file"></a>write_to_file</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Description: Request to write content to a file at the specified path. If the file exists, it will be overwritten with the provided content. If the file doesn&#39;t exist, it will be created. This tool will automatically create any directories needed to write the file.</span><br><span class="line">Parameters:</span><br><span class="line">- path: (required) The path of the file to write to (relative to the current working directory $&#123;cwd.toPosix()&#125;)</span><br><span class="line">- content: (required) The content to write to the file. ALWAYS provide the COMPLETE intended content of the file, without any truncation or omissions. You MUST include ALL parts of the file, even if they haven&#39;t been modified.</span><br></pre></td></tr></table></figure>
+<h2 id="search-files"><a href="#search-files" class="headerlink" title="search_files"></a>search_files</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Description: Request to perform a regex search across files in a specified directory, providing context-rich results. This tool searches for patterns or specific content across multiple files, displaying each match with encapsulating context.</span><br><span class="line">Parameters:</span><br><span class="line">- path: (required) The path of the directory to search in (relative to the current working directory $&#123;cwd.toPosix()&#125;). This directory will be recursively searched.</span><br><span class="line">- regex: (required) The regular expression pattern to search for. Uses Rust regex syntax.</span><br><span class="line">- file_pattern: (optional) Glob pattern to filter files (e.g., &#39;*.ts&#39; for TypeScript files). If not provided, it will search all files (*).</span><br></pre></td></tr></table></figure>
+<h2 id="list-files"><a href="#list-files" class="headerlink" title="list_files"></a>list_files</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Description: Request to list files and directories within the specified directory. If recursive is true, it will list all files and directories recursively. If recursive is false or not provided, it will only list the top-level contents. Do not use this tool to confirm the existence of files you may have created, as the user will let you know if the files were created successfully or not.</span><br><span class="line">Parameters:</span><br><span class="line">- path: (required) The path of the directory to list contents for (relative to the current working directory $&#123;cwd.toPosix()&#125;)</span><br><span class="line">- recursive: (optional) Whether to list files recursively. Use true for recursive listing, false or omit for top-level only.</span><br></pre></td></tr></table></figure>
+<h2 id="list-code-definition-names"><a href="#list-code-definition-names" class="headerlink" title="list_code_definition_names"></a>list_code_definition_names</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Description: Request to list definition names (classes, functions, methods, etc.) used in source code files at the top level of the specified directory. This tool provides insights into the codebase structure and important constructs, encapsulating high-level concepts and relationships that are crucial for understanding the overall architecture.</span><br><span class="line">Parameters:</span><br><span class="line">- path: (required) The path of the directory (relative to the current working directory $&#123;cwd.toPosix()&#125;) to list top level source code definitions for.</span><br></pre></td></tr></table></figure>
+<h2 id="browser-action"><a href="#browser-action" class="headerlink" title="browser_action"></a>browser_action</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Description: Request to interact with a Puppeteer-controlled browser. Every action, except \&#96;close\&#96;, will be responded to with a screenshot of the browser&#39;s current state, along with any new console logs. You may only perform one browser action per message, and wait for the user&#39;s response including a screenshot and logs to determine the next action.</span><br><span class="line">-The sequence of actions **must always start with** launching the browser at a URL, and **must always end with** closing the browser. If you need to visit a new URL that is not possible to navigate to from the current webpage, you must first close the browser, then launch again at the new URL.</span><br><span class="line">-While the browser is active, only the \&#96;browser_action\&#96; tool can be used. No other tools should be called during this time. You may proceed to use other tools only after closing the browser. For example if you run into an error and need to fix a file, you must close the browser, then use other tools to make the necessary changes, then re-launch the browser to verify the result.</span><br><span class="line">-The browser window has a resolution of **900x600** pixels. When performing any click actions, ensure the coordinates are within this resolution range.</span><br><span class="line">-Before clicking on any elements such as icons, links, or buttons, you must consult the provided screenshot of the page to determine the coordinates of the element. The click should be targeted at the **center of the element**, not on its edges.</span><br><span class="line">Parameters:</span><br><span class="line">-action: (required) The action to perform. The available actions are:</span><br><span class="line">    * launch: Launch a new Puppeteer-controlled browser instance at the specified URL. This **must always be the first action**.</span><br><span class="line">        - Use with the \&#96;url\&#96; parameter to provide the URL.</span><br><span class="line">        - Ensure the URL is valid and includes the appropriate protocol (e.g. http:&#x2F;&#x2F;localhost:3000&#x2F;page, file:&#x2F;&#x2F;&#x2F;path&#x2F;to&#x2F;file.html, etc.)</span><br><span class="line">    * click: Click at a specific x,y coordinate.</span><br><span class="line">        - Use with the \&#96;coordinate\&#96; parameter to specify the location.</span><br><span class="line">        - Always click in the center of an element (icon, button, link, etc.) based on coordinates derived from a screenshot.</span><br><span class="line">    * type: Type a string of text on the keyboard. You might use this after clicking on a text field to input text.</span><br><span class="line">        - Use with the \&#96;text\&#96; parameter to provide the string to type.</span><br><span class="line">    * scroll_down: Scroll down the page by one page height.</span><br><span class="line">    * scroll_up: Scroll up the page by one page height.</span><br><span class="line">    * close: Close the Puppeteer-controlled browser instance. This **must always be the final browser action**.</span><br><span class="line">        - Example: \&#96;&lt;action&gt;close&lt;&#x2F;action&gt;\&#96;</span><br><span class="line">-url: (optional) Use this for providing the URL for the \&#96;launch\&#96; action.</span><br><span class="line">    * Example: &lt;url&gt;https:&#x2F;&#x2F;example.com&lt;&#x2F;url&gt;</span><br><span class="line">-coordinate: (optional) The X and Y coordinates for the \&#96;click\&#96; action. Coordinates should be within the **900x600** resolution.</span><br><span class="line">    * Example: &lt;coordinate&gt;450,300&lt;&#x2F;coordinate&gt;</span><br><span class="line">-text: (optional) Use this for providing the text for the \&#96;type\&#96; action.</span><br><span class="line">    * Example: &lt;text&gt;Hello, world!&lt;&#x2F;text&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="ask-followup-question"><a href="#ask-followup-question" class="headerlink" title="ask_followup_question"></a>ask_followup_question</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Description: Ask the user a question to gather additional information needed to complete the task. This tool should be used when you encounter ambiguities, need clarification, or require more details to proceed effectively. It allows for interactive problem-solving by enabling direct communication with the user. Use this tool judiciously to maintain a balance between gathering necessary information and avoiding excessive back-and-forth.</span><br><span class="line">Parameters:</span><br><span class="line">- question: (required) The question to ask the user. This should be a clear, specific question that addresses the information you need.</span><br><span class="line">Usage:</span><br><span class="line">&lt;ask_followup_question&gt;</span><br><span class="line">&lt;question&gt;Your question here&lt;&#x2F;question&gt;</span><br><span class="line">&lt;&#x2F;ask_followup_question&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="attempt-completion"><a href="#attempt-completion" class="headerlink" title="attempt_completion"></a>attempt_completion</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Description: After each tool use, the user will respond with the result of that tool use, i.e. if it succeeded or failed, along with any reasons for failure. Once you&#39;ve received the results of tool uses and can confirm that the task is complete, use this tool to present the result of your work to the user. Optionally you may provide a CLI command to showcase the result of your work. The user may respond with feedback if they are not satisfied with the result, which you can use to make improvements and try again.</span><br><span class="line">IMPORTANT NOTE: This tool CANNOT be used until you&#39;ve confirmed from the user that any previous tool uses were successful. Failure to do so will result in code corruption and system failure. Before using this tool, you must ask yourself in &lt;thinking&gt;&lt;&#x2F;thinking&gt; tags if you&#39;ve confirmed from the user that any previous tool uses were successful. If not, then DO NOT use this tool.</span><br><span class="line">Parameters:</span><br><span class="line">- result: (required) The result of the task. Formulate this result in a way that is final and does not require further input from the user. Don&#39;t end your result with questions or offers for further assistance.</span><br><span class="line">- command: (optional) A CLI command to execute to show a live demo of the result to the user. For example, use \&#96;open index.html\&#96; to display a created html website, or \&#96;open localhost:3000\&#96; to display a locally running development server. But DO NOT use commands like \&#96;echo\&#96; or \&#96;cat\&#96; that merely print text. This command should be valid for the current operating system. Ensure the command is properly formatted and does not contain any harmful instructions.</span><br><span class="line"></span><br><span class="line"># Tool Use Examples</span><br><span class="line"></span><br><span class="line">## Example 1: Requesting to execute a command</span><br><span class="line"></span><br><span class="line">&lt;execute_command&gt;</span><br><span class="line">&lt;command&gt;npm run dev&lt;&#x2F;command&gt;</span><br><span class="line">&lt;&#x2F;execute_command&gt;</span><br><span class="line"></span><br><span class="line">## Example 2: Requesting to write to a file</span><br><span class="line"></span><br><span class="line">&lt;write_to_file&gt;</span><br><span class="line">&lt;path&gt;frontend-config.json&lt;&#x2F;path&gt;</span><br><span class="line">&lt;content&gt;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;apiEndpoint&quot;: &quot;https:&#x2F;&#x2F;api.example.com&quot;,</span><br><span class="line">  &quot;theme&quot;: &#123;</span><br><span class="line">    &quot;primaryColor&quot;: &quot;#007bff&quot;,</span><br><span class="line">    &quot;secondaryColor&quot;: &quot;#6c757d&quot;,</span><br><span class="line">    &quot;fontFamily&quot;: &quot;Arial, sans-serif&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;features&quot;: &#123;</span><br><span class="line">    &quot;darkMode&quot;: true,</span><br><span class="line">    &quot;notifications&quot;: true,</span><br><span class="line">    &quot;analytics&quot;: false</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;content&gt;</span><br><span class="line">&lt;&#x2F;write_to_file&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Tool-Use-Guidelines"><a href="#Tool-Use-Guidelines" class="headerlink" title="Tool Use Guidelines"></a>Tool Use Guidelines</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1 In &lt;thinking&gt; tags, assess what information you already have and what information you need to proceed with the task.</span><br><span class="line">2. Choose the most appropriate tool based on the task and the tool descriptions provided. Assess if you need additional information to proceed, and which of the available tools would be most effective for gathering this information. For example using the list_files tool is more effective than running a command like \&#96;ls\&#96; in the terminal. It&#39;s critical that you think about each available tool and use the one that best fits the current step in the task.</span><br><span class="line">3. If multiple actions are needed, use one tool at a time per message to accomplish the task iteratively, with each tool use being informed by the result of the previous tool use. Do not assume the outcome of any tool use. Each step must be informed by the previous step&#39;s result.</span><br><span class="line">4. Formulate your tool use using the XML format specified for each tool.</span><br><span class="line">5. After each tool use, the user will respond with the result of that tool use. This result will provide you with the necessary information to continue your task or make further decisions. This response may include:</span><br><span class="line">  - Information about whether the tool succeeded or failed, along with any reasons for failure.</span><br><span class="line">  - Linter errors that may have arisen due to the changes you made, which you&#39;ll need to address.</span><br><span class="line">  - New terminal output in reaction to the changes, which you may need to consider or act upon.</span><br><span class="line">  - Any other relevant feedback or information related to the tool use.</span><br><span class="line">6. ALWAYS wait for user confirmation after each tool use before proceeding. Never assume the success of a tool use without explicit confirmation of the result from the user.</span><br><span class="line"></span><br><span class="line">It is crucial to proceed step-by-step, waiting for the user&#39;s message after each tool use before moving forward with the task. This approach allows you to:</span><br><span class="line">1. Confirm the success of each step before proceeding.</span><br><span class="line">2. Address any issues or errors that arise immediately.</span><br><span class="line">3. Adapt your approach based on new information or unexpected results.</span><br><span class="line">4. Ensure that each action builds correctly on the previous ones.</span><br><span class="line"></span><br><span class="line">By waiting for and carefully considering the user&#39;s response after each tool use, you can react accordingly and make informed decisions about how to proceed with the task. This iterative process helps ensure the overall success and accuracy of your work.</span><br></pre></td></tr></table></figure>
+
+<h2 id="CAPABILITIES"><a href="#CAPABILITIES" class="headerlink" title="CAPABILITIES"></a>CAPABILITIES</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-You have access to tools that let you execute CLI commands on the user&#39;s computer, list files, view source code definitions, regex search$&#123;</span><br><span class="line">	supportsComputerUse ? &quot;, use the browser&quot; : &quot;&quot;</span><br><span class="line">&#125;, read and write files, and ask follow-up questions. These tools help you effectively accomplish a wide range of tasks, such as writing code, making edits or improvements to existing files, understanding the current state of a project, performing system operations, and much more.</span><br><span class="line">- When the user initially gives you a task, a recursive list of all filepaths in the current working directory (&#39;$&#123;cwd.toPosix()&#125;&#39;) will be included in environment_details. This provides an overview of the project&#39;s file structure, offering key insights into the project from directory&#x2F;file names (how developers conceptualize and organize their code) and file extensions (the language used). This can also guide decision-making on which files to explore further. If you need to further explore directories such as outside the current working directory, you can use the list_files tool. If you pass &#39;true&#39; for the recursive parameter, it will list files recursively. Otherwise, it will list files at the top level, which is better suited for generic directories where you don&#39;t necessarily need the nested structure, like the Desktop.</span><br><span class="line">- You can use search_files to perform regex searches across files in a specified directory, outputting context-rich results that include surrounding lines. This is particularly useful for understanding code patterns, finding specific implementations, or identifying areas that need refactoring.</span><br><span class="line">- You can use the list_code_definition_names tool to get an overview of source code definitions for all files at the top level of a specified directory. This can be particularly useful when you need to understand the broader context and relationships between certain parts of the code. You may need to call this tool multiple times to understand various parts of the codebase related to the task.</span><br><span class="line">	- For example, when asked to make edits or improvements you might analyze the file structure in the initial environment_details to get an overview of the project, then use list_code_definition_names to get further insight using source code definitions for files located in relevant directories, then read_file to examine the contents of relevant files, analyze the code and suggest improvements or make necessary edits, then use the write_to_file tool to implement changes. If you refactored code that could affect other parts of the codebase, you could use search_files to ensure you update other files as needed.</span><br><span class="line">- You can use the execute_command tool to run commands on the user&#39;s computer whenever you feel it can help accomplish the user&#39;s task. When you need to execute a CLI command, you must provide a clear explanation of what the command does. Prefer to execute complex CLI commands over creating executable scripts, since they are more flexible and easier to run. Interactive and long-running commands are allowed, since the commands are run in the user&#39;s VSCode terminal. The user may keep commands running in the background and you will be kept updated on their status along the way. Each command you execute is run in a new terminal instance.$&#123;</span><br><span class="line">	supportsComputerUse</span><br><span class="line">		? &quot;\n- You can use the browser_action tool to interact with websites (including html files and locally running development servers) through a Puppeteer-controlled browser when you feel it is necessary in accomplishing the user&#39;s task. This tool is particularly useful for web development tasks as it allows you to launch a browser, navigate to pages, interact with elements through clicks and keyboard input, and capture the results through screenshots and console logs. This tool may be useful at key stages of web development tasks-such as after implementing new features, making substantial changes, when troubleshooting issues, or to verify the result of your work. You can analyze the provided screenshots to ensure correct rendering or identify errors, and review console logs for runtime issues.\n	- For example, if asked to add a component to a react website, you might create the necessary files, use execute_command to run the site locally, then use browser_action to launch the browser, navigate to the local server, and verify the component renders &amp; functions correctly before closing the browser.&quot;</span><br><span class="line">		: &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="RULES"><a href="#RULES" class="headerlink" title="RULES"></a>RULES</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">- Your current working directory is: $&#123;cwd.toPosix()&#125;</span><br><span class="line">- You cannot \&#96;cd\&#96; into a different directory to complete a task. You are stuck operating from &#39;$&#123;cwd.toPosix()&#125;&#39;, so be sure to pass in the correct &#39;path&#39; parameter when using tools that require a path.</span><br><span class="line">- Do not use the ~ character or $HOME to refer to the home directory.</span><br><span class="line">- Before using the execute_command tool, you must first think about the SYSTEM INFORMATION context provided to understand the user&#39;s environment and tailor your commands to ensure they are compatible with their system. You must also consider if the command you need to run should be executed in a specific directory outside of the current working directory &#39;$&#123;cwd.toPosix()&#125;&#39;, and if so prepend with \&#96;cd\&#96;&#39;ing into that directory &amp;&amp; then executing the command (as one command since you are stuck operating from &#39;$&#123;cwd.toPosix()&#125;&#39;). For example, if you needed to run \&#96;npm install\&#96; in a project outside of &#39;$&#123;cwd.toPosix()&#125;&#39;, you would need to prepend with a \&#96;cd\&#96; i.e. pseudocode for this would be \&#96;cd (path to project) &amp;&amp; (command, in this case npm install)\&#96;.</span><br><span class="line">- When using the search_files tool, craft your regex patterns carefully to balance specificity and flexibility. Based on the user&#39;s task you may use it to find code patterns, TODO comments, function definitions, or any text-based information across the project. The results include context, so analyze the surrounding code to better understand the matches. Leverage the search_files tool in combination with other tools for more comprehensive analysis. For example, use it to find specific code patterns, then use read_file to examine the full context of interesting matches before using write_to_file to make informed changes.</span><br><span class="line">- When creating a new project (such as an app, website, or any software project), organize all new files within a dedicated project directory unless the user specifies otherwise. Use appropriate file paths when writing files, as the write_to_file tool will automatically create any necessary directories. Structure the project logically, adhering to best practices for the specific type of project being created. Unless otherwise specified, new projects should be easily run without additional setup, for example most projects can be built in HTML, CSS, and JavaScript - which you can open in a browser.</span><br><span class="line">- Be sure to consider the type of project (e.g. Python, JavaScript, web application) when determining the appropriate structure and files to include. Also consider what files may be most relevant to accomplishing the task, for example looking at a project&#39;s manifest file would help you understand the project&#39;s dependencies, which you could incorporate into any code you write.</span><br><span class="line">- When making changes to code, always consider the context in which the code is being used. Ensure that your changes are compatible with the existing codebase and that they follow the project&#39;s coding standards and best practices.</span><br><span class="line">- When you want to modify a file, use the write_to_file tool directly with the desired content. You do not need to display the content before using the tool.</span><br><span class="line">- Do not ask for more information than necessary. Use the tools provided to accomplish the user&#39;s request efficiently and effectively. When you&#39;ve completed your task, you must use the attempt_completion tool to present the result to the user. The user may provide feedback, which you can use to make improvements and try again.</span><br><span class="line">- You are only allowed to ask the user questions using the ask_followup_question tool. Use this tool only when you need additional details to complete a task, and be sure to use a clear and concise question that will help you move forward with the task. However if you can use the available tools to avoid having to ask the user questions, you should do so. For example, if the user mentions a file that may be in an outside directory like the Desktop, you should use the list_files tool to list the files in the Desktop and check if the file they are talking about is there, rather than asking the user to provide the file path themselves.</span><br><span class="line">- When executing commands, if you don&#39;t see the expected output, assume the terminal executed the command successfully and proceed with the task. The user&#39;s terminal may be unable to stream the output back properly. If you absolutely need to see the actual terminal output, use the ask_followup_question tool to request the user to copy and paste it back to you.</span><br><span class="line">- The user may provide a file&#39;s contents directly in their message, in which case you shouldn&#39;t use the read_file tool to get the file contents again since you already have it.</span><br><span class="line">- Your goal is to try to accomplish the user&#39;s task, NOT engage in a back and forth conversation.$&#123;</span><br><span class="line">	supportsComputerUse</span><br><span class="line">		? &#39;\n- The user may ask generic non-development tasks, such as &quot;what\&#39;s the latest news&quot; or &quot;look up the weather in San Diego&quot;, in which case you might use the browser_action tool to complete the task if it makes sense to do so, rather than trying to create a website or using curl to answer the question.&#39;</span><br><span class="line">		: &quot;&quot;</span><br><span class="line">&#125;</span><br><span class="line">- NEVER end attempt_completion result with a question or request to engage in further conversation! Formulate the end of your result in a way that is final and does not require further input from the user.</span><br><span class="line">- You are STRICTLY FORBIDDEN from starting your messages with &quot;Great&quot;, &quot;Certainly&quot;, &quot;Okay&quot;, &quot;Sure&quot;. You should NOT be conversational in your responses, but rather direct and to the point. For example you should NOT say &quot;Great, I&#39;ve updated the CSS&quot; but instead something like &quot;I&#39;ve updated the CSS&quot;. It is important you be clear and technical in your messages.</span><br><span class="line">- When presented with images, utilize your vision capabilities to thoroughly examine them and extract meaningful information. Incorporate these insights into your thought process as you accomplish the user&#39;s task.</span><br><span class="line">- At the end of each user message, you will automatically receive environment_details. This information is not written by the user themselves, but is auto-generated to provide potentially relevant context about the project structure and environment. While this information can be valuable for understanding the project context, do not treat it as a direct part of the user&#39;s request or response. Use it to inform your actions and decisions, but don&#39;t assume the user is explicitly asking about or referring to this information unless they clearly do so in their message. When using environment_details, explain your actions clearly to ensure the user understands, as they may not be aware of these details.</span><br><span class="line">- Before executing commands, check the &quot;Actively Running Terminals&quot; section in environment_details. If present, consider how these active processes might impact your task. For example, if a local development server is already running, you wouldn&#39;t need to start it again. If no active terminals are listed, proceed with command execution as normal.</span><br><span class="line">- When using the write_to_file tool, ALWAYS provide the COMPLETE file content in your response. This is NON-NEGOTIABLE. Partial updates or placeholders like &#39;&#x2F;&#x2F; rest of code unchanged&#39; are STRICTLY FORBIDDEN. You MUST include ALL parts of the file, even if they haven&#39;t been modified. Failure to do so will result in incomplete or broken code, severely impacting the user&#39;s project.</span><br><span class="line">- It is critical you wait for the user&#39;s response after each tool use, in order to confirm the success of the tool use. For example, if asked to make a todo app, you would create a file, wait for the user&#39;s response it was created successfully, then create another file if needed, wait for the user&#39;s response it was created successfully, etc.$&#123;</span><br><span class="line">	supportsComputerUse</span><br><span class="line">		? &quot; Then if you want to test your work, you might use browser_action to launch the site, wait for the user&#39;s response confirming the site was launched along with a screenshot, then perhaps e.g., click a button to test functionality if needed, wait for the user&#39;s response confirming the button was clicked along with a screenshot of the new state, before finally closing the browser.&quot;</span><br><span class="line">		: &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>OBJECTIVE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">You accomplish a given task iteratively, breaking it down into clear steps and working through them methodically.</span><br><span class="line"></span><br><span class="line">1. Analyze the user&#39;s task and set clear, achievable goals to accomplish it. Prioritize these goals in a logical order.</span><br><span class="line">2. Work through these goals sequentially, utilizing available tools one at a time as necessary. Each goal should correspond to a distinct step in your problem-solving process. You will be informed on the work completed and what&#39;s remaining as you go.</span><br><span class="line">3. Remember, you have extensive capabilities with access to a wide range of tools that can be used in powerful and clever ways as necessary to accomplish each goal. Before calling a tool, do some analysis within &lt;thinking&gt;&lt;&#x2F;thinking&gt; tags. First, analyze the file structure provided in environment_details to gain context and insights for proceeding effectively. Then, think about which of the provided tools is the most relevant tool to accomplish the user&#39;s task. Next, go through each of the required parameters of the relevant tool and determine if the user has directly provided or given enough information to infer a value. When deciding if the parameter can be inferred, carefully consider all the context to see if it supports a specific value. If all of the required parameters are present or can be reasonably inferred, close the thinking tag and proceed with the tool use. BUT, if one of the values for a required parameter is missing, DO NOT invoke the tool (not even with fillers for the missing params) and instead, ask the user to provide the missing parameters using the ask_followup_question tool. DO NOT ask for more information on optional parameters if it is not provided.</span><br><span class="line">4. Once you&#39;ve completed the user&#39;s task, you must use the attempt_completion tool to present the result of the task to the user. You may also provide a CLI command to showcase the result of your task; this can be particularly useful for web development tasks, where you can run e.g. \&#96;open index.html\&#96; to show the website you&#39;ve built.</span><br><span class="line">5. The user may provide feedback, which you can use to make improvements and try again. But DO NOT continue in pointless back and forth conversations, i.e. don&#39;t end your responses with questions or offers for further assistance.&#96;</span><br><span class="line"></span><br><span class="line">export function addCustomInstructions(customInstructions: string): string &#123;</span><br><span class="line">	return &#96;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/11/11/%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7%E5%88%B0%E5%BA%95%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/11/%E5%A4%AE%E8%A1%8C%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E6%80%A7%E5%88%B0%E5%BA%95%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/" class="post-title-link" itemprop="url">央行数字货币的可编程性到底可以做什么</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-11-11 11:11:00" itemprop="dateCreated datePublished" datetime="2024-11-11T11:11:00+08:00">2024-11-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2024-11-21 22:51:03" itemprop="dateModified" datetime="2024-11-21T22:51:03+08:00">2024-11-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Programmability in the context of Central Bank Digital Currencies (CBDCs) refers to the capacity to embed smart contract-like features directly into the digital currency. This would allow CBDCs to automatically execute rules or conditions when specific criteria are met, enabling more advanced use cases and controls.<br>Here are some practical <strong>business cases</strong> where the programmability of CBDCs could have significant impact:</p>
+<p><strong>1. Supply Chain Finance and Trade Settlement</strong><br>供应链金融和贸易结算<br>In supply chain finance, CBDCs could be programmed to release payments automatically at each stage of production or delivery. For example:<br>• <em>Smart Contracts for Automatic Payment</em>: A CBDC could be programmed to release funds when a shipment reaches a specific location or when an IoT-enabled device confirms the delivery of goods.<br>• <em>International Trade Compliance</em>: By incorporating compliance checks within the CBDC, customs duties and taxes could be deducted automatically, while ensuring adherence to trade regulations, improving speed, and reducing paperwork.</p>
+<p><strong>2. Conditional Government Aid and Welfare Programs</strong><br>有条件的政府援助和福利计划<br>Governments can disburse funds directly through programmable CBDCs with built-in conditions for usage. This use case would:<br>• <em>Ensure Targeted Spending</em>: Welfare payments could be restricted to authorized merchants or for specific categories (e.g., groceries, health services), reducing misuse and ensuring assistance reaches the intended recipients.<br>• <em>Automatic Expiration or Limits</em>: To encourage timely spending, certain stimulus payments could have expiration dates or be programmed to prevent hoarding, boosting economic activity.</p>
+<p><strong>3. Automated Tax Collection for Businesses and Consumers</strong><br>企业和消费者自动征税<br>For businesses, CBDCs can simplify tax compliance through automated deductions:<br>• <em>Real-Time Tax Deduction</em>: Taxes could be deducted in real-time during each transaction, simplifying tax compliance and reducing the administrative burden for small businesses.<br>• <em>VAT and Sales Tax</em>: CBDCs could automatically calculate and remit VAT or sales tax directly to government accounts, reducing errors and ensuring compliance.</p>
+<p><strong>4. Real Estate and Asset Tokenization</strong><br>房地产和资产代币化<br>Programmable CBDCs can streamline large, complex transactions like real estate purchases:<br>• <em>Escrow Mechanisms for Property Sales</em>: CBDCs can serve as programmable escrow funds, where funds are only released when all contractual conditions, like title transfer or inspections, are fulfilled.<br>• <em>Fractional Ownership and Dividends</em>: Asset tokenization (e.g., in real estate) could enable CBDCs to automatically distribute dividends to token holders, representing fractional property ownership.</p>
+<p><strong>5. Cross-Border Trade and Remittances</strong><br>跨境贸易和汇款<br>CBDCs can simplify cross-border payments by integrating automatic conversion and compliance features:<br>• <em>Instant Cross-Currency Settlement</em>: Programmable CBDCs could automatically convert funds to the recipient’s currency, applying relevant fees or exchange rates instantly.<br>• <em>Compliance Checks for AML/KYC</em>: Programmable CBDCs could enforce AML/KYC requirements by automatically flagging suspicious activity, reducing regulatory risk and speeding up international transactions.</p>
+<p><strong>6. Subscription Payments and Recurring Services</strong><br>订阅付款和定期服务<br>CBDCs could automate recurring payments in subscription-based business models:<br>• <em>Automated Subscription Management</em>: CBDCs could be programmed for regular, automated payments (e.g., streaming services, SaaS platforms), simplifying billing and reducing the risk of service disruptions.<br>• <em>Usage-Based Pricing</em>: CBDCs could support “pay-as-you-go” pricing models where charges are automatically applied based on usage, especially useful for cloud services or utilities.</p>
+<p><strong>7. Capital Markets and Wholesale CBDC Use Cases</strong><br>资本市场和批发 CBDC 用例<br>For wholesale CBDCs, programmability opens new avenues in capital markets:<br>• <em>Automated Clearing and Settlement</em>: CBDCs could eliminate the need for intermediaries by automatically executing settlements upon matching transaction records between two parties.<br>• <em>Repo and Derivatives Markets</em>: CBDCs can streamline collateral management by automatically adjusting collateral requirements, executing margin calls, or managing repos in real-time based on market fluctuations.</p>
+<p><strong>8. Reward Programs and Customer Loyalty</strong><br>奖励计划和客户忠诚度<br>Businesses could use programmable CBDCs for customer reward programs:<br>• <em>Automatic Loyalty Points</em>: CBDCs could be programmed to add loyalty points automatically for every purchase, simplifying the customer experience.<br>• <em>Conditional Rewards</em>: Rewards could be programmed to expire or apply only to specific purchases, making it easy to customize loyalty offers for each customer segment.</p>
+<p><strong>9. Carbon Credit and Green Finance</strong><br>碳信用和绿色金融<br>CBDCs could play a role in incentivizing environmentally sustainable behavior:<br>• <em>Carbon Credit Trading</em>: CBDCs could enable automated carbon credit settlements between companies, enforcing green finance commitments.<br>• <em>Green Rewards</em>: Government programs could incentivize green purchases by programming CBDCs to offer discounts or rewards for sustainable activities, such as using public transport or purchasing eco-friendly products.<br>These use cases highlight how CBDC programmability could drive efficiencies, automate compliance, and introduce innovative business models across multiple sectors, benefiting both businesses and consumers.</p>
+<p>Programmable CBDCs offer interesting possibilities for end users to create custom payment solutions and manage <strong>personal</strong> finances in new ways. Here are a few examples:</p>
+<p><strong>1. Personal Budgeting and Spending Controls</strong><br>个人预算和支出控制<br>• <strong>Automated Savings</strong> 自动储蓄: Users could program a portion of their income (e.g., 10%) to automatically transfer to a savings wallet whenever they receive a paycheck, supporting disciplined saving habits.<br>• <strong>Category-Based Spending Limits</strong> 消费归类: End users could set monthly spending caps for specific categories, such as dining out or entertainment, to better manage their budgets and spending behavior.<br>• <strong>Automatic Rounding for Savings</strong> 储蓄和消费预估: Each purchase could be rounded up to the nearest dollar, with the “extra” going to a savings or investment account—similar to popular savings apps.</p>
+<p><strong>2. Shared Wallets for Families or Groups</strong><br>家庭或团体共享钱包<br>• <strong>Family Allowance System</strong>: Parents could set up programmable wallets for children, where funds are released for specific purposes, like school supplies or transportation. Funds could be set to expire if unused within a certain period, encouraging responsible spending.<br>• <strong>Household Expense Management</strong>: Roommates or couples could create a shared wallet programmed to split common expenses like rent, utilities, or groceries automatically, reducing manual tracking and making shared expenses more transparent.</p>
+<p><strong>3. Charitable Donations with Conditions</strong><br>有条件的慈善捐赠<br>• <strong>Conditional Charity Donations</strong>: Users could set up automatic donations to charities that activate only when personal income exceeds a certain threshold, allowing them to give back when they are financially able.<br>• <strong>Transparent Donations</strong>: CBDCs could allow donors to see exactly when and how their funds are used by a charity, increasing transparency and engagement with the causes they support.</p>
+<p><strong>4. Emergency Funds and Auto-Trigger Insurance</strong><br>应急资金和自动触发保险<br>• <strong>Self-Triggered Emergency Payments</strong>: Users could set up a programmable emergency fund to automatically transfer to their main wallet if their balance falls below a certain level.<br>• <strong>Automated Micro-Insurance Payments</strong>: End users could set up small automatic payments for emergency health or travel insurance, activating only when they cross country borders or travel a specified distance.</p>
+<p><strong>5. Conditional Gifting and Allowances</strong><br>有条件的赠与和津贴<br>• <strong>Smart Gifting</strong>: CBDCs could allow users to set up gifts with conditions, such as funds for a child’s education that can only be used for tuition, books, or school supplies.<br>• <strong>Goal-Based Allowances</strong>: Parents could use programmable CBDCs to set up an allowance system that releases funds to their children only after achieving certain goals, like completing homework or chores.</p>
+<p><strong>6. Automated Bill Splitting for Social Activities</strong><br>社交活动账单自动分摊<br>• <strong>Social Wallets</strong>: Friends could create a shared, programmable wallet for social events, where each person contributes, and funds are automatically allocated for event-specific expenses, like concert tickets or group dinners.<br>• <strong>Real-Time Expense Tracking</strong>: Programmed CBDCs could split expenses in real-time as they occur, making group activities financially smoother and removing the need for after-the-fact reimbursements.</p>
+<p><strong>7. Customizable Travel Budgets and Currency Conversion</strong><br>可定制的旅行预算和货币兑换<br>• <strong>Vacation Budgeting</strong>: Travelers could allocate a specific budget for their trip, where funds automatically convert to the local currency and apply spending limits to ensure they stay within their set vacation budget.<br>• <strong>Location-Based Spending</strong>: Users could set geographic restrictions on their CBDC wallets, preventing them from spending funds outside a designated area or country, adding an extra layer of control and security for travel budgets.</p>
+<p><strong>8. Personal Investment Automations</strong><br>个人投资自动化<br>• <strong>Recurring Investments</strong>: End users could program their CBDCs to allocate a small percentage of each paycheck into specific investments or savings accounts, making it easy to automate dollar-cost averaging.<br>• <strong>Goal-Based Investment Triggers</strong>: Users could set up a CBDC wallet to transfer funds to an investment account only if they’ve met other financial goals for the month, like saving or debt repayment targets.</p>
+<p><strong>9. Incentivized Health and Wellness Programs</strong><br>激励健康和保健计划<br>• <strong>Rewards for Healthy Activities</strong>: End users could connect programmable CBDCs to health tracking apps to earn micro-payments for activities such as reaching a daily step goal, gym attendance, or purchasing healthy food.<br>• <strong>Goal-Based Health Savings</strong>: CBDCs could also be used to allocate funds to a “health fund” every time a fitness milestone is reached, rewarding users for making healthy choices.</p>
+<p><strong>10. Flexible Subscription Management</strong><br>灵活的订阅管理<br>• <strong>Trial Periods with Expiry</strong>: End users could set up subscriptions to only renew if they actively confirm, helping avoid unwanted subscription charges.<br>• <strong>Family Subscription Pools</strong>: Users could program CBDCs to fund family-wide subscriptions where family members contribute proportionally, or enable automatic payments only if usage metrics meet certain thresholds.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -970,281 +1147,6 @@
 <td>Scam</td>
 </tr>
 </tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/10/21/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E5%92%8C%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/21/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E5%92%8C%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">终端安全和网络代理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-10-21 11:57:00" itemprop="dateCreated datePublished" datetime="2024-10-21T11:57:00+08:00">2024-10-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-09-05 16:29:47" itemprop="dateModified" datetime="2025-09-05T16:29:47+08:00">2025-09-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="通用架构"><a href="#通用架构" class="headerlink" title="通用架构"></a>通用架构</h2><p>员工 —&gt;<br>Downstream(DRN) — HTTPS—&gt; Int. Firewall —HTTPS —&gt; Upstream (DMZ) —&gt; Ext. Firewall —&gt; Internet</p>
-<h2 id="聊天软件"><a href="#聊天软件" class="headerlink" title="聊天软件"></a>聊天软件</h2><p>员工 —&gt;<br>GRE Router(HK, UK, China等国家) —&gt; GRE Tunnel Encapsulation —&gt; <strong>Zscaler</strong> (Cloud) —&gt; MS Cloud (Teams) </p>
-<h2 id="网盘"><a href="#网盘" class="headerlink" title="网盘"></a>网盘</h2><p>员工 —&gt;<br>网络策略Policy —&gt; SAML —&gt; Azure IDP </p>
-<h2 id="上网浏览"><a href="#上网浏览" class="headerlink" title="上网浏览"></a>上网浏览</h2><p>员工 —&gt;<br>网络策略Policy —&gt; Internet</p>
-<h2 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h2><p>远程员工 —&gt;<br>网络策略Policy —&gt; 拆分通道 —&gt; ZOOM</p>
-<h2 id="Zscaler的能力"><a href="#Zscaler的能力" class="headerlink" title="Zscaler的能力"></a><a target="_blank" rel="noopener" href="https://www.zscaler.com/">Zscaler的能力</a></h2><ul>
-<li>1）为用户建立profile，2）制定policy，3）执行policy - 控制用户的网络浏览。</li>
-<li>可以和企业内部的 AD 整合。</li>
-<li>用户端无法logout，无法退出，无法修改policy，确保用户执行policy。</li>
-<li>管理员端可以方便地监控全体用户端流量情况，如，哪些 App 流量最高，用户端device类型/型号。</li>
-<li>支持多云环境，自动更新，低延时，<strong>全球部署</strong>。</li>
-</ul>
-<h2 id="Broadcom"><a href="#Broadcom" class="headerlink" title="Broadcom"></a><a target="_blank" rel="noopener" href="https://www.broadcom.com/">Broadcom</a></h2><ul>
-<li>服务端网络安全管理</li>
-</ul>
-<h2 id="Trellix-Endpoint-Security"><a href="#Trellix-Endpoint-Security" class="headerlink" title="Trellix Endpoint Security"></a><a target="_blank" rel="noopener" href="https://www.trellix.com/products/endpoint-security/">Trellix Endpoint Security</a></h2><ul>
-<li>确保所有安全组件无缝运行，为所有载体提供强大的保护。</li>
-<li>可以在用户工作电脑端，云端部署。</li>
-<li>中心化管理。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/" class="post-title-link" itemprop="url">比较-隐私交易Nightfall和Zeto和Zether和ZAMA</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-09-12 15:20:00" itemprop="dateCreated datePublished" datetime="2024-09-12T15:20:00+08:00">2024-09-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-09-05 16:42:56" itemprop="dateModified" datetime="2025-09-05T16:42:56+08:00">2025-09-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以下是 <a target="_blank" rel="noopener" href="https://github.com/EYBlockchain/nightfall_3">Nightfall_3</a>、<a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto">Zeto</a> 、 <a target="_blank" rel="noopener" href="https://github.com/Consensys/anonymous-zether">Zether</a> 和 <a target="_blank" rel="noopener" href="https://github.com/zama-ai/fhevm">ZAMA</a> 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：</p>
-<table>
-<thead>
-<tr>
-<th><strong>Attribute</strong></th>
-<th><strong>Nightfall_3</strong></th>
-<th><strong>Zeto</strong></th>
-<th align="left"><strong>Zether</strong></th>
-<th align="left"><a target="_blank" rel="noopener" href="https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf">kinexys by JPMorgan </a>| ZAMA</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Privacy Algorithm</strong></td>
-<td>ZK-SNARKS, Groth16 by Circom</td>
-<td>ZK-SNARKS, Groth16 by Circom</td>
-<td align="left">Bullet-Proof with ElGamal encryption and homomorphic addition</td>
-<td align="left">Kinexys used Zama’s open-source fhEVM-native solution to keep balances and transaction amounts encrypted, ensuring confidentiality while maintaining composability through FHE.</td>
-</tr>
-<tr>
-<td><strong>Anonymity</strong></td>
-<td>Extremely high, anonymity achieved with hashes and ZKPs.</td>
-<td>Extremely high, Stealth Addresses.</td>
-<td align="left">Medium, the identity of transactors hidden among the anonymity set.</td>
-<td align="left">Extremely high, Stealth Addresses.</td>
-</tr>
-<tr>
-<td><strong>Transaction Model</strong></td>
-<td>UTXO</td>
-<td>UTXO</td>
-<td align="left">Account Balance State</td>
-<td align="left">Account Balance State</td>
-</tr>
-<tr>
-<td><strong>Non-repudiation</strong></td>
-<td>Not currently supported, transaction submitters can deny.</td>
-<td><strong>Supported</strong>, when using the circuit requiring encrypted secrets for the authority.</td>
-<td align="left">Not currently supported, auditing balance requires a special viewing key that involves additional cryptography.</td>
-<td align="left"><strong>Supported</strong>, FHE ‘s KMS operator would need to provision the auditor with the FHE decryption key to review all transactions. The stealth address service could also specify addresses that are allowed to decrypt transactions.</td>
-</tr>
-<tr>
-<td><strong>Public Chain Support</strong></td>
-<td>Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
-<td>Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Polygon, etc.</td>
-<td align="left">Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Polygon, etc. <strong>ZK Rollup deployment has failed.</strong></td>
-<td align="left">Supported on EVM based blockchains.</td>
-</tr>
-<tr>
-<td><strong>Transaction Cost</strong></td>
-<td><strong>Low</strong>, ZK verification happens off-chain.</td>
-<td>High, ZK SNARKS verification on-chain with varied cost depending on the usage of encryption and non-traceability.</td>
-<td align="left">High, bulletproof verification on-chain is more costly than ZK SNARKS based proofs.</td>
-<td align="left">High.</td>
-</tr>
-<tr>
-<td><strong>Transaction Delay</strong></td>
-<td>1~2 blocks time</td>
-<td>1~2 blocks time</td>
-<td align="left">1~2 blocks time</td>
-<td align="left">1~2 blocks time</td>
-</tr>
-<tr>
-<td><strong>Standard Tokens Support</strong></td>
-<td>Both fungible and non-fungible tokens with ERC20 and ERC721 tokens anchoring.</td>
-<td>Only fungible tokens with ERC20 tokens anchoring.</td>
-<td align="left">Only fungible tokens with ERC20 tokens anchoring.</td>
-<td align="left">Only fungible tokens with ERC20 tokens anchoring.</td>
-</tr>
-<tr>
-<td><strong>Double-spending Prevention</strong></td>
-<td>Nullifier (<strong>offchain</strong>) mechanism prevents double spending.</td>
-<td>UTXO or nullifier (<strong>offchain</strong>) based double spend prevention depending on the specific implementation.</td>
-<td align="left">ElGamal encryption (<strong>onchain</strong>) homomorphic computation combined with zero-knowledge proofs prevent double spending.</td>
-<td align="left">FHE (<strong>onchain</strong>) prevent double spending. ElGamal encryption (offchain).</td>
-</tr>
-<tr>
-<td><strong>Programmability</strong></td>
-<td>Limited programmability due to the optimistic transaction design with off-chain ZKP verification.</td>
-<td>Full programmability across multiple UTXOs. Supported by Paladin for programmable privacy.</td>
-<td align="left">Full programmability due to on-chain verifications.</td>
-<td align="left">Full with ZAMA framework.</td>
-</tr>
-<tr>
-<td><strong>Limitations</strong></td>
-<td>The optimistic transaction model means a confirmation window of multiple days to transaction finality.</td>
-<td>Fragmented UTXOs require new transactions to transfer multiple UTXOs. No fee custom implementations.</td>
-<td align="left">Only one spending transaction per account can occur within one epoch (approximately two block times). Limited self-custody wallet support.</td>
-<td align="left">ZAMA(FHE) + Stealth Addresses</td>
-</tr>
-<tr>
-<td><strong>Scalability</strong></td>
-<td>Low. Relies on a centralized sequencer/block proposer.</td>
-<td>High, peer-to-peer transactions. Solutions based on UTXOs.</td>
-<td align="left">Low. Limited by the one spending transaction per account per epoch design.</td>
-<td align="left">High. Offchain service - ZAMA(FHE) + Stealth Addresses</td>
-</tr>
-<tr>
-<td><strong>Community Support</strong></td>
-<td>Questionable, abandoned by Polygon for a ZK-based Layer 2. Only supports code from EY. GPL-3.0 license.</td>
-<td>Hosted in LFDT Labs (formerly Hyperledger Labs). Active, supported by Kaleido.</td>
-<td align="left">Weak, supported by Consensys but no updates in the last two years. Apache License 2.0 View license.</td>
-<td align="left"><strong>BSD-3-Clause-Clear</strong> license. To commercially use Zama’s technology you need to be granted Zama’s patent license.</td>
-</tr>
-<tr>
-<td>Reference link</td>
-<td></td>
-<td></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-</tbody></table>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf">https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Inco-fhevm/confidential-erc20-framework/blob/main/whitepaper.pdf">https://github.com/Inco-fhevm/confidential-erc20-framework/blob/main/whitepaper.pdf</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Inco-fhevm/confidential-erc20-framework/">https://github.com/Inco-fhevm/confidential-erc20-framework/</a></li>
-</ol>
 
       
     </div>
