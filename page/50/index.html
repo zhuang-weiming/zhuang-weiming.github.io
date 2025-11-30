@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">289</span>
+          <span class="site-state-item-count">290</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,86 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/14/%E7%AE%80%E8%AF%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E4%BA%8EVRF%E7%9A%84%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">简评三个基于VRF的共识算法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-14 09:34:29" itemprop="dateCreated datePublished" datetime="2018-07-14T09:34:29+08:00">2018-07-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-11-17 15:04:39" itemprop="dateModified" datetime="2023-11-17T15:04:39+08:00">2023-11-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[转]<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2b9fa8633df1">https://www.jianshu.com/p/2b9fa8633df1</a></p>
+<p>Algorand、Dfinity和Ouroboros Praos三个共识算法（Dfinity虽然是项目名，这里用来称呼其共识算法也应无不妥）近期较受关注，而且都是基于VRF(Verifiable Random Function) 设计，可以对照学习。Algorand的版本很多，以下单指 1607.01341v9，暂称其为Algorand’（笔者手中另有Algorand的最新版本，其中已对下文提及的几处问题完成了修正，可与本文参看）。</p>
+<h3 id="一、VRF的共性"><a href="#一、VRF的共性" class="headerlink" title="一、VRF的共性"></a>一、VRF的共性</h3><p>VRF的意义很好理解——用以完成出块人（群）的随机选择。为此，VRF的返回值应尽力难以预测。先看Algorand’和Dfinity的套路是怎么做的：大体上是先将前一个随机数（最初的随机数却是协议给定的）和某种代表高度、轮次的变量进行组合，用某种私钥对之进行签名（或者是先签名再组合），最后哈希一下得出最新的随机数。这样产生的随机数旁人很容易验证其合乎算法，”V”就这样得到了；而哈希返回值又是随机分布的，“R”也因此得到保证。在此过程中，为降低操纵结果的可能性，有两个注意事项：A) 签名算法应当具有唯一性，也就是用同一把私钥对同样的信息进行签名，只有一个合法签名可以通过验证——普通的非对称加解密算法一般不具备这个属性，如SM2。如果用的签名算法没有这种uniqueness属性，那在生成新随机数的时候就存在通过反复多次尝试签名以挑出最有利者的余地，会降低安全性。B) 避免在生成新随机数时将当前块的数据作为随机性来源之一，比如引用本块交易列表的merkle root值等等，因为这样做会给出块人尝试变更打包交易顺序、尝试打包不同交易以产生最有利的新随机数的余地。在设计和检视新的共识算法时，以上两个注意事项是要特别留意的。</p>
+<p>考察一下VRF的返回结果应该如何运用。目前所见用法中，VRF的返回结果可以用来公开完成节点或节点群体的选择，也可以私密地完成选择。以Dfinity为例，它是利用mod操作来唯一、公开地确定一个Group。Algorand、Ouroboros Praos是私密选择的范例，大致套路是对VRF的最新返回值，配上轮次等变量后用私钥进行签名并哈希，如果哈希值小于某个阈值，节点就可以私密地知道自己被选中。这种方法很可能在网络节点数较多时的表现会更稳定，否则幸运儿个数上下波动会较大，进而影响协议表现，包括空块和分叉。</p>
+<h3 id="二、简评强同步假设版本的Algorand"><a href="#二、简评强同步假设版本的Algorand" class="headerlink" title="二、简评强同步假设版本的Algorand"></a>二、简评强同步假设版本的Algorand</h3><p>私密选择提供了较强的抗击定点攻击的能力，但由于幸运儿的总数对于任何一个幸运儿都是不能预知的，也因此给后续共识算法的设计和区块链的优化带来了困难。Algorand‘采用了很强的同步网络假设（同步网络假设下的共识算法当然容易做一些），要求预先知道网络消息传播时间的上限：在固定时间内完成对固定比例的用户的网络传播。比如要知道，1KB消息，在1秒钟内完成全网95%的传播，而1MB消息需要1.5分钟完成全网95%的传播。但这个传输上限应该如何选择？ 通过一段时间的统计结果再乘以一个系数这种经验统计？只能说“感觉上可以”，但如果要严谨和安全，Algorand‘算法应该补充证明即使在遭遇DDOS或互联网拥堵的情况下消息传播严重超限后算法仍然能够保证安全——然而这个证明是缺失的。作为对照，Ouroboros Praos公开承认之前在同步网络假设下设计的Ouroboros协议在异步网络条件下会出错，所以才又做了Ouroboros Praos；新版本的Algorand承认在弱同步网络时会在不同的块上达成共识（后续网络恢复强同步时分叉可以得到解决）云云，这些都可资参考。</p>
+<p>即使我们暂且认可Algorand’算法可以通过设定一个很大的传播时间上限来回应上述问题，但随之而来的是此时可以看出此算法缺乏一个非常好的特性：Responsiveness。这个特性指的是：若一个协议被设计为在一个较大的传播时间上限DELTA下工作，但若实际传播时间是较小的delta，则协议的实际推进步调将只和delta有关，这种协议被称为Responsive的。具有Responsive特性的共识算法再配以同步网络假设会非常理想——出于安全，上限可以设置很大，然而协议执行速度只和当时网络条件有关。Algorand’并不具有这种特性。平均而言，Algorand’完成共识所需的消息传送次数是11轮，每轮如果要确保安全，完成共识的时间就会很长，单个分区的吞吐量就不会太高。当然，架构设计涉及很多取舍，最终评价一个算法好还是不好还是要回到初心——准备拿来实现的目标是什么。上述分析只是尝试客观地指出Algorand’算法的几个少为人知的固有特征，供读者自行评估。</p>
+<h3 id="三、简评Dfinity的可扩展性问题"><a href="#三、简评Dfinity的可扩展性问题" class="headerlink" title="三、简评Dfinity的可扩展性问题"></a>三、简评Dfinity的可扩展性问题</h3><p>私密选择并且立即上任的做法，也给系统分片带来了极大挑战。Dfinity是明确要做分片(Sharding)的，所以必须直面挑战。可扩展性问题非常复杂，完整解决这个问题需要通盘考虑网络、存储、计算三方面的可扩展性——时下大多数区块链3.0项目只注意到计算的分片和可扩展性，忽略了其余二者，从而不可能真正实现理想的扩展。由于公链节点网络带宽的制约，计算合约所需的数据通常很难迅速地从一个节点拷贝到另一节点，所以就算用VRF实现了飘忽来去的出块节点选择，存储节点是没法同样飘逸如风的。明显的选择有那么几个：全部节点存储全部数据，不同节点静态地分配用来存储不同分区。前者的可扩展性很差，对于后者而言，如果出块节点漂浮不定且出块节点还需要完成合约运算，就意味着基于P2P网络来回远程访问存储，性能多半急剧下降；动态决定的出块节点只完成排序共识，计算能力和存储捆绑，通过静态分区提供可扩展性，可能是合理的应对。然而，最可恨的就是“然而”二字——即使如此，系统还存在一处对存储和网络构成压力的所在：最终用户提交的待打包交易。普通公链（先不考虑EOS那种）的带宽有限，如果用户提交的待打包交易必须粗放型地全网泛滥传播，那现有网络带宽可以提供多少TPS？如果出块节点是静态分区或者至少提前一段时间公开知晓，事情尚有回旋余地；如果出块节点是如此飘忽不定，而且直到最后一刻也只有这些节点自己知道，那无论是用户还是出块节点候选人看起来最直接的应对之道就是全网泛滥传播全部待打包交易、保存全部待打包交易，这样带宽和存储仍然成为系统瓶颈。</p>
+<p>所以这里碰到的，本质上还是安全、可扩展性、去中心化的不可能三角。</p>
+<h3 id="四、简评Ouroboros-Praos"><a href="#四、简评Ouroboros-Praos" class="headerlink" title="四、简评Ouroboros Praos"></a>四、简评Ouroboros Praos</h3><p>BM怼 Ouroboros的文字已经流传广泛。BM的话当然有些明显是不对的，比如Ouroboros的DPOS是指”Dynamic [stake distribution] POS”而不是BM的Delegate POS，但其关于Pareto分布的评论则值得玩味。如果我们仔细浏览后出的Ouroboros Praos，可以发现协议的安全假设和安全证明完全没有考虑经济博弈因素，因此洋洋洒洒的证明很可能会不得要领而错过真正需要防护的方向——毕竟一直以来POS/DPOS这些协议的血管里面流淌的就是基于经济博弈和人性进行设计的血液。最明显的例子是在forward secure signature的实现方法上，协议目前的设计是要求每个好的节点自觉主动地安全删除用过的私钥，而完全没有考虑近乎零的私钥保存成本如何面对bribe attack的诱惑，然而这却是值得考虑的。除了形式化证明之外，Ouroboros Praos本身并没有太多值得关注的协议特征，总体上就是用VRF抽签结合POS算法并针对某些安全假设进行了形式化证明，其做事的态度是非常值得赞赏的。</p>
+<h3 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h3><p>这几个算法本身颇有创意，也很值得学习。与此同时，在看过以太坊CASPER目前披露的分区技术后，笔者的体会是：区块链3.0的竞争才刚刚开始，从以太坊团队的技术路线看，他们的技术考量和选择要比很多宣称要超越以太坊的团队来得深刻和全面。如果当真要超越以太坊，还是应该先从理解以太坊开始。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -602,114 +682,6 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1 (pprof) list FindLoops</span><br><span class="line">2 Total: 82.4 MB</span><br><span class="line">3 ROUTINE ====================== main.FindLoops <span class="keyword">in</span> /home/rsc/g/benchgraffiti/havlak/havlak3.go</span><br><span class="line">4   56.3   56.3 Total MB (flat / cumulative)</span><br><span class="line">5...</span><br><span class="line">6    1.9    1.9  268:     nonBackPreds := make([]map[int]bool, size)</span><br><span class="line">7    5.8    5.8  269:     backPreds := make([][]int, size)</span><br><span class="line">8      .      .  270:</span><br><span class="line">9    1.9    1.9  271:     number := make([]int, size)</span><br><span class="line">10   1.9    1.9  272:     header := make([]int, size, size)</span><br><span class="line">11   1.9    1.9  273:     types := make([]int, size, size)</span><br><span class="line">12   1.9    1.9  274:     last := make([]int, size, size)</span><br><span class="line">13   1.9    1.9  275:     nodes := make([]*UnionFindNode, size, size)</span><br><span class="line">14     .      .  276:</span><br><span class="line">15     .      .  277:     <span class="keyword">for</span> i := 0; i &lt; size; i++ &#123;</span><br><span class="line">16   9.5    9.5  278:             nodes[i] = new(UnionFindNode)</span><br><span class="line">17     .      .  279:     &#125;</span><br><span class="line">18...</span><br><span class="line">19     .      .  286:     <span class="keyword">for</span> i, bb := range cfgraph.Blocks &#123;</span><br><span class="line">20     .      .  287:             number[bb.Name] = unvisited</span><br><span class="line">21  29.5   29.5  288:             nonBackPreds[i] = make(map[int]bool)</span><br><span class="line">22     .      .  289:     &#125;</span><br></pre></td></tr></table></figure>
 
 <p>有了这些信息，我们就可以着手进行优化了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/05/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A6%81%E6%B1%82/" class="post-title-link" itemprop="url">开源协议的详细要求</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-05 13:52:57" itemprop="dateCreated datePublished" datetime="2018-06-05T13:52:57+08:00">2018-06-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="BSD开源协议"><a href="#BSD开源协议" class="headerlink" title="BSD开源协议"></a>BSD开源协议</h4><p>是一个给于使用者很大自由的协议。可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件再发布。当你发布使用了BSD协议的代码，或者以BSD协议代码为基础做二次开发自己的产品时，需要满足三个条件：</p>
-<ul>
-<li>如果再发布的产品中包含源代码，则在源代码中必须带有原来代码中的BSD协议。</li>
-<li>如果再发布的只是二进制类库/软件，则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议。</li>
-<li>不可以用开源代码的作者/机构名字和原来产品的名字做市场推广。</li>
-</ul>
-<p>BSD代码鼓励代码共享，但需要尊重代码作者的著作权。BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销售，因此是对商业集成很友好的协议。很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码，在必要的时候可以修改或者 二次开发。</p>
-<h4 id="Apache-Licene-2-0-协议"><a href="#Apache-Licene-2-0-协议" class="headerlink" title="Apache Licene 2.0 协议"></a>Apache Licene 2.0 协议</h4><p>Apache Licence是著名的非盈利开源组织Apache采用的协议。该协议和BSD类似，同样鼓励代码共享和尊重原作者的著作权，同样允许代码修改，再发布（作为开源或商业软件）。需要满足的条件也和BSD类似：</p>
-<ul>
-<li>需要给代码的用户一份Apache Licence</li>
-<li>如果你修改了代码，需要在被修改的文件中说明。</li>
-<li>在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议，商标，专利声明和其他原来作者规定需要包含的说明。</li>
-<li>如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有Apache Licence。你可以在Notice中增加自己的许可，但不可以表现为对Apache Licence构成更改。</li>
-<li>Apache Licence也是对商业应用友好的许可。使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售。</li>
-</ul>
-<p>英文原文：<a target="_blank" rel="noopener" href="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</a></p>
-<h4 id="MIT-协议"><a href="#MIT-协议" class="headerlink" title="MIT 协议"></a>MIT 协议</h4><p>MIT许可证之名源自麻省理工学院（Massachusetts Institute of Technology, MIT），又称「X条款」（X License）或「X11条款」（X11 License）</p>
-<p>MIT内容与三条款BSD许可证（3-clause BSD license）内容颇为近似，但是赋予软体被授权人更大的权利与更少的限制。</p>
-<p>被授权人有权利使用、复制、修改、合并、出版发行、散布、再授权及贩售软体及软体的副本。</p>
-<p>被授权人可根据程式的需要修改授权条款为适当的内容。</p>
-<p>在软件和软件的所有副本中都必须包含版权声明和许可声明。</p>
-<p>此授权条款并非属copyleft的自由软体授权条款，允许在自由/开放源码软体或非自由软体（proprietary software）所使用。</p>
-<p>此亦为MIT与BSD（The BSD license, 3-clause BSD license）本质上不同处。</p>
-<p>MIT条款可与其他授权条款并存。另外，MIT条款也是自由软体基金会（FSF）所认可的自由软体授权条款，与GPL相容。</p>
-<p>协议英文原文：<a target="_blank" rel="noopener" href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a></p>
-<h4 id="GPL-协议"><a href="#GPL-协议" class="headerlink" title="GPL 协议"></a>GPL 协议</h4><p>在自由软件所使用的各种许可证之中，最为人们注意的也许是通用性公开许可证(General Public License，简称GPL)。</p>
-<p>GPL同其它的自由软件许可证一样，许可社会公众享有：运行、复制软件的自由，发行传播软件的自由，获得软件源码的自由，改进软件并将自己作出的改进版本向社会发行传播的自由。<br>GPL还规定：只要这种修改文本在整体上或者其某个部分来源于遵循GPL的程序，该修改文本的 整体就必须按照GPL流通，不仅该修改文本的源码必须向社会公开，而且对于这种修改文本的流通不准许附加修改者自己作出的限制。因此，一项遵循GPL流通 的程序不能同非自由的软件合并。GPL所表达的这种流通规则称为copyleft，表示与copyright(版权)的概念“相左”。</p>
-<p>GPL协议最主要的几个原则：</p>
-<ul>
-<li><p>确保软件自始至终都以开放源代码形式发布，保护开发成果不被窃取用作商业发售。任何一套软 件，只要其中使用了受 GPL 协议保护的第三方软件的源程序，并向非开发人员发布时，软件本身也就自动成为受 GPL 保护并且约束的实体。也就是说，此时它必须开放源代码。</p>
-</li>
-<li><p>GPL 大致就是一个左侧版权（Copyleft，或译为“反版权”、“版权属左”、“版权所无”、“版责”等）的体现。你可以去掉所有原作的版权 信息，只要你保持开源，并且随源代码、二进制版附上 GPL 的许可证就行，让后人可以很明确地得知此软件的授权信息。GPL 精髓就是，只要使软件在完整开源 的情况下，尽可能使使用者得到自由发挥的空间，使软件得到更快更好的发展。</p>
-</li>
-<li><p>无论软件以何种形式发布，都必须同时附上源代码。例如在 Web 上提供下载，就必须在二进制版本（如果有的话）下载的同一个页面，清楚地提供源代码下载的链接。如果以光盘形式发布，就必须同时附上源文件的光盘。</p>
-</li>
-<li><p>开发或维护遵循 GPL 协议开发的软件的公司或个人，可以对使用者收取一定的服务费用。但还是一句老话——必须无偿提供软件的完整源代码，不得将源代码与服务做捆绑或任何变相捆绑销售。</p>
-</li>
-</ul>
 
       
     </div>

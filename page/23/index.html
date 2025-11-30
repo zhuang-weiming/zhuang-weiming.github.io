@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">289</span>
+          <span class="site-state-item-count">290</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -236,6 +236,205 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2022/04/18/1.Medusajs%20quick%20start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/18/1.Medusajs%20quick%20start/" class="post-title-link" itemprop="url">1.medusajs quick start</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-18 14:03:00" itemprop="dateCreated datePublished" datetime="2022-04-18T14:03:00+08:00">2022-04-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-05-11 15:31:53" itemprop="dateModified" datetime="2023-05-11T15:31:53+08:00">2023-05-11</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="in-Ubuntu-medusa-version-v1-7-12"><a href="#in-Ubuntu-medusa-version-v1-7-12" class="headerlink" title="in Ubuntu / medusa version v1.7.12"></a>in Ubuntu / medusa version <a target="_blank" rel="noopener" href="https://github.com/medusajs/medusa/releases/tag/v1.7.12">v1.7.12</a></h2><p>nodejs version</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ node -v</span><br><span class="line">v16.14.1</span><br><span class="line">➜  ~ npm -v</span><br><span class="line">8.5.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Quickstart"><a href="#Quickstart" class="headerlink" title="Quickstart"></a>Quickstart</h3><ol>
+<li><p>Install Medusa CLI</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @medusajs&#x2F;medusa-cli</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Create a new Medusa project</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">medusa new my-medusa-store --seed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Start redis (in ubuntu)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart redis-server</span><br><span class="line">➜  ~ redis-cli</span><br><span class="line">127.0.0.1:6379&gt; select</span><br><span class="line">(error) ERR wrong number of arguments for &#x27;select&#x27; command</span><br><span class="line">127.0.0.1:6379&gt; select 1</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379[1]&gt; FLUSHDB</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Start postgres DB (in ubuntu)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo /etc/init.d/postgresql start</span><br><span class="line">[sudo] password for zhuang: </span><br><span class="line">➜  ~ </span><br><span class="line">➜  ~ sudo -i -u postgres</span><br><span class="line">postgres@elementoryos61:~$ psql</span><br><span class="line">psql (12.9 (Ubuntu 12.9-0ubuntu0.20.04.1))</span><br><span class="line">Type &quot;help&quot; for help.</span><br><span class="line">postgres=# CREATE DATABASE openharbor_marketplace_medusa;</span><br><span class="line">CREATE DATABASE</span><br><span class="line">postgres=# </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Config postgress</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// CORS when consuming Medusa from admin</span><br><span class="line">const ADMIN_CORS = process.env.ADMIN_CORS || &quot;http://localhost:7000,http://localhost:7001&quot;;</span><br><span class="line"></span><br><span class="line">// CORS to avoid issues when consuming Medusa from a client</span><br><span class="line">const STORE_CORS = process.env.STORE_CORS || &quot;http://localhost:8000&quot;;</span><br><span class="line"></span><br><span class="line">// Database URL (here we use a local database called medusa-development)</span><br><span class="line">const DATABASE_URL =</span><br><span class="line">  process.env.DATABASE_URL || &quot;postgres://postgres:postgres@localhost:5432/openharbor_marketplace_medusa&quot;;</span><br><span class="line"></span><br><span class="line">// Medusa uses Redis, so this needs configuration as well</span><br><span class="line">const REDIS_URL = process.env.REDIS_URL || &quot;redis://localhost:6379&quot;;</span><br><span class="line"></span><br><span class="line">// This is the place to include plugins. See API documentation for a thorough guide on plugins.</span><br><span class="line">const plugins = [</span><br><span class="line">  `medusa-fulfillment-manual`,</span><br><span class="line">  `medusa-payment-manual`,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  projectConfig: &#123;</span><br><span class="line">    redis_url: REDIS_URL,</span><br><span class="line">    // For more production-like environment install PostgresQL</span><br><span class="line">    database_url: DATABASE_URL,</span><br><span class="line">    database_type: &quot;postgres&quot;,</span><br><span class="line">    // database_database: &quot;./medusa-db.sql&quot;,</span><br><span class="line">    //database_type: &quot;sqlite&quot;,</span><br><span class="line">    store_cors: STORE_CORS,</span><br><span class="line">    admin_cors: ADMIN_CORS,</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Init data for postgres DB</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">medusa migrations run</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Start your Medusa engine</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">medusa develop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Use the API, check medusa server status.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl localhost:9000/store/products</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h3 id="Setting-up-Admin"><a href="#Setting-up-Admin" class="headerlink" title="Setting up Admin"></a>Setting up Admin</h3><ol>
+<li><p>Clone this repository</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/medusajs/admin medusa-admin</span><br><span class="line">cd medusa-admin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Install dependencies</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Start the development server</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn start</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Go to <a target="_blank" rel="noopener" href="http://localhost:7000/">http://localhost:7000</a></strong></p>
+</li>
+<li><p>Back in your Medusa engine installation directory, you can create your own user for the admin by running:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">medusa user -e some@email.com -p some-password</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="Setup-medusa-plugin-filestorage-local"><a href="#Setup-medusa-plugin-filestorage-local" class="headerlink" title="Setup medusa-plugin-filestorage-local"></a>Setup <strong><a target="_blank" rel="noopener" href="https://github.com/Blechlawine/medusa-plugin-filestorage-local">medusa-plugin-filestorage-local</a></strong></h2><p>setup medusa local file service for Images of product which support you create product in Admin.</p>
+<ol>
+<li><p>Back in your Medusa engine installation directory,</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install medusa-plugin-filestorage-local</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Setup config in medusa-config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> plugins = [</span><br><span class="line">  <span class="string">`medusa-fulfillment-manual`</span>,</span><br><span class="line">  <span class="string">`medusa-payment-manual`</span>,</span><br><span class="line">  &#123;</span><br><span class="line">  	resolve: <span class="string">`medusa-plugin-filestorage-local`</span>,</span><br><span class="line">  	options: &#123;</span><br><span class="line"> 	   <span class="comment">// The baseurl for your medusajs server</span></span><br><span class="line">    	   serverBaseUrl: <span class="string">&quot;http://localhost:9000&quot;</span>,</span><br><span class="line">    	   <span class="comment">// when enabled saves the file as a base64 encoded string inside the database (deleting that row is not yet supported)</span></span><br><span class="line">    	   saveInDatabase: <span class="literal">false</span>, <span class="comment">// recommended: false</span></span><br><span class="line">    	   <span class="comment">// the folder where your files are stored on the server</span></span><br><span class="line">    	   fileLocation: <span class="string">&quot;uploads/persistent/&quot;</span>,</span><br><span class="line">    	&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Restart medusa server</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">medusa develop</span><br><span class="line">// or</span><br><span class="line">medusa start</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>then, you can create a product in medusa admin. e.g. <a target="_blank" rel="noopener" href="http://localhost:7000/">http://localhost:7000/</a></p>
+</li>
+</ol>
+<p>====================================================================</p>
+<h2 id="in-Mac-medusa-version-v1-10-1"><a href="#in-Mac-medusa-version-v1-10-1" class="headerlink" title="in Mac / medusa version v1.10.1"></a>in Mac / medusa version <a target="_blank" rel="noopener" href="https://github.com/medusajs/medusa/releases/tag/v1.10.1">v1.10.1</a></h2><p>Follow the medusa guide <a target="_blank" rel="noopener" href="https://docs.medusajs.com/development/backend/prepare-environment">https://docs.medusajs.com/development/backend/prepare-environment</a></p>
+<ol>
+<li>node version</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ node -v   </span><br><span class="line">v18.16.0</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Install medusa CLI</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install @medusajs/medusa-cli -g</span><br><span class="line"></span><br><span class="line">➜  ~ medusa -v                           </span><br><span class="line">Medusa CLI version: 1.3.13</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Create a new Medusa project</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">medusa new my-medusa-store --seed</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Start your Medusa backend</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd my-medusa-store</span><br><span class="line">medusa develop</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Test the Backend</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl localhost:9000/store/products</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>PostgreSQL Configurations</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const DATABASE_TYPE = process.env.DATABASE_TYPE || &quot;postgres&quot;;</span><br><span class="line">const DATABASE_URL = process.env.DATABASE_URL || &quot;postgres://postgres:zaq12wsx@localhost:5432/pg-medusa-1-10-1-test&quot;;</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>Update DB</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">medusa migrations run</span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>medusa can mock Redis for test</li>
+</ol>
+<h3 id="For-admin-dashboard"><a href="#For-admin-dashboard" class="headerlink" title="For admin dashboard"></a>For admin dashboard</h3><ol>
+<li>back the folder path of medusa, Install the Package of Admin Dashboard</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @medusajs/admin</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Add Admin to Medusa Configurations.</li>
+</ol>
+<p>In <code>medusa-config.js</code>, add the admin plugin into the array of <code>plugins</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> plugins = [</span><br><span class="line">  <span class="string">`medusa-fulfillment-manual`</span>,</span><br><span class="line">  <span class="string">`medusa-payment-manual`</span>,</span><br><span class="line">  <span class="comment">// To enable the admin plugin, uncomment the following lines and run `yarn add @medusajs/admin`</span></span><br><span class="line">   &#123;</span><br><span class="line">     resolve: <span class="string">&quot;@medusajs/admin&quot;</span>,</span><br><span class="line">     <span class="comment">/** <span class="doctag">@type <span class="type">&#123;import(&#x27;@medusajs/admin&#x27;).PluginOptions&#125;</span> </span>*/</span></span><br><span class="line">     options: &#123;</span><br><span class="line">       autoRebuild: <span class="literal">true</span>,</span><br><span class="line">     &#125;,</span><br><span class="line">   &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>The plugin accepts the following options:</p>
+<p>a. <code>serve</code>: (default: <code>true</code>) a boolean indicating whether to serve the admin dashboard when the Medusa backend starts. If set to <code>false</code>, you can serve the admin dashboard using the <a target="_blank" rel="noopener" href="https://docs.medusajs.com/admin/quickstart#dev-command-options">dev command</a>.</p>
+<p>b. <code>path</code>: (default: <code>app</code>) a string indicating the path the admin server should run on. It shouldn’t be prefixed or suffixed with a slash <code>/</code>, and it can’t be one of the reserved paths: “admin” and “store”.</p>
+<p>c. <code>outDir</code>: Optional path for where to output the admin build files.</p>
+<p>e. <code>autoRebuild</code>: (default: <code>false</code>) a boolean indicating whether the admin UI should be rebuilt if there are any changes or if a missing build is detected when the backend starts. If not set, you must <a target="_blank" rel="noopener" href="https://docs.medusajs.com/admin/quickstart#build-command-options">manually build the admin dashboard</a>.</p>
+<ol start="3">
+<li>Start the Admin Dashboard</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run start</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Create a New Admin User</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">medusa user -e some@email.com -p some-password</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -737,105 +936,6 @@
 <p>answer - two dishonest parties can send out the same dishonest message or they don’t response, and make other nodes cannot reach “all the properly signed bits from the sender are the same, and the party outputs that bit.”  So this protocol don’t have validity.  </p>
 <p><strong>E) Does the protocol have totality (for any number of dishonest parties)?</strong></p>
 <p>answer - It assume that this protocol run in a reliable broadcast protocol (RBC). But the dishonest party can send a (or some) correct response to one (or some other) party, but don’t response any message to one (or some other) party in step 1. Dishonest party also can do the same in step 0. So these honest party cannot have the same result. Then this protocol don’t have totality.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2022/03/10/CS251_Final_Exam_2021-stanford.edu-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/10/CS251_Final_Exam_2021-stanford.edu-2/" class="post-title-link" itemprop="url">CS251_Final_Exam_2021-stanford.edu-1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-10 19:16:00" itemprop="dateCreated datePublished" datetime="2022-03-10T19:16:00+08:00">2022-03-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-03-31 20:17:13" itemprop="dateModified" datetime="2022-03-31T20:17:13+08:00">2022-03-31</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="Problem-1-18-points-Questions-from-all-over"><a href="#Problem-1-18-points-Questions-from-all-over" class="headerlink" title="Problem 1. [18 points]: Questions from all over."></a>Problem 1. [18 points]: Questions from all over.</h4><p><strong>A) Briefly explain why a Rollup system stores all transaction data on chain? What would go wrong if transaction data were discarded and not stored anywhere?</strong></p>
-<p>answer - The main goal of Rollup is to increase transaction speed (faster finality), and transaction throughput (high transactions per second), without sacrificing decentralization or security. </p>
-<p>Some Rollup solutions are <a target="_blank" rel="noopener" href="https://ethereum.org/en/developers/docs/scaling/optimistic-rollups/">optimistic rollups</a>, <a target="_blank" rel="noopener" href="https://ethereum.org/en/developers/docs/scaling/zk-rollups/">zero-knowledge rollups</a> or <a target="_blank" rel="noopener" href="https://ethereum.org/en/developers/docs/scaling/state-channels/">state channels</a>. Transactions are rolled up into a single transaction to Mainnet Ethereum, reducing gas fees for users making Ethereum more inclusive and accessible for people everywhere. Rollups perform transaction execution outside layer 1 and then the data is posted to layer 1 where consensus is reached. As transaction data is included in layer 1 blocks, this allows rollups to be secured by native Ethereum security. That is why Rollup system stores all transaction data. </p>
-<p>So If Rollup system has only one single data storage and its transaction data were discarded, the transaction data before rollup will lose and can not get back. Usually, Rollup system is a blockchain and data saved in decentralized nodes, so original transaction data will not lose when one of blockchain nodes is down or broken.</p>
-<p><strong>B) Consider the following Solidity code:</strong> </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>; </span><br><span class="line">contract ERC20 is IERC20 &#123;</span><br><span class="line">  mapping(<span class="function"><span class="params">address</span> =&gt;</span> uint256) private _balances; </span><br><span class="line">  event Transfer(address indexed <span class="keyword">from</span>, address indexed to, uint256 value); </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_transfer</span>(<span class="params">address sender, address recipient, uint256 amount</span>) </span>&#123;</span><br><span class="line">    emit Transfer(sender, recipient, amount); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Suppose this code is deployed in two contracts: a contract at address X and a contract at address Y . Which of the following can read the state of _balances in contract X? Circle the correct answer(s). </p>
-<ul>
-<li>A  Code in the _transfer() function in contract ERC20 at address X </li>
-<li>B  Code in the _transfer() function in contract ERC20 at address Y </li>
-<li>C  An enduser using etherscan.io</li>
-</ul>
-<p>answer C is correct.</p>
-<p><strong>C) Continuing with part (B),</strong> </p>
-<p>which of the following can read the log entry Transfer emitted when the function _transfer() is called? Circle the correct answer(s). </p>
-<ul>
-<li>A  Code in the function getBalance() defined in contract ERC20 at address X </li>
-<li>B  Code in the function getBalance() defined in contract ERC20 at address Y </li>
-<li>C  An enduser using etherscan.io</li>
-</ul>
-<p>answer C is correct.</p>
-<p><strong>D) Two Ethereum transactions, tx1 and tx2, are submitted to the network at the same time.</strong> Transaction tx1 has maxPriorityFee set to y and transaction tx2 has maxPriorityFee set to 2y. Will tx2 necessarily be executed on chain before tx1? Justify your answer. You can assume that maxFee for both tx1 and tx2 is greater than baseFee + maxPriorityFee.</p>
-<p>answer - Assume that maxFee (tx1 and tx2) is greater than baseFee + maxPriorityFee, tx1 and tx2 will mine by miner both,  they will execute in the same block, that is the most possibility, because usually miner nodes are working for tx order base on gasFee from high to low. But still has other possibilities - 1) send tx1 in node 1, send tx2 in node2, the network of node 1 is bad, and all txs in txpool of node 1 maybe blocked , so the speed and status of network of node is very important for transaction success; 2) the other transactions’ maxPriorityFee, if they all very high than 2y, the block is full and cannot take tx2 in, then tx1 and tx2 will not execute, and their executed order will depends on the next block. Or they all very high than y, the block is full and cannot take tx1 in, but the block take tx2 in, so tx1 will not execute, tx2 will execute.</p>
-<p>Catch up high Miner extractable value (MEV) may cause a miner to take priority of a lower fee transaction because it benefits them in some way, it is good for DeFi and application boom, but bad for UX, blockchain network congestion, even make blockchain block order re-organization and consensus instability.</p>
-<p><strong>E) Alice wants to buy a car from dealer Bob.</strong> She sends 1 BTC to Bob’s Bitcoin address. Bob waits for a transaction where (i) the input is from Alice’s address, and (ii) one of the outputs is a UTXO bound to Bob’s address with a value of 1 BTC. As soon as Bob sees this transaction on the Bitcoin blockchain, he gives Alice the keys, and she drives away. Is this safe? Could Alice get the car for free? If so, explain why. If not, explain what Bob should do to ensure that he gets paid. </p>
-<p>answer - In bitcoin with PoW consensus protocol, the tx finality need to wait 6 blocks. so Bob should to wait 6 blocks after the block of tx.</p>
-<p><strong>F) Alice owns a brand new Tesla Model Y.</strong> Can she currently use her car as collateral for a loan in the Compound system? (without selling the car) If yes, explain how. If no, explain why not.</p>
-<p>answer - no, physical car cannot come into digital Compound system yet, because the car maybe bad, maybe broken, maybe stole from somewhere illegally, the car loan needs many kinds of service to confirm its value and price. Compound now only provide cryptocurrencies as collateral for a loan.</p>
 
       
     </div>

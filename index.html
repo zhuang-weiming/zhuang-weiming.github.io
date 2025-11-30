@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">289</span>
+          <span class="site-state-item-count">290</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -245,6 +245,204 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/11/30/%E5%9F%BA%E4%BA%8Epalantir%E7%9A%84%E6%99%BA%E8%83%BD%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/11/30/%E5%9F%BA%E4%BA%8Epalantir%E7%9A%84%E6%99%BA%E8%83%BD%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">基于palantir的智能决策系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-11-30 19:34:00 / Modified: 19:35:09" itemprop="dateCreated datePublished" datetime="2025-11-30T19:34:00+08:00">2025-11-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>Foundry (操作系统)</strong></th>
+<th><strong>Ontology (本体层)</strong></th>
+<th><strong>AIP (人工智能平台)</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>核心定位</strong></td>
+<td><strong>数据集成与计算平台</strong><br><br>&gt; 覆盖连接 → 转换 → 版本控制 → 权限 → 审计 → DevOps 的完整数据生命周期。</td>
+<td><strong>语义层与数字孪生</strong><br><br>将技术数据映射为业务概念（对象、关系、动作）。它是业务的“数字映射”。<br><br>Ontology 不只是静态的“语义层”，而是(银行)全业务的<strong>动态数字孪生（Dynamic Digital Twin）</strong>。</td>
+<td><strong>生成式AI与自动化引擎</strong><br><br>利用大模型（LLM）结合本体进行推理、生成和执行。它是“智能副驾驶”。<br><br>AIP 是让 AI 真正“理解银行业务”的关键。它不是简单的 RAG，而是能够理解本体、调用动作、生成可执行步骤的 <strong>Agent Engine</strong>。</td>
+</tr>
+<tr>
+<td><strong>具体能力</strong></td>
+<td>1. <strong>数据连接</strong>：连接数百种ERP/数据库。<br><br>2. <strong>数据转换</strong>：Spark/SQL 管道处理。<br><br>3. <strong>权限管理</strong>：细粒度到行/列的访问控制。<br><br>4. <strong>DevOps</strong>：代码版本控制、CI/CD。</td>
+<td>1. <strong>对象建模</strong>：定义客户、账户、交易等实体。<br><br>2. <strong>关系映射</strong>：定义“客户拥有账户”的图谱关系。<br><br>3. <strong>行动 (Actions)**：定义写回业务系统的逻辑（如“冻结账户”）。<br><br>4. **动态逻辑</strong>：计算属性和状态监测。</td>
+<td>1. <strong>AIP Logic</strong>：编排LLM链式思考，处理复杂任务。<br><br>2. <strong>Ontology Awareness</strong>：超越传统RAG，AI直接理解结构化本体而非依赖向量检索。<br><br>3. <strong>Copilot/Agent</strong>：构建对话式助手，直接调用Ontology Actions。<br><br>4. <strong>自动化</strong>：基于AI决策触发业务流程。</td>
+</tr>
+<tr>
+<td><strong>输入 (Input)</strong></td>
+<td><strong>原始数据</strong><br><br>Excel, CSV, SQL 数据库, API, 日志流, 非结构化文档。</td>
+<td><strong>清洗后的数据集 (Datasets)</strong><br><br>来自Foundry管道的结构化表格。</td>
+<td><strong>自然语言指令 + 本体上下文</strong><br><br>用户的Prompt、Ontology中的对象（如具体的客户档案）。</td>
+</tr>
+<tr>
+<td><strong>输出 (Output)</strong></td>
+<td><strong>结构化数据集 (Datasets)</strong><br><br>清洗完毕、这就绪的数据表。</td>
+<td><strong>业务对象 (Objects)</strong><br><br>API可调用的实体（如 <code>Client: John Doe</code>），包含属性和关联。</td>
+<td><strong>智能决策/生成内容/自动化操作</strong><br><br>生成投资报告、自动填写表单、触发“调整仓位”的Action。</td>
+</tr>
+<tr>
+<td><strong>用户角色</strong></td>
+<td>数据工程师 (Data Engineer)<br><br>平台管理员</td>
+<td>业务分析师 (Analyst)<br><br>应用开发者</td>
+<td>业务用户 (Business User)<br><br>AI 工程师</td>
+</tr>
+<tr>
+<td><strong>SDK/API 对应</strong></td>
+<td><code>Foundry Platform SDK</code><br><br>用于资源管理、管道编排</td>
+<td><code>Ontology SDK (OSDK)</code><br><br>用于前端App开发，操作对象和Action</td>
+<td><code>AIP Logic</code> / <code>AIP Agent</code><br><br>通过OSDK或API调用AI服务</td>
+</tr>
+</tbody></table>
+<h3 id="二、-上下游关系：数据与逻辑的流动"><a href="#二、-上下游关系：数据与逻辑的流动" class="headerlink" title="二、 上下游关系：数据与逻辑的流动"></a>二、 上下游关系：数据与逻辑的流动</h3><p>这三者不是独立的，而是层层递进的流水线关系：</p>
+<ol>
+<li>**上游 (Foundry)**：负责脏活累活-基础数据工程工作。它从银行的旧系统（Mainframe, SQL）抓取交易记录和客户信息，清洗并整合为统一格式。</li>
+</ol>
+<ul>
+<li>_产出_：一张干净的“客户表”和“交易表”。</li>
+</ul>
+<ol start="2">
+<li><strong>中游 (Ontology)**：负责赋予意义。它读取Foundry的表，声明：“这张表的一行代表一个</strong>客户<strong>，那张表的一行代表一笔</strong>持仓**，它们通过ID关联”。同时定义规则：“客户风险等级由持仓波动率决定”。</li>
+</ol>
+<ul>
+<li>_产出_：一个可交互的知识图谱。</li>
+</ul>
+<ol start="3">
+<li><strong>下游 (AIP)**：负责智能应用。它不再看底层的SQL表，而是直接问Ontology：“给我风险等级为‘高’的客户”。AI利用这些上下文生成建议，并通过Ontology定义的</strong>Action**（动作）把决策写回系统。如果没有 Foundry + Ontology，AI 只能看到混乱的数据表，做不到稳定可靠的推荐，更无法自动执行操作。Ontology 是 AI 被“驯化”后可靠执行事务的关键。</li>
+</ol>
+<p><strong>流动图示：</strong> <code>原始数据 (ERP/CRM)</code> -&gt; <strong>[Foundry 管道]</strong> -&gt; <code>清洗数据</code> -&gt; <strong>[Ontology 映射]</strong> -&gt; <code>对象与图谱</code> -&gt; <strong>[AIP 智能处理]</strong> -&gt; <code>业务决策/操作</code></p>
+<p>“典型工具”维度：</p>
+<ul>
+<li>Foundry: Code Repositories, Pipeline Builder, Contour</li>
+<li>Ontology: Object Explorer, Action Framework</li>
+<li>AIP: Logic, Agents, Copilot</li>
+</ul>
+<h3 id="三、-实施案例：财富管理私人银行-Wealth-Personal-Bank"><a href="#三、-实施案例：财富管理私人银行-Wealth-Personal-Bank" class="headerlink" title="三、 实施案例：财富管理私人银行 (Wealth Personal Bank)"></a>三、 实施案例：财富管理私人银行 (Wealth Personal Bank)</h3><p>假设场景：<strong>“高净值客户智能投顾与风险预警系统”</strong>。 目标：让客户经理（RM）能在一分钟内准备好客户会议，并实时监控投资组合风险。</p>
+<h4 id="第一阶段：Foundry-实施（数据底座）"><a href="#第一阶段：Foundry-实施（数据底座）" class="headerlink" title="第一阶段：Foundry 实施（数据底座）"></a>第一阶段：Foundry 实施（数据底座）</h4><ul>
+<li><strong>任务</strong>：打通数据孤岛。</li>
+<li><strong>操作</strong>：<ol>
+<li><strong>连接源系统</strong>：使用 Connector 连接银行的核心交易系统（Core Banking）、CRM（客户关系）、市场数据源（Bloomberg/Reuters）。</li>
+<li><strong>数据集成</strong>：编写 Python/SQL 转换逻辑（Transforms）。<ul>
+<li>_逻辑举例_：将交易代码统一（如将 ‘AAPL US’ 和 ‘Apple Inc’ 对齐）。</li>
+<li>_隐私计算_：对客户姓名、证件号进行加密或脱敏处理（PII Protection），利用 Foundry 的 Checkpoints 确保合规。</li>
+</ul>
+</li>
+<li><strong>输出</strong>：生成标准的 <code>All_Clients</code>，<code>All_Transactions</code>，<code>Market_Prices</code> 数据集。</li>
+</ol>
+</li>
+</ul>
+<h4 id="第二阶段：Ontology-实施（业务建模）"><a href="#第二阶段：Ontology-实施（业务建模）" class="headerlink" title="第二阶段：Ontology 实施（业务建模）"></a>第二阶段：Ontology 实施（业务建模）</h4><ul>
+<li><strong>任务</strong>：构建数字孪生。</li>
+<li><strong>操作</strong>：<ol>
+<li>**定义对象 (Object Types)**：<ul>
+<li>**Client (客户)**：属性包含 <code>AUM</code> (管理资产规模), <code>RiskProfile</code> (风险偏好), <code>LastContactDate</code>。</li>
+<li>**Portfolio (投资组合)**：关联到 Client。</li>
+<li>**Holding (持仓)**：属性包含 <code>Ticker</code>, <code>Quantity</code>, <code>CostBasis</code>。</li>
+</ul>
+</li>
+<li>**定义链接 (Link Types)**：<ul>
+<li><code>Client</code> <strong>has_many</strong> <code>Portfolios</code></li>
+<li><code>Portfolio</code> <strong>contains</strong> <code>Holdings</code></li>
+</ul>
+</li>
+<li>**定义动作 (Actions)**：<ul>
+<li><strong>Action</strong>: <code>RebalancePortfolio</code>（再平衡）。</li>
+<li><strong>输入</strong>：目标客户ID，买卖指令列表。</li>
+<li><strong>逻辑</strong>：调用银行交易API，并在 Foundry 中记录操作日志。</li>
+<li><strong>Action</strong>: <code>Update_Client_Notes</code>（更新会议纪要）。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="第三阶段：AIP-实施（智能赋能）"><a href="#第三阶段：AIP-实施（智能赋能）" class="headerlink" title="第三阶段：AIP 实施（智能赋能）"></a>第三阶段：AIP 实施（智能赋能）</h4><ul>
+<li><strong>任务</strong>：打造 AI 助手 (RM Copilot)。</li>
+<li><strong>实施场景 1：会前准备自动化</strong><ul>
+<li><strong>输入</strong>：RM 在对话框输入“准备明天与王总（Client ID: 8823）的会议材料，关注他持有的科技股表现”。</li>
+<li>**AIP 流程 (AIP Logic)**：<ol>
+<li>**检索 (Retrieval)**：AIP 通过 Ontology 查找“王总”对象，通过关联关系定位找到其 <code>Holdings</code> 中属于“Technology”板块的股票。</li>
+<li><strong>联网/市场分析</strong>：AIP通过Ontology查询新闻对象(该对象基于Foundry管道接入的Bloomberg数据构建)，分析这些股票近期的财报和新闻。</li>
+<li>**生成 (Generation)**：AIP 撰写一份《投资组合回顾与建议草案》，指出某科技股近期波动大，建议减持。</li>
+</ol>
+</li>
+<li><strong>输出</strong>：一份格式完美的 PDF 报告草稿。</li>
+</ul>
+</li>
+<li><strong>实施场景 2：自然语言执行交易</strong><ul>
+<li><strong>输入</strong>：RM 审阅后输入：“同意减持 AAPL 1000股，生成交易指令。”</li>
+<li><strong>AIP 流程</strong>：<ol>
+<li><strong>参数提取</strong>：LLM 从文本提取 <code>Ticker: AAPL</code>, <code>Action: Sell</code>, <code>Qty: 1000</code>。</li>
+<li><strong>验证</strong>：AIP 调用 Ontology 校验王总是否持有足够的 AAPL。</li>
+<li><strong>执行</strong>：AIP 调用 Ontology 定义的 <code>Rebalance_Portfolio</code> Action。</li>
+<li><strong>反馈</strong>：界面弹出“交易指令已生成，等待合规审核”。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2025/11/30/%E5%9F%BA%E4%BA%8Epalantir%E7%9A%84%E6%99%BA%E8%83%BD%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F/1.png"></p>
+<h3 id="总结建议"><a href="#总结建议" class="headerlink" title="总结建议"></a>总结建议</h3><p>对于私人银行实施，关键在于<strong>Ontology 的设计</strong>。 不要直接让 AI 去读几百万行的 SQL 数据库。你需要先用 <strong>Foundry</strong> 把数据洗干净，用 <strong>Ontology</strong> 建立好“客户”和“持仓”的实体关系，最后用 <strong>AIP</strong> 来充当那个“不知疲倦的分析师”，它可以24小时监控本体中的每一个对象变化（例如：某客户持仓波动超过5%），并自动生成建议发给客户经理。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/11/24/%E6%80%9D%E8%80%83IT%E9%83%A8%E9%97%A8%E7%9A%84%E7%BB%A9%E6%95%88%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,10 +466,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-11-24 15:21:00 / Modified: 16:02:25" itemprop="dateCreated datePublished" datetime="2025-11-24T15:21:00+08:00">2025-11-24</time>
+      <time title="Created: 2025-11-24 15:21:00" itemprop="dateCreated datePublished" datetime="2025-11-24T15:21:00+08:00">2025-11-24</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-11-26 10:56:56" itemprop="dateModified" datetime="2025-11-26T10:56:56+08:00">2025-11-26</time>
+      </span>
 
   
 </div>
@@ -462,10 +666,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-11-24 15:17:00 / Modified: 15:18:41" itemprop="dateCreated datePublished" datetime="2025-11-24T15:17:00+08:00">2025-11-24</time>
+      <time title="Created: 2025-11-24 15:17:00" itemprop="dateCreated datePublished" datetime="2025-11-24T15:17:00+08:00">2025-11-24</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-11-26 10:56:56" itemprop="dateModified" datetime="2025-11-26T10:56:56+08:00">2025-11-26</time>
+      </span>
 
   
 </div>
@@ -1002,135 +1212,6 @@
 <p><strong>私钥的本质</strong>：比特币私钥本质上是一个极其庞大的随机数。标准比特币私钥是一个<strong>256位</strong>的二进制数。这个数字的空间有多大呢？是2的256次方，约等于10的77次方。<br>LuBian矿池的私钥生成机制在上述两个核心要点上出现了严重失误。使用了一种名为 Mersenne Twister (MT19937-32)​ 的伪随机数生成器（PRNG），并且仅以32位的种子进行初始化。这意味着，尽管生成的私钥在形式上可能仍然是256位，但其背后真正的随机性来源只有32位。根据报告中的计算，假设攻击脚本每秒可以测试100万个密钥，那么理论上遍历所有可能种子只需要大约1.17小时。</p>
 <p>最后，LuBian矿池使用的有缺陷的随机数生成器（Mersenne Twister, MT19937-32）和低熵（32位）问题，与加密货币领域已知的多个重大漏洞（如Libbitcoin的“MilkSad”漏洞、Trust Wallet的历史漏洞）高度相似。这种“重复前人重大错误”的模式，更符合一种缺乏安全审计和经验导致的疏忽。这可能是一个故意留下的后门，比如一个只有设计者知道的“主密钥”。但LuBian矿池的这种低熵漏洞，一旦被外界知晓，相当于把金库的钥匙放在了一个能被很多人猜到的地方。这对于后门设置者本身来说风险也极高。<br><strong>如果LuBian矿池严格使用比特币核心（Bitcoin Core）或其他成熟的开源钱包软件来生成和管理私钥，那么几乎可以100%避免这个导致灾难性后果的“伪随机数漏洞”。</strong></p>
 <p>参考链接：<br><a target="_blank" rel="noopener" href="https://finance.sina.com.cn/chanjing/gsnews/2025-11-13/doc-infxhqmu3714863.shtml">https://finance.sina.com.cn/chanjing/gsnews/2025-11-13/doc-infxhqmu3714863.shtml</a><br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hant/%E9%99%B3%E5%BF%97_(%E5%95%86%E4%BA%BA)">https://zh.wikipedia.org/zh-hant/%E9%99%B3%E5%BF%97_(%E5%95%86%E4%BA%BA)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/" class="post-title-link" itemprop="url">Best-Practice-Framework-of-Agentic-Coding</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-11-12 18:06:00 / Modified: 18:14:05" itemprop="dateCreated datePublished" datetime="2025-11-12T18:06:00+08:00">2025-11-12</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Best-Practice-Framework-Idea-→-Requirements-→-Design-→-Tasks-→-Implementation"><a href="#Best-Practice-Framework-Idea-→-Requirements-→-Design-→-Tasks-→-Implementation" class="headerlink" title="Best Practice Framework: Idea → Requirements → Design → Tasks → Implementation"></a>Best Practice Framework: Idea → Requirements → Design → Tasks → Implementation</h2><h3 id="1-Idea-Phase"><a href="#1-Idea-Phase" class="headerlink" title="1. Idea Phase"></a>1. <strong>Idea Phase</strong></h3><ul>
-<li><strong>Articulate the core concept</strong> - What problem are you solving?</li>
-<li><strong>Define the value proposition</strong> - Why does this matter?</li>
-<li><strong>Identify the target outcome</strong> - What success looks like</li>
-<li><strong>Consider alternatives</strong> - Are there simpler approaches?</li>
-</ul>
-<h3 id="2-Requirements-Phase"><a href="#2-Requirements-Phase" class="headerlink" title="2. Requirements Phase"></a>2. <strong>Requirements Phase</strong></h3><ul>
-<li><strong>Functional requirements</strong> - What must the system do?</li>
-<li><strong>Non-functional requirements</strong> - Performance, security, scalability</li>
-<li><strong>Constraints</strong> - Time, resources, existing tech stack</li>
-<li><strong>Acceptance criteria</strong> - How do we know it’s done?</li>
-</ul>
-<h3 id="3-Design-Phase"><a href="#3-Design-Phase" class="headerlink" title="3. Design Phase"></a>3. <strong>Design Phase</strong></h3><ul>
-<li><strong>Architecture decisions</strong> - High-level structure</li>
-<li><strong>Technology choices</strong> - Frameworks, libraries, patterns</li>
-<li><strong>Data flow</strong> - How information moves through the system</li>
-<li><strong>Interface contracts</strong> - APIs, function signatures, data schemas</li>
-</ul>
-<h3 id="4-Tasks-Phase"><a href="#4-Tasks-Phase" class="headerlink" title="4. Tasks Phase"></a>4. <strong>Tasks Phase</strong></h3><ul>
-<li><strong>Break down into atomic units</strong> - Each task should be independently completable</li>
-<li><strong>Sequence dependencies</strong> - What must happen before what</li>
-<li><strong>Identify risks</strong> - Where might things go wrong?</li>
-<li><strong>Plan validation</strong> - How to test each task</li>
-</ul>
-<h3 id="5-Implementation-Phase"><a href="#5-Implementation-Phase" class="headerlink" title="5. Implementation Phase"></a>5. <strong>Implementation Phase</strong></h3><ul>
-<li><strong>Execute in planned order</strong> - Follow the task sequence</li>
-<li><strong>Minimal viable code</strong> - Only what’s needed for the requirement</li>
-<li><strong>Validate incrementally</strong> - Test each piece as you build</li>
-<li><strong>Refactor if needed</strong> - Clean up after core functionality works</li>
-</ul>
-<h2 id="Why-This-Prevents-Amazon-Q-Hanging-Inefficiency"><a href="#Why-This-Prevents-Amazon-Q-Hanging-Inefficiency" class="headerlink" title="Why This Prevents Amazon Q Hanging/Inefficiency"></a>Why This Prevents Amazon Q Hanging/Inefficiency</h2><p><strong>The Problem with Skipping Idea Phase:</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">❌ <span class="string">&quot;Build me a user system&quot;</span></span><br><span class="line">→ Amazon Q guesses at requirements</span><br><span class="line">→ Implements generic solution</span><br><span class="line">→ Doesn<span class="number">&#x27;</span>t match your actual vision</span><br><span class="line">→ Multiple revision cycles</span><br></pre></td></tr></table></figure>
-
-<p><strong>The Power of Starting with Idea:</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">✅ <span class="string">&quot;I want users to collaborate on documents in real-time, like Google Docs&quot;</span></span><br><span class="line">→ Clear idea <span class="keyword">and</span> vision</span><br><span class="line">→ Specific requirements emerge naturally</span><br><span class="line">→ Design choices become obvious</span><br><span class="line">→ Implementation is focused <span class="keyword">and</span> efficient</span><br></pre></td></tr></table></figure>
-
-<h2 id="Practical-Application-Examples"><a href="#Practical-Application-Examples" class="headerlink" title="Practical Application Examples"></a>Practical Application Examples</h2><h3 id="Example-1-E-commerce-Feature"><a href="#Example-1-E-commerce-Feature" class="headerlink" title="Example 1: E-commerce Feature"></a>Example 1: E-commerce Feature</h3><p><strong>Idea:</strong> “Customers abandon carts because checkout is too complex”<br><strong>Requirements:</strong> One-click checkout for returning customers<br><strong>Design:</strong> Store payment methods, streamlined UI flow<br><strong>Tasks:</strong> Payment storage, UI simplification, security validation<br><strong>Implementation:</strong> Minimal code for core flow</p>
-<h3 id="Example-2-API-Optimization"><a href="#Example-2-API-Optimization" class="headerlink" title="Example 2: API Optimization"></a>Example 2: API Optimization</h3><p><strong>Idea:</strong> “Our API is slow because we’re making too many database calls”<br><strong>Requirements:</strong> Reduce response time by 50% without changing API contract<br><strong>Design:</strong> Implement caching layer and query optimization<br><strong>Tasks:</strong> Add Redis, optimize queries, implement cache invalidation<br><strong>Implementation:</strong> Focused changes to bottleneck areas only</p>
-<h2 id="Amazon-Q-Interaction-Best-Practices"><a href="#Amazon-Q-Interaction-Best-Practices" class="headerlink" title="Amazon Q Interaction Best Practices"></a>Amazon Q Interaction Best Practices</h2><h3 id="Communicate-the-Full-Journey"><a href="#Communicate-the-Full-Journey" class="headerlink" title="Communicate the Full Journey"></a>Communicate the Full Journey</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;IDEA: I want to add real-time notifications to keep users engaged</span></span><br><span class="line"><span class="string">REQUIREMENTS: Push notifications for comments, mentions, and updates</span></span><br><span class="line"><span class="string">DESIGN: WebSocket connection with fallback to polling</span></span><br><span class="line"><span class="string">CONTEXT: @workspace (existing Express.js app with Socket.io already installed)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Use-Progressive-Disclosure"><a href="#Use-Progressive-Disclosure" class="headerlink" title="Use Progressive Disclosure"></a>Use Progressive Disclosure</h3><ol>
-<li>Start with the idea and get alignment</li>
-<li>Drill into requirements together</li>
-<li>Explore design options</li>
-<li>Plan tasks collaboratively</li>
-<li>Execute implementation efficiently</li>
-</ol>
-<h3 id="Leverage-Context-Effectively"><a href="#Leverage-Context-Effectively" class="headerlink" title="Leverage Context Effectively"></a>Leverage Context Effectively</h3><p>@workspacefor understanding the bigger picture<br>@folder for architectural context<br>@file for implementation details<br>Share your idea first, then provide relevant context</p>
-<h2 id="Red-Flags-That-Indicate-Skipped-Phases"><a href="#Red-Flags-That-Indicate-Skipped-Phases" class="headerlink" title="Red Flags That Indicate Skipped Phases"></a>Red Flags That Indicate Skipped Phases</h2><ul>
-<li><strong>Vague requests</strong> - “Make it better” (missing idea)</li>
-<li><strong>Feature creep</strong> - Requirements keep expanding (unclear idea)</li>
-<li><strong>Over-engineering</strong> - Complex solutions for simple problems (poor design)</li>
-<li><strong>Rework cycles</strong> - Constant revisions (inadequate planning)</li>
-</ul>
-<h2 id="The-Compound-Benefits"><a href="#The-Compound-Benefits" class="headerlink" title="The Compound Benefits"></a>The Compound Benefits</h2><p>Each phase informs and improves the next:</p>
-<ul>
-<li><strong>Clear idea</strong> → More precise requirements</li>
-<li><strong>Precise requirements</strong> → Better design choices</li>
-<li><strong>Better design</strong> → Cleaner task breakdown</li>
-<li><strong>Clean tasks</strong> → Efficient implementation</li>
-<li><strong>Efficient implementation</strong> → Less debugging and rework</li>
-</ul>
-<p>This approach works for any agentic coding tool, not just Amazon Q. The key is treating the AI as a collaborative partner in the entire creative process, not just a code generator.</p>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>requirements.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/1.png"><br>Design.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/2.png"><br>Task.md<br><img src="/2025/11/12/Best-Practice-Framework-of-Agentic-Coding/3.png"></p>
-<p>Reference Link ==&gt; <a target="_blank" rel="noopener" href="https://catalog.workshops.aws/qadvanced/en-US/00-introduction">https://catalog.workshops.aws/qadvanced/en-US/00-introduction</a></p>
 
       
     </div>
