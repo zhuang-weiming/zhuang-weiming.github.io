@@ -16068,7 +16068,8 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
   <entry>
     <title>基于palantir的智能决策系统</title>
     <url>/2025/11/30/%E5%9F%BA%E4%BA%8Epalantir%E7%9A%84%E6%99%BA%E8%83%BD%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<table>
+    <content><![CDATA[<p>Foundry、Ontology（本体）和 AIP（人工智能平台）三者的关系，可以将它们视为地基与管线（Foundry）、数字孪生模型（Ontology）、智能大脑（AIP）的关系。</p>
+<table>
 <thead>
 <tr>
 <th><strong>维度</strong></th>
@@ -16079,15 +16080,15 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 </thead>
 <tbody><tr>
 <td><strong>核心定位</strong></td>
-<td><strong>数据集成与计算平台</strong><br><br>&gt; 覆盖连接 → 转换 → 版本控制 → 权限 → 审计 → DevOps 的完整数据生命周期。</td>
-<td><strong>语义层与数字孪生</strong><br><br>将技术数据映射为业务概念（对象、关系、动作）。它是业务的“数字映射”。<br><br>Ontology 不只是静态的“语义层”，而是(银行)全业务的<strong>动态数字孪生（Dynamic Digital Twin）</strong>。</td>
-<td><strong>生成式AI与自动化引擎</strong><br><br>利用大模型（LLM）结合本体进行推理、生成和执行。它是“智能副驾驶”。<br><br>AIP 是让 AI 真正“理解银行业务”的关键。它不是简单的 RAG，而是能够理解本体、调用动作、生成可执行步骤的 <strong>Agent Engine</strong>。</td>
+<td><strong>数据集成与计算平台</strong><br><br>覆盖连接 → 转换 → 版本控制 → 权限 → 审计 → DevOps 的完整数据生命周期。</td>
+<td><strong>语义层与数字孪生</strong><br><br>将技术数据映射为业务概念（对象、关系、动作）。它是业务的“数字映射”。<br><br>Ontology 不只是静态的“语义层”，而是(银行)全业务的动态数字孪生(Dynamic Digital Twin)。</td>
+<td><strong>生成式AI与自动化引擎</strong><br><br>利用大模型（LLM）结合本体进行推理、生成和执行。它是“智能副驾驶”。<br><br>AIP 是让 AI 真正“理解银行业务”的关键。它不是简单的 RAG，而是能够理解本体、调用动作、生成可执行步骤的Agent Engine。</td>
 </tr>
 <tr>
 <td><strong>具体能力</strong></td>
-<td>1. <strong>数据连接</strong>：连接数百种ERP/数据库。<br><br>2. <strong>数据转换</strong>：Spark/SQL 管道处理。<br><br>3. <strong>权限管理</strong>：细粒度到行/列的访问控制。<br><br>4. <strong>DevOps</strong>：代码版本控制、CI/CD。</td>
-<td>1. <strong>对象建模</strong>：定义客户、账户、交易等实体。<br><br>2. <strong>关系映射</strong>：定义“客户拥有账户”的图谱关系。<br><br>3. <strong>行动 (Actions)**：定义写回业务系统的逻辑（如“冻结账户”）。<br><br>4. **动态逻辑</strong>：计算属性和状态监测。</td>
-<td>1. <strong>AIP Logic</strong>：编排LLM链式思考，处理复杂任务。<br><br>2. <strong>Ontology Awareness</strong>：超越传统RAG，AI直接理解结构化本体而非依赖向量检索。<br><br>3. <strong>Copilot/Agent</strong>：构建对话式助手，直接调用Ontology Actions。<br><br>4. <strong>自动化</strong>：基于AI决策触发业务流程。</td>
+<td>1. 数据连接：连接数百种ERP/数据库。<br><br>2. 数据转换：Spark/SQL 管道处理。<br><br>3. 权限管理：细粒度到行/列的访问控制。<br><br>4. DevOps：代码版本控制、CI/CD。</td>
+<td>1. 对象建模：定义客户、账户、交易等实体。<br><br>2. 关系映射：定义“客户拥有账户”的图谱关系。<br><br>3. 行动 (Actions)：定义写回业务系统的逻辑（如“冻结账户”）。<br><br>4. 动态逻辑：计算属性和状态监测。</td>
+<td>1. AIP Logic：编排LLM链式思考，处理复杂任务。<br><br>2. <strong>Ontology Awareness</strong>：超越传统RAG，AI直接理解结构化本体而非依赖向量检索。<br><br>3. <strong>Copilot/Agent</strong>：构建对话式助手，直接调用Ontology Actions。<br><br>4. <strong>自动化</strong>：基于AI决策触发业务流程。</td>
 </tr>
 <tr>
 <td><strong>输入 (Input)</strong></td>
@@ -16121,16 +16122,16 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 <ul>
 <li>_产出_：一张干净的“客户表”和“交易表”。</li>
 </ul>
-<ol start="2">
-<li><strong>中游 (Ontology)**：负责赋予意义。它读取Foundry的表，声明：“这张表的一行代表一个</strong>客户<strong>，那张表的一行代表一笔</strong>持仓**，它们通过ID关联”。同时定义规则：“客户风险等级由持仓波动率决定”。</li>
+<ol>
+<li>**中游 (Ontology)**：负责赋予意义。它读取Foundry的表，声明：“这张表的一行代表一个客户，那张表的一行代表一笔持仓，它们通过ID关联”。同时定义规则：“客户风险等级由持仓波动率决定”。</li>
 </ol>
 <ul>
 <li>_产出_：一个可交互的知识图谱。</li>
 </ul>
-<ol start="3">
-<li><strong>下游 (AIP)**：负责智能应用。它不再看底层的SQL表，而是直接问Ontology：“给我风险等级为‘高’的客户”。AI利用这些上下文生成建议，并通过Ontology定义的</strong>Action**（动作）把决策写回系统。如果没有 Foundry + Ontology，AI 只能看到混乱的数据表，做不到稳定可靠的推荐，更无法自动执行操作。Ontology 是 AI 被“驯化”后可靠执行事务的关键。</li>
+<ol>
+<li>**下游 (AIP)**：负责智能应用。它不再看底层的SQL表，而是直接问Ontology：“给我风险等级为‘高’的客户”。AI利用这些上下文生成建议，并通过Ontology定义的Action (动作)把决策写回系统。如果没有 Foundry + Ontology，AI 只能看到混乱的数据表，做不到稳定可靠的推荐，更无法自动执行操作。Ontology 是 AI 被“驯化”后可靠执行事务的关键。</li>
 </ol>
-<p><strong>流动图示：</strong> <code>原始数据 (ERP/CRM)</code> -&gt; <strong>[Foundry 管道]</strong> -&gt; <code>清洗数据</code> -&gt; <strong>[Ontology 映射]</strong> -&gt; <code>对象与图谱</code> -&gt; <strong>[AIP 智能处理]</strong> -&gt; <code>业务决策/操作</code></p>
+<p><strong>流动图示：</strong> <code>原始数据 (ERP/CRM)</code> -&gt; [Foundry 管道] -&gt; <code>清洗数据</code> -&gt; [Ontology 映射] -&gt; <code>对象与图谱</code> -&gt; [AIP 智能处理] -&gt; <code>业务决策/操作</code></p>
 <p>“典型工具”维度：</p>
 <ul>
 <li>Foundry: Code Repositories, Pipeline Builder, Contour</li>
@@ -16201,7 +16202,7 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 </li>
 </ul>
 <p><img src="/2025/11/30/%E5%9F%BA%E4%BA%8Epalantir%E7%9A%84%E6%99%BA%E8%83%BD%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F/1.png"></p>
-<h3 id="总结建议"><a href="#总结建议" class="headerlink" title="总结建议"></a>总结建议</h3><p>对于私人银行实施，关键在于<strong>Ontology 的设计</strong>。 不要直接让 AI 去读几百万行的 SQL 数据库。你需要先用 <strong>Foundry</strong> 把数据洗干净，用 <strong>Ontology</strong> 建立好“客户”和“持仓”的实体关系，最后用 <strong>AIP</strong> 来充当那个“不知疲倦的分析师”，它可以24小时监控本体中的每一个对象变化（例如：某客户持仓波动超过5%），并自动生成建议发给客户经理。</p>
+<h3 id="总结建议"><a href="#总结建议" class="headerlink" title="总结建议"></a>总结建议</h3><p>对于私人银行实施，关键在于Ontology 的设计。 不要直接让 AI 去读几百万行的 SQL 数据库。你需要先用 Foundry 把数据洗干净，用 Ontology 建立好“客户”和“持仓”的实体关系，最后用 AIP 来充当那个“不知疲倦的分析师”，它可以24小时监控本体中的每一个对象变化（例如：某客户持仓波动超过5%），并自动生成建议发给客户经理。</p>
 ]]></content>
       <tags>
         <tag>知识图谱</tag>
