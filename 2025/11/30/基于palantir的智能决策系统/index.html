@@ -32,7 +32,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://zhuang-weiming.github.io/2025/11/30/%E5%9F%BA%E4%BA%8Epalantir%E7%9A%84%E6%99%BA%E8%83%BD%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F/1.png">
 <meta property="article:published_time" content="2025-11-30T11:34:00.000Z">
-<meta property="article:modified_time" content="2025-11-30T13:40:22.997Z">
+<meta property="article:modified_time" content="2025-11-30T13:46:33.255Z">
 <meta property="article:author" content="Weiming Zhuang">
 <meta property="article:tag" content="知识图谱">
 <meta property="article:tag" content="设计模式">
@@ -281,7 +281,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-11-30 19:34:00 / Modified: 21:40:22" itemprop="dateCreated datePublished" datetime="2025-11-30T19:34:00+08:00">2025-11-30</time>
+      <time title="Created: 2025-11-30 19:34:00 / Modified: 21:46:33" itemprop="dateCreated datePublished" datetime="2025-11-30T19:34:00+08:00">2025-11-30</time>
     </span>
 
   
@@ -343,21 +343,14 @@
 </tbody></table>
 <h3 id="二、-上下游关系：数据与逻辑的流动"><a href="#二、-上下游关系：数据与逻辑的流动" class="headerlink" title="二、 上下游关系：数据与逻辑的流动"></a>二、 上下游关系：数据与逻辑的流动</h3><p>这三者不是独立的，而是层层递进的流水线关系：</p>
 <ol>
-<li>**上游 (Foundry)**：负责脏活累活-基础数据工程工作。它从银行的旧系统（Mainframe, SQL）抓取交易记录和客户信息，清洗并整合为统一格式。</li>
+<li><p>**上游 (Foundry)**：负责脏活累活-基础数据工程工作。它从银行的旧系统（Mainframe, SQL）抓取交易记录和客户信息，清洗并整合为统一格式。<br>产出：一张干净的“客户表”和“交易表”。</p>
+</li>
+<li><p>**中游 (Ontology)**：负责赋予意义。它读取Foundry的表，声明：“这张表的一行代表一个客户，那张表的一行代表一笔持仓，它们通过ID关联”。同时定义规则：“客户风险等级由持仓波动率决定”。<br>产出：一个可交互的知识图谱。</p>
+</li>
+<li><p>**下游 (AIP)**：负责智能应用。它不再看底层的SQL表，而是直接问Ontology：“给我风险等级为‘高’的客户”。AI利用这些上下文生成建议，并通过Ontology定义的Action (动作)把决策写回系统。如果没有 Foundry + Ontology，AI 只能看到混乱的数据表，做不到稳定可靠的推荐，更无法自动执行操作。Ontology 是 AI 被“驯化”后可靠执行事务的关键。<br>产出：一个决定+执行。</p>
+</li>
 </ol>
-<ul>
-<li>_产出_：一张干净的“客户表”和“交易表”。</li>
-</ul>
-<ol>
-<li>**中游 (Ontology)**：负责赋予意义。它读取Foundry的表，声明：“这张表的一行代表一个客户，那张表的一行代表一笔持仓，它们通过ID关联”。同时定义规则：“客户风险等级由持仓波动率决定”。</li>
-</ol>
-<ul>
-<li>_产出_：一个可交互的知识图谱。</li>
-</ul>
-<ol>
-<li>**下游 (AIP)**：负责智能应用。它不再看底层的SQL表，而是直接问Ontology：“给我风险等级为‘高’的客户”。AI利用这些上下文生成建议，并通过Ontology定义的Action (动作)把决策写回系统。如果没有 Foundry + Ontology，AI 只能看到混乱的数据表，做不到稳定可靠的推荐，更无法自动执行操作。Ontology 是 AI 被“驯化”后可靠执行事务的关键。</li>
-</ol>
-<p><strong>流动图示：</strong> <code>原始数据 (ERP/CRM)</code> -&gt; [Foundry 管道] -&gt; <code>清洗数据</code> -&gt; [Ontology 映射] -&gt; <code>对象与图谱</code> -&gt; [AIP 智能处理] -&gt; <code>业务决策/操作</code></p>
+<p>流动图示：<code>原始数据 (ERP/CRM)</code> -&gt; [Foundry 管道] -&gt; <code>清洗数据</code> -&gt; [Ontology 映射] -&gt; <code>对象与图谱</code> -&gt; [AIP 智能处理] -&gt; <code>业务决策/操作</code></p>
 <p>“典型工具”维度：</p>
 <ul>
 <li>Foundry: Code Repositories, Pipeline Builder, Contour</li>

@@ -16117,21 +16117,14 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 </tbody></table>
 <h3 id="二、-上下游关系：数据与逻辑的流动"><a href="#二、-上下游关系：数据与逻辑的流动" class="headerlink" title="二、 上下游关系：数据与逻辑的流动"></a>二、 上下游关系：数据与逻辑的流动</h3><p>这三者不是独立的，而是层层递进的流水线关系：</p>
 <ol>
-<li>**上游 (Foundry)**：负责脏活累活-基础数据工程工作。它从银行的旧系统（Mainframe, SQL）抓取交易记录和客户信息，清洗并整合为统一格式。</li>
+<li><p>**上游 (Foundry)**：负责脏活累活-基础数据工程工作。它从银行的旧系统（Mainframe, SQL）抓取交易记录和客户信息，清洗并整合为统一格式。<br>产出：一张干净的“客户表”和“交易表”。</p>
+</li>
+<li><p>**中游 (Ontology)**：负责赋予意义。它读取Foundry的表，声明：“这张表的一行代表一个客户，那张表的一行代表一笔持仓，它们通过ID关联”。同时定义规则：“客户风险等级由持仓波动率决定”。<br>产出：一个可交互的知识图谱。</p>
+</li>
+<li><p>**下游 (AIP)**：负责智能应用。它不再看底层的SQL表，而是直接问Ontology：“给我风险等级为‘高’的客户”。AI利用这些上下文生成建议，并通过Ontology定义的Action (动作)把决策写回系统。如果没有 Foundry + Ontology，AI 只能看到混乱的数据表，做不到稳定可靠的推荐，更无法自动执行操作。Ontology 是 AI 被“驯化”后可靠执行事务的关键。<br>产出：一个决定+执行。</p>
+</li>
 </ol>
-<ul>
-<li>_产出_：一张干净的“客户表”和“交易表”。</li>
-</ul>
-<ol>
-<li>**中游 (Ontology)**：负责赋予意义。它读取Foundry的表，声明：“这张表的一行代表一个客户，那张表的一行代表一笔持仓，它们通过ID关联”。同时定义规则：“客户风险等级由持仓波动率决定”。</li>
-</ol>
-<ul>
-<li>_产出_：一个可交互的知识图谱。</li>
-</ul>
-<ol>
-<li>**下游 (AIP)**：负责智能应用。它不再看底层的SQL表，而是直接问Ontology：“给我风险等级为‘高’的客户”。AI利用这些上下文生成建议，并通过Ontology定义的Action (动作)把决策写回系统。如果没有 Foundry + Ontology，AI 只能看到混乱的数据表，做不到稳定可靠的推荐，更无法自动执行操作。Ontology 是 AI 被“驯化”后可靠执行事务的关键。</li>
-</ol>
-<p><strong>流动图示：</strong> <code>原始数据 (ERP/CRM)</code> -&gt; [Foundry 管道] -&gt; <code>清洗数据</code> -&gt; [Ontology 映射] -&gt; <code>对象与图谱</code> -&gt; [AIP 智能处理] -&gt; <code>业务决策/操作</code></p>
+<p>流动图示：<code>原始数据 (ERP/CRM)</code> -&gt; [Foundry 管道] -&gt; <code>清洗数据</code> -&gt; [Ontology 映射] -&gt; <code>对象与图谱</code> -&gt; [AIP 智能处理] -&gt; <code>业务决策/操作</code></p>
 <p>“典型工具”维度：</p>
 <ul>
 <li>Foundry: Code Repositories, Pipeline Builder, Contour</li>
