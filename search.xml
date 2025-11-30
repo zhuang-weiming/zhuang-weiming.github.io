@@ -16093,13 +16093,13 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 <tr>
 <td><strong>输入 (Input)</strong></td>
 <td><strong>原始数据</strong><br><br>Excel, CSV, SQL 数据库, API, 日志流, 非结构化文档。</td>
-<td><strong>清洗后的数据集 (Datasets)</strong><br><br>来自Foundry管道的结构化表格。</td>
+<td><strong>清洗后的数据集 Datasets</strong><br><br>来自Foundry管道的结构化表格。</td>
 <td><strong>自然语言指令 + 本体上下文</strong><br><br>用户的Prompt、Ontology中的对象（如具体的客户档案）。</td>
 </tr>
 <tr>
 <td><strong>输出 (Output)</strong></td>
-<td><strong>结构化数据集 (Datasets)</strong><br><br>清洗完毕、这就绪的数据表。</td>
-<td><strong>业务对象 (Objects)</strong><br><br>API可调用的实体（如 <code>Client: John Doe</code>），包含属性和关联。</td>
+<td><strong>结构化数据集 Datasets</strong><br><br>清洗完毕、这就绪的数据表。</td>
+<td><strong>业务对象 Objects</strong><br><br>API可调用的实体（如 Client: John Doe），包含属性和关联。</td>
 <td><strong>智能决策/生成内容/自动化操作</strong><br><br>生成投资报告、自动填写表单、触发“调整仓位”的Action。</td>
 </tr>
 <tr>
@@ -16110,9 +16110,9 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 </tr>
 <tr>
 <td><strong>SDK/API 对应</strong></td>
-<td><code>Foundry Platform SDK</code><br><br>用于资源管理、管道编排</td>
-<td><code>Ontology SDK (OSDK)</code><br><br>用于前端App开发，操作对象和Action</td>
-<td><code>AIP Logic</code> / <code>AIP Agent</code><br><br>通过OSDK或API调用AI服务</td>
+<td>Foundry Platform SDK<br><br>用于资源管理、管道编排</td>
+<td>Ontology SDK (OSDK)<br><br>用于前端App开发，操作对象和Action</td>
+<td>AIP Logic / AIP Agent<br><br>通过OSDK或API调用AI服务</td>
 </tr>
 </tbody></table>
 <h3 id="二、-上下游关系：数据与逻辑的流动"><a href="#二、-上下游关系：数据与逻辑的流动" class="headerlink" title="二、 上下游关系：数据与逻辑的流动"></a>二、 上下游关系：数据与逻辑的流动</h3><p>这三者不是独立的，而是层层递进的流水线关系：</p>
@@ -16124,7 +16124,7 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 <li><p>**下游 (AIP)**：负责智能应用。它不再看底层的SQL表，而是直接问Ontology：“给我风险等级为‘高’的客户”。AI利用这些上下文生成建议，并通过Ontology定义的Action (动作)把决策写回系统。如果没有 Foundry + Ontology，AI 只能看到混乱的数据表，做不到稳定可靠的推荐，更无法自动执行操作。Ontology 是 AI 被“驯化”后可靠执行事务的关键。<br>产出：一个决定+执行。</p>
 </li>
 </ol>
-<p>流动图示：<code>原始数据 (ERP/CRM)</code> -&gt; [Foundry 管道] -&gt; <code>清洗数据</code> -&gt; [Ontology 映射] -&gt; <code>对象与图谱</code> -&gt; [AIP 智能处理] -&gt; <code>业务决策/操作</code></p>
+<p>流动图示：原始数据 (ERP/CRM) -&gt; [Foundry 管道] -&gt; 清洗数据 -&gt; [Ontology 映射] -&gt; 对象与图谱 -&gt; [AIP 智能处理] -&gt; 业务决策/操作</p>
 <p>“典型工具”维度：</p>
 <ul>
 <li>Foundry: Code Repositories, Pipeline Builder, Contour</li>
@@ -16137,11 +16137,11 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 <li><strong>操作</strong>：<ol>
 <li><strong>连接源系统</strong>：使用 Connector 连接银行的核心交易系统（Core Banking）、CRM（客户关系）、市场数据源（Bloomberg/Reuters）。</li>
 <li><strong>数据集成</strong>：编写 Python/SQL 转换逻辑（Transforms）。<ul>
-<li>_逻辑举例_：将交易代码统一（如将 ‘AAPL US’ 和 ‘Apple Inc’ 对齐）。</li>
-<li>_隐私计算_：对客户姓名、证件号进行加密或脱敏处理（PII Protection），利用 Foundry 的 Checkpoints 确保合规。</li>
+<li>逻辑举例：将交易代码统一（如将 ‘AAPL US’ 和 ‘Apple Inc’ 对齐）。</li>
+<li>隐私计算：对客户姓名、证件号进行加密或脱敏处理（PII Protection），利用 Foundry 的 Checkpoints 确保合规。</li>
 </ul>
 </li>
-<li><strong>输出</strong>：生成标准的 <code>All_Clients</code>，<code>All_Transactions</code>，<code>Market_Prices</code> 数据集。</li>
+<li><strong>输出</strong>：生成标准的 All_Clients，All_Transactions，Market_Prices 数据集。</li>
 </ol>
 </li>
 </ul>
@@ -16149,21 +16149,21 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 <li><strong>任务</strong>：构建数字孪生。</li>
 <li><strong>操作</strong>：<ol>
 <li>**定义对象 (Object Types)**：<ul>
-<li>**Client (客户)**：属性包含 <code>AUM</code> (管理资产规模), <code>RiskProfile</code> (风险偏好), <code>LastContactDate</code>。</li>
+<li>**Client (客户)**：属性包含 AUM (管理资产规模), RiskProfile (风险偏好), LastContactDate。</li>
 <li>**Portfolio (投资组合)**：关联到 Client。</li>
-<li>**Holding (持仓)**：属性包含 <code>Ticker</code>, <code>Quantity</code>, <code>CostBasis</code>。</li>
+<li>**Holding (持仓)**：属性包含 Ticker, Quantity, CostBasis。</li>
 </ul>
 </li>
 <li>**定义链接 (Link Types)**：<ul>
-<li><code>Client</code> <strong>has_many</strong> <code>Portfolios</code></li>
-<li><code>Portfolio</code> <strong>contains</strong> <code>Holdings</code></li>
+<li>Client <strong>has_many</strong> Portfolios</li>
+<li>Portfolio <strong>contains</strong> Holdings</li>
 </ul>
 </li>
 <li>**定义动作 (Actions)**：<ul>
-<li><strong>Action</strong>: <code>RebalancePortfolio</code>（再平衡）。</li>
+<li><strong>Action</strong>: RebalancePortfolio（再平衡）。</li>
 <li><strong>输入</strong>：目标客户ID，买卖指令列表。</li>
 <li><strong>逻辑</strong>：调用银行交易API，并在 Foundry 中记录操作日志。</li>
-<li><strong>Action</strong>: <code>Update_Client_Notes</code>（更新会议纪要）。</li>
+<li><strong>Action</strong>: Update_Client_Notes（更新会议纪要）。</li>
 </ul>
 </li>
 </ol>
@@ -16174,7 +16174,7 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 <li><strong>实施场景 1：会前准备自动化</strong><ul>
 <li><strong>输入</strong>：RM 在对话框输入“准备明天与王总（Client ID: 8823）的会议材料，关注他持有的科技股表现”。</li>
 <li>**AIP 流程 (AIP Logic)**：<ol>
-<li>**检索 (Retrieval)**：AIP 通过 Ontology 查找“王总”对象，通过关联关系定位找到其 <code>Holdings</code> 中属于“Technology”板块的股票。</li>
+<li>**检索 (Retrieval)**：AIP 通过 Ontology 查找“王总”对象，通过关联关系定位找到其 Holdings 中属于“Technology”板块的股票。</li>
 <li><strong>联网/市场分析</strong>：AIP通过Ontology查询新闻对象(该对象基于Foundry管道接入的Bloomberg数据构建)，分析这些股票近期的财报和新闻。</li>
 <li>**生成 (Generation)**：AIP 撰写一份《投资组合回顾与建议草案》，指出某科技股近期波动大，建议减持。</li>
 </ol>
@@ -16185,9 +16185,9 @@ AllowedMimeTypes: 定义了允许上传的文件类型，使用 map[string]bool 
 <li><strong>实施场景 2：自然语言执行交易</strong><ul>
 <li><strong>输入</strong>：RM 审阅后输入：“同意减持 AAPL 1000股，生成交易指令。”</li>
 <li><strong>AIP 流程</strong>：<ol>
-<li><strong>参数提取</strong>：LLM 从文本提取 <code>Ticker: AAPL</code>, <code>Action: Sell</code>, <code>Qty: 1000</code>。</li>
+<li><strong>参数提取</strong>：LLM 从文本提取 Ticker: AAPL, Action: Sell, Qty: 1000。</li>
 <li><strong>验证</strong>：AIP 调用 Ontology 校验王总是否持有足够的 AAPL。</li>
-<li><strong>执行</strong>：AIP 调用 Ontology 定义的 <code>Rebalance_Portfolio</code> Action。</li>
+<li><strong>执行</strong>：AIP 调用 Ontology 定义的 Rebalance_Portfolio Action。</li>
 <li><strong>反馈</strong>：界面弹出“交易指令已生成，等待合规审核”。</li>
 </ol>
 </li>
