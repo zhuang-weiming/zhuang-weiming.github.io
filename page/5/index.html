@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">290</span>
+          <span class="site-state-item-count">292</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -236,6 +236,187 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/06/19/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-two/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/06/19/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-two/" class="post-title-link" itemprop="url">软件工程之特性管理-feature-management-day-two</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-06-19 17:08:00" itemprop="dateCreated datePublished" datetime="2025-06-19T17:08:00+08:00">2025-06-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:29:37" itemprop="dateModified" datetime="2025-09-05T16:29:37+08:00">2025-09-05</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Unleash 如何作为控制面板（Control Plane）与服务侧解耦</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  [Unleash Server]</span><br><span class="line">     ↑        ↑</span><br><span class="line">[Admin 配置] [监控回报]</span><br><span class="line">     ↓        ↓</span><br><span class="line"> ┌───────────────┐</span><br><span class="line"> │ FeatureContext│ ← 用户属性、风险等级、时间窗口...</span><br><span class="line"> └───────┬───────┘</span><br><span class="line">		↓</span><br><span class="line"> [业务服务] →  [新/旧逻辑分支]</span><br></pre></td></tr></table></figure>
+
+<p>以下是针对IT场景的五种Feature Flag类型的设计模式及代码实现，结合金融行业特有的安全性、合规性和高可用性要求：</p>
+<h3 id="1-Release-Flags（新功能渐进发布）​"><a href="#1-Release-Flags（新功能渐进发布）​" class="headerlink" title="1. Release Flags（新功能渐进发布）​"></a>1. Release Flags（新功能渐进发布）​</h3><p>​<strong>​场景​</strong>​：手机银行APP新转账流程灰度发布<br>​<strong>​设计模式​</strong>​：客户分群策略 + 交易金额阈值控制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Spring Boot + Unleash (银行核心系统)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/transfer&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransferController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;TransferResponse&gt; <span class="title">executeTransfer</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="meta">@RequestBody</span> TransferRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="meta">@RequestHeader(&quot;X-Customer-Tier&quot;)</span> String customerTier)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 根据客户等级和金额阈值启用新流程（VIP客户且金额&lt;50万）</span></span><br><span class="line">        <span class="keyword">boolean</span> isNewFlow = unleash.isEnabled(</span><br><span class="line">            <span class="string">&quot;new_transfer_flow&quot;</span>,</span><br><span class="line">            Map.of(</span><br><span class="line">                <span class="string">&quot;customerTier&quot;</span>, customerTier,</span><br><span class="line">                <span class="string">&quot;amount&quot;</span>, request.getAmount().toString()</span><br><span class="line">            )</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (isNewFlow &amp;&amp; request.getAmount().compareTo(<span class="keyword">new</span> BigDecimal(<span class="string">&quot;500000&quot;</span>)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> newTransferService.execute(request); <span class="comment">// 新风控引擎</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> legacyTransferService.execute(request); <span class="comment">// 原有逻辑</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unleash策略配置</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;new_transfer_flow&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;gradualRollout&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;percentage&quot;</span>: <span class="number">20</span>  <span class="comment">// 首批开放20%VIP客户</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;remoteAddress&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;IPs&quot;</span>: <span class="string">&quot;10.2.3.0/24&quot;</span>  <span class="comment">// 仅内部测试网络可用</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-Experiment-Flags（A-B测试）​"><a href="#2-Experiment-Flags（A-B测试）​" class="headerlink" title="2. Experiment Flags（A/B测试）​"></a>2. Experiment Flags（A/B测试）​</h3><p>​<strong>​场景​</strong>​：信用卡还款页面UI优化实验<br>​<strong>​设计模式​</strong>​：哈希客户号分桶 + 实时埋点</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Django + Unleash (银行前端系统)</span></span><br><span class="line"><span class="keyword">from</span> UnleashClient <span class="keyword">import</span> UnleashClient</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化Unleash客户端</span></span><br><span class="line">unleash = UnleashClient(</span><br><span class="line">    url=<span class="string">&quot;https://unleash.yourbank.com/api&quot;</span>,</span><br><span class="line">    app_name=<span class="string">&quot;credit_card_frontend&quot;</span>,</span><br><span class="line">    environment=<span class="string">&quot;production&quot;</span>,</span><br><span class="line">    custom_headers=&#123;<span class="string">&quot;Authorization&quot;</span>: <span class="string">&quot;YOUR_API_KEY&quot;</span>&#125;</span><br><span class="line">)</span><br><span class="line">unleash.initialize_client()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">credit_card_payment</span>(<span class="params">request</span>):</span></span><br><span class="line">    customer_no = request.user.customer_no</span><br><span class="line">    context = &#123;</span><br><span class="line">        <span class="string">&quot;userId&quot;</span>: customer_no,</span><br><span class="line">        <span class="string">&quot;properties&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;risk_level&quot;</span>: get_risk_level(customer_no),  <span class="comment"># 自定义上下文属性</span></span><br><span class="line">            <span class="string">&quot;country&quot;</span>: request.user.country_code</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用Unleash判断是否启用实验</span></span><br><span class="line">    <span class="keyword">if</span> unleash.is_enabled(<span class="string">&quot;credit_card_ui_v3&quot;</span>, context):</span><br><span class="line">        <span class="comment"># 获取Variant（需要Unleash配置策略变体）</span></span><br><span class="line">        variant = unleash.get_variant(<span class="string">&quot;credit_card_ui_v3&quot;</span>, context)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 实时埋点（Unleash默认支持impression事件）</span></span><br><span class="line">        track_event(</span><br><span class="line">            event_type=<span class="string">&quot;UI_EXPERIMENT&quot;</span>,</span><br><span class="line">            customer_no=customer_no,</span><br><span class="line">            experiment_variant=variant[<span class="string">&#x27;name&#x27;</span>],  <span class="comment"># variant结构: &#123;&#x27;name&#x27;: &#x27;assisted&#x27;, &#x27;enabled&#x27;: True&#125;</span></span><br><span class="line">            page=<span class="string">&quot;credit_card_payment&quot;</span></span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> render(<span class="string">f&quot;payment_<span class="subst">&#123;variant[<span class="string">&#x27;name&#x27;</span>]&#125;</span>.html&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> render(<span class="string">&quot;payment_control.html&quot;</span>)  <span class="comment"># 默认UI</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>unleash 配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unleash Admin控制台配置</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;credit_card_ui_v3&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;flexibleRollout&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;rollout&quot;</span>: <span class="number">100</span>,         <span class="comment">// 100%流量参与</span></span><br><span class="line">        <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;userId&quot;</span>,  <span class="comment">// 按用户ID固定分桶</span></span><br><span class="line">        <span class="attr">&quot;groupId&quot;</span>: <span class="string">&quot;experiment&quot;</span>  <span class="comment">// 实验分组</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;userWithId&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;userIds&quot;</span>: <span class="string">&quot;12345,67890&quot;</span>  <span class="comment">// 可指定白名单用户</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;variants&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;control&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;weight&quot;</span>: <span class="number">50</span>  <span class="comment">// 权重50%</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;simplified&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;weight&quot;</span>: <span class="number">30</span>  <span class="comment">// 权重30%</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;assisted&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;weight&quot;</span>: <span class="number">20</span>,  <span class="comment">// 权重20%</span></span><br><span class="line">      <span class="attr">&quot;payload&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;json&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: &#123;<span class="attr">&quot;showTutor&quot;</span>: <span class="literal">true</span>&#125;  <span class="comment">// 可携带额外参数</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="​3-Kill-Switches（紧急熔断）​​"><a href="#​3-Kill-Switches（紧急熔断）​​" class="headerlink" title="​3. Kill Switches（紧急熔断）​​"></a><strong>​3. Kill Switches（紧急熔断）​</strong>​</h3><p>​<strong>​场景​</strong>​：大额转账系统异常熔断<br>​<strong>​设计模式​</strong>​：双通道触发 + 本地缓存强制更新</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化Unleash客户端（需提前配置）</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/Unleash/unleash-client-go/v3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    unleash.Initialize(</span><br><span class="line">        unleash.WithUrl(<span class="string">&quot;https://unleash.yourbank.com/api&quot;</span>),</span><br><span class="line">        unleash.WithAppName(<span class="string">&quot;payment_system&quot;</span>),</span><br><span class="line">        unleash.WithCustomHeaders(http.Header&#123;<span class="string">&quot;Authorization&quot;</span>: []<span class="keyword">string</span>&#123;<span class="string">&quot;YOUR_API_KEY&quot;</span>&#125;&#125;),</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ProcessLargeTransfer</span><span class="params">(transfer *pb.TransferRequest)</span> <span class="params">(*pb.TransferResponse, error)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 使用Unleash判断熔断状态</span></span><br><span class="line">    ctx := unleash.Context&#123;</span><br><span class="line">        UserId:    transfer.UserId,</span><br><span class="line">        Properties: <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;</span><br><span class="line">            <span class="string">&quot;country&quot;</span>:    transfer.CountryCode,</span><br><span class="line">            <span class="string">&quot;amount&quot;</span>:     strconv.FormatInt(transfer.Amount, <span class="number">10</span>),</span><br><span class="line">            <span class="string">&quot;risk_level&quot;</span>: getRiskLevel(transfer.UserId),</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> !unleash.IsEnabled(<span class="string">&quot;large_transfer_enabled&quot;</span>, ctx) &#123;</span><br><span class="line">        audit.LogEmergencyEvent(transfer, <span class="string">&quot;unleash_killswitch_activated&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, status.Error(codes.Unavailable, <span class="string">&quot;服务临时维护&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 正常处理逻辑...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>unleash 配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unleash Admin控制台配置</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;large_transfer_enabled&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;gradualRollout&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;rollout&quot;</span>: <span class="number">100</span>,  <span class="comment">// 默认100%开启</span></span><br><span class="line">        <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;userId&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;remoteAddress&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;IPs&quot;</span>: <span class="string">&quot;10.2.3.0/24&quot;</span>  <span class="comment">// 仅允许内网访问</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;variants&quot;</span>: [],</span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-Operational-Flags（系统迁移）​​"><a href="#4-Operational-Flags（系统迁移）​​" class="headerlink" title="4. Operational Flags（系统迁移）​​"></a><strong>4. Operational Flags（系统迁移）​</strong>​</h3><p>​<strong>场景</strong>​：核心账户系统数据库迁移<br>​<strong>设计模式</strong>​：影子流量对比 + 自动回退</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.getunleash.Unleash;</span><br><span class="line"><span class="keyword">import</span> io.getunleash.UnleashContext;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Unleash unleash;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AuditLogger auditLogger;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AccountService</span><span class="params">(Unleash unleash, AuditLogger auditLogger)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.unleash = unleash;</span><br><span class="line">        <span class="keyword">this</span>.auditLogger = auditLogger;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Balance <span class="title">getBalance</span><span class="params">(String accountNo)</span> <span class="keyword">throws</span> BankSystemException </span>&#123;</span><br><span class="line">        <span class="comment">// 构建Unleash上下文</span></span><br><span class="line">        UnleashContext context = UnleashContext.builder()</span><br><span class="line">            .addProperty(<span class="string">&quot;accountType&quot;</span>, getAccountType(accountNo))</span><br><span class="line">            .addProperty(<span class="string">&quot;timeWindow&quot;</span>, </span><br><span class="line">                java.time.LocalTime.now().getHour() &lt; <span class="number">6</span> ? <span class="string">&quot;low-traffic&quot;</span> : <span class="string">&quot;peak&quot;</span>)</span><br><span class="line">            .addProperty(<span class="string">&quot;accountNo&quot;</span>, accountNo) <span class="comment">// 用于单账户回退</span></span><br><span class="line">            .build();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">boolean</span> useNewDB = unleash.isEnabled(<span class="string">&quot;account_db_migration&quot;</span>, context);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Balance balance = useNewDB ? </span><br><span class="line">                newDbQuery(accountNo) : </span><br><span class="line">                legacyDbQuery(accountNo);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 影子流量比对</span></span><br><span class="line">            <span class="keyword">if</span> (useNewDB) &#123;</span><br><span class="line">                Balance legacyBalance = legacyDbQuery(accountNo);</span><br><span class="line">                auditLogger.compareResults(<span class="string">&quot;balance_query&quot;</span>, balance, legacyBalance);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">return</span> balance;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            <span class="comment">// 单账户回退（通过Unleash的个性化配置）</span></span><br><span class="line">            Map&lt;String, String&gt; fallbackConfig = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            fallbackConfig.put(<span class="string">&quot;accountNo&quot;</span>, accountNo);</span><br><span class="line">            unleash.more().updateContext(<span class="string">&quot;account_db_migration&quot;</span>, </span><br><span class="line">                <span class="string">&quot;disableForAccount&quot;</span>, fallbackConfig);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> BankSystemException(<span class="string">&quot;DB_OPERATION_FAILED&quot;</span>, ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> Balance <span class="title">newDbQuery</span><span class="params">(String accountNo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 新数据库查询实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> Balance <span class="title">legacyDbQuery</span><span class="params">(String accountNo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 旧数据库查询实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getAccountType</span><span class="params">(String accountNo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取账户类型逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>unleash 配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">&quot;features&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;account_db_migration&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;银行核心系统数据库迁移开关&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;gradualRollout&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;rollout&quot;</span>: <span class="string">&quot;30&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;accountType&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;groupId&quot;</span>: <span class="string">&quot;migration&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;flexibleRollout&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;rollout&quot;</span>: <span class="string">&quot;100&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;stickiness&quot;</span>: <span class="string">&quot;timeWindow&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;groupId&quot;</span>: <span class="string">&quot;low-traffic&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;userWithId&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;userIds&quot;</span>: <span class="string">&quot;disabled_account_1,disabled_account_2&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;variants&quot;</span>: [],</span><br><span class="line">      <span class="attr">&quot;dependencies&quot;</span>: [],</span><br><span class="line">      <span class="attr">&quot;tags&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;banking&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;core-system&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;impressionData&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;segments&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">&quot;constraints&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;timeWindow&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;IN&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;low-traffic&quot;</span>],</span><br><span class="line">          <span class="attr">&quot;caseInsensitive&quot;</span>: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Permission-Flags（权限控制）​​"><a href="#5-Permission-Flags（权限控制）​​" class="headerlink" title="5. Permission Flags（权限控制）​​"></a><strong>5. Permission Flags（权限控制）​</strong>​</h3><p>​<strong>场景</strong>​：企业网银大额审批功能<br>​<strong>设计模式</strong>​：RBAC + 实时权限同步</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.getunleash.Unleash;</span><br><span class="line"><span class="keyword">import</span> io.getunleash.UnleashContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/transfer&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransferApprovalController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Unleash unleash;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AuditLogger auditLogger;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TransferApprovalController</span><span class="params">(Unleash unleash, AuditLogger auditLogger)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.unleash = unleash;</span><br><span class="line">        <span class="keyword">this</span>.auditLogger = auditLogger;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/approve-large&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ResponseEntity&lt;?&gt; approveLargeTransfer(</span><br><span class="line">            <span class="meta">@RequestBody</span> TransferRequest request,</span><br><span class="line">            <span class="meta">@RequestHeader(&quot;X-User-Info&quot;)</span> String userInfo) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 解析用户信息</span></span><br><span class="line">        User user = parseUserInfo(userInfo);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 构建Unleash上下文</span></span><br><span class="line">        UnleashContext context = UnleashContext.builder()</span><br><span class="line">                .userId(user.getId())</span><br><span class="line">                .addProperty(<span class="string">&quot;roles&quot;</span>, String.join(<span class="string">&quot;,&quot;</span>, user.getRoles()))</span><br><span class="line">                .addProperty(<span class="string">&quot;amount&quot;</span>, String.valueOf(request.getAmount()))</span><br><span class="line">                .addProperty(<span class="string">&quot;branchCode&quot;</span>, user.getBranchCode())</span><br><span class="line">                .addProperty(<span class="string">&quot;currency&quot;</span>, request.getCurrency())</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查权限</span></span><br><span class="line">        <span class="keyword">boolean</span> isApprovalAllowed = unleash.isEnabled(<span class="string">&quot;large_transfer_approval&quot;</span>, context);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!isApprovalAllowed) &#123;</span><br><span class="line">            auditLogger.logAccessViolation(user.getId(), <span class="string">&quot;large_transfer_approval_denied&quot;</span>, request);</span><br><span class="line">            <span class="keyword">return</span> ResponseEntity.status(HttpStatus.FORBIDDEN)</span><br><span class="line">                    .body(<span class="keyword">new</span> ErrorResponse(<span class="string">&quot;超出审批权限&quot;</span>, <span class="string">&quot;INSUFFICIENT_PRIVILEGES&quot;</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 执行审批逻辑</span></span><br><span class="line">        <span class="keyword">return</span> processApproval(request, user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> User <span class="title">parseUserInfo</span><span class="params">(String userInfo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 解析JWT或其它用户信息</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ResponseEntity&lt;?&gt; processApproval(TransferRequest request, User user) &#123;</span><br><span class="line">        <span class="comment">// 审批逻辑实现</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>unleash admin 配置如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">&quot;features&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;large_transfer_approval&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;大额转账审批权限控制&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">&quot;strategies&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;userWithId&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;constraints&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;roles&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;STR_CONTAINS&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;branch_manager&quot;</span>],</span><br><span class="line">              <span class="attr">&quot;caseInsensitive&quot;</span>: <span class="literal">false</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;amount&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;NUM_LTE&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;1000000&quot;</span>]</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;default&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;constraints&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;branchCode&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;IN&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;SHANGHAI&quot;</span>, <span class="string">&quot;BEIJING&quot;</span>],</span><br><span class="line">              <span class="attr">&quot;caseInsensitive&quot;</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;amount&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;NUM_LTE&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;5000000&quot;</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">&quot;contextName&quot;</span>: <span class="string">&quot;currency&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;operator&quot;</span>: <span class="string">&quot;IN&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;values&quot;</span>: [<span class="string">&quot;CNY&quot;</span>, <span class="string">&quot;USD&quot;</span>]</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;variants&quot;</span>: [],</span><br><span class="line">      <span class="attr">&quot;tags&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;security&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;high&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;impressionData&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Weiming Zhuang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/" class="post-title-link" itemprop="url">软件工程之特性管理-feature-management-day-one</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-06-18 09:42:00" itemprop="dateCreated datePublished" datetime="2025-06-18T09:42:00+08:00">2025-06-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2025-09-05 16:29:37" itemprop="dateModified" datetime="2025-09-05T16:29:37+08:00">2025-09-05</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>以 <a target="_blank" rel="noopener" href="https://github.com/Unleash/unleash">https://github.com/Unleash/unleash</a> 为例：<br>Here are the key concepts you’ll need when working with Unleash</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/1.png"></p>
+<h3 id="费用"><a href="#费用" class="headerlink" title="费用"></a>费用</h3><p><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/2.png"><br><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/3.png"><br><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/4.png"><br><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/5.png"></p>
+<h3 id="本地运行-Demo-run-on-local"><a href="#本地运行-Demo-run-on-local" class="headerlink" title="本地运行 Demo run on local"></a>本地运行 Demo run on local</h3><p><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/6.png"></p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/7.png"><br><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/8.png"></p>
+<h3 id="配置调整时，默认的-报文-字段"><a href="#配置调整时，默认的-报文-字段" class="headerlink" title="配置调整时，默认的(报文)字段"></a>配置调整时，默认的(报文)字段</h3><p><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/9.png"></p>
+<h3 id="配置调整时，feature的类型"><a href="#配置调整时，feature的类型" class="headerlink" title="配置调整时，feature的类型"></a>配置调整时，feature的类型</h3><p><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/10.png"></p>
+<h3 id="配置调整时，策略-规则"><a href="#配置调整时，策略-规则" class="headerlink" title="配置调整时，策略/规则"></a>配置调整时，策略/规则</h3><p><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/11.png"></p>
+<h3 id="Unleash-SDK支持的语言类型"><a href="#Unleash-SDK支持的语言类型" class="headerlink" title="Unleash SDK支持的语言类型"></a>Unleash SDK支持的语言类型</h3><p><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/12.png"><br><img src="/2025/06/18/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B9%8B%E7%89%B9%E6%80%A7%E7%AE%A1%E7%90%86-feature-management-day-one/13.png"></p>
+<h3 id="项目端开发指南"><a href="#项目端开发指南" class="headerlink" title="项目端开发指南"></a>项目端开发指南</h3><ol>
+<li>Java - <a target="_blank" rel="noopener" href="https://github.com/zhuang-weiming/unleash-feature-flag-sample/blob/main/docs/backend-integration-guide.md">https://github.com/zhuang-weiming/unleash-feature-flag-sample/blob/main/docs/backend-integration-guide.md</a></li>
+<li>JavaScript - <a target="_blank" rel="noopener" href="https://github.com/zhuang-weiming/unleash-feature-flag-sample/blob/main/docs/frontend-integration-guide.md">https://github.com/zhuang-weiming/unleash-feature-flag-sample/blob/main/docs/frontend-integration-guide.md</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -810,441 +991,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/03/29/%E5%9F%BA%E4%BA%8EDORA%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/03/29/%E5%9F%BA%E4%BA%8EDORA%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">基于DORA指标体系的项目管理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-03-29 11:50:00" itemprop="dateCreated datePublished" datetime="2025-03-29T11:50:00+08:00">2025-03-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-11-24 14:24:08" itemprop="dateModified" datetime="2025-11-24T14:24:08+08:00">2025-11-24</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>使用 <strong>DORA 指标</strong>，向管理层展示交付流程的整体效率和稳定性。</p>
-<h2 id="一、战略层（DORA-Metrics）"><a href="#一、战略层（DORA-Metrics）" class="headerlink" title="一、战略层（DORA Metrics）"></a>一、战略层（DORA Metrics）</h2><table>
-<thead>
-<tr>
-<th>指标</th>
-<th>描述</th>
-<th>目标值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>部署频率（Deployment Frequency）</td>
-<td>每月部署到生产环境的次数</td>
-<td>≥ 每周一次</td>
-</tr>
-<tr>
-<td>变更前置时间（Lead Time for Changes）</td>
-<td>从代码提交到生产环境部署的平均时间</td>
-<td>≤ 1周</td>
-</tr>
-<tr>
-<td>变更失败率（Change Failure Rate）</td>
-<td>生产环境变更导致事故的比例</td>
-<td>≤ 5%</td>
-</tr>
-<tr>
-<td>平均恢复时间（Mean Time to Restore，MTTR）</td>
-<td>故障发生到修复完成的平均时长</td>
-<td>≤ 2小时</td>
-</tr>
-</tbody></table>
-<h2 id="二、执行层（精细化指标体系）"><a href="#二、执行层（精细化指标体系）" class="headerlink" title="二、执行层（精细化指标体系）"></a>二、执行层（精细化指标体系）</h2><h3 id="（一）研发阶段（Development）"><a href="#（一）研发阶段（Development）" class="headerlink" title="（一）研发阶段（Development）"></a>（一）研发阶段（Development）</h3><table>
-<thead>
-<tr>
-<th>指标</th>
-<th>描述</th>
-<th>目标值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>单元测试覆盖率</td>
-<td>单元测试代码覆盖率</td>
-<td>≥80%</td>
-</tr>
-<tr>
-<td>代码审查一次通过率</td>
-<td>首次通过代码审查比例</td>
-<td>≥85%</td>
-</tr>
-<tr>
-<td>技术债务</td>
-<td>SonarQube技术债务评分</td>
-<td>≤ 技术债务比例15%</td>
-</tr>
-<tr>
-<td>敏捷迭代按时交付率</td>
-<td>Sprint内任务完成率</td>
-<td>≥90%</td>
-</tr>
-</tbody></table>
-<h3 id="（二）部署阶段（Deployment）"><a href="#（二）部署阶段（Deployment）" class="headerlink" title="（二）部署阶段（Deployment）"></a>（二）部署阶段（Deployment）</h3><table>
-<thead>
-<tr>
-<th>指标</th>
-<th>描述</th>
-<th>目标值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>首次上线成功率</td>
-<td>一次性成功部署比例</td>
-<td>≥95%</td>
-</tr>
-<tr>
-<td>部署自动化覆盖率</td>
-<td>CI/CD管道自动化程度</td>
-<td>≥90%</td>
-</tr>
-<tr>
-<td>平均部署周期</td>
-<td>提交到上线部署的周期</td>
-<td>≤2天</td>
-</tr>
-</tbody></table>
-<h3 id="（三）运维阶段（Operation）"><a href="#（三）运维阶段（Operation）" class="headerlink" title="（三）运维阶段（Operation）"></a>（三）运维阶段（Operation）</h3><table>
-<thead>
-<tr>
-<th>指标</th>
-<th>描述</th>
-<th>目标值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>系统可用率</td>
-<td>系统正常运行的比例</td>
-<td>≥99.95%</td>
-</tr>
-<tr>
-<td>平均故障间隔（MTBF）</td>
-<td>系统两次事故之间的平均时间</td>
-<td>≥30天</td>
-</tr>
-<tr>
-<td>自动化监控覆盖率</td>
-<td>关键系统自动监控覆盖程度</td>
-<td>≥95%</td>
-</tr>
-<tr>
-<td>服务响应延迟</td>
-<td>应用的99%响应延迟</td>
-<td>≤500ms</td>
-</tr>
-</tbody></table>
-<h3 id="（四）事故管理（Incident-Management）"><a href="#（四）事故管理（Incident-Management）" class="headerlink" title="（四）事故管理（Incident Management）"></a>（四）事故管理（Incident Management）</h3><table>
-<thead>
-<tr>
-<th>指标</th>
-<th>描述</th>
-<th>目标值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>事故响应时间</td>
-<td>事故发生到首次响应的平均时间</td>
-<td>≤15分钟</td>
-</tr>
-<tr>
-<td>事故关闭时间（MTTR）</td>
-<td>从事故发生到关闭的平均时间</td>
-<td>≤2小时</td>
-</tr>
-<tr>
-<td>一级事故数量</td>
-<td>严重事故（P1级）发生次数</td>
-<td>每月≤2次</td>
-</tr>
-<tr>
-<td>RCA完成率</td>
-<td>重大事故根因分析完成比例</td>
-<td>100%</td>
-</tr>
-</tbody></table>
-<h3 id="（五）变更管理（Change-Management）"><a href="#（五）变更管理（Change-Management）" class="headerlink" title="（五）变更管理（Change Management）"></a>（五）变更管理（Change Management）</h3><table>
-<thead>
-<tr>
-<th>指标</th>
-<th>描述</th>
-<th>目标值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>变更回退率</td>
-<td>需要回滚的变更比例</td>
-<td>≤5%</td>
-</tr>
-<tr>
-<td>紧急变更比例</td>
-<td>紧急变更占全部变更的比例</td>
-<td>≤10%</td>
-</tr>
-<tr>
-<td>变更审批效率</td>
-<td>变更申请到审批完成时间</td>
-<td>≤1个工作日</td>
-</tr>
-</tbody></table>
-<h3 id="（六）系统淘汰管理（Demise-amp-Decommission）"><a href="#（六）系统淘汰管理（Demise-amp-Decommission）" class="headerlink" title="（六）系统淘汰管理（Demise &amp; Decommission）"></a>（六）系统淘汰管理（Demise &amp; Decommission）</h3><table>
-<thead>
-<tr>
-<th>指标</th>
-<th>描述</th>
-<th>目标值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>系统及时退役率</td>
-<td>按计划淘汰系统的及时率</td>
-<td>100%</td>
-</tr>
-<tr>
-<td>淘汰成本控制</td>
-<td>实际退役成本与计划的差异比例</td>
-<td>≤10%</td>
-</tr>
-</tbody></table>
-<h2 id="三、实施与治理模式"><a href="#三、实施与治理模式" class="headerlink" title="三、实施与治理模式"></a>三、实施与治理模式</h2><h3 id="0-CIO-应该参加critical级别的incident现场解决会议"><a href="#0-CIO-应该参加critical级别的incident现场解决会议" class="headerlink" title="0. CIO 应该参加critical级别的incident现场解决会议"></a>0. CIO 应该参加critical级别的incident现场解决会议</h3><h3 id="1-报告与回顾机制"><a href="#1-报告与回顾机制" class="headerlink" title="1. 报告与回顾机制"></a>1. 报告与回顾机制</h3><ul>
-<li>每季度向战略层汇报DORA指标，审视整体战略目标达成情况。</li>
-<li>每月运营回顾精细化指标，针对执行偏差提出整改。</li>
-<li>每周团队自查具体指标，持续改进。<h3 id="2-技术支撑平台"><a href="#2-技术支撑平台" class="headerlink" title="2. 技术支撑平台"></a>2. 技术支撑平台</h3></li>
-<li>DevOps平台自动收集开发、测试、部署数据。</li>
-<li>ITSM（如ServiceNow）跟踪事故、变更数据。</li>
-<li>APM（如Prometheus/Grafana）实时监控运维指标。</li>
-<li>数据可视化平台（如Power BI）集中展现指标。<h3 id="3-组织与激励"><a href="#3-组织与激励" class="headerlink" title="3. 组织与激励"></a>3. 组织与激励</h3></li>
-<li>指标与团队绩效激励直接关联，优秀团队给予奖励。</li>
-<li>存在明显问题的团队，组织针对性改进辅导。<h2 id="四、预期效果"><a href="#四、预期效果" class="headerlink" title="四、预期效果"></a>四、预期效果</h2></li>
-<li>保持开发与运维的效率、稳定性双平衡。</li>
-<li>确保监管合规性，同时保证技术与业务的快速响应能力。</li>
-<li>促进组织持续改善，实现稳定高效的整体技术管理水平。</li>
-</ul>
-<h3 id="Reference-link"><a href="#Reference-link" class="headerlink" title="Reference link:"></a>Reference link:</h3><p><a target="_blank" rel="noopener" href="https://dora.dev/capabilities/">https://dora.dev/capabilities/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/02/13/SFT%E3%80%81DPO%E3%80%81GRPO%E4%B8%89%E7%A7%8D%E8%AE%AD%E7%BB%83%E5%99%A8%E7%9A%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Weiming Zhuang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/13/SFT%E3%80%81DPO%E3%80%81GRPO%E4%B8%89%E7%A7%8D%E8%AE%AD%E7%BB%83%E5%99%A8%E7%9A%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="post-title-link" itemprop="url">SFT、DPO、GRPO三种训练器的训练数据与应用场景</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-02-13 18:22:00" itemprop="dateCreated datePublished" datetime="2025-02-13T18:22:00+08:00">2025-02-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-09-05 16:43:57" itemprop="dateModified" datetime="2025-09-05T16:43:57+08:00">2025-09-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="结论总结："><a href="#结论总结：" class="headerlink" title="结论总结："></a>结论总结：</h2><table>
-<thead>
-<tr>
-<th>模型名称</th>
-<th>SFTTrainer - Supervised Fine-Tuning Trainer - 监督式微调训练器</th>
-<th>DPOTrainer - Direct Preference Optimization Trainer - 直接偏好优化训练器</th>
-<th>GRPOTrainer - Generative Reward Policy Optimization Trainer - 生成式奖励策略优化训练器</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>训练目标</td>
-<td>模仿训练数据</td>
-<td>对齐人类偏好</td>
-<td>最大化奖励函数</td>
-</tr>
-<tr>
-<td>数据需求</td>
-<td>输入-输出数据对。数据形式是 “指令 -&gt; 期望输出” 的对应关系</td>
-<td>偏好数据。”指令 -&gt; (偏好输出, 非偏好输出)” 的成对比较</td>
-<td>奖励信号。数据形式是一个数值奖励，用于评价模型在环境中的行为</td>
-</tr>
-<tr>
-<td>核心算法</td>
-<td>监督学习 (交叉熵损失)</td>
-<td>直接偏好优化 (DPO 损失)</td>
-<td>强化学习 (PPO 算法)</td>
-</tr>
-<tr>
-<td>优势</td>
-<td>简单易用, 高效, 适用多种任务</td>
-<td>更符合人类偏好, 避免奖励函数设计难题, 训练稳定, 对奖励函数偏差更鲁棒</td>
-<td>直接优化目标指标, 可学习复杂策略, 适用于与环境交互任务, 精细行为控制</td>
-</tr>
-<tr>
-<td>劣势</td>
-<td>可能放大数据偏差, 难处理复杂偏好, 可能过拟合</td>
-<td>需要偏好数据, 对偏好数据质量敏感, 可能牺牲部分生成能力</td>
-<td>训练复杂不稳定, 奖励函数设计困难, 计算成本高, 可能奖励函数偏移</td>
-</tr>
-<tr>
-<td>复杂度</td>
-<td>低</td>
-<td>中</td>
-<td>高</td>
-</tr>
-<tr>
-<td>应用场景示例</td>
-<td>- 内容生成: 自动生成产品描述、新闻稿、社交媒体文案等。<br>- 指令跟随: 简单的问答系统、文档摘要、代码生成等。 <br>- 数据增强: 生成特定格式或风格的合成数据，例如特定风格的文本或代码。<br></td>
-<td>- 对话系统: 训练客服机器人、聊天机器人，使其回复更礼貌、更人性化、更符合用户期望。<br>- 内容审核: 训练模型判断文本是否安全、无害、符合道德标准。<br>- 偏好排序: 训练模型根据用户偏好对多个选项进行排序或选择 (例如，排序新闻摘要、推荐商品)。</td>
-<td>- 游戏 AI: 训练游戏 Bot，在游戏中获得高分或战胜对手。<br>- 交易策略: 训练交易机器人，使其在股票市场或加密货币市场中最大化收益。<br>- 机器人控制: 训练机器人完成复杂任务，例如导航、物体抓取等，最大化任务完成效率或成功率。 <br>- 复杂对话策略: 训练对话系统进行多轮对话，最终达成用户目标 (例如，预定餐厅、解决复杂问题)。</td>
-</tr>
-</tbody></table>
-<h2 id="1-输入-输出数据对-Input-Output-Data-Pairs-SFTTrainer-使用"><a href="#1-输入-输出数据对-Input-Output-Data-Pairs-SFTTrainer-使用" class="headerlink" title="1. 输入-输出数据对 (Input-Output Data Pairs) - SFTTrainer 使用"></a>1. 输入-输出数据对 (Input-Output Data Pairs) - SFTTrainer 使用</h2><p>这种数据形式是最直接的，用于监督式微调 (SFTTrainer)。 每个数据样本都包含一个 输入 (Input) 和一个期望的 输出 (Output)。</p>
-<p>应用场景例子：<strong>指令跟随 (Instruction Following)</strong> - 简单的问答任务<br><strong>示例：</strong></p>
-<ul>
-<li>问答系统： “问题 -&gt; 答案”</li>
-<li>翻译任务： “原文 -&gt; 译文”</li>
-<li>摘要生成： “文章 -&gt; 摘要”</li>
-<li>样例数据格式 (JSON 格式示例):<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;法国的首都是哪里？&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;output&quot;</span>: <span class="string">&quot;法国的首都是巴黎。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;请写一个关于夏天的简短故事。&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;output&quot;</span>: <span class="string">&quot;阳光洒在金色的沙滩上，海风轻轻吹拂，孩子们在海边嬉戏，冰淇淋融化在甜甜的笑容里，夏天真美好。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;将这句话翻译成英文：你好世界。&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;output&quot;</span>: <span class="string">&quot;Hello world.&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ... 更多数据样本</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-解释:</li>
-<li>“instruction” (输入): 代表用户给模型的指令或问题。</li>
-<li>“output” (输出): 代表模型应该生成的期望回复或答案。</li>
-<li>数据目标: SFTTrainer 的目标是让模型学习将 “instruction” 映射到 “output”，模仿训练数据中的这种对应关系。</li>
-</ul>
-<p>应用场景例子：<strong>内容生成 (Content Generation)</strong> - 生成产品描述</p>
-<ul>
-<li>样例数据格式 (JSON 格式示例):<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;input&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;product_name&quot;</span>: <span class="string">&quot;智能咖啡机&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;features&quot;</span>: [<span class="string">&quot;一键操作&quot;</span>, <span class="string">&quot;多种咖啡模式&quot;</span>, <span class="string">&quot;可预约&quot;</span>, <span class="string">&quot;自动清洗&quot;</span>],</span><br><span class="line">      <span class="attr">&quot;materials&quot;</span>: [<span class="string">&quot;不锈钢&quot;</span>, <span class="string">&quot;耐热玻璃&quot;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;output&quot;</span>: <span class="string">&quot;这款智能咖啡机让您在家也能轻松享受咖啡馆级的美味。一键操作，多种咖啡模式随心选择，更有预约功能，让您早晨醒来就能品尝到香浓咖啡。采用不锈钢和耐热玻璃材质，坚固耐用，并具备自动清洗功能，省心省力。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ... 更多数据样本</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-解释:</li>
-<li>“input” (输入): 可以是更结构化的信息，例如产品的特征、材质等。</li>
-<li>“output” (输出): 是基于输入信息生成的期望产品描述文本。</li>
-</ul>
-<h2 id="2-偏好数据-Pairwise-Ranking-DPOTrainer-使用"><a href="#2-偏好数据-Pairwise-Ranking-DPOTrainer-使用" class="headerlink" title="2. 偏好数据 (Pairwise Ranking) - DPOTrainer 使用"></a>2. 偏好数据 (Pairwise Ranking) - DPOTrainer 使用</h2><p>这种数据形式用于直接偏好优化 (DPOTrainer)。 对于同一个输入，我们提供两个模型生成的输出，并标注哪个输出更符合偏好。</p>
-<p>应用场景例子：<strong>对话系统 (Chatbot)</strong> - 提升回复质量和偏好</p>
-<ul>
-<li>样例数据格式 (JSON 格式示例):<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;今天天气怎么样？&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;chosen&quot;</span>: <span class="string">&quot;今天天气晴朗，阳光明媚，非常适合户外活动。&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;rejected&quot;</span>: <span class="string">&quot;天气还行。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;instruction&quot;</span>: <span class="string">&quot;请问你能推荐一家附近的意大利餐厅吗？&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;chosen&quot;</span>: <span class="string">&quot;当然，附近有一家评价很高的意大利餐厅，名叫“托斯卡纳阳光”，他们家的披萨和意面非常受欢迎，地址是… [地址信息] …，您要我帮您查询一下电话或者预定吗？&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;rejected&quot;</span>: <span class="string">&quot;我推荐一家意大利餐厅。&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ... 更多数据样本</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure></li>
-<li>解释:<ul>
-<li>“instruction” (输入): 用户的问题或指令。</li>
-<li>“chosen” (偏好输出): 被认为更好或更符合偏好的回复。例如，更详细、更礼貌、更乐于助人的回复。</li>
-<li>“rejected” (非偏好输出): 被认为相对较差或不太符合偏好的回复。例如，更简短、更生硬、信息量较少的回复。</li>
-<li>数据目标: DPOTrainer 学习到，对于相同的 “instruction”，模型应该倾向于生成类似 “chosen” 这样的回复，而不是 “rejected” 这样的回复。偏好可以是基于礼貌程度、信息量、是否乐于助人、是否符合特定价值观等等。</li>
-</ul>
-</li>
-</ul>
-<h2 id="3-奖励信号-Reward-Signal-GRPOTrainer-使用"><a href="#3-奖励信号-Reward-Signal-GRPOTrainer-使用" class="headerlink" title="3. 奖励信号 (Reward Signal) - GRPOTrainer 使用"></a>3. 奖励信号 (Reward Signal) - GRPOTrainer 使用</h2><p>奖励信号是一个数值，用于评价模型在特定环境或任务中生成的输出质量。 GRPOTrainer 使用强化学习方法，目标是最大化模型获得的累积奖励。</p>
-<p>应用场景例子：<strong>游戏 AI (Game AI)</strong> - 训练游戏 Bot 下围棋</p>
-<ul>
-<li>奖励函数示例 (Python 伪代码):<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reward_function</span>(<span class="params">game_state, action</span>):</span></span><br><span class="line">  <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">  定义围棋游戏中的奖励函数.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Args:</span></span><br><span class="line"><span class="string">    game_state: 当前的棋局状态.</span></span><br><span class="line"><span class="string">    action: 模型采取的落子动作.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  Returns:</span></span><br><span class="line"><span class="string">    reward:  一个数值奖励信号.</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> is_illegal_move(game_state, action): <span class="comment"># 落子是否为非法</span></span><br><span class="line">    reward = <span class="number">-10</span>  <span class="comment"># 非法落子，负奖励，惩罚模型</span></span><br><span class="line">  <span class="keyword">elif</span> is_capture_opponent_piece(game_state, action): <span class="comment"># 是否吃掉对方棋子</span></span><br><span class="line">    reward = +<span class="number">5</span>   <span class="comment"># 吃掉对方棋子，正奖励</span></span><br><span class="line">  <span class="keyword">elif</span> is_win(game_state): <span class="comment"># 是否赢得游戏</span></span><br><span class="line">    reward = +<span class="number">100</span>  <span class="comment"># 赢得游戏，巨大正奖励</span></span><br><span class="line">  <span class="keyword">elif</span> is_lose(game_state): <span class="comment"># 是否输掉游戏</span></span><br><span class="line">    reward = <span class="number">-50</span>  <span class="comment"># 输掉游戏，负奖励</span></span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    reward = <span class="number">-0.1</span> <span class="comment"># 常规落子，轻微负奖励 (鼓励尽快结束游戏，避免无意义的步骤 - 可根据实际情况调整)</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> reward</span><br></pre></td></tr></table></figure></li>
-<li>解释:<ul>
-<li>奖励函数: <code>reward_function</code> 就是一个奖励函数，它根据当前的游戏状态和模型采取的动作，计算出一个数值奖励。</li>
-<li>奖励信号: 每次模型在游戏中执行一个动作后，环境 (围棋游戏) 会根据 <code>reward_function</code> 计算出一个奖励值，并将这个奖励值反馈给模型。</li>
-<li>数据目标: GRPOTrainer 通过不断尝试不同的动作，并根据获得的奖励信号学习，目标是找到一个策略 (即模型的参数)，使得在围棋游戏中能够获得尽可能高的累积奖励 (例如，最终赢得游戏)。</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
