@@ -17,11 +17,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="第一步：也是最重要的一步，就是下载谷歌浏览器！ 第二步：下载 Graphviz   http:&#x2F;&#x2F;graphviz.org&#x2F;download&#x2F;安装后配置环境变量，再path里面添加安装目录！   第三步：添加以下测试代码 （添加   _”net&#x2F;http&#x2F;pprof” 不然不会有效果！） 具体看源码 123456789101112131415161718192021222324">
 <meta property="og:type" content="article">
-<meta property="og:title" content="go pprof trace完整操作">
+<meta property="og:title" content="Go Pprof Trace完整操作">
 <meta property="og:url" content="https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="第一步：也是最重要的一步，就是下载谷歌浏览器！ 第二步：下载 Graphviz   http:&#x2F;&#x2F;graphviz.org&#x2F;download&#x2F;安装后配置环境变量，再path里面添加安装目录！   第三步：添加以下测试代码 （添加   _”net&#x2F;http&#x2F;pprof” 不然不会有效果！） 具体看源码 123456789101112131415161718192021222324">
@@ -45,10 +45,10 @@
 <link rel="canonical" href="https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/","path":"2018/06/07/go-pprof-trace完整操作/","title":"go pprof trace完整操作"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/","path":"2018/06/07/go-pprof-trace完整操作/","title":"Go Pprof Trace完整操作"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>go pprof trace完整操作 | Zhuang's Diary</title>
+<title>Go Pprof Trace完整操作 | Zhuang's Diary</title>
   
 
 
@@ -60,6 +60,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -82,6 +83,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -231,12 +235,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="go pprof trace完整操作 | Zhuang's Diary">
+      <meta itemprop="name" content="Go Pprof Trace完整操作 | Zhuang's Diary">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          go pprof trace完整操作
+          Go Pprof Trace完整操作
         </h1>
 
         <div class="post-meta-container">
@@ -268,7 +272,7 @@
     
     <div class="post-body" itemprop="articleBody"><p>第一步：也是最重要的一步，就是下载谷歌浏览器！</p>
 <p>第二步：下载 Graphviz   <a target="_blank" rel="noopener" href="http://graphviz.org/download/">http://graphviz.org/download/</a><br>安装后配置环境变量，再path里面添加安装目录！</p>
-<img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/1.png" class="">
+<img data-src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/1.png" class="">
 
 <p>第三步：添加以下测试代码 （添加   _”net&#x2F;http&#x2F;pprof” 不然不会有效果！）</p>
 <p>具体看源码</p>
@@ -281,23 +285,23 @@
 <p>需要等待分析时间，大约30秒，然后再输入 </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web</span><br></pre></td></tr></table></figure>
 <p>查看具体pprof的信息了</p>
-<img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/2.png" class="">
+<img data-src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/2.png" class="">
 
 <p>第五步：查看trace的信息，在谷歌浏览器中输入</p>
-<img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/3.png" class="">
+<img data-src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/3.png" class="">
 
 <p>然后等一会儿，再输入</p>
-<img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/4.png" class="">
+<img data-src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/4.png" class="">
 
 <p>当然期间也可以手动gc。在程序运行的地方自动生成一个文件</p>
-<img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/5.png" class="">
+<img data-src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/5.png" class="">
 
 <p>在cmd中输入 go tool trace    trace.out(具体路径)</p>
-<img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/6.png" class="">
+<img data-src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/6.png" class="">
 
 <p>它会生成一个URL 地址，使用谷歌浏览器打开即可</p>
-<img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/7.png" class="">
-<img src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/8.png" class="">
+<img data-src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/7.png" class="">
+<img data-src="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/8.png" class="">
     </div>
 
     
@@ -314,7 +318,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/" title="go pprof trace完整操作">https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace完整操作/</a>
+      <a href="https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/" title="Go Pprof Trace完整操作">https://zhuang-weiming.github.io/2018/06/07/go-pprof-trace完整操作/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -330,13 +334,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" rel="prev" title="golang调优工具-pprof">
-                  <i class="fa fa-angle-left"></i> golang调优工具-pprof
+                <a href="/2018/06/07/golang%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7-pprof/" rel="prev" title="Golang调优工具-Pprof">
+                  <i class="fa fa-angle-left"></i> Golang调优工具-Pprof
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="next" title="golang 随机数">
-                  golang 随机数 <i class="fa fa-angle-right"></i>
+                <a href="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="next" title="Golang 随机数">
+                  Golang 随机数 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

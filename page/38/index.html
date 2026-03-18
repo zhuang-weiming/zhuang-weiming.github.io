@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Zhuang&#39;s Diary">
@@ -46,6 +46,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -68,6 +69,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/page/38/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -258,17 +262,17 @@
 <h4 id="一台服务器用于部署Chainlink节点"><a href="#一台服务器用于部署Chainlink节点" class="headerlink" title="一台服务器用于部署Chainlink节点"></a>一台服务器用于部署Chainlink节点</h4><p>Chainlink节点相当于区块链在真实世界中的代理，它可以接收链上的数据请求，并获取到链上所需要的数据，通过事务提交给链上。所以需要一台服务器来建立Chainlink节点服务，服务器配置不需要很高，但是需要和私有链环境保持良好的网络通讯。</p>
 <p>之前的Chainlink节点版本默认使用Sqlite作为存储数据库，但是随着功能越来越完善，性能要求也越来越高，从0.8.0版本起，Chainlink节点要求必须使用postgres作为存储数据库，所以我们需要搭建一个postgres数据库。这个数据库可以和节点位于同一台服务器上，也可以位于不同的服务器上。您也可以同时搭建两个数据库作为备份。</p>
 <h3 id="可选-准备truffle-suite和npm或WebIDE-Remix等开发部署工具"><a href="#可选-准备truffle-suite和npm或WebIDE-Remix等开发部署工具" class="headerlink" title="(可选)准备truffle suite和npm或WebIDE Remix等开发部署工具"></a>(可选)准备truffle suite和npm或WebIDE Remix等开发部署工具</h3><p>您可以选择Chainlink提供的truffle box来编写和部署测试合约</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle unbox smartcontractkit/box</span><br></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle <span class="built_in">unbox</span> smartcontractkit<span class="operator">/</span><span class="built_in">box</span></span><br></pre></td></tr></table></figure>
 
 <p>也可以在已有的项目中添加Chainlink开发库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">truffle init</span><br><span class="line">npm install @chainlink/contracts --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">truffle init</span><br><span class="line"><span class="built_in">npm</span> install @chainlink/contracts --save</span><br></pre></td></tr></table></figure>
 
 <p>同样的，您也可以使用可视化的Web IDE Remix来进行开发，使用起来更加方便，也无需配置本地开发环境。在使用Remix时，可以搭配MetaMask来进行转账和事务操作。</p>
 <p><a target="_blank" rel="noopener" href="https://remix.ethereum.org/">https://remix.ethereum.org</a></p>
 <p><a target="_blank" rel="noopener" href="https://metamask.io/">https://metamask.io</a></p>
 <h3 id="实施步骤"><a href="#实施步骤" class="headerlink" title="实施步骤"></a>实施步骤</h3><h3 id="0-搭建-EVM-私链"><a href="#0-搭建-EVM-私链" class="headerlink" title="0.搭建 EVM 私链"></a>0.搭建 EVM 私链</h3><h3 id="1-部署Link-Token-合约"><a href="#1-部署Link-Token-合约" class="headerlink" title="1.部署Link Token 合约"></a>1.部署Link Token 合约</h3><p><a target="_blank" rel="noopener" href="https://github.com/smartcontractkit/chainlink/blob/develop/evm-contracts/src/v0.4/LinkToken.sol">LinkToken.sol</a></p>
 <p>所有Chainlink的功能实现和数据流转都是围绕LINK token来实现的。<code>这里的remix中默认是https url，如果访问vmware中的linux server，建议在remix中使用 http url</code></p>
-<img src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/1.png" class="" title="img">
+<img data-src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/1.png" class="" title="img">
 
 <h3 id="2-部署Chainlink节点"><a href="#2-部署Chainlink节点" class="headerlink" title="2.部署Chainlink节点"></a>2.部署Chainlink节点</h3><h4 id="2-1-安装docker、postgres-（建议postgres也在docker中安装）"><a href="#2-1-安装docker、postgres-（建议postgres也在docker中安装）" class="headerlink" title="2.1 安装docker、postgres （建议postgres也在docker中安装）"></a>2.1 安装docker、postgres （建议postgres也在docker中安装）</h4><h4 id="2-2-创建环境变量配置文件"><a href="#2-2-创建环境变量配置文件" class="headerlink" title="2.2 创建环境变量配置文件"></a>2.2 创建环境变量配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.chainlink</span><br><span class="line">cd ~/.chainlink</span><br><span class="line">vim .env</span><br></pre></td></tr></table></figure>
 
@@ -282,7 +286,7 @@
 <p><code>0.7.8</code>是Chainlink的release版本号，不写的话默认是latest。</p>
 <h4 id="2-4-记录节点管理密码"><a href="#2-4-记录节点管理密码" class="headerlink" title="2.4 记录节点管理密码"></a>2.4 记录节点管理密码</h4><p>首次启动成功后，首先会要求输入一个密码，这个密码是Chainlink节点账户的私钥密码，可以用来控制Chainlink节点账户，必须牢记，否则节点账户所持有的资金无法取出。</p>
 <p>然后会要求输入一对用户名和密码，这是Chainlink管理界面的的用户名和密码，在通过 http: &#x2F;&#x2F;chainlink_ip:6688 访问管理端界面时会要求输入这对用户名和密码。</p>
-<img src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/2.png" class="" title="img">
+<img data-src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/2.png" class="" title="img">
 
 <h4 id="2-5-创建Job"><a href="#2-5-创建Job" class="headerlink" title="2.5 创建Job"></a>2.5 创建Job</h4><p><a target="_blank" rel="noopener" href="https://docs.chain.link/docs/fulfilling-requests#section-add-jobs-to-the-node">https://docs.chain.link/docs/fulfilling-requests#section-add-jobs-to-the-node</a></p>
 <p>创建不同数据类型的 Job</p>
@@ -298,7 +302,7 @@
 <p>其中 linkAddress、OracleAddress、JobId 需要根据上面的配置结果填写，或作为参数在调用时传入。</p>
 <p>向部署好的用户合约地址转入Link token，用户在发起请求是支付给节点的费用。上述部署的Link Token为18位精度，建议使用 transfer 方法转移 Link token 2000,000000000000000000</p>
 <p>发起请求获取数据，使用getData方法获取天气数据。</p>
-<img src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/3.png" class="" title="image">
+<img data-src="/2020/04/14/%E4%BD%93%E9%AA%8CChainlink/3.png" class="" title="image">
       
     </div>
 
@@ -342,7 +346,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/" class="post-title-link" itemprop="url">本地玩转k8s-第I弹</a>
+          <a href="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/" class="post-title-link" itemprop="url">本地玩转K8s-第I弹</a>
         </h2>
 
         <div class="post-meta-container">
@@ -400,10 +404,10 @@
 <li><p>optional，检查vmware，<code>编辑-&gt;虚拟网络编辑器</code> 中的<code>VMnet8</code>的连通状态，如果有需要，在windows10-&gt;设置-&gt;更改适配器选项，重新启动<code>VMnet8</code>网卡</p>
 </li>
 </ol>
-<img src="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/1.png" class="">
+<img data-src="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/1.png" class="">
 
 <p>从winscp端登录：</p>
-<img src="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/2.png" class="">
+<img data-src="/2020/04/10/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACI%E5%BC%B9/2.png" class="">
 
 <p>最后，按照 <a target="_blank" rel="noopener" href="https://kuboard.cn/install/install-k8s.html#%E9%85%8D%E7%BD%AE%E8%A6%81%E6%B1%82">kuboard -&gt; 安装 -&gt; 安装 kubernetes</a> 手册完成kubernetes安装。</p>
 
@@ -450,7 +454,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" class="post-title-link" itemprop="url">关于golang服务重启</a>
+          <a href="/2020/03/30/%E5%85%B3%E4%BA%8Egolang%E6%9C%8D%E5%8A%A1%E9%87%8D%E5%90%AF/" class="post-title-link" itemprop="url">关于Golang服务重启</a>
         </h2>
 
         <div class="post-meta-container">

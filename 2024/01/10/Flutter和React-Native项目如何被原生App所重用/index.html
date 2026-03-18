@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="继续讨论 https:&#x2F;&#x2F;github.com&#x2F;0xPolygonID&#x2F;polygonid-flutter-sdk ，其中使用了c-polygonid &#x2F; witnesscalc &#x2F; rapidsnark &#x2F; babyjubjub 这4个外部lib库，有c，golang，rust等编译后得到的 .a 文件。那么Flutter开发的部分内容，如手机DB存储等如何重用呢？">
 <meta property="og:type" content="article">
@@ -55,6 +55,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -77,6 +78,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -269,16 +273,16 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lipo -info</span><br><span class="line">lipo -create &lt;path/to/lib1&gt; &lt;path/to/lib2&gt; -output &lt;path/to/combineLib&gt;</span><br><span class="line">lipo &lt;path/to/Fatlib&gt; -thin arm64 -output &lt;path/to/arm64Lib&gt;</span><br><span class="line">lipo &lt;path/to/Fatlib&gt; -thin x86_64 -output &lt;path/to/x86_64Lib&gt;</span><br></pre></td></tr></table></figure>
 <p>在 arm64 iOS 设备中，.xcframework &#x2F; thin lib &#x2F; fat lib 绝可以调试开发；在 arm64 iOS Simulators仿真中，目前尚无法调试开始 fat lib。</p>
 <p>第二步，得到FlutterEngine，即Flutter.framework文件。运行 <code>flutter builld ios-framework</code> 命令后， 从 dart 库编译为 ios framework 的时候，在本地 flutter 电脑中，安装好的工具链目录里在直接 copy 得到 Flutter.framework 文件。</p>
-<img src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/3.png" class="">
+<img data-src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/3.png" class="">
 <p>从该命令来看， Flutter.xcframework 是直接 copy 的，app.xcframework 是编译的（从dart），Build plugins 是编译 Flutter  SDK 项目用到的第三方库的 framework文件。</p>
 <p>总体来看，调用链条如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">App &lt;--&gt; Polygon SDK &lt;--&gt; FlutterEngine(Flutter.framework) &lt;--&gt; PolygonFlutterChannel(dart) &lt;--&gt; UsercaseClass(dart) &lt;--&gt; NativeLibs(swift/c/golang/rust)</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">App &lt;--&gt; Polygon SDK &lt;--&gt; FlutterEngine(Flutter.framework) &lt;--&gt; PolygonFlutterChannel(dart) &lt;--&gt; UsercaseClass(dart) &lt;--&gt; NativeLibs(swift/c/golang/rust)</span><br></pre></td></tr></table></figure>
 
 <h3 id="React-Native-开发的代码，通过如下方式可以被原生App重用"><a href="#React-Native-开发的代码，通过如下方式可以被原生App重用" class="headerlink" title="React Native 开发的代码，通过如下方式可以被原生App重用"></a>React Native 开发的代码，通过如下方式可以被原生App重用</h3><p><a target="_blank" rel="noopener" href="https://github.com/facebook/hermes">https://github.com/facebook/hermes</a> - A JavaScript engine optimized for running React Native. Hermes is a JavaScript engine optimized for fast start-up of <a target="_blank" rel="noopener" href="https://reactnative.dev/">React Native</a> apps. It features ahead-of-time static optimization and compact bytecode.<br>第一步，<a target="_blank" rel="noopener" href="https://reactnative.dev/docs/hermes%EF%BC%8C">https://reactnative.dev/docs/hermes，</a> 在该文档中，<code>pod install</code> 执行之后，如iOS开发端，hermes.xcframework 即已经被拉到本地，如下图。</p>
-<img src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/1.png" class="">
+<img data-src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/1.png" class="">
 
 <p>第二步，从 Reactnative 项目代码打包到 jsbundle 资源文件。具体流程是放在了 Xcode 工程里的一个自定义脚本这里，每次Xcodes编译 App 的时候，就会根据情况来对 js 打包。</p>
-<img src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/2.png" class="">
+<img data-src="/2024/01/10/Flutter%E5%92%8CReact-Native%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E8%A2%AB%E5%8E%9F%E7%94%9FApp%E6%89%80%E9%87%8D%E7%94%A8/2.png" class="">
 <p>总体来说，native swift&#x2F;OC 通过调用 hermes 来调用 React-Native 中的JS 代码逻辑。</p>
 
     </div>

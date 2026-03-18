@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="嵌入式监管？集中式监管？ 解决该问题的核心是需要在协议层进行监管。监管单位在每条链都有节点，可以得到全部交易信息，不需要经过收集、集中、分类、发送到监管单位，而是直接在数据端拿到数据后，可以使用blockchain data lake区块链数据湖来进行大数据分析。 如上文所讲，Libra 2.0总体监管机制仍落后。关于自动合规并没有任何细节。 在实践上，ISDA（International swa">
 <meta property="og:type" content="article">
@@ -53,6 +53,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -75,6 +76,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2022/08/08/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9B%91%E7%AE%A1%E6%80%9D%E8%80%83/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -267,7 +271,7 @@
 <p>总体监管机制落后的一个主要原因，是对新型监管机制的需求还不明确。直到Libra1.0出现，该需求才变得急迫。Libra 1.0出现之前，基于区块链的监管系统还没有被建立出来。在国际上，多半的监管论文还是集中在大数据和人工智能上面（很少区块链监管论文），并且相关监管科技的实验也非常少，甚至在一些监管科技产业报告中，区块链都没有被列入重要科技名单中。但是Libr1.0出现后，这些机构纷纷改变态度，例如联合国在2019年立刻将区块链列为最重要的金融科技之一。而我们在2018年已经将区块链监管科技列为区块链中国梦之四《区块链的中国梦：RegTech编织全面安全梦》，并且提出“监管性”是新型区块链必要的功能，在新型数字货币市场，交易会是实时的，监管也需要是实时的。实时交易，实时监管，而只有嵌入式监管可以实现实时监管。</p>
 <p>由于大部分的监管机制使用传统方式，Libra 2.0等区块链的出现，会给监管单位带来了巨大的压力。</p>
 <p>目前几类监管的特性与现状—《互链网》page-405</p>
-<img src="/2022/08/08/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9B%91%E7%AE%A1%E6%80%9D%E8%80%83/1.png" class="">
+<img data-src="/2022/08/08/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9B%91%E7%AE%A1%E6%80%9D%E8%80%83/1.png" class="">
     </div>
 
     
@@ -305,8 +309,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/08/28/sui_consensus-Narwhal_and_Tusk/" rel="next" title="sui_consensus-Narwhal_and_Tusk">
-                  sui_consensus-Narwhal_and_Tusk <i class="fa fa-angle-right"></i>
+                <a href="/2022/08/28/sui_consensus-Narwhal_and_Tusk/" rel="next" title="Sui_consensus-Narwhal_and_Tusk">
+                  Sui_consensus-Narwhal_and_Tusk <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

@@ -17,11 +17,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="zksync 与其他 layer2 方案相比较，优缺点如何？ &#x3D;&#x3D;&gt; https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;drgDM5mCZsBQdTIfszO97g 先说结论如下图：     在区块链 layer1 (以太坊) 中，所有的计算过程和数据存储都在主链进行（交易数据存在区块中，全节点执行所有计算过程）；但 layer2 不同，我们可以根据 layer2 如">
 <meta property="og:type" content="article">
-<meta property="og:title" content="体验zksync-2">
+<meta property="og:title" content="体验Zksync-2">
 <meta property="og:url" content="https://zhuang-weiming.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="zksync 与其他 layer2 方案相比较，优缺点如何？ &#x3D;&#x3D;&gt; https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;drgDM5mCZsBQdTIfszO97g 先说结论如下图：     在区块链 layer1 (以太坊) 中，所有的计算过程和数据存储都在主链进行（交易数据存在区块中，全节点执行所有计算过程）；但 layer2 不同，我们可以根据 layer2 如">
@@ -40,10 +40,10 @@
 <link rel="canonical" href="https://zhuang-weiming.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/","path":"2020/06/23/体验zksync-2/","title":"体验zksync-2"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/","path":"2020/06/23/体验zksync-2/","title":"体验Zksync-2"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>体验zksync-2 | Zhuang's Diary</title>
+<title>体验Zksync-2 | Zhuang's Diary</title>
   
 
 
@@ -55,6 +55,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -77,6 +78,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -227,12 +231,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="体验zksync-2 | Zhuang's Diary">
+      <meta itemprop="name" content="体验Zksync-2 | Zhuang's Diary">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          体验zksync-2
+          体验Zksync-2
         </h1>
 
         <div class="post-meta-container">
@@ -264,7 +268,7 @@
     
     <div class="post-body" itemprop="articleBody"><p>zksync 与其他 layer2 方案相比较，优缺点如何？ &#x3D;&#x3D;&gt; <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/drgDM5mCZsBQdTIfszO97g">https://mp.weixin.qq.com/s/drgDM5mCZsBQdTIfszO97g</a></p>
 <p>先说结论如下图：</p>
-<img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/1.png" class="">
+<img data-src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/1.png" class="">
 
 <p>  在区块链 layer1 (以太坊) 中，所有的计算过程和数据存储都在主链进行（交易数据存在区块中，全节点执行所有计算过程）；但 layer2 不同，我们可以根据 layer2 如何解决这两个扩展相关的瓶颈问题（计算 &amp; 数据存储）来对他们分类，正如上图的二阶矩阵所示。</p>
 <h4 id="Plasma"><a href="#Plasma" class="headerlink" title="Plasma"></a>Plasma</h4><p>  Plasma 由 Vitalik Buterin 和 Joseph Poon 在 2017 年共同提出；Plasma 作为被寄予厚望的理论思想，可以说是开启了以太坊扩展研究的先驱。将其放在矩阵右下角。</p>
@@ -279,7 +283,7 @@
 <ol>
 <li>状态树(State Merkle Tree)</li>
 </ol>
-<img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/2.png" class="">
+<img data-src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/2.png" class="">
 
 <p>Ha 是 account tree 的高度。Hb 是 balance tree 的高度.</p>
 <ol start="2">
@@ -304,7 +308,7 @@
 <blockquote>
 <p>非常感谢 Georgios Konstantopoulos（Layer 2独立研究员），John Adler，Ben Jones，JD Kanani，Patrick McCorry，Justin Drake（以太坊基金会）和Brecht Devos（Loopring 路印），感谢他们对该表的审查和更正。</p>
 </blockquote>
-<img src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/3.png" class="">
+<img data-src="/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/3.png" class="">
 
 <p>注：<br>0 某些研究完全不认为侧链应被归入 L2 范畴，可见：<a target="_blank" rel="noopener" href="https://twitter.com/gakonst/status/1146793685545304064">https://twitter.com/gakonst/status/1146793685545304064</a><br>1 要看相关升级机制的实现，不过一般来说都可以<br>2 有非常复杂的限制<br>3 为保证与 EVM 的可组合性，吞吐量的上限是 300 TPS<br>4 这个参数实际上是可调的，但大部分研究员都觉得 1 到 2 周时间比较安全<br>5 要看相关的实现。zkSync 是不需要的，但 Loopring 需要<br>7 理论上来说，可以通过流动性提供商缓解这个问题，但是会让整个方案的资金利用效率性变差</p>
 
@@ -324,7 +328,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://zhuang-weiming.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/" title="体验zksync-2">https://zhuang-weiming.github.io/2020/06/23/体验zksync-2/</a>
+      <a href="https://zhuang-weiming.github.io/2020/06/23/%E4%BD%93%E9%AA%8Czksync-2/" title="体验Zksync-2">https://zhuang-weiming.github.io/2020/06/23/体验zksync-2/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -340,13 +344,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/06/22/%E4%BD%93%E9%AA%8Czksync-1/" rel="prev" title="体验zksync-1">
-                  <i class="fa fa-angle-left"></i> 体验zksync-1
+                <a href="/2020/06/22/%E4%BD%93%E9%AA%8Czksync-1/" rel="prev" title="体验Zksync-1">
+                  <i class="fa fa-angle-left"></i> 体验Zksync-1
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/07/07/%E5%A6%82%E4%BD%95%E5%9C%A8ubuntu%E4%B8%AD%E4%BD%BF%E7%94%A8make/" rel="next" title="如何在ubuntu中使用make">
-                  如何在ubuntu中使用make <i class="fa fa-angle-right"></i>
+                <a href="/2020/07/07/%E5%A6%82%E4%BD%95%E5%9C%A8ubuntu%E4%B8%AD%E4%BD%BF%E7%94%A8make/" rel="next" title="如何在Ubuntu中使用make">
+                  如何在Ubuntu中使用make <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

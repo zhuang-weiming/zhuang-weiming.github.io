@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="令牌环领导人选举算法 We start with 6 processes,    connected in a logical ring.Process 6 is the leader,    as it has the highest number.  Process 6 fails.  Process 3 notices that Process 6 does not respond    S">
 <meta property="og:type" content="article">
@@ -64,6 +64,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -86,6 +87,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2018/03/27/Token-Ring-Election-Algorithm/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -272,29 +276,29 @@
     
     <div class="post-body" itemprop="articleBody"><p>令牌环领导人选举算法</p>
 <p>We start with 6 processes,<br>    connected in a logical ring.<br>Process 6 is the leader,<br>    as it has the highest number.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/0.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/0.gif" class="">
 <p>Process 6 fails.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/1.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/1.gif" class="">
 <p>Process 3 notices that Process 6 does not respond<br>    So it starts an election,<br>        sending a message containing its id<br>    to the next node in the ring.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/2.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/2.gif" class="">
 <p>Process 5 passes the message on,<br>    adding its own id to the message.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/3.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/3.gif" class="">
 <p>Process 0 passes the message on,<br>    adding its own id to the message.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/4.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/4.gif" class="">
 <p>Process 1 passes the message on,<br>    adding its own id to the message.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/5.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/5.gif" class="">
 <p>Process 4 passes the message on,<br>    adding its own id to the message.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/6.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/6.gif" class="">
 <p>When Process 3 receives the message back,<br>    it knows the message has gone around the ring,<br>        as its own id is in the list.<br>Picking the highest id in the list,<br>    it starts the coordinator message<br>        “5 is the leader” around the ring.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/7.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/7.gif" class="">
 <p>Process 5 passes on the coordinator message.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/8.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/8.gif" class="">
 <p>Process 0 passes on the coordinator message.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/9.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/9.gif" class="">
 <p>Process 1 passes on the coordinator message.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/10.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/10.gif" class="">
 <p>Process 4 passes on the coordinator message.</p>
-<img src="/2018/03/27/Token-Ring-Election-Algorithm/11.gif" class="">
+<img data-src="/2018/03/27/Token-Ring-Election-Algorithm/11.gif" class="">
 <p>Process 3 receives the coordinator message,<br>    and stops it.</p>
 <p>让我们分析如何在ZooKeeper集合中选举leader节点，这个过程和令牌环原理是一致的。考虑一个集群中有N个节点。leader选举的过程如下：</p>
 <ul>

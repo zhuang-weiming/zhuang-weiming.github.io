@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="什么是zk-SNARKs？Zcash是zk-SNARKs的第一个广泛应用，它是一种零知识密码学的新形式。Zcash的隐私保证源于可以屏蔽交易，但仍可通过zk-SNARK证明在网络共识规则下验证为有效。 缩写zk-SNARK代表“Zero-Knowledge Succinct Non-Interactive Argument of Knowledge 零知识简明非交互式知识”，并且指向的证明构造可以">
 <meta property="og:type" content="article">
@@ -53,6 +53,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -75,6 +76,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2018/03/21/zkSNARKs%E4%B8%8Ezcash/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -271,7 +275,7 @@
 <p>计算 → 算术电路 → R1CS → QAP → zk-SNARK</p>
 <p>将交易有效性函数转化为数学表示，第一步是将逻辑步骤分解为最小可能的操作，从而创建一个“算术电路”。 类似于一个布尔逻辑电路，其中一个程序被编译成离散的单个步骤，如AND，OR，NOT，当一个程序转换为一个算术电路时，它被分解为单个步骤，包括加法，减法， 乘法和除法（在特殊情况下，我们将避免使用除法）。</p>
 <p>下面是计算表达式（a + b）*（b * c）的算术电路的例子：</p>
-<img src="/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png" class="">
+<img data-src="/2018/03/21/zkSNARKs%E4%B8%8Ezcash/1.png" class="">
 
 <p>看着这样一个电路，我们可以将输入值a，b，c看作在输出线上从左到右的“行进”。我们的下一步是建立的一级约束系统 (Rank 1 Constraint System)，即R1CS，以检查这些值是否“行进正确”。在上图中，R1CS将确认，b和c进入的乘法门的值是 b*c。</p>
 <p>在这个R1CS表示中，验证者必须检查许多约束条件 - 几乎每条线路都有一个约束条件。 （由于技术原因，事实证明，我们只能对乘法门引出的线路有所限制。）在2012年<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2012/215.pdf">关于该主题的论文</a>中，Gennaro，Gentry，Parno和Raykova提出了一种很好的方法来“将所有这些约束集中成一个” 。该方法使用称为二次算术程序（QAP）的电路表示。需要检查的单个约束在多项式之间而不是数字之间。多项式可能相当大，因为当多项式之间的身份不成立时，它将无法保持多数点。因此，您只需检查两个多项式是否在一个随机选择的点上匹配，以便以高概率正确验证证明。</p>
@@ -341,8 +345,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/03/20/awesome-links-of-zero-knowledge-proof/" rel="prev" title="awesome links of zero knowledge proof">
-                  <i class="fa fa-angle-left"></i> awesome links of zero knowledge proof
+                <a href="/2018/03/20/awesome-links-of-zero-knowledge-proof/" rel="prev" title="Awesome Links of Zero Knowledge Proof">
+                  <i class="fa fa-angle-left"></i> Awesome Links of Zero Knowledge Proof
                 </a>
             </div>
             <div class="post-nav-item">

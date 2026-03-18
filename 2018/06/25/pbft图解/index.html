@@ -17,11 +17,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="参考链接：https:&#x2F;&#x2F;github.com&#x2F;bigpicturelabs&#x2F;consensusPBFT    Definitions of each abbreviation in the diagram are;m: Request message objectc: Client IDt: Timestampv: View IDn: Sequence IDi: Peer(Node) IDr:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pbft图解">
+<meta property="og:title" content="Pbft图解">
 <meta property="og:url" content="https://zhuang-weiming.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="参考链接：https:&#x2F;&#x2F;github.com&#x2F;bigpicturelabs&#x2F;consensusPBFT    Definitions of each abbreviation in the diagram are;m: Request message objectc: Client IDt: Timestampv: View IDn: Sequence IDi: Peer(Node) IDr:">
@@ -38,10 +38,10 @@
 <link rel="canonical" href="https://zhuang-weiming.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/","path":"2018/06/25/pbft图解/","title":"pbft图解"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/","path":"2018/06/25/pbft图解/","title":"Pbft图解"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>pbft图解 | Zhuang's Diary</title>
+<title>Pbft图解 | Zhuang's Diary</title>
   
 
 
@@ -53,6 +53,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -75,6 +76,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -225,12 +229,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="pbft图解 | Zhuang's Diary">
+      <meta itemprop="name" content="Pbft图解 | Zhuang's Diary">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          pbft图解
+          Pbft图解
         </h1>
 
         <div class="post-meta-container">
@@ -261,7 +265,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/bigpicturelabs/consensusPBFT">https://github.com/bigpicturelabs/consensusPBFT</a> </p>
-<img src="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg" class="">
+<img data-src="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/pbft-consensus-behavior.jpg" class="">
 
 <h4 id="Definitions-of-each-abbreviation-in-the-diagram-are"><a href="#Definitions-of-each-abbreviation-in-the-diagram-are" class="headerlink" title="Definitions of each abbreviation in the diagram are;"></a>Definitions of each abbreviation in the diagram are;</h4><p>m: Request message object<br>c: Client ID<br>t: Timestamp<br>v: View ID<br>n: Sequence ID<br>i: Peer(Node) ID<br>r: Result of the request’s operation</p>
 <h4 id="Why-count-2"><a href="#Why-count-2" class="headerlink" title="Why count &gt;&#x3D; 2 ?"></a>Why count &gt;&#x3D; 2 ?</h4><p>In the diagram, the peer change its state to prepared or committed when the count value, which is the number of verified messages from other peers, is larger than 2. Actually, the condition is count &gt;&#x3D; 2*f where f is the maximum number of faulty peers, which the network can tolerate. In this case, f is just 1, so the condition is count &gt;&#x3D; 2.</p>
@@ -283,7 +287,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://zhuang-weiming.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" title="pbft图解">https://zhuang-weiming.github.io/2018/06/25/pbft图解/</a>
+      <a href="https://zhuang-weiming.github.io/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" title="Pbft图解">https://zhuang-weiming.github.io/2018/06/25/pbft图解/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -299,8 +303,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="prev" title="golang 随机数">
-                  <i class="fa fa-angle-left"></i> golang 随机数
+                <a href="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" rel="prev" title="Golang 随机数">
+                  <i class="fa fa-angle-left"></i> Golang 随机数
                 </a>
             </div>
             <div class="post-nav-item">

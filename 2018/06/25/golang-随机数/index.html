@@ -17,11 +17,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="随机数主要分为以下三类：  弱伪随机数 强伪随机数 真随机数  随机数的分类是根据随机数的性质进行的分类。随机数的性质分为以下三类：  随机性一不存在统计学偏差，是完全杂乱的数列 不可预测性一不能从过去的数列推测出”下一个出现的数 不可重现性一除非将数列本身保存下来，否则不能重现相同的数列  密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。   GoLang 中的伪">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang 随机数">
+<meta property="og:title" content="Golang 随机数">
 <meta property="og:url" content="https://zhuang-weiming.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="随机数主要分为以下三类：  弱伪随机数 强伪随机数 真随机数  随机数的分类是根据随机数的性质进行的分类。随机数的性质分为以下三类：  随机性一不存在统计学偏差，是完全杂乱的数列 不可预测性一不能从过去的数列推测出”下一个出现的数 不可重现性一除非将数列本身保存下来，否则不能重现相同的数列  密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。   GoLang 中的伪">
@@ -38,10 +38,10 @@
 <link rel="canonical" href="https://zhuang-weiming.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/","path":"2018/06/25/golang-随机数/","title":"golang 随机数"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/","path":"2018/06/25/golang-随机数/","title":"Golang 随机数"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>golang 随机数 | Zhuang's Diary</title>
+<title>Golang 随机数 | Zhuang's Diary</title>
   
 
 
@@ -53,6 +53,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -75,6 +76,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -225,12 +229,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="golang 随机数 | Zhuang's Diary">
+      <meta itemprop="name" content="Golang 随机数 | Zhuang's Diary">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          golang 随机数
+          Golang 随机数
         </h1>
 
         <div class="post-meta-container">
@@ -273,7 +277,7 @@
 <li>不可重现性一除非将数列本身保存下来，否则不能重现相同的数列</li>
 </ul>
 <p>密码技术中所使用的随机数,仅仅具备随机性是不够的，至少还需要具备不可预测性才行。</p>
-<img src="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/1.png" class="">
+<img data-src="/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/1.png" class="">
 
 <h4 id="GoLang-中的伪随机数"><a href="#GoLang-中的伪随机数" class="headerlink" title="GoLang 中的伪随机数"></a>GoLang 中的伪随机数</h4><p>在 GoLang 中，我们可以通过 math&#x2F;rand 包里的方法来生成一个伪随机数：</p>
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;fmt&quot;</span></span><br><span class="line">  <span class="string">&quot;math/rand&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(rand.Int())   <span class="comment">// =&gt; 134020434</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -304,7 +308,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://zhuang-weiming.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" title="golang 随机数">https://zhuang-weiming.github.io/2018/06/25/golang-随机数/</a>
+      <a href="https://zhuang-weiming.github.io/2018/06/25/golang-%E9%9A%8F%E6%9C%BA%E6%95%B0/" title="Golang 随机数">https://zhuang-weiming.github.io/2018/06/25/golang-随机数/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -320,13 +324,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/" rel="prev" title="go pprof trace完整操作">
-                  <i class="fa fa-angle-left"></i> go pprof trace完整操作
+                <a href="/2018/06/07/go-pprof-trace%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C/" rel="prev" title="Go Pprof Trace完整操作">
+                  <i class="fa fa-angle-left"></i> Go Pprof Trace完整操作
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" rel="next" title="pbft图解">
-                  pbft图解 <i class="fa fa-angle-right"></i>
+                <a href="/2018/06/25/pbft%E5%9B%BE%E8%A7%A3/" rel="next" title="Pbft图解">
+                  Pbft图解 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

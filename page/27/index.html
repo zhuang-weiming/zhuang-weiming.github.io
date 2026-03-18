@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Zhuang&#39;s Diary">
@@ -46,6 +46,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -68,6 +69,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/page/27/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -337,7 +341,7 @@
           <h3 id="区块链轻客户端需要解决的的问题"><a href="#区块链轻客户端需要解决的的问题" class="headerlink" title="区块链轻客户端需要解决的的问题"></a>区块链轻客户端需要解决的的问题</h3><p>如何如需信任任何固定的区块链节点，包括验证者集合和全节点，如何做到仅相信作为整体的活跃验证者集合。</p>
 <p>基于PoS机制的区块链中，全节点和轻客户端都会面临弱主观性问题：由于无法仅依赖数学或者PoW等机制验证某个高度的状态，全节点和轻客户端都需要通过某种方式获取关于区块链在某个高度的可信状态。</p>
 <p>Tendermint Core轻客户端和Gaia Lite轻客户端都解决了上述问题，基于可信的初始活跃验证者集合，通过跟踪活跃验证者集合的演变，持续具有验证区块链合法性的能力。新区块链通过活跃验证者参与共识投票完成；通过Merkle证明进一步验证交易的合法性和链上状态的合法性。</p>
-<img src="/2021/11/08/Tendermint-II-%E8%BD%BB%E5%AE%A2%E6%88%B7%E7%AB%AF/1.png" class="">
+<img data-src="/2021/11/08/Tendermint-II-%E8%BD%BB%E5%AE%A2%E6%88%B7%E7%AB%AF/1.png" class="">
 
 <p>轻客户端本身保存着当前的活跃验证者集合。当收到新的区块后，1）首先对区块头做检查；2）区块头中的验证者集合与轻客户端本身存储的验证者集合做比较，若相同，则通过+2&#x2F;3的投票，通过验证，若不同，更新轻客户端的活跃验证者集合，再次验证；3）当轻客户端的安全性不足时（如高度不连续、bft超过1&#x2F;3等等），与全节点进行交互验证。</p>
 
@@ -384,7 +388,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">cosmos-SDK介绍</a>
+          <a href="/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">Cosmos-SDK介绍</a>
         </h2>
 
         <div class="post-meta-container">
@@ -415,7 +419,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <img src="/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/1.png" class="" title="cosmos作为上层应用的整体架构">
+          <img data-src="/2021/11/02/cosmos-SDK%E4%BB%8B%E7%BB%8D/1.png" class="" title="cosmos作为上层应用的整体架构">
 
 
       
@@ -492,7 +496,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <img src="/2021/10/29/Tendermint-I-ABCI%E4%BB%8B%E7%BB%8D/1.png" class="" title="tendermint ABCI接口时序图">
+          <img data-src="/2021/10/29/Tendermint-I-ABCI%E4%BB%8B%E7%BB%8D/1.png" class="" title="tendermint ABCI接口时序图">
       
     </div>
 
@@ -594,7 +598,7 @@
 <li>NPM</li>
 <li>OpenSSL</li>
 </ul>
-<h3 id="Setup-1"><a href="#Setup-1" class="headerlink" title="Setup"></a>Setup</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/ThomasLeister/nodepki-client.git</span><br><span class="line">cd nodepki-client</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<h3 id="Setup-1"><a href="#Setup-1" class="headerlink" title="Setup"></a>Setup</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ThomasLeister/nodepki-client.git</span><br><span class="line"><span class="built_in">cd</span> nodepki-client</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
 
 <h3 id="Configure"><a href="#Configure" class="headerlink" title="Configure"></a>Configure</h3><p>Copy config.default.yml to config&#x2F;config.yml and set the settings according to your environment.</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">node client help            </span><br><span class="line">[07:34:26] Reading config file data/config/config.yml ...</span><br><span class="line">Usage: client &lt;subcommand&gt; [options]</span><br><span class="line"></span><br><span class="line">命令：</span><br><span class="line">  request    Request a new certificate with or without .csr file</span><br><span class="line">  list       List issued certificates</span><br><span class="line">  get        Get issued certificate by serial number</span><br><span class="line">  revoke     Revoke certificate via cert file</span><br><span class="line">  getcacert  Get CA certificate</span><br><span class="line"></span><br><span class="line">选项：</span><br><span class="line">  -h, --help  显示帮助信息                                                [布尔]</span><br></pre></td></tr></table></figure>

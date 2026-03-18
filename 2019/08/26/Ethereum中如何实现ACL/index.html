@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="需求在供应链(金融)、个人履历以及各个行业应用中，ACL（Access Control List）是共同类的需求。 写管理OpenZeppelin，Roles.sol 可以使用，搭配 ERC721 合约 使用，处理生成和销毁数字资产功效加倍。但是数据写在区块链上之后，即使使用了 private 关键字也是可以被用户读取的。  以上方法只实现了用户的 写权限控制，无法实现用户的读权限控制。 读管理思">
 <meta property="og:type" content="article">
@@ -54,6 +54,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -76,6 +77,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2019/08/26/Ethereum%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0ACL/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -268,7 +272,7 @@
 <p>a) 客户端 AES 加密原文（shared data）；b) 密文(encrypt(shared data))如果过大则存放于某云数据库，其他用户也可以访问到云数据库，也可以直接存放于ethereum 上，如 Tx 的 extraData 或者 state 中；c) 验证用户符合条件，如 role，policy或者address的要求时，data owner 将 encrypt 的秘钥经过用户（data user）的 pk 加密后， 通过 event 传递给到用户（data user）</p>
 <p>详细参加：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1903.07009.pdf">Multi-Authority Attribute-Based Access Control with Smart Contract</a></p>
 <p>以下是论文中的详细说明：</p>
-<h4 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h4><img src="/2019/08/26/Ethereum%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0ACL/architecture.png" class="">
+<h4 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h4><img data-src="/2019/08/26/Ethereum%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0ACL/architecture.png" class="">
 
 <h4 id="System-target"><a href="#System-target" class="headerlink" title="System target"></a>System target</h4><p>Here we present a concrete example. Suppose an data owner in the Computer and Information Sciences Department at the University of Delaware specifies access policy W to be [UD, PhD Student, Gender#] for accessing encrypted research meeting notes, and we have student Alice’s attribute list SAlice &#x3D; [UD, PhD Student, Female], and student Bob’s attribute list SBob &#x3D; [UD, Master Student, Male]. As a result, Alice can access the corresponding encrypted research meeting notes, while Bob cannot because he is an Master student. Notice that the Gender# attribute indicates that either gender satisfies the access policy.</p>
 <h4 id="Participants"><a href="#Participants" class="headerlink" title="Participants"></a>Participants</h4><p>• Data Owner (DO): A DO is an entity (e.g., person, organization, or process) who owns the data to be shared. A DO actively specifies access policies for the data it shares.</p>
@@ -276,7 +280,7 @@
 <p>• Shared Data (SD): An SD is a piece of data owned by a DO, and can be accessed passively by authorized DUs. </p>
 <p>• Attribute Token (AT): An AT is a credential representing an attribute that a DU possesses. </p>
 <p>• Attribute Authority (AA): An AA is a pre-verified and authorized node in Ethereum who issues ATs to qualified DUs who possess the corresponding attributes.</p>
-<h4 id="Workflow-Timeflow"><a href="#Workflow-Timeflow" class="headerlink" title="Workflow &#x2F; Timeflow"></a>Workflow &#x2F; Timeflow</h4><img src="/2019/08/26/Ethereum%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0ACL/workflow.png" class="">
+<h4 id="Workflow-Timeflow"><a href="#Workflow-Timeflow" class="headerlink" title="Workflow &#x2F; Timeflow"></a>Workflow &#x2F; Timeflow</h4><img data-src="/2019/08/26/Ethereum%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0ACL/workflow.png" class="">
     </div>
 
     
@@ -314,8 +318,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/08/28/hyperledger-fabric-vs-ethereum-vs-odyssey/" rel="next" title="hyperledger-fabric-vs-Ethereum-vs-Odyssey">
-                  hyperledger-fabric-vs-Ethereum-vs-Odyssey <i class="fa fa-angle-right"></i>
+                <a href="/2019/08/28/hyperledger-fabric-vs-ethereum-vs-odyssey/" rel="next" title="Hyperledger-Fabric-vs-Ethereum-vs-Odyssey">
+                  Hyperledger-Fabric-vs-Ethereum-vs-Odyssey <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

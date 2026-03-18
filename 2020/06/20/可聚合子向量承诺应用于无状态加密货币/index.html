@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="将可聚合子向量承诺应用于无状态加密货币 &#x3D;&#x3D;&gt; https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2020&#x2F;527.pdf 0.摘要可聚合子向量承诺（aSVC, An aggregatable subvector commitment）方案是一种向量承诺（VC）方案，可以将多个证明聚合到单个小的子向量证明中。本文中，我们对aSVC进行了形式化处理，通过恒定大小的多项式承诺，">
 <meta property="og:type" content="article">
@@ -53,6 +53,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -75,6 +76,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -349,7 +353,7 @@
 </li>
 </ol>
 <p>在文章中我们用自然语言描述了aSVC的工作，如果你感兴趣，可以通过aSVC 的API定义来更清晰地了解它。如下图所示：第一个红框是初始化时生成承诺c，第二个红框是根据交易更新c；第一个绿框是初始化时生成证明π(i)，第二个绿框是根据交易更新π(i)；蓝框是出块节点用c和π(i)做验证。</p>
-<img src="/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/1.png" class="">
+<img data-src="/2020/06/20/%E5%8F%AF%E8%81%9A%E5%90%88%E5%AD%90%E5%90%91%E9%87%8F%E6%89%BF%E8%AF%BA%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%8A%B6%E6%80%81%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/1.png" class="">
 
 <p>在上述过程中，最核心的工作是<strong>根据交易引发的变动把旧的c变成新的c，把旧的π(i)变成新的π(i)</strong>。不但要能够完成更新，且这种更新的开销是可以被接受的，这是aSVC要解决的关键问题。我们以c的更新为例来介绍aSVC是如何做的。</p>
 <p>如前文所述，c承诺的是V，从c到新c，实际上就是从承诺V到承诺一个新的V。对V来说，它是由一系列的点构成的，（地址1，余额1）是一个点，（地址2，余额2）是另一个点……（地址100，余额100）是第100个点。</p>
@@ -395,8 +399,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/06/22/%E4%BD%93%E9%AA%8Czksync-1/" rel="next" title="体验zksync-1">
-                  体验zksync-1 <i class="fa fa-angle-right"></i>
+                <a href="/2020/06/22/%E4%BD%93%E9%AA%8Czksync-1/" rel="next" title="体验Zksync-1">
+                  体验Zksync-1 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

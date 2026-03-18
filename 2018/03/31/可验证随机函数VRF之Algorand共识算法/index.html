@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="2018年2月，图灵奖得主、MIT教授Sivio Micali募集400万美元开发Algorand区块链协议一事受到了国内外媒体的普遍关注。在MITMicali教授和MIT媒体实验室数字货币计划负责人Neha Narula合开课程《共享公共账本》(Shared Public Ledger)课程。这门课主要就是讲解Algorand。Algorand的目标是建立一个低能耗、高速度、民主化、可拓展性好而">
 <meta property="og:type" content="article">
@@ -51,6 +51,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
 <script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
@@ -73,6 +74,9 @@
 <script src="/js/third-party/math/mathjax.js" defer></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -335,7 +339,7 @@
 <li>“验证者”i将收到的vi广播给其他用户。广播正确的vi代表他告诉其他验证者他同意该vi。</li>
 <li>当且仅当“验证者”i在步骤2中收到消息x的次数超过了2t+1次（即 2i(x)≥2t+1），他将消息x发给其他用户。“验证者”i按以下规则输出(vi,gi)：</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">如果存在x使得#3i(x)≥2t+1，则, </span><br><span class="line">vi=x, gi=2；//2轮都投票成功 如果x存在使得#3i(x)≥t+1，则, </span><br><span class="line">vi=x, gi=1；//只有1轮投票成功 否则, </span><br><span class="line">vi=Ø, gi=1，其中Ø代表空区块。</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">如果存在x使得#3i(x)≥2t+1，则, </span><br><span class="line"><span class="attribute">vi</span>=x, <span class="attribute">gi</span>=2；//2轮都投票成功 如果x存在使得#3i(x)≥t+1，则, </span><br><span class="line"><span class="attribute">vi</span>=x, <span class="attribute">gi</span>=1；//只有1轮投票成功 否则, </span><br><span class="line"><span class="attribute">vi</span>=Ø, <span class="attribute">gi</span>=1，其中Ø代表空区块。</span><br></pre></td></tr></table></figure>
 <pre><code>含义是：
 </code></pre>
 <ul>
@@ -343,7 +347,7 @@
 <li>对所有的诚实“验证者”i，gi≤1，并且他们输出的候选区块不一定相同。</li>
 </ul>
 <h4 id="3-2-第二阶段：二元拜占庭协议"><a href="#3-2-第二阶段：二元拜占庭协议" class="headerlink" title="3.2. 第二阶段：二元拜占庭协议"></a>3.2. 第二阶段：二元拜占庭协议</h4><p>基于分级共识协议的输出{(vi,gi):i&#x3D;1,2,K……n}对每个诚实“验证者”赋值：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果gi=2，那么bi=0；</span><br><span class="line">其他情况，bi=1。</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果<span class="attribute">gi</span>=2，那么bi=0；</span><br><span class="line">其他情况，<span class="attribute">bi</span>=1。</span><br></pre></td></tr></table></figure>
 <pre><code>这些bi就是二元拜占庭协议的输入。
 </code></pre>
 <ol>
