@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="问题描述早期空头 NFT&#x2F;ERC20 Token 的话，更多需要用户来做 withdraw。本文章的设计模式是由发行方来发送 NFT&#x2F;ERC20 Token 给到用户。同样适用于多个资产同时转账的场景。 解决方案合约接口： 12345678910111213141516pragma solidity ^0.8.0;interface IMulticall &#123;    &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单个合约中多个交易的模式">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2023/04/20/%E5%8D%95%E4%B8%AA%E5%90%88%E7%BA%A6%E4%B8%AD%E5%A4%9A%E4%B8%AA%E4%BA%A4%E6%98%93%E7%9A%84%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="问题描述早期空头 NFT&#x2F;ERC20 Token 的话，更多需要用户来做 withdraw。本文章的设计模式是由发行方来发送 NFT&#x2F;ERC20 Token 给到用户。同样适用于多个资产同时转账的场景。 解决方案合约接口： 12345678910111213141516pragma solidity ^0.8.0;interface IMulticall &#123;    &#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-20T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-05T08:36:51.487Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="solidity">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2023/04/20/%E5%8D%95%E4%B8%AA%E5%90%88%E7%BA%A6%E4%B8%AD%E5%A4%9A%E4%B8%AA%E4%BA%A4%E6%98%93%E7%9A%84%E6%A8%A1%E5%BC%8F/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2023/04/20/%E5%8D%95%E4%B8%AA%E5%90%88%E7%BA%A6%E4%B8%AD%E5%A4%9A%E4%B8%AA%E4%BA%A4%E6%98%93%E7%9A%84%E6%A8%A1%E5%BC%8F/","path":"2023/04/20/单个合约中多个交易的模式/","title":"单个合约中多个交易的模式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>单个合约中多个交易的模式 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95-%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">调用方法&#x2F;测试方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E5%B7%A5%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">完整工程</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2023/04/20/%E5%8D%95%E4%B8%AA%E5%90%88%E7%BA%A6%E4%B8%AD%E5%A4%9A%E4%B8%AA%E4%BA%A4%E6%98%93%E7%9A%84%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="单个合约中多个交易的模式 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          单个合约中多个交易的模式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-20 16:00:00" itemprop="dateCreated datePublished" datetime="2023-04-20T16:00:00+08:00">2023-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-09-05 16:36:51" itemprop="dateModified" datetime="2025-09-05T16:36:51+08:00">2025-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>早期空头 NFT&#x2F;ERC20 Token 的话，更多需要用户来做 withdraw。本文章的设计模式是由发行方来发送 NFT&#x2F;ERC20 Token 给到用户。同样适用于多个资产同时转账的场景。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>合约接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">interface IMulticall &#123;</span><br><span class="line">    /// @notice           Takes an array of abi-encoded call data, delegatecalls itself with each calldata, and returns the abi-encoded result</span><br><span class="line">    /// @dev              Reverts if any delegatecall reverts</span><br><span class="line">    /// @param    data    The abi-encoded data</span><br><span class="line">    /// @returns  results The abi-encoded return values</span><br><span class="line">    function multicall(bytes[] calldata data) external virtual returns (bytes[] memory results);</span><br><span class="line"></span><br><span class="line">    /// @notice           OPTIONAL. Takes an array of abi-encoded call data, delegatecalls itself with each calldata, and returns the abi-encoded result</span><br><span class="line">    /// @dev              Reverts if any delegatecall reverts</span><br><span class="line">    /// @param    data    The abi-encoded data</span><br><span class="line">    /// @param    values  The effective msg.values. These must add up to at most msg.value</span><br><span class="line">    /// @returns  results The abi-encoded return values</span><br><span class="line">    function multicallPayable(bytes[] calldata data, uint256[] values) external payable virtual returns (bytes[] memory results);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>multicallPayable 是可选的，因为由于 msg.value，它并不总是可行的。</p>
+<p>以下是最为简陋的实现方式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">/// Derived from OpenZeppelin&#x27;s implementation</span><br><span class="line">abstract contract Multicall is IMulticall &#123;</span><br><span class="line">    function multicall(bytes[] calldata data) external virtual returns (bytes[] memory results) &#123;</span><br><span class="line">        results = new bytes[](data.length);</span><br><span class="line">        for (uint256 i = 0; i &lt; data.length; i++) &#123;</span><br><span class="line">            (bool success, bytes memory returndata) = address(this).delegatecall(data);</span><br><span class="line">            require(success);</span><br><span class="line">            results[i] = returndata;</span><br><span class="line">        &#125;</span><br><span class="line">        return results;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>multicallPayable 只应在合约能够支持时使用。以上实现可能允许攻击者使用相同的以太币多次调用支付函数。</p>
+<h3 id="调用方法-测试方法"><a href="#调用方法-测试方法" class="headerlink" title="调用方法&#x2F;测试方法"></a>调用方法&#x2F;测试方法</h3><p>以下 JavaScript 代码使用 Ethers 库，应自动将 ERC-20 Token 的 amt 单位传输到地址 A 和地址 B。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> token.<span class="title function_">multicall</span>(<span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">all</span>([</span><br><span class="line">    token.<span class="property">interface</span>.<span class="title function_">encodeFunctionData</span>(<span class="string">&#x27;transfer&#x27;</span>, [ addressA, amt ]),</span><br><span class="line">    token.<span class="property">interface</span>.<span class="title function_">encodeFunctionData</span>(<span class="string">&#x27;transfer&#x27;</span>, [ addressB, amt ]),</span><br><span class="line">]));</span><br></pre></td></tr></table></figure>
+
+<h3 id="完整工程"><a href="#完整工程" class="headerlink" title="完整工程"></a>完整工程</h3><p>如下：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/willzhuang/multicall">https://github.com/willzhuang/multicall</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-6357.md">https://github.com/ethereum/EIPs/blob/master/EIPS/eip-6357.md</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2023/04/20/%E5%8D%95%E4%B8%AA%E5%90%88%E7%BA%A6%E4%B8%AD%E5%A4%9A%E4%B8%AA%E4%BA%A4%E6%98%93%E7%9A%84%E6%A8%A1%E5%BC%8F/" title="单个合约中多个交易的模式">https://zhuang-weiming.github.io/2023/04/20/单个合约中多个交易的模式/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/solidity/" rel="tag"># solidity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/03/Software-2.0/" rel="prev" title="Software-2.0">
+                  <i class="fa fa-angle-left"></i> Software-2.0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/05/17/Golang%20database%20tools%20libraries%20comparison/" rel="next" title="Golang database tools libraries comparison">
+                  Golang database tools libraries comparison <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"1d19a827b3f15a532489deb26f1a1b4f"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

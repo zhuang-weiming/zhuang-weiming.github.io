@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="文档链接&#x3D;&gt;https:&#x2F;&#x2F;hyperledger.github.io&#x2F;burrow&#x2F; github链接&#x3D;&gt;https:&#x2F;&#x2F;github.com&#x2F;hyperledger&#x2F;burrow&#x2F; Burrow是一个权限控制较为严格、以太坊EVM和WASM虚拟机支持、运行于Tendermint共识之上的区块链客户端。其主要由Monax贡献，并由Monax 和英特尔赞助。 其强调">
+<meta property="og:type" content="article">
+<meta property="og:title" content="体验Hyperledger-Burrow-1">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="文档链接&#x3D;&gt;https:&#x2F;&#x2F;hyperledger.github.io&#x2F;burrow&#x2F; github链接&#x3D;&gt;https:&#x2F;&#x2F;github.com&#x2F;hyperledger&#x2F;burrow&#x2F; Burrow是一个权限控制较为严格、以太坊EVM和WASM虚拟机支持、运行于Tendermint共识之上的区块链客户端。其主要由Monax贡献，并由Monax 和英特尔赞助。 其强调">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-11T09:33:01.000Z">
+<meta property="article:modified_time" content="2020-11-02T10:16:50.000Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="Burrow">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/","path":"2020/05/11/体验Hyperledger-Burrow-1/","title":"体验Hyperledger-Burrow-1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>体验Hyperledger-Burrow-1 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96Burrow%E8%8A%82%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">初始化Burrow节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Burrow%E8%8A%82%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">启动Burrow节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E7%AB%AF%E8%AE%BF%E9%97%AERPC%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">网页端访问RPC服务</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="体验Hyperledger-Burrow-1 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          体验Hyperledger-Burrow-1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-11 17:33:01" itemprop="dateCreated datePublished" datetime="2020-05-11T17:33:01+08:00">2020-05-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>文档链接&#x3D;&gt;<a target="_blank" rel="noopener" href="https://hyperledger.github.io/burrow/">https://hyperledger.github.io/burrow/</a></p>
+<p>github链接&#x3D;&gt;<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/">https://github.com/hyperledger/burrow/</a></p>
+<p>Burrow是一个权限控制较为严格、以太坊EVM和WASM虚拟机支持、运行于Tendermint共识之上的区块链客户端。其主要由Monax贡献，并由Monax 和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%8B%B1%E7%89%B9%E5%B0%94">英特尔</a>赞助。</p>
+<p>其强调的设计理念包括：</p>
+<ol>
+<li>防篡改的Merkle状态—Tamper-resistant merkle state</li>
+<li>PoS支持</li>
+<li>链上治理原生支持</li>
+<li>以太坊账户一览</li>
+<li>可以根据每个帐户设置代码执行权限</li>
+<li>事件流支持</li>
+<li>智能合约事件弹出至SQL表记录</li>
+<li>GRPC和Protobuf支持</li>
+<li>Javascript SDK支持，客户端库可以生成代码来访问合约，生成的代码是静态的Typescript对象</li>
+<li>Keys服务，提供代理签名服务器</li>
+<li>Web3 RPC，兼容Ethereum主网的开发工具，如 Truffle、 Metamask、Remix</li>
+</ol>
+<p><strong>Burrow应用于多个区块链生产项目</strong>。</p>
+<h3 id="初始化Burrow节点"><a href="#初始化Burrow节点" class="headerlink" title="初始化Burrow节点"></a>初始化Burrow节点</h3><p>从<a target="_blank" rel="noopener" href="https://github.com/hyperledger/burrow/%E4%B8%8B%E8%BD%BD%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%EF%BC%8C%E6%9C%AC%E6%96%87%E4%BB%A5">https://github.com/hyperledger/burrow/下载可执行文件，本文以</a> ubuntu 环境为例。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./burrow spec -f2 -p2 | ./burrow configure --curve-type secp256k1 -s- --pool --separate-genesis-doc=genesis.json</span><br></pre></td></tr></table></figure>
+
+<p><code>./burrow spec</code> 建立一个GenesisSpec作为GenesisDoc和configure命令的模板，f2是指2个full-accounts，p2是指2个participant-accounts。</p>
+<p><code>--curve-type secp256k1</code> 是指定加密曲线的类型。</p>
+<p><code>./burrow configure -s-</code> 通过使用GenesisDoc或GenesisSpec，创建密钥并创建配置文档。<code>--pool </code> 为名为burrowNNN.toml的所有共识节点（validators）编写配置文件。<code>--separate-genesis-doc</code> 将genesis文档投送至 JSON或者TOML文件。</p>
+<ul>
+<li><p>validator-accounts 共识的参与者，需要抵押一部分资金</p>
+</li>
+<li><p>root-accounts 根账户</p>
+</li>
+<li><p>developer-accounts 开发者，功能很多和全节点很像</p>
+</li>
+<li><p>participant-accounts 参与者</p>
+</li>
+<li><p>full-accounts 全功能</p>
+</li>
+</ul>
+<h3 id="启动Burrow节点"><a href="#启动Burrow节点" class="headerlink" title="启动Burrow节点"></a>启动Burrow节点</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  script ./burrow start --config=burrow000.toml &amp;</span><br><span class="line">./burrow start --config=burrow001.toml &amp;</span><br><span class="line">./burrow start --config=burrow002.toml &amp;</span><br><span class="line">./burrow start --config=burrow003.toml &amp;</span><br><span class="line">[5] 12458</span><br><span class="line">[6] 12459</span><br><span class="line">[7] 12460</span><br><span class="line">[8] 12464</span><br></pre></td></tr></table></figure>
+
+<h3 id="网页端访问RPC服务"><a href="#网页端访问RPC服务" class="headerlink" title="网页端访问RPC服务"></a>网页端访问RPC服务</h3><p><a target="_blank" rel="noopener" href="http://127.0.0.1:26759/">http://127.0.0.1:26759/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Available endpoints:</span><br><span class="line">//127.0.0.1:26759/account_stats</span><br><span class="line">//127.0.0.1:26759/accounts</span><br><span class="line">//127.0.0.1:26759/chain_id</span><br><span class="line">//127.0.0.1:26759/consensus</span><br><span class="line">//127.0.0.1:26759/genesis</span><br><span class="line">//127.0.0.1:26759/network</span><br><span class="line">//127.0.0.1:26759/network/registry</span><br><span class="line">//127.0.0.1:26759/validators</span><br><span class="line"></span><br><span class="line">Endpoints that require arguments:</span><br><span class="line">//127.0.0.1:26759/account?address=_</span><br><span class="line">//127.0.0.1:26759/account_human?address=_</span><br><span class="line">//127.0.0.1:26759/block?height=_</span><br><span class="line">//127.0.0.1:26759/blocks?minHeight=_&amp;maxHeight=_</span><br><span class="line">//127.0.0.1:26759/dump_storage?address=_</span><br><span class="line">//127.0.0.1:26759/name?name=_</span><br><span class="line">//127.0.0.1:26759/names?regex=_</span><br><span class="line">//127.0.0.1:26759/status?block_time_within=_&amp;block_seen_time_within=_</span><br><span class="line">//127.0.0.1:26759/storage?address=_&amp;key=_</span><br><span class="line">//127.0.0.1:26759/unconfirmed_txs?maxTxs=_</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2020/05/11/%E4%BD%93%E9%AA%8CHyperledger-Burrow-1/" title="体验Hyperledger-Burrow-1">https://zhuang-weiming.github.io/2020/05/11/体验Hyperledger-Burrow-1/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Burrow/" rel="tag"># Burrow</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/04/17/%E6%9C%AC%E5%9C%B0%E7%8E%A9%E8%BD%ACk8s-%E7%AC%ACII%E5%BC%B9/" rel="prev" title="本地玩转k8s-第II弹">
+                  <i class="fa fa-angle-left"></i> 本地玩转k8s-第II弹
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/05/12/%E4%BD%93%E9%AA%8CHyperledger-Burrow-2/" rel="next" title="体验Hyperledger-Burrow-2">
+                  体验Hyperledger-Burrow-2 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"ecb941dd6aa49df026cabc76140b24a1"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

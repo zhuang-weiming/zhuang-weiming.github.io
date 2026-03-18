@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="以下是 Nightfall_3、Zeto 、 Zether 和 ZAMA 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：    Attribute Nightfall_3 Zeto Zether kinexys by JPMorgan | ZAMA    Privacy Algorithm ZK-SNARKS, Groth16 by Circom ZK-SNARKS, Groth">
+<meta property="og:type" content="article">
+<meta property="og:title" content="比较-隐私交易Nightfall和Zeto和Zether和ZAMA">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="以下是 Nightfall_3、Zeto 、 Zether 和 ZAMA 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：    Attribute Nightfall_3 Zeto Zether kinexys by JPMorgan | ZAMA    Privacy Algorithm ZK-SNARKS, Groth16 by Circom ZK-SNARKS, Groth">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-12T07:20:00.000Z">
+<meta property="article:modified_time" content="2025-12-29T13:58:04.112Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="Blockchain">
+<meta property="article:tag" content="CBDC">
+<meta property="article:tag" content="ZKP">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/","path":"2024/09/12/比较-隐私交易Nightfall和Zeto和Zether和ZAMA/","title":"比较-隐私交易Nightfall和Zeto和Zether和ZAMA"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>比较-隐私交易Nightfall和Zeto和Zether和ZAMA | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="比较-隐私交易Nightfall和Zeto和Zether和ZAMA | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          比较-隐私交易Nightfall和Zeto和Zether和ZAMA
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-09-12 15:20:00" itemprop="dateCreated datePublished" datetime="2024-09-12T15:20:00+08:00">2024-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-29 21:58:04" itemprop="dateModified" datetime="2025-12-29T21:58:04+08:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>以下是 <a target="_blank" rel="noopener" href="https://github.com/EYBlockchain/nightfall_3">Nightfall_3</a>、<a target="_blank" rel="noopener" href="https://github.com/hyperledger-labs/zeto">Zeto</a> 、 <a target="_blank" rel="noopener" href="https://github.com/Consensys/anonymous-zether">Zether</a> 和 <a target="_blank" rel="noopener" href="https://github.com/zama-ai/fhevm">ZAMA</a> 的详细比较，从隐私算法到交易花费、时长、限制等多个维度进行分析：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Nightfall_3</strong></th>
+<th><strong>Zeto</strong></th>
+<th align="left"><strong>Zether</strong></th>
+<th align="left"><a target="_blank" rel="noopener" href="https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf">kinexys by JPMorgan </a>| ZAMA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Privacy Algorithm</strong></td>
+<td>ZK-SNARKS, Groth16 by Circom</td>
+<td>ZK-SNARKS, Groth16 by Circom</td>
+<td align="left">Bullet-Proof with ElGamal encryption and homomorphic addition</td>
+<td align="left">Kinexys used Zama’s open-source fhEVM-native solution to keep balances and transaction amounts encrypted, ensuring confidentiality while maintaining composability through FHE.</td>
+</tr>
+<tr>
+<td><strong>Anonymity</strong></td>
+<td>Extremely high, anonymity achieved with hashes and ZKPs.</td>
+<td>Extremely high, Stealth Addresses.</td>
+<td align="left">Medium, the identity of transactors hidden among the anonymity set.</td>
+<td align="left">Extremely high, Stealth Addresses.</td>
+</tr>
+<tr>
+<td><strong>Transaction Model</strong></td>
+<td>UTXO</td>
+<td>UTXO</td>
+<td align="left">Account Balance State</td>
+<td align="left">Account Balance State</td>
+</tr>
+<tr>
+<td><strong>Non-repudiation</strong></td>
+<td>Not currently supported, transaction submitters can deny.</td>
+<td><strong>Supported</strong>, when using the circuit requiring encrypted secrets for the authority.</td>
+<td align="left">Not currently supported, auditing balance requires a special viewing key that involves additional cryptography.</td>
+<td align="left"><strong>Supported</strong>, FHE ‘s KMS operator would need to provision the auditor with the FHE decryption key to review all transactions. The stealth address service could also specify addresses that are allowed to decrypt transactions.</td>
+</tr>
+<tr>
+<td><strong>Public Chain Support</strong></td>
+<td>Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Linea, Polygon, etc.</td>
+<td>Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Polygon, etc.</td>
+<td align="left">Supported on EVM based blockchains. Ethereum, Optimistic Layer 2, Polygon, etc. <strong>ZK Rollup deployment has failed.</strong></td>
+<td align="left">Supported on EVM based blockchains.</td>
+</tr>
+<tr>
+<td><strong>Transaction Cost</strong></td>
+<td><strong>Low</strong>, ZK verification happens off-chain.</td>
+<td>High, ZK SNARKS verification on-chain with varied cost depending on the usage of encryption and non-traceability.</td>
+<td align="left">High, bulletproof verification on-chain is more costly than ZK SNARKS based proofs.</td>
+<td align="left">High.</td>
+</tr>
+<tr>
+<td><strong>Transaction Delay</strong></td>
+<td>1~2 blocks time</td>
+<td>1~2 blocks time</td>
+<td align="left">1~2 blocks time</td>
+<td align="left">1~2 blocks time</td>
+</tr>
+<tr>
+<td><strong>Standard Tokens Support</strong></td>
+<td>Both fungible and non-fungible tokens with ERC20 and ERC721 tokens anchoring.</td>
+<td>Only fungible tokens with ERC20 tokens anchoring.</td>
+<td align="left">Only fungible tokens with ERC20 tokens anchoring.</td>
+<td align="left">Only fungible tokens with ERC20 tokens anchoring.</td>
+</tr>
+<tr>
+<td><strong>Double-spending Prevention</strong></td>
+<td>Nullifier (<strong>offchain</strong>) mechanism prevents double spending.</td>
+<td>UTXO or nullifier (<strong>offchain</strong>) based double spend prevention depending on the specific implementation.</td>
+<td align="left">ElGamal encryption (<strong>onchain</strong>) homomorphic computation combined with zero-knowledge proofs prevent double spending.</td>
+<td align="left">FHE (<strong>onchain</strong>) prevent double spending. ElGamal encryption (offchain).</td>
+</tr>
+<tr>
+<td><strong>Programmability</strong></td>
+<td>Limited programmability due to the optimistic transaction design with off-chain ZKP verification.</td>
+<td>Full programmability across multiple UTXOs. Supported by Paladin for programmable privacy.</td>
+<td align="left">Full programmability due to on-chain verifications.</td>
+<td align="left">Full with ZAMA framework.</td>
+</tr>
+<tr>
+<td><strong>Limitations</strong></td>
+<td>The optimistic transaction model means a confirmation window of multiple days to transaction finality.</td>
+<td>Fragmented UTXOs require new transactions to transfer multiple UTXOs. No fee custom implementations.</td>
+<td align="left">Only one spending transaction per account can occur within one epoch (approximately two block times). Limited self-custody wallet support.</td>
+<td align="left">ZAMA(FHE) + Stealth Addresses</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Low. Relies on a centralized sequencer&#x2F;block proposer.</td>
+<td>High, peer-to-peer transactions. Solutions based on UTXOs.</td>
+<td align="left">Low. Limited by the one spending transaction per account per epoch design.</td>
+<td align="left">High. Offchain service - ZAMA(FHE) + Stealth Addresses</td>
+</tr>
+<tr>
+<td><strong>Community Support</strong></td>
+<td>Questionable, abandoned by Polygon for a ZK-based Layer 2. Only supports code from EY. GPL-3.0 license.</td>
+<td>Hosted in LFDT Labs (formerly Hyperledger Labs). Active, supported by Kaleido.</td>
+<td align="left">Weak, supported by Consensys but no updates in the last two years. Apache License 2.0 View license.</td>
+<td align="left"><strong>BSD-3-Clause-Clear</strong> license. To commercially use Zama’s technology you need to be granted Zama’s patent license.</td>
+</tr>
+<tr>
+<td>Reference link</td>
+<td></td>
+<td></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf">https://www.jpmorgan.com/kinexys/documents/JPMC-Kinexys-Project-Epic-Whitepaper-2024.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Inco-fhevm/confidential-erc20-framework/blob/main/whitepaper.pdf">https://github.com/Inco-fhevm/confidential-erc20-framework/blob/main/whitepaper.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Inco-fhevm/confidential-erc20-framework/">https://github.com/Inco-fhevm/confidential-erc20-framework/</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2024/09/12/%E6%AF%94%E8%BE%83-%E9%9A%90%E7%A7%81%E4%BA%A4%E6%98%93Nightfall%E5%92%8CZeto%E5%92%8CZether%E5%92%8CZAMA/" title="比较-隐私交易Nightfall和Zeto和Zether和ZAMA">https://zhuang-weiming.github.io/2024/09/12/比较-隐私交易Nightfall和Zeto和Zether和ZAMA/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/ZKP/" rel="tag"># ZKP</a>
+              <a href="/tags/CBDC/" rel="tag"># CBDC</a>
+              <a href="/tags/Blockchain/" rel="tag"># Blockchain</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/03/%E5%85%AC%E6%9C%89%E9%93%BE%E6%8A%80%E6%9C%AF%E4%B8%BA%E9%93%B6%E8%A1%8C%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E9%A3%8E%E9%99%A9%E5%92%8C%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7/" rel="prev" title="公有链技术为银行带来的新风险和不确定性">
+                  <i class="fa fa-angle-left"></i> 公有链技术为银行带来的新风险和不确定性
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/10/21/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E5%92%8C%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/" rel="next" title="终端安全和网络代理">
+                  终端安全和网络代理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"cc620a1154bf841e539b4b041bfec212"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

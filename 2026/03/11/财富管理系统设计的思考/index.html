@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="当我们剥开繁复的算法外衣，回归银行业务的本质时，会发现真正的解法并不在于前端的“购物车”有多绚丽，而在于底层是否构建了扎实的 Next Best Action &#x2F; Next Best Offer (NBA &#x2F; NBO) 引擎。 迷思：复杂的 AI 推荐系统是画蛇添足吗？许多产品团队在设计财富管理系统时，往往会采用类似电商或内容平台的“媒体推荐逻辑”：系统模拟客户 -&gt; 资">
+<meta property="og:type" content="article">
+<meta property="og:title" content="财富管理系统设计的思考">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2026/03/11/%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%80%9D%E8%80%83/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="当我们剥开繁复的算法外衣，回归银行业务的本质时，会发现真正的解法并不在于前端的“购物车”有多绚丽，而在于底层是否构建了扎实的 Next Best Action &#x2F; Next Best Offer (NBA &#x2F; NBO) 引擎。 迷思：复杂的 AI 推荐系统是画蛇添足吗？许多产品团队在设计财富管理系统时，往往会采用类似电商或内容平台的“媒体推荐逻辑”：系统模拟客户 -&gt; 资">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-11T09:50:00.000Z">
+<meta property="article:modified_time" content="2026-03-17T04:10:40.883Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="ProductDesign">
+<meta property="article:tag" content="wealthbank">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2026/03/11/%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%80%9D%E8%80%83/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2026/03/11/%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%80%9D%E8%80%83/","path":"2026/03/11/财富管理系统设计的思考/","title":"财富管理系统设计的思考"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>财富管理系统设计的思考 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%B7%E6%80%9D%EF%BC%9A%E5%A4%8D%E6%9D%82%E7%9A%84-AI-%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E6%98%AF%E7%94%BB%E8%9B%87%E6%B7%BB%E8%B6%B3%E5%90%97%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">迷思：复杂的 AI 推荐系统是画蛇添足吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BD%E9%99%85%E9%93%B6%E8%A1%8C%E7%9A%84%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A%E4%BB%8E%E5%AE%A2%E6%88%B7%E6%B4%9E%E5%AF%9F%E5%88%B0%E8%A1%8C%E5%8A%A8%E8%A7%A6%E5%8F%91"><span class="nav-number">2.</span> <span class="nav-text">国际银行的核心逻辑：从客户洞察到行动触发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%A7%91%E5%AD%A6%E7%9A%84%E5%AE%A2%E6%88%B7%E9%87%91%E8%9E%8D%E5%88%86%E7%B1%BB%EF%BC%88%E5%9B%9B%E4%B8%AA%E5%85%B3%E9%94%AE%E7%BB%B4%E5%BA%A6%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">1. 科学的客户金融分类（四个关键维度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%9C%BA%E6%99%AF%E8%A7%A6%E5%8F%91-Liquidity-Events"><span class="nav-number">2.2.</span> <span class="nav-text">2. 场景触发 (Liquidity Events)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9F%BA%E4%BA%8E-SOP-%E7%9A%84%E6%8E%A8%E8%8D%90%E8%84%9A%E6%9C%AC"><span class="nav-number">2.3.</span> <span class="nav-text">3. 基于 SOP 的推荐脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%A4%A7%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%94%BB%E5%83%8F-Customer-Affinity-Model"><span class="nav-number">2.4.</span> <span class="nav-text">4. 大数据与客户画像 (Customer Affinity Model)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E6%9E%81%E8%93%9D%E5%9B%BE%EF%BC%9A%E5%9B%BD%E9%99%85%E9%93%B6%E8%A1%8C%E9%A1%B6%E7%BA%A7%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E4%BA%94%E5%B1%82%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">终极蓝图：国际银行顶级财富管理五层架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/03/11/%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%80%9D%E8%80%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="财富管理系统设计的思考 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          财富管理系统设计的思考
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-03-11 17:50:00" itemprop="dateCreated datePublished" datetime="2026-03-11T17:50:00+08:00">2026-03-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-03-17 12:10:40" itemprop="dateModified" datetime="2026-03-17T12:10:40+08:00">2026-03-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>当我们剥开繁复的算法外衣，回归银行业务的本质时，会发现真正的解法并不在于前端的“购物车”有多绚丽，而在于底层是否构建了扎实的 <strong>Next Best Action &#x2F; Next Best Offer (NBA &#x2F; NBO)</strong> 引擎。</p>
+<h2 id="迷思：复杂的-AI-推荐系统是画蛇添足吗？"><a href="#迷思：复杂的-AI-推荐系统是画蛇添足吗？" class="headerlink" title="迷思：复杂的 AI 推荐系统是画蛇添足吗？"></a>迷思：复杂的 AI 推荐系统是画蛇添足吗？</h2><p>许多产品团队在设计财富管理系统时，往往会采用类似电商或内容平台的“媒体推荐逻辑”：<em>系统模拟客户 -&gt; 资产排序 (Ranking) -&gt; 放入购物车 -&gt; 客户阅读并购买</em>。</p>
+<p>但这并不是银行财富管理的真实逻辑。如果完全按照这条路走，之前的诸多复杂设计确实容易变成“画蛇添足”。</p>
+<p>但好消息是，<strong>你并没有全盘走错，只是把层级放错了。</strong> 复杂的 AI 系统不应该被推翻，而是应该被“降维”成 NBA&#x2F;NBO 战略下的一个具体技术实现。</p>
+<p>简而言之：<strong>NBA &#x2F; NBO 是战略原则，而 Recommendation Cart &#x2F; Opportunity Hub 是技术实现。</strong></p>
+<p>在每一个时间点 $t$，银行核心决策引擎要计算的是：</p>
+<p>$$Action_t &#x3D; \arg\max E(\text{Customer Value} \mid State_t)$$</p>
+<p>这里的 $State_t$（状态）包含了客户的账户余额、交易行为、收入周期、宏观市场等。这就是 Next Best Action 引擎的数学本质。</p>
+<h2 id="国际银行的核心逻辑：从客户洞察到行动触发"><a href="#国际银行的核心逻辑：从客户洞察到行动触发" class="headerlink" title="国际银行的核心逻辑：从客户洞察到行动触发"></a>国际银行的核心逻辑：从客户洞察到行动触发</h2><p>一家顶级的国际银行，其标准的财富管理运作框架是非常连贯的：<strong>Customer（客户） → Context（场景） → Decision（决策） → Action（行动）</strong>。</p>
+<p>为了让这个 NBA&#x2F;NBO 引擎真正落地，我们需要构建以下四大核心支柱：</p>
+<h3 id="1-科学的客户金融分类（四个关键维度）"><a href="#1-科学的客户金融分类（四个关键维度）" class="headerlink" title="1. 科学的客户金融分类（四个关键维度）"></a>1. 科学的客户金融分类（四个关键维度）</h3><p>要做到精准推荐，首先要对客户的资金和偏好进行立体分类：</p>
+<ul>
+<li><p><strong>风险维度 (Risk, R1-R5)：</strong> 这是合规与投资者保护的底线（如从 R1 保本型到 R5 激进型）。</p>
+</li>
+<li><p><strong>时间维度 (Horizon)：</strong> 银行实际销售中，<strong>时间往往优先于风险</strong>。资金需要被划分为流动资金（0-6个月）、配置资金（1-3年）和财富资金（5年以上）。</p>
+</li>
+<li><p><strong>空间与主题维度 (Space&#x2F;Theme)：</strong> 涵盖区域（如 US&#x2F;Asia&#x2F;EU）与行业板块（如 US Tech, Global AI），这通常由银行的 CIO Office 来定义。</p>
+</li>
+<li><p><strong>驱动维度 (Macro Driver)：</strong> 这是非常高级的视角，即客户对宏观事件（利率、金价、地缘政治）的敏感度。</p>
+</li>
+</ul>
+<h3 id="2-场景触发-Liquidity-Events"><a href="#2-场景触发-Liquidity-Events" class="headerlink" title="2. 场景触发 (Liquidity Events)"></a>2. 场景触发 (Liquidity Events)</h3><p>银行并非让 AI 漫无目的地随时向客户推销产品，真正的 NBO 是<strong>事件驱动 (Event Driven)</strong> 的。</p>
+<p>当客户发生特定的资金事件（如工资到账、年终奖发放、大额应收账款到账、分红或存款积累）时，系统才会触发相应的行动。</p>
+<h3 id="3-基于-SOP-的推荐脚本"><a href="#3-基于-SOP-的推荐脚本" class="headerlink" title="3. 基于 SOP 的推荐脚本"></a>3. 基于 SOP 的推荐脚本</h3><p>在顶级机构中，推荐内容的决定权不在单纯的算法，而在由 Investment Office 和投资委员会主导的 SOP（标准作业程序）。</p>
+<p>例如，当系统监测到客户收到一笔奖金（Bonus Trigger），且客户画像为“风险 R3 + 周期 3年 + 偏好美股”，客户经理 (RM) 的系统面板上就会直接弹出一条 SOP 指令：<em>建议推荐 60% 债券基金 + 30% 股票 + 10% 黄金</em>。RM 的核心工作是执行这一 SOP，而非自己盲目搭配。</p>
+<h3 id="4-大数据与客户画像-Customer-Affinity-Model"><a href="#4-大数据与客户画像-Customer-Affinity-Model" class="headerlink" title="4. 大数据与客户画像 (Customer Affinity Model)"></a>4. 大数据与客户画像 (Customer Affinity Model)</h3><p>结合客户的职业、行业、年龄、性别和收入等数据，系统通过大数据关联分析，输出的是<strong>产品兴趣概率 (Probability of Interest)</strong>。</p>
+<p>将这个概率与合规适配度 (Suitability)、资金流动性 (Liquidity) 和触发事件 (Event) 结合，才能输出最终的 Next Best Offer。</p>
+<h2 id="终极蓝图：国际银行顶级财富管理五层架构"><a href="#终极蓝图：国际银行顶级财富管理五层架构" class="headerlink" title="终极蓝图：国际银行顶级财富管理五层架构"></a>终极蓝图：国际银行顶级财富管理五层架构</h2><p>理顺了上述逻辑，我们再来看系统架构。之前设计的“推荐购物车”其实仅仅处于交付层，属于“购买过该产品的客户还买了什么”的辅助模块。真正的系统核心应该深藏于后端。</p>
+<p>如果您正在规划一个国际银行级别的 Wealth NBA&#x2F;NBO 引擎，它应该呈现为高度清晰的<strong>五层架构</strong>：</p>
+<ul>
+<li><p><strong>Layer 1: Customer Intelligence（客户智能层）</strong> - 负责画像提取与概率预测。</p>
+</li>
+<li><p><strong>Layer 2: Investment Strategy（投资策略层）</strong> - 承载 CIO Office 的市场观点与宏观驱动逻辑。</p>
+</li>
+<li><p><strong>Layer 3: Event Engine（事件引擎层）</strong> - 实时监听资金与流动性事件。</p>
+</li>
+<li><p><strong>Layer 4: NBO Decision Engine（决策引擎层）</strong> - 结合前三层数据，结合合规规则，输出最优动作。</p>
+</li>
+<li><p><strong>Layer 5: Channel Delivery（渠道交付层）</strong> - 此时，RM Dashboard、手机 App 以及我们之前设计的 Opportunity Hub &#x2F; 购物车，才作为触达端发挥作用。</p>
+</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>在银行业，系统的复杂度往往来源于严格的合规要求，而非深奥复杂的黑盒算法。</p>
+<p>全球 90% 的银行在搭建 NBA 引擎时，容易把架构重点放错，过度追求前端 AI 的拟人化推荐。当你开始从“客户资金事件 -&gt; 分类适配 -&gt; 投资主题 -&gt; 产品组合 -&gt; RM 触达”这个纯正的银行业务视角来思考时，你的架构方向就已经无限接近<strong>瑞银（UBS）或摩根士丹利等全球顶级财富管理机构的真实运作逻辑了。</strong></p>
+<p>保持思路的连贯与克制，让系统回归业务本身，才是财富管理数字化转型的终极答案。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2026/03/11/%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%80%9D%E8%80%83/" title="财富管理系统设计的思考">https://zhuang-weiming.github.io/2026/03/11/财富管理系统设计的思考/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/ProductDesign/" rel="tag"># ProductDesign</a>
+              <a href="/tags/wealthbank/" rel="tag"># wealthbank</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/04/%E4%BB%8E%E4%BA%BA%E5%8A%9B%E9%A9%B1%E5%8A%A8%E5%88%B0%E7%AE%97%E6%B3%95%E9%A9%B1%E5%8A%A8%E7%9A%84%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E8%8C%83%E5%BC%8F%E8%BD%AC%E7%A7%BB/" rel="prev" title="从人力驱动到算法驱动的财富管理范式转移">
+                  <i class="fa fa-angle-left"></i> 从人力驱动到算法驱动的财富管理范式转移
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/03/17/AI%E4%B8%8EBI%E7%9A%84%E7%8E%B0%E6%9C%89%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E6%95%B4%E5%90%88%EF%BC%9F/" rel="next" title="AI与BI的现有系统如何整合？">
+                  AI与BI的现有系统如何整合？ <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"ba34fbf3e60194ac0b995b59361c6c1a"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Executive SummaryModel Context Protocol (MCP) servers are revolutionizing development workflows by providing seamless integration between AI assistants and development tools. However, implementing MCP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="Executive SummaryModel Context Protocol (MCP) servers are revolutionizing development workflows by providing seamless integration between AI assistants and development tools. However, implementing MCP">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-04T08:50:00.000Z">
+<meta property="article:modified_time" content="2025-09-05T08:43:57.459Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/","path":"2025/08/04/Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments/","title":"Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Executive-Summary"><span class="nav-number">1.</span> <span class="nav-text">Executive Summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Understanding-MCP-Architecture-in-Banking-Context"><span class="nav-number">2.</span> <span class="nav-text">Understanding MCP Architecture in Banking Context</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Core-Components-Overview"><span class="nav-number">2.1.</span> <span class="nav-text">Core Components Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MCP-Server-Deployment-Options"><span class="nav-number">2.2.</span> <span class="nav-text">MCP Server Deployment Options</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Banking-Network-Architecture-Challenges"><span class="nav-number">3.</span> <span class="nav-text">Banking Network Architecture Challenges</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Traditional-Banking-Network-Zones"><span class="nav-number">3.1.</span> <span class="nav-text">Traditional Banking Network Zones</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key-Banking-Network-Constraints"><span class="nav-number">3.2.</span> <span class="nav-text">Key Banking Network Constraints</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-Requirements-Analysis-for-Banking"><span class="nav-number">4.</span> <span class="nav-text">Network Requirements Analysis for Banking</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard-MCP-Server-Network-Needs"><span class="nav-number">4.1.</span> <span class="nav-text">Standard MCP Server Network Needs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Banking-Adapted-Network-Architecture"><span class="nav-number">4.2.</span> <span class="nav-text">Banking-Adapted Network Architecture</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-Strategies-for-Banking-Environments"><span class="nav-number">5.</span> <span class="nav-text">Implementation Strategies for Banking Environments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Strategy-Controlled-Internet-Access"><span class="nav-number">5.1.</span> <span class="nav-text">Strategy - Controlled Internet Access</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-04 16:50:00" itemprop="dateCreated datePublished" datetime="2025-08-04T16:50:00+08:00">2025-08-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-09-05 16:43:57" itemprop="dateModified" datetime="2025-09-05T16:43:57+08:00">2025-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Executive-Summary"><a href="#Executive-Summary" class="headerlink" title="Executive Summary"></a>Executive Summary</h2><p>Model Context Protocol (MCP) servers are revolutionizing development workflows by providing seamless integration between AI assistants and development tools. However, implementing MCP servers like HashiCorp’s Terraform MCP Server within large banking institutions presents unique challenges due to strict security requirements, network isolation, and regulatory compliance needs.</p>
+<p>This article examines the technical architecture, network requirements, and implementation strategies for deploying Terraform MCP servers in highly regulated banking environments.</p>
+<h2 id="Understanding-MCP-Architecture-in-Banking-Context"><a href="#Understanding-MCP-Architecture-in-Banking-Context" class="headerlink" title="Understanding MCP Architecture in Banking Context"></a>Understanding MCP Architecture in Banking Context</h2><h3 id="Core-Components-Overview"><a href="#Core-Components-Overview" class="headerlink" title="Core Components Overview"></a>Core Components Overview</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    Banking Intranet Zone                    │</span><br><span class="line">│  ┌─────────────────┐    JSON-RPC 2.0    ┌─────────────────┐ │</span><br><span class="line">│  │   VS Code       │ ─────────────────&gt; │   MCP Server    │ │</span><br><span class="line">│  │   (MCP Client)  │ &lt;───────────────── │   Process       │ │</span><br><span class="line">│  └─────────────────┘    stdio pipes     │  (Docker/npx/   │ │</span><br><span class="line">│           │                             │   uvx/native)   │ │</span><br><span class="line">│           │                             └─────────────────┘ │</span><br><span class="line">│           │                                      │          │</span><br><span class="line">│           ▼                                      ▼          │</span><br><span class="line">│  ┌─────────────────┐                    ┌─────────────────┐ │</span><br><span class="line">│  │   Developer     │                    │   Internal      │ │</span><br><span class="line">│  │   Workstation   │                    │   Terraform     │ │</span><br><span class="line">│  └─────────────────┘                    │   Registry      │ │</span><br><span class="line">│                                         └─────────────────┘ │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>The MCP server operates as a process (containerized via Docker, or directly via npx&#x2F;uvx&#x2F;native installation) that bridges VS Code with Terraform operations through JSON-RPC 2.0 protocol over stdio pipes, eliminating the need for network ports while maintaining security.</p>
+<h3 id="MCP-Server-Deployment-Options"><a href="#MCP-Server-Deployment-Options" class="headerlink" title="MCP Server Deployment Options"></a>MCP Server Deployment Options</h3><p>The Terraform MCP Server can be deployed using different methods, all maintaining the same communication architecture:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Docker deployment (recommended for banking)</span></span><br><span class="line">docker run -i --<span class="built_in">rm</span> hashicorp/terraform-mcp-server:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># NPX deployment (Node.js package manager)</span></span><br><span class="line">npx @hashicorp/terraform-mcp-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># UVX deployment (Python package manager)</span></span><br><span class="line">uvx terraform-mcp-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># Native binary deployment</span></span><br><span class="line">./terraform-mcp-server</span><br></pre></td></tr></table></figure>
+
+<p>All deployment methods use identical JSON-RPC 2.0 communication over stdio pipes, ensuring consistent behavior regardless of the installation approach.</p>
+<h2 id="Banking-Network-Architecture-Challenges"><a href="#Banking-Network-Architecture-Challenges" class="headerlink" title="Banking Network Architecture Challenges"></a>Banking Network Architecture Challenges</h2><h3 id="Traditional-Banking-Network-Zones"><a href="#Traditional-Banking-Network-Zones" class="headerlink" title="Traditional Banking Network Zones"></a>Traditional Banking Network Zones</h3><p>Large banks typically implement multi-tier network architectures:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Internet ──&gt; DMZ ──&gt; Application Zone ──&gt; Database Zone</span><br><span class="line">    │         │            │                   │</span><br><span class="line">    │         │            │                   │</span><br><span class="line">   WAF    Firewall    Internal Apps        Databases</span><br><span class="line">                           │</span><br><span class="line">                           ▼</span><br><span class="line">                  Developer Workstations</span><br><span class="line">                     (Isolated Zone)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Key-Banking-Network-Constraints"><a href="#Key-Banking-Network-Constraints" class="headerlink" title="Key Banking Network Constraints"></a>Key Banking Network Constraints</h3><ol>
+<li><strong>Air-Gapped Environments</strong>: Many development zones have no direct internet access</li>
+<li><strong>Strict Egress Controls</strong>: All outbound traffic requires explicit approval</li>
+<li><strong>Container Registry Restrictions</strong>: External Docker registries often blocked</li>
+<li><strong>DNS Limitations</strong>: External DNS resolution may be restricted</li>
+<li><strong>Proxy Requirements</strong>: All HTTP&#x2F;HTTPS traffic must route through corporate proxies</li>
+</ol>
+<h2 id="Network-Requirements-Analysis-for-Banking"><a href="#Network-Requirements-Analysis-for-Banking" class="headerlink" title="Network Requirements Analysis for Banking"></a>Network Requirements Analysis for Banking</h2><h3 id="Standard-MCP-Server-Network-Needs"><a href="#Standard-MCP-Server-Network-Needs" class="headerlink" title="Standard MCP Server Network Needs"></a>Standard MCP Server Network Needs</h3><p>The original Terraform MCP Server requires:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">External Dependencies:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docs.aws.amazon.com:443</span>        <span class="comment"># AWS documentation</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">registry.terraform.io:443</span>      <span class="comment"># Terraform registry</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">github.com:443</span>                 <span class="comment"># Module sources</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docker.io:443</span>                  <span class="comment"># Container registry</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">checkov.io:443</span>                 <span class="comment"># Security scanning updates</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Internal Communication:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">stdio</span> <span class="string">pipes</span> <span class="string">(no</span> <span class="string">network</span> <span class="string">ports)</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Docker</span> <span class="string">daemon</span> <span class="string">access</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Local</span> <span class="string">filesystem</span> <span class="string">access</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Banking-Adapted-Network-Architecture"><a href="#Banking-Adapted-Network-Architecture" class="headerlink" title="Banking-Adapted Network Architecture"></a>Banking-Adapted Network Architecture</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                    Banking Intranet                         │</span><br><span class="line">│                                                             │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   Developer     │   stdio      │   MCP Server    │       │</span><br><span class="line">│  │   Workstation   │ ───────────&gt; │   Process       │       │</span><br><span class="line">│  │   (VS Code)     │              │                 │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│           │                                │                │</span><br><span class="line">│           │                                ▼                │</span><br><span class="line">│           │                       ┌─────────────────┐       │</span><br><span class="line">│           │                       │   Internal      │       │</span><br><span class="line">│           │                       │   Terraform     │       │</span><br><span class="line">│           │                       │   Registry      │       │</span><br><span class="line">│           │                       └─────────────────┘       │</span><br><span class="line">│           │                                │                │</span><br><span class="line">│           ▼                                ▼                │</span><br><span class="line">│  ┌─────────────────┐              ┌─────────────────┐       │</span><br><span class="line">│  │   Internal      │              │   Corporate     │       │</span><br><span class="line">│  │   Container     │              │   Proxy         │       │</span><br><span class="line">│  │   Registry      │              │                 │       │</span><br><span class="line">│  └─────────────────┘              └─────────────────┘       │</span><br><span class="line">│                                                             │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="Implementation-Strategies-for-Banking-Environments"><a href="#Implementation-Strategies-for-Banking-Environments" class="headerlink" title="Implementation Strategies for Banking Environments"></a>Implementation Strategies for Banking Environments</h2><h3 id="Strategy-Controlled-Internet-Access"><a href="#Strategy-Controlled-Internet-Access" class="headerlink" title="Strategy - Controlled Internet Access"></a>Strategy - Controlled Internet Access</h3><p><strong>Approach</strong>: Selective external access through secure proxies</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Developer ──→ MCP Server ──→ Corporate Proxy ──→ Internet</span><br><span class="line">Workstation    Container      (with filtering)     (Limited)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Proxy Configuration</strong>:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># corporate-proxy.yaml</span></span><br><span class="line"><span class="attr">allowed_domains:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docs.aws.amazon.com</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">registry.terraform.io</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">github.com</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docker.io</span></span><br><span class="line"></span><br><span class="line"><span class="attr">blocked_patterns:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;*.social-media.com&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;*.entertainment.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">security_scanning:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">malware_detection:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">data_loss_prevention:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Container Configuration</strong>:</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dockerfile for banking environment</span></span><br><span class="line"><span class="keyword">FROM</span> hashicorp/terraform-mcp-server:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure proxy settings</span></span><br><span class="line"><span class="keyword">ENV</span> HTTP_PROXY=http://proxy.bank.com:<span class="number">8080</span></span><br><span class="line"><span class="keyword">ENV</span> HTTPS_PROXY=http://proxy.bank.com:<span class="number">8080</span></span><br><span class="line"><span class="keyword">ENV</span> NO_PROXY=localhost,<span class="number">127.0</span>.<span class="number">0.1</span>,*.bank.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add internal CA certificates</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> internal-ca-certs.pem /usr/local/share/ca-certificates/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> update-ca-certificates</span></span><br></pre></td></tr></table></figure>
+<p><strong>Vision (推荐)：环境标准化</strong> - 强调不应由开发者手动在容器或本地设置代理。正确的做法是由IT部门提供一个<strong>预先配置好代理和证书的、不可修改的标准化MCP Server</strong></p>
+<p><strong>Of cause this is a big risk for each developer to set proxy on the MCP Server in everyday working. Because we can’t fully follow the bank’s internet access policy via the Proxy Configuration</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2025/08/04/Experience%20of%20Implementing%20HashiCorp%20Terraform%20MCP%20Server%20in%20Bank%20Intranet%20Environments/" title="Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments">https://zhuang-weiming.github.io/2025/08/04/Experience of Implementing HashiCorp Terraform MCP Server in Bank Intranet Environments/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"># LLM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/01/%E4%BC%81%E4%B8%9A%E7%AB%AFMCP%E5%88%86%E7%B1%BB/" rel="prev" title="企业端MCP分类">
+                  <i class="fa fa-angle-left"></i> 企业端MCP分类
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%85%B3%E4%BA%8ECline%E4%BA%A7%E5%93%81%E7%9A%84%E4%B8%80%E5%88%87/" rel="next" title="关于Cline产品的一切">
+                  关于Cline产品的一切 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"67fec434dbe414637a0245c50efec945"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

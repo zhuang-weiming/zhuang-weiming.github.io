@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Project link -&gt; https:&#x2F;&#x2F;github.com&#x2F;WillZhuang&#x2F;zkp-workshop-project让我来 step by step 做介绍： 1.编写关于 bid case 的 code123456789101112131415161718192021222324252627282930313233343536373839404142434445464748">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zokrates-基于ethereum的zkp-II-进阶">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="Project link -&gt; https:&#x2F;&#x2F;github.com&#x2F;WillZhuang&#x2F;zkp-workshop-project让我来 step by step 做介绍： 1.编写关于 bid case 的 code123456789101112131415161718192021222324252627282930313233343536373839404142434445464748">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-24T08:01:04.000Z">
+<meta property="article:modified_time" content="2025-12-29T13:58:04.063Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="ZKP">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/","path":"2019/07/24/zokrates-基于ethereum的zkp-II-进阶/","title":"zokrates-基于ethereum的zkp-II-进阶"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>zokrates-基于ethereum的zkp-II-进阶 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Project-link-https-github-com-WillZhuang-zkp-workshop-project"><span class="nav-number">1.</span> <span class="nav-text">Project link -&gt; https:&#x2F;&#x2F;github.com&#x2F;WillZhuang&#x2F;zkp-workshop-project</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%BC%96%E5%86%99%E5%85%B3%E4%BA%8E-bid-case-%E7%9A%84-code"><span class="nav-number">1.1.</span> <span class="nav-text">1.编写关于 bid case 的 code</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%BC%96%E8%AF%91"><span class="nav-number">1.2.</span> <span class="nav-text">2.编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">3.设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.4.</span> <span class="nav-text">4.执行程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%94%9F%E6%88%90%E8%AF%81%E6%98%8E"><span class="nav-number">1.5.</span> <span class="nav-text">5.生成证明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%AF%BC%E5%87%BA-solidity-verifier"><span class="nav-number">1.6.</span> <span class="nav-text">6.导出 solidity verifier</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E7%BC%96%E5%86%99%E5%90%88%E7%BA%A6"><span class="nav-number">1.7.</span> <span class="nav-text">7.编写合约</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E4%BD%BF%E7%94%A8-truffle-%E9%83%A8%E7%BD%B2%E5%90%88%E7%BA%A6"><span class="nav-number">1.8.</span> <span class="nav-text">8.使用 truffle 部署合约</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E6%B5%8B%E8%AF%95"><span class="nav-number">1.9.</span> <span class="nav-text">9.测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%A4%B4%E6%9D%A5%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%EF%BC%9A"><span class="nav-number">1.10.</span> <span class="nav-text">回头来总结一下：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="zokrates-基于ethereum的zkp-II-进阶 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          zokrates-基于ethereum的zkp-II-进阶
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-24 16:01:04" itemprop="dateCreated datePublished" datetime="2019-07-24T16:01:04+08:00">2019-07-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-29 21:58:04" itemprop="dateModified" datetime="2025-12-29T21:58:04+08:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="Project-link-https-github-com-WillZhuang-zkp-workshop-project"><a href="#Project-link-https-github-com-WillZhuang-zkp-workshop-project" class="headerlink" title="Project link -&gt; https://github.com/WillZhuang/zkp-workshop-project"></a>Project link -&gt; <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project">https://github.com/WillZhuang/zkp-workshop-project</a></h3><p>让我来 step by step 做介绍：</p>
+<h4 id="1-编写关于-bid-case-的-code"><a href="#1-编写关于-bid-case-的-code" class="headerlink" title="1.编写关于 bid case 的 code"></a>1.编写关于 bid case 的 code</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">/// This zksnark <span class="keyword">is</span> to be used to verify that an operator has choosen</span><br><span class="line">/// the lowest bid that was actually submitted by an approved supplier was choosen</span><br><span class="line">/// by the operator <span class="keyword">for</span> the work. For this proof of concept, we will structure the</span><br><span class="line">/// proof to use <span class="number">3</span> suppliers only.</span><br><span class="line"></span><br><span class="line">///    Inputs <span class="keyword">for</span> the SNARK</span><br><span class="line"></span><br><span class="line">///    PUBLIC FIELDS</span><br><span class="line">///    input_of_py: field[<span class="number">3</span>] public keys <span class="keyword">for</span> each supplier - should be EDDSA public keys</span><br><span class="line">///    *  A: Curve point. Public part of the key used to create S.</span><br><span class="line"></span><br><span class="line">///    PRIVATE FIELDS</span><br><span class="line">///    input_of_py: field[<span class="number">3</span>] actual bid <span class="keyword">from</span> each supplier</span><br><span class="line">///    input_of_py: Requires per each EDDSA signatures per supplier</span><br><span class="line">///    *  R: Curve point. Hidden version of the per-message nonce.</span><br><span class="line">///    *  S: Field element. Signature to be verified.</span><br><span class="line">///    input_of_py: a secret to aide <span class="keyword">in</span> building out the merkel tree of the results</span><br><span class="line"></span><br><span class="line">///    *  context: Curve parameters used to create S. Tells you which curve was used.</span><br><span class="line">///    The context can be generated <span class="keyword">from</span> the babyjubjub curve.</span><br><span class="line"></span><br><span class="line">///    Returns <span class="keyword">for</span> the SNARK</span><br><span class="line">///    <span class="keyword">return</span>: a merkel tree including...</span><br><span class="line">///    <span class="number">1.</span> private key of choosen supplier</span><br><span class="line">///    <span class="number">2.</span> secret</span><br><span class="line">///    <span class="number">3.</span> A: Curve point. Public part of the key used to create S.</span><br><span class="line"></span><br><span class="line">// In the vectors, the supplier order should be kept the same to compare/access (i.e. supplier one has first bid, supplier two second bid, etc.)</span><br><span class="line"></span><br><span class="line">//For signatures</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;ecc/babyjubjubParams.code&quot;</span> <span class="keyword">as</span> context</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;signatures/verifyEddsa.code&quot;</span> <span class="keyword">as</span> verifyEddsa</span><br><span class="line">//For unpacking bids correctly</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/unpack128.code&quot;</span> <span class="keyword">as</span> unpack128</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/pack128.code&quot;</span> <span class="keyword">as</span> pack128</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/nonStrictUnpack256.code&quot;</span> <span class="keyword">as</span> unpack256</span><br><span class="line">//For unpacking signatures correctly</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;utils/pack/pack128.code&quot;</span> <span class="keyword">as</span> pack128</span><br><span class="line">//For merkle tree - changed to padded</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;hashes/sha256/512bitPadded.code&quot;</span> <span class="keyword">as</span> sha256</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">private field[<span class="number">6</span>] R, \</span></span><br><span class="line"><span class="params"> field[<span class="number">6</span>] A, \</span></span><br><span class="line"><span class="params"> field[<span class="number">3</span>] S, \</span></span><br><span class="line"><span class="params"> private field secret, \</span></span><br><span class="line"><span class="params"> private field bidone, \</span></span><br><span class="line"><span class="params"> private field bidtwo, \</span></span><br><span class="line"><span class="params"> private field bidthree</span>) -&gt; (field[<span class="number">2</span>]):</span><br><span class="line"></span><br><span class="line">//Since each message <span class="keyword">is</span> constructed <span class="keyword">from</span> the bids, no way to input_of_py a faulty bid</span><br><span class="line"></span><br><span class="line">//Reconstruct messages:</span><br><span class="line">//Note: Field element can be a value between <span class="number">0</span> <span class="keyword">and</span> p (p upper limit: <span class="number">2</span>^<span class="number">254</span>)</span><br><span class="line">//Makes an assumption that every bid will be <span class="number">64</span> bit number</span><br><span class="line">//Message <span class="keyword">in</span> the signature should be <span class="number">512</span> bits</span><br><span class="line"></span><br><span class="line">field[<span class="number">128</span>] bidoneunpacked = unpack128(bidone)</span><br><span class="line">field[<span class="number">512</span>] bidonemessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidoneunpacked]</span><br><span class="line">field[<span class="number">128</span>] bidtwounpacked = unpack128(bidtwo)</span><br><span class="line">field[<span class="number">512</span>] bidtwomessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidtwounpacked]</span><br><span class="line">field[<span class="number">128</span>] bidthreeunpacked = unpack128(bidthree)</span><br><span class="line">field[<span class="number">512</span>] bidthreemessage = [...[<span class="number">0</span>; <span class="number">384</span>], ...bidthreeunpacked]</span><br><span class="line"></span><br><span class="line">context = context()</span><br><span class="line"></span><br><span class="line">// Supplier <span class="number">1</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">0.</span><span class="number">.2</span>], S[<span class="number">0</span>], A[<span class="number">0.</span><span class="number">.2</span>], bidonemessage[<span class="number">0.</span><span class="number">.256</span>], bidonemessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line">// Supplier <span class="number">2</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">2.</span><span class="number">.4</span>], S[<span class="number">1</span>], A[<span class="number">2.</span><span class="number">.4</span>], bidtwomessage[<span class="number">0.</span><span class="number">.256</span>], bidtwomessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line">// Supplier <span class="number">3</span></span><br><span class="line"><span class="number">1</span> == verifyEddsa(R[<span class="number">4.</span><span class="number">.6</span>], S[<span class="number">2</span>], A[<span class="number">4.</span><span class="number">.6</span>], bidthreemessage[<span class="number">0.</span><span class="number">.256</span>], bidthreemessage[<span class="number">256.</span><span class="number">.512</span>], context)</span><br><span class="line"></span><br><span class="line">//Lowest bid should correllate <span class="keyword">with</span> supplier</span><br><span class="line">//To Do: write the simplest implementation to simplify, each of the below would be a <span class="built_in">range</span> proof</span><br><span class="line">field[<span class="number">3</span>] lowestbidder = [...[<span class="number">0</span>; <span class="number">3</span>]] //Save supplier <span class="keyword">and</span> the lowest bid</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidone &lt; bidtwo &amp;&amp; bidone &lt; bidthree then [A[<span class="number">0</span>], A[<span class="number">1</span>], bidone] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidtwo &lt; bidone &amp;&amp; bidtwo &lt; bidthree then [A[<span class="number">2</span>], A[<span class="number">3</span>], bidtwo] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line">lowestbidder = <span class="keyword">if</span> bidthree &lt; bidone &amp;&amp; bidthree &lt; bidtwo then [A[<span class="number">4</span>], A[<span class="number">5</span>], bidthree] <span class="keyword">else</span> [...[<span class="number">0</span>; <span class="number">3</span>]] fi</span><br><span class="line"></span><br><span class="line">//Now we have the lowest bid, supplier sig verified, <span class="keyword">and</span> secret --&gt; ready <span class="keyword">for</span> the merkle tree</span><br><span class="line">//512bitpadded - same merkle tree <span class="keyword">as</span> ethereum</span><br><span class="line">//Leaf One: lowest bid + secret</span><br><span class="line">//Makes an assumption that every secret will be <span class="number">64</span> bit number</span><br><span class="line">field lowest = lowestbidder[<span class="number">2</span>]</span><br><span class="line">field[<span class="number">256</span>] lowestbidunpacked = unpack256(lowest)</span><br><span class="line">field[<span class="number">256</span>] secretunpacked = unpack256(secret)</span><br><span class="line">field[<span class="number">256</span>] leafone = sha256(lowestbidunpacked, secretunpacked)</span><br><span class="line"></span><br><span class="line">//Leaf Two: Curve point A: A[<span class="number">0</span>] + A[<span class="number">1</span>]</span><br><span class="line">//We know that A[<span class="number">0</span>] <span class="keyword">and</span> A[<span class="number">1</span>] will be <span class="number">64</span> bit numbers, need to unpack to <span class="number">256</span></span><br><span class="line">field[<span class="number">256</span>] a0unpacked = unpack256(A[<span class="number">0</span>])</span><br><span class="line">field[<span class="number">256</span>] a1unpacked = unpack256(A[<span class="number">1</span>])</span><br><span class="line">field[<span class="number">256</span>] leaftwo = sha256(a0unpacked, a1unpacked)</span><br><span class="line"></span><br><span class="line">//Build the root of leaf one + leaf two</span><br><span class="line">field[<span class="number">256</span>] root = sha256(leafone, leaftwo)</span><br><span class="line"></span><br><span class="line">//Before returning, compress back to field element root - split off <span class="number">128</span> bits</span><br><span class="line">res0 = pack128(root[.<span class="number">.128</span>])</span><br><span class="line">res1 = pack128(root[<span class="number">128.</span>.])</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [res0, res1]</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-编译"><a href="#2-编译" class="headerlink" title="2.编译"></a>2.编译</h4><p><code>zokrates compile -i verifybid.code</code></p>
+<p>生成 out 和 out.code 文件。其中 out 文件为 102M，out.code 文件为 60M，文件 size 较大。</p>
+<h4 id="3-设置"><a href="#3-设置" class="headerlink" title="3.设置"></a>3.设置</h4><p><code>zokrates setup</code></p>
+<p>生成 proving.key 和 verification.key 文件。其中 proving.key 为 121M，文件较大。</p>
+<h4 id="4-执行程序"><a href="#4-执行程序" class="headerlink" title="4.执行程序"></a>4.执行程序</h4><p><code>zokrates compute-witness -a 10055980565918579776429468085502320403896861311334950973306171539247124720876 9872212025624827705538064352986283580914984702567748676648365783032194062540 15914440638590293656936968551196129378835493705090190454426890248467449623197 7164401624892807842686423552737135338148312648059491863415011813391162897156 17656893400745400645892949581714190787095935883004706460374622673779099869831 13238137875306891162631161684759202257598937454005976664682588856632564854848 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 14897476871502190904409029696666322856887678969656209656241038339251270171395 16668832459046858928951622951481252834155254151733002984053501254009901876174 6460329147541296150725376868570071708599740324087744825213520062979428542760 8063340131639693693865282091868641282847827816145781069349300386706996098818 21548706238088528999687556989620717323700520797702367873886065001951944889761 45 500 400 300</code></p>
+<p>-a 后面为执行程序的参数，即对应着<strong>verifybid.code</strong>中的入参 private field[6] R, field[6] A, field[3] S, private field secret, private field bidone, private field bidtwo, private field bidthree</p>
+<p>其中的 500，400，300 即为 3 方的报价，此处可在前序的智能合约中编写为下面的逻辑：</p>
+<p>party one，输入 500，执行 smart contract，</p>
+<p>party two，输入 400，执行 smart contract，</p>
+<p>party three，输入 300，执行smart contract，</p>
+<p>smart contract 收集到法定报价数量之后，verifier 端收到 event，执行 step5 和 step6。</p>
+<p>其余参数内容来自<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/input_files/inputs_of_command_paras">inputs_of_command_paras</a></p>
+<h4 id="5-生成证明"><a href="#5-生成证明" class="headerlink" title="5.生成证明"></a>5.生成证明</h4><p><code>zokrates generate-proof</code></p>
+<p>生成 witness 文件。其中 witness 文件为 82M，文件较大。</p>
+<h4 id="6-导出-solidity-verifier"><a href="#6-导出-solidity-verifier" class="headerlink" title="6.导出 solidity verifier"></a>6.导出 solidity verifier</h4><p><code>zokrates export-verifier</code></p>
+<p>生成<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/contracts/Verifier.sol">Verifier.sol</a>。</p>
+<h4 id="7-编写合约"><a href="#7-编写合约" class="headerlink" title="7.编写合约"></a>7.编写合约</h4><p>编写<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/contracts/Bid_operator.sol">Bid_operator.sol</a>合约，引用 verifyTx 函数。</p>
+<h4 id="8-使用-truffle-部署合约"><a href="#8-使用-truffle-部署合约" class="headerlink" title="8.使用 truffle 部署合约"></a>8.使用 truffle 部署合约</h4><p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/migrations/2_deploy_Verifier.js">2_deploy_Verifier.js</a> 和 <a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/migrations/3_deploy_Bid_operator.js">3_deploy_Bid_operator.js</a> 作为配置文件。</p>
+<h4 id="9-测试"><a href="#9-测试" class="headerlink" title="9.测试"></a>9.测试</h4><p><a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/tree/master/test">test&#x2F;bid_operator.js</a> 中的a, b, c 和 input 均来自于<a target="_blank" rel="noopener" href="https://github.com/WillZhuang/zkp-workshop-project/blob/master/zkp_files/proof.json">proof.json</a>。</p>
+<h4 id="回头来总结一下："><a href="#回头来总结一下：" class="headerlink" title="回头来总结一下："></a>回头来总结一下：</h4><p>1.本次的 bid case 的目的为验证operator选择了最低的 bid 报价，并且验证了该 bid 为 supplier 所提供；</p>
+<p><strong>不能证明</strong> supplier one，two，three 之间互相<strong>看不到</strong>其他 supplier 的 bid。</p>
+<p>2.zokrates默认的证明算法为 <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2016/260">G16</a>，<a target="_blank" rel="noopener" href="https://zokrates.github.io/reference/proving_schemes.html">根据 zokrates 的说明</a>，在使用了签名和 ethereum address 作为proofs 证明的情况下，G16 是安全的。并且 G16 无需引用<strong>libsnark</strong>，生成 witness 和 proof 的速度大大加快，使用配置文件的 size 大大降低。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2019/07/24/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-II-%E8%BF%9B%E9%98%B6/" title="zokrates-基于ethereum的zkp-II-进阶">https://zhuang-weiming.github.io/2019/07/24/zokrates-基于ethereum的zkp-II-进阶/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/ZKP/" rel="tag"># ZKP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/07/22/zokrates-%E5%9F%BA%E4%BA%8Eethereum%E7%9A%84zkp-I-%E4%BB%8B%E7%BB%8D/" rel="prev" title="zokrates-基于ethereum的zkp-I-介绍">
+                  <i class="fa fa-angle-left"></i> zokrates-基于ethereum的zkp-I-介绍
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/07/24/%E5%85%B3%E4%BA%8Eethereum%E9%9A%90%E7%A7%81%E6%95%B0%E6%8D%AE%E7%9A%84%E7%8E%B0%E7%8A%B6/" rel="next" title="关于ethereum隐私数据的现状">
+                  关于ethereum隐私数据的现状 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"e48c807ad48a74c68ce546022aaf9e8f"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

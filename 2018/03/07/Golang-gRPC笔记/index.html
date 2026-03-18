@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="gRPC 简介： gRPC 是一款高性能、开源的 RPC（Remote Procedure Call）框架，产自 Google，基于 ProtoBuf 序列化协议进行开发，支持多种语言（Golang、Python、Java等），本篇只介绍 Golang 的 gRPC 使用。因为 gRPC 对 HTTP&#x2F;2 协议的支持使其在 Android、IOS 等客户端后端服务的开发领域具有良好的前景">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang gRPC笔记">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="gRPC 简介： gRPC 是一款高性能、开源的 RPC（Remote Procedure Call）框架，产自 Google，基于 ProtoBuf 序列化协议进行开发，支持多种语言（Golang、Python、Java等），本篇只介绍 Golang 的 gRPC 使用。因为 gRPC 对 HTTP&#x2F;2 协议的支持使其在 Android、IOS 等客户端后端服务的开发领域具有良好的前景">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/1.png">
+<meta property="article:published_time" content="2018-03-07T11:23:30.000Z">
+<meta property="article:modified_time" content="2023-09-14T05:55:12.926Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="golang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhuang-weiming.github.io/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/1.png">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/","path":"2018/03/07/Golang-gRPC笔记/","title":"Golang gRPC笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Golang gRPC笔记 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#gRPC-%E7%AE%80%E4%BB%8B%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">gRPC 简介：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">安装：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Golang gRPC笔记 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Golang gRPC笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-03-07 19:23:30" itemprop="dateCreated datePublished" datetime="2018-03-07T19:23:30+08:00">2018-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-09-14 13:55:12" itemprop="dateModified" datetime="2023-09-14T13:55:12+08:00">2023-09-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="gRPC-简介："><a href="#gRPC-简介：" class="headerlink" title="gRPC 简介："></a>gRPC 简介：</h3><blockquote>
+<p>gRPC 是一款高性能、开源的 RPC（Remote Procedure Call）框架，产自 Google，基于 ProtoBuf 序列化协议进行开发，支持多种语言（Golang、Python、Java等），本篇只介绍 Golang 的 gRPC 使用。因为 gRPC 对 HTTP&#x2F;2 协议的支持使其在 Android、IOS 等客户端后端服务的开发领域具有良好的前景。gRPC 提供了一种简单的方法来定义服务，同时客户端可以充分利用 HTTP&#x2F;2 stream 的特性，从而有助于节省带宽、降低 TCP 的连接次数、节省CPU的使用等。</p>
+</blockquote>
+<h3 id="安装："><a href="#安装：" class="headerlink" title="安装："></a>安装：</h3><p>gRPC 的安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go get -u google.golang.org/grpc</span><br></pre></td></tr></table></figure>
+<p>因为 gRPC 是基于 protobuf 实现的接口序列化，所以也要安装 protobuf： 安装及简介教程(Golang 序列化之 ProtoBuf)。</p>
+<p>实验：</p>
+<p>下面我们使用 gRPC 定义一个接口，该接口实现对传入的数据进行大写的格式化处理。</p>
+<ol>
+<li>创建项目 golang Demo 工程：</li>
+</ol>
+<img src="/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/1.png" class="">
+
+<blockquote>
+<p>client目录下的 main.go 实现了客户端用于发送数据并打印接收到 server 端处理后的数据</p>
+</blockquote>
+<ol>
+<li>server 目录下的 main.go 实现了服务端用于接收客户端发送的数据，并对数据进行大写处理后返回给客户端</li>
+<li>example 包用于编写 proto 文件并生成 data 接口</li>
+<li>定义 gRPC 接口：</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line"><span class="keyword">package</span> example;</span><br><span class="line">service FormatData &#123;</span><br><span class="line">    rpc DoFormat(Data) returns (Data)&#123;&#125; </span><br><span class="line">    <span class="comment">// 此处定义的方法为简单RPC。其余的服务器端流式 RPC，客户端流式 RPC，双向流式 RPC请查询参考链接</span></span><br><span class="line">&#125;</span><br><span class="line">message Data &#123;</span><br><span class="line">    <span class="type">string</span> text = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译 protobuf：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --go_out=plugins=grpc:. *.proto // 在 example 目录中执行编译，会生成：data.pb.go</span><br></pre></td></tr></table></figure>
+<p>实现 server 端：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;gRPCDemo/example&quot;</span></span><br><span class="line">	<span class="string">&quot;net&quot;</span></span><br><span class="line">	<span class="string">&quot;google.golang.org/grpc&quot;</span></span><br><span class="line">	<span class="string">&quot;google.golang.org/grpc/reflection&quot;</span></span><br><span class="line">	<span class="string">&quot;golang.org/x/net/context&quot;</span></span><br><span class="line">	<span class="string">&quot;strings&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">// 定义监听地址</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	HOST <span class="type">string</span> = <span class="string">&quot;localhost&quot;</span></span><br><span class="line">	PORT <span class="type">string</span> = <span class="string">&quot;8080&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">// 定义接口</span></span><br><span class="line"><span class="keyword">type</span> FormatData <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(fd *FormatData)</span></span> DoFormat(ctx context.Context, in *example.Data) (out *example.Data, err <span class="type">error</span>) &#123;</span><br><span class="line">	str := in.Text</span><br><span class="line">	out = &amp;example.Data&#123;Text: strings.ToUpper(str)&#125;</span><br><span class="line">	<span class="keyword">return</span> out, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 直接在 main 方法中注册接口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 启动服务器</span></span><br><span class="line">	<span class="comment">// 指定我们期望客户端请求的监听端口</span></span><br><span class="line">	listener, err := net.Listen(<span class="string">&quot;tcp&quot;</span>, HOST+<span class="string">&quot;:&quot;</span>+PORT)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;faile listen at: &quot;</span> + HOST + <span class="string">&quot;:&quot;</span> + PORT)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		log.Println(<span class="string">&quot;Demo server is listening at: &quot;</span> + HOST + <span class="string">&quot;:&quot;</span> + PORT)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 创建 gRPC 服务器的一个实例</span></span><br><span class="line">	rpcServer := grpc.NewServer()</span><br><span class="line">	<span class="comment">// 在 gRPC 服务器注册我们的服务实现</span></span><br><span class="line">	example.RegisterFormatDataServer(rpcServer, &amp;FormatData&#123;&#125;)</span><br><span class="line">	reflection.Register(rpcServer)</span><br><span class="line">	<span class="comment">// 实现阻塞等待，直到进程被杀死或者 Stop() 被调用</span></span><br><span class="line">	<span class="keyword">if</span> err = rpcServer.Serve(listener); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;faile serve at: &quot;</span> + HOST + <span class="string">&quot;:&quot;</span> + PORT)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现 client 端：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;google.golang.org/grpc&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;gRPCDemo/example&quot;</span></span><br><span class="line">	<span class="string">&quot;golang.org/x/net/context&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">// 定义请求地址</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	ADDRESS <span class="type">string</span> = <span class="string">&quot;localhost:8080&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">// main 方法实现对 gRPC 接口的请求</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 为了调用服务方法，我们首先创建一个 gRPC channel 和服务器交互。</span></span><br><span class="line">	<span class="comment">// 可以使用 DialOptions 在 grpc.Dial 中设置授权认证（如， TLS，GCE认证，JWT认证）</span></span><br><span class="line">	conn, err := grpc.Dial(ADDRESS, grpc.WithInsecure())</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;Can&#x27;t connect: &quot;</span> + ADDRESS)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> conn.Close()</span><br><span class="line">	<span class="comment">// 一旦 gRPC channel 建立起来，我们需要一个客户端 存根 去执行 RPC</span></span><br><span class="line">	client := example.NewFormatDataClient(conn)</span><br><span class="line">	<span class="comment">// 调用简单 RPC</span></span><br><span class="line">	resp,err := client.DoFormat(context.Background(), &amp;example.Data&#123;Text:<span class="string">&quot;hello,world!&quot;</span>&#125;)</span><br><span class="line">	<span class="comment">// 如果调用没有返回错误，那么我们就可以从服务器返回的第一个返回值中读到响应信息</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(<span class="string">&quot;Do Format error:&quot;</span> + err.Error())</span><br><span class="line">	&#125;</span><br><span class="line">	log.Println(resp.Text)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行验证结果：<br>先启动 server，之后再执行 client<br>client 侧控制台如果打印的结果为： HELLO,WORLD! ，证明 gRPC 接口定义成功。</p>
+<p>参考</p>
+<p><a target="_blank" rel="noopener" href="http://doc.oschina.net/grpc?t=60133">http://doc.oschina.net/grpc?t=60133</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/grpc/grpc-go">https://github.com/grpc/grpc-go</a></p>
+<p><a target="_blank" rel="noopener" href="https://grpc.io/">https://grpc.io/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2018/03/07/Golang-gRPC%E7%AC%94%E8%AE%B0/" title="Golang gRPC笔记">https://zhuang-weiming.github.io/2018/03/07/Golang-gRPC笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/golang/" rel="tag"># golang</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/07/Golang-ProtoBuf%E7%AC%94%E8%AE%B0/" rel="prev" title="Golang ProtoBuf笔记">
+                  <i class="fa fa-angle-left"></i> Golang ProtoBuf笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/03/14/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%BC%96%E7%A8%8B-%E4%BD%BF%E7%94%A8web3%E5%92%8Cinfura/" rel="next" title="以太坊编程 使用web3和infura">
+                  以太坊编程 使用web3和infura <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"51690fdc157944b29ec84b3b4ba1f058"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

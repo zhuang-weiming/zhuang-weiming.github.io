@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="here is algorand网址链接 PoW的安全性基于PoW的区块链假定矿工拥有生成下一个区块所需的大部分计算能力。但是，工作证明已将权力集中在少数采矿池中。在比特币中，实际上只有三个这样的矿池控制区块链。对于任何实体而言，这种权力集中对于渴望分权的系统是不可接受的，并且很可能是非常危险的。 Bonded PoS的安全性在基于Bonded PoS的区块链中，每个用户都可能将自己的部分资金置于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorand算法特性总结">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="here is algorand网址链接 PoW的安全性基于PoW的区块链假定矿工拥有生成下一个区块所需的大部分计算能力。但是，工作证明已将权力集中在少数采矿池中。在比特币中，实际上只有三个这样的矿池控制区块链。对于任何实体而言，这种权力集中对于渴望分权的系统是不可接受的，并且很可能是非常危险的。 Bonded PoS的安全性在基于Bonded PoS的区块链中，每个用户都可能将自己的部分资金置于">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-09T03:56:41.000Z">
+<meta property="article:modified_time" content="2025-12-29T13:50:18.757Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="Consensus">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/","path":"2018/04/09/Algorand算法特性总结/","title":"Algorand算法特性总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Algorand算法特性总结 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#PoW%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">PoW的安全性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bonded-PoS%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">Bonded PoS的安全性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DPoS%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">DPoS的安全性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E5%9C%A8Algorand"><span class="nav-number">4.</span> <span class="nav-text">安全在Algorand</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E6%95%88%E4%B8%94%E5%8F%AF%E6%89%A9%E5%B1%95"><span class="nav-number">5.</span> <span class="nav-text">高效且可扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorand%E4%B8%8D%E8%83%BD%E8%A2%AB%E5%AE%A1%E6%9F%A5"><span class="nav-number">6.</span> <span class="nav-text">Algorand不能被审查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%81%B5%E6%B4%BB%E6%80%A7%E6%98%AF%E6%88%90%E5%8A%9F%E7%9A%84%E5%85%B3%E9%94%AE%E3%80%82"><span class="nav-number">7.</span> <span class="nav-text">灵活性是成功的关键。</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Algorand算法特性总结 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Algorand算法特性总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-04-09 11:56:41" itemprop="dateCreated datePublished" datetime="2018-04-09T11:56:41+08:00">2018-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-29 21:50:18" itemprop="dateModified" datetime="2025-12-29T21:50:18+08:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://www.algorand.com/">here is algorand网址链接</a></p>
+<h4 id="PoW的安全性"><a href="#PoW的安全性" class="headerlink" title="PoW的安全性"></a>PoW的安全性</h4><p>基于PoW的区块链假定矿工拥有生成下一个区块所需的大部分计算能力。但是，工作证明已将权力集中在少数采矿池中。在比特币中，实际上只有三个这样的矿池控制区块链。对于任何实体而言，这种权力集中对于渴望分权的系统是不可接受的，并且很可能是非常危险的。</p>
+<h4 id="Bonded-PoS的安全性"><a href="#Bonded-PoS的安全性" class="headerlink" title="Bonded PoS的安全性"></a>Bonded PoS的安全性</h4><p>在基于Bonded PoS的区块链中，每个用户都可能将自己的部分资金置于危险境地。那些这样做的人有权根据他们的赌注选择一个新的区块。原则上，如果他们发现行为不端，他们可能会失去他们的赌注，如果他们主张通过行为失误赚更多的钱，这可能不是很有威慑力。但是，一个普通用户只能负担得起的一小部分资金。因此，这个系统可能会成为富有的不诚实的人的牺牲品，这些个人通过大量的资金来控制区块链。</p>
+<h4 id="DPoS的安全性"><a href="#DPoS的安全性" class="headerlink" title="DPoS的安全性"></a>DPoS的安全性</h4><p>在基于DPoS的区块链中，生成区块的权力在很长的时间间隔内被提供给一小部分公认的用户群。这种方法可能比工作量证明的成本更低，但无可否认的是相当集中！在这里，安全依赖于这个小组中大多数人的诚实，但任何一小部分用户都是攻击者的明显目标。</p>
+<h4 id="安全在Algorand"><a href="#安全在Algorand" class="headerlink" title="安全在Algorand"></a>安全在Algorand</h4><p>如果系统中的大部分资金由诚实用户所有，Algorand将保证安全工作。请注意，我们并不是谈论一些特殊用户拥有的大部分资金，而是所有用户拥有的资金。此外，Algorand的用户不需要将任何一小部分资金投入赌注。用户的钱始终留在她的手中，随时准备用尽自己的希望。</p>
+<h4 id="高效且可扩展"><a href="#高效且可扩展" class="headerlink" title="高效且可扩展"></a>高效且可扩展</h4><p>Algorand因为它在两个阶段产生一个新的块，每一个都完美地缩放。<br>阶段1：随机选择一个用户并提出一个新的区块。<br>阶段2：随机选择一小部分用户来验证并同意该区块。</p>
+<h4 id="Algorand不能被审查"><a href="#Algorand不能被审查" class="headerlink" title="Algorand不能被审查"></a>Algorand不能被审查</h4><p>两阶段中，用户按照他们在系统中的金额成比例地选择。它可能不包含在由不诚实用户提出的区块中，但只要其提议者是诚实的，它就会进入新的区块。因此，进入Algorand区块链所需的交易费用也非常低。这允许在平等条件下处理宏观和微观支付。</p>
+<h4 id="灵活性是成功的关键。"><a href="#灵活性是成功的关键。" class="headerlink" title="灵活性是成功的关键。"></a>灵活性是成功的关键。</h4><p>Algorand通过其标志性的建议和约定机制产生一个新的区块。在很高的层次上，Algorand秘密并即时召集一小群用户，他们的加密和安全选择能够公平地代表所有用户的社区（由他们在系统中的持股量加权）。这个代表性的委员会就新的区块达成协议，但事实上，它可以用来就其他问题达成一致。例如，改变议定书或修改货币政策。</p>
+<p>我们应该认识到，在任何复杂的系统中改变都是必要的。传统的加密货币是静态的，任何“改变方向”都需要一个硬分叉，从而导致社区分裂。从长远来看，分散会削弱社区和任何货币的效用。</p>
+<p>传统的加密货币没有内置的安全机制来达成协议。因此，关于变革的辩论是非常结构化的，无论达成任何形式的协议，都必须在链条外达成。因此，人们总是怀疑任何结论的正确性。</p>
+<p>相比之下，Algorand使社区和协议得以发展。Algorand以其有效和安全的拜占庭协议为中心。经过辩论后，在区块链上发布了一项拟议更改，并使用Algorand的共识协议，社群投票接受或拒绝该提案。如果获得批准，建议的更改将立即生效。</p>
+<p>在Algorand，这种协议并不是通过智能合同来实施的。相反，它直接内置于协议的核心。</p>
+<p>相关文章链接：</p>
+<p><a target="_blank" rel="noopener" href="https://willzhuang.github.io/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">可验证随机函数VRF之Algorand共识算法</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2018/04/09/Algorand%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/" title="Algorand算法特性总结">https://zhuang-weiming.github.io/2018/04/09/Algorand算法特性总结/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Consensus/" rel="tag"># Consensus</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/31/%E5%8F%AF%E9%AA%8C%E8%AF%81%E9%9A%8F%E6%9C%BA%E5%87%BD%E6%95%B0VRF%E4%B9%8BAlgorand%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" rel="prev" title="可验证随机函数VRF之Algorand共识算法">
+                  <i class="fa fa-angle-left"></i> 可验证随机函数VRF之Algorand共识算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/12/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/" rel="next" title="算法图解">
+                  算法图解 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"67433ba30ba44c42f6091d2c992bbafd"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

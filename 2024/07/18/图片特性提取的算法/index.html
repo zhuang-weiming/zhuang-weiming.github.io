@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="比较项目 SIFT CLIP 模型 OpenCV 和 SSIM    特征类型 局部特征点和描述符（关键点、边缘） 高维特征向量（512维），包含物体、场景、语义、颜色、形状等信息 全局结构相似性（亮度、对比度、结构）   算法特点 尺度不变性、旋转不变性、对光照变化鲁棒 多模态（图像和文本联合训练）、高语义理解、跨模态能力 感知驱动、结构相似性评估   计算复杂度 高，适合离线处理 中等到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图片特性提取的算法">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="比较项目 SIFT CLIP 模型 OpenCV 和 SSIM    特征类型 局部特征点和描述符（关键点、边缘） 高维特征向量（512维），包含物体、场景、语义、颜色、形状等信息 全局结构相似性（亮度、对比度、结构）   算法特点 尺度不变性、旋转不变性、对光照变化鲁棒 多模态（图像和文本联合训练）、高语义理解、跨模态能力 感知驱动、结构相似性评估   计算复杂度 高，适合离线处理 中等到">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-18T01:35:00.000Z">
+<meta property="article:modified_time" content="2025-12-29T13:51:21.861Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="ImageProcess">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/","path":"2024/07/18/图片特性提取的算法/","title":"图片特性提取的算法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>图片特性提取的算法 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="图片特性提取的算法 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图片特性提取的算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-07-18 09:35:00" itemprop="dateCreated datePublished" datetime="2024-07-18T09:35:00+08:00">2024-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-29 21:51:21" itemprop="dateModified" datetime="2025-12-29T21:51:21+08:00">2025-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><table>
+<thead>
+<tr>
+<th><strong>比较项目</strong></th>
+<th><strong>SIFT</strong></th>
+<th><strong>CLIP 模型</strong></th>
+<th><strong>OpenCV 和 SSIM</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>特征类型</strong></td>
+<td>局部特征点和描述符（关键点、边缘）</td>
+<td>高维特征向量（512维），包含物体、场景、语义、颜色、形状等信息</td>
+<td>全局结构相似性（亮度、对比度、结构）</td>
+</tr>
+<tr>
+<td><strong>算法特点</strong></td>
+<td>尺度不变性、旋转不变性、对光照变化鲁棒</td>
+<td>多模态（图像和文本联合训练）、高语义理解、跨模态能力</td>
+<td>感知驱动、结构相似性评估</td>
+</tr>
+<tr>
+<td><strong>计算复杂度</strong></td>
+<td>高，适合离线处理</td>
+<td>中等到高，依赖 GPU，适合实时处理</td>
+<td>低到中，适合实时处理</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>图像拼接、物体识别、精确图像匹配</td>
+<td>图像搜索、图像分类、跨模态任务</td>
+<td>图像质量评估、图像压缩、变化检测</td>
+</tr>
+<tr>
+<td><strong>鲁棒性</strong></td>
+<td>对尺度、旋转、光照变化具有鲁棒性</td>
+<td>对多种视觉变化具有鲁棒性</td>
+<td>对整体结构变化具有鲁棒性</td>
+</tr>
+<tr>
+<td><strong>依赖库</strong></td>
+<td>OpenCV（包含 SIFT 算法实现）</td>
+<td>transformers 库（Hugging Face 提供的 CLIP 模型实现）</td>
+<td>OpenCV（图像处理）和 skimage（SSIM 计算）</td>
+</tr>
+<tr>
+<td><strong>输出形式</strong></td>
+<td>关键点位置和描述符，匹配的关键点对</td>
+<td>高维特征向量，语义相似性得分</td>
+<td>SSIM 得分（-1 到 1），结构差异图</td>
+</tr>
+<tr>
+<td><strong>易用性</strong></td>
+<td>需要一定的图像处理和计算机视觉知识</td>
+<td>需要了解深度学习模型和预训练模型的使用方法</td>
+<td>易于使用，适合初学者和快速应用</td>
+</tr>
+<tr>
+<td><strong>性能评估</strong></td>
+<td>精确度高，但计算时间长</td>
+<td>精确度高，计算效率高</td>
+<td>精确度适中，计算效率高</td>
+</tr>
+<tr>
+<td><strong>开发和维护</strong></td>
+<td>较成熟，算法稳定，但需要大量计算资源</td>
+<td>持续更新，模型性能不断提升，但依赖最新的深度学习框架</td>
+<td>成熟稳定，依赖基础图像处理库</td>
+</tr>
+<tr>
+<td><strong>示例代码片段</strong></td>
+<td><code>sift = cv2.SIFT_create()</code><br><code>kp, des = sift.detectAndCompute(image, None)</code></td>
+<td><code>model = CLIPModel.from_pretrained(&quot;openai/clip-vit-base-patch32&quot;)</code><br><code>features = model.get_image_features(inputs)</code></td>
+<td><code>score, diff = ssim(image1, image2, full=True)</code></td>
+</tr>
+<tr>
+<td><strong>模型更新频率</strong></td>
+<td>由于算法经典，更新频率低</td>
+<td>持续更新，引入更多数据集和改进</td>
+<td>算法稳定，更新频率低</td>
+</tr>
+<tr>
+<td><strong>社区支持</strong></td>
+<td>较强，广泛应用于计算机视觉研究和工程实践</td>
+<td>强大，特别是在 NLP 和 CV 领域的多模态研究</td>
+<td>强大，广泛应用于图像处理和分析</td>
+</tr>
+<tr>
+<td><strong>资源需求</strong></td>
+<td>高 CPU 和内存需求，处理大图像数据时尤其明显</td>
+<td>高 GPU 和内存需求，适合使用高性能计算资源</td>
+<td>较低的资源需求，适合各种计算环境</td>
+</tr>
+</tbody></table>
+<p>通过这个表格，可以更全面地比较 SIFT 算法、CLIP 模型和 OpenCV 与 SSIM 方法在图像特征提取与比较上的不同特点。这个表格包含了特征类型、算法特点、计算复杂度、应用场景、鲁棒性、依赖库、输出形式、易用性、性能评估、开发和维护、示例代码片段、模型更新频率、社区支持以及资源需求等多个比较项目。</p>
+<p>除了 SIFT、CLIP 和 SSIM 之外，还有许多其他算法和方法可以用于图像特征提取。以下是一些常见的算法及其特点：</p>
+<table>
+<thead>
+<tr>
+<th><strong>算法</strong></th>
+<th><strong>特征类型</strong></th>
+<th><strong>特点</strong></th>
+<th><strong>应用场景</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SURF (Speeded-Up Robust Features)</strong></td>
+<td>局部特征点和描述符</td>
+<td>比 SIFT 更快，鲁棒性稍差，但仍对尺度、旋转不变</td>
+<td>物体识别、图像拼接</td>
+</tr>
+<tr>
+<td><strong>ORB (Oriented FAST and Rotated BRIEF)</strong></td>
+<td>局部特征点和描述符</td>
+<td>快速高效，对旋转不变，但对尺度不变性较差</td>
+<td>实时应用、移动设备</td>
+</tr>
+<tr>
+<td><strong>HOG (Histogram of Oriented Gradients)</strong></td>
+<td>形状和边缘方向直方图</td>
+<td>捕捉局部的梯度方向直方图，适用于检测对象的形状和轮廓</td>
+<td>人体检测、物体检测</td>
+</tr>
+<tr>
+<td><strong>LBP (Local Binary Patterns)</strong></td>
+<td>纹理特征</td>
+<td>快速简便，对纹理特征敏感，适合纹理分类和检测</td>
+<td>纹理分类、图像分割</td>
+</tr>
+<tr>
+<td><strong>Gabor Filters</strong></td>
+<td>频域特征</td>
+<td>通过多尺度和多方向的滤波器捕捉图像中的纹理和边缘</td>
+<td>纹理分析、边缘检测</td>
+</tr>
+<tr>
+<td><strong>Deep Learning Features (CNNs)</strong></td>
+<td>高维特征向量</td>
+<td>通过卷积神经网络提取图像的高维特征，适用于复杂的视觉任务</td>
+<td>图像分类、对象检测、图像分割</td>
+</tr>
+<tr>
+<td><strong>PCA (Principal Component Analysis)</strong></td>
+<td>主成分特征</td>
+<td>通过降维技术提取图像的主要特征，减少数据维度</td>
+<td>数据降维、特征压缩</td>
+</tr>
+<tr>
+<td><strong>LDA (Linear Discriminant Analysis)</strong></td>
+<td>判别特征</td>
+<td>通过线性判别分析提取最能区分类别的特征</td>
+<td>分类任务、特征选择</td>
+</tr>
+<tr>
+<td><strong>Wavelet Transform</strong></td>
+<td>多尺度分析特征</td>
+<td>通过小波变换分析图像的多尺度信息，适用于纹理和边缘检测</td>
+<td>纹理分析、图像压缩</td>
+</tr>
+<tr>
+<td><strong>Color Histograms</strong></td>
+<td>颜色分布特征</td>
+<td>统计图像中不同颜色的分布，适用于图像的颜色分析和匹配</td>
+<td>图像检索、颜色分析</td>
+</tr>
+<tr>
+<td><strong>Edge Detection (Canny, Sobel)</strong></td>
+<td>边缘特征</td>
+<td>检测图像中的边缘，捕捉物体的轮廓和形状</td>
+<td>边缘检测、形状分析</td>
+</tr>
+<tr>
+<td><strong>Daisy Descriptors</strong></td>
+<td>局部图像描述符</td>
+<td>捕捉图像的局部特征，类似 SIFT 和 SURF，但更快</td>
+<td>物体识别、图像匹配</td>
+</tr>
+<tr>
+<td><strong>BRISK (Binary Robust Invariant Scalable Keypoints)</strong></td>
+<td>局部特征点和描述符</td>
+<td>快速、鲁棒，对旋转和尺度变化具有不变性</td>
+<td>实时应用、移动设备</td>
+</tr>
+<tr>
+<td><strong>FREAK (Fast Retina Keypoint)</strong></td>
+<td>局部特征点和描述符</td>
+<td>快速、有效，模仿人眼视网膜的工作方式</td>
+<td>实时应用、移动设备</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2024/07/18/%E5%9B%BE%E7%89%87%E7%89%B9%E6%80%A7%E6%8F%90%E5%8F%96%E7%9A%84%E7%AE%97%E6%B3%95/" title="图片特性提取的算法">https://zhuang-weiming.github.io/2024/07/18/图片特性提取的算法/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"># LLM</a>
+              <a href="/tags/ImageProcess/" rel="tag"># ImageProcess</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/07/02/YOLO%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0/" rel="prev" title="YOLO原理概述">
+                  <i class="fa fa-angle-left"></i> YOLO原理概述
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/07/25/What%20should%20be%20the%20roadmap%20of%20Layer%202/" rel="next" title="What should be the roadmap of Layer 2">
+                  What should be the roadmap of Layer 2 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"38dfa81b7dbd1e80f10d2c1ed41ae654"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>

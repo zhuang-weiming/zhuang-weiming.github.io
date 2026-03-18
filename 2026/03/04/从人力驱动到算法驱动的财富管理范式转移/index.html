@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="摘要：本报告旨在通过数字化重构，将银行从依赖客户经理（RM）体力的“线性增长模型”，转型为由“AI+数据”驱动、边际成本递减的“指数增长平台”。我们的核心目标是通过系统杠杆，在不线性增加人力成本的前提下，实现 AUM 规模与利润率的同步增长。 一、 核心战略：财富管理的“第一性原理”与破局财富管理业务的本质可拆解为三个元要素：  信任 (Trust)： 解决“为什么选你”——从依赖 RM 个人关系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从人力驱动到算法驱动的财富管理范式转移">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2026/03/04/%E4%BB%8E%E4%BA%BA%E5%8A%9B%E9%A9%B1%E5%8A%A8%E5%88%B0%E7%AE%97%E6%B3%95%E9%A9%B1%E5%8A%A8%E7%9A%84%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E8%8C%83%E5%BC%8F%E8%BD%AC%E7%A7%BB/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="摘要：本报告旨在通过数字化重构，将银行从依赖客户经理（RM）体力的“线性增长模型”，转型为由“AI+数据”驱动、边际成本递减的“指数增长平台”。我们的核心目标是通过系统杠杆，在不线性增加人力成本的前提下，实现 AUM 规模与利润率的同步增长。 一、 核心战略：财富管理的“第一性原理”与破局财富管理业务的本质可拆解为三个元要素：  信任 (Trust)： 解决“为什么选你”——从依赖 RM 个人关系">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-04T06:49:00.000Z">
+<meta property="article:modified_time" content="2026-03-17T04:14:20.792Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="ProductDesign">
+<meta property="article:tag" content="wealthbank">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2026/03/04/%E4%BB%8E%E4%BA%BA%E5%8A%9B%E9%A9%B1%E5%8A%A8%E5%88%B0%E7%AE%97%E6%B3%95%E9%A9%B1%E5%8A%A8%E7%9A%84%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E8%8C%83%E5%BC%8F%E8%BD%AC%E7%A7%BB/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2026/03/04/%E4%BB%8E%E4%BA%BA%E5%8A%9B%E9%A9%B1%E5%8A%A8%E5%88%B0%E7%AE%97%E6%B3%95%E9%A9%B1%E5%8A%A8%E7%9A%84%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E8%8C%83%E5%BC%8F%E8%BD%AC%E7%A7%BB/","path":"2026/03/04/从人力驱动到算法驱动的财富管理范式转移/","title":"从人力驱动到算法驱动的财富管理范式转移"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从人力驱动到算法驱动的财富管理范式转移 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E6%A0%B8%E5%BF%83%E6%88%98%E7%95%A5%EF%BC%9A%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E7%9A%84%E2%80%9C%E7%AC%AC%E4%B8%80%E6%80%A7%E5%8E%9F%E7%90%86%E2%80%9D%E4%B8%8E%E7%A0%B4%E5%B1%80"><span class="nav-number">1.</span> <span class="nav-text">一、 核心战略：财富管理的“第一性原理”与破局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-CEO-%E5%86%B3%E7%AD%96%E7%9C%8B%E6%9D%BF%EF%BC%9A%E9%80%BB%E8%BE%91%E6%A8%A1%E5%9E%8B%E4%B8%8E-KPI-%E4%BD%93%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">二、 CEO 决策看板：逻辑模型与 KPI 体系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%B8%E5%BF%83%E5%88%A9%E6%B6%A6%E9%80%BB%E8%BE%91%E5%85%AC%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">1. 核心利润逻辑公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%85%AD%E5%A4%A7%E4%BA%8C%E7%BA%A7%E6%8C%87%E6%A0%87%E7%9B%91%E6%8E%A7%E6%89%8B%E5%86%8C"><span class="nav-number">2.2.</span> <span class="nav-text">2. 六大二级指标监控手册</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81-%E6%9C%AC%E8%B4%A8%E8%BD%AC%E5%9E%8B%EF%BC%9A%E4%BB%8E%E2%80%9C%E5%8A%A0%E5%8A%9F%E8%83%BD%E2%80%9D%E5%88%B0%E2%80%9C%E9%87%8D%E6%9E%84%E8%B7%AF%E5%BE%84%E2%80%9D"><span class="nav-number">3.</span> <span class="nav-text">三、 本质转型：从“加功能”到“重构路径”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%8C%96%E5%88%86%E6%9E%90%EF%BC%9A%E4%B8%9A%E5%8A%A1%E8%83%BD%E5%8A%9B%E4%B8%8E%E5%88%A9%E6%B6%A6%E6%8C%87%E6%A0%87%E8%81%94%E5%8A%A8%E7%9F%A9%E9%98%B5"><span class="nav-number">4.</span> <span class="nav-text">深化分析：业务能力与利润指标联动矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%A0%B8%E5%BF%83-KPI-%E6%8C%87%E6%A0%87%E8%AE%A1%E7%AE%97%E6%89%8B%E5%86%8C"><span class="nav-number">5.</span> <span class="nav-text">四、核心 KPI 指标计算手册</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%88%A9%E6%B6%A6%E4%B8%8E%E6%95%88%E7%8E%87%E6%8C%87%E6%A0%87"><span class="nav-number">5.1.</span> <span class="nav-text">1. 利润与效率指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A2%9E%E9%95%BF%E4%B8%8E%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87"><span class="nav-number">5.2.</span> <span class="nav-text">2. 增长与质量指标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Profit-%E7%9A%84%E5%8F%8D%E6%8E%A8%E6%8B%86%E8%A7%A3%EF%BC%88%E9%A1%B6%E5%B1%82%EF%BC%89"><span class="nav-number">5.2.1.</span> <span class="nav-text">Profit 的反推拆解（顶层）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Profit-%E2%86%92-%E4%BA%8C%E7%BA%A7-%E4%B8%89%E7%BA%A7%E6%8C%87%E6%A0%87-%E2%86%92-Business-Capability-%E6%98%A0%E5%B0%84%E8%A1%A8%EF%BC%88%E6%A0%B8%E5%BF%83%E6%88%90%E6%9E%9C%EF%BC%89"><span class="nav-number">5.3.</span> <span class="nav-text">3. Profit → 二级 &#x2F; 三级指标 → Business Capability 映射表（核心成果）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%BA%A7%E5%88%A9%E6%B6%A6%E7%9B%AE%E6%A0%87-%EF%BC%9AAUM-%E6%89%A9%E5%BC%A0%EF%BC%88%E6%96%B0%E5%A2%9E-%E5%AD%98%E9%87%8F%EF%BC%89"><span class="nav-number">5.4.</span> <span class="nav-text">一级利润目标 ：AUM 扩张（新增 + 存量）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E6%8C%87%E6%A0%87-%EF%BC%9ALeads-%E2%86%92-AUM-%E8%BD%AC%E5%8C%96%E6%95%88%E7%8E%87"><span class="nav-number">5.4.1.</span> <span class="nav-text">二级指标 ：Leads → AUM 转化效率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E6%8C%87%E6%A0%87-%EF%BC%9AAUM-%E7%95%99%E5%AD%98%E8%83%BD%E5%8A%9B"><span class="nav-number">5.4.2.</span> <span class="nav-text">二级指标 ：AUM 留存能力</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%BA%A7%E5%88%A9%E6%B6%A6%E7%9B%AE%E6%A0%87-%EF%BC%9ANet-Margin-%E6%8F%90%E5%8D%87"><span class="nav-number">5.5.</span> <span class="nav-text">一级利润目标 ：Net Margin 提升</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E6%8C%87%E6%A0%87-%EF%BC%9AProduct-Mix-Margin"><span class="nav-number">5.5.1.</span> <span class="nav-text">二级指标 ：Product Mix Margin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E6%8C%87%E6%A0%87-B2%EF%BC%9ACross-sell-Depth"><span class="nav-number">5.5.2.</span> <span class="nav-text">二级指标 B2：Cross-sell Depth</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%BA%A7%E5%88%A9%E6%B6%A6%E7%9B%AE%E6%A0%87-%EF%BC%9AVelocity%EF%BC%88%E9%92%B1%E8%BD%AC%E5%BE%97%E6%9B%B4%E5%BF%AB%EF%BC%89"><span class="nav-number">5.6.</span> <span class="nav-text">一级利润目标 ：Velocity（钱转得更快）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E6%8C%87%E6%A0%87-%EF%BC%9ADecision-to-Trade-Velocity"><span class="nav-number">5.6.1.</span> <span class="nav-text">二级指标 ：Decision-to-Trade Velocity</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%BA%A7%E5%88%A9%E6%B6%A6%E7%9B%AE%E6%A0%87-%EF%BC%9ACost-%E6%9D%A0%E6%9D%86%EF%BC%88%E6%8C%87%E6%95%B0%E5%A2%9E%E9%95%BF%E7%9A%84%E5%85%B3%E9%94%AE%EF%BC%89"><span class="nav-number">5.7.</span> <span class="nav-text">一级利润目标 ：Cost 杠杆（指数增长的关键）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E6%8C%87%E6%A0%87-%EF%BC%9ARM-Leverage"><span class="nav-number">5.7.1.</span> <span class="nav-text">二级指标 ：RM Leverage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E6%8C%87%E6%A0%87-D2%EF%BC%9ASTP-Ops-Efficiency"><span class="nav-number">5.7.2.</span> <span class="nav-text">二级指标 D2：STP &amp; Ops Efficiency</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%BB%A5-RM-%E4%B8%BA%E4%B8%AD%E5%BF%83%E6%9D%A5%E6%80%9D%E8%80%83-Revenue-%E5%92%8C-Profit"><span class="nav-number">6.</span> <span class="nav-text">五、以 RM 为中心来思考 Revenue 和 Profit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BD%8D%E6%B6%88%E5%8E%BB%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="nav-number">6.1.</span> <span class="nav-text">单位消去过程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E6%98%AF%E2%80%9C100-%E6%AD%A3%E7%A1%AE%E7%9A%84%E2%80%9D%EF%BC%9F%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E5%A4%B1%E6%95%88%EF%BC%9F"><span class="nav-number">6.2.</span> <span class="nav-text">什么时候这个公式是“100% 正确的”？什么时候会失效？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%88%90%E7%AB%8B%E7%9A%84%E5%89%8D%E6%8F%90"><span class="nav-number">6.2.1.</span> <span class="nav-text">成立的前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E5%A4%B1%E6%95%88-%E9%9C%80%E8%A6%81%E5%8D%87%E7%BA%A7%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">6.2.2.</span> <span class="nav-text">可能失效 &#x2F; 需要升级的情况</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%B8%80%E4%B8%AA%E2%80%9C%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%E4%BD%86%E7%8E%B0%E5%9C%A8%E6%89%8D%E6%98%BE%E6%80%A7%E5%8C%96%E2%80%9D%E7%9A%84%E6%B4%9E%E5%AF%9F"><span class="nav-number">7.</span> <span class="nav-text">六、一个“非常重要但现在才显性化”的洞察</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">298</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/03/04/%E4%BB%8E%E4%BA%BA%E5%8A%9B%E9%A9%B1%E5%8A%A8%E5%88%B0%E7%AE%97%E6%B3%95%E9%A9%B1%E5%8A%A8%E7%9A%84%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E8%8C%83%E5%BC%8F%E8%BD%AC%E7%A7%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从人力驱动到算法驱动的财富管理范式转移 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从人力驱动到算法驱动的财富管理范式转移
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-03-04 14:49:00" itemprop="dateCreated datePublished" datetime="2026-03-04T14:49:00+08:00">2026-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-03-17 12:14:20" itemprop="dateModified" datetime="2026-03-17T12:14:20+08:00">2026-03-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>摘要：本报告旨在通过数字化重构，将银行从依赖客户经理（RM）体力的“线性增长模型”，转型为由“AI+数据”驱动、边际成本递减的“指数增长平台”。我们的核心目标是通过系统杠杆，在不线性增加人力成本的前提下，实现 AUM 规模与利润率的同步增长。</p>
+<h2 id="一、-核心战略：财富管理的“第一性原理”与破局"><a href="#一、-核心战略：财富管理的“第一性原理”与破局" class="headerlink" title="一、 核心战略：财富管理的“第一性原理”与破局"></a>一、 核心战略：财富管理的“第一性原理”与破局</h2><p>财富管理业务的本质可拆解为三个元要素：</p>
+<ol>
+<li><strong>信任 (Trust)：</strong> 解决“为什么选你”——从依赖 RM 个人关系的“人际信任”，转向<strong>由机构专业支撑的“系统信任”</strong>。</li>
+<li><strong>理解 (Understanding)：</strong> 解决“你懂我吗”——从 RM 的感性经验，转向<strong>基于行为金融学的数字化精准画像</strong>。</li>
+<li><strong>效率 (Access &amp; Efficiency)：</strong> 解决“响应速度”——实现决策闭环的自动化，使服务的<strong>边际成本趋近于零</strong>。</li>
+</ol>
+<h2 id="二、-CEO-决策看板：逻辑模型与-KPI-体系"><a href="#二、-CEO-决策看板：逻辑模型与-KPI-体系" class="headerlink" title="二、 CEO 决策看板：逻辑模型与 KPI 体系"></a>二、 CEO 决策看板：逻辑模型与 KPI 体系</h2><h3 id="1-核心利润逻辑公式"><a href="#1-核心利润逻辑公式" class="headerlink" title="1. 核心利润逻辑公式"></a>1. 核心利润逻辑公式</h3><p>基于第一性原理，我们将利润增长重构为“执行力”与“防御力”的双引擎驱动模型：</p>
+<p>$$\boxed{ Revenue &#x3D; \left( \underbrace{\left[ \sum (Leads \times CVR \times \text{Avg Ticket}) \times \frac{1}{T} \right]}<em>{\text{新钱执行力引擎 (Flow)}} + \underbrace{\left[ AUM</em>{base} \times (1 + R_{SAA} - Churn) \right]}_{\text{存量策略引擎 (Stock)}} \right) \times Net\ Margin }$$<br>$$\boxed{ Profit &#x3D; Revenue - \left( TotalRMCost + OtherVariableOpsCost - CostSaved \right) }$$</p>
+<ul>
+<li><strong>新钱执行力：</strong> 钱转得有多快？（由转化率 $CVR$ 和决策速度 $1&#x2F;T$ 决定）。</li>
+<li><strong>存量策略：</strong> 钱留得有多稳？（由配置收益 $R_{SAA}$ 和流失率 $Churn$ 决定）。</li>
+<li><strong>效率杠杆：</strong> 靠人还是靠系统？（由 $RM\ Leverage$ 决定单位资产的人力成本）。</li>
+</ul>
+<h3 id="2-六大二级指标监控手册"><a href="#2-六大二级指标监控手册" class="headerlink" title="2. 六大二级指标监控手册"></a>2. 六大二级指标监控手册</h3><table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>核心指标</strong></th>
+<th><strong>计算公式</strong></th>
+<th><strong>CEO 监控逻辑与预警</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>流量 (Volume)</strong></td>
+<td><strong>Leads &amp; CVR</strong></td>
+<td>CVR:<br>$\frac{\text{成交客户数}}{\text{营销名单总数}}$<br></td>
+<td><strong>进水报警：</strong> 若 Leads 下降 15%，预示 3 个月后新增 AUM 将见顶，需检查市场投放或生命周期触发节点。</td>
+</tr>
+<tr>
+<td><strong>容量 (Capacity)</strong></td>
+<td><strong>RM Leverage</strong></td>
+<td>Input Leverage: $\frac{\text{系统分配客户数}}{\text{RM 人数 (FTE)}}$ <br><br>Output Productivity:<br>$\frac{\text{ 成交客户数}}{\text{RM 人数 (FTE)}}$</td>
+<td><strong>管径瓶颈：</strong> Input Leverage杠杆率过高说明 RM 处于满负荷。也是衡量 Wealth 系统的自动化程度。系统越强，RM 能同时“管”的客户就越多，<strong>单位 AUM 对应的人力成本越低</strong>。这是 CEO 衡量 IT 杠杆的核心。Output Productivity衡量 RM 的最终产出能力。</td>
+</tr>
+<tr>
+<td><strong>速度 (Velocity)</strong></td>
+<td><strong>1&#x2F;T (动能)</strong></td>
+<td>$\frac{1}{\text{从 Lead 到成交的天数}}$</td>
+<td><strong>摩擦力监测：</strong> $T$ 延长说明客户信心下降或产品过于复杂，需增强 CIO 观点矩阵的社会认同引导。</td>
+</tr>
+<tr>
+<td><strong>深度 (Depth)</strong></td>
+<td><strong>Cross-sell (CS)</strong></td>
+<td>$\frac{\text{持有 2 种以上产品客户}}{\text{总客户数}}$</td>
+<td><strong>盈利纯度：</strong> 若 CS 升高但 Margin 下降，预警 RM 可能在过度推销低毛利产品以换取 KPI。</td>
+</tr>
+<tr>
+<td><strong>留存 (Retention)</strong></td>
+<td><strong>Churn Rate</strong></td>
+<td>$\frac{\text{本期流出 AUM}}{\text{期初总 AUM}}$</td>
+<td><strong>防守反击：</strong> 实时监测 AUM 流出。异常升高时自动触发 AI 挽留策略。</td>
+</tr>
+<tr>
+<td><strong>策略 (Strategy)</strong></td>
+<td><strong>SAA Alpha</strong></td>
+<td>$R_{Actual} - R_{Market}$</td>
+<td><strong>专业溢价：</strong> 监测 CIO 策略 ($R_{SAA}$) 超出纯市场基准的部分。这是银行作为专业机构的灵魂，也是客户愿意支付溢价的原因。</td>
+</tr>
+<tr>
+<td><strong>质量(Quality)</strong></td>
+<td>Net Margin</td>
+<td>$\frac{\text{净收入​}}{\text{平均 AUM}}$</td>
+<td><strong>盈利纯度：</strong> 监测 $Net\ Margin$。防止 RM 为冲规模而推销低毛利、高风险产品。</td>
+</tr>
+</tbody></table>
+<h2 id="三、-本质转型：从“加功能”到“重构路径”"><a href="#三、-本质转型：从“加功能”到“重构路径”" class="headerlink" title="三、 本质转型：从“加功能”到“重构路径”"></a>三、 本质转型：从“加功能”到“重构路径”</h2><h2 id="深化分析：业务能力与利润指标联动矩阵"><a href="#深化分析：业务能力与利润指标联动矩阵" class="headerlink" title="深化分析：业务能力与利润指标联动矩阵"></a>深化分析：业务能力与利润指标联动矩阵</h2><p>按照“利润导向”，业务功能进行重组，并增加了缺失的 AI 乘数效应。</p>
+<table>
+<thead>
+<tr>
+<th><strong>业务领域 (Capability)</strong></th>
+<th><strong>对应细分功能模块 (来自附件图)</strong></th>
+<th><strong>核心驱动指标 (Profit Index)</strong></th>
+<th><strong>利润贡献度</strong></th>
+<th><strong>深度逻辑与贡献公式</strong></th>
+<th><strong>优先级</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. 智能转化引擎 (Growth)</strong></td>
+<td>Lead Propensity &amp; Prioritization, Pipeline Next Best Actions (NBA), Team Sales Tracking</td>
+<td><strong>CVR (转化率)</strong></td>
+<td>30%</td>
+<td><strong>逻辑：</strong> 消除 RM 的盲目拨号。通过 AI 预测客户申购倾向，将线索优先级排序。<br><br><strong>公式：</strong> $\Delta Profit \propto Leads \times \Delta CVR \times \text{Ticket Size}$</td>
+<td><strong>P0 (核心)</strong></td>
+</tr>
+<tr>
+<td><strong>2. 存量价值挖掘 (Deepening)</strong></td>
+<td>RM Portfolio Discovery &amp; Heatmap, Transaction History, 360 Individual View</td>
+<td><strong>Cross-sell (CS) &amp; Net Margin</strong></td>
+<td>25%</td>
+<td><strong>逻辑：</strong> 通过“热力图”识别资产配置缺口（Gap Analysis），自动匹配高 Margin 产品（如 SP, SN）。<br><br><strong>公式：</strong> $\Delta Profit \propto AUM \times \Delta \text{Product Mix Margin}$</td>
+<td><strong>P0 (核心)</strong></td>
+</tr>
+<tr>
+<td><strong>3. 极限效率杠杆 (Efficiency)</strong></td>
+<td>Wealth Shopping Cart, Automated Compliance, Fast Onboarding, Holistic Planning</td>
+<td><strong>RM Leverage &amp; $Cost_{Ops}$</strong></td>
+<td>20%</td>
+<td><strong>逻辑：</strong> 传统的手工合规与下单需要 2 小时，现在缩短至 5 分钟。RM 可以管理更多客户。<br><br><strong>公式：</strong> $Cost_{Ops} \downarrow \propto \frac{\text{AUM}}{\text{RM FTE} \uparrow}$</td>
+<td><strong>P1 (杠杆)</strong></td>
+</tr>
+<tr>
+<td><strong>4. 决策速度加速 (Velocity)</strong></td>
+<td>CIO Product Insight, Market Insights with Trade Ideas, Portfolio Management</td>
+<td><strong>1&#x2F;T (Velocity)</strong></td>
+<td>15%</td>
+<td><strong>逻辑：</strong> 将“研究观点”直接转化为“可执行订单”。减少客户在决策漏斗中的流失。<br><br><strong>公式：</strong> $Revenue \uparrow \propto \text{Capital Turnover} \times \frac{1}{T \downarrow}$</td>
+<td><strong>P1 (加速)</strong></td>
+</tr>
+<tr>
+<td><strong>5. 存量流失防御 (Retention)</strong></td>
+<td>AI Predict Alerts, Individual Client Insurance Portal, Batch Comm</td>
+<td><strong>Churn Rate</strong></td>
+<td>10%</td>
+<td><strong>逻辑：</strong> AI 预测流失概率并自动触发“挽留包”。稳定 AUM 基数是利润的“压舱石”。<br><br><strong>公式：</strong> $Profit_{base} \propto AUM \times (1 - Churn \downarrow)$</td>
+<td><strong>P2 (防守)</strong></td>
+</tr>
+</tbody></table>
+<h2 id="四、核心-KPI-指标计算手册"><a href="#四、核心-KPI-指标计算手册" class="headerlink" title="四、核心 KPI 指标计算手册"></a>四、核心 KPI 指标计算手册</h2><h3 id="1-利润与效率指标"><a href="#1-利润与效率指标" class="headerlink" title="1. 利润与效率指标"></a>1. 利润与效率指标</h3><ul>
+<li><p><strong>Cost per AUM (单位资产管理成本)：</strong><br>  $$\boxed{ Cost\ per\ AUM &#x3D; \frac{\text{Ops Cost}}{\text{Total AUM}} }$$</p>
+<ul>
+<li><strong>监控：</strong> 随着 AUM 扩张，此指标应呈平滑下降曲线，证明规模效应。</li>
+</ul>
+</li>
+<li><p><strong>STP Rate (直通处理率)：</strong><br>$$\boxed{ STP\ Rate &#x3D; \frac{\text{无需人工干预的订单数}}{\text{总订单数}} }$$</p>
+<ul>
+<li><strong>监控：</strong> 反映系统自动化程度，直接决定了 $RM\ Leverage$ 的上限。直接体现 <strong>Wealth Shopping Cart</strong> 减少中后台人工干预的能力。</li>
+</ul>
+</li>
+<li><p><strong>Revenue per Employee (人均产出)：</strong><br>$$\boxed{ Revenue\ per\ Employee &#x3D; \frac{\text{Wealth 总收入}}{\text{总编制人数 (FTE)}} }$$</p>
+<ul>
+<li><strong>监控：</strong> 衡量人力资源是否真正从繁琐的事务工作中释放，转向高净值客户的深耕。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-增长与质量指标"><a href="#2-增长与质量指标" class="headerlink" title="2. 增长与质量指标"></a>2. 增长与质量指标</h3><ul>
+<li><strong>1&#x2F;T (Velocity)：</strong> 监测“线索生成”到“下单执行”的时间天数。</li>
+<li><strong>Churn Rate：</strong> 监测存量 AUM 的流失率。</li>
+<li><strong>SAA Alpha：</strong> 监测 CIO 配置策略对比市场基准带来的超额收益。</li>
+</ul>
+<h4 id="Profit-的反推拆解（顶层）"><a href="#Profit-的反推拆解（顶层）" class="headerlink" title="Profit 的反推拆解（顶层）"></a>Profit 的反推拆解（顶层）</h4><p>我们不从功能开始，而从 <strong>Profit 构成开始</strong>：<br>$$ \textbf{Profit} &#x3D; AUM \times Net\ Margin - Cost_{Ops} - Cost_{IT}$$</p>
+<table>
+<thead>
+<tr>
+<th><strong>一级利润杠杆</strong></th>
+<th><strong>数学表达</strong></th>
+<th><strong>本质含义</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AUM 扩张</strong></td>
+<td>ΔAUM</td>
+<td>客户进来 &amp; 钱留下</td>
+</tr>
+<tr>
+<td><strong>Margin 提升</strong></td>
+<td>Δ(Net Margin)</td>
+<td>卖更好的产品、卖得更对</td>
+</tr>
+<tr>
+<td><strong>Velocity 提升</strong></td>
+<td>1&#x2F;T</td>
+<td>钱转得更快</td>
+</tr>
+<tr>
+<td><strong>Cost 杠杆</strong></td>
+<td>AUM &#x2F; FTE ↑</td>
+<td>人不随 AUM 线性增长</td>
+</tr>
+</tbody></table>
+<h3 id="3-Profit-→-二级-三级指标-→-Business-Capability-映射表（核心成果）"><a href="#3-Profit-→-二级-三级指标-→-Business-Capability-映射表（核心成果）" class="headerlink" title="3. Profit → 二级 &#x2F; 三级指标 → Business Capability 映射表（核心成果）"></a>3. Profit → 二级 &#x2F; 三级指标 → Business Capability 映射表（核心成果）</h3><h3 id="一级利润目标-：AUM-扩张（新增-存量）"><a href="#一级利润目标-：AUM-扩张（新增-存量）" class="headerlink" title="一级利润目标 ：AUM 扩张（新增 + 存量）"></a>一级利润目标 ：AUM 扩张（新增 + 存量）</h3><h4 id="二级指标-：Leads-→-AUM-转化效率"><a href="#二级指标-：Leads-→-AUM-转化效率" class="headerlink" title="二级指标 ：Leads → AUM 转化效率"></a>二级指标 ：Leads → AUM 转化效率</h4><table>
+<thead>
+<tr>
+<th><strong>三级指标</strong></th>
+<th><strong>公式</strong></th>
+<th><strong>直接支撑的 Business Capabilities</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>CVR</strong></td>
+<td>成交客户 &#x2F; Leads</td>
+<td>- Lead Propensity Scoring- Lead Prioritization Engine- Next Best Action (NBA)</td>
+</tr>
+<tr>
+<td><strong>Ticket Size</strong></td>
+<td>AUM &#x2F; 成交客户</td>
+<td>- Product Fit Recommendation- Portfolio Gap Analysis</td>
+</tr>
+<tr>
+<td><strong>RM Output Productivity</strong></td>
+<td>成交客户 &#x2F; RM</td>
+<td>- AI Assisted RM Workbench- Automated Proposal Generation</td>
+</tr>
+<tr>
+<td>文中“穿透式产品研究 + AI 决策画像”本质都属于 <strong>CVR 提升器</strong>，而不是“Research 能力”。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="二级指标-：AUM-留存能力"><a href="#二级指标-：AUM-留存能力" class="headerlink" title="二级指标 ：AUM 留存能力"></a>二级指标 ：AUM 留存能力</h4><table>
+<thead>
+<tr>
+<th><strong>三级指标</strong></th>
+<th><strong>公式</strong></th>
+<th><strong>Business Capabilities</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Churn Rate</strong></td>
+<td>流出 AUM &#x2F; 期初 AUM</td>
+<td>- AI Churn Prediction Alerts- Behavior-based Intervention Engine</td>
+</tr>
+<tr>
+<td><strong>Drawdown Defense Effectiveness</strong></td>
+<td>回撤期净流入</td>
+<td>- CIO Market Stress Playbook- Automated CIO Messaging</td>
+</tr>
+<tr>
+<td>没有 Retention，前端所有增长都是“漏斗倒水”。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="一级利润目标-：Net-Margin-提升"><a href="#一级利润目标-：Net-Margin-提升" class="headerlink" title="一级利润目标 ：Net Margin 提升"></a>一级利润目标 ：Net Margin 提升</h3><h4 id="二级指标-：Product-Mix-Margin"><a href="#二级指标-：Product-Mix-Margin" class="headerlink" title="二级指标 ：Product Mix Margin"></a>二级指标 ：Product Mix Margin</h4><table>
+<thead>
+<tr>
+<th><strong>三级指标</strong></th>
+<th><strong>公式</strong></th>
+<th><strong>Business Capabilities</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>High-Margin Product Penetration</strong></td>
+<td>高毛利产品 AUM &#x2F; 总 AUM</td>
+<td>- Product Margin Heatmap- AI Product Substitution Engine</td>
+</tr>
+<tr>
+<td><strong>Self-directed Adoption Rate</strong></td>
+<td>自助下单 &#x2F; 总订单</td>
+<td>- One-click Backtesting- Scenario &amp; Stress Simulation</td>
+</tr>
+<tr>
+<td>文中 <strong>“降低模糊厌恶”</strong> → 本质就是 <strong>提升 Margin，而不是体验</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="二级指标-B2：Cross-sell-Depth"><a href="#二级指标-B2：Cross-sell-Depth" class="headerlink" title="二级指标 B2：Cross-sell Depth"></a>二级指标 B2：Cross-sell Depth</h4><table>
+<thead>
+<tr>
+<th><strong>三级指标</strong></th>
+<th><strong>公式</strong></th>
+<th><strong>Business Capabilities</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>CS Ratio</strong></td>
+<td>≥2 产品客户 &#x2F; 总客户</td>
+<td>- 360 Client View- Portfolio Gap Detection</td>
+</tr>
+<tr>
+<td><strong>Margin-adjusted CS</strong></td>
+<td>CS × Margin</td>
+<td>- Margin-aware Recommendation Engine</td>
+</tr>
+<tr>
+<td>这是你已经点到、但还没“显性化”的一条：</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Cross-sell ≠ 好，Margin-adjusted Cross-sell 才是好</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="一级利润目标-：Velocity（钱转得更快）"><a href="#一级利润目标-：Velocity（钱转得更快）" class="headerlink" title="一级利润目标 ：Velocity（钱转得更快）"></a>一级利润目标 ：Velocity（钱转得更快）</h3><h4 id="二级指标-：Decision-to-Trade-Velocity"><a href="#二级指标-：Decision-to-Trade-Velocity" class="headerlink" title="二级指标 ：Decision-to-Trade Velocity"></a>二级指标 ：Decision-to-Trade Velocity</h4><table>
+<thead>
+<tr>
+<th><strong>三级指标</strong></th>
+<th><strong>公式</strong></th>
+<th><strong>Business Capabilities</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1&#x2F;T</strong></td>
+<td>1 &#x2F; 决策周期</td>
+<td>- CIO Consensus Matrix- Social Proof UI</td>
+</tr>
+<tr>
+<td><strong>Drop-off Rate</strong></td>
+<td>放弃交易 &#x2F; 交易意图</td>
+<td>- AI Hesitation Detection- Authority Bias Trigger</td>
+</tr>
+<tr>
+<td><strong>“Consensus as a Service” 在这里找到了唯一合法位置</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="一级利润目标-：Cost-杠杆（指数增长的关键）"><a href="#一级利润目标-：Cost-杠杆（指数增长的关键）" class="headerlink" title="一级利润目标 ：Cost 杠杆（指数增长的关键）"></a>一级利润目标 ：Cost 杠杆（指数增长的关键）</h3><h4 id="二级指标-：RM-Leverage"><a href="#二级指标-：RM-Leverage" class="headerlink" title="二级指标 ：RM Leverage"></a>二级指标 ：RM Leverage</h4><table>
+<thead>
+<tr>
+<th><strong>三级指标</strong></th>
+<th><strong>公式</strong></th>
+<th><strong>Business Capabilities</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AUM per RM</strong></td>
+<td>AUM &#x2F; RM FTE</td>
+<td>- Automated Onboarding- Digital KYC &amp; Suitability</td>
+</tr>
+<tr>
+<td><strong>Clients per RM</strong></td>
+<td>客户数 &#x2F; RM</td>
+<td>- AI Self-service Advisory- RM Exception Handling Model</td>
+</tr>
+</tbody></table>
+<h4 id="二级指标-D2：STP-Ops-Efficiency"><a href="#二级指标-D2：STP-Ops-Efficiency" class="headerlink" title="二级指标 D2：STP &amp; Ops Efficiency"></a>二级指标 D2：STP &amp; Ops Efficiency</h4><table>
+<thead>
+<tr>
+<th><strong>三级指标</strong></th>
+<th><strong>公式</strong></th>
+<th><strong>Business Capabilities</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>STP Rate</strong></td>
+<td>无人工订单 &#x2F; 总订单</td>
+<td>- Wealth Shopping Cart- Embedded Compliance Engine</td>
+</tr>
+<tr>
+<td><strong>Cost per AUM</strong></td>
+<td>Ops Cost &#x2F; AUM</td>
+<td>- End-to-end Workflow Orchestration</td>
+</tr>
+<tr>
+<td>这是 CFO 最关心、但最容易被“功能表”掩盖的地方。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="五、以-RM-为中心来思考-Revenue-和-Profit"><a href="#五、以-RM-为中心来思考-Revenue-和-Profit" class="headerlink" title="五、以 RM 为中心来思考 Revenue 和 Profit"></a>五、以 RM 为中心来思考 Revenue 和 Profit</h2><p>Revenue 公式重新定义为：<br>$$<br>\boxed{\begin{aligned} Revenue &amp;&#x3D; \underbrace{RM FTE}<em>{人} \times \underbrace{Meeting &#x2F; RM &#x2F; Year}</em>{RM Capacity} \ &amp;\times \underbrace{Deal &#x2F; Meeting}<em>{Productivity} \times \underbrace{USD &#x2F; Deal}</em>{Avg Ticket} \times \underbrace{Percentage}_{Fee Rate} \end{aligned}}<br>$$</p>
+<h4 id="单位消去过程："><a href="#单位消去过程：" class="headerlink" title="单位消去过程："></a>单位消去过程：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">人 × (Meeting / 人 / 年)</span><br><span class="line">× (Trade / Meeting)</span><br><span class="line">× (USD / Trade)</span><br><span class="line">× Percentage</span><br></pre></td></tr></table></figure>
+<p>最终单位：USD &#x2F; Year</p>
+<h3 id="什么时候这个公式是“100-正确的”？什么时候会失效？"><a href="#什么时候这个公式是“100-正确的”？什么时候会失效？" class="headerlink" title="什么时候这个公式是“100% 正确的”？什么时候会失效？"></a>什么时候这个公式是“100% 正确的”？什么时候会失效？</h3><h4 id="成立的前提"><a href="#成立的前提" class="headerlink" title="成立的前提"></a>成立的前提</h4><ul>
+<li>Breakage &#x2F; Transaction-driven 收费</li>
+<li>RM 是主要但不是唯一触达渠道</li>
+<li>Digital Sales 可以放大交易次数</li>
+<li>不考虑持有期管理费</li>
+</ul>
+<h4 id="可能失效-需要升级的情况"><a href="#可能失效-需要升级的情况" class="headerlink" title="可能失效 &#x2F; 需要升级的情况"></a>可能失效 &#x2F; 需要升级的情况</h4><table>
+<thead>
+<tr>
+<th><strong>场景</strong></th>
+<th><strong>需要加的项</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>引入管理费 &#x2F; Advisory Fee</td>
+<td>AUM × Fee</td>
+</tr>
+<tr>
+<td>产品有长期 trail fee</td>
+<td>持有期函数</td>
+</tr>
+<tr>
+<td>RM 不再是中心</td>
+<td>渠道混合模型</td>
+</tr>
+<tr>
+<td>强监管限制交易频率</td>
+<td>Velocity cap</td>
+</tr>
+</tbody></table>
+<h2 id="六、一个“非常重要但现在才显性化”的洞察"><a href="#六、一个“非常重要但现在才显性化”的洞察" class="headerlink" title="六、一个“非常重要但现在才显性化”的洞察"></a>六、一个“非常重要但现在才显性化”的洞察</h2><p>RM Productivity Multiplier 是整个模型中,唯一可以“非线性放大”的变量:</p>
+<ul>
+<li>RM FTE：线性，贵</li>
+<li>RM Capacity：接近线性，有上限</li>
+<li>Avg Ticket：受客户资产约束</li>
+<li>Fee Rate：受市场与监管约束</li>
+</ul>
+<p>只有 Productivity Multiplier：</p>
+<ul>
+<li>AI 可以提升</li>
+<li>不增加人</li>
+<li>不碰监管红线</li>
+<li>对老客户同样有效<br>$$\boxed{ Profit &#x3D; Revenue - \left( TotalRMCost + OtherVariableOpsCost - CostSaved \right) }$$<br>注意一个非常重要的点：<br><strong>RM FTE 同时出现在 Revenue 端 和 Cost 端<br>这正是 “算法驱动 vs 人力驱动”</strong></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2026/03/04/%E4%BB%8E%E4%BA%BA%E5%8A%9B%E9%A9%B1%E5%8A%A8%E5%88%B0%E7%AE%97%E6%B3%95%E9%A9%B1%E5%8A%A8%E7%9A%84%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E8%8C%83%E5%BC%8F%E8%BD%AC%E7%A7%BB/" title="从人力驱动到算法驱动的财富管理范式转移">https://zhuang-weiming.github.io/2026/03/04/从人力驱动到算法驱动的财富管理范式转移/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/ProductDesign/" rel="tag"># ProductDesign</a>
+              <a href="/tags/wealthbank/" rel="tag"># wealthbank</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/12/%E5%A6%82%E4%BD%95%E7%94%A8AI+IDE%E5%92%8C%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E9%A9%B1%E5%8A%A8%E8%A7%86%E9%A2%91%E5%88%9B%E4%BD%9C/" rel="prev" title="如何用AI+IDE和自然语言驱动视频创作">
+                  <i class="fa fa-angle-left"></i> 如何用AI+IDE和自然语言驱动视频创作
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/03/11/%E8%B4%A2%E5%AF%8C%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%80%9D%E8%80%83/" rel="next" title="财富管理系统设计的思考">
+                  财富管理系统设计的思考 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://zhuang-weiming.github.io/","client_id":"bcfbeadd6147f39af62f","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","body":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"2508e57a998b6824ae4d605d7aab3871"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+</body>
+</html>
