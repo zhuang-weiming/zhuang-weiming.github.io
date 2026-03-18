@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"title":null,"layout":null,"path":null,"darkclass":null,"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Zhuang&#39;s Diary">
@@ -203,7 +203,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/12/20/%E5%85%B3%E4%BA%8EGeth%E7%9B%91%E6%8E%A7/">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2019/12/20/%E5%85%B3%E4%BA%8EPBFT%E7%9B%91%E6%8E%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -221,7 +221,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/12/20/%E5%85%B3%E4%BA%8EGeth%E7%9B%91%E6%8E%A7/" class="post-title-link" itemprop="url">关于Geth监控</a>
+          <a href="/2019/12/20/%E5%85%B3%E4%BA%8EPBFT%E7%9B%91%E6%8E%A7/" class="post-title-link" itemprop="url">关于PBFT监控</a>
         </h2>
 
         <div class="post-meta-container">
@@ -239,7 +239,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2020-11-02 18:16:50" itemprop="dateModified" datetime="2020-11-02T18:16:50+08:00">2020-11-02</time>
+      <time title="Modified: 2025-12-29 21:50:18" itemprop="dateModified" datetime="2025-12-29T21:50:18+08:00">2025-12-29</time>
     </span>
 
   
@@ -252,78 +252,225 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>go-ethereum 在 2019 年 7 月推出了 <code>Geth v1.9.x</code> 版本。</p>
-<p>Geth 可以通过 <code>--metrics</code> 命令符收集运行状态信息。 <code>Geth v1.9.x</code> 有3套独立的监控体系，<a target="_blank" rel="noopener" href="https://golang.org/pkg/expvar/">ExpVars</a>，<a target="_blank" rel="noopener" href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a> 和 <a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a>：</p>
-<ol>
-<li><h3 id="ExpVars"><a href="#ExpVars" class="headerlink" title="ExpVars"></a><a target="_blank" rel="noopener" href="https://golang.org/pkg/expvar/">ExpVars</a></h3></li>
-</ol>
-<p>是将Golang系统公共指标暴露给到HTTP接口。Geth 用 <code>pprof</code> 来作为埋点暴露这些公共参数。</p>
-<p>运行 Geth –metrics –pprof 将暴露指标成为<a target="_blank" rel="noopener" href="https://golang.org/pkg/expvar/">ExpVars</a>的格式，于地址 </p>
-<p><a target="_blank" rel="noopener" href="http://127.0.0.1:6060/debug/metrics%E3%80%82">http://127.0.0.1:6060/debug/metrics。</a></p>
-<p>ExpVars 有 Golang 非常好的支持。</p>
-<ol start="2">
-<li><h3 id="Prometheus"><a href="#Prometheus" class="headerlink" title="Prometheus"></a><a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a></h3></li>
-</ol>
-<p>同理 ExpVars，运行 Geth –metrics –pprof 将暴露指标成为<a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a>的格式，于地址 </p>
-<p><a target="_blank" rel="noopener" href="http://127.0.0.1:6060/debug/metrics/prometheus%E3%80%82">http://127.0.0.1:6060/debug/metrics/prometheus。</a></p>
-<p><a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a>更加接近业界的标准。</p>
-<ol start="3">
-<li><h3 id="InfluxDB"><a href="#InfluxDB" class="headerlink" title="InfluxDB"></a><a target="_blank" rel="noopener" href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a></h3></li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://golang.org/pkg/expvar/">ExpVars</a> 和 <a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a> 是拉取pull数据的监控方式。<a target="_blank" rel="noopener" href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a> 是推送push数据的监控方式。</p>
-<p><a target="_blank" rel="noopener" href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a>的启用有些麻烦，请参见 <code>geth help</code> 中的 <code>--metrics.influxdb</code> 及其子标识。</p>
-<h3 id="参数可视化"><a href="#参数可视化" class="headerlink" title="参数可视化"></a>参数可视化</h3><p>推荐使用 <a target="_blank" rel="noopener" href="https://grafana.com/">Grafana</a>，建议使用 <a target="_blank" rel="noopener" href="http://127.0.0.1:6060/debug/metrics">geth-prometheus</a> 项目中给出的图表，参考链接&#x3D;&#x3D;&gt; <a target="_blank" rel="noopener" href="https://github.com/karalabe/geth-prometheus">https://github.com/karalabe/geth-prometheus</a>。效果如下图：</p>
-<img src="/2019/12/20/%E5%85%B3%E4%BA%8EGeth%E7%9B%91%E6%8E%A7/1.jpg" class="">
+          <p>关于PBFT的监控，已tendermint为例，已经具备 <a target="_blank" rel="noopener" href="https://prometheus.io/">Prometheus</a> 监控能力。</p>
+<img src="/2019/12/20/%E5%85%B3%E4%BA%8EPBFT%E7%9B%91%E6%8E%A7/1.jpg" class="">
 
-<p>参考文档&#x3D;&#x3D;&gt; <a target="_blank" rel="noopener" href="https://blog.ethereum.org/2019/07/10/geth-v1-9-0/">Geth v1.9.0 Six months distilled</a></p>
-<p>具体功能如下：</p>
-<ul>
-<li>节点进程监控<ul>
-<li>节点的存活，进程中CPU、内存使用率，IO</li>
-</ul>
-</li>
-<li>区块链数据健康监控<ul>
-<li>节点出块高度历史，出块时间，出块间隔趋势，交易量历史，TPS，磁盘占用，数据目录大小增长趋势</li>
-</ul>
-</li>
-<li>运行环境监控<ul>
-<li>主机运行环境的系统负载、CPU、内存、磁盘空间使用情况、网络流量、TCP 连接数等</li>
-</ul>
-</li>
-<li>故障告警通知<ul>
-<li>监控告警策略</li>
-<li>支持邮件通知、短信通知</li>
-</ul>
-</li>
-<li>节点网络监控<ul>
-<li>连接节点数、网络拓扑、地理位置等</li>
-</ul>
-</li>
-</ul>
-<p>仪表板的监控指标：</p>
-<ul>
-<li>Summary Dashboard<ul>
-<li>各节点最新块高</li>
-<li>各节点监控进程存活</li>
-<li>各节点 CPU 使用率变化</li>
-<li>节点列表</li>
-</ul>
-</li>
-<li>Node Info Dashboard<ul>
-<li>Chain Meta Data - 链的配置信息，如 Chain Name、创建时间等</li>
-<li>Chain Info - 链的最新块高、共识节点数、共识节点出块历史趋势</li>
-<li>Node Info - 选定节点的详细信息，包括区块链数据、运行环境、运行软件信息</li>
-</ul>
-</li>
-<li>Host Info Dashboard<ul>
-<li>各节点运行主机的信息，包括系统负载、CPU、内存、硬盘使用率、网络流量</li>
-</ul>
-</li>
-<li>Process Info Dashboard<ul>
-<li>节点中进程（pprof）的历史情况、CPU、内存、IO 变化历史</li>
-</ul>
-</li>
-</ul>
+<p>具体参数请参见 &#x3D;&#x3D;&gt; <a target="_blank" rel="noopener" href="https://docs.tendermint.com/master/tendermint-core/metrics.html">https://docs.tendermint.com/master/tendermint-core/metrics.html</a></p>
+<h2 id="List-of-available-metrics"><a href="#List-of-available-metrics" class="headerlink" title="List of available metrics"></a>List of available metrics</h2><p>The following metrics are available:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Since</strong></th>
+<th><strong>Tags</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>consensus_height</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Height of the chain</td>
+</tr>
+<tr>
+<td>consensus_validators</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of validators</td>
+</tr>
+<tr>
+<td>consensus_validators_power</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Total voting power of all validators</td>
+</tr>
+<tr>
+<td>consensus_validator_power</td>
+<td>Gauge</td>
+<td>0.33.0</td>
+<td></td>
+<td>Voting power of the node if in the validator set</td>
+</tr>
+<tr>
+<td>consensus_validator_last_signed_height</td>
+<td>Gauge</td>
+<td>0.33.0</td>
+<td></td>
+<td>Last height the node signed a block, if the node is a validator</td>
+</tr>
+<tr>
+<td>consensus_validator_missed_blocks</td>
+<td>Gauge</td>
+<td>0.33.0</td>
+<td></td>
+<td>Total amount of blocks missed for the node, if the node is a validator</td>
+</tr>
+<tr>
+<td>consensus_missing_validators</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of validators who did not sign</td>
+</tr>
+<tr>
+<td>consensus_missing_validators_power</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Total voting power of the missing validators</td>
+</tr>
+<tr>
+<td>consensus_byzantine_validators</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of validators who tried to double sign</td>
+</tr>
+<tr>
+<td>consensus_byzantine_validators_power</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Total voting power of the byzantine validators</td>
+</tr>
+<tr>
+<td>consensus_block_interval_seconds</td>
+<td>Histogram</td>
+<td>0.21.0</td>
+<td></td>
+<td>Time between this and last block (Block.Header.Time) in seconds</td>
+</tr>
+<tr>
+<td>consensus_rounds</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of rounds</td>
+</tr>
+<tr>
+<td>consensus_num_txs</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of transactions</td>
+</tr>
+<tr>
+<td>consensus_total_txs</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Total number of transactions committed</td>
+</tr>
+<tr>
+<td>consensus_block_parts</td>
+<td>counter</td>
+<td>on dev</td>
+<td>peer_id</td>
+<td>number of blockparts transmitted by peer</td>
+</tr>
+<tr>
+<td>consensus_latest_block_height</td>
+<td>gauge</td>
+<td>on dev</td>
+<td></td>
+<td>&#x2F;status sync_info number</td>
+</tr>
+<tr>
+<td>consensus_fast_syncing</td>
+<td>gauge</td>
+<td>on dev</td>
+<td></td>
+<td>either 0 (not fast syncing) or 1 (syncing)</td>
+</tr>
+<tr>
+<td>consensus_block_size_bytes</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Block size in bytes</td>
+</tr>
+<tr>
+<td>p2p_peers</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of peers node’s connected to</td>
+</tr>
+<tr>
+<td>p2p_peer_receive_bytes_total</td>
+<td>counter</td>
+<td>on dev</td>
+<td>peer_id, chID</td>
+<td>number of bytes per channel received from a given peer</td>
+</tr>
+<tr>
+<td>p2p_peer_send_bytes_total</td>
+<td>counter</td>
+<td>on dev</td>
+<td>peer_id, chID</td>
+<td>number of bytes per channel sent to a given peer</td>
+</tr>
+<tr>
+<td>p2p_peer_pending_send_bytes</td>
+<td>gauge</td>
+<td>on dev</td>
+<td>peer_id</td>
+<td>number of pending bytes to be sent to a given peer</td>
+</tr>
+<tr>
+<td>p2p_num_txs</td>
+<td>gauge</td>
+<td>on dev</td>
+<td>peer_id</td>
+<td>number of transactions submitted by each peer_id</td>
+</tr>
+<tr>
+<td>p2p_pending_send_bytes</td>
+<td>gauge</td>
+<td>on dev</td>
+<td>peer_id</td>
+<td>amount of data pending to be sent to peer</td>
+</tr>
+<tr>
+<td>mempool_size</td>
+<td>Gauge</td>
+<td>0.21.0</td>
+<td></td>
+<td>Number of uncommitted transactions</td>
+</tr>
+<tr>
+<td>mempool_tx_size_bytes</td>
+<td>histogram</td>
+<td>on dev</td>
+<td></td>
+<td>transaction sizes in bytes</td>
+</tr>
+<tr>
+<td>mempool_failed_txs</td>
+<td>counter</td>
+<td>on dev</td>
+<td></td>
+<td>number of failed transactions</td>
+</tr>
+<tr>
+<td>mempool_recheck_times</td>
+<td>counter</td>
+<td>on dev</td>
+<td></td>
+<td>number of transactions rechecked in the mempool</td>
+</tr>
+<tr>
+<td>state_block_processing_time</td>
+<td>histogram</td>
+<td>on dev</td>
+<td></td>
+<td>time between BeginBlock and EndBlock in ms</td>
+</tr>
+</tbody></table>
 
       
     </div>
@@ -744,10 +891,6 @@
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
-
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"zhuang-weiming","repo":"https://github.com/zhuang-weiming/zhuang-weiming.github.io","client_id":"zhuang-weiming","client_secret":"36f4ca5368918536f72f6b3816b90c30f61effb3","admin_user":"zhuang-weiming","distraction_free_mode":true,"proxy":null,"issue_term":"pathname","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"7715e5e788769ecaac9de6946ec2c295"}</script>
-<script src="/js/third-party/comments/gitalk.js" defer></script>
 
 </body>
 </html>
