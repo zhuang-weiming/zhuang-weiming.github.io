@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="../../../../images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="../../../../css/main.css">
 
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"../../../../images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"../../../../search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="../../../../js/config.js" defer></script>
 
     <meta name="description" content="在需要高性能、节省资源的场景下，比如海量的连接、很高的并发，我们发现Go开始变得吃力，不但内存开销大，而且还会有频繁的goroutine调度。GC时间也变得越来越长，甚至还会把系统搞挂。这时，我们就可以考虑用Go构建经典的Reactor网络模型，来应对这种场景。 一、常见的服务端网络编程模型在具体讲Reactor网络库的实现前，我们先快速回顾下常见的服务端网络编程模型。 服务端网络编程主要解决两个">
 <meta property="og:type" content="article">
@@ -26,27 +27,27 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="在需要高性能、节省资源的场景下，比如海量的连接、很高的并发，我们发现Go开始变得吃力，不但内存开销大，而且还会有频繁的goroutine调度。GC时间也变得越来越长，甚至还会把系统搞挂。这时，我们就可以考虑用Go构建经典的Reactor网络模型，来应对这种场景。 一、常见的服务端网络编程模型在具体讲Reactor网络库的实现前，我们先快速回顾下常见的服务端网络编程模型。 服务端网络编程主要解决两个">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/1.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.1.jpeg">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/3.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/4.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/5.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/6.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/7.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/8.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.1.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/10.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/11.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/12.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/13.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/1.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.1.jpeg">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/3.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/4.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/5.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/6.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/7.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/8.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.1.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/10.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/11.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/12.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/13.png">
 <meta property="article:published_time" content="2022-09-19T01:40:00.000Z">
 <meta property="article:modified_time" content="2026-03-19T01:54:05.362Z">
 <meta property="article:author" content="Zhuang Wei Ming">
 <meta property="article:tag" content="golang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/1.png">
+<meta name="twitter:image" content="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/1.png">
 
 
 <link rel="canonical" href="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/">
@@ -67,15 +68,23 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
-<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+<script src="../../../../js/utils.js" defer></script><script src="../../../../js/motion.js" defer></script><script src="../../../../js/sidebar.js" defer></script><script src="../../../../js/next-boot.js" defer></script><script src="../../../../js/pjax.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
-<script src="/js/third-party/search/local-search.js" defer></script>
+<script src="../../../../js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"../../../../lib/pdf/web/viewer.html"}</script>
+  <script src="../../../../js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="../../../../js/third-party/tags/mermaid.js" defer></script>
 
 
-
-
+  <script src="../../../../js/third-party/fancybox.js" defer></script>
 
 
 
@@ -87,15 +96,15 @@
   
 
   <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js" defer></script>
+<script src="../../../../js/third-party/math/mathjax.js" defer></script>
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
   <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/"}</script>
-  <script src="/js/third-party/quicklink.js" defer></script>
+  <script src="../../../../js/third-party/quicklink.js" defer></script>
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
+    <link rel="stylesheet" href="../../../../css/noscript.css">
   </noscript>
 </head>
 
@@ -114,6 +123,7 @@
   </div>
 
   <div class="site-meta">
+      <img class="custom-logo-image" src="../../../../uploads/logo.jpg" alt="Zhuang's Diary">
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
@@ -133,7 +143,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">69</span></a></li><li class="menu-item menu-item-archives"><a href="../../../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">299</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -196,7 +206,7 @@
 <div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        <a href="/archives/">
+        <a href="../../../../archives/">
           <span class="site-state-item-count">299</span>
           <span class="site-state-item-name">posts</span>
         </a>
@@ -207,6 +217,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="../../../../zwm136200@gmail.com" title="E-Mail → zwm136200@gmail.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
         </div>
       </div>
@@ -236,7 +251,7 @@
     <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
       <meta itemprop="name" content="Zhuang Wei Ming">
     </span>
 
@@ -294,7 +309,7 @@
 </li>
 </ul>
 <p>下面两图分别是传统IO阻塞模型和Reactor模型，传统IO阻塞模型的特点是每条连接都是由单独的线&#x2F;进程管理，业务逻辑（crud）跟数据处理（网络连接上的read和write）都在该线&#x2F;进程完成。<strong>缺点很明显，并发大时，需要创建大量的线&#x2F;进程，系统资源开销大；连接建立后，如果当前线&#x2F;进程暂时还没数据可读，会阻塞在Read调用上，浪费系统资源</strong>。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/1.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/1.png" class="">
 
 <p>Reactor模型就是传统IO阻塞模型的改进，Reactor会起单独的线&#x2F;进程去监听和分发事件，分发给其他EventHandlers处理数据读写和业务逻辑。这样，与传统IO阻塞模型不同的是，Reactor的连接都先到一个EventDispatcher上，一个核心的事件分发器，同时<strong>Reactor会使用IO多路复用在事件分发器上非阻塞地处理多个连接</strong>。</p>
 <p>这个EventDispatcher跟后面的EventHandlers可以都在一个线&#x2F;进程，也可以分开，下文会有区分。整体来看，Reactor就是一种事件分发机制，所以Reactor也被称为事件驱动模型。<strong>简而言之，Reactor&#x3D;IO多路复用（I&#x2F;O multiplexing）+非阻塞IO（non-blocking I&#x2F;O）</strong>。</p>
@@ -308,31 +323,31 @@
 </li>
 </ul>
 <p>先看两个单Reactor：</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.png" class="">
 
 
 
 <p><strong>一个Reactor接管所有的事件安排</strong>，如果是建立连接事件，就交给Acceptor处理，接着创建对应的Handler处理该连接后续的读写事件。如果不是建立连接事件，就调用连接对应的Event Handler来响应。单Reator1和2的区别是2带了个线程池，一定程度上解放Event Handler线程，让Handler专注数据读写处理，特别是在遇到一些笨重、高耗时的业务逻辑时。</p>
 <p>再来看多Reactor，这个是本文的主角，第三节内容就是怎么实现它。多Reactor就是主从多Reactor，它的特点是<strong>多个Reactor在多个单独的线&#x2F;进程中运行，MainReactor负责处理建立连接事件，交给它的Acceptor处理，处理完了，它再分配连接给SubReactor；SubReactor则处理这个连接后续的读写事件，SubReactor自己调用EventHandlers做事情</strong>。</p>
 <p>这种实现看起来职责就很明确，可以方便通过增加SubReactor数量来充分利用CPU资源，也是当前主流的服务端网络编程模型。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.1.jpeg" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/2.1.jpeg" class="">
 
 
 
 <h4 id="（二）Proactor模型自带主角光环"><a href="#（二）Proactor模型自带主角光环" class="headerlink" title="（二）Proactor模型自带主角光环"></a>（二）Proactor模型自带主角光环</h4><p>尽管本文的主角是主从多Reactor，但如果Proactor要当主角，就没Reactor什么事。</p>
 <p>Proactor模型跟Reactor模型的<strong>本质区别是异步I&#x2F;O和同步I&#x2F;O的区别，即底层I&#x2F;O实现</strong>。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/3.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/3.png" class="">
 
 <p>从上面两张图可以看出，Reactor模型依赖的同步I&#x2F;O需要不断检查事件发生，然后拷贝数据处理，而Proactor模型使用的异步I&#x2F;O只需等待系统通知，直接处理内核拷贝过来的数据，孰优孰劣，一言便知。</p>
 <p>基于异步I&#x2F;O的Proactor模型实现如下图：</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/4.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/4.png" class="">
 
 
 
 <p>那为什么主角光环如此明显的Proactor不是当前主流的服务端网络编程模型呢？</p>
 <p>原因是在Linux下的AIO API–io_uring还没有像同步I&#x2F;O那样能够覆盖和支持很多场景，即还没成熟到被广泛使用。</p>
 <h3 id="二、Go原生网络模型简介"><a href="#二、Go原生网络模型简介" class="headerlink" title="二、Go原生网络模型简介"></a>二、Go原生网络模型简介</h3><p>关于Go原生网络模型的实现，网上已经有很多文章，这里就不过多展开，读者可以结合下图追踪整个代码流程：</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/5.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/5.png" class="">
 
 
 
@@ -361,7 +376,7 @@
 <p>另一方面，开源社区目前缺少专注于RPC方案的Go网络库。类似的项目如：evio，gnet等，均面向Redis，HAProxy这样的场景。</p>
 <h4 id="（二）总体分层设计"><a href="#（二）总体分层设计" class="headerlink" title="（二）总体分层设计"></a>（二）总体分层设计</h4><p>终于到了实现部分，我们先看一个Reactor库的总体分层设计，总体分为三层：应用层、连接层和基础层。</p>
 <p>应用层就是常见的EchoServer、HTTPServer、TLSServer和GRPCServer等等，主要负责协议解析、执行业务逻辑，对应Reactor模型里边的EventHandler。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/6.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/6.png" class="">
 
 <p>在Reactor模型中，应用层会实现事件处理的接口，等待连接层调用。</p>
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Handler Core 注册接口type Handler interface &#123;  OnOpen(c *Conn)</span></span><br><span class="line"><span class="comment">// happen on accept conn  OnClose(c *Conn, err error)</span></span><br><span class="line"><span class="comment">// happen ob delete conn  OnData(c *Conn, data []byte)</span></span><br><span class="line"><span class="comment">// happen on epoll wait  OnStop()&#125;</span></span><br></pre></td></tr></table></figure>
@@ -369,7 +384,7 @@
 <p>比如当连接建立后，可以调用OnOpen函数做些初始化逻辑，当连接上有新数据到来，可以调用OnData函数完成具体的协议解析和业务逻辑。</p>
 <h4 id="（三）连接层设计"><a href="#（三）连接层设计" class="headerlink" title="（三）连接层设计"></a>（三）连接层设计</h4><p>连接层就是整个Reactor模型的核心，根据上文的主从Reactor多线程模型，连接层主要有两种Reactor，一主（Main Reactor）多从（Sub Reactor），也可以多主多从。</p>
 <p>Main Reactor主要负责监听和接收连接，接着分配连接，它里边有个for循环，不断去accept新连接，这里的方法可以叫做acceptorLoop；Sub Reactor拿到Main Reactor分配的连接，它也是个for循环，一直等待着读写事件到来，然后干活，即回调应用层执行具体业务逻辑，它的方法可以叫做readWriteLoop。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/7.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/7.png" class="">
 
 <p>根据连接层的工作安排，可以发现我们需要以下三个数据结构：</p>
 <ul>
@@ -380,15 +395,15 @@
 <li><p>Conn：Main Reactor的listener accept之后建立的连接，与一个文件描述符fd绑定。</p>
 </li>
 </ul>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/8.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/8.png" class="">
 
 <h4 id="值得注意的fd竞态"><a href="#值得注意的fd竞态" class="headerlink" title="值得注意的fd竞态"></a>值得注意的fd竞态</h4><p>每个连接都会与一个fd绑定，当某个连接关闭后，它会释放掉fd，供新连接绑定，这也叫<strong>fd的复用</strong>。</p>
 <p>通常我们的应用层会在一个协程池中执行它的业务逻辑，在连接层有个Sub Reactor在处理这个连接上的读写事件。</p>
 <p>如果在应用层那边关闭了连接，而在Sub Reactor那边刚好在准备读这个连接上的数据，即操作这个fd。</p>
 <p>当Sub Reactor还没来得及读，但被应用层关闭释放掉的fd，已经给到了一个新连接，这时Sub Reactor继续读这个fd上的数据，就会把新连接的数据读走。</p>
 <p>因此，我们需要<strong>针对fd的操作前后加个锁，即在关闭连接跟在连接上读写前先上锁，关闭后才释放掉锁，并且在连接上读写前判断连接是否关闭</strong>，这样才会避免脏数据。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.png" class="">
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.1.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.1.png" class="">
 <h4 id="不可忽略的负载均衡"><a href="#不可忽略的负载均衡" class="headerlink" title="不可忽略的负载均衡"></a>不可忽略的负载均衡</h4><p>除了注意fd复用带来的竞态，还有一个不可忽略的负载均衡，在Main Reactor分配连接到Sub Reactor这个环节。</p>
 <p>未来避免某个Sub Reactor过载，我们可以参考Nginx的负载均衡策略，大概有以下三种方式：</p>
 <ul>
@@ -425,7 +440,7 @@
 </li>
 </ul>
 <p>这里最理想的是第三种内存管理方案，字节的netpoll有实现。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/10.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/10.png" class="">
 
 <p>这里引用某个项目的实现说明，<strong>NoCopy体现在连接层读到的数据，可以不用拷贝给应用层使用，而是让应用层引用LinkBuffer使用</strong>。</p>
 <p>首先来讲零拷贝读取接口，我们将读取操作分成了「引用读」「释放」两个步骤，「引用读」会把 Linked Buffer 中一定长度的字节数组以指针的形式取出，用户使用完这些数据后，主动执行「释放」告知 Linked Buffer 刚刚「引用读」的数据空间不会再被使用，可以释放掉，被「释放」了的数据不能再被读取和修改。</p>
@@ -447,13 +462,13 @@
 <p>最终的结果如下4张图，可以忽略字节netpoll的数据，大概是因为这两种场景并不是netpoll的目标场景，即RPC场景，所以压测的姿势大概率不对。</p>
 <p>Echo场景下是4核机器跑的EchoServer，HTTP场景下是8核跑的HTTPServer。</p>
 <p>图1：Echo场景下，固定1KB数据包，不断增加连接数。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/11.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/11.png" class="">
 
 <p>图2：Echo场景下，固定1K连接数，不断增加数据包大小。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/12.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/12.png" class="">
 
 <p>图3和图4：HTTP场景下，固定1KB数据包，不断增加连接数，QPS和内存占用情况。</p>
-<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/13.png" class="">
+<img data-src="2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/13.png" class="">
 
 <ul>
 <li><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4></li>
@@ -492,19 +507,19 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/golang/" rel="tag"># golang</a>
+              <a href="../../../../tags/golang/" rel="tag"># golang</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/09/17/startup-product-20220917/" rel="prev" title="Startup-Product-20220917">
+                <a href="../../17/startup-product-20220917/" rel="prev" title="Startup-Product-20220917">
                   <i class="fa fa-angle-left"></i> Startup-Product-20220917
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/09/19/golang-fsm/" rel="next" title="Startup-Product-20220917">
+                <a href="../golang-fsm/" rel="next" title="Startup-Product-20220917">
                   Startup-Product-20220917 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
@@ -550,7 +565,7 @@
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 <script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zhuang-weiming/zhuang-weiming.github.io","issue_term":"pathname","theme":"github-light"}</script>
-<script src="/js/third-party/comments/utterances.js" defer></script>
+<script src="../../../../js/third-party/comments/utterances.js" defer></script>
 
 </body>
 </html>

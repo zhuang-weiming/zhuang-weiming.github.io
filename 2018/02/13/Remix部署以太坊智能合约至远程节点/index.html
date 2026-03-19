@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="../../../../images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="../../../../css/main.css">
 
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"../../../../images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"../../../../search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="../../../../js/config.js" defer></script>
 
     <meta name="description" content="编写 solidity 代码，选择 Web3 Provider     Yes     节点IP地址     点击 Create，部署代码。查看底部 log 成功与否，这里需要花费几秒钟的时间。成功后 copy 合约地址。     本地查看调试网页。    示例源码如下： 12345678910111213141516171819202122232425262728293031323334353">
 <meta property="og:type" content="article">
@@ -26,17 +27,17 @@
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
 <meta property="og:description" content="编写 solidity 代码，选择 Web3 Provider     Yes     节点IP地址     点击 Create，部署代码。查看底部 log 成功与否，这里需要花费几秒钟的时间。成功后 copy 合约地址。     本地查看调试网页。    示例源码如下： 12345678910111213141516171819202122232425262728293031323334353">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%201.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%202.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%203.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%204.png">
-<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%205.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%201.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%202.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%203.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%204.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%205.png">
 <meta property="article:published_time" content="2018-02-13T04:49:39.000Z">
 <meta property="article:modified_time" content="2023-09-14T05:56:30.834Z">
 <meta property="article:author" content="Zhuang Wei Ming">
 <meta property="article:tag" content="solidity">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%201.png">
+<meta name="twitter:image" content="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%201.png">
 
 
 <link rel="canonical" href="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/">
@@ -57,15 +58,23 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
-<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+<script src="../../../../js/utils.js" defer></script><script src="../../../../js/motion.js" defer></script><script src="../../../../js/sidebar.js" defer></script><script src="../../../../js/next-boot.js" defer></script><script src="../../../../js/pjax.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
-<script src="/js/third-party/search/local-search.js" defer></script>
+<script src="../../../../js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"../../../../lib/pdf/web/viewer.html"}</script>
+  <script src="../../../../js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="../../../../js/third-party/tags/mermaid.js" defer></script>
 
 
-
-
+  <script src="../../../../js/third-party/fancybox.js" defer></script>
 
 
 
@@ -77,15 +86,15 @@
   
 
   <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js" defer></script>
+<script src="../../../../js/third-party/math/mathjax.js" defer></script>
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
   <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/"}</script>
-  <script src="/js/third-party/quicklink.js" defer></script>
+  <script src="../../../../js/third-party/quicklink.js" defer></script>
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
+    <link rel="stylesheet" href="../../../../css/noscript.css">
   </noscript>
 </head>
 
@@ -104,6 +113,7 @@
   </div>
 
   <div class="site-meta">
+      <img class="custom-logo-image" src="../../../../uploads/logo.jpg" alt="Zhuang's Diary">
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
@@ -123,7 +133,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">69</span></a></li><li class="menu-item menu-item-archives"><a href="../../../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">299</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -185,7 +195,7 @@
 <div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        <a href="/archives/">
+        <a href="../../../../archives/">
           <span class="site-state-item-count">299</span>
           <span class="site-state-item-name">posts</span>
         </a>
@@ -196,6 +206,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="../../../../zwm136200@gmail.com" title="E-Mail → zwm136200@gmail.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
         </div>
       </div>
@@ -225,7 +240,7 @@
     <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
       <meta itemprop="name" content="Zhuang Wei Ming">
     </span>
 
@@ -273,27 +288,27 @@
     <div class="post-body" itemprop="articleBody"><ol>
 <li>编写 solidity 代码，选择 Web3 Provider</li>
 </ol>
-<img data-src="/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%201.png" class="">
+<img data-src="2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%201.png" class="">
 
 <ol start="2">
 <li>Yes</li>
 </ol>
-<img data-src="/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%202.png" class="">
+<img data-src="2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%202.png" class="">
 
 <ol start="3">
 <li>节点IP地址</li>
 </ol>
-<img data-src="/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%203.png" class="">
+<img data-src="2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%203.png" class="">
 
 <ol start="4">
 <li>点击 Create，部署代码。查看底部 log 成功与否，这里需要花费几秒钟的时间。成功后 copy 合约地址。</li>
 </ol>
-<img data-src="/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%204.png" class="">
+<img data-src="2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%204.png" class="">
 
 <ol start="5">
 <li>本地查看调试网页。</li>
 </ol>
-<img data-src="/2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%205.png" class="">
+<img data-src="2018/02/13/Remix%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E8%87%B3%E8%BF%9C%E7%A8%8B%E8%8A%82%E7%82%B9/remix%20remote%20deploy%205.png" class="">
 
 <p>示例源码如下：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie=edge&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;main.css&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./node_modules/web3/dist/web3.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h1</span>&gt;</span>Coursetro Instructor<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">h2</span> <span class="attr">id</span>=<span class="string">&quot;instructor&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;loader&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;name&quot;</span> <span class="attr">class</span>=<span class="string">&quot;col-lg-2 control-label&quot;</span>&gt;</span>Instructor Name<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;name&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;name&quot;</span> <span class="attr">class</span>=<span class="string">&quot;col-lg-2 control-label&quot;</span>&gt;</span>Instructor Age<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;age&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;button&quot;</span>&gt;</span>Update Instructor<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://code.jquery.com/jquery-3.2.1.slim.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">if</span> (<span class="keyword">typeof</span> web3 !== <span class="string">&#x27;undefined&#x27;</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">		web3 = <span class="keyword">new</span> <span class="title class_">Web3</span>(web3.<span class="property">currentProvider</span>);</span></span><br><span class="line"><span class="language-javascript">	&#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">		<span class="comment">// set the provider you want from Web3.providers</span></span></span><br><span class="line"><span class="language-javascript">		web3 = <span class="keyword">new</span> <span class="title class_">Web3</span>(<span class="keyword">new</span> <span class="title class_">Web3</span>.<span class="property">providers</span>.<span class="title class_">HttpProvider</span>(<span class="string">&quot;http://47.92.53.158:8545&quot;</span>));</span></span><br><span class="line"><span class="language-javascript">	&#125;</span></span><br><span class="line"><span class="language-javascript">	web3.<span class="property">eth</span>.<span class="property">defaultAccount</span> = web3.<span class="property">eth</span>.<span class="property">accounts</span>[<span class="number">0</span>];</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> <span class="title class_">CoursetroContract</span> = web3.<span class="property">eth</span>.<span class="title function_">contract</span>([&#123;<span class="string">&quot;constant&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;inputs&quot;</span>:[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;_fName&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;string&quot;</span>&#125;,&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;_age&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;uint256&quot;</span>&#125;],<span class="string">&quot;name&quot;</span>:<span class="string">&quot;setInstructor&quot;</span>,<span class="string">&quot;outputs&quot;</span>:[],<span class="string">&quot;payable&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;stateMutability&quot;</span>:<span class="string">&quot;nonpayable&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;function&quot;</span>&#125;,&#123;<span class="string">&quot;constant&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;inputs&quot;</span>:[],<span class="string">&quot;name&quot;</span>:<span class="string">&quot;getInstructor&quot;</span>,<span class="string">&quot;outputs&quot;</span>:[&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;string&quot;</span>&#125;,&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;uint256&quot;</span>&#125;],<span class="string">&quot;payable&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;stateMutability&quot;</span>:<span class="string">&quot;view&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;function&quot;</span>&#125;,&#123;<span class="string">&quot;anonymous&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;inputs&quot;</span>:[&#123;<span class="string">&quot;indexed&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;name&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;string&quot;</span>&#125;,&#123;<span class="string">&quot;indexed&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;age&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;uint256&quot;</span>&#125;],<span class="string">&quot;name&quot;</span>:<span class="string">&quot;Instructor&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;event&quot;</span>&#125;]);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> <span class="title class_">Coursetro</span> = <span class="title class_">CoursetroContract</span>.<span class="title function_">at</span>(<span class="string">&#x27;0x6f57ae4ea0bb4a6bc3c153ced8202217d63d5fca&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Coursetro</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">var</span> instructorEvent = <span class="title class_">Coursetro</span>.<span class="title class_">Instructor</span>();</span></span><br><span class="line"><span class="language-javascript">	instructorEvent.<span class="title function_">watch</span>(<span class="keyword">function</span>(<span class="params">error, result</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">		 <span class="keyword">if</span> (!error)</span></span><br><span class="line"><span class="language-javascript">				 &#123;</span></span><br><span class="line"><span class="language-javascript">						 $(<span class="string">&quot;#loader&quot;</span>).<span class="title function_">hide</span>();</span></span><br><span class="line"><span class="language-javascript">						 $(<span class="string">&quot;#instructor&quot;</span>).<span class="title function_">html</span>(result.<span class="property">args</span>.<span class="property">name</span> + <span class="string">&#x27; (&#x27;</span> + result.<span class="property">args</span>.<span class="property">age</span> + <span class="string">&#x27; years old)&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">				 &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">						 $(<span class="string">&quot;#loader&quot;</span>).<span class="title function_">hide</span>();</span></span><br><span class="line"><span class="language-javascript">						 <span class="variable language_">console</span>.<span class="title function_">log</span>(error);</span></span><br><span class="line"><span class="language-javascript">				 &#125;</span></span><br><span class="line"><span class="language-javascript"> &#125;);</span></span><br><span class="line"><span class="language-javascript">	$(<span class="string">&quot;#button&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">		<span class="title class_">Coursetro</span>.<span class="title function_">setInstructor</span>($(<span class="string">&quot;#name&quot;</span>).<span class="title function_">val</span>(), $(<span class="string">&quot;#age&quot;</span>).<span class="title function_">val</span>());</span></span><br><span class="line"><span class="language-javascript">		$(<span class="string">&quot;#loader&quot;</span>).<span class="title function_">show</span>();</span></span><br><span class="line"><span class="language-javascript">	&#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -325,19 +340,19 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/solidity/" rel="tag"># solidity</a>
+              <a href="../../../../tags/solidity/" rel="tag"># solidity</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/02/13/What-is-an-ERC/" rel="prev" title="What Is an ERC?">
+                <a href="../What-is-an-ERC/" rel="prev" title="What Is an ERC?">
                   <i class="fa fa-angle-left"></i> What Is an ERC?
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/02/15/Jasper%E9%A1%B9%E7%9B%AE%E5%91%8A%E8%AF%89%E4%BD%A0-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%A7%E9%A2%9D%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A1%8C/" rel="next" title="Jasper项目告诉你-分布式大额支付系统是否可行">
+                <a href="../../15/Jasper%E9%A1%B9%E7%9B%AE%E5%91%8A%E8%AF%89%E4%BD%A0-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%A7%E9%A2%9D%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A1%8C/" rel="next" title="Jasper项目告诉你-分布式大额支付系统是否可行">
                   Jasper项目告诉你-分布式大额支付系统是否可行 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
@@ -383,7 +398,7 @@
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 <script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zhuang-weiming/zhuang-weiming.github.io","issue_term":"pathname","theme":"github-light"}</script>
-<script src="/js/third-party/comments/utterances.js" defer></script>
+<script src="../../../../js/third-party/comments/utterances.js" defer></script>
 
 </body>
 </html>
