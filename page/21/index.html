@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="/js/config.js" defer></script>
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Zhuang&#39;s Diary">
@@ -551,7 +551,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-21 11:04:21" itemprop="dateModified" datetime="2023-02-21T11:04:21+08:00">2023-02-21</time>
+      <time title="Modified: 2026-03-19 09:54:05" itemprop="dateModified" datetime="2026-03-19T09:54:05+08:00">2026-03-19</time>
     </span>
 
   
@@ -671,10 +671,7 @@
 <p>当Sub Reactor还没来得及读，但被应用层关闭释放掉的fd，已经给到了一个新连接，这时Sub Reactor继续读这个fd上的数据，就会把新连接的数据读走。</p>
 <p>因此，我们需要<strong>针对fd的操作前后加个锁，即在关闭连接跟在连接上读写前先上锁，关闭后才释放掉锁，并且在连接上读写前判断连接是否关闭</strong>，这样才会避免脏数据。</p>
 <img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.png" class="">
-
-
-
-<p><img data-src="https://mmbiz.qpic.cn/mmbiz_png/VY8SELNGe95VxoqjGm1IfuicBMt3YLNVkg8j3Kte9fFPQgrTfkibf0xlCLkARz5cTdA5GDDzrRicXcruJrlsEuic6A/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="Image"></p>
+<img data-src="/2022/09/19/%E7%94%A8Go%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%BD%91%E7%BB%9C%E5%BA%93/9.1.png" class="">
 <h4 id="不可忽略的负载均衡"><a href="#不可忽略的负载均衡" class="headerlink" title="不可忽略的负载均衡"></a>不可忽略的负载均衡</h4><p>除了注意fd复用带来的竞态，还有一个不可忽略的负载均衡，在Main Reactor分配连接到Sub Reactor这个环节。</p>
 <p>未来避免某个Sub Reactor过载，我们可以参考Nginx的负载均衡策略，大概有以下三种方式：</p>
 <ul>
