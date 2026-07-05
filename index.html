@@ -121,7 +121,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">72</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">302</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">303</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -184,13 +184,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">302</span>
+          <span class="site-state-item-count">303</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">73</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -216,6 +216,81 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/07/05/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%201-%E5%9B%9E%E6%B5%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="2026/07/05/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%201-%E5%9B%9E%E6%B5%8B/" class="post-title-link" itemprop="url">算法交易 1-回测</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-07-05 22:27:00 / Modified: 22:27:45" itemprop="dateCreated datePublished" datetime="2026-07-05T22:27:00+08:00">2026-07-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>要点：</p>
+<ol>
+<li>回测系统必须能够预测未来交易策略的绩效，但是在回测过程中有很多潜在的缺陷，将降低其预测的能力</li>
+<li>对缺陷有哪些清除的策略呢：<br> 1）回测与执行的过程所使用的程序必须相同，可以消除前视偏差。<br> 2）样本外的测试、交叉验证以及高估夏普比率能够减少数据探测过程中出现的偏差，但没有比前视检验更加明确的了。<br> 3）简化模型的做法是一个规避数据探测过程中出现的偏差的一个简易的模式。<br> 4）“为什么模型在 2021 年 7 月 9 日会生成一个做空 THQI 股票的信号呢？哦，因为忘记了以 1:10 的股票分割比例调整其历史价格的数据！”<br> 5）“别忘记了，今天是这只股票的除息日”<br> 6）“模型在提示做多，但你确定所有数据库中的股票不存在退市的风险吗？”<br> 7）“会测时，使用收盘价格，模型的回测结果很好。但是，当你使用原生金融工具市场的数据进行检测时，检测结果通常会出现缩水。”<br> 8）“你的模型在 2008 年 11 月做空了很多股票，回测表现很好，但实际上，当时卖空股票是禁止的。”<br> 9）高频交易模型的回测过程需要特别注意交易规则的限制条件，特别是对空头的交易规则限制。<br> 10）交易策略一定要经过时间的检验和洗礼。</li>
+<li>回测系统的统计数据<br> 1）相应交易策略的预期年化收益率为 10%，而统计相关的收益率只有 1%，为什么？回答：因为运行相关策略所对应的初始三个月的（或者相同步长的历史价格序列）累计值为 10000 个数据，而其中只有 100 个样本数据的年化收益率大于 10%。<br>  2）上述问题还有另外一种解释：在随机入场时间测定相关交易过程中，100 个随机值中只有 1 个数据的年化收益率会大于 10%。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1537,137 +1612,6 @@
 <p><strong>汇丰和渣打系同时拿到首批牌照，两家选择了完全不同的落地路径。汇丰走零售优先路线，渣打系走机构优先路线。两条路径没有优劣之分，而是各自资源禀赋的自然延伸。</strong></p>
 <p>对RWA生态而言，两条路径的互补性大于竞争性。渣打系解决资产端的资金通道，汇丰解决零售端的分销渠道。两条路都跑通，香港的RWA生态将从资产端到资金端形成更完整的连接。</p>
 <p>未来12个月，两种模式谁能在规模效应上先跑出来，将直接影响香港稳定币生态的演进方向。这不仅是两家机构的竞争，也是两种商业模式的第一次市场检验。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/03/17/AI%E4%B8%8EBI%E7%9A%84%E7%8E%B0%E6%9C%89%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E6%95%B4%E5%90%88%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="images/avatar.gif">
-      <meta itemprop="name" content="Zhuang Wei Ming">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Zhuang's Diary">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="2026/03/17/AI%E4%B8%8EBI%E7%9A%84%E7%8E%B0%E6%9C%89%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E6%95%B4%E5%90%88%EF%BC%9F/" class="post-title-link" itemprop="url">AI与BI的现有系统如何整合？</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2026-03-17 12:05:00" itemprop="dateCreated datePublished" datetime="2026-03-17T12:05:00+08:00">2026-03-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-03-19 09:41:25" itemprop="dateModified" datetime="2026-03-19T09:41:25+08:00">2026-03-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="打破-AI-与-BI-的底层壁垒：基于-Ray-Lance-Iceberg-的多模态数据湖架构实践"><a href="#打破-AI-与-BI-的底层壁垒：基于-Ray-Lance-Iceberg-的多模态数据湖架构实践" class="headerlink" title="打破 AI 与 BI 的底层壁垒：基于 Ray + Lance + Iceberg 的多模态数据湖架构实践"></a>打破 AI 与 BI 的底层壁垒：基于 Ray + Lance + Iceberg 的多模态数据湖架构实践</h1><p>在企业数字化转型的深水区，数据架构正在经历一次深刻的裂变。一方面，基于结构化数据的 BI（商业智能）体系已经非常成熟；另一方面，以大模型和多模态为核心的 AI 业务正在狂飙突进。</p>
-<p>然而，当我们要将 AI 和 BI 结合时，底层的存储和计算瓶颈却暴露无遗。本文将深入探讨一种业界前沿的<strong>多模态数据湖（Multimodal Data Lake）架构</strong>，看看如何通过 <strong>Ray on EKS + Lance + Iceberg + Trino</strong> 的技术栈组合，彻底打通非结构化与结构化数据的任督二脉。</p>
-<h2 id="1-业务的痛点：当传统数据湖遇到-AI"><a href="#1-业务的痛点：当传统数据湖遇到-AI" class="headerlink" title="1. 业务的痛点：当传统数据湖遇到 AI"></a>1. 业务的痛点：当传统数据湖遇到 AI</h2><p>在构建现代 AI 应用（如音视频智能分析、多模态 RAG、精准推荐）时，传统基于 Parquet 或 ORC 格式的数据湖仓往往显得力不从心：</p>
-<ul>
-<li><p><strong>多模态数据存储与检索极其低效：</strong> 传统列式存储并不擅长处理超长文本、海量图片和高维特征向量（Embedding）。读取带有百兆级别大字段的表时，内存极易溢出（OOM）。</p>
-</li>
-<li><p><strong>探索新特征的成本高昂（Schema 僵化）：</strong> 算法团队经常需要迭代模型（如上线 v2 版本的 Embedding 算法）。在 Parquet 中新增一列特征，往往意味着要重写数十 TB 的历史数据。</p>
-</li>
-<li><p><strong>AI 与 BI 的“数据孤岛”：</strong> 数据分析师用 SQL 在 Iceberg 里查用户画像，算法工程师用 Python 在 S3 里捞原始视频。当业务需要进行跨界联动（例如：“找出所有高净值用户看过的、且情绪被识别为‘积极’的视频”）时，由于缺乏统一的元数据和联邦查询能力，只能靠写胶水脚本做低效的数据搬运。</p>
-</li>
-</ul>
-<h2 id="2-设计与方案：双轨制并行的数据底座"><a href="#2-设计与方案：双轨制并行的数据底座" class="headerlink" title="2. 设计与方案：双轨制并行的数据底座"></a>2. 设计与方案：双轨制并行的数据底座</h2><p>为了解决上述痛点，我们需要打破“一个格式打天下”的迷思，采用**“底层存储统一、中间格式分流、上层计算按需调用”**的设计哲学。</p>
-<ul>
-<li><p><strong>统一存储与元数据层：</strong> S3 作为唯一的 Single Source of Truth，结合 AWS Glue Data Catalog 作为全局统一的数据字典。</p>
-</li>
-<li><p><strong>双轨制存储格式：</strong></p>
-<ul>
-<li><p><strong>Iceberg 层 (BI&#x2F;分析侧):</strong> 负责承载强约束、需要 ACID 事务支持的结构化数据（如用户标签、交易流水）。</p>
-</li>
-<li><p><strong>Lance 层 (AI&#x2F;多模态侧):</strong> 替代 Parquet，专门存储非结构化数据。Lance 的按列排列和碎片管理机制，天生支持高维向量的快速随机访问（Random Access），且支持<strong>零拷贝（Zero-copy）的动态列扩展</strong>。</p>
-</li>
-</ul>
-</li>
-<li><p><strong>异构计算与联邦查询层：</strong></p>
-<ul>
-<li><p><strong>Ray on EKS:</strong> 作为 AI 处理引擎，混合调度 CPU 和 GPU 节点，从 S3 并发拉取非结构化数据，执行预处理、模型推理（提取 Embedding），并利用 Lance 的高 I&#x2F;O 原生接口流式写入 S3。</p>
-</li>
-<li><p><strong>EMR Trino:</strong> 作为联邦查询引擎，打破 AI 与 BI 的界限。分析师可以直接写 SQL 对 Iceberg（结构化）和 Lance（非结构化特征）两张表执行 JOIN 操作。</p>
-</li>
-</ul>
-</li>
-<li><p><strong>生命周期管理：</strong> 结合 S3 的冷热分层（Intelligent-Tiering 与 Glacier），并通过 Ray 定期执行 Lance 碎片的 Compaction（合并压缩），实现极具性价比的海量数据归档。</p>
-</li>
-</ul>
-<h2 id="3-架构图：平行的计算与存储宇宙"><a href="#3-架构图：平行的计算与存储宇宙" class="headerlink" title="3. 架构图：平行的计算与存储宇宙"></a>3. 架构图：平行的计算与存储宇宙</h2><p>在这个架构下，AI 和 BI 不再是上下游的附庸关系，而是共享底层数据底座的平行宇宙。</p>
-<p>Plaintext</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">     AI &amp; Apps Layer       BI &amp; Analytics Layer</span><br><span class="line">    (Vector<span class="operator">/</span>RAG<span class="operator">/</span>Apps)        (Dashboards<span class="operator">/</span>SQL)</span><br><span class="line">           │                        │</span><br><span class="line">    ┌──────┴───────┐         ┌──────┴───────┐</span><br><span class="line">    │  AI Compute  │         │ Query Engine │</span><br><span class="line">    │ Ray CPU<span class="symbol">/GPU</span>  │         │  EMR Trino   │</span><br><span class="line">    └──────┬───────┘         └────┬─────┬───┘</span><br><span class="line">           │      ┌─ Metadata ─┐  │     │</span><br><span class="line">           │      │Glue Catalog│  │     │</span><br><span class="line">           │      └─┬────────┬─┘  │     │</span><br><span class="line">           ▼        │        │    ▼     ▼</span><br><span class="line">    ┌───────────────┴┐    ┌──┴──────────────┐</span><br><span class="line">    │ Lance Tables   │    │ Iceberg Tables  │</span><br><span class="line">    │ (<span class="params">Unstructured:</span> │    │ (<span class="params">Structured:</span>    │</span><br><span class="line">    │ Video, Audio,  │    │ User Profiles,  │</span><br><span class="line">    │ Embeddings)    │    │ Transactions)   │</span><br><span class="line">    └──────┬─────────┘    └─────────┬───────┘</span><br><span class="line">           │                        │</span><br><span class="line"><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">=</span>▼<span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span>▼<span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">==</span><span class="operator">=</span></span><br><span class="line">                AWS S3 Storage</span><br><span class="line">          (Raw <span class="symbol">/</span> Hot Data <span class="symbol">/</span> Archive)</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-行业先锋实践案例"><a href="#4-行业先锋实践案例" class="headerlink" title="4. 行业先锋实践案例"></a>4. 行业先锋实践案例</h2><p>这套架构并非空中楼阁，国内外头部科技企业已经在使用类似的技术栈重构其数据湖：</p>
-<ul>
-<li><p><strong>Netflix (Media Table 实践):</strong> Netflix 构建了大规模的 Media Table，将视频的 URI、基础元数据和各种机器学习模型输出的特征（Embedding）统合存储。通过类似 Lance 的格式特性，算法团队可以在不重写底层原始大文件的情况下，极其轻量地动态增加列，极大地加速了新推荐特征的探索与上线。</p>
-</li>
-<li><p><strong>Bilibili (基于 Ray + Lance 的底层数据湖):</strong> B站面临着海量视频、弹幕等多模态大向量的存储与计算挑战。他们引入了 Ray + Lance 技术栈。Ray 提供了极致的分布式计算扩展性，而 Lance 彻底解决了传统格式处理大向量时的 I&#x2F;O 拥堵问题，实现了灵活的 Schema 扩展和高效的 AI 模型训练数据投喂。</p>
-</li>
-</ul>
-<h2 id="5-方案的短板与落地防坑指南"><a href="#5-方案的短板与落地防坑指南" class="headerlink" title="5. 方案的短板与落地防坑指南"></a>5. 方案的短板与落地防坑指南</h2><p>没有任何架构是银弹，在落地这套前沿方案时，仍需正视以下短板与挑战：</p>
-<ol>
-<li><p><strong>Trino 并非向量数据库：</strong> Trino 能够完美执行跨界 JOIN（例如匹配用户 ID），但绝对不能用 Trino 去执行底层的 KNN（K-近邻）高维向量相似度检索。复杂的向量计算仍需推回给在线的 Vector DB（如 LanceDB、Milvus）或在 Ray 任务中完成。</p>
-</li>
-<li><p><strong>S3 API 限流与海量小文件灾难：</strong> 当并发处理数亿张小图片或音频切片时，极易触发 S3 的 <code>503 Slow Down</code>。必须在接入层做好合并（Batching&#x2F;Tarball），或者在 EKS 引入分布式缓存（如 Alluxio）。</p>
-</li>
-<li><p><strong>跨模态的数据一致性黑洞：</strong> Iceberg 和 Lance 是两个独立的格式层，缺乏全局的分布式事务锁。如果 BI 侧的用户状态已更新，而 AI 侧的向量特征未重算，Trino 查询时可能会出现短暂的数据“错位”。这需要上层的数据编排工具（如 Airflow&#x2F;Dagster）来保障任务链路的强一致性。</p>
-</li>
-<li><p><strong>缺乏亚秒级实时能力：</strong> 这本质上依然是一个以批处理和微批处理（Batch &#x2F; Near-line）为主的数据湖仓架构。如果业务需要毫秒级的事件驱动反馈，还需要额外挂载 Flink + Kafka 组成的流计算引擎。</p>
-</li>
-</ol>
 
       
     </div>
