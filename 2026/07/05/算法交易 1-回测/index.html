@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"../../../../images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"../../../../search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="../../../../js/config.js" defer></script>
 
-    <meta name="description" content="要点：  回测系统必须能够预测未来交易策略的绩效，但是在回测过程中有很多潜在的缺陷，将降低其预测的能力 对缺陷有哪些清除的策略呢： 1）回测与执行的过程所使用的程序必须相同，可以消除前视偏差。 2）样本外的测试、交叉验证以及高估夏普比率能够减少数据探测过程中出现的偏差，但没有比前视检验更加明确的了。 3）简化模型的做法是一个规避数据探测过程中出现的偏差的一个简易的模式。 4）“为什么模型在 202">
+    <meta name="description" content="Ernie Chan《算法交易：制胜策略与原理》第一章读书笔记。 第一章：回测系统的陷阱与统计学应用一、 回测的核心目的与常见缺陷回测系统的终极目标是预测未来交易策略的绩效，但过程中潜藏的诸多陷阱会严重削弱其预测能力。常见的缺陷及实战清除策略如下：  前视偏差 原理：使用了回测当时根本无法获取的未来数据。 实战修复：回测生成信号与执行交易的代码逻辑必须完全一致。通常采用“T日收盘生成信号，T+1日">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法交易 1-回测">
 <meta property="og:url" content="https://zhuang-weiming.github.io/2026/07/05/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%201-%E5%9B%9E%E6%B5%8B/index.html">
 <meta property="og:site_name" content="Zhuang&#39;s Diary">
-<meta property="og:description" content="要点：  回测系统必须能够预测未来交易策略的绩效，但是在回测过程中有很多潜在的缺陷，将降低其预测的能力 对缺陷有哪些清除的策略呢： 1）回测与执行的过程所使用的程序必须相同，可以消除前视偏差。 2）样本外的测试、交叉验证以及高估夏普比率能够减少数据探测过程中出现的偏差，但没有比前视检验更加明确的了。 3）简化模型的做法是一个规避数据探测过程中出现的偏差的一个简易的模式。 4）“为什么模型在 202">
+<meta property="og:description" content="Ernie Chan《算法交易：制胜策略与原理》第一章读书笔记。 第一章：回测系统的陷阱与统计学应用一、 回测的核心目的与常见缺陷回测系统的终极目标是预测未来交易策略的绩效，但过程中潜藏的诸多陷阱会严重削弱其预测能力。常见的缺陷及实战清除策略如下：  前视偏差 原理：使用了回测当时根本无法获取的未来数据。 实战修复：回测生成信号与执行交易的代码逻辑必须完全一致。通常采用“T日收盘生成信号，T+1日">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-07-05T14:27:00.000Z">
-<meta property="article:modified_time" content="2026-07-05T14:27:45.296Z">
+<meta property="article:modified_time" content="2026-07-06T08:49:14.495Z">
 <meta property="article:author" content="Zhuang Wei Ming">
 <meta property="article:tag" content="AgenticCoding">
 <meta property="article:tag" content="Algorithm">
@@ -131,7 +131,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="../../../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">303</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="../../../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">304</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -169,7 +169,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -182,6 +182,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E5%9B%9E%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%99%B7%E9%98%B1%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%AD%A6%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">第一章：回测系统的陷阱与统计学应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E5%9B%9E%E6%B5%8B%E7%9A%84%E6%A0%B8%E5%BF%83%E7%9B%AE%E7%9A%84%E4%B8%8E%E5%B8%B8%E8%A7%81%E7%BC%BA%E9%99%B7"><span class="nav-number">1.1.</span> <span class="nav-text">一、 回测的核心目的与常见缺陷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-%E5%9B%9E%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%9F%E8%AE%A1%E5%AD%A6%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C"><span class="nav-number">1.2.</span> <span class="nav-text">二、 回测系统的统计学假设检验</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -194,7 +195,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="../../../../archives/">
-          <span class="site-state-item-count">303</span>
+          <span class="site-state-item-count">304</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -264,9 +265,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2026-07-05 22:27:00 / Modified: 22:27:45" itemprop="dateCreated datePublished" datetime="2026-07-05T22:27:00+08:00">2026-07-05</time>
+      <time title="Created: 2026-07-05 22:27:00" itemprop="dateCreated datePublished" datetime="2026-07-05T22:27:00+08:00">2026-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-07-06 16:49:14" itemprop="dateModified" datetime="2026-07-06T16:49:14+08:00">2026-07-06</time>
     </span>
 
   
@@ -278,11 +285,54 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>要点：</p>
+    <div class="post-body" itemprop="articleBody"><p>Ernie Chan《算法交易：制胜策略与原理》第一章读书笔记。</p>
+<h2 id="第一章：回测系统的陷阱与统计学应用"><a href="#第一章：回测系统的陷阱与统计学应用" class="headerlink" title="第一章：回测系统的陷阱与统计学应用"></a>第一章：回测系统的陷阱与统计学应用</h2><h3 id="一、-回测的核心目的与常见缺陷"><a href="#一、-回测的核心目的与常见缺陷" class="headerlink" title="一、 回测的核心目的与常见缺陷"></a>一、 回测的核心目的与常见缺陷</h3><p>回测系统的终极目标是<strong>预测未来交易策略的绩效</strong>，但过程中潜藏的诸多陷阱会严重削弱其预测能力。常见的缺陷及实战清除策略如下：</p>
 <ol>
-<li>回测系统必须能够预测未来交易策略的绩效，但是在回测过程中有很多潜在的缺陷，将降低其预测的能力</li>
-<li>对缺陷有哪些清除的策略呢：<br> 1）回测与执行的过程所使用的程序必须相同，可以消除前视偏差。<br> 2）样本外的测试、交叉验证以及高估夏普比率能够减少数据探测过程中出现的偏差，但没有比前视检验更加明确的了。<br> 3）简化模型的做法是一个规避数据探测过程中出现的偏差的一个简易的模式。<br> 4）“为什么模型在 2021 年 7 月 9 日会生成一个做空 THQI 股票的信号呢？哦，因为忘记了以 1:10 的股票分割比例调整其历史价格的数据！”<br> 5）“别忘记了，今天是这只股票的除息日”<br> 6）“模型在提示做多，但你确定所有数据库中的股票不存在退市的风险吗？”<br> 7）“会测时，使用收盘价格，模型的回测结果很好。但是，当你使用原生金融工具市场的数据进行检测时，检测结果通常会出现缩水。”<br> 8）“你的模型在 2008 年 11 月做空了很多股票，回测表现很好，但实际上，当时卖空股票是禁止的。”<br> 9）高频交易模型的回测过程需要特别注意交易规则的限制条件，特别是对空头的交易规则限制。<br> 10）交易策略一定要经过时间的检验和洗礼。</li>
-<li>回测系统的统计数据<br> 1）相应交易策略的预期年化收益率为 10%，而统计相关的收益率只有 1%，为什么？回答：因为运行相关策略所对应的初始三个月的（或者相同步长的历史价格序列）累计值为 10000 个数据，而其中只有 100 个样本数据的年化收益率大于 10%。<br>  2）上述问题还有另外一种解释：在随机入场时间测定相关交易过程中，100 个随机值中只有 1 个数据的年化收益率会大于 10%。</li>
+<li><strong>前视偏差</strong><ul>
+<li><strong>原理</strong>：使用了回测当时根本无法获取的未来数据。</li>
+<li><strong>实战修复</strong>：回测生成信号与执行交易的代码逻辑必须完全一致。通常采用“T日收盘生成信号，T+1日开盘执行交易”的严格时序。</li>
+</ul>
+</li>
+<li><strong>数据探测偏差</strong><ul>
+<li><strong>原理</strong>：在大量历史数据中反复测试不同参数，碰巧找到一段表现极佳的参数组合（过度拟合）。</li>
+<li><strong>实战修复</strong>：<ul>
+<li><strong>样本外测试（OOS）与交叉验证</strong>：将数据分为训练集（如2010-2018）和测试集（如2019-2023），仅在训练集调参。</li>
+<li><strong>模型简化原则</strong>：参数越少越好，拒绝过度复杂的拟合曲线。</li>
+<li><strong>Deflated Sharpe Ratio（ deflate 夏普比率）</strong>：根据尝试的参数组合数量对夏普比率进行惩罚。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>数据质量缺陷（生存者偏差与公司行动）</strong><ul>
+<li><strong>案例</strong>：“为什么2021年7月9日会生成做空THQI的信号？哦，因为忘了按1:10的比例调整历史复权价格。”</li>
+<li><strong>实战修复</strong>：必须使用<strong>后复权</strong>价格计算收益率；必须在回测引擎中引入退市、并购、ST特别处理等状态标记，剔除当前已退市的股票会导致回测收益虚高（生存者偏差）。</li>
+</ul>
+</li>
+<li><strong>流动性约束与微观结构缺陷</strong><ul>
+<li><strong>案例</strong>：“回测用收盘价效果很好，但实盘用真实市场数据却大幅缩水。”</li>
+<li><strong>实战修复</strong>：回测必须考虑<strong>滑点</strong>和<strong>交易佣金</strong>。对于容量有限的策略（如小盘股），需设置单笔交易量不超过该标的日均成交量的X%（如5%）的阈值限制。</li>
+</ul>
+</li>
+<li><strong>制度性与规则性限制</strong><ul>
+<li><strong>案例</strong>：“模型在2008年11月做空很多股票表现很好，但当时美国SEC禁止裸卖空。”或“高频交易忽视了涨跌停板限制。”</li>
+<li><strong>实战修复</strong>：回测引擎必须内置历史交易规则变更（如限制做空名单、涨跌停板限制、T+1制度）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="二、-回测系统的统计学假设检验"><a href="#二、-回测系统的统计学假设检验" class="headerlink" title="二、 回测系统的统计学假设检验"></a>二、 回测系统的统计学假设检验</h3><p>仅仅依靠高夏普比率不能证明策略有效，必须通过统计学假设检验（零假设：策略收益率为0）。</p>
+<ol>
+<li><strong>夏普比率的T检验</strong><ul>
+<li><strong>公式</strong>：$T &#x3D; \frac{Mean(R)}{Std(R)} \times \sqrt{N}$ （其中N为交易次数&#x2F;样本数）</li>
+<li><strong>实战阈值</strong>：通常要求 $T &gt; 2$（对应95%置信水平），即策略的收益并非随机产生。但若收益率序列存在自相关，需使用Newey-West调整后的标准差，否则会高估夏普比率。</li>
+</ul>
+</li>
+<li><strong>蒙特卡洛模拟与P值检验</strong><ul>
+<li><strong>场景</strong>：策略年化收益10%，如何证明这不是碰运气？</li>
+<li><strong>方法一（随机入场法）</strong>：保持交易次数和持仓时间不变，但随机改变入场时间，生成10,000次模拟。如果其中只有100次模拟的年化收益大于10%，则P值 &#x3D; 100&#x2F;10000 &#x3D; 1%。</li>
+<li><strong>方法二（价格序列重采样法）</strong>：对历史价格进行打乱重排，运行策略10,000次。</li>
+<li><strong>实战判断</strong>：<strong>P值必须 &lt; 0.05</strong>（甚至&lt;0.01），才能拒绝零假设，证明策略具备真正的Alpha。</li>
+</ul>
+</li>
 </ol>
 
     </div>
@@ -327,6 +377,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="../../06/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%202-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92/" rel="next" title="算法交易 2-均值回归">
+                  算法交易 2-均值回归 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>

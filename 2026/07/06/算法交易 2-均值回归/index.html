@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="../../../../images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="../../../../css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"../../../../images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"../../../../search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="../../../../js/config.js" defer></script>
+
+    <meta name="description" content="Ernie Chan《算法交易：制胜策略与原理》第二章读书笔记。 第二章：均值回归与平稳性一、 核心概念与统计检验 均值回归 定义：价格的变化与“平均价格”和“当前价格”之差成正比。即跌多了会涨，涨多了会跌。 公式：$dY(t) &#x3D; \lambda (Y_{mean} - Y(t-1)) dt + dW$ （其中 $\lambda$ 为回归速度，$dW$ 为随机噪声）   平稳性 定义：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法交易 2-均值回归">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2026/07/06/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%202-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="Ernie Chan《算法交易：制胜策略与原理》第二章读书笔记。 第二章：均值回归与平稳性一、 核心概念与统计检验 均值回归 定义：价格的变化与“平均价格”和“当前价格”之差成正比。即跌多了会涨，涨多了会跌。 公式：$dY(t) &#x3D; \lambda (Y_{mean} - Y(t-1)) dt + dW$ （其中 $\lambda$ 为回归速度，$dW$ 为随机噪声）   平稳性 定义：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-07-06T08:32:00.000Z">
+<meta property="article:modified_time" content="2026-07-06T08:51:48.549Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="AgenticCoding">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="FMR">
+<meta property="article:tag" content="agents">
+<meta property="article:tag" content="algorithmTrading">
+<meta property="article:tag" content="wealthbank">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2026/07/06/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%202-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2026/07/06/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%202-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92/","path":"2026/07/06/算法交易 2-均值回归/","title":"算法交易 2-均值回归"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>算法交易 2-均值回归 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="../../../../js/utils.js" defer></script><script src="../../../../js/motion.js" defer></script><script src="../../../../js/sidebar.js" defer></script><script src="../../../../js/next-boot.js" defer></script><script src="../../../../js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="../../../../js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"../../../../lib/pdf/web/viewer.html"}</script>
+  <script src="../../../../js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="../../../../js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="../../../../js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="../../../../js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2026/07/06/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%202-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92/"}</script>
+  <script src="../../../../js/third-party/quicklink.js" defer></script>
+
+  <noscript>
+    <link rel="stylesheet" href="../../../../css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="../../../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">304</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E4%B8%8E%E5%B9%B3%E7%A8%B3%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">第二章：均值回归与平稳性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%BB%9F%E8%AE%A1%E6%A3%80%E9%AA%8C"><span class="nav-number">1.1.</span> <span class="nav-text">一、 核心概念与统计检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%9A%84%E5%AE%9E%E6%88%98%E6%8C%87%E6%A0%87"><span class="nav-number">1.2.</span> <span class="nav-text">二、 均值回归的实战指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81-%E5%8D%8F%E6%95%B4%EF%BC%9A%E5%A4%9A%E8%B5%84%E4%BA%A7%E7%9A%84%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92"><span class="nav-number">1.3.</span> <span class="nav-text">三、 协整：多资产的均值回归</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="../../../../archives/">
+          <span class="site-state-item-count">304</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="../../../../tags/">
+        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="../../../../zwm136200@gmail.com" title="E-Mail → zwm136200@gmail.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/07/06/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%202-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="算法交易 2-均值回归 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法交易 2-均值回归
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-07-06 16:32:00 / Modified: 16:51:48" itemprop="dateCreated datePublished" datetime="2026-07-06T16:32:00+08:00">2026-07-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Ernie Chan《算法交易：制胜策略与原理》第二章读书笔记。</p>
+<h2 id="第二章：均值回归与平稳性"><a href="#第二章：均值回归与平稳性" class="headerlink" title="第二章：均值回归与平稳性"></a>第二章：均值回归与平稳性</h2><h3 id="一、-核心概念与统计检验"><a href="#一、-核心概念与统计检验" class="headerlink" title="一、 核心概念与统计检验"></a>一、 核心概念与统计检验</h3><ol>
+<li><strong>均值回归</strong><ul>
+<li><strong>定义</strong>：价格的变化与“平均价格”和“当前价格”之差成正比。即跌多了会涨，涨多了会跌。</li>
+<li><strong>公式</strong>：$dY(t) &#x3D; \lambda (Y_{mean} - Y(t-1)) dt + dW$ （其中 $\lambda$ 为回归速度，$dW$ 为随机噪声）</li>
+</ul>
+</li>
+<li><strong>平稳性</strong><ul>
+<li><strong>定义</strong>：价格序列的统计特性（均值、方差）不随时间漂移。价格离散的速率小于几何随机游走的速率。</li>
+</ul>
+</li>
+<li><strong>ADF检验</strong><ul>
+<li><strong>目的</strong>：测试单只股票&#x2F;资产是否具备均值回归特性。</li>
+<li><strong>实战阈值</strong>：计算出的ADF统计量需小于临界值（如1%显著性水平下的-3.43），或 <strong>P值 &lt; 0.05</strong>，才认为序列具备均值回归性。<em>注：单只股票极少通过ADF检验，通常呈现随机游走。</em></li>
+</ul>
+</li>
+<li><strong>赫斯特指数与方差比率检验</strong><ul>
+<li><strong>目的</strong>：测试平稳性及长期记忆性。</li>
+<li><strong>实战阈值</strong>：赫斯特指数 $H$。<ul>
+<li>$H &#x3D; 0.5$：纯随机游走。</li>
+<li>$H &lt; 0.5$：具备均值回归性（越小越强，实战中寻找 $H$ 在 0.3 - 0.45 之间的标的）。</li>
+<li>$H &gt; 0.5$：具备动量&#x2F;趋势延续性。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="二、-均值回归的实战指标"><a href="#二、-均值回归的实战指标" class="headerlink" title="二、 均值回归的实战指标"></a>二、 均值回归的实战指标</h3><ol>
+<li><strong>半衰期</strong><ul>
+<li><strong>定义</strong>：测定价格向其均值回归的速度有多快（即偏离均值后，回归一半所需的时间）。</li>
+<li><strong>实战意义与阈值</strong>：半衰期决定了持仓周期。<strong>实战中，半衰期通常应在 1 到 50 个交易日之间</strong>。若半衰期 &lt; 1，回归太快，多为噪音，交易成本吞噬利润；若半衰期 &gt; 50，回归太慢，资金占用成本过高。</li>
+</ul>
+</li>
+<li><strong>线性交易策略（Z-Score策略）</strong><ul>
+<li><strong>定义</strong>：投资组合的仓位份数与其Z分数的负值成正比。</li>
+<li><strong>公式</strong>：$Z &#x3D; \frac{Price - SMA(Price)}{Std(Price)}$</li>
+<li><strong>实战阈值</strong>：当 $Z &gt; +2$ 时做空（高估），当 $Z &lt; -2$ 时做多（低估），当 $Z$ 回归至 0 附近平仓。</li>
+</ul>
+</li>
+</ol>
+<h3 id="三、-协整：多资产的均值回归"><a href="#三、-协整：多资产的均值回归" class="headerlink" title="三、 协整：多资产的均值回归"></a>三、 协整：多资产的均值回归</h3><ol>
+<li><strong>协整</strong><ul>
+<li><strong>定义</strong>：两只（或多只）非平稳的价格序列（如股票A和股票B各自随机游走），如果它们的某种线性组合是平稳的，则称它们协整。这意味着尽管各自价格发散，但它们之间的“价差”会均值回归。</li>
+</ul>
+</li>
+<li><strong>检验方法</strong><ul>
+<li><strong>CADF检验</strong>：用于测试两个序列的协整性。</li>
+<li><strong>约翰森检验</strong>：用于测试三个及以上序列的协整性。</li>
+</ul>
+</li>
+<li><strong>实战应用：特征向量与对冲比例</strong><ul>
+<li><strong>原理解析</strong>：约翰森检验生成的特征向量，即为资产间的<strong>对冲比例</strong>。将各资产价格乘以对应的特征向量权重，即可合成一条平稳的“价差序列”。</li>
+<li><strong>实战阈值</strong>：约翰森检验会输出多个特征值和特征向量。<strong>应选择最大特征值对应的特征向量</strong>，因为最大特征值对应最平稳的组合和<strong>最短的半衰期</strong>，最适合用于套利交易。</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2026/07/06/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%202-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92/" title="算法交易 2-均值回归">https://zhuang-weiming.github.io/2026/07/06/算法交易 2-均值回归/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="../../../../tags/AgenticCoding/" rel="tag"># AgenticCoding</a>
+              <a href="../../../../tags/agents/" rel="tag"># agents</a>
+              <a href="../../../../tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="../../../../tags/FMR/" rel="tag"># FMR</a>
+              <a href="../../../../tags/wealthbank/" rel="tag"># wealthbank</a>
+              <a href="../../../../tags/algorithmTrading/" rel="tag"># algorithmTrading</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="../../05/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%201-%E5%9B%9E%E6%B5%8B/" rel="prev" title="算法交易 1-回测">
+                  <i class="fa fa-angle-left"></i> 算法交易 1-回测
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zhuang-weiming/zhuang-weiming.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="../../../../js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
