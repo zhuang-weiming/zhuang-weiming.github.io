@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="../../../../images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="../../../../css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"../../../../images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"../../../../search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="../../../../js/config.js" defer></script>
+
+    <meta name="description" content="Ernie Chan《算法交易：制胜策略与原理》第三章读书笔记。 第三章：均值回归策略的运行机制一、 对冲比率的精确计算（OLS回归法）在构建协整投资组合时，对冲比率（Hedge Ratio, 即 $\beta$）的计算方式直接决定了组合是否真正平稳。根据交易意图的不同，必须严格区分价格与对数价格的使用场景：  固定股数对冲（按数量交易） 方法：直接对两个资产的价格序列 $Y$ 和 $X$ 进行普">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法交易 3- 均值回归策略的运行机制">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2026/07/07/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%203-%20%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="Ernie Chan《算法交易：制胜策略与原理》第三章读书笔记。 第三章：均值回归策略的运行机制一、 对冲比率的精确计算（OLS回归法）在构建协整投资组合时，对冲比率（Hedge Ratio, 即 $\beta$）的计算方式直接决定了组合是否真正平稳。根据交易意图的不同，必须严格区分价格与对数价格的使用场景：  固定股数对冲（按数量交易） 方法：直接对两个资产的价格序列 $Y$ 和 $X$ 进行普">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-07-07T08:14:00.000Z">
+<meta property="article:modified_time" content="2026-07-07T08:45:20.650Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="FMR">
+<meta property="article:tag" content="agents">
+<meta property="article:tag" content="algorithmTrading">
+<meta property="article:tag" content="wealthbank">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2026/07/07/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%203-%20%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2026/07/07/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%203-%20%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/","path":"2026/07/07/算法交易 3- 均值回归策略的运行机制/","title":"算法交易 3- 均值回归策略的运行机制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>算法交易 3- 均值回归策略的运行机制 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="../../../../js/utils.js" defer></script><script src="../../../../js/motion.js" defer></script><script src="../../../../js/sidebar.js" defer></script><script src="../../../../js/next-boot.js" defer></script><script src="../../../../js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="../../../../js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"../../../../lib/pdf/web/viewer.html"}</script>
+  <script src="../../../../js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="../../../../js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="../../../../js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="../../../../js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2026/07/07/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%203-%20%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/"}</script>
+  <script src="../../../../js/third-party/quicklink.js" defer></script>
+
+  <noscript>
+    <link rel="stylesheet" href="../../../../css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="../../../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">305</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">第三章：均值回归策略的运行机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E5%AF%B9%E5%86%B2%E6%AF%94%E7%8E%87%E7%9A%84%E7%B2%BE%E7%A1%AE%E8%AE%A1%E7%AE%97%EF%BC%88OLS%E5%9B%9E%E5%BD%92%E6%B3%95%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">一、 对冲比率的精确计算（OLS回归法）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-%E5%8F%82%E6%95%B0%E6%BC%82%E7%A7%BB%E4%B8%8E%E5%8D%A1%E5%B0%94%E6%9B%BC%E6%BB%A4%E6%B3%A2"><span class="nav-number">1.2.</span> <span class="nav-text">二、 参数漂移与卡尔曼滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81-%E4%BB%93%E4%BD%8D%E7%AE%A1%E7%90%86%E4%B8%8E%E6%B3%A2%E5%8A%A8%E7%8E%87%E8%87%AA%E9%80%82%E5%BA%94"><span class="nav-number">1.3.</span> <span class="nav-text">三、 仓位管理与波动率自适应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81-%E6%95%B0%E6%8D%AE%E8%AF%AF%E5%B7%AE%E5%AF%B9%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%9A%84%E8%87%B4%E5%91%BD%E5%BD%B1%E5%93%8D"><span class="nav-number">1.4.</span> <span class="nav-text">四、 数据误差对均值回归的致命影响</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="../../../../archives/">
+          <span class="site-state-item-count">305</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="../../../../tags/">
+        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="../../../../zwm136200@gmail.com" title="E-Mail → zwm136200@gmail.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/07/07/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%203-%20%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="算法交易 3- 均值回归策略的运行机制 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法交易 3- 均值回归策略的运行机制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-07-07 16:14:00 / Modified: 16:45:20" itemprop="dateCreated datePublished" datetime="2026-07-07T16:14:00+08:00">2026-07-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Ernie Chan《算法交易：制胜策略与原理》第三章读书笔记。</p>
+<h2 id="第三章：均值回归策略的运行机制"><a href="#第三章：均值回归策略的运行机制" class="headerlink" title="第三章：均值回归策略的运行机制"></a>第三章：均值回归策略的运行机制</h2><h3 id="一、-对冲比率的精确计算（OLS回归法）"><a href="#一、-对冲比率的精确计算（OLS回归法）" class="headerlink" title="一、 对冲比率的精确计算（OLS回归法）"></a>一、 对冲比率的精确计算（OLS回归法）</h3><p>在构建协整投资组合时，对冲比率（Hedge Ratio, 即 $\beta$）的计算方式直接决定了组合是否真正平稳。根据交易意图的不同，必须严格区分价格与对数价格的使用场景：</p>
+<ol>
+<li><strong>固定股数对冲（按数量交易）</strong><ul>
+<li><strong>方法</strong>：直接对两个资产的价格序列 $Y$ 和 $X$ 进行普通最小二乘法（OLS）线性回归：$Y &#x3D; \beta X + \epsilon$。</li>
+<li><strong>实战意义</strong>：回归得到的斜率 $\beta$ 即为对冲比率。意味着每交易1股 $X$ 资产，需要交易 $\beta$ 股 $Y$ 资产来构建平稳价差。</li>
+</ul>
+</li>
+<li><strong>固定市值对冲（按金额交易）</strong><ul>
+<li><strong>方法</strong>：对两个资产价格序列的<strong>自然对数</strong> $\ln(Y)$ 和 $\ln(X)$ 进行OLS回归。</li>
+<li><strong>数值样例</strong>：假设我们要配对交易<strong>贵州茅台（Y）和五粮液（X）</strong>。茅台价格1700元，五粮液价格150元。<ul>
+<li><strong>错误做法（用价格OLS）</strong>：假设算出 $\beta &#x3D; 2$。策略要求“买1股五粮液，卖2股茅台”。实际资金占用：做多 150元，做空 3400元。资金占比极度失衡，组合收益完全被茅台的单边风险主导，并非真正的均值回归。</li>
+<li><strong>正确做法（用对数价格OLS）</strong>：对 $\ln(1700)$ 和 $\ln(150)$ 回归。假设算出 $\beta &#x3D; 1.2$（代表价格弹性）。实盘中，我们设定<strong>总资金为100万元</strong>，则做多五粮液分配50万（买入3333股），做空茅台分配50万（卖出294股）。此时无论两者绝对价格差多远，组合中多空两边的<strong>市值是完全对等的</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>货币对的特殊处理</strong><ul>
+<li><strong>原则</strong>：货币对（如EUR&#x2F;USD）本质已经是相对报价，其“价差”没有直接的经济学意义。</li>
+<li><strong>实战指标</strong>：应直接使用价格比率（Price Ratio, $P_A &#x2F; P_B$）或对数价差（$\ln(P_A) - \ln(P_B)$）作为均值回归的指标，而非算术价差（$P_A - P_B$）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="二、-参数漂移与卡尔曼滤波"><a href="#二、-参数漂移与卡尔曼滤波" class="headerlink" title="二、 参数漂移与卡尔曼滤波"></a>二、 参数漂移与卡尔曼滤波</h3><p>静态的协整检验假设对冲比率 $\beta$ 是恒定的，但这在实盘中不存在。初级做法是用“移动窗口（如20天）”，但存在断崖式跳变的问题。高级做法是引入卡尔曼滤波。</p>
+<ul>
+<li><strong>卡尔曼滤波动态对冲样例</strong><br>假设我们在交易AMD（Y）和英伟达（X）的价差。<ul>
+<li><strong>状态方程</strong>（预测）：$\beta_t &#x3D; \beta_{t-1} + \omega$ （假设今天的对冲比率等于昨天，加上微小随机噪声 $\omega$）</li>
+<li><strong>观测方程</strong>（实测）：$Y_t &#x3D; \beta_t X_t + v$ （实际价格关系，$v$ 为观测噪声）</li>
+<li><strong>卡尔曼增益（核心公式）</strong>：$K_t &#x3D; \frac{P_{t|t-1}}{P_{t|t-1} + R}$<br><em>(注：$P_{t|t-1}$ 是预测误差方差，$R$ 是市场观测噪声方差。$K_t$ 决定了我们多大程度上相信新数据)</em></li>
+<li><strong>数据推演</strong>：<ul>
+<li><strong>T-1日</strong>：模型估算 $\beta_{t-1} &#x3D; 0.5$（即1股NVDA对冲0.5股AMD）。预测误差方差 $P &#x3D; 0.01$，市场噪声方差设定为 $R &#x3D; 1.0$。</li>
+<li><strong>T日新Tick到来</strong>：NVDA暴涨，$X_t &#x3D; 800$；AMD跟涨，$Y_t &#x3D; 450$。</li>
+<li><strong>计算卡尔曼增益</strong>：$K_t &#x3D; 0.01 &#x2F; (0.01 + 1.0) \approx 0.0098$ （因为市场价格噪声极大，所以 $K$ 很小，模型选择“不信谣不传谣”）。</li>
+<li><strong>计算残差（意外幅度）</strong>：实际AMD价格 - 预测AMD价格 &#x3D; $450 - (0.5 \times 800) &#x3D; 50$ 美元。</li>
+<li><strong>更新对冲比率</strong>：$\beta_{new} &#x3D; 0.5 + 0.0098 \times 50 &#x3D; 0.5 + 0.49 &#x3D; 0.99$。</li>
+</ul>
+</li>
+<li><strong>实战优势</strong>：如果用静态20天窗口，$\beta$ 会突然从0.5跳变到1.0，导致巨量换手；而卡尔曼滤波通过 $K_t$ 的调节，将其<strong>平滑过渡</strong>到了0.99，完美解决了参数漂移引发的实盘冲击成本问题。</li>
+</ul>
+</li>
+</ul>
+<h3 id="三、-仓位管理与波动率自适应"><a href="#三、-仓位管理与波动率自适应" class="headerlink" title="三、 仓位管理与波动率自适应"></a>三、 仓位管理与波动率自适应</h3><p>标准线性Z-Score策略（仓位 &#x3D; $-k \times Z$）假设方差恒定。实盘中必须引入布林带（动态标准差），并深刻理解“加仓”在动态系统中的双刃剑效应。</p>
+<ul>
+<li><strong>布林带与被动加仓的数值推演</strong><br>假设我们交易一个股指期货价差组合，历史均值 &#x3D; 0点。<ul>
+<li><strong>初始建仓（T1）</strong>：过去20天标准差 $\sigma &#x3D; 10$ 点。价差突然扩大到 $+20$ 点。<ul>
+<li>静态Z-Score &#x3D; $(20-0)&#x2F;10 &#x3D; 2.0$。触发做空信号，建立空头底仓。</li>
+</ul>
+</li>
+<li><strong>极端行情演化（T2）</strong>：价差继续单边发散，涨到了 $+30$ 点。此时实盘波动率剧增，<strong>布林带带宽被撑大，最近10天的实际标准差变成了 $\sigma &#x3D; 15$ 点</strong>。</li>
+<li><strong>策略分化</strong>：<ul>
+<li><strong>静态模型的灾难</strong>：如果死板使用历史 $\sigma&#x3D;10$，此时的 $Z &#x3D; 30&#x2F;10 &#x3D; 3.0$。模型认为“偏离更大了，更值得做空”，从而<strong>盲目加仓</strong>。这往往是实盘爆仓的元凶（逆势死扛）。</li>
+<li><strong>布林带模型的自救</strong>：使用动态 $\sigma&#x3D;15$，此时 $Z &#x3D; 30&#x2F;15 &#x3D; 2.0$。Z-Score并没有进一步放大，模型<strong>拒绝加仓</strong>，甚至如果均值发生微小漂移，还会发出减仓信号。</li>
+</ul>
+</li>
+<li><strong>何为“被动加仓的有效性”？</strong><br>在上述T2场景中，如果交易员采用<strong>网格交易法</strong>（不依赖Z-Score，而是设定每上涨5点手动加仓一次）。当价格从20涨到30时，交易员“被动”地在25和30加了空单。<ul>
+<li><strong>为何回测中无效？</strong> 回测假设波动率恒定，一次性在20点做空是最优的，后续加仓增加了手续费且拉低了平均收益。</li>
+<li><strong>为何实盘中有效？</strong> 因为实盘的波动率和概率分布实时变化。如果在30点被动加仓后，价差真的从30点回归到0点，这种分批建仓法有效降低了整体持仓的平均成本（从20点降至了25点左右），提高了安全垫。</li>
+<li><strong>致命前提</strong>：这种“被动加仓”<strong>必须配合严格的止损线</strong>（例如价差突破40点无条件全部平仓）。因为如果价差从30点涨到100点，网格加仓会让你在错误方向上越陷越深。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="四、-数据误差对均值回归的致命影响"><a href="#四、-数据误差对均值回归的致命影响" class="headerlink" title="四、 数据误差对均值回归的致命影响"></a>四、 数据误差对均值回归的致命影响</h3><p>数据质量是均值回归策略的生死线，其对数据的敏感度远高于动量策略。</p>
+<ol>
+<li><strong>均值回归 vs. 动量：对误差的容忍度</strong><ul>
+<li><strong>动量策略</strong>：只关心价格的<strong>方向</strong>（今天涨还是跌），对绝对数值的误差不敏感。即使某个价格点被错误记录，只要趋势方向对，策略依然有效。</li>
+<li><strong>均值回归策略</strong>：极其依赖价格的<strong>绝对水平</strong>（当前价格偏离均值有多远）。</li>
+</ul>
+</li>
+<li><strong>误差的“膨胀效应”数值案例</strong><ul>
+<li><strong>案例</strong>：某股票因<strong>除权除息</strong>，价格在一天内从 100元 真实下跌到 90元。但你的数据供应商漏掉了这笔分红，未做后复权处理。</li>
+<li><strong>后果</strong>：<ul>
+<li><strong>动量策略</strong>：看到一根-10%的大阴线，视为一次普通的下跌趋势，可能不做交易或顺势做空，影响有限。</li>
+<li><strong>均值回归策略</strong>：假设该股与另一只平稳股票的价差历史均值为 5元，标准差为 2元。由于未复权，价差瞬间变成了 $-5$ 元。Z-Score计算为 $(-5 - 5) &#x2F; 2 &#x3D; -5.0$。策略会认为出现了“千年一遇”的极度低估，触发<strong>满仓逆势做多</strong>信号，最终造成灾难性亏损。</li>
+</ul>
+</li>
+<li><strong>实战铁律</strong>：在运行基于价差的均值回归策略前，必须对输入数据进行极其严格的<strong>异常值剔除（如MAD法）<strong>和</strong>复权处理</strong>。即使是非常微小的数据误差（如几分钱的偏差），在高频或高杠杆的价差交易中也会被急剧放大。</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2026/07/07/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%203-%20%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" title="算法交易 3- 均值回归策略的运行机制">https://zhuang-weiming.github.io/2026/07/07/算法交易 3- 均值回归策略的运行机制/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="../../../../tags/agents/" rel="tag"># agents</a>
+              <a href="../../../../tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="../../../../tags/FMR/" rel="tag"># FMR</a>
+              <a href="../../../../tags/wealthbank/" rel="tag"># wealthbank</a>
+              <a href="../../../../tags/algorithmTrading/" rel="tag"># algorithmTrading</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="../../06/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%93%202-%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92/" rel="prev" title="算法交易 2-均值回归">
+                  <i class="fa fa-angle-left"></i> 算法交易 2-均值回归
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zhuang-weiming/zhuang-weiming.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="../../../../js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

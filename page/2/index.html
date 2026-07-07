@@ -121,7 +121,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">304</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">305</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -184,7 +184,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="../../archives/">
-          <span class="site-state-item-count">304</span>
+          <span class="site-state-item-count">305</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -216,6 +216,102 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/05/27/Opencode-Agent-UI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="../../images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="../../2026/05/27/Opencode-Agent-UI/" class="post-title-link" itemprop="url">Opencode-Agent-UI</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-05-27 21:12:00" itemprop="dateCreated datePublished" datetime="2026-05-27T21:12:00+08:00">2026-05-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-07-01 15:02:35" itemprop="dateModified" datetime="2026-07-01T15:02:35+08:00">2026-07-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://github.com/anomalyco/opencode">Opencode</a> 原本的UI可以是 <code>opencode web</code> ，这个命令可以打开Opencode原生的Web UI。他还不错，可以完整地展示Agent的交互；不足有两点：1）无法放在手机上使用，无法使用语音输入输出；2）无法打开Agent生成的文件，例如MS Office中的 .xlsx .ppt等文件；3）定时任务，例如每天早上组织早间金融新闻报告。</p>
+<p>沿着<a target="_blank" rel="noopener" href="https://opencode.ai/docs/ecosystem/">Opencode 生态</a> 的介绍，可以找到 <a target="_blank" rel="noopener" href="https://github.com/openchamber/openchamber">openchamber</a> - <a target="_blank" rel="noopener" href="https://openchamber.dev/">https://openchamber.dev/</a>, MIT license，项目开发&#x2F;Feature&#x2F;Roadmap都非常健康。</p>
+<h2 id="一、-Desktop-macOS-Version"><a href="#一、-Desktop-macOS-Version" class="headerlink" title="一、 Desktop (macOS) Version"></a>一、 Desktop (macOS) Version</h2><p>功能清晰，继承了<code>opencode web</code> 的全部功能。并且增加了1）语音输入输出；2）附件下载的功能；3）定时任务。</p>
+<img data-src="2026/05/27/Opencode-Agent-UI/2.png" class="">
+
+<img data-src="2026/05/27/Opencode-Agent-UI/1.png" class="">
+
+<p>和<code>opencode web</code> 或者TUI相对比，使用起来可以扩展到程序员以外的场景，例如金融，医生，等等人员来使用。</p>
+<h2 id="二、Web-PWA"><a href="#二、Web-PWA" class="headerlink" title="二、Web + PWA"></a>二、Web + PWA</h2><p>电脑网页端不必讲，因为在电脑端已经有上面的Desktop Version。主要的关注点在手机Web端：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm i -g opencode-ai</span><br><span class="line"></span><br><span class="line">npm i -g @openchamber/web , #安装openchaber，https://www.npmjs.com/package/@openchamber/web</span><br><span class="line"></span><br><span class="line">openchamber --ui-password be-creative-here ， #初始化网页端密码</span><br><span class="line"></span><br><span class="line">brew install cloudflared ， #安装cloudflared - https://docs.openchamber.dev/tunnels/</span><br><span class="line"></span><br><span class="line">openchamber tunnel start --provider cloudflare --mode quick , # 启动tunnel, tunnel是通往您 OpenChamber 的公共链接，使您能够通过手机或其他网络对其进行访问。请使用 `openchamber tunnel` 命令，为正在运行的实例创建一个此类链接。</span><br></pre></td></tr></table></figure>
+<p>tunnel 启动成功后，如下图:</p>
+<img data-src="2026/05/27/Opencode-Agent-UI/3.png" class="">
+<p>&#x3D;&#x3D;&#x3D;&#x3D;视频如下&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<img data-src="2026/05/27/Opencode-Agent-UI/4.mov" class="">
+
+<p>此外，其VS Code的插件也很好用。但是通常都已经进入VS Code了，大家应该会更加喜欢 opencode 本身在terminal TUI才是程序员的最爱吧。</p>
+<p>Roadmap中，</p>
+<ul>
+<li>Windows and Linux desktop apps</li>
+<li>Mobile app with remote instance and laptop connectivity<br>是最让人期待的，Linux desktop app，就意味着机器人可以带着Agent跑起来了哦</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1159,284 +1255,6 @@
 <li>不增加人</li>
 <li>不碰监管红线</li>
 <li>对老客户同样有效<br>$$ { Profit &#x3D; Revenue - \left( TotalRMCost + OtherVariableOpsCost - CostSaved \right) } $$<br>注意一个非常重要的点：<br><strong>RM FTE 同时出现在 Revenue 端 和 Cost 端<br>这正是 “算法驱动 vs 人力驱动”</strong></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/02/12/%E5%A6%82%E4%BD%95%E7%94%A8AI+IDE%E5%92%8C%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E9%A9%B1%E5%8A%A8%E8%A7%86%E9%A2%91%E5%88%9B%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="../../images/avatar.gif">
-      <meta itemprop="name" content="Zhuang Wei Ming">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Zhuang's Diary">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="../../2026/02/12/%E5%A6%82%E4%BD%95%E7%94%A8AI+IDE%E5%92%8C%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E9%A9%B1%E5%8A%A8%E8%A7%86%E9%A2%91%E5%88%9B%E4%BD%9C/" class="post-title-link" itemprop="url">如何用AI+IDE和自然语言驱动视频创作</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2026-02-12 17:17:00" itemprop="dateCreated datePublished" datetime="2026-02-12T17:17:00+08:00">2026-02-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-03-18 17:23:57" itemprop="dateModified" datetime="2026-03-18T17:23:57+08:00">2026-03-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>核心结论</strong>：</p>
-<p><strong>产品人员可以通过 “自然语言描述需求 → AI生成视频代码 → 增量迭代验证” 的工作流，将想法直接转化为高质量视频内容，无需学习 AE、DaVinci、Final cut pro 等专业剪辑软件。</strong></p>
-<h2 id="一、为什么要用-AI-IDE-做视频？"><a href="#一、为什么要用-AI-IDE-做视频？" class="headerlink" title="一、为什么要用 AI+IDE 做视频？"></a>一、为什么要用 AI+IDE 做视频？</h2><h3 id="传统视频制作的痛点"><a href="#传统视频制作的痛点" class="headerlink" title="传统视频制作的痛点"></a>传统视频制作的痛点</h3><table>
-<thead>
-<tr>
-<th>痛点</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>工具门槛高</strong></td>
-<td>AE、DaVinci、Premiere 等专业软件学习成本极高</td>
-</tr>
-<tr>
-<td><strong>时间成本高</strong></td>
-<td>一个 1 分钟的产品介绍视频，专业剪辑需要 3-5 天</td>
-</tr>
-<tr>
-<td><strong>协作困难</strong></td>
-<td>产品想法需要反复传递给设计师，容易失真</td>
-</tr>
-<tr>
-<td><strong>修改成本高</strong></td>
-<td>调整一个动画细节，可能需要重新渲染整个视频</td>
-</tr>
-</tbody></table>
-<h3 id="AI-IDE-视频创作的优势"><a href="#AI-IDE-视频创作的优势" class="headerlink" title="AI+IDE 视频创作的优势"></a>AI+IDE 视频创作的优势</h3><ol>
-<li><strong>零学习成本</strong>：用自然语言描述即可，无需掌握时间轴、关键帧等概念</li>
-<li><strong>代码即视频</strong>：所有动画都用代码描述，版本可控，可追溯</li>
-<li><strong>增量迭代</strong>：小步快跑，随时调整，即时预览</li>
-<li><strong>一键渲染</strong>：代码写完后，一键生成 MP4 视频</li>
-</ol>
-<h2 id="二、方法论：自然语言-→-代码-→-视频"><a href="#二、方法论：自然语言-→-代码-→-视频" class="headerlink" title="二、方法论：自然语言 → 代码 → 视频"></a>二、方法论：自然语言 → 代码 → 视频</h2><h3 id="核心思维链"><a href="#核心思维链" class="headerlink" title="核心思维链"></a>核心思维链</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">graph LR</span><br><span class="line"></span><br><span class="line">A[自然语言需求] --&gt; B[AI生成视频代码]</span><br><span class="line"></span><br><span class="line">B --&gt; C[本地运行预览]</span><br><span class="line"></span><br><span class="line">C --&gt; D[验证效果]</span><br><span class="line"></span><br><span class="line">D --&gt;|不满意| E[追加指令调整]</span><br><span class="line"></span><br><span class="line">E --&gt; B</span><br><span class="line"></span><br><span class="line">D --&gt;|满意| F[渲染输出MP4]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="实践案例：Wealth-Copilot-产品介绍视频"><a href="#实践案例：Wealth-Copilot-产品介绍视频" class="headerlink" title="实践案例：Wealth Copilot 产品介绍视频"></a>实践案例：Wealth Copilot 产品介绍视频</h3><p><strong>背景</strong>：需要将一份 HTML 格式的 PPT 演示文稿（7 页 slides）转换为产品宣传视频。</p>
-<p><strong>完整工作流程</strong>：</p>
-<h4 id="Step-1-需求描述"><a href="#Step-1-需求描述" class="headerlink" title="Step 1: 需求描述"></a>Step 1: 需求描述</h4><p>向 AI 提供清晰的需求：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我需要用 Remotion 制作一个产品介绍视频。</span><br><span class="line">素材来源：solutions/presentation<span class="emphasis">_market.html</span></span><br><span class="line"><span class="emphasis">这是一个关于 &quot;AI-Native Wealth Insight Copilot&quot; 的演示文稿，包含 7 个 slides：</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">1. 标题页 - 展示产品名称和关键指标</span></span><br><span class="line"><span class="emphasis">2. 核心价值 - 客户价值与业务价值</span></span><br><span class="line"><span class="emphasis">3. SOP 设计 - 工作流程图</span></span><br><span class="line"><span class="emphasis">4. 合规框架 - 4层合规架构</span></span><br><span class="line"><span class="emphasis">5. 零幻觉策略 - 安全保障措施</span></span><br><span class="line"><span class="emphasis">6. 真实案例 - 两个使用场景</span></span><br><span class="line"><span class="emphasis">7. 总结 - 4个核心要点</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">要求：</span></span><br><span class="line"><span class="emphasis">- 视频尺寸 1920x1080</span></span><br><span class="line"><span class="emphasis">- 每个 slide 展示 6 秒</span></span><br><span class="line"><span class="emphasis">- 添加平滑的转场动画</span></span><br><span class="line"><span class="emphasis">- 使用红色主题色 #dc001c</span></span><br><span class="line"><span class="emphasis">- 动画风格：专业、简洁</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="Step-2-AI-生成项目框架"><a href="#Step-2-AI-生成项目框架" class="headerlink" title="Step 2: AI 生成项目框架"></a>Step 2: AI 生成项目框架</h4><p>AI 会自动创建 Remotion 项目结构：</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">movie<span class="symbol">/</span></span><br><span class="line">├── package.json <span class="comment"># 项目配置</span></span><br><span class="line">├── tsconfig.json <span class="comment"># TypeScript 配置</span></span><br><span class="line">├── remotion.config.ts <span class="comment"># Remotion 配置</span></span><br><span class="line">├── src<span class="symbol">/</span></span><br><span class="line">│ ├── index.tsx <span class="comment"># 入口文件</span></span><br><span class="line">│ ├── Video.tsx <span class="comment"># 视频主组件</span></span><br><span class="line">│ └── components<span class="symbol">/</span> <span class="comment"># Slide 组件</span></span><br><span class="line">│ ├── TitleSlide.tsx</span><br><span class="line">│ ├── CoreValueSlide.tsx</span><br><span class="line">│ ├── SOPDesignSlide.tsx</span><br><span class="line">│ ├── ComplianceSlide.tsx</span><br><span class="line">│ ├── AntiHallucinationSlide.tsx</span><br><span class="line">│ ├── ExamplesSlide.tsx</span><br><span class="line">│ ├── SummarySlide.tsx</span><br><span class="line">│ └── Transition.tsx</span><br><span class="line">└── out<span class="symbol">/</span></span><br><span class="line">└── video.mp4 <span class="comment"># 最终输出</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="Step-3-增量迭代开发"><a href="#Step-3-增量迭代开发" class="headerlink" title="Step 3: 增量迭代开发"></a>Step 3: 增量迭代开发</h4><p><strong>第一轮</strong>：先让 AI 创建基础框架和第一个 slide</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">请先帮我：</span><br><span class="line"><span class="bullet">1.</span> 初始化 Remotion 项目</span><br><span class="line"><span class="bullet">2.</span> 创建 Video.tsx，定义 7 个 slide 的时间轴</span><br><span class="line"><span class="bullet">3.</span> 先实现 TitleSlide 组件，包含：</span><br><span class="line"><span class="bullet">-</span> 标题 &quot;AI-Native Wealth Insight Copilot&quot;</span><br><span class="line"><span class="bullet">-</span> 副标题高亮框</span><br><span class="line"><span class="bullet">-</span> 4 个关键指标卡片（带动画）</span><br></pre></td></tr></table></figure>
-
-<p><strong>第二轮</strong>：验证效果，继续添加其他 slides</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TitleSlide 看起来不错！请继续创建：</span><br><span class="line"><span class="bullet">-</span> CoreValueSlide：左右两栏布局，展示 For Customers / For Business</span><br><span class="line"><span class="bullet">-</span> SOPDesignSlide：顶部流程图 + 底部两个信息卡片</span><br></pre></td></tr></table></figure>
-
-<p><strong>第三轮</strong>：添加转场效果</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">请在每个 slide 之间添加转场动画：</span><br><span class="line"><span class="bullet">-</span> 使用红色主题色的滑入效果</span><br><span class="line"><span class="bullet">-</span> 奇数 slide 从左滑入，偶数从右滑入</span><br><span class="line"><span class="bullet">-</span> 转场时长 0.5 秒</span><br></pre></td></tr></table></figure>
-<h4 id="Step-4-本地预览与调整"><a href="#Step-4-本地预览与调整" class="headerlink" title="Step 4: 本地预览与调整"></a>Step 4: 本地预览与调整</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动 Remotion Studio 实时预览</span></span><br><span class="line">npm run dev</span><br><span class="line"><span class="comment"># 或直接渲染视频</span></span><br><span class="line">npm run build</span><br></pre></td></tr></table></figure>
-
-<h4 id="Step-5-最终渲染输出"><a href="#Step-5-最终渲染输出" class="headerlink" title="Step 5: 最终渲染输出"></a>Step 5: 最终渲染输出</h4><p>45 秒后，得到 <code>out/video.mp4</code>：</p>
-<ul>
-<li>1920x1080 高清分辨率</li>
-<li>7 个 slides，每个 6 秒</li>
-<li>流畅的 spring 动画</li>
-<li>专业的红色主题转场</li>
-</ul>
-<h2 id="三、核心技巧与指令模板"><a href="#三、核心技巧与指令模板" class="headerlink" title="三、核心技巧与指令模板"></a>三、核心技巧与指令模板</h2><h3 id="1-视频描述的最佳实践"><a href="#1-视频描述的最佳实践" class="headerlink" title="1. 视频描述的最佳实践"></a>1. 视频描述的最佳实践</h3><p><strong>好的描述</strong>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">生成一个产品介绍视频，要求：</span><br><span class="line"><span class="bullet">-</span> 尺寸：1920x1080</span><br><span class="line"><span class="bullet">-</span> 时长：45秒（7个slides，每个6秒）</span><br><span class="line"><span class="bullet">-</span> 主题色：#dc001c（红色）</span><br><span class="line"><span class="bullet">-</span> 动画要求：</span><br><span class="line"><span class="bullet">*</span> 标题从下方弹性滑入</span><br><span class="line"><span class="bullet">*</span> 卡片依次弹出，间隔0.5秒</span><br><span class="line"><span class="bullet">*</span> 使用 spring 动画曲线</span><br><span class="line"><span class="bullet">*</span> 列表项从左侧滑入</span><br><span class="line"><span class="bullet">-</span> 转场：红色背景滑入滑出，交替方向</span><br></pre></td></tr></table></figure>
-
-<p><strong>差的描述</strong>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">做个产品介绍视频，好看一点。</span><br></pre></td></tr></table></figure>
-<h3 id="2-常用的动画指令模板"><a href="#2-常用的动画指令模板" class="headerlink" title="2. 常用的动画指令模板"></a>2. 常用的动画指令模板</h3><table>
-<thead>
-<tr>
-<th>效果</th>
-<th>指令模板</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>弹性滑入</strong></td>
-<td>“从下方滑入，使用 spring 动画，damping: 15, stiffness: 150”</td>
-</tr>
-<tr>
-<td><strong>依次弹出</strong></td>
-<td>“元素依次出现，每个延迟 15 帧，使用 scale 从 0.8 到 1”</td>
-</tr>
-<tr>
-<td><strong>淡入</strong></td>
-<td>“透明度从 0 到 1，持续 20 帧”</td>
-</tr>
-<tr>
-<td><strong>列表滑入</strong></td>
-<td>“从左侧滑入，每个元素延迟 10 帧”</td>
-</tr>
-<tr>
-<td><strong>转场</strong></td>
-<td>“红色背景从左侧滑入覆盖，0.5 秒后从右侧滑出”</td>
-</tr>
-</tbody></table>
-<h3 id="3-增量迭代的沟通策略"><a href="#3-增量迭代的沟通策略" class="headerlink" title="3. 增量迭代的沟通策略"></a>3. 增量迭代的沟通策略</h3><p><strong>不要一次性要求太多</strong>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">错误：&quot;请帮我创建所有 7 个 slides，每个都要有复杂的动画&quot;</span><br><span class="line">正确：</span><br><span class="line"><span class="bullet">1.</span> &quot;先创建项目框架和第一个 slide&quot;</span><br><span class="line"><span class="bullet">2.</span> &quot;验证 OK 后，再创建第 2-3 个 slides&quot;</span><br><span class="line"><span class="bullet">3.</span> &quot;继续添加剩余的 slides&quot;</span><br><span class="line"><span class="bullet">4.</span> &quot;最后添加转场效果&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="4-处理-AI-生成错误"><a href="#4-处理-AI-生成错误" class="headerlink" title="4. 处理 AI 生成错误"></a>4. 处理 AI 生成错误</h3><p>当渲染出错时，使用 <strong>“删除法”</strong>：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">渲染时报错：Minified React error #130</span><br><span class="line">请帮我：</span><br><span class="line"><span class="bullet">1.</span> 先删除复杂动画，用最简单的静态布局测试</span><br><span class="line"><span class="bullet">2.</span> 确认能正常渲染后，再逐步添加动画</span><br><span class="line"><span class="bullet">3.</span> 每次只添加一个动画效果，验证后再继续</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、工具链选择"><a href="#四、工具链选择" class="headerlink" title="四、工具链选择"></a>四、工具链选择</h2><table>
-<thead>
-<tr>
-<th>工具</th>
-<th>适用场景</th>
-<th>优势</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Remotion + React</strong></td>
-<td>数据驱动型视频、产品演示、宣传视频</td>
-<td>代码可控、版本管理、React 生态</td>
-</tr>
-<tr>
-<td><strong>Motion&#x2F;Framer Motion</strong></td>
-<td>简单的 UI 动画录屏</td>
-<td>学习成本低、React 原生支持</td>
-</tr>
-<tr>
-<td><strong>HTML&#x2F;CSS + 录屏</strong></td>
-<td>一次性简单视频</td>
-<td>无需框架、快速原型</td>
-</tr>
-</tbody></table>
-<h3 id="推荐技术栈"><a href="#推荐技术栈" class="headerlink" title="推荐技术栈"></a>推荐技术栈</h3><p><strong>对于产品宣传视频，强烈推荐 Remotion</strong>：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"></span><br><span class="line"> <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line"> <span class="attr">&quot;remotion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4.0.421&quot;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;react&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^18.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;typescript&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^5.3.0&quot;</span></span><br><span class="line"> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>为什么选择 Remotion？</strong></p>
-<ol>
-<li><strong>React 友好</strong>：使用熟悉的 JSX 语法描述视频</li>
-<li><strong>时间精确</strong>：帧级别的动画控制</li>
-<li><strong>参数化</strong>：可以通过 props 调整视频内容</li>
-<li><strong>可编程</strong>：数据驱动，可以从 API 获取内容生成视频</li>
-<li><strong>高质量</strong>：渲染输出为 H.264 编码的 MP4</li>
-</ol>
-<h3 id="进阶工具：Remotion-Skills"><a href="#进阶工具：Remotion-Skills" class="headerlink" title="进阶工具：Remotion Skills"></a>进阶工具：Remotion Skills</h3><p><strong>Remotion Skills</strong> 是官方提供的最佳实践检查工具，可以自动分析你的代码并提供优化建议。<br><strong>安装方式</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方式 1：使用 Skill.sh 命令行（推荐）</span></span><br><span class="line">npx skills add https://github.com/remotion-dev/skills --skill remotion-best-practices</span><br><span class="line"><span class="comment"># 方式 2：从 GitHub 仓库下载</span></span><br><span class="line"><span class="comment"># 下载 https://github.com/remotion-dev/remotion/tree/main/packages/skills</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>示例输出</strong>：</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">✓ 使用 spring 动画替代线性动画，提升视觉效果</span><br><span class="line">✓ 建议使用 Sequence 组件管理时间轴</span><br><span class="line">⚠ 发现未使用的 <span class="keyword">import</span>，建议清理</span><br><span class="line">✓ 图片建议使用 <span class="meta">@remotion</span>/media-utils 进行预加载</span><br></pre></td></tr></table></figure>
-
-<p>这个工具特别适合在<strong>项目完成后</strong>或<strong>遇到性能问题时</strong>使用，能够帮助你写出更专业、更高效的 Remotion 代码。</p>
-<h2 id="五、从实践总结的方法论"><a href="#五、从实践总结的方法论" class="headerlink" title="五、从实践总结的方法论"></a>五、从实践总结的方法论</h2><h3 id="核心心法"><a href="#核心心法" class="headerlink" title="核心心法"></a>核心心法</h3><blockquote>
-<p><strong>“视频创作的未来不是剪辑，而是描述。”</strong></p>
-</blockquote>
-<p>传统流程：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">想法 → 画分镜 → 找素材 → 剪辑 → 渲染 → 修改 → 重新渲染</span><br><span class="line">↑<span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">__<span class="emphasis">_↓</span></span></span><br><span class="line"><span class="emphasis"><span class="strong"></span></span></span><br><span class="line"><span class="emphasis"><span class="strong">（循环多次，耗时数天）</span></span></span><br></pre></td></tr></table></figure>
-
-<p>AI+IDE 流程：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">想法 → 自然语言描述 → AI生成代码 → 预览 → 追加指令 → 渲染</span><br><span class="line">↑<span class="strong">____</span><span class="strong">____</span><span class="strong">____</span><span class="strong">__↓</span></span><br><span class="line"><span class="strong">（分钟级迭代）</span></span><br></pre></td></tr></table></figure>
-<h3 id="关键成功因素"><a href="#关键成功因素" class="headerlink" title="关键成功因素"></a>关键成功因素</h3><ol>
-<li><strong>需求描述要具体</strong></li>
-</ol>
-<ul>
-<li>明确尺寸、时长、颜色</li>
-<li>描述动画的起止状态和持续时间</li>
-<li>提供参考示例或截图</li>
-</ul>
-<ol start="2">
-<li><strong>采用增量开发</strong></li>
-</ol>
-<ul>
-<li>先框架，后细节</li>
-<li>先静态，后动画</li>
-<li>先单页，后多页</li>
-</ul>
-<ol start="3">
-<li><strong>建立反馈循环</strong></li>
-</ol>
-<ul>
-<li>每完成一个阶段就预览验证</li>
-<li>发现问题立即调整，不累积</li>
-<li>使用版本控制（git）管理代码</li>
-</ul>
-<ol start="4">
-<li><strong>理解动画原理</strong></li>
-</ol>
-<ul>
-<li>掌握基本的动画概念：opacity、transform、spring、easing</li>
-<li>知道如何描述时间：帧 vs 秒（30fps 下 30 帧 &#x3D; 1 秒）</li>
-<li>学会使用 spring 物理动画替代简单的线性动画</li>
-</ul>
-<h2 id="六、完整指令模板"><a href="#六、完整指令模板" class="headerlink" title="六、完整指令模板"></a>六、完整指令模板</h2><h3 id="项目初始化"><a href="#项目初始化" class="headerlink" title="项目初始化"></a>项目初始化</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">请帮我创建一个 Remotion 视频项目：</span><br><span class="line"></span><br><span class="line">项目需求：</span><br><span class="line"><span class="bullet">-</span> 视频主题：[描述视频内容]</span><br><span class="line"><span class="bullet">-</span> 尺寸：1920x1080</span><br><span class="line"><span class="bullet">-</span> 帧率：30fps</span><br><span class="line"><span class="bullet">-</span> 总时长：[X 秒]</span><br><span class="line"><span class="bullet">-</span> 包含 [N] 个场景/页面</span><br><span class="line"></span><br><span class="line">请创建完整的项目结构：</span><br><span class="line"><span class="bullet">1.</span> package.json（包含 remotion 依赖）</span><br><span class="line"><span class="bullet">2.</span> tsconfig.json</span><br><span class="line"><span class="bullet">3.</span> remotion.config.ts</span><br><span class="line"><span class="bullet">4.</span> src/index.tsx（入口）</span><br><span class="line"><span class="bullet">5.</span> src/Video.tsx（主组件）</span><br><span class="line"><span class="bullet">6.</span> src/components/ 下的各个 Slide 组件</span><br></pre></td></tr></table></figure>
-
-<h3 id="转场效果"><a href="#转场效果" class="headerlink" title="转场效果"></a>转场效果</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">请在 slides 之间添加转场效果：</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"><span class="bullet">-</span> 类型：滑入滑出</span><br><span class="line"><span class="bullet">-</span> 颜色：[主题色]</span><br><span class="line"><span class="bullet">-</span> 方向：交替从左/右滑入</span><br><span class="line"><span class="bullet">-</span> 时长：0.5 秒（15 帧）</span><br><span class="line"><span class="bullet">-</span> 实现方式：使用 Remotion 的 Sequence 组件</span><br></pre></td></tr></table></figure>
-
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>通过 Wealth Copilot 视频的实践，我验证了这套方法的可行性：<br><strong>从需求到视频，45 分钟完成</strong>：</p>
-<ul>
-<li>5 分钟：描述需求，AI 生成项目框架</li>
-<li>20 分钟：增量开发 7 个 slides</li>
-<li>10 分钟：添加动画和转场</li>
-<li>10 分钟：调试优化</li>
-<li>45 秒：最终渲染输出</li>
-</ul>
-<p><strong>相比传统方式的优势</strong>：</p>
-<ul>
-<li>AE&#x2F;DaVinci：学习 1 个月，制作 3-5 天</li>
-<li>AI+Remotion：描述 5 分钟，制作 40 分钟</li>
-</ul>
-<blockquote>
-<p><strong>终极心法</strong>：<br><strong>“你的指令越精准，AI 的视频越可靠；你的描述越清晰，视频的传播力越强。”</strong><br>视频创作不再是设计师的专利，产品人员用自然语言也能创作出专业级的产品宣传视频。</p>
-</blockquote>
-<p><strong>参考资源</strong>：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.remotion.dev/">Remotion 官方文档</a></li>
 </ul>
 
       
