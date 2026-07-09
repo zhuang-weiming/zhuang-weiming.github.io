@@ -121,7 +121,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">306</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">307</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -184,7 +184,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">306</span>
+          <span class="site-state-item-count">307</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -216,6 +216,131 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/07/09/V21%20%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%20vs%20WIF%20v5.9%20%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E4%B8%96%E7%95%8C%E8%A7%82%E4%B8%8E%E6%96%B9%E6%B3%95%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="2026/07/09/V21%20%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%20vs%20WIF%20v5.9%20%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E4%B8%96%E7%95%8C%E8%A7%82%E4%B8%8E%E6%96%B9%E6%B3%95%E8%AE%BA/" class="post-title-link" itemprop="url">V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-07-09 21:48:00 / Modified: 21:48:14" itemprop="dateCreated datePublished" datetime="2026-07-09T21:48:00+08:00">2026-07-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、V21-阿尔法引擎：纯截面因子定价"><a href="#一、V21-阿尔法引擎：纯截面因子定价" class="headerlink" title="一、V21 阿尔法引擎：纯截面因子定价"></a>一、V21 阿尔法引擎：纯截面因子定价</h2><h3 id="世界观"><a href="#世界观" class="headerlink" title="世界观"></a>世界观</h3><p><strong>超额收益源于横截面因子暴露的持续性分化。</strong> 市场贝塔是外生给定的常数（恒定满仓），Alpha 的生成不依赖于对市场方向的预测，而是依赖于因子信号在横截面上的排序能力。系统默认市场状态不可预测且无需预测，收益的方差全部由选股截面的离散度解释。</p>
+<h3 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h3><ul>
+<li><strong>收益模型</strong>：严格基于截面因子模型。每月对全市场候选池进行单维或多维因子排序，选取 Top N 等权持有。Alpha 的数学期望等于因子多空收益，风险等于因子收益的时间序列波动率。</li>
+<li><strong>核心假设</strong>：因子溢价在时间序列上平稳，截面排名的领先性在持有期内（月度）不会发生均值回归或反转。</li>
+<li><strong>风控逻辑</strong>：纯粹的事前过滤。流动性阈值、异常收益率剔除、行业集中度上限，均用于保证截面排序的输入数据质量，而非管理组合的尾部风险。不设组合级止损、不管理市场贝塔暴露、不预留现金缓冲。<strong>风控的本质是维持因子暴露的纯洁性，而非控制下行风险。</strong></li>
+<li><strong>对前视偏差的零容忍</strong>：如 Bad-Returns Filter 仅使用 $i_{global-2} \to i_{global-1}$ 的历史数据，严格切断当期数据对当期选股的污染，即使对 Sharpe 的边际贡献极小（&lt;0.01）也绝不妥协。</li>
+</ul>
+<hr>
+<h2 id="二、WIF-v5-9-贝塔框架：宏观状态条件下的动态风险预算"><a href="#二、WIF-v5-9-贝塔框架：宏观状态条件下的动态风险预算" class="headerlink" title="二、WIF v5.9 贝塔框架：宏观状态条件下的动态风险预算"></a>二、WIF v5.9 贝塔框架：宏观状态条件下的动态风险预算</h2><h3 id="世界观-1"><a href="#世界观-1" class="headerlink" title="世界观"></a>世界观</h3><p><strong>组合收益的决定性变量是宏观 Regime 切换时的贝塔暴露度，而非资产类别内部的标的选择。</strong> Alpha 是贝塔动态再分配的副产品。系统的核心命题不是”在给定暴露下选谁”，而是”在当前宏观状态下给多少暴露”。</p>
+<h3 id="方法论-1"><a href="#方法论-1" class="headerlink" title="方法论"></a>方法论</h3><ul>
+<li><strong>收益模型</strong>：基于宏观状态转移模型。Phase 1（CSI&#x2F;F33b&#x2F;F29）判断系统性风险状态，Phase 2（PMI&#x2F;CPI&#x2F;Yield Curve）判定宏观象限，两相结合输出三轨制贝塔预算（股票&#x2F;固收&#x2F;另类的上限比例）。Alpha 来自 Regime 切换的领先识别与时滞套利。</li>
+<li><strong>核心假设</strong>：宏观经济状态具有惯性，象限转换存在可识别的领先信号（如信用利差扩张、PMI 趋势反转），且信号触发后的配置调整能在摩擦成本约束下捕获 Regime 溢价。</li>
+<li><strong>风控逻辑</strong>：分层阻断。Phase 1 是系统性风险的硬阻断器（EMERGENCY 绕过所有后续 Phase，强制 SHV+GLD），Phase 3.0 MCI 矩阵是贝塔暴露的软上限，Phase 5B CVaR 是组合尾部风险的统计审查。<strong>风控的本质是管理贝塔暴露的方向和大小，而非筛选标的的质量。</strong></li>
+<li><strong>对执行摩擦的精确建模</strong>：3% 申购费的硬编码、VIX 自适应再平衡带、非对称调仓阈值（超配宽&#x2F;低配窄），承认 Alpha 会被交易成本反噬，将执行层纳入收益模型。</li>
+</ul>
+<hr>
+<h2 id="三、核心分歧总结"><a href="#三、核心分歧总结" class="headerlink" title="三、核心分歧总结"></a>三、核心分歧总结</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>V21 阿尔法</th>
+<th>WIF v5.9 贝塔</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>收益归因</strong></td>
+<td>截面因子溢价（选股）</td>
+<td>状态转移溢价（择时&#x2F;配比）</td>
+</tr>
+<tr>
+<td><strong>时间维度</strong></td>
+<td>静态（月度截面快照，不考虑时序演变）</td>
+<td>动态（状态转移的领先与滞后）</td>
+</tr>
+<tr>
+<td><strong>风险定义</strong></td>
+<td>输入数据噪声与因子失效</td>
+<td>系统性贝塔错配与尾部崩塌</td>
+</tr>
+<tr>
+<td><strong>风控目标</strong></td>
+<td>维持因子暴露的纯洁性与统计有效性</td>
+<td>控制贝塔暴露与宏观状态的偏离度</td>
+</tr>
+<tr>
+<td><strong>现金定位</strong></td>
+<td>零（空仓&#x3D;放弃因子暴露&#x3D;机会成本）</td>
+<td>核心防御工具（SHV 是贝塔收缩的载体）</td>
+</tr>
+<tr>
+<td><strong>容错机制</strong></td>
+<td>分散化（10只等权吸收个股特异性风险）</td>
+<td>Hysteresis（5日持续确认过滤假信号）</td>
+</tr>
+</tbody></table>
+<p><strong>本质对立</strong>：V21 假设市场方向不可知且无需知，将全部赌注押在截面分化上；WIF 假设市场方向可模糊识别且必须识别，将主要赌注押在贝塔分配上。前者信奉”分散化是唯一免费午餐”，后者信奉”Regime 切换是最大 Alpha 来源”。两者在数学框架和风控逻辑上互不兼容，分别回答了投资组合构建中两个正交的问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -742,81 +867,6 @@
 </ul>
 </li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/07/01/Data-Wrangler/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="images/avatar.gif">
-      <meta itemprop="name" content="Zhuang Wei Ming">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuang's Diary">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Zhuang's Diary">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="2026/07/01/Data-Wrangler/" class="post-title-link" itemprop="url">Data-Wrangler</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2026-07-01 17:03:00 / Modified: 17:14:21" itemprop="dateCreated datePublished" datetime="2026-07-01T17:03:00+08:00">2026-07-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Data-Wrangler-Extension-for-Visual-Studio-Code"><a href="#Data-Wrangler-Extension-for-Visual-Studio-Code" class="headerlink" title="Data Wrangler Extension for Visual Studio Code"></a>Data Wrangler Extension for Visual Studio Code</h1><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-toolsai.datawrangler" title="https:&#x2F;&#x2F;marketplace.visualstudio.com&#x2F;items?itemName&#x3D;ms-toolsai.datawrangler">Data Wrangler</a> is a data viewing and cleaning tool that is integrated into VS Code and VS Code Jupyter Notebooks. It provides a rich user interface to view and analyze your data, show insightful column statistics and visualizations, and can automatically generate Pandas code as you clean and transform the data if that’s your goal.</p>
-<ol>
-<li><strong>Viewing mode:</strong> The viewing mode optimizes the interface for you to quickly view, filter and sort your data. This mode is great for doing initial exploration on the dataset.</li>
-<li><strong>Editing mode:</strong> The Editing mode optimizes the interface for you to apply <strong>transformations</strong>, <strong>cleaning</strong>, or <strong>modifications</strong> to your dataset. As you apply these transformations in the interface, Data Wrangler <strong>automatically generates the relevant Pandas code</strong>, and this can be <strong>exported back into your notebook for reuse</strong>.</li>
-</ol>
-<img data-src="2026/07/01/Data-Wrangler/1.png" class="">
 
       
     </div>

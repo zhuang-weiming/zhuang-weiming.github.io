@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="../../../../images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="../../../../css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"../../../../images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"../../../../search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="../../../../js/config.js" defer></script>
+
+    <meta name="description" content="一、V21 阿尔法引擎：纯截面因子定价世界观超额收益源于横截面因子暴露的持续性分化。 市场贝塔是外生给定的常数（恒定满仓），Alpha 的生成不依赖于对市场方向的预测，而是依赖于因子信号在横截面上的排序能力。系统默认市场状态不可预测且无需预测，收益的方差全部由选股截面的离散度解释。 方法论 收益模型：严格基于截面因子模型。每月对全市场候选池进行单维或多维因子排序，选取 Top N 等权持有。Alp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2026/07/09/V21%20%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%20vs%20WIF%20v5.9%20%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E4%B8%96%E7%95%8C%E8%A7%82%E4%B8%8E%E6%96%B9%E6%B3%95%E8%AE%BA/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="一、V21 阿尔法引擎：纯截面因子定价世界观超额收益源于横截面因子暴露的持续性分化。 市场贝塔是外生给定的常数（恒定满仓），Alpha 的生成不依赖于对市场方向的预测，而是依赖于因子信号在横截面上的排序能力。系统默认市场状态不可预测且无需预测，收益的方差全部由选股截面的离散度解释。 方法论 收益模型：严格基于截面因子模型。每月对全市场候选池进行单维或多维因子排序，选取 Top N 等权持有。Alp">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-07-09T13:48:00.000Z">
+<meta property="article:modified_time" content="2026-07-09T13:48:14.529Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="FMR">
+<meta property="article:tag" content="agents">
+<meta property="article:tag" content="algorithmTrading">
+<meta property="article:tag" content="wealthbank">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2026/07/09/V21%20%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%20vs%20WIF%20v5.9%20%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E4%B8%96%E7%95%8C%E8%A7%82%E4%B8%8E%E6%96%B9%E6%B3%95%E8%AE%BA/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2026/07/09/V21%20%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%20vs%20WIF%20v5.9%20%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E4%B8%96%E7%95%8C%E8%A7%82%E4%B8%8E%E6%96%B9%E6%B3%95%E8%AE%BA/","path":"2026/07/09/V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论/","title":"V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="../../../../js/utils.js" defer></script><script src="../../../../js/motion.js" defer></script><script src="../../../../js/sidebar.js" defer></script><script src="../../../../js/next-boot.js" defer></script><script src="../../../../js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="../../../../js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"../../../../lib/pdf/web/viewer.html"}</script>
+  <script src="../../../../js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="../../../../js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="../../../../js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="../../../../js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2026/07/09/V21%20%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%20vs%20WIF%20v5.9%20%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E4%B8%96%E7%95%8C%E8%A7%82%E4%B8%8E%E6%96%B9%E6%B3%95%E8%AE%BA/"}</script>
+  <script src="../../../../js/third-party/quicklink.js" defer></script>
+
+  <noscript>
+    <link rel="stylesheet" href="../../../../css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">73</span></a></li><li class="menu-item menu-item-archives"><a href="../../../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">307</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81V21-%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%EF%BC%9A%E7%BA%AF%E6%88%AA%E9%9D%A2%E5%9B%A0%E5%AD%90%E5%AE%9A%E4%BB%B7"><span class="nav-number">1.</span> <span class="nav-text">一、V21 阿尔法引擎：纯截面因子定价</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%96%E7%95%8C%E8%A7%82"><span class="nav-number">1.1.</span> <span class="nav-text">世界观</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%AE%BA"><span class="nav-number">1.2.</span> <span class="nav-text">方法论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81WIF-v5-9-%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E5%AE%8F%E8%A7%82%E7%8A%B6%E6%80%81%E6%9D%A1%E4%BB%B6%E4%B8%8B%E7%9A%84%E5%8A%A8%E6%80%81%E9%A3%8E%E9%99%A9%E9%A2%84%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">二、WIF v5.9 贝塔框架：宏观状态条件下的动态风险预算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%96%E7%95%8C%E8%A7%82-1"><span class="nav-number">2.1.</span> <span class="nav-text">世界观</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%AE%BA-1"><span class="nav-number">2.2.</span> <span class="nav-text">方法论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%A0%B8%E5%BF%83%E5%88%86%E6%AD%A7%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">三、核心分歧总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="../../../../archives/">
+          <span class="site-state-item-count">307</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="../../../../tags/">
+        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="../../../../zwm136200@gmail.com" title="E-Mail → zwm136200@gmail.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/07/09/V21%20%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%20vs%20WIF%20v5.9%20%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E4%B8%96%E7%95%8C%E8%A7%82%E4%B8%8E%E6%96%B9%E6%B3%95%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-07-09 21:48:00 / Modified: 21:48:14" itemprop="dateCreated datePublished" datetime="2026-07-09T21:48:00+08:00">2026-07-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="一、V21-阿尔法引擎：纯截面因子定价"><a href="#一、V21-阿尔法引擎：纯截面因子定价" class="headerlink" title="一、V21 阿尔法引擎：纯截面因子定价"></a>一、V21 阿尔法引擎：纯截面因子定价</h2><h3 id="世界观"><a href="#世界观" class="headerlink" title="世界观"></a>世界观</h3><p><strong>超额收益源于横截面因子暴露的持续性分化。</strong> 市场贝塔是外生给定的常数（恒定满仓），Alpha 的生成不依赖于对市场方向的预测，而是依赖于因子信号在横截面上的排序能力。系统默认市场状态不可预测且无需预测，收益的方差全部由选股截面的离散度解释。</p>
+<h3 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h3><ul>
+<li><strong>收益模型</strong>：严格基于截面因子模型。每月对全市场候选池进行单维或多维因子排序，选取 Top N 等权持有。Alpha 的数学期望等于因子多空收益，风险等于因子收益的时间序列波动率。</li>
+<li><strong>核心假设</strong>：因子溢价在时间序列上平稳，截面排名的领先性在持有期内（月度）不会发生均值回归或反转。</li>
+<li><strong>风控逻辑</strong>：纯粹的事前过滤。流动性阈值、异常收益率剔除、行业集中度上限，均用于保证截面排序的输入数据质量，而非管理组合的尾部风险。不设组合级止损、不管理市场贝塔暴露、不预留现金缓冲。<strong>风控的本质是维持因子暴露的纯洁性，而非控制下行风险。</strong></li>
+<li><strong>对前视偏差的零容忍</strong>：如 Bad-Returns Filter 仅使用 $i_{global-2} \to i_{global-1}$ 的历史数据，严格切断当期数据对当期选股的污染，即使对 Sharpe 的边际贡献极小（&lt;0.01）也绝不妥协。</li>
+</ul>
+<hr>
+<h2 id="二、WIF-v5-9-贝塔框架：宏观状态条件下的动态风险预算"><a href="#二、WIF-v5-9-贝塔框架：宏观状态条件下的动态风险预算" class="headerlink" title="二、WIF v5.9 贝塔框架：宏观状态条件下的动态风险预算"></a>二、WIF v5.9 贝塔框架：宏观状态条件下的动态风险预算</h2><h3 id="世界观-1"><a href="#世界观-1" class="headerlink" title="世界观"></a>世界观</h3><p><strong>组合收益的决定性变量是宏观 Regime 切换时的贝塔暴露度，而非资产类别内部的标的选择。</strong> Alpha 是贝塔动态再分配的副产品。系统的核心命题不是”在给定暴露下选谁”，而是”在当前宏观状态下给多少暴露”。</p>
+<h3 id="方法论-1"><a href="#方法论-1" class="headerlink" title="方法论"></a>方法论</h3><ul>
+<li><strong>收益模型</strong>：基于宏观状态转移模型。Phase 1（CSI&#x2F;F33b&#x2F;F29）判断系统性风险状态，Phase 2（PMI&#x2F;CPI&#x2F;Yield Curve）判定宏观象限，两相结合输出三轨制贝塔预算（股票&#x2F;固收&#x2F;另类的上限比例）。Alpha 来自 Regime 切换的领先识别与时滞套利。</li>
+<li><strong>核心假设</strong>：宏观经济状态具有惯性，象限转换存在可识别的领先信号（如信用利差扩张、PMI 趋势反转），且信号触发后的配置调整能在摩擦成本约束下捕获 Regime 溢价。</li>
+<li><strong>风控逻辑</strong>：分层阻断。Phase 1 是系统性风险的硬阻断器（EMERGENCY 绕过所有后续 Phase，强制 SHV+GLD），Phase 3.0 MCI 矩阵是贝塔暴露的软上限，Phase 5B CVaR 是组合尾部风险的统计审查。<strong>风控的本质是管理贝塔暴露的方向和大小，而非筛选标的的质量。</strong></li>
+<li><strong>对执行摩擦的精确建模</strong>：3% 申购费的硬编码、VIX 自适应再平衡带、非对称调仓阈值（超配宽&#x2F;低配窄），承认 Alpha 会被交易成本反噬，将执行层纳入收益模型。</li>
+</ul>
+<hr>
+<h2 id="三、核心分歧总结"><a href="#三、核心分歧总结" class="headerlink" title="三、核心分歧总结"></a>三、核心分歧总结</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>V21 阿尔法</th>
+<th>WIF v5.9 贝塔</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>收益归因</strong></td>
+<td>截面因子溢价（选股）</td>
+<td>状态转移溢价（择时&#x2F;配比）</td>
+</tr>
+<tr>
+<td><strong>时间维度</strong></td>
+<td>静态（月度截面快照，不考虑时序演变）</td>
+<td>动态（状态转移的领先与滞后）</td>
+</tr>
+<tr>
+<td><strong>风险定义</strong></td>
+<td>输入数据噪声与因子失效</td>
+<td>系统性贝塔错配与尾部崩塌</td>
+</tr>
+<tr>
+<td><strong>风控目标</strong></td>
+<td>维持因子暴露的纯洁性与统计有效性</td>
+<td>控制贝塔暴露与宏观状态的偏离度</td>
+</tr>
+<tr>
+<td><strong>现金定位</strong></td>
+<td>零（空仓&#x3D;放弃因子暴露&#x3D;机会成本）</td>
+<td>核心防御工具（SHV 是贝塔收缩的载体）</td>
+</tr>
+<tr>
+<td><strong>容错机制</strong></td>
+<td>分散化（10只等权吸收个股特异性风险）</td>
+<td>Hysteresis（5日持续确认过滤假信号）</td>
+</tr>
+</tbody></table>
+<p><strong>本质对立</strong>：V21 假设市场方向不可知且无需知，将全部赌注押在截面分化上；WIF 假设市场方向可模糊识别且必须识别，将主要赌注押在贝塔分配上。前者信奉”分散化是唯一免费午餐”，后者信奉”Regime 切换是最大 Alpha 来源”。两者在数学框架和风控逻辑上互不兼容，分别回答了投资组合构建中两个正交的问题。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2026/07/09/V21%20%E9%98%BF%E5%B0%94%E6%B3%95%E5%BC%95%E6%93%8E%20vs%20WIF%20v5.9%20%E8%B4%9D%E5%A1%94%E6%A1%86%E6%9E%B6%EF%BC%9A%E4%B8%96%E7%95%8C%E8%A7%82%E4%B8%8E%E6%96%B9%E6%B3%95%E8%AE%BA/" title="V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论">https://zhuang-weiming.github.io/2026/07/09/V21 阿尔法引擎 vs WIF v5.9 贝塔框架：世界观与方法论/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="../../../../tags/agents/" rel="tag"># agents</a>
+              <a href="../../../../tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="../../../../tags/FMR/" rel="tag"># FMR</a>
+              <a href="../../../../tags/wealthbank/" rel="tag"># wealthbank</a>
+              <a href="../../../../tags/algorithmTrading/" rel="tag"># algorithmTrading</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="../../07/%E7%AE%97%E6%B3%95%E4%BA%A4%E6%98%934-%E8%82%A1%E7%A5%A8%E4%B8%8EETF%E5%9F%BA%E9%87%91%E7%9A%84%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%BC%8F/" rel="prev" title="算法交易4-股票与ETF基金的均值回归模式">
+                  <i class="fa fa-angle-left"></i> 算法交易4-股票与ETF基金的均值回归模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zhuang-weiming/zhuang-weiming.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="../../../../js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
