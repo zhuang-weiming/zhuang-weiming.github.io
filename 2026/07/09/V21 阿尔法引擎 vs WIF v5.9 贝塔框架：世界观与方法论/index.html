@@ -28,7 +28,7 @@
 <meta property="og:description" content="一、V21 阿尔法引擎：纯截面因子定价世界观超额收益源于横截面因子暴露的持续性分化。 市场贝塔是外生给定的常数（恒定满仓），Alpha 的生成不依赖于对市场方向的预测，而是依赖于因子信号在横截面上的排序能力。系统默认市场状态不可预测且无需预测，收益的方差全部由选股截面的离散度解释。 方法论 收益模型：严格基于截面因子模型。每月对全市场候选池进行单维或多维因子排序，选取 Top N 等权持有。Alp">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-07-09T13:48:00.000Z">
-<meta property="article:modified_time" content="2026-07-09T13:49:09.897Z">
+<meta property="article:modified_time" content="2026-07-09T13:49:50.621Z">
 <meta property="article:author" content="Zhuang Wei Ming">
 <meta property="article:tag" content="Algorithm">
 <meta property="article:tag" content="FMR">
@@ -266,7 +266,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2026-07-09 21:48:00 / Modified: 21:49:09" itemprop="dateCreated datePublished" datetime="2026-07-09T21:48:00+08:00">2026-07-09</time>
+      <time title="Created: 2026-07-09 21:48:00 / Modified: 21:49:50" itemprop="dateCreated datePublished" datetime="2026-07-09T21:48:00+08:00">2026-07-09</time>
     </span>
 
   
@@ -285,7 +285,6 @@
 <li><strong>风控逻辑</strong>：纯粹的事前过滤。流动性阈值、异常收益率剔除、行业集中度上限，均用于保证截面排序的输入数据质量，而非管理组合的尾部风险。不设组合级止损、不管理市场贝塔暴露、不预留现金缓冲。<strong>风控的本质是维持因子暴露的纯洁性，而非控制下行风险。</strong></li>
 <li><strong>对前视偏差的零容忍</strong>：如 Bad-Returns Filter 仅使用 $i_{global-2} \to i_{global-1}$ 的历史数据，严格切断当期数据对当期选股的污染，即使对 Sharpe 的边际贡献极小（&lt;0.01）也绝不妥协。</li>
 </ul>
-<hr>
 <h2 id="二、WIF-v5-9-贝塔框架：宏观状态条件下的动态风险预算"><a href="#二、WIF-v5-9-贝塔框架：宏观状态条件下的动态风险预算" class="headerlink" title="二、WIF v5.9 贝塔框架：宏观状态条件下的动态风险预算"></a>二、WIF v5.9 贝塔框架：宏观状态条件下的动态风险预算</h2><h3 id="世界观-1"><a href="#世界观-1" class="headerlink" title="世界观"></a>世界观</h3><p><strong>组合收益的决定性变量是宏观 Regime 切换时的贝塔暴露度，而非资产类别内部的标的选择。</strong> Alpha 是贝塔动态再分配的副产品。系统的核心命题不是”在给定暴露下选谁”，而是”在当前宏观状态下给多少暴露”。</p>
 <h3 id="方法论-1"><a href="#方法论-1" class="headerlink" title="方法论"></a>方法论</h3><ul>
 <li><strong>收益模型</strong>：基于宏观状态转移模型。Phase 1（CSI&#x2F;F33b&#x2F;F29）判断系统性风险状态，Phase 2（PMI&#x2F;CPI&#x2F;Yield Curve）判定宏观象限，两相结合输出三轨制贝塔预算（股票&#x2F;固收&#x2F;另类的上限比例）。Alpha 来自 Regime 切换的领先识别与时滞套利。</li>
