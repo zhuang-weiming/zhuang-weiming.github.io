@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="../../../../images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="../../../../css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhuang-weiming.github.io","root":"/","images":"../../../../images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":true,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"../../../../search.json","localsearch":{"enable":true,"top_n_per_article":2,"unescape":true,"preload":false}}</script><script src="../../../../js/config.js" defer></script>
+
+    <meta name="description" content="1. 概述1.1 目标本文描述投资管理平台的通用需求与设计，覆盖三项核心能力：投资建议、监控、投资组合再平衡。文档面向产品与架构设计，只描述能力、业务规则、数据模型与流程，不绑定任何具体实现、厂商或技术栈。 1.2 能力地图 投资建议：客户画像与风险画像、投资契约与授权模式、组合构建、事前适销性校验、与外部投研平台的协同。 监控：风险-收益特征度量、资产配置与限额监控、损益归因、授信与抵押监控、按">
+<meta property="og:type" content="article">
+<meta property="og:title" content="私人银行-财富投资管理平台">
+<meta property="og:url" content="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:site_name" content="Zhuang&#39;s Diary">
+<meta property="og:description" content="1. 概述1.1 目标本文描述投资管理平台的通用需求与设计，覆盖三项核心能力：投资建议、监控、投资组合再平衡。文档面向产品与架构设计，只描述能力、业务规则、数据模型与流程，不绑定任何具体实现、厂商或技术栈。 1.2 能力地图 投资建议：客户画像与风险画像、投资契约与授权模式、组合构建、事前适销性校验、与外部投研平台的协同。 监控：风险-收益特征度量、资产配置与限额监控、损益归因、授信与抵押监控、按">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/1.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/2.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/3.png">
+<meta property="og:image" content="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/4.png">
+<meta property="article:published_time" content="2026-10-07T02:06:00.000Z">
+<meta property="article:modified_time" content="2026-10-07T05:11:13.070Z">
+<meta property="article:author" content="Zhuang Wei Ming">
+<meta property="article:tag" content="Finance">
+<meta property="article:tag" content="Finance-Banking">
+<meta property="article:tag" content="Finance-PrivateBank">
+<meta property="article:tag" content="Finance-RiskManagement">
+<meta property="article:tag" content="Finance-WealthManagement">
+<meta property="article:tag" content="Fintech">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/1.png">
+
+
+<link rel="canonical" href="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/","path":"2026/10/07/私人银行-财富投资管理平台/","title":"私人银行-财富投资管理平台"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>私人银行-财富投资管理平台 | Zhuang's Diary</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="../../../../js/utils.js" defer></script><script src="../../../../js/motion.js" defer></script><script src="../../../../js/sidebar.js" defer></script><script src="../../../../js/next-boot.js" defer></script><script src="../../../../js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="../../../../js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"../../../../lib/pdf/web/viewer.html"}</script>
+  <script src="../../../../js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="../../../../js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="../../../../js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="../../../../js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/"}</script>
+  <script src="../../../../js/third-party/quicklink.js" defer></script>
+
+  <noscript>
+    <link rel="stylesheet" href="../../../../css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Zhuang's Diary</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">言之有物，持之以恒</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="../../../../index.html" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="../../../../tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">71</span></a></li><li class="menu-item menu-item-archives"><a href="../../../../archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">316</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E8%83%BD%E5%8A%9B%E5%9C%B0%E5%9B%BE"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 能力地图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 设计原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8A%95%E8%B5%84%E5%BB%BA%E8%AE%AE%EF%BC%88Investment-Advice%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2. 投资建议（Investment Advice）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E9%9C%80%E6%B1%82"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E6%8A%95%E8%B5%84%E5%A5%91%E7%BA%A6%E4%B8%8E%E6%8E%88%E6%9D%83%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 投资契约与授权模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E9%A3%8E%E9%99%A9%E7%94%BB%E5%83%8F%E4%B8%8E%E8%B5%84%E4%BA%A7%E9%85%8D%E7%BD%AE%E8%93%9D%E5%9B%BE"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 风险画像与资产配置蓝图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-%E4%BA%8B%E5%89%8D%E9%80%82%E9%94%80%E6%80%A7%E6%A0%A1%E9%AA%8C"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 事前适销性校验</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-%E4%B8%8E%E5%A4%96%E9%83%A8%E6%8A%95%E7%A0%94%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%8D%8F%E5%90%8C"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 与外部投研平台的协同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-5-%E7%BB%84%E5%90%88%E6%9E%84%E5%BB%BA%E4%B8%8E%E6%B2%BB%E7%90%86"><span class="nav-number">2.2.5.</span> <span class="nav-text">2.2.5 组合构建与治理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%9B%91%E6%8E%A7%EF%BC%88Monitoring%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3. 监控（Monitoring）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E9%9C%80%E6%B1%82"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E9%A3%8E%E9%99%A9-%E6%94%B6%E7%9B%8A%E7%89%B9%E5%BE%81%E5%BA%A6%E9%87%8F"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 风险-收益特征度量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-%E9%85%8D%E7%BD%AE%E7%9B%91%E6%8E%A7%E3%80%81%E7%BB%84%E5%90%88%E9%A3%8E%E9%99%A9%E4%B8%8E%E6%8D%9F%E7%9B%8A%E5%BD%92%E5%9B%A0"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 配置监控、组合风险与损益归因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-%E6%8C%89%E6%97%B6%E9%97%B4%E4%B8%8E%E5%AE%A2%E7%BE%A4%E5%8F%AF%E9%85%8D%E7%BD%AE%E7%9A%84%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 按时间与客群可配置的健康检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-%E7%BB%93%E6%9E%9C%E8%BE%93%E5%87%BA%E4%B8%8E%E6%8A%A5%E9%80%81"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 结果输出与报送</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%8A%95%E8%B5%84%E7%BB%84%E5%90%88%E5%86%8D%E5%B9%B3%E8%A1%A1%EF%BC%88Portfolio-Rebalancing%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">4. 投资组合再平衡（Portfolio Rebalancing）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E9%9C%80%E6%B1%82"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E5%86%B3%E7%AD%96%E5%88%86%E5%B7%A5%E4%B8%8E%E4%B8%A4%E5%B1%82%E8%93%9D%E5%9B%BE"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 决策分工与两层蓝图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-%E6%89%A7%E8%A1%8C%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 执行流水线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-%E5%86%8D%E5%B9%B3%E8%A1%A1%E6%96%B9%E6%B3%95%E5%BA%93%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.2.3 再平衡方法库与计算模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-4-%E9%99%90%E5%88%B6%E8%AF%84%E4%BC%B0"><span class="nav-number">4.2.4.</span> <span class="nav-text">4.2.4 限制评估</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-5-%E5%8D%95%E7%AC%94%E3%80%81%E6%89%B9%E9%87%8F%E4%B8%8E%E7%89%88%E6%9C%AC%E5%8C%96"><span class="nav-number">4.2.5.</span> <span class="nav-text">4.2.5 单笔、批量与版本化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%9B%B4%E4%BD%8E%E6%88%90%E6%9C%AC%E7%9A%84%E9%A1%BE%E9%97%AE%E6%9C%8D%E5%8A%A1%EF%BC%88Lower-cost-of-advice%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5. 更低成本的顾问服务（Lower cost of advice）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E9%9C%80%E6%B1%82"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%AE%A2%E5%8D%95%E5%90%88%E5%B9%B6%E6%B1%A0%EF%BC%88Order-Pooling%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 订单合并池（Order Pooling）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E9%9C%80%E6%B1%82"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E8%AE%BE%E8%AE%A1"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-1-%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.2.1.</span> <span class="nav-text">6.2.1 对象模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-2-%E5%85%A5%E6%B1%A0%E5%85%BC%E5%AE%B9%E6%80%A7%E6%A0%A1%E9%AA%8C"><span class="nav-number">6.2.2.</span> <span class="nav-text">6.2.2 入池兼容性校验</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-3-%E6%B1%A0%E5%89%A9%E4%BD%99%E9%87%8F%E5%8A%A8%E6%80%81%E6%89%A3%E5%87%8F"><span class="nav-number">6.2.3.</span> <span class="nav-text">6.2.3 池剩余量动态扣减</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-4-%E5%B8%82%E5%9C%BA%E6%88%90%E4%BA%A4%E5%88%86%E9%85%8D%E4%B8%8E%E9%98%B2%E8%B6%85%E9%85%8D"><span class="nav-number">6.2.4.</span> <span class="nav-text">6.2.4 市场成交分配与防超配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-5-%E6%AF%94%E4%BE%8B%E5%88%86%E6%91%8A%E4%B8%8E%E6%AE%8B%E5%B7%AE%E5%90%B8%E6%94%B6"><span class="nav-number">6.2.5.</span> <span class="nav-text">6.2.5 比例分摊与残差吸收</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-6-%E5%B8%82%E5%9C%BA%E5%88%86%E9%85%8D%E4%BC%A0%E6%92%AD%E4%B8%8E%E5%A4%96%E9%83%A8%E5%AF%B9%E8%B4%A6"><span class="nav-number">6.2.6.</span> <span class="nav-text">6.2.6 市场分配传播与外部对账</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-7-%E4%B8%8E%E8%A7%84%E6%A8%A1%E5%8C%96%E9%99%8D%E6%9C%AC%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">6.2.7.</span> <span class="nav-text">6.2.7 与规模化降本的关系</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E9%80%9A%E7%94%A8%E8%AE%BE%E8%AE%A1%E8%A6%81%E7%82%B9"><span class="nav-number">7.</span> <span class="nav-text">7. 通用设计要点</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhuang Wei Ming</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="../../../../archives/">
+          <span class="site-state-item-count">316</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="../../../../tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="../../../../zwm136200@gmail.com" title="E-Mail → zwm136200@gmail.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+      <meta itemprop="name" content="Zhuang Wei Ming">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="私人银行-财富投资管理平台 | Zhuang's Diary">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          私人银行-财富投资管理平台
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-10-07 10:06:00 / Modified: 13:11:13" itemprop="dateCreated datePublished" datetime="2026-10-07T10:06:00+08:00">2026-10-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><h3 id="1-1-目标"><a href="#1-1-目标" class="headerlink" title="1.1 目标"></a>1.1 目标</h3><p>本文描述投资管理平台的通用需求与设计，覆盖三项核心能力：<strong>投资建议、监控、投资组合再平衡</strong>。文档面向产品与架构设计，只描述能力、业务规则、数据模型与流程，不绑定任何具体实现、厂商或技术栈。</p>
+<h3 id="1-2-能力地图"><a href="#1-2-能力地图" class="headerlink" title="1.2 能力地图"></a>1.2 能力地图</h3><ul>
+<li><strong>投资建议</strong>：客户画像与风险画像、投资契约与授权模式、组合构建、事前适销性校验、与外部投研平台的协同。</li>
+<li><strong>监控</strong>：风险-收益特征度量、资产配置与限额监控、损益归因、授信与抵押监控、按时间与客群可配置的巡检、合规监控与报送。</li>
+<li><strong>投资组合再平衡</strong>：单笔与批量再平衡、限制评估、多方法再平衡引擎、现金管理与外汇对冲。</li>
+</ul>
+<h3 id="1-3-设计原则"><a href="#1-3-设计原则" class="headerlink" title="1.3 设计原则"></a>1.3 设计原则</h3><ol>
+<li><strong>决策与账本分离</strong>：投资决策（目标配置的生成）与持有、资金、账务（真实持仓与交割）由不同系统承担，通过标准化指令差分对接。</li>
+<li><strong>可配置</strong>：校验规则、巡检周期、客群范围、再平衡方法与门槛均以配置驱动，而非硬编码。</li>
+<li><strong>可追溯</strong>：契约、建议、审批、再平衡版本与最终单据全程留痕，支持回溯与审计。</li>
+<li><strong>解耦</strong>：外部系统只发布「目标与差额」，平台依据客户个性化持仓与真实账户资金生成可落地的交易。</li>
+</ol>
+<h2 id="2-投资建议（Investment-Advice）"><a href="#2-投资建议（Investment-Advice）" class="headerlink" title="2. 投资建议（Investment Advice）"></a>2. 投资建议（Investment Advice）</h2><h3 id="2-1-需求"><a href="#2-1-需求" class="headerlink" title="2.1 需求"></a>2.1 需求</h3><ul>
+<li>平台应支持将<strong>投资适销性检查、组合构建与风险分析自动化</strong>。</li>
+<li>平台应支持基于客户<strong>风险画像</strong>与<strong>战略资产配置</strong>快速设定并维护客户画像。</li>
+<li>投资活动应严格遵循客户与机构签署的投资契约及合规适销性约束。</li>
+</ul>
+<h3 id="2-2-设计"><a href="#2-2-设计" class="headerlink" title="2.2 设计"></a>2.2 设计</h3><h4 id="2-2-1-投资契约与授权模式"><a href="#2-2-1-投资契约与授权模式" class="headerlink" title="2.2.1 投资契约与授权模式"></a>2.2.1 投资契约与授权模式</h4><p>以具有法律约束力的**投资政策声明（Investment Policy Statement，IPS）**作为投资授权的载体，记录投资目标、风险偏好、投资期限、损益底线、业绩基准与有效期。系统支持三类授权模式：</p>
+<table>
+<thead>
+<tr>
+<th>授权模式</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全权委托管理（Discretionary）</td>
+<td>投资经理依据契约自主调仓</td>
+</tr>
+<tr>
+<td>投资顾问（Advisory）</td>
+<td>投资经理提出调仓建议，经客户确认后下单</td>
+</tr>
+<tr>
+<td>纯交易执行（Execution-Only）</td>
+<td>客户自主发起交易，系统仅做适销性风险提示</td>
+</tr>
+<tr>
+<td>契约的关键属性至少包括：授权模式、客户风险等级、业绩归因基准、有效期，以及客户层面的个券定制规则（豁免或黑名单，如关联上市公司股票禁买）。</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="2-2-2-风险画像与资产配置蓝图"><a href="#2-2-2-风险画像与资产配置蓝图" class="headerlink" title="2.2.2 风险画像与资产配置蓝图"></a>2.2.2 风险画像与资产配置蓝图</h4><p>采用<strong>两层资产配置蓝图</strong>：</p>
+<ul>
+<li><strong>第一层——战略&#x2F;战术资产配置（SAA &#x2F; TAA）</strong>：设定各大类资产（股票、固收、另类、流动性）的基准配置比例，并给出允许浮动的<strong>容差带（Corridor）</strong>。</li>
+<li><strong>第二层——模型投资组合（Model Portfolio）</strong>：将宏观大类比例细化为具体标的的目标权重，每个标的给出<strong>下限 &#x2F; 最优目标 &#x2F; 上限</strong>三段区间。</li>
+</ul>
+<p>目标权重可由外部投研平台批量同步，也可由内部模型生成。</p>
+<h4 id="2-2-3-事前适销性校验"><a href="#2-2-3-事前适销性校验" class="headerlink" title="2.2.3 事前适销性校验"></a>2.2.3 事前适销性校验</h4><p>订单录入时，由流程引擎触发事前自动校验，逐层判定「产品风险是否匹配、大类配置是否越界、集中度是否超限」：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">flowchart TD</span><br><span class="line"></span><br><span class="line">Order[新录入订单] --&gt; RiskCheck&#123;产品风险等级 &lt;= 客户风险等级？&#125;</span><br><span class="line"></span><br><span class="line">RiskCheck -- 否 --&gt; Warning[拦截交易 / 要求客户签署风险自担声明]</span><br><span class="line"></span><br><span class="line">RiskCheck -- 是 --&gt; CorridorCheck&#123;调仓后大类比例是否在容差带内？&#125;</span><br><span class="line"></span><br><span class="line">CorridorCheck -- 否 --&gt; BreachAlert[报警：偏离基准配置范围]</span><br><span class="line"></span><br><span class="line">CorridorCheck -- 是 --&gt; ConcentCheck&#123;单一标的风险暴露 &lt;= 集中度上限？&#125;</span><br><span class="line"></span><br><span class="line">ConcentCheck -- 否 --&gt; RejectOrder[强制阻断：触犯集中度限制]</span><br><span class="line"></span><br><span class="line">ConcentCheck -- 是 --&gt; Pass[放行并推进订单]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>大类比例漂移校验</strong>：订单执行后的预期大类权重为</p>
+<p>$$w_{post} &#x3D; \frac{V_{class,current} + \Delta V_{order}}{NAV_{portfolio}}$$</p>
+<p>并满足约束 $\text{MinWeight}<em>{class} \le w</em>{post} \le \text{MaxWeight}_{class}$；越界时由流程引擎抛出带宽越界异常并阻断。</p>
+<p><strong>集中度限额</strong>按规则类型管理：单一标的集中度、单一发行人集中度、非流动性资产上限；每条规则配置最大允许持有比例。</p>
+<h4 id="2-2-4-与外部投研平台的协同"><a href="#2-2-4-与外部投研平台的协同" class="headerlink" title="2.2.4 与外部投研平台的协同"></a>2.2.4 与外部投研平台的协同</h4><ul>
+<li>外部投研平台负责生成个性化调仓建议，并通过标准化接口提交「适销性建议订单」；平台在落单前校验客户风险等级与当前持仓偏离度，无违规时生成待审批建议单据。</li>
+<li>外部平台下发的资产级预交易合规门槛，与内部契约限制项做一致性对账。</li>
+<li>客户与外部投研平台之间建立唯一映射，外部测算的风险指标（如预期短缺、年化波动率）可回写至客户档案，供后续分析与展示使用。</li>
+</ul>
+<h4 id="2-2-5-组合构建与治理"><a href="#2-2-5-组合构建与治理" class="headerlink" title="2.2.5 组合构建与治理"></a>2.2.5 组合构建与治理</h4><ul>
+<li>客户、自然人、合同&#x2F;账户三层模型解耦：客户为法律&#x2F;经济主体，自然人为生物个体（承载国籍、税务居民地、政治敏感人物、实益拥有人信息），合同为投资与结算关系载体。</li>
+<li>支持批量将最新模型投资组合挂接至客户组合。</li>
+<li>契约签署、版本升级、双人复核审批（4-Eyes）由异步流程驱动并留痕。</li>
+</ul>
+<img data-src="2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/1.png" class="">
+<h2 id="3-监控（Monitoring）"><a href="#3-监控（Monitoring）" class="headerlink" title="3. 监控（Monitoring）"></a>3. 监控（Monitoring）</h2><h3 id="3-1-需求"><a href="#3-1-需求" class="headerlink" title="3.1 需求"></a>3.1 需求</h3><ul>
+<li>平台应能<strong>优化并监测风险-收益特征</strong>，确保其处于既定风险偏好之内。</li>
+<li>平台应支持设置<strong>按时间与客群（分段）可配置的健康检查</strong>，覆盖从资产配置监控到组合风险的全过程。</li>
+<li>监控结果应可输出为报告并满足合规报送要求。</li>
+</ul>
+<h3 id="3-2-设计"><a href="#3-2-设计" class="headerlink" title="3.2 设计"></a>3.2 设计</h3><h4 id="3-2-1-风险-收益特征度量"><a href="#3-2-1-风险-收益特征度量" class="headerlink" title="3.2.1 风险-收益特征度量"></a>3.2.1 风险-收益特征度量</h4><p>采用国际通行的投资业绩计量口径（如 GIPS）：</p>
+<ul>
+<li><strong>时间加权收益率（TWRR）</strong>：剔除外部资金进出影响，衡量投资管理能力。将现金流按业务分类（出入金、红利、税款、交易手续费、利息等）分别计算日收益因子并链式累乘：</li>
+</ul>
+<p>$$F_{g} &#x3D; \prod_{t \in g} f_{t}$$</p>
+<ul>
+<li><strong>资金加权收益率（MWRR &#x2F; IRR）</strong>：纳入资金进出的时点权重，反映客户实际回报。构建按天加权的净现金流：</li>
+</ul>
+<p>$$NCF &#x3D; \sum_t NCF_{t}, \qquad WNCF &#x3D; \sum_t (\Delta\mathrm{days}<em>t + timing_t) \times NCF</em>{t}$$</p>
+<p>其中日初现金流计时因子取 1、日终取 0。</p>
+<ul>
+<li><strong>多层级持仓权重</strong>：支持按大类、货币、行业、国家穿透至个券的树状权重分析；分母为零时输出空值而非零。</li>
+<li><strong>组合离散度</strong>：衡量同一策略模型下不同客户组合的收益分化，仅在样本净值大于零且有效成员数达到门槛时对外发布。</li>
+<li><strong>累计与年化收益率</strong>：对月度收益率序列 $r_k$，</li>
+</ul>
+<p>$$C_j &#x3D; \prod_{k&#x3D;1}^{j}(1+r_k), \qquad R_{cum,j}&#x3D;C_j-1, \qquad R_{ann,j}&#x3D;C_j^{12&#x2F;j}-1$$</p>
+<p>历史每日收益率、累计因子与对标基准写入时间序列表，用于报告与图表输出。</p>
+<h4 id="3-2-2-配置监控、组合风险与损益归因"><a href="#3-2-2-配置监控、组合风险与损益归因" class="headerlink" title="3.2.2 配置监控、组合风险与损益归因"></a>3.2.2 配置监控、组合风险与损益归因</h4><ul>
+<li><strong>资产配置监控</strong>：在线校验 SAA&#x2F;TAA 容差带与集中度限额；支持对客户持仓做批量合规扫描。</li>
+<li><strong>损益归因</strong>：将投资总损益拆分为「市场纯价格变动」与「汇率波动」两部分，汇兑损益以残差方式推导，保证恒等式成立：</li>
+</ul>
+<p>$$Profit_{mkt} + Profit_{fx} \equiv Profit_{total}$$</p>
+<p>以多币种折算不产生分钱级悬空差额。</p>
+<ul>
+<li><strong>额度与授信风险</strong>：额度按树状层级组织，子账户动支同时受本地额度与上级剩余空间双重约束：</li>
+</ul>
+<p>$$\text{LocalFree} &#x3D; \max(0,\ \text{Limit} - \text{Exposure})$$</p>
+<p>$$\text{HierarchyFree}_k &#x3D; \min(\text{LocalFree}<em>k,\ \text{HierarchyFree}</em>{parent})$$</p>
+<p>后台交割完成时实时释放日内预占敞口。</p>
+<ul>
+<li><strong>抵押品与追缴监控</strong>：抵押品按阶梯折算率编译为高精度分段比例；保证金赤字</li>
+</ul>
+<p>$$\text{MarginDeficit} &#x3D; \max(0,\ \text{TotalDebt} - \text{LendingValue})$$</p>
+<p>赤字为正时触发补仓通知、限制出金或强制平仓。</p>
+<ul>
+<li><strong>净值与费用监控</strong>：为每个计费周期生成每日逐笔净值估值快照，作为阶梯式管理费、托管费、业绩报酬与顾问费的计提依据；快照完整性状态用于阻断不完整的计费。</li>
+</ul>
+<h4 id="3-2-3-按时间与客群可配置的健康检查"><a href="#3-2-3-按时间与客群可配置的健康检查" class="headerlink" title="3.2.3 按时间与客群可配置的健康检查"></a>3.2.3 按时间与客群可配置的健康检查</h4><p>巡检能力建立在统一的任务&#x2F;队列框架之上。可配置性体现在两个维度：</p>
+<ul>
+<li><strong>时间维度</strong>：期间起止、调度周期、计费周期、运行日期。</li>
+<li><strong>客群&#x2F;对象维度</strong>：业务单元隔离、重点客户名单、按对象分片并行。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>巡检任务</th>
+<th>时间维度（可配置）</th>
+<th>客群&#x2F;对象维度（可配置）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>交易行为筛查</td>
+<td>待审查价值日起止</td>
+<td>按业务单元隔离；可过滤历史迁移数据；可指定重点客户群</td>
+</tr>
+<tr>
+<td>持仓合规扫描</td>
+<td>任务调度周期</td>
+<td>批量扫描客户持仓；越限时自动生成待办工单</td>
+</tr>
+<tr>
+<td>费用计提</td>
+<td>计费周期与运行日期；首&#x2F;中&#x2F;尾三阶段并行</td>
+<td>按对象选择并分片</td>
+</tr>
+<tr>
+<td>绩效异常检查</td>
+<td>期间区间</td>
+<td>按组合&#x2F;Composite 对象；命中写入检查表并输出</td>
+</tr>
+</tbody></table>
+<p>实时合规监控由异步队列承担：客户信息或交易对手变化时，实时与制裁名单比对，命中即阻断单据进入交割。</p>
+<h4 id="3-2-4-结果输出与报送"><a href="#3-2-4-结果输出与报送" class="headerlink" title="3.2.4 结果输出与报送"></a>3.2.4 结果输出与报送</h4><ul>
+<li>客户结单与交易通知单等输出由统一输出管理生成。</li>
+<li>满足监管报送要求（如交易类 T+1 报送、场外衍生品存续与估值上报）。</li>
+<li>所有变更由审计与权限体系留痕。</li>
+</ul>
+<img data-src="2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/2.png" class="">
+
+<h2 id="4-投资组合再平衡（Portfolio-Rebalancing）"><a href="#4-投资组合再平衡（Portfolio-Rebalancing）" class="headerlink" title="4. 投资组合再平衡（Portfolio Rebalancing）"></a>4. 投资组合再平衡（Portfolio Rebalancing）</h2><h3 id="4-1-需求"><a href="#4-1-需求" class="headerlink" title="4.1 需求"></a>4.1 需求</h3><ul>
+<li>平台应支持<strong>单笔与批量（mass）再平衡</strong>，并集成<strong>限制评估</strong>。</li>
+<li>平台应提供<strong>20 余种再平衡方法</strong>，涵盖策略再平衡、外汇对冲、现金管理，以及单资产与多资产再平衡。</li>
+</ul>
+<h3 id="4-2-设计"><a href="#4-2-设计" class="headerlink" title="4.2 设计"></a>4.2 设计</h3><h4 id="4-2-1-决策分工与两层蓝图"><a href="#4-2-1-决策分工与两层蓝图" class="headerlink" title="4.2.1 决策分工与两层蓝图"></a>4.2.1 决策分工与两层蓝图</h4><ul>
+<li><strong>投资委员会 &#x2F; 首席投资官</strong>：制定战略资产配置（SAA），并定期微调战术资产配置（TAA）。</li>
+<li><strong>多资产投资组合管理团队</strong>：将大类比例转化为模型投资组合，选定具体标的并赋予目标权重。</li>
+<li><strong>外部投研&#x2F;组合管理平台</strong>：作为投资决策来源，输出目标配置与调仓差额。</li>
+<li><strong>投资管理平台核心账本</strong>：作为真实持仓、资金与报送来源，依据目标差额与真实账户资金生成可落地交易。</li>
+</ul>
+<p>外部平台通过标准化协议发布「目标与差额」，平台对账后更新目标权重。</p>
+<h4 id="4-2-2-执行流水线"><a href="#4-2-2-执行流水线" class="headerlink" title="4.2.2 执行流水线"></a>4.2.2 执行流水线</h4><p>再平衡引擎采用确定性多阶段流水线：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">flowchart TD</span><br><span class="line"></span><br><span class="line">Holdings[当前持仓] &amp; Target[目标配置] --&gt; DriftCalc[1. 偏离度测算 ΔV / ΔQ]</span><br><span class="line"></span><br><span class="line">DriftCalc --&gt; MultiCont[2. 多账户候选调拨]</span><br><span class="line"></span><br><span class="line">MultiCont --&gt; MultiContEval[买入/卖出跨账户可用性排序]</span><br><span class="line"></span><br><span class="line">MultiContEval --&gt; UnitRound[3. 交易单位规整与门槛过滤]</span><br><span class="line"></span><br><span class="line">UnitRound --&gt; Sweep[4. 现金扫账]</span><br><span class="line"></span><br><span class="line">Sweep --&gt; Validation[5. 工作流前置校验]</span><br><span class="line"></span><br><span class="line">Validation --&gt; OrderGen[6. 建议单据生成]</span><br><span class="line"></span><br><span class="line">OrderGen --&gt; Pool[分发至交易撮合池]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>阶段一：偏离度与调仓差额试算</strong></li>
+</ul>
+<p>$$\Delta V_i &#x3D; (W_{target,i} \times NAV_{total}) - V_{current,i}, \qquad \Delta Q_i &#x3D; \frac{\Delta V_i}{Price_i}$$</p>
+<p>$\Delta V_i&gt;0$ 触发买入（需检查流动性），$\Delta V_i&lt;0$ 触发卖出（需调取可变现头寸）。</p>
+<ul>
+<li><p><strong>阶段二：多账户流动性调配</strong>：在家族&#x2F;关联账户群中计算跨子账户的现金与头寸可用性。</p>
+</li>
+<li><p><strong>阶段三：交易单位规整与门槛过滤</strong>：将小于市场最小撮合单位的零碎挂单向上规整为整数倍；低于配置门槛的挂单静默抑制，避免无意义碎单与高额手续费。</p>
+</li>
+<li><p><strong>阶段四：现金扫账</strong>：对配置了百分比扫账的账户，将超过流动性保留比例的富余现金转入高流动性工具：</p>
+</li>
+</ul>
+<p>$$Balance_{target} &#x3D; \frac{p}{100} \times NAV \times FX$$</p>
+<ul>
+<li><p><strong>阶段五：前置校验</strong>：账户&#x2F;合同未处于司法或合规冻结；模型权重满足归一化 $\sum W_{target,i} &#x3D; 100%$；标的无陈旧价格与停牌；杜绝非授权做空。</p>
+</li>
+<li><p><strong>阶段六：建议单据生成</strong>：形成待审批批次，确认后拆包为标准交易订单进入撮合池。</p>
+</li>
+</ul>
+<h4 id="4-2-3-再平衡方法库与计算模式"><a href="#4-2-3-再平衡方法库与计算模式" class="headerlink" title="4.2.3 再平衡方法库与计算模式"></a>4.2.3 再平衡方法库与计算模式</h4><p>引擎支持可配置的<strong>再平衡计算方法</strong>与<strong>行情快照模式</strong>：</p>
+<ul>
+<li>计算方法：完全按权重重置、现金优先渐进平衡、偏离度绝对值优先。</li>
+<li>行情模式：即时现价、官方前收盘价、加权均价。</li>
+</ul>
+<p>在上述模式下，覆盖的<strong>再平衡方法家族</strong>包括：</p>
+<table>
+<thead>
+<tr>
+<th>方法家族</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>策略再平衡</strong></td>
+<td>按模型策略目标权重重置或按参考组合传播订单</td>
+</tr>
+<tr>
+<td><strong>外汇对冲（FX Hedging）</strong></td>
+<td>远期外汇对冲差额低于交易单位时强制上规整，差额按截断或四舍五入至单位整数倍；支持对冲展期</td>
+</tr>
+<tr>
+<td><strong>现金管理（Cash Management）</strong></td>
+<td>按百分比、固定金额或余额目标执行自动扫账，驱动来源&#x2F;目标现金流</td>
+</tr>
+<tr>
+<td><strong>单资产再平衡</strong></td>
+<td>逐资产计算目标差额并下单</td>
+</tr>
+<tr>
+<td><strong>多资产 &#x2F; 多账户再平衡</strong></td>
+<td>跨资产、跨账户统一调配现金与头寸，生成批量交易</td>
+</tr>
+<tr>
+<td><strong>其他命令</strong></td>
+<td>基金转换、模型订单传播、现金扫账，以及数量、金额、权重等多类指令</td>
+</tr>
+</tbody></table>
+<h4 id="4-2-4-限制评估"><a href="#4-2-4-限制评估" class="headerlink" title="4.2.4 限制评估"></a>4.2.4 限制评估</h4><p>再平衡在计算阶段即携带契约个性化风控输入：</p>
+<ul>
+<li>个券黑名单、大类排除（如符合特定教法或 ESG 约束的排除清单）；</li>
+<li>特定账户类型的资金防火墙（如免税账户禁止跨账户借调资金）。</li>
+</ul>
+<p>提交前由校验分派器执行舍入、多账户、组合&#x2F;模型、链接组、冻结状态、零余额、空头&#x2F;符号变化与陈旧价格检查；限制评估结果持久化保存。</p>
+<h4 id="4-2-5-单笔、批量与版本化"><a href="#4-2-5-单笔、批量与版本化" class="headerlink" title="4.2.5 单笔、批量与版本化"></a>4.2.5 单笔、批量与版本化</h4><ul>
+<li><strong>单笔与批量</strong>：既支持账户级单笔再平衡，也支持<strong>再平衡矩阵批量操作</strong>，由再平衡动作、再平衡日期、成本来源、资产排除等配置驱动；支持以文件上传等方式触发批量再平衡。</li>
+<li><strong>版本化持久化</strong>：每个再平衡版本保存汇总指标、组合头寸、证券交易、外汇交易与限制评估明细；采用替换式保存，并以生成单据标识关联最终落地交易。</li>
+</ul>
+<img data-src="2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/3.png" class="">
+
+<img data-src="2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/4.png" class="">
+
+<h2 id="5-更低成本的顾问服务（Lower-cost-of-advice）"><a href="#5-更低成本的顾问服务（Lower-cost-of-advice）" class="headerlink" title="5. 更低成本的顾问服务（Lower cost of advice）"></a>5. 更低成本的顾问服务（Lower cost of advice）</h2><h3 id="5-1-需求"><a href="#5-1-需求" class="headerlink" title="5.1 需求"></a>5.1 需求</h3><ul>
+<li>平台应支持以规模化的<strong>批量再平衡</strong>与<strong>批量监控</strong>，在不牺牲客户体验的前提下降低顾问服务成本。</li>
+</ul>
+<h3 id="5-2-设计"><a href="#5-2-设计" class="headerlink" title="5.2 设计"></a>5.2 设计</h3><ul>
+<li><strong>规模化批量再平衡</strong>：一次为大量账户生成调仓订单，经订单合并池统一挂牌与成交，摊薄交易佣金、买卖价差与市场冲击成本。</li>
+<li><strong>规模化批量监控</strong>：按时间与客群批量执行配置、限额与风险巡检，替代逐户人工核对，降低运营成本。</li>
+<li><strong>不牺牲客户体验</strong>：每笔成交仍按各自子订单比例精确回填，利息、税费与佣金按交易币种精度分摊，客户账单独立、准确、可追溯。</li>
+</ul>
+<h2 id="6-订单合并池（Order-Pooling）"><a href="#6-订单合并池（Order-Pooling）" class="headerlink" title="6. 订单合并池（Order Pooling）"></a>6. 订单合并池（Order Pooling）</h2><h3 id="6-1-需求"><a href="#6-1-需求" class="headerlink" title="6.1 需求"></a>6.1 需求</h3><ul>
+<li>平台应支持将同一时段内多个客户对同一标的的买卖指令<strong>合并为一个母单</strong>执行，以降低佣金、获取更优的大额成交价格并减少市场冲击。</li>
+<li>母单成交后，平台应按各子订单比例<strong>精确回填成交量</strong>，并按币种精度分摊应计利息、交易税费与经纪佣金。</li>
+<li>平台应执行严格的<strong>防超配</strong>校验，杜绝分配数量符号翻转（买变卖、超额卖出）。</li>
+<li>全链路金额应满足守恒，分摊后总和精确等于外部成交回报，实现<strong>零分钱误差</strong>。</li>
+<li>平台应与外部投研&#x2F;风险平台保持订单生命周期与敞口的双向同步。</li>
+</ul>
+<h3 id="6-2-设计"><a href="#6-2-设计" class="headerlink" title="6.2 设计"></a>6.2 设计</h3><h4 id="6-2-1-对象模型"><a href="#6-2-1-对象模型" class="headerlink" title="6.2.1 对象模型"></a>6.2.1 对象模型</h4><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>客户子订单</td>
+<td>各独立客户账户下达的限价单或市价单</td>
+</tr>
+<tr>
+<td>合并主订单（母单）</td>
+<td>交易台将多个兼容子订单汇总后挂牌&#x2F;成交的大单</td>
+</tr>
+<tr>
+<td>市场成交单</td>
+<td>经纪商或交易所分笔返回的实际成交回报</td>
+</tr>
+<tr>
+<td>客户分配</td>
+<td>母单成交后按比例回填到各子订单的成交量与费用</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[客户子订单 A] --&gt; Chk[入池兼容性校验 18+3]</span><br><span class="line">    B[客户子订单 B] --&gt; Chk</span><br><span class="line">    C[客户子订单 C] --&gt; Chk</span><br><span class="line">    Chk --&gt; Master[合并主订单 挂牌/成交]</span><br><span class="line">    Master --&gt; Mkt[市场成交回报]</span><br><span class="line">    Mkt --&gt; Alloc[按比例分配 + 防超配校验]</span><br><span class="line">    Alloc --&gt; A2[子订单 A 分配 费用/利息]</span><br><span class="line">    Alloc --&gt; C2b[子订单 B 分配]</span><br><span class="line">    Alloc --&gt; C2[子订单 C 分配 尾数吸收]</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-2-2-入池兼容性校验"><a href="#6-2-2-入池兼容性校验" class="headerlink" title="6.2.2 入池兼容性校验"></a>6.2.2 入池兼容性校验</h4><p>子订单加入母单池时，执行 <strong>18 项无条件一致性校验 + 3 项条件分支校验</strong>：</p>
+<ul>
+<li><strong>18 项无条件校验</strong>：目标市场、多市场交易能力、标的证券、市场交易币种、结算币种、汇率设定、倒签标志、订单类型组、订单子类型、到期日、限价、触发价、冰山单可见数量、数量&#x2F;金额驱动标志、跨品种调仓标志、前台受理实体、交易对手方合同、托管传播模式。</li>
+<li><strong>3 项条件校验</strong>：市价单有效性约束；特定托管传播模式要求合同完全一致；另一类托管传播模式要求客户完全一致。</li>
+</ul>
+<h4 id="6-2-3-池剩余量动态扣减"><a href="#6-2-3-池剩余量动态扣减" class="headerlink" title="6.2.3 池剩余量动态扣减"></a>6.2.3 池剩余量动态扣减</h4><p>子订单入池时按驱动方式扣减母单可用量：</p>
+<ul>
+<li><strong>数量驱动池</strong>：$Q_{pool} :&#x3D; Q_{pool} - Q_{member}$</li>
+<li><strong>金额驱动池</strong>：$G_{pool} :&#x3D; G_{pool} - G_{member}$</li>
+</ul>
+<h4 id="6-2-4-市场成交分配与防超配"><a href="#6-2-4-市场成交分配与防超配" class="headerlink" title="6.2.4 市场成交分配与防超配"></a>6.2.4 市场成交分配与防超配</h4><p>市场分笔成交后，对已挂单总量执行防超配校验：</p>
+<p>$$Q_{after} &#x3D; Q_{market} - Q_{linked} - Q_{placed} - Q_{newAlloc} - Q_{diffPool}$$</p>
+<p><strong>不变量守恒律</strong>：若 $Q_{after} \ne 0$ 且其符号与 $Q_{market}$ 相反，系统立即拒绝本次分配并回滚，杜绝买变卖或超额卖出。</p>
+<h4 id="6-2-5-比例分摊与残差吸收"><a href="#6-2-5-比例分摊与残差吸收" class="headerlink" title="6.2.5 比例分摊与残差吸收"></a>6.2.5 比例分摊与残差吸收</h4><p>非末尾池成员按绝对数量占比计算权重（保留高精度浮点，不做向下截断）：</p>
+<p>$$w_i &#x3D; \left| \frac{q_i}{Q_{abs}} \right|$$</p>
+<p>各项金额按交易币种资产精度舍入：</p>
+<p>$$AccruedInterest_i &#x3D; \mathrm{Round}<em>{curry}(-AccruedInterest</em>{market} \times w_i)$$<br>$$CashToReceive_i &#x3D; \mathrm{Round}<em>{curry}(-CashToReceive</em>{market} \times w_i)$$<br>$$Cost_{i,b} &#x3D; \mathrm{Round}<em>{curry}(Cost</em>{market,b} \times w_i)$$</p>
+<p><strong>尾数吸收</strong>：最后一个池成员承接全部计算剩余值，使分摊总和精确等于市场总清算账单：</p>
+<p>$$\text{Amount}<em>n &#x3D; \text{Total}</em>{market} - \sum_{i&#x3D;1}^{n-1} \text{Amount}_i$$</p>
+<h4 id="6-2-6-市场分配传播与外部对账"><a href="#6-2-6-市场分配传播与外部对账" class="headerlink" title="6.2.6 市场分配传播与外部对账"></a>6.2.6 市场分配传播与外部对账</h4><ul>
+<li><strong>市场分配传播</strong>：母单成交后，按市场与托管关系将成交量与金额传播到各子订单，并执行上述尾数吸收，保证多客户账单与交易所回单一致。</li>
+<li><strong>外部对账</strong>：对外部投研&#x2F;风险平台发起或受其监控的订单，平台在异步单据补充分派中做双向对账——记录外部接口状态、状态时间戳，并透传代理资产，确保跨市场代理挂单在外部风险账本中保持实时敞口同步；该机制同样适用于外汇远期、利率掉期与期权等产品。</li>
+</ul>
+<h4 id="6-2-7-与规模化降本的关系"><a href="#6-2-7-与规模化降本的关系" class="headerlink" title="6.2.7 与规模化降本的关系"></a>6.2.7 与规模化降本的关系</h4><p>订单合并池是「更低成本的顾问服务」的执行底座：批量再平衡一次产生的大量子订单经入池合并后统一成交，摊薄佣金、价差与冲击成本；同时大批量监控保证分配与费用分摊依然逐客户准确、可对账，从而在不牺牲客户体验的前提下实现规模化降本。</p>
+<h2 id="7-通用设计要点"><a href="#7-通用设计要点" class="headerlink" title="7. 通用设计要点"></a>7. 通用设计要点</h2><ol>
+<li><strong>决策与账本分离</strong>：外部决策系统只发布目标与差额，平台依据客户个性化持仓与真实资金生成落地交易。</li>
+<li><strong>两层目标蓝图</strong>：宏观大类容差带与个券模型权重分层继承与校验，避免将配置简化为单一标签。</li>
+<li><strong>配置驱动</strong>：规则、巡检、方法与门槛均可配置，适配不同客群与监管辖区。</li>
+<li><strong>全链路留痕</strong>：契约、审批、再平衡版本与最终单据可回溯，满足审计与合规报送。</li>
+<li><strong>精度与守恒</strong>：多币种与费用计算保持明确的舍入口径，关键恒等式（如损益拆分）保持守恒，杜绝分钱级悬空差额。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Zhuang Wei Ming
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://zhuang-weiming.github.io/2026/10/07/%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E8%B4%A2%E5%AF%8C%E6%8A%95%E8%B5%84%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/" title="私人银行-财富投资管理平台">https://zhuang-weiming.github.io/2026/10/07/私人银行-财富投资管理平台/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="../../../../tags/Finance/" rel="tag"># Finance</a>
+              <a href="../../../../tags/Finance-Banking/" rel="tag"># Finance-Banking</a>
+              <a href="../../../../tags/Finance-RiskManagement/" rel="tag"># Finance-RiskManagement</a>
+              <a href="../../../../tags/Finance-WealthManagement/" rel="tag"># Finance-WealthManagement</a>
+              <a href="../../../../tags/Fintech/" rel="tag"># Fintech</a>
+              <a href="../../../../tags/Finance-PrivateBank/" rel="tag"># Finance-PrivateBank</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="../../../09/23/%E4%BB%8B%E7%BB%8DSystemOne%E6%A8%A1%E5%9E%8B%E4%B8%8EJev/" rel="prev" title="介绍SystemOne模型与Jev">
+                  <i class="fa fa-angle-left"></i> 介绍SystemOne模型与Jev
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="../%E7%A7%81%E4%BA%BA%E9%93%B6%E8%A1%8C-%E6%95%B0%E5%AD%97%E6%B8%A0%E9%81%93DigitalChannels/" rel="next" title="私人银行-数字渠道DigitalChannels">
+                  私人银行-数字渠道DigitalChannels <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Zhuang Wei Ming</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zhuang-weiming/zhuang-weiming.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="../../../../js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
